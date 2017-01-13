@@ -1,0 +1,73 @@
+@import "sizes";
+@import "colors";
+.page {
+  margin-top: 140px;
+  position: relative;
+  margin-bottom: 60px;
+
+  .logo {
+    //background: url(../img/logo-small.png) no-repeat;
+    background-size: 100%;
+    width: 350px;
+    height: 170px;
+    z-index: 1000;
+    float: left;
+    position: absolute;
+    top: -105px;
+    @media (max-width: @small-screen) {
+      top: -160px;
+    }
+  }
+
+  .header {
+    height: 100px;
+    //background: url(../img/stripes.png);
+    .header-color {
+      width: 100%;
+      height: 70px;
+      background-color: @main;
+      clip-path: polygon(0% 0%, 100% 0%, 100% 50px, 0% 70px);
+    }
+    .submenu {
+      display: flex;
+      justify-content: flex-end;
+      font-family: "Bebas Neue", Helvetica;
+      input.filter {
+        color: black;
+        width: 40%;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      }
+      a.item {
+        font-weight: bold;
+        cursor: pointer;
+        padding-right: 3px;
+        color: @main;
+        &:hover, &.active {
+          color: white;
+          text-decoration: none;
+          background-color: transparent;
+        }
+      }
+
+    }
+    h1 {
+      text-align: right;
+      padding: 10px;
+    }
+  }
+  .content {
+    background-color: @third;
+    padding: 20px;
+    @media (max-width: @small-screen) {
+      padding: 5px;
+    }
+  }
+  .footer {
+    //background: url(../img/partners_footer.png) no-repeat;
+    background-size: contain;
+    height: 0;
+    width: 100%;
+    padding-top: 9.8%;
+  }
+
+}

@@ -1,0 +1,75 @@
+{
+  "news": [
+    {
+      "isPublished": false,
+      "author": {
+        "www": null,
+        "github": null,
+        "bio": null,
+        "id": 1,
+        "firstName": "John",
+        "lastName": "Smith",
+        "email": "john@smith.com"
+      },
+      "title": "Test",
+      "intro": "asda",
+      "full": "asdad",
+      "id": 2
+    },
+    {
+      "isPublished": true,
+      "author": {
+        "www": null,
+        "github": null,
+        "bio": null,
+        "id": 1,
+        "firstName": "John",
+        "lastName": "Smith",
+        "email": "john@smith.com"
+      },
+      "title": "er",
+      "intro": "dfg",
+      "full": "dfg",
+      "id": 3
+    }
+  ],
+  "tags": [
+    {
+      "name": "Java"
+    },
+    {
+      "name": "JavaScript"
+    },
+    {
+      "name": "Agile"
+    },
+    {
+      "name": "Reactive"
+    },
+    {
+      "name": "Soft Skills"
+    }
+  ],
+  "presentations": [
+    {
+      "title": "asda",
+      "level": "advanced",
+      "tags": [
+        "JavaScript",
+        "Agile"
+      ],
+      "shortDescription": "asadasd",
+      "description": "asdasd",
+      "owner": {
+        "www": null,
+        "github": null,
+        "bio": null,
+        "id": 1,
+        "firstName": "John",
+        "lastName": "Smith",
+        "email": "john@smith.com"
+      },
+      "id": 6
+    }
+  ]
+}

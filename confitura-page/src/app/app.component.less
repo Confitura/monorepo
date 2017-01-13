@@ -1,0 +1,932 @@
+//@import url("http://hello.mywebfonts.net/count/30e5ac");
+//@font-face {
+//    font-family: 'NeuzeitGro-Bol';
+//    src: url('../fonts/30E5AC_0_0.eot');
+//    src: url('../fonts/30E5AC_0_0.eot?#iefix') format('embedded-opentype'), url('../fonts/30E5AC_0_0.woff2') format('woff2'), url('../fonts/30E5AC_0_0.woff') format('woff'), url('../fonts/30E5AC_0_0.ttf') format('truetype');
+//}
+//
+//@font-face {
+//    font-family: 'NeuzeitGro-Reg';
+//    src: url('../fonts/30E5AC_1_0.eot');
+//    src: url('../fonts/30E5AC_1_0.eot?#iefix') format('embedded-opentype'), url('../fonts/30E5AC_1_0.woff2') format('woff2'), url('../fonts/30E5AC_1_0.woff') format('woff'), url('../fonts/30E5AC_1_0.ttf') format('truetype');
+//}
+
+/* general */
+* {
+    outline: none !important;
+}
+
+body#confitura {
+    padding-top: 100px;
+    font-family: 'NeuzeitGro-Reg', Verdana, Tahoma, sans-serif; /* NeuzeitGro-Bol */
+    background-color: black;
+}
+
+.container-fluid {
+    padding: 0;
+}
+
+@media (max-width: 767px) {
+    body#confitura {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+/* effects - css3*/
+.ease {
+    transition: 0.5s ease;
+}
+
+/* menu */
+
+.navbar, #navbar {
+    height: 100px !important;
+}
+
+.navbar-toggle {
+    margin-top: 10px;
+    padding-left: 0;
+    padding-right: 0;
+    background: transparent !important;
+}
+
+nav .container, .navbar-brand {
+    height: 100px;
+}
+
+.navbar-brand {
+    line-height: 100px;
+    border: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.nav > li > a {
+    height: 100px;
+    line-height: 100px;
+    border: 0;
+}
+
+.pink, .pink:hover {
+    padding-left: 45px !important;
+    padding-right: 45px !important;
+    background: #ff0040 !important;
+    color: #ffffff !important;
+}
+
+@media screen and (min-width: 1141px) {
+    .navbar-default .navbar-nav > li > a:link,
+    .navbar-default .navbar-nav > li > a:active,
+    .navbar-default .navbar-nav > li > a:hover,
+    .navbar-default .navbar-nav > li > a:visited {
+        color: #000000;
+        font-weight: bold;
+        text-decoration: none;
+        outline: none;
+        font-size: 17px;
+        transition: 0.5s ease;
+        -webkit-transition: 0.5s ease;
+        -o-transition: 0.5s ease;
+        -moz-transition: 0.5s ease;
+    }
+
+    .nav > li > a {
+        padding: 0 17px 0 0;
+    }
+
+    .pink, .pink:hover {
+        padding-left: 17px !important;
+        padding-right: 17px !important;
+    }
+}
+
+@media all and ( min-width: 768px ) and ( max-width: 1140px ) {
+    .navbar-toggle {
+        margin-right: 0 !important;
+    }
+
+}
+
+@media screen and (max-width: 1140px) {
+    /* mobile */
+    .navbar, #navbar {
+        height: 55px !important;
+    }
+
+    .navbar-brand {
+        line-height: 55px;
+    }
+
+    nav .container, .navbar-brand {
+        height: 55px;
+    }
+
+    .navbar-right li a {
+        display: none !important;
+    }
+
+    #mobile-menu {
+        display: block !important;
+        height: 55px;
+        line-height: 55px;
+        padding-right: 20px;
+        div {
+            background: url('../img/mobile-menu.png') no-repeat center;
+            background-size: contain;
+            width: 30px;
+            height: 100%;
+            float: right;
+        }
+    }
+
+    .navbar-header {
+        display: block;
+        float: right;
+        text-align: right;
+    }
+
+    .confitura-logo {
+        width: 100% !important;
+    }
+}
+
+@media screen and (min-width: 1141px) and (max-width: 1279px) {
+    .nav > li > a {
+        padding: 0 20px 0 0;
+    }
+
+    .pink, .pink:hover {
+        padding-left: 20px !important;
+        padding-right: 30px !important;
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    .navbar-default .navbar-nav > li > a:link,
+    .navbar-default .navbar-nav > li > a:active,
+    .navbar-default .navbar-nav > li > a:hover,
+    .navbar-default .navbar-nav > li > a:visited {
+        color: #000000;
+        font-weight: bold;
+        text-decoration: none;
+        outline: none;
+        font-size: 20px;
+        transition: 0.5s ease;
+        -webkit-transition: 0.5s ease;
+        -o-transition: 0.5s ease;
+        -moz-transition: 0.5s ease;
+    }
+
+    .nav > li > a {
+        padding: 0 20px 0 0;
+    }
+
+    .pink, .pink:hover {
+        padding-left: 20px !important;
+        padding-right: 30px !important;
+    }
+}
+
+@media screen and (min-width: 1440px) {
+    .navbar-default .navbar-nav > li > a:link,
+    .navbar-default .navbar-nav > li > a:active,
+    .navbar-default .navbar-nav > li > a:hover,
+    .navbar-default .navbar-nav > li > a:visited {
+        color: #000000;
+        font-weight: bold;
+        text-decoration: none;
+        outline: none;
+        font-size: 21px;
+        transition: 0.5s ease;
+        -webkit-transition: 0.5s ease;
+        -o-transition: 0.5s ease;
+        -moz-transition: 0.5s ease;
+    }
+
+    .nav > li > a {
+        padding: 0 29px 0 0;
+    }
+
+    .pink, .pink:hover {
+        padding-left: 45px !important;
+        padding-right: 45px !important;
+    }
+}
+
+.navbar-default .navbar-nav > li > a:hover {
+    text-decoration: underline;
+}
+
+.navbar-default .navbar-toggle {
+    border: none;
+}
+
+.navbar-toggle .icon-bar {
+    display: block;
+    width: 60px;
+    height: 8px;
+    border-radius: 0 !important;
+    margin: 10px 0;
+}
+
+@media screen and (max-width: 375px) {
+    .navbar-toggle .icon-bar {
+        width: 30px;
+    }
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: #000000;
+}
+
+.fa-bars {
+    padding: 0 !important;
+}
+
+/* logo */
+.confitura-logo {
+    border: none;
+    outline: none;
+    margin-left: 20px !important;
+    transition: 0.5s ease;
+    background: url('../img/logo.png') no-repeat center center;
+    background-size: contain;
+    width: 232px;
+    height: 100%;
+
+}
+
+@media screen and (max-width: 1140px) {
+    body#confitura {
+        padding-top: 35px;
+    }
+
+    .navbar-brand {
+        width: 200px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .confitura-logo, .container-fluid > .navbar-header {
+        padding-left: 0 !important;
+        margin-left: 20px !important;
+    }
+
+    .container-fluid > .navbar-header {
+        margin-right: 0 !important;
+    }
+}
+
+@media screen and (max-width: 1140px) {
+    .navbar-header {
+        width: 100%;
+    }
+}
+
+/* mobile menu */
+.mobile-nav {
+    display: none;
+    position: fixed;
+    top: 55px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgb(0, 0, 0);
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 10000;
+}
+
+.mlink:link, .mlink:active, .mlink:visited, .mlink:hover {
+    display: block;
+    width: 100%;
+    text-align: center;
+    border: none;
+    outline: none;
+}
+
+@media screen and (min-height: 320px) {
+    .mlink:link, .mlink:active, .mlink:visited, .mlink:hover {
+        font-size: 3rem;
+        /* padding: 0; */
+    }
+}
+
+@media screen and (min-height: 480px) {
+    .mlink:link, .mlink:active, .mlink:visited, .mlink:hover {
+        font-size: 24px;
+        /* padding: 3px 0; */
+    }
+}
+
+@media screen and (min-height: 640px) {
+    .mlink:link, .mlink:active, .mlink:visited, .mlink:hover {
+        font-size: 32px;
+        /* padding: 6px 0; */
+    }
+}
+
+@media screen and (min-height: 768px) {
+    .mlink:link, .mlink:active, .mlink:visited, .mlink:hover {
+        font-size: 36px;
+        /* padding: 10px 0; */
+    }
+}
+
+.wh, .wh:hover {
+    background: #ffffff !important;
+    color: #000000 !important;
+}
+
+.pk, .pk:hover {
+    background: #ff0040 !important;
+    color: #ffffff !important;
+}
+
+/* carousel */
+.carousel-caption {
+    text-align: left;
+    left: 13.25%;
+    bottom: 120px;
+}
+
+.btn-pink, .btn-pink:hover {
+    width: 320px;
+    height: 80px;
+    line-height: 80px;
+    color: #ffffff;
+    background: #ff0040;
+    font-size: 24px;
+    padding: 0;
+    border-radius: 0;
+    border: none;
+    font-weight: bold;
+}
+
+.btn-pink:hover {
+    //text-decoration: underline;
+}
+
+.carousel-caption > h1 {
+    font-weight: bold;
+    text-shadow: none;
+    font-size: 48px;
+    font-family: 'NeuzeitGro-Bol', Verdana, Tahoma, sans-serif;
+}
+
+.carousel-p {
+    font-size: 23px;
+    text-shadow: none;
+    margin: 25px 0 60px 0;
+}
+
+.own-carousel {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100vh;
+    background: transparent url('../img/carousel.jpg') center center no-repeat;
+    background-size: cover;
+}
+
+@media screen and (max-width: 900px) {
+    .carousel-caption {
+        text-align: center;
+        width: 100%;
+        left: 0;
+        bottom: 90px;
+    }
+}
+
+@media screen and (max-width: 375px) {
+    .carousel-caption {
+        text-align: center;
+        width: 100%;
+        left: 0;
+        bottom: 45px;
+    }
+
+    .carousel-p {
+        font-size: 23px;
+        text-shadow: none;
+        margin: 25px 10px 60px 10px;
+    }
+}
+
+/* agenda carousel */
+#agenda-carousel-inner {
+    position: relative;
+}
+
+.agenda-block {
+    position: absolute;
+    background: transparent;
+    left: 0;
+}
+
+.agenda-carousel-container {
+    position: relative;
+    height: 380px;
+    overflow: hidden;
+    display: block;
+    margin: 0 auto;
+}
+
+@media screen and (min-width: 380px) {
+    .agenda-carousel-container {
+        width: 380px;
+        height: 380px;
+    }
+}
+
+@media screen and (min-width: 760px) {
+    .agenda-carousel-container {
+        width: 760px;
+        height: 380px;
+    }
+}
+
+@media screen and (min-width: 1140px) {
+    .agenda-carousel-container {
+        width: 1140px;
+        height: 380px;
+    }
+}
+
+#agenda-left,
+#agenda-right {
+    position: absolute;
+    display: block;
+    width: 28px;
+    height: 44px;
+}
+
+#agenda-left {
+    top: 50%;
+    margin-top: -22px;
+    left: 20px;
+    background: transparent url(../img/black-prev.png) center center no-repeat;
+}
+
+#agenda-right {
+    top: 50%;
+    margin-top: -22px;
+    right: 20px;
+    background: transparent url(../img/black-next.png) center center no-repeat;
+}
+
+.agenda-carousel-item {
+    position: relative;
+    display: block;
+    float: left;
+    padding: 30px;
+}
+
+.agenda-slide {
+    font-size: 46px;
+    line-height: 50px;
+    font-family: 'NeuzeitGro-Bol', Verdana, Tahoma, sans-serif;
+}
+
+.agenda-slide span.topic {
+    display: block;
+}
+
+.agenda-slide span.hour {
+    display: block;
+    font-size: 24px;
+    line-height: 30px;
+    font-family: 'NeuzeitGro-Reg', Verdana, Tahoma, sans-serif; /* NeuzeitGro-Bol */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+/* content */
+.container-fluid {
+    background: #ffffff;
+    color: #000000;
+    display: block;
+}
+
+div[class^="col-"] {
+    padding: 0;
+}
+
+#main-confitura,
+#about-confitura,
+#news-confitura,
+#agenda-confitura,
+#speakers-confitura,
+#partners-confitura {
+    display: block;
+    width: 100%;
+    background: #ffffff;
+    color: #000000;
+}
+
+#speakers-confitura {
+    background: #e4d7c6 !important;
+}
+
+#footer-confitura {
+    display: block;
+    width: 100%;
+    background: #000000 !important;
+    color: #ffffff !important;
+}
+
+h2 {
+    display: block;
+    width: 100%;
+    color: #000000;
+    text-decoration: underline;
+    text-align: center;
+    font-weight: bold;
+    text-shadow: none;
+    font-size: 6rem;
+    font-family: 'NeuzeitGro-Bol', Verdana, Tahoma, sans-serif;
+    padding-top: 100px !important;
+    padding-bottom: 90px !important;
+
+}
+
+//@media screen and (max-width: 375px) {
+//  .main-confitura-header,
+//  .about-confitura-header,
+//  .news-confitura-header,
+//  .agenda-confitura-header,
+//  .speakers-confitura-header,
+//  .partners-confitura-header {
+//    font-size: 46px;
+//    font-weight: normal;
+//    padding-top: 75px !important;
+//    padding-bottom: 20px !important;
+//
+//  }
+//}
+
+.main-confitura-content-inner,
+.about-confitura-content-inner,
+.agenda-confitura-content-inner {
+    display: block;
+    max-width: 1140px;
+    margin: 0 auto;
+}
+
+.main-confitura-content-inner .col-lg-6,
+.about-confitura-content-inner div,
+.agenda-confitura-content-inner div {
+    padding: 0 30px;
+}
+
+h3 {
+    display: block;
+    font-weight: bold;
+    text-shadow: none;
+    font-size: 4rem;
+    font-family: 'NeuzeitGro-Bol', Verdana, Tahoma, sans-serif;
+    text-align: center;
+}
+
+//@media screen and (max-width: 375px) {
+//  .mcci-header {
+//    font-size: 40px;
+//    font-weight: bold;
+//    font-family: 'NeuzeitGro-Bol', Verdana, Tahoma, sans-serif;
+//    padding-top: 20px;
+//  }
+//
+//  .mcci-content {
+//    text-align: center !important;
+//  }
+//}
+
+.mcci-content,
+.about-confitura-content-inner div,
+.agenda-confitura-content-inner div {
+    display: block;
+    text-shadow: none;
+    font-size: 24px;
+    line-height: 30px;
+    padding-top: 20px;
+}
+
+.about-confitura-content-inner div,
+.agenda-confitura-content-inner div {
+    padding-top: 0;
+    padding-bottom: 80px;
+    text-align: center;
+}
+
+.main-confitura-footer button, .main-confitura-footer button:hover,
+.about-confitura-footer button, .about-confitura-footer button:hover,
+.agenda-confitura-footer button, .agenda-confitura-footer button:hover {
+    display: block;
+    border: none;
+    outline: none;
+    width: 320px;
+    height: 80px;
+    background: #ebebeb;
+    font-size: 24px;
+    color: #000000;
+    margin: 80px auto 0;
+    font-family: 'NeuzeitGro-Bol', Verdana, Tahoma, sans-serif;
+}
+
+@media screen and (max-width: 375px) {
+    .main-confitura-footer button, .main-confitura-footer button:hover,
+    .about-confitura-footer button, .about-confitura-footer button:hover,
+    .agenda-confitura-footer button, .agenda-confitura-footer button:hover {
+        margin-top: 40px;
+    }
+}
+
+.about-confitura-footer button,
+.about-confitura-footer button:hover {
+    margin-top: 0 !important;
+}
+
+.agenda-confitura-footer button,
+.agenda-confitura-footer button:hover {
+    margin-top: 20px !important;
+    margin-bottom: 150px !important;
+}
+
+.main-confitura-footer button:hover,
+.about-confitura-footer button:hover,
+.agenda-confitura-footer button:hover {
+    text-decoration: underline;
+}
+
+.about-items {
+    background: transparent;
+    min-height: 350px;
+}
+
+.item-1 {
+    background: transparent url(../img/main-item-1.png) top center no-repeat;
+    padding-top: 200px !important;
+    text-align: center;
+}
+
+.item-2 {
+    background: transparent url(../img/main-item-2.png) top center no-repeat;
+    padding-top: 200px !important;
+    text-align: center;
+}
+
+.item-3 {
+    background: transparent url(../img/main-item-3.png) top center no-repeat;
+    padding-top: 200px !important;
+    text-align: center;
+}
+
+.item-4 {
+    background: transparent url(../img/main-item-4.png) top center no-repeat;
+    padding-top: 200px !important;
+    text-align: center;
+}
+
+.about-items a:link,
+.about-items a:active,
+.about-items a:visited,
+.about-items a:hover {
+    border: none;
+    color: #000000 !important;
+    text-decoration: none;
+    font-size: 48px;
+    font-family: 'NeuzeitGro-Bol', Verdana, Tahoma, sans-serif;
+}
+
+.about-items a:hover {
+    text-decoration: underline;
+}
+
+.news-confitura-left {
+    position: relative;
+    background: transparent url(../img/pink-woman-pc.jpg) center center no-repeat;
+    background-size: cover;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../img/pink-woman-pc.png', sizingMethod='scale');
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../img/pink-woman-pc.png',sizingMethod='scale')";
+    padding: 60px !important;
+
+}
+
+.news-confitura-right {
+    position: relative;
+}
+
+.semi-square {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 60px !important;
+}
+
+.black {
+    background: #000000 !important;
+}
+
+.beige {
+    background: #e4d7c6 !important;
+}
+
+.font-white {
+    color: #ffffff;
+}
+
+.font-black {
+    color: #000000;
+}
+
+@media screen and (min-width: 320px) and (max-width: 480px) {
+
+    .news-confitura-left, .semi-square {
+        padding: 20px !important;
+    }
+
+}
+
+@media screen and (min-width: 1200px) and (max-width: 1400px) {
+    .news-title {
+        display: block;
+        //line-height: 40px;
+        font-family: 'NeuzeitGro-Bol', Verdana, Tahoma, sans-serif;
+    }
+
+    .news-excerpt,
+    .news-date {
+        display: block;
+        //line-height: 22px;
+    }
+}
+
+.partner-logo, .partner-type {
+    display: block;
+    background: transparent;
+}
+
+#footer-confitura .footer-left, #footer-confitura .footer-right {
+    padding-top: 60px;
+    font-family: 'NeuzeitGro-Bol', Verdana, Tahoma, sans-serif;
+    font-size: 24px;
+    line-height: 30px;
+    height: 400px;
+}
+
+#footer-confitura .footer-left {
+    padding-left: 60px;
+    @media all and (max-width: 768px) {
+        padding-left: 0;
+
+    }
+}
+
+#footer-confitura .footer-right {
+    padding-right: 60px;
+
+    @media all and (max-width: 768px) {
+        padding-right: 0;
+        padding-top: 0;
+        height: 200px;
+
+    }
+}
+
+.footer-logo {
+    display: block;
+    width: 306px;
+    height: 100px;
+    padding-bottom: 90px;
+    background: url("../img/logo-black.png") no-repeat;
+    background-size: contain;
+    @media all and (max-width: 768px) {
+        margin: auto;
+    }
+
+}
+
+.footer-content-left {
+    @media all and (max-width: 768px) {
+        padding-left: 10px;
+        padding-right: 10px;
+        text-align: center;
+    }
+}
+
+.footer-social {
+    display: block;
+    color: #ff0040;
+    padding-top: 40px;
+}
+
+.footer-social a {
+    color: #ff0040;
+
+}
+
+.footer-social [class*="fa fa-"] {
+    background-color: #ffffff;
+    border-radius: 30px;
+    color: #000000;
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    margin: auto 3px;
+    width: 30px;
+    font-size: 15px;
+    text-align: center;
+}
+
+.footer-social [class*="fa fa-"]:hover {
+    background-color: #ff0040;
+}
+
+a.social-link:link, a.social-link:active, a.social-link:visited, a.social-link:hover {
+    text-decoration: none;
+}
+
+.footer-partner, .footer-partner-desc {
+    display: block;
+}
+
+.footer-partner-desc {
+    text-align: center;
+    max-width: 150px;
+    float: right;
+    margin-top: 50px;
+}
+
+div#patronat {
+    background: url('../img/patronat.png') no-repeat center;
+    background-size: contain;
+    width: 70%;
+    height: 70%;
+    float: right;
+    @media all and (max-width: 768px) {
+        width: 80%;
+        float: inherit;
+        margin: auto;
+
+    }
+    //margin-right: 100px;
+}
+
+.footer-social {
+    #email, #social-links {
+        float: left;
+        @media all and (max-width: 768px) {
+            width: 100%;
+            text-align: center;
+        }
+    }
+    #social-links {
+        margin-left: 50px;
+        @media all and (max-width: 768px) {
+            margin-left: 0;
+        }
+    }
+}
+
+.partner-logo .bx-wrapper {
+    border: none;
+    box-shadow: none;
+    img {
+        margin: auto;
+        max-width: 210px;
+        max-height: 55px;
+    }
+}
+
+.bg-white {
+    background: #ffffff;
+}
+
+.bg-beige {
+    background: #e4d7c6;
+}
+
+.ta-left {
+    text-align: left !important;
+}
+
+.pb150 {
+    padding-bottom: 150px !important;
+}
+
+.row-1140 {
+    display: block;
+    max-width: 1140px;
+    margin: 0 auto !important;
+    @media all and (max-width: 1140px) {
+        padding-left: 20px ;
+        padding-right: 20px;
+    }
+}
+
+.row-1080 {
+    display: block;
+    max-width: 1080px;
+    margin: 0 auto;
+}
