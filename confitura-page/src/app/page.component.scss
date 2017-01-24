@@ -14,7 +14,7 @@
     float: left;
     position: absolute;
     top: -105px;
-    @media (max-width: @small-screen) {
+    @media (max-width: $small-screen) {
       top: -160px;
     }
   }
@@ -25,7 +25,7 @@
     .header-color {
       width: 100%;
       height: 70px;
-      background-color: @main;
+      background-color: $main;
       clip-path: polygon(0% 0%, 100% 0%, 100% 50px, 0% 70px);
     }
     .submenu {
@@ -41,7 +41,7 @@
         font-weight: bold;
         cursor: pointer;
         padding-right: 3px;
-        color: @main;
+        color: $main;
         &:hover, &.active {
           color: white;
           text-decoration: none;
@@ -56,14 +56,14 @@
     }
   }
   .content {
-    background-color: @third;
+    background-color: $third;
     padding: 20px;
-    @media (max-width: @small-screen) {
+    @media (max-width: $small-screen) {
       padding: 5px;
     }
   }
   .footer {
-    //background: url(../img/partners_footer.png) no-repeat;
+    //background: url(img/partners_footer.png) no-repeat;
     background-size: contain;
     height: 0;
     width: 100%;

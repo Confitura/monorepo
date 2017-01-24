@@ -1,15 +1,15 @@
 //@import url("http://hello.mywebfonts.net/count/30e5ac");
-//@font-face {
-//    font-family: 'NeuzeitGro-Bol';
-//    src: url('../fonts/30E5AC_0_0.eot');
-//    src: url('../fonts/30E5AC_0_0.eot?#iefix') format('embedded-opentype'), url('../fonts/30E5AC_0_0.woff2') format('woff2'), url('../fonts/30E5AC_0_0.woff') format('woff'), url('../fonts/30E5AC_0_0.ttf') format('truetype');
-//}
-//
-//@font-face {
-//    font-family: 'NeuzeitGro-Reg';
-//    src: url('../fonts/30E5AC_1_0.eot');
-//    src: url('../fonts/30E5AC_1_0.eot?#iefix') format('embedded-opentype'), url('../fonts/30E5AC_1_0.woff2') format('woff2'), url('../fonts/30E5AC_1_0.woff') format('woff'), url('../fonts/30E5AC_1_0.ttf') format('truetype');
-//}
+@font-face {
+    font-family: 'NeuzeitGro-Bol';
+    src: url('fonts/30E5AC_0_0.eot');
+    src: url('fonts/30E5AC_0_0.eot?#iefix') format('embedded-opentype'), url('fonts/30E5AC_0_0.woff2') format('woff2'), url('fonts/30E5AC_0_0.woff') format('woff'), url('fonts/30E5AC_0_0.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'NeuzeitGro-Reg';
+    src: url('fonts/30E5AC_1_0.eot');
+    src: url('fonts/30E5AC_1_0.eot?#iefix') format('embedded-opentype'), url('fonts/30E5AC_1_0.woff2') format('woff2'), url('fonts/30E5AC_1_0.woff') format('woff'), url('fonts/30E5AC_1_0.ttf') format('truetype');
+}
 
 /* general */
 * {
@@ -132,7 +132,7 @@ nav .container, .navbar-brand {
         line-height: 55px;
         padding-right: 20px;
         div {
-            background: url('../img/mobile-menu.png') no-repeat center;
+            background: url('img/mobile-menu.png') no-repeat center;
             background-size: contain;
             width: 30px;
             height: 100%;
@@ -250,7 +250,7 @@ nav .container, .navbar-brand {
     outline: none;
     margin-left: 20px !important;
     transition: 0.5s ease;
-    background: url('../img/logo.png') no-repeat center center;
+    background: url('img/logo.png') no-repeat center center;
     background-size: contain;
     width: 232px;
     height: 100%;
@@ -385,7 +385,7 @@ nav .container, .navbar-brand {
     display: block;
     width: 100%;
     height: 100vh;
-    background: transparent url('../img/carousel.jpg') center center no-repeat;
+    background: transparent url('img/carousel.jpg') center center no-repeat;
     background-size: cover;
 }
 
@@ -465,14 +465,14 @@ nav .container, .navbar-brand {
     top: 50%;
     margin-top: -22px;
     left: 20px;
-    background: transparent url(../img/black-prev.png) center center no-repeat;
+    background: transparent url(img/black-prev.png) center center no-repeat;
 }
 
 #agenda-right {
     top: 50%;
     margin-top: -22px;
     right: 20px;
-    background: transparent url(../img/black-next.png) center center no-repeat;
+    background: transparent url(img/black-next.png) center center no-repeat;
 }
 
 .agenda-carousel-item {
@@ -665,25 +665,25 @@ h3 {
 }
 
 .item-1 {
-    background: transparent url(../img/main-item-1.png) top center no-repeat;
+    background: transparent url(img/main-item-1.png) top center no-repeat;
     padding-top: 200px !important;
     text-align: center;
 }
 
 .item-2 {
-    background: transparent url(../img/main-item-2.png) top center no-repeat;
+    background: transparent url(img/main-item-2.png) top center no-repeat;
     padding-top: 200px !important;
     text-align: center;
 }
 
 .item-3 {
-    background: transparent url(../img/main-item-3.png) top center no-repeat;
+    background: transparent url(img/main-item-3.png) top center no-repeat;
     padding-top: 200px !important;
     text-align: center;
 }
 
 .item-4 {
-    background: transparent url(../img/main-item-4.png) top center no-repeat;
+    background: transparent url(img/main-item-4.png) top center no-repeat;
     padding-top: 200px !important;
     text-align: center;
 }
@@ -705,10 +705,10 @@ h3 {
 
 .news-confitura-left {
     position: relative;
-    background: transparent url(../img/pink-woman-pc.jpg) center center no-repeat;
+    background: transparent url(img/pink-woman-pc.jpg) center center no-repeat;
     background-size: cover;
-    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../img/pink-woman-pc.png', sizingMethod='scale');
-    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../img/pink-woman-pc.png',sizingMethod='scale')";
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img/pink-woman-pc.png', sizingMethod='scale');
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img/pink-woman-pc.png',sizingMethod='scale')";
     padding: 60px !important;
 
 }
@@ -799,7 +799,7 @@ h3 {
     width: 306px;
     height: 100px;
     padding-bottom: 90px;
-    background: url("../img/logo-black.png") no-repeat;
+    background: url("img/logo-black.png") no-repeat;
     background-size: contain;
     @media all and (max-width: 768px) {
         margin: auto;
@@ -859,7 +859,7 @@ a.social-link:link, a.social-link:active, a.social-link:visited, a.social-link:h
 }
 
 div#patronat {
-    background: url('../img/patronat.png') no-repeat center;
+    background: url('img/patronat.png') no-repeat center;
     background-size: contain;
     width: 70%;
     height: 70%;

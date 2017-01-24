@@ -1,10 +1,10 @@
 import {Component} from "@angular/core";
-import "./app.component.less";
-import "./page.component.less";
+import "./app.component.scss";
+import "./page.component.scss";
 
 @Component({
     selector: 'cf-application',
-    templateUrl: './app.component.html'
+    templateUrl: './app.component.html',
 })
 export class AppComponent{
 

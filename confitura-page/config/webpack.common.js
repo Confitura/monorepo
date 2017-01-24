@@ -36,17 +36,19 @@ module.exports = {
                 }
             },
             {
+                test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                use: {
+                    loader: 'file-loader'
+
+                }
+            },
+            {
                 test: /\.css$/,
                 exclude: helpers.root('src', 'app'),
                 loader: ExtractTextPlugin.extract({
                     fallbackLoader: "style-loader",
                     loader: "css-loader"
                 })
-            },
-            {
-                test: /\.css$/,
-                include: helpers.root('src', 'app'),
-                use: 'raw-loader'
             },
             {
                 test: /\.less$/,
@@ -61,8 +63,14 @@ module.exports = {
                 ]
             },
             {
-                test: /\.png$/,
-                use: "url-loader"
+                test: /\.scss$/,
+                use: [
+                    "style-loader",
+                    ExtractTextPlugin.extract({
+                        fallbackLoader: "style-loader",
+                        loader: "css-loader"
+                    }),
+                    "sass-loader"]
             }
         ]
     },

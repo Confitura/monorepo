@@ -56,6 +56,9 @@
     "less": "^2.7.2",
     "less-loader": "^2.2.3",
     "lite-server": "^2.2.2",
+    "node-sass": "^4.3.0",
+    "raw-loader": "^0.5.1",
+    "sass-loader": "^4.1.1",
     "typescript": "^2.1.4",
     "typings": "^2.1.0",
     "url-loader": "^0.5.7"
