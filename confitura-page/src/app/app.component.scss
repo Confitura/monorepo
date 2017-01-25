@@ -163,10 +163,10 @@ nav .container, .navbar-brand {
 }
 
 @media screen and (min-width: 1280px) {
-    #confitura .navbar-default .navbar-nav > li > a,
-    #confitura .navbar-default .navbar-nav > li > a:active,
-    #confitura .navbar-default .navbar-nav > li > a:hover,
-    #confitura .navbar-default .navbar-nav > li > a:visited {
+    .navbar-default .navbar-nav > li > a,
+    .navbar-default .navbar-nav > li > a:active,
+    .navbar-default .navbar-nav > li > a:hover,
+    .navbar-default .navbar-nav > li > a:visited {
         color: #000000;
         font-weight: bold;
         text-decoration: none;

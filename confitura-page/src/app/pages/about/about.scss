@@ -1,0 +1,68 @@
+#about {
+  .bg-about-header {
+    position: relative;
+    background: transparent url('../../img/header-about.jpg') center center no-repeat;
+    background-size: cover;
+    h2 {
+      color: #ffffff;
+    }
+  }
+  .about-excerpt {
+    padding: 50px 0 100px 0;
+    color: #000000;
+    font-family: 'NeuzeitGro-Reg', Verdana, Tahoma, sans-serif;
+    font-size: 2.2rem;
+    //line-height: 30px;
+  }
+  .img-speaker img {
+    min-width: 100%;
+    min-height: 100%;
+  }
+  .organizers {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    @media all and (max-width: 767px) {
+      flex-direction: column;
+      align-items: center;
+    }
+    .organizer {
+      width: 375px;
+      height: 375px;
+      @media all and (max-width: 767px) {
+        width: 300px;
+        height: 300px;
+      }
+
+      overflow: hidden;
+      cursor: pointer;
+      span.name-speaker {
+        display: block;
+        font-size: 24px;
+        line-height: 30px;
+        font-family: 'NeuzeitGro-Reg', Verdana, Tahoma, sans-serif; /* NeuzeitGro-Bol */
+        color: #ffffff;
+        position: absolute;
+        bottom: 25px;
+        left: 25px;
+        text-align: left !important;
+        padding: 5px;
+        background-color: rgba(0, 0, 0, 0.4);
+        a:link,
+        a:active,
+        a:visited,
+        a:hover {
+          font-family: 'NeuzeitGro-Reg', Verdana, Tahoma, sans-serif; /* NeuzeitGro-Bol */
+          color: #ffffff;
+        }
+        a:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+}
+@import "person";
+
