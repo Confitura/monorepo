@@ -3,7 +3,7 @@ import {OrganizerService} from "./organizer.service";
 import {Observable} from "rxjs";
 import {Person} from "./person.model";
 import "./about.scss";
-import {PersonModalService} from "../../components/person-modal/person-modal.service";
+import {PersonModalService} from "../../persons/person-modal/person-modal.service";
 @Component({
     templateUrl: "./about.component.html"
 })
