@@ -6,14 +6,11 @@
         <div class="row-fluid">
             <div class="col-lg-12">
                 <div class="bg-white row-1140 text-center about-excerpt">
-                    <!--<page name="about"></page>-->
+                    <jl-page title="about"></jl-page>
                 </div>
             </div>
         </div>
     </section>
-    <!--<div id="map"></div>-->
-    <!--<ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>-->
-    <!--<ui-gmap-google-map></ui-gmap-google-map>-->
     <div ng-controller="OrganizersController as organizers" id="speakers-confitura">
         <section class="beige">
             <div class="row-fluid beige">
@@ -23,19 +20,13 @@
                 <div class="col-lg-12 beige pb150">
                     <div class="row-1140">
                         <div class="beige organizers">
-                            <div class="slide margin-auto organizer" *ngFor="let item of organizers | async">
-                                <span class="img-speaker"><img [src]="item.photo" onError="this.onerror=null;this.src='/img/logo-square.png';"></span>
-                                <span class="name-speaker">
-                                    <a href="">{{item.firstName}}<br>{{item.lastName}}</a>
-                                </span>
-                            </div>
+                            <jl-person [model]="item" *ngFor="let item of organizers | async" class="organizer"></jl-person>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
         <section>
-
             <div class="row-fluid">
                 <div class="col-lg-12 speakers-confitura-header"><h2>volunteers</h2></div>
             </div>
@@ -43,17 +34,12 @@
                 <div class="col-lg-12  pb150">
                     <div class="row-1140">
                         <div class=" organizers">
-                            <div class="slide margin-auto organizer" *ngFor="let item of volunteers | async">
-                                <span class="img-speaker"><img [src]="item.photo" onError="this.onerror=null;this.src='/img/logo-square.png';"></span>
-                                <span class="name-speaker">
-                                    <a href="">{{item.firstName}}<br>{{item.lastName}}</a>
-                                </span>
-                            </div>
+                            <jl-person [model]="item" *ngFor="let item of volunteers | async" class="organizer"></jl-person>
                         </div>
                     </div>
                 </div>
             </div>
-
         </section>
     </div>
 </div>
+<jl-person-modal></jl-person-modal>

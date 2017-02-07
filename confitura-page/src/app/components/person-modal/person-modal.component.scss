@@ -1,0 +1,32 @@
+.person-modal {
+
+  .person-modal-container {
+    display: flex;
+
+    @media all and (max-width: 768px) {
+      flex-direction: column;
+
+      .modal-dialog {
+        margin: 0;
+      }
+    }
+    .modal-content {
+      border: none;
+    }
+    .person-photo {
+      flex-shrink: 0;
+      .img-speaker img{
+        min-width: 300px;
+        min-height: 300px;
+      }
+    }
+    .person-info {
+      padding: 20px;
+      .person-name h3 {
+        &:before, &:after {
+          content: " # ";
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,44 @@
+<div class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document" *ngIf="person">
+        <div class="modal-content">
+            <div class="modal-body beige person-modal">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+                <div class="person-modal-container">
+                    <div class="person-photo">
+                        <div class="img-speaker">
+                            <img class="img-responsive margin-auto" [src]="person.photo"/>
+                        </div>
+                        <section class="social-speaker">
+                            <a href="http://www.twitter.com/{{person.twitter}}" title="twitter" target="_blank" *ngIf="person.twitter">
+                                <i class="fa fa-twitter prelegent-social" aria-hidden="true"></i>
+                            </a>
+                            <a href="//{{person.url}}" title="direct" target="_blank" *ngIf="person.url">
+                                <i class="fa fa-arrow-up prelegent-social" aria-hidden="true"></i>
+                            </a>
+                        </section>
+                    </div>
+                    <div class="person-info">
+                        <section>
+                            <div class="ta-leftperson-name person-name"><h3>{{person.fullName}}</h3></div>
+                            <div class="mcci-content" [innerHTML]="person.bio"></div>
+                        </section>
+                        <section *ngIf="person.presentations">
+                            <a>
+                                <h3 class="presentation-title">
+                                    title
+                                </h3>
+                            </a>
+                        </section>
+                    </div>
+                </div>
+
+                <aside class="navigation">
+                    <span class="next-arrow"></span>
+                </aside>
+            </div>
+        </div>
+    </div>
+</div>

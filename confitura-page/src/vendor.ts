@@ -12,6 +12,7 @@ import 'jquery';
 //selectize
 // import 'selectize';
 // import 'selectize/dist/css/selectize.bootstrap3.css'
+import "normalize.css/normalize.css"
 //bootstrap
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';

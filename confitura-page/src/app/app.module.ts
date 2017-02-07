@@ -5,6 +5,7 @@ import {LayoutModule} from "./layout/layout.module";
 import {BrowserModule} from "@angular/platform-browser";
 import {PagesModule} from "./pages/pages.module";
 import {HttpModule} from "@angular/http";
+import {PersonModalComponent} from "./components/person-modal/person-modal.component";
 @NgModule({
     imports: [BrowserModule, LayoutModule, routing, PagesModule, HttpModule],
     declarations: [AppComponent],
