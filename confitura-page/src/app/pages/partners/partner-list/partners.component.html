@@ -1,0 +1,22 @@
+<section id="partners-confitura">
+    <div class="row-fluid">
+        <div class="col-lg-12 partners-header"><h2>partners</h2></div>
+    </div>
+    <div class="row-fluid" *ngIf="partners">
+        <div class="col-lg-12 partners-type {{type}}-type" *ngFor="let type of types">
+            <div *ngIf="partners[type]" class="pt100 pb50">
+                <div class="bg-white row-1140 text-center partner-header">{{type}}</div>
+                <div class="bg-white row-1140 text-center">
+                    <div class="text-center">
+                        <div class="vcenter text-center partners-logo-container">
+                            <a routerLink="{{partner.name}}" class="a-abs" *ngFor="let partner of partners[type]">
+                                <img class="img-responsive" [src]="partner.logo"/>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
