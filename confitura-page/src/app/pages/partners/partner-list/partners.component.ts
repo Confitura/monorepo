@@ -6,8 +6,8 @@ import "./partners.scss";
     templateUrl: "./partners.component.html"
 })
 export class PartnersComponent implements OnInit {
-    types = ["dupa", "platinum", "gold", "silver", "bronze", "media", "technical"];
-    private partners: Map<String, Partner[]>;
+    types = ["platinum", "gold", "silver", "bronze", "media", "technical"];
+    private partners: Partner[];
 
 
     constructor(private service: PartnerService) {
@@ -15,9 +15,10 @@ export class PartnersComponent implements OnInit {
 
     ngOnInit(): void {
         this.service.getAll()
-            .subscribe((partners) => this.partners = partners)
-        ;
+            .subscribe(partners => this.partners = partners);
+    }
 
-
+    partnersFor(type: string) {
+        return this.partners.filter(partner => partner.type == type);
     }
 }

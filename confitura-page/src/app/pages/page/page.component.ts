@@ -3,7 +3,7 @@ import {PageService} from "./page.service";
 import {Page} from "./page.model";
 @Component({
     selector: 'jl-page',
-    template: '<div *ngIf="page" [innerHTML]="page.text"></div>'
+    template: '<div *ngIf="page" [innerHTML]="page.content"></div>'
 })
 export class PageComponent implements OnInit {
     @Input()

@@ -1,7 +1,8 @@
 export class News{
     title:string;
     author:string;
-    date:any;
-    shortText:string;
+    creationDate:any;
+    shortDescription:string;
+    description:string;
     hasMore:boolean;
 }

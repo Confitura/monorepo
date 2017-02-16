@@ -6,14 +6,10 @@
     <div class="news-container col-lg-12" *ngIf="list != null">
         <div class="news-confitura-left">
             <jl-news [model]="list[0]" class="font-white"></jl-news>
-            <!--<news-item class="font-white" item="news.list[0]"></news-item>-->
         </div>
         <div class="news-confitura-right" ng-if="news.list.length > 1">
             <jl-news [model]="list[1]" class="semi-square black font-white"></jl-news>
             <jl-news [model]="list[2]" class="semi-square beige"></jl-news>
-
-            <!--<news-item item="news.list[1]" class="semi-square black font-white"></news-item>-->
-            <!--<news-item ng-if="news.list.length > 2" item="news.list[2]" class="semi-square beige"></news-item>-->
         </div>
     </div>
 

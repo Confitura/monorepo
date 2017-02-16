@@ -1,8 +1,8 @@
 <div class="news-title  ease">
     {{model.title}}
 </div>
-<div class="news-excerpt ease" [innerHTML]="model.shortText">
+<div class="news-excerpt ease" [innerHTML]="model.shortDescription">
 </div>
 <div class="news-date ease">
-    {{model.date.month}} {{model.date.day}} {{model.date.year}}
+    {{model.creationDate | date:"MMM dd yyyy, HH:mm"}}
 </div>
