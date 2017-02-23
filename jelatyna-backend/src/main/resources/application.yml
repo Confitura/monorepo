@@ -3,18 +3,19 @@ server:
   port: 9090
 
 twitter:
-  api-key: 7ouqIqvrgXivnf1GCPT2g53zB
-  api-secret: yj9eMGTKWqTkvVfvOSw8IN46C32xbglbotabHhJ8cdn8ca3g4J
-  callback: http://localhost:8080/
+  api-key:
+  api-secret:
+  callback: http://localhost:8080/login
 spring:
   datasource:
-    url: jdbc:mysql://localhost:33061/confitura_2016?useLegacyDatetimeCode=false&serverTimezone=Europe/Warsaw
+    url: jdbc:mysql://${docker-machine.ip}:33061/confitura?useLegacyDatetimeCode=false&serverTimezone=Europe/Warsaw
     username: confitura
     password: confitura
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     properties:
       hibernate:
         show_sql: true
         format_sql: true
+docker-machine.ip: 192.168.99.100

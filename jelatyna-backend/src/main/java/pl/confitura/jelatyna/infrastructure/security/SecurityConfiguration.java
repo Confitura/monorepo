@@ -1,0 +1,40 @@
+package pl.confitura.jelatyna.infrastructure.security;
+
+import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+@Configuration
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+    @Autowired
+    private TokenService tokenService;
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**");
+    }
+
+    @Override
+    public void configure(HttpSecurity http) throws Exception {
+        http
+                .sessionManagement().sessionCreationPolicy(STATELESS)
+                .and()
+                .authorizeRequests()
+                .antMatchers("/login/twitter").permitAll()
+                .antMatchers("/news/**").
+                authenticated()
+                .and()
+                .addFilterBefore(filter(tokenService), UsernamePasswordAuthenticationFilter.class);
+
+    }
+
+    public JwtAuthenticationFilter filter(TokenService tokenService) {
+        return new JwtAuthenticationFilter(tokenService);
+    }
+}
