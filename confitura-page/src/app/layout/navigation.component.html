@@ -13,11 +13,8 @@
             <ul class="nav navbar-nav navbar-right">
                 <li><a routerLink="/about" title="about us">about us</a></li>
                 <li><a routerLink="/partners" title="partners">partners</a></li>
-                <li><a ui-sref="speakers" title="speakers">speakers</a></li>
-                <li><a ui-sref="presentations" title="presentations">presentations</a></li>
-                <li><a ui-sref="agenda" title="agenda">agenda</a></li>
-                <li><a ui-sref="faq" title="faq">FAQ</a></li>
-                <li><a href="http://c4p.confitura.pl" title="call 4 papers">call 4 papers</a></li>
+                <li><a routerLink="/login" title="login" *ngIf="!loggedIn">login</a></li>
+                <li><a (click)="logout()" title="logout" *ngIf="loggedIn">log out</a></li>
                 <li><a class="pink" ui-sref="agenda" title="agenda">agenda</a></li>
             </ul>
         </div>

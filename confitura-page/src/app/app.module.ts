@@ -4,8 +4,9 @@ import {NgModule} from "@angular/core";
 import {LayoutModule} from "./layout/layout.module";
 import {PagesModule} from "./pages/pages.module";
 import {SharedModule} from "./shared/shared.module";
+import {BrowserModule} from "@angular/platform-browser";
 @NgModule({
-    imports: [LayoutModule, routing, PagesModule, SharedModule],
+    imports: [LayoutModule, routing, PagesModule, SharedModule, BrowserModule],
     declarations: [AppComponent],
     bootstrap: [AppComponent]
 })

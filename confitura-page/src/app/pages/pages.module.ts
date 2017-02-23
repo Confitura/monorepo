@@ -13,9 +13,10 @@ import {PartnersComponent} from "./partners/partner-list/partners.component";
 import {PartnerService} from "./partners/shared/partner.service";
 import {PartnerComponent} from "./partners/partner/partner.component";
 import {RouterModule} from "@angular/router";
+import {LoginComponent} from "./login/login.component";
 @NgModule({
     imports: [SharedModule, PersonModule, RouterModule],
-    declarations: [HomeComponent, NewsBannerComponent, NewsComponent, AboutComponent, PageComponent, PartnersComponent, PartnerComponent],
+    declarations: [HomeComponent, NewsBannerComponent, NewsComponent, AboutComponent, PageComponent, PartnersComponent, PartnerComponent, LoginComponent],
     providers: [NewsService, OrganizerService, PageService, PartnerService],
     exports: [HomeComponent, AboutComponent]
 })
