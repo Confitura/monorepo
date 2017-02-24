@@ -16,6 +16,7 @@ public class User {
     private String name;
     private String email;
     private String username;
+    private String bio;
     private boolean isAdmin;
     private boolean isVolunteer;
 }

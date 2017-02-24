@@ -10,16 +10,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import pl.confitura.jelatyna.login.twitter.TwitterService;
-import pl.confitura.jelatyna.infrastructure.security.TokenHolder;
-import pl.confitura.jelatyna.infrastructure.security.TokenService;
-import pl.confitura.jelatyna.user.User;
-import pl.confitura.jelatyna.user.UserRepository;
 import com.github.scribejava.core.model.OAuth1AccessToken;
 import com.github.scribejava.core.model.OAuth1RequestToken;
+import pl.confitura.jelatyna.infrastructure.security.TokenHolder;
+import pl.confitura.jelatyna.infrastructure.security.TokenService;
+import pl.confitura.jelatyna.login.twitter.TwitterService;
+import pl.confitura.jelatyna.user.User;
+import pl.confitura.jelatyna.user.UserRepository;
 
 @RestController
-@RequestMapping("/login/")
+@RequestMapping("/login")
 @CrossOrigin()
 public class LoginController {
     @Autowired
@@ -31,19 +31,19 @@ public class LoginController {
     @Autowired
     private TokenService tokenService;
 
-    @GetMapping("twitter")
-    public ResponseEntity<Object> login() {
+    @GetMapping("/twitter")
+    public ResponseEntity<Object> redirectToTwitterLogin() {
         OAuth1RequestToken token = twitter.getRequestToken();
         holder.setSecret(token.getToken(), token.getTokenSecret());
-
         return ResponseEntity
                 .status(PERMANENT_REDIRECT)
                 .header("Location", "https://api.twitter.com/oauth/authenticate?oauth_token=" + token.getToken())
                 .build();
     }
 
-    @GetMapping("twitter/callback")
-    public ResponseEntity<String> hello(@RequestParam("oauth_token") String token, @RequestParam("oauth_verifier") String verifier) {
+    @GetMapping("/twitter/callback")
+    public ResponseEntity<String> doLoginWithTwitter(@RequestParam("oauth_token") String token,
+            @RequestParam("oauth_verifier") String verifier) {
         OAuth1AccessToken accessToken = twitter.getAccessToken(new OAuth1RequestToken(token, holder.getSecretFor(token)), verifier);
         OAuthUser userDto = twitter.getUser(accessToken);
         User user = mapToSystemUser(userDto);
@@ -52,16 +52,15 @@ public class LoginController {
     }
 
     private User mapToSystemUser(OAuthUser userDto) {
-        String id = "twitter_" + userDto.getId();
+        String id = "twitter/" + userDto.getId();
         if (!userRepository.exists(id)) {
             userRepository.save(new User()
                     .setId(id)
+                    .setOrigin("twitter")
                     .setUsername(userDto.getUserName())
                     .setName(userDto.getName()));
         }
         return userRepository.getOne(id);
     }
-
-
 
 }
