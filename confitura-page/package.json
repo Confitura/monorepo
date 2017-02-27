@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "webpack-dev-server --inline --progress --port 8080",
-    "lite": "lite-server",
+    "liteweb": "lite-server",
     "postinstall": "typings install",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
@@ -26,7 +26,7 @@
     "bootstrap": "^3.3.7",
     "core-js": "^2.4.1",
     "css-loader": "^0.26.1",
-    "extract-text-webpack-plugin": "beta",
+    "extract-text-webpack-plugin": "2.0.0",
     "faker": "^4.1.0",
     "file-loader": "^0.10.0",
     "fine-uploader": "^5.14.1",

@@ -1,6 +1,6 @@
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 var helpers = require('./helpers');
 
 module.exports = {
@@ -45,32 +45,14 @@ module.exports = {
             {
                 test: /\.css$/,
                 exclude: helpers.root('src', 'app'),
-                loader: ExtractTextPlugin.extract({
-                    fallbackLoader: "style-loader",
-                    loader: "css-loader"
+                use: ExtractTextPlugin.extract({
+                    fallback: "style-loader",
+                    use: "css-loader"
                 })
             },
             {
-                test: /\.less$/,
-                include: helpers.root('src', 'app'),
-                use: [
-                    'style-loader',
-                    ExtractTextPlugin.extract({
-                        fallbackLoader: "style-loader",
-                        loader: "css-loader"
-                    }),
-                    'less-loader'
-                ]
-            },
-            {
                 test: /\.scss$/,
-                use: [
-                    "style-loader",
-                    ExtractTextPlugin.extract({
-                        fallbackLoader: "style-loader",
-                        loader: "css-loader"
-                    }),
-                    "sass-loader"]
+                use: ExtractTextPlugin.extract([ "css-loader", "sass-loader"])
             }
         ]
     },
@@ -82,6 +64,7 @@ module.exports = {
 
         new HtmlWebpackPlugin({
             template: 'src/index.html'
-        })
+        }),
+        new ExtractTextPlugin("styles.css"),
     ]
 };
