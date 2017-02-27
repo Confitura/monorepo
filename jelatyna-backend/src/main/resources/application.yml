@@ -3,8 +3,8 @@ server:
   port: 9090
 
 twitter:
-  api-key:
-  api-secret:
+  api-key: KEY
+  api-secret: SECRET
   callback: http://localhost:8080/login
 spring:
   datasource:

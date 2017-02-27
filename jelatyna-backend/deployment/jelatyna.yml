@@ -1,0 +1,13 @@
+---
+- hosts: confitura.pl
+  become: yes
+  become_user: jelatyna
+  tasks:
+    - name: checkout repository
+      git:
+        repo: https://github.com/Confitura/jelatyna-backend
+        dest: /home/jelatyna/2017/code
+    - name: build package
+      command: "mvn clean install"
+      args:
+        chdir: /home/jelatyna/2017/code
