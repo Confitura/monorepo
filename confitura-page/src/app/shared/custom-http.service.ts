@@ -11,14 +11,30 @@ export class CustomHttp {
     }
 
     get(url: string, options: RequestOptionsArgs = {}): Observable<Response> {
+        this.addAuthorizationHeader(options);
+        return this.http.get(this.toFullUrl(url), options);
+    }
+
+
+
+    post(url: string, body: any, options: RequestOptionsArgs = {}): Observable<Response> {
+        this.addAuthorizationHeader(options);
+        return this.http.post(this.toFullUrl(url), body, options);
+    }
+
+    private addAuthorizationHeader(options: RequestOptionsArgs) {
         if (this.currentUser.isAvailable()) {
             if (options.headers == null) {
                 options.headers = new Headers();
             }
             options.headers.set("Authorization", `Bearer ${this.currentUser.getToken()}`);
         }
-        console.log(options.headers);
-        return this.http.get(`${this.config.apiServer}${url}`, options);
     }
+
+    private toFullUrl(url: string) {
+        return `${this.config.apiServer}${url}`;
+    }
+
+
 
 }

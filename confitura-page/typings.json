@@ -7,7 +7,8 @@
     "bootstrap": "registry:dt/bootstrap",
     "select2": "registry:dt/select2#4.0.1+20160812083516",
     "selectize": "registry:dt/selectize#0.12.13+20160930120956",
-    "faker": "registry:dt/faker"
+    "faker": "registry:dt/faker",
+    "js-base64": "registry:dt/js-base64"
 
   },
   "dependencies": {

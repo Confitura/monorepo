@@ -3,15 +3,15 @@ import {URLSearchParams, Response} from "@angular/http";
 import {CustomHttp} from "../shared/custom-http.service";
 import {CurrentUser} from "./current-user.service";
 import {Observable, Observer} from "rxjs";
-import {User} from "../pages/home/user.model";
+import {JwtUser} from "../pages/home/jwt-user.model";
 @Injectable()
 export class LoginService  {
 
     constructor(private http: CustomHttp, private currentUser: CurrentUser) {
     }
 
-    login(token: string, verifier: string): Observable<User> {
-        return Observable.create((observer: Observer<User>) => {
+    login(token: string, verifier: string): Observable<JwtUser> {
+        return Observable.create((observer: Observer<JwtUser>) => {
             let searchParams = new URLSearchParams();
             searchParams.set("oauth_token", token);
             searchParams.set("oauth_verifier", verifier);
