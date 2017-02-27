@@ -52,7 +52,7 @@ public class LoginController {
     }
 
     private User mapToSystemUser(OAuthUser userDto) {
-        String id = "twitter/" + userDto.getId();
+        String id = "twitter_" + userDto.getId();
         if (!userRepository.exists(id)) {
             userRepository.save(new User()
                     .setId(id)

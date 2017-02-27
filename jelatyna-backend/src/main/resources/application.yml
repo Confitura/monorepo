@@ -8,7 +8,7 @@ twitter:
   callback: http://localhost:8080/login
 spring:
   datasource:
-    url: jdbc:mysql://${docker-machine.ip}:33061/confitura?useLegacyDatetimeCode=false&serverTimezone=Europe/Warsaw
+    url: jdbc:mysql://${docker-machine.ip}:33061/confitura?useLegacyDatetimeCode=false&serverTimezone=Europe/Warsaw&useUnicode=yes&characterEncoding=UTF-8
     username: confitura
     password: confitura
   jpa:
