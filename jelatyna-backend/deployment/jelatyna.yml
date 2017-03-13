@@ -2,12 +2,37 @@
 - hosts: confitura.pl
   become: yes
   become_user: jelatyna
+  vars:
+    - version: 0.0.1-SNAPSHOT
+    - dest: /home/jelatyna/2017
+    - code: "{{dest}}/code"
+    - app: "{{dest}}/app"
+
   tasks:
     - name: checkout repository
       git:
         repo: https://github.com/Confitura/jelatyna-backend
-        dest: /home/jelatyna/2017/code
+        dest: "{{code}}"
     - name: build package
-      command: "mvn clean install"
+      command: "mvn clean install -DskipTests"
       args:
-        chdir: /home/jelatyna/2017/code
+        chdir: "{{code}}"
+    - name: create app folder
+      file:
+        path: "{{app}}"
+        state: directory
+    - name: copy new jar file
+      copy:
+        src: "{{code}}/target/jelatyna-{{version}}.jar"
+        dest: "{{app}}/jelatyna.jar"
+        remote_src:  true
+    - name: copy new configuration
+      template:
+        src: templates/application.yml
+        dest: "{{app}}/application.yml"
+    - name: start app
+      shell: nohup java -jar jelatyna.jar &
+      args:
+        chdir: "{{app}}"
+      tags:
+        - restart
