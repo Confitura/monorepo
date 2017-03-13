@@ -1,4 +1,4 @@
-port: 39090
+port: 19052
 db_host: localhost
-db_port: 3061
+db_port: 3306
 db_name: confitura_2016

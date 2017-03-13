@@ -9,27 +9,51 @@
     - app: "{{dest}}/app"
 
   tasks:
+
     - name: checkout repository
       git:
         repo: https://github.com/Confitura/jelatyna-backend
         dest: "{{code}}"
+
     - name: build package
       command: "mvn clean install -DskipTests"
       args:
         chdir: "{{code}}"
+
     - name: create app folder
       file:
         path: "{{app}}"
         state: directory
+    - block:
+      - name: find PID of running instance
+        shell: "cat {{app}}/application.pid"
+        register: pid
+        ignore_errors: true
+
+      - name: stop running instance {{pid.stdout}}
+        command: "kill {{pid.stdout}}"
+        when: pid|succeeded
+
+      - name: wait for process to stop
+        wait_for:
+          path: "/proc/{{pid.stdout}}/status"
+          state: absent
+        when: pid|succeeded
+      tags:
+        - restart
+        - stop
+
     - name: copy new jar file
       copy:
         src: "{{code}}/target/jelatyna-{{version}}.jar"
         dest: "{{app}}/jelatyna.jar"
         remote_src:  true
+
     - name: copy new configuration
       template:
         src: templates/application.yml
         dest: "{{app}}/application.yml"
+
     - name: start app
       shell: nohup java -jar jelatyna.jar &
       args:
