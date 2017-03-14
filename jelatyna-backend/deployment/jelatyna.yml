@@ -24,7 +24,9 @@
       file:
         path: "{{app}}"
         state: directory
+
     - block:
+
       - name: find PID of running instance
         shell: "cat {{app}}/application.pid"
         register: pid
@@ -39,6 +41,7 @@
           path: "/proc/{{pid.stdout}}/status"
           state: absent
         when: pid|succeeded
+
       tags:
         - restart
         - stop

@@ -18,4 +18,4 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
-docker-machine.ip: 192.168.99.100
+docker-machine.ip: localhost
