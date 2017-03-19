@@ -1,0 +1,26 @@
+---
+- hosts: confitura.pl
+  become: yes
+  become_user: root
+  vars:
+    - folder: /var/www/2017.confitura.pl/
+    - archive: /tmp/confitura_page.tar.gz
+
+  tasks:
+    - name: archive distrubution
+      local_action: "command tar -czvf {{archive}} dist"
+      args:
+        chdir: ../
+      become: no
+
+    - name: create destination directory
+      file:
+        path: "{{folder}}"
+        state: directory
+
+    - name: copy file to the server
+      unarchive:
+        src: "{{archive}}"
+        dest: "{{folder}}"
+
+

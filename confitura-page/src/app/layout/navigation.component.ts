@@ -1,6 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {CurrentUser} from "../security/current-user.service";
 import {LoginService} from "../security/login.service";
+import {User} from "../pages/profile/user.model";
 @Component({
     selector: "cf-navigation",
     templateUrl: "./navigation.component.html"
@@ -13,7 +14,7 @@ export class NavigationComponent implements OnInit {
 
     ngOnInit(): void {
         this.loggedIn = this.currentUser.isAvailable();
-        this.currentUser.onLogin.subscribe(user => this.loggedIn = this.currentUser.isAvailable());
+        this.currentUser.onLogin.subscribe((user:User) => this.loggedIn = this.currentUser.isAvailable());
     }
 
     logout(){

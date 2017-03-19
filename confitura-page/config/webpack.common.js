@@ -1,6 +1,7 @@
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+var CleanWebpackPlugin = require('clean-webpack-plugin');
 var helpers = require('./helpers');
 
 module.exports = {
@@ -29,7 +30,7 @@ module.exports = {
                 loader: 'html-loader'
             },
             {
-                test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
+                test: /\.(woff|woff2|ttf|eot|ico)$/,
                 use: {
                     loader: 'file-loader',
                     options: {name: 'assets/[name].[hash].[ext]'}
@@ -65,6 +66,9 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: 'src/index.html'
         }),
-        new ExtractTextPlugin("styles.css"),
+        new ExtractTextPlugin("[name].[contenthash].css"),
+        new CleanWebpackPlugin(['dist'], {
+            root: helpers.root()
+        })
     ]
 };

@@ -13,7 +13,7 @@ export class PersonModalComponent implements OnInit {
     }
 
     constructor(service: PersonModalService) {
-        service.changed.subscribe((person) => {
+        service.changed.subscribe((person:Person) => {
             this.person = person;
             this.openModal();
 

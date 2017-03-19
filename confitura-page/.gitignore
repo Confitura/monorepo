@@ -34,3 +34,4 @@ typings/
 /node_modules/
 /typings/
 /.idea/
+/deployment/confitura-page.retry
