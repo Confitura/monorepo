@@ -10,8 +10,8 @@ module.exports = webpackMerge(commonConfig, {
 
     output: {
         path: helpers.root('dist'),
-        // publicPath: 'http://localhost:8080/',
-        publicPath: 'http://localhost:63342/confitura-page/dist/',
+        publicPath: 'http://localhost:8080/',
+        // publicPath: 'http://localhost:63342/confitura-page/dist/',
         filename: '[name].js',
         chunkFilename: '[id].chunk.js'
     },

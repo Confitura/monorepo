@@ -14,7 +14,7 @@
     float: left;
     position: absolute;
     top: -105px;
-    @media (max-width: $small-screen) {
+    @media (max-width: $size_small) {
       top: -160px;
     }
   }
@@ -58,7 +58,7 @@
   .content {
     background-color: $third;
     padding: 20px;
-    @media (max-width: $small-screen) {
+    @media (max-width: $size_small) {
       padding: 5px;
     }
   }

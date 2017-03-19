@@ -1,0 +1,34 @@
+<!-- /fixed navbar -->
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button class="mobile-menu navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    id="mobile-menu" title="open menu">
+                <div></div>
+            </button>
+            <a class="navbar-brand" routerLink="/">
+                <div class="confitura-logo"></div>
+            </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse navbar-right">
+            <ul class="nav navbar-nav">
+                <li *ngFor="let item of menu">
+                    <a [routerLink]="item.url" [title]="item.label">{{item.label}}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!--&lt;!&ndash; /own mobile navbar &ndash;&gt;-->
+<!--<nav id="mobile-nav" class="mobile-nav">-->
+<!--<a class="mlink wh" ui-sref="about" title="about us">about us</a>-->
+<!--<a class="mlink wh" ui-sref="partners" title="partners">partners</a>-->
+<!--<a class="mlink wh" ui-sref="speakers" title="speakers">speakers</a>-->
+<!--<a class="mlink wh" ui-sref="presentations" title="presentations">presentations</a>-->
+<!--<a class="mlink wh" ui-sref="agenda" title="agenda">agenda</a>-->
+<!--<a class="mlink wh" ui-sref="faq" title="faq">FAQ</a>-->
+
+<!--<a class="mlink wh" href="http://c4p.confitura.pl" title="call 4 papers">call 4 papers</a>-->
+<!--<a class="mlink pk" ui-sref="agenda" title="agenda">agenda</a>-->
+<!--</nav>-->

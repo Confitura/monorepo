@@ -2,7 +2,7 @@
   "name": "confitura-page",
   "version": "1.0.0",
   "scripts": {
-    "start": "webpack-dev-server --inline --progress --port 8080",
+    "start": "webpack-dev-server --env=dev --inline --progress --port 8080",
     "build:dev": "webpack --env=dev --progress --profile --colors",
     "build:prod": "webpack --env=prod --progress --profile --colors",
     "liteweb": "lite-server",
