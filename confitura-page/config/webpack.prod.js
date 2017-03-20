@@ -70,7 +70,11 @@ module.exports = webpackMerge(commonConfig, {
             'API_URL': JSON.stringify("http://2017.confitura.pl/api/"),
             'ENV': JSON.stringify('prod')
         }),
-        new OptimizeCssAssetsPlugin(),
+        new OptimizeCssAssetsPlugin({
+            cssProcessorOptions:{
+                zindex: false
+            }
+        }),
         new ScriptExtHtmlWebpackPlugin({
             async: /app.+/,
             defaultAttribute: 'sync'
