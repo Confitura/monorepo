@@ -254,20 +254,6 @@ h2 {
 
 }
 
-//@media screen and (max-width: 375px) {
-//  .main-confitura-header,
-//  .about-confitura-header,
-//  .news-confitura-header,
-//  .agenda-confitura-header,
-//  .speakers-confitura-header,
-//  .partners-confitura-header {
-//    font-size: 46px;
-//    font-weight: normal;
-//    padding-top: 75px !important;
-//    padding-bottom: 20px !important;
-//
-//  }
-//}
 
 .main-confitura-content-inner,
 .about-confitura-content-inner,
@@ -292,18 +278,6 @@ h3 {
   text-align: center;
 }
 
-//@media screen and (max-width: 375px) {
-//  .mcci-header {
-//    font-size: 40px;
-//    font-weight: bold;
-//    font-family: 'NeuzeitGro-Bol', Verdana, Tahoma, sans-serif;
-//    padding-top: 20px;
-//  }
-//
-//  .mcci-content {
-//    text-align: center !important;
-//  }
-//}
 
 .mcci-content,
 .about-confitura-content-inner div,
@@ -632,4 +606,8 @@ div#patronat {
   display: block;
   max-width: 1080px;
   margin: 0 auto;
+}
+
+p{
+  font-size: 2.2rem;
 }

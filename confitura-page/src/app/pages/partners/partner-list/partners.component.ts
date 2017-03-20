@@ -7,7 +7,7 @@ import "./partners.scss";
 })
 export class PartnersComponent implements OnInit {
     types = ["platinum", "gold", "silver", "bronze", "media", "technical"];
-    private partners: Partner[];
+    partners: Partner[] = [];
 
 
     constructor(private service: PartnerService) {
