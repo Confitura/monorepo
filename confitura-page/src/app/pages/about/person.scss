@@ -1,3 +1,4 @@
+@import "../../sizes";
 #v4p{
   background-color: #FFFFFF;
 }
@@ -144,6 +145,10 @@ div.vote-prev {
   position: relative;
   width: 375px;
   height: 375px;
+  @media all and (max-width: $size_small){
+    width: 300px;
+    height: 300px;
+  }
 }
 
 #speakers-confitura {
