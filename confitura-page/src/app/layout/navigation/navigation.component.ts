@@ -9,7 +9,7 @@ import "./navigation.component.scss";
     templateUrl: "./navigation.component.html"
 })
 export class NavigationComponent implements OnInit {
-    private loggedIn: boolean;
+    // private loggedIn: boolean;
     menu: MenuItem[] = [
         {label: "about us", url: "/about"},
         {label: "partners", url: "/partners"},
@@ -19,12 +19,17 @@ export class NavigationComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.loggedIn = this.currentUser.isAvailable();
-        this.currentUser.onLogin.subscribe((user: User) => this.loggedIn = this.currentUser.isAvailable());
+        // this.loggedIn = this.currentUser.isAvailable();
+        // this.currentUser.onLogin.subscribe((user: User) => this.loggedIn = this.currentUser.isAvailable());
     }
 
     logout() {
-        this.login.logout();
+        // this.login.logout();
+    }
+
+    closeMenu(){
+        $(".navbar-toggle").click();
+        console.log("Test");
     }
 
 

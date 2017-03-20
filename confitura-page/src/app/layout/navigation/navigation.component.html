@@ -13,7 +13,7 @@
         <div id="navbar" class="navbar-collapse collapse navbar-right">
             <ul class="nav navbar-nav">
                 <li *ngFor="let item of menu">
-                    <a [routerLink]="item.url" [title]="item.label">{{item.label}}</a>
+                    <a [routerLink]="item.url" [title]="item.label" (click)="closeMenu()">{{item.label}}</a>
                 </li>
             </ul>
         </div>

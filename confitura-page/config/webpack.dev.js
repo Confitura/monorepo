@@ -28,15 +28,10 @@ module.exports = webpackMerge(commonConfig, {
     },
 
     plugins: [
-        new ExtractTextPlugin({
-            filename: "[name].css",
-            disable: false,
-            allChunks: true
-        }),
         new webpack.DefinePlugin({
             'API_URL': JSON.stringify("http://2017.confitura.pl/api/"),
             'ENV': JSON.stringify('devr')
-        }),
+        })
 
     ],
     devServer: {
