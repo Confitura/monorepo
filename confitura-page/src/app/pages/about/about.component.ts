@@ -25,7 +25,6 @@ export class AboutComponent implements OnInit {
     }
 
     logError(){
-        console.log("duoa");
     }
 
 
