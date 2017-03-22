@@ -11,7 +11,7 @@ module.exports = webpackMerge(commonConfig, {
 
     output: {
         path: helpers.root('dist'),
-        publicPath: 'http://2017.confitura.pl/',
+        publicPath: 'https://2017.confitura.pl/',
         filename: '[name].[hash].js',
         chunkFilename: '[id].chunk.js'
     },
@@ -67,7 +67,7 @@ module.exports = webpackMerge(commonConfig, {
             comments: false
         }),
         new webpack.DefinePlugin({
-            'API_URL': JSON.stringify("http://2017.confitura.pl/api/"),
+            'API_URL': JSON.stringify("https://2017.confitura.pl/api/"),
             'ENV': JSON.stringify('prod')
         }),
         new OptimizeCssAssetsPlugin({
