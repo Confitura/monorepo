@@ -35,6 +35,7 @@
       - name: stop running instance {{pid.stdout}}
         command: "kill {{pid.stdout}}"
         when: pid|succeeded
+        ignore_errors: true
 
       - name: wait for process to stop
         wait_for:

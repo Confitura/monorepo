@@ -12,6 +12,6 @@ public class Organizer extends Person {
     private String filename;
 
     public String getPhoto() {
-        return "http://2017.confitura.pl/files/kapitula/" + getId() + ".jpg";
+        return "https://2017.confitura.pl/files/kapitula/" + getId() + ".jpg";
     }
 }
