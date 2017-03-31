@@ -13,8 +13,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.web.filter.GenericFilterBean;
 
-import pl.confitura.jelatyna.user.User;
-
 public class JwtAuthenticationFilter extends GenericFilterBean {
 
     private TokenService tokenService;
@@ -29,9 +27,9 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         String authorization = request.getHeader("Authorization");
         if (authorization != null) {
-            User user = tokenService.toUser(authorization.replaceFirst("Bearer ", ""));
+            JelatynaPrincipal principal = tokenService.toUser(authorization.replaceFirst("Bearer ", ""));
             SecurityContextHolder.getContext()
-                    .setAuthentication(new PreAuthenticatedAuthenticationToken(user, "",
+                    .setAuthentication(new PreAuthenticatedAuthenticationToken(principal, "",
                             Collections.emptyList()));
         }
 

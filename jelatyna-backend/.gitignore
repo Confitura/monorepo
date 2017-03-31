@@ -25,4 +25,4 @@ nbdist/
 /src/main/resources/application-dev.yml
 /deployment/jelatyna.retry
 /deployment/host_vars/confitura.pl/secret
-/logs
+/logs/

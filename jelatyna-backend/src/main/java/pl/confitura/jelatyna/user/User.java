@@ -17,6 +17,10 @@ public class User {
     private String email;
     private String username;
     private String bio;
+    private String twitter;
+    private String github;
+    private String www;
+    private String photo;
     private boolean isAdmin;
     private boolean isVolunteer;
 }

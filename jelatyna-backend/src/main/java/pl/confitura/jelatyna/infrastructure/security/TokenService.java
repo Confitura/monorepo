@@ -8,13 +8,13 @@ import java.util.HashMap;
 
 import org.springframework.stereotype.Service;
 
-import pl.confitura.jelatyna.user.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtHandlerAdapter;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.impl.crypto.MacProvider;
+import pl.confitura.jelatyna.user.User;
 
 @Service
 public class TokenService {
@@ -32,20 +32,14 @@ public class TokenService {
                 .signWith(SignatureAlgorithm.HS512, key).compact();
     }
 
-    public User toUser(String token) {
-        return Jwts.parser().setSigningKey(key).parse(token, new JwtHandlerAdapter<User>() {
-//            @Override
-//            public User onClaimsJwt(Jwt<Header, Claims> jwt) {
-//                Claims body = jwt.getBody();
-//                return new User().setName(body.getSubject())
-//                        .setId(body.getId())
-//                        .setAdmin(Boolean.getBoolean((String) body.get("isAdmin")));
-//            }
+    public JelatynaPrincipal toUser(String token) {
+        return Jwts.parser().setSigningKey(key).parse(token, new JwtHandlerAdapter<JelatynaPrincipal>() {
 
             @Override
-            public User onClaimsJws(Jws<Claims> jws) {
+            public JelatynaPrincipal onClaimsJws(Jws<Claims> jws) {
                 Claims body = jws.getBody();
-                return new User().setName(body.getSubject())
+                return new JelatynaPrincipal()
+                        .setName(body.getSubject())
                         .setId(body.getId())
                         .setAdmin((Boolean) body.get("isAdmin"));
             }

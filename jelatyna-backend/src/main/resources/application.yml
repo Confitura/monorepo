@@ -1,6 +1,12 @@
 
 server:
   port: 9090
+  tomcat:
+    accesslog:
+      enabled: true
+    basedir: /Users/margielm/jelatyna/tomcat
+#      directory: ./tomcat/logs
+
 
 twitter:
   api-key: KEY
