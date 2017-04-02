@@ -7,9 +7,10 @@ import {BrowserModule} from "@angular/platform-browser";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ProfileModule} from "./profile/profile.module";
 import {UserService} from "./pages/profile/user.service";
+import {PresentationService} from "./profile/shared/presentation.service";
 @NgModule({
     imports: [LayoutModule, PagesModule, BrowserModule, BrowserAnimationsModule, ProfileModule, routing],
-    providers: [UserService],
+    providers: [UserService, PresentationService],
     declarations: [AppComponent],
     bootstrap: [AppComponent]
 })

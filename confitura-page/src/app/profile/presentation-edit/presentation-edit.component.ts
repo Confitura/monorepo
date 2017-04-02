@@ -1,13 +1,13 @@
 import {Component, OnInit} from "@angular/core";
-import {Presentation} from "./presentation.model";
-import {PresentationService} from "./presentation.service";
-import {Tag} from "./tag.model";
 import {Observable} from "rxjs";
 import {ActivatedRoute, Params, Router} from "@angular/router";
+import {Presentation} from "../shared/presentation.model";
+import {PresentationService} from "../shared/presentation.service";
+import {Tag} from "../shared/tag.model";
 @Component({
-    templateUrl: "./presentation.component.html"
+    templateUrl: "./presentation-edit.component.html"
 })
-export class PresentationComponent implements OnInit {
+export class PresentationEditComponent implements OnInit {
 
     model: Presentation = new Presentation();
 
@@ -19,7 +19,6 @@ export class PresentationComponent implements OnInit {
     ngOnInit(): void {
         this.route.params
             .subscribe((params: Params) => {
-                console.log(params);
                 let id = params["id"];
                 if (id) {
                     this.service.getOne(id)
@@ -30,7 +29,8 @@ export class PresentationComponent implements OnInit {
     }
 
     save() {
-        this.service.save(this.model).subscribe(() => this.router.navigate(["/my-profile"]));
+        this.service.save(this.model)
+            .subscribe(() => this.router.navigate(["/profile"]));
     }
 
     public tags = (): Observable<Tag[]> => {
