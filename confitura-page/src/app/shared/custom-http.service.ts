@@ -19,8 +19,8 @@ export class CustomHttp {
         return this.doExecute(() => this.http.post(this.toFullUrl(url), body, options), options);
     }
 
-    put(url: string, body: any, options: RequestOptionsArgs = {}): Observable<Response> {
-        return this.doExecute(() => this.http.put(this.toFullUrl(url), body, options), options);
+    remove(url: string, options: RequestOptionsArgs = {}): Observable<Response> {
+        return this.doExecute(() => this.http.delete(this.toFullUrl(url), options), options);
     }
 
     private doExecute(call: Function, options: RequestOptionsArgs) {

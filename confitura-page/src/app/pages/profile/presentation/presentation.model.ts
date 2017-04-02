@@ -1,4 +1,5 @@
 export class Presentation{
+    id:string;
     title:string;
     language:string;
     level:string;

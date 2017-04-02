@@ -17,6 +17,7 @@ const appRoutes: Routes = [
     { path: 'profile', component: ProfileComponent },
     { path: 'my-profile', component: ProfileViewComponent },
     { path: 'presentation', component: PresentationComponent },
+    { path: 'presentation/:id/edit', component: PresentationComponent },
 
 ];
 export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);

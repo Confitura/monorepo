@@ -3,7 +3,7 @@ import {Presentation} from "./presentation.model";
 import {PresentationService} from "./presentation.service";
 import {Tag} from "./tag.model";
 import {Observable} from "rxjs";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Params, Router} from "@angular/router";
 @Component({
     templateUrl: "./presentation.component.html"
 })
@@ -11,10 +11,22 @@ export class PresentationComponent implements OnInit {
 
     model: Presentation = new Presentation();
 
-    constructor(private service: PresentationService, private router: Router) {
+    constructor(private service: PresentationService,
+                private router: Router,
+                private route: ActivatedRoute) {
     }
 
     ngOnInit(): void {
+        this.route.params
+            .subscribe((params: Params) => {
+                console.log(params);
+                let id = params["id"];
+                if (id) {
+                    this.service.getOne(id)
+                        .subscribe((presentation: Presentation) => this.model = presentation);
+                }
+            })
+
     }
 
     save() {
