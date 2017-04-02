@@ -20,7 +20,7 @@
         </encoder>
     </appender>
 
-    <logger name="org.hibernate" level="INFO"/>
+    <logger name="org.hibernate" level="TRACE"/>
 
     <root level="INFO">
         <appender-ref ref="FILE" />

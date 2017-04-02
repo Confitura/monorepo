@@ -1,5 +1,7 @@
 package pl.confitura.jelatyna.infrastructure.security;
 
+import static pl.confitura.jelatyna.infrastructure.Profiles.PRODUCTION;
+
 import java.io.IOException;
 import java.util.Collections;
 
@@ -9,14 +11,19 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
-import org.springframework.web.filter.GenericFilterBean;
+import org.springframework.stereotype.Component;
 
-public class JwtAuthenticationFilter extends GenericFilterBean {
+@Component
+@Profile(PRODUCTION)
+public class JwtAuthenticationFilter extends AuthenticationFilter {
 
     private TokenService tokenService;
 
+    @Autowired
     public JwtAuthenticationFilter(TokenService tokenService) {
         this.tokenService = tokenService;
     }
