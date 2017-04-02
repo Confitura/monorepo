@@ -10,8 +10,8 @@ import {RouterModule} from "@angular/router";
 import {FormsModule} from "@angular/forms";
 @NgModule({
     providers: [HttpConfiguration, CustomHttp, LoginService, CurrentUser],
-    imports: [CommonModule, HttpModule, RouterModule],
-    exports: [CommonModule, HttpModule, FormsModule]
+    imports: [CommonModule, HttpModule],
+    exports: [CommonModule, HttpModule, FormsModule, RouterModule]
 })
 export class SharedModule{
 

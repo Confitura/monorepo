@@ -9,10 +9,10 @@ export class NewsService {
     constructor(private http: CustomHttp) {
     }
 
-    getAll(page: number, size: number): Observable<News[]> {
+    getPage(page: number, size: number): Observable<News[]> {
         const params = new URLSearchParams();
-        params.set("page", "0");
-        params.set("size", "3");
+        params.set("page", `${page}`);
+        params.set("size", `${size}`);
         params.set("sort", "creationDate,desc");
 
         return this.http.get(`/news/search/published`, {search: params})

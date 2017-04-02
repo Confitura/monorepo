@@ -1,10 +1,10 @@
 import {Component, OnInit} from "@angular/core";
-import {UserService} from "../user.service";
-import {CurrentUser} from "../../../security/current-user.service";
-import {User} from "../user.model";
 import {Observable} from "rxjs";
-import {Presentation} from "../presentation/presentation.model";
-import {PresentationService} from "../presentation/presentation.service";
+import {Presentation} from "../../pages/profile/presentation/presentation.model";
+import {User} from "../../pages/profile/user.model";
+import {UserService} from "../../pages/profile/user.service";
+import {CurrentUser} from "../../security/current-user.service";
+import {PresentationService} from "../../pages/profile/presentation/presentation.service";
 @Component({
     templateUrl: "./profile-view.component.html"
 })

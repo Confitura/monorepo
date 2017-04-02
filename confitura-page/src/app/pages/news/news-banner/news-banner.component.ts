@@ -7,13 +7,13 @@ import  "../shared/news.scss";
     templateUrl: "./news-banner.component.html"
 })
 export class NewsBannerComponent implements OnInit {
-    list: News[] = null;
+    list: News[] = [];
 
     constructor(private service: NewsService) {
     }
 
     ngOnInit(): void {
-        this.service.getAll(0, 3)
+        this.service.getPage(0, 3)
             .subscribe((list: News[]) => this.list = list);
     }
 

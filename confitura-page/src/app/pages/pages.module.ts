@@ -14,14 +14,12 @@ import {PartnerService} from "./partners/shared/partner.service";
 import {PartnerComponent} from "./partners/partner/partner.component";
 import {RouterModule} from "@angular/router";
 import {LoginComponent} from "./login/login.component";
-import {ProfileModule} from "./profile/profile.module";
-import {ProfileViewComponent} from "./profile/view/profile-view.component";
 import {PresentationComponent} from "./profile/presentation/presentation.component";
 import {TagInputModule} from "ng2-tag-input";
 import {PresentationService} from "./profile/presentation/presentation.service";
 @NgModule({
-    imports: [SharedModule, PersonModule, RouterModule, ProfileModule, TagInputModule],
-    declarations: [HomeComponent, NewsBannerComponent, NewsComponent, AboutComponent, PageComponent, PartnersComponent, PartnerComponent, LoginComponent, ProfileViewComponent, PresentationComponent],
+    imports: [SharedModule, PersonModule, RouterModule, TagInputModule],
+    declarations: [HomeComponent, NewsBannerComponent, NewsComponent, AboutComponent, PageComponent, PartnersComponent, PartnerComponent, LoginComponent, PresentationComponent],
     providers: [NewsService, OrganizerService, PageService, PartnerService, PresentationService],
     exports: [HomeComponent, AboutComponent]
 })

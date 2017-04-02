@@ -13,7 +13,7 @@ export class NavigationComponent implements OnInit {
     menu: MenuItem[] = [
         {label: "about us", url: "/about"},
         {label: "partners", url: "/partners"},
-        {label: "profile", url: "/my-profile"},
+        {label: "profile", url: "/profile"},
         {label: "login", url: "/login"},
     ];
 

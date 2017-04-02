@@ -1,9 +1,10 @@
-<section id="news-confitura">
+<section id="news-confitura" *ngIf="list.length > 0">
+    -->{{list}}<--
     <div class="row-fluid">
         <div class="col-lg-12 news-confitura-header"><h2>News</h2></div>
     </div>
 
-    <div class="news-container col-lg-12" *ngIf="list != null">
+    <div class="news-container col-lg-12" >
         <div class="news-confitura-left">
             <jl-news [model]="list[0]" class="font-white"></jl-news>
         </div>
