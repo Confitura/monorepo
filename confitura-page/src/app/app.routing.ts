@@ -6,6 +6,8 @@ import {PartnersComponent} from "./pages/partners/partner-list/partners.componen
 import {PartnerComponent} from "./pages/partners/partner/partner.component";
 import {LoginComponent} from "./pages/login/login.component";
 import {ProfileComponent} from "./pages/profile/profile.component";
+import {ProfileViewComponent} from "./pages/profile/view/profile-view.component";
+import {PresentationComponent} from "./pages/profile/presentation/presentation.component";
 const appRoutes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'about', component: AboutComponent },
@@ -13,6 +15,8 @@ const appRoutes: Routes = [
     { path: 'partners/:id', component: PartnerComponent },
     { path: 'login', component: LoginComponent },
     { path: 'profile', component: ProfileComponent },
+    { path: 'my-profile', component: ProfileViewComponent },
+    { path: 'presentation', component: PresentationComponent },
 
 ];
 export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);

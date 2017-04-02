@@ -1,0 +1,38 @@
+<div *ngIf="model" class="person-container">
+    <div class="person-photo">
+        <div class="img-speaker">
+            <input type="file" ng2FileSelect [uploader]="uploader" multiple style="visibility: hidden">
+            <button class="btn" style="position: absolute;
+transform: translate(-50%,-50%);
+margin-right: -50%;
+top: 50%;
+left: 50%;" (click)="selectNewPhoto()">Upload New
+            </button>
+            <img class="img-responsive margin-auto" [src]="model.photo"/>
+        </div>
+        <section class="social-speaker">
+            <a href="http://www.twitter.com/{{model.twitter}}" title="twitter" target="_blank" *ngIf="model.twitter">
+                <i class="fa fa-twitter prelegent-social" aria-hidden="true"></i>
+            </a>
+            <a href="//{{model.www}}" title="direct" target="_blank" *ngIf="model.www">
+                <i class="fa fa-arrow-up prelegent-social" aria-hidden="true"></i>
+            </a>
+            <a href="//{{model.github}}" title="direct" target="_blank" *ngIf="model.github">
+                <i class="fa fa-github prelegent-social" aria-hidden="true"></i>
+            </a>
+        </section>
+    </div>
+    <div class="person-info">
+        <section>
+            <div class="ta-left person-name"><h3>{{model.name}}</h3></div>
+            <div class="mcci-content" [innerHTML]="model.bio"></div>
+        </section>
+        <section *ngIf="model.presentations">
+            <a>
+                <h3 class="presentation-title">
+                    title
+                </h3>
+            </a>
+        </section>
+    </div>
+</div>

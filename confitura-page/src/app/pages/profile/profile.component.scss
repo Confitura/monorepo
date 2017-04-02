@@ -1,11 +1,11 @@
 .required {
-  input,
-  textarea {
+  & > input,
+  & > textarea {
     &.ng-invalid.ng-touched {
       border-left: red solid 5px;
     }
   }
-  label {
+  & > label:first-child {
     &:after {
       content: ' *';
       color: #ff0000;

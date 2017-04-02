@@ -1,17 +1,15 @@
 {
   "globalDependencies": {
-    "core-js": "registry:dt/core-js",
-    "jasmine": "registry:dt/jasmine",
-    "node": "registry:dt/node",
-    "jquery": "registry:dt/jquery",
     "bootstrap": "registry:dt/bootstrap",
-    "select2": "registry:dt/select2#4.0.1+20160812083516",
-    "selectize": "registry:dt/selectize#0.12.13+20160930120956",
     "faker": "registry:dt/faker",
+    "jasmine": "registry:dt/jasmine",
+    "jquery": "registry:dt/jquery",
     "js-base64": "registry:dt/js-base64"
-
   },
   "dependencies": {
     "lodash": "registry:npm/lodash"
+  },
+  "globalDevDependencies": {
+    "node": "registry:dt/node#7.0.0+20170322231424"
   }
 }

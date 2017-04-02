@@ -15,6 +15,9 @@
                 <li *ngFor="let item of menu">
                     <a [routerLink]="item.url" [title]="item.label" (click)="closeMenu()">{{item.label}}</a>
                 </li>
+                <li >
+                    <a  title="logout" (click)="logout()">logout</a>
+                </li>
             </ul>
         </div>
     </div>

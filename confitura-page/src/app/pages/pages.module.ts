@@ -15,10 +15,14 @@ import {PartnerComponent} from "./partners/partner/partner.component";
 import {RouterModule} from "@angular/router";
 import {LoginComponent} from "./login/login.component";
 import {ProfileModule} from "./profile/profile.module";
+import {ProfileViewComponent} from "./profile/view/profile-view.component";
+import {PresentationComponent} from "./profile/presentation/presentation.component";
+import {TagInputModule} from "ng2-tag-input";
+import {PresentationService} from "./profile/presentation/presentation.service";
 @NgModule({
-    imports: [SharedModule, PersonModule, RouterModule, ProfileModule],
-    declarations: [HomeComponent, NewsBannerComponent, NewsComponent, AboutComponent, PageComponent, PartnersComponent, PartnerComponent, LoginComponent],
-    providers: [NewsService, OrganizerService, PageService, PartnerService],
+    imports: [SharedModule, PersonModule, RouterModule, ProfileModule, TagInputModule],
+    declarations: [HomeComponent, NewsBannerComponent, NewsComponent, AboutComponent, PageComponent, PartnersComponent, PartnerComponent, LoginComponent, ProfileViewComponent, PresentationComponent],
+    providers: [NewsService, OrganizerService, PageService, PartnerService, PresentationService],
     exports: [HomeComponent, AboutComponent]
 })
 export class PagesModule {

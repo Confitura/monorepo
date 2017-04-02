@@ -27,7 +27,13 @@ module.exports = {
             },
             {
                 test: /\.html$/,
-                loader: 'html-loader'
+                loader: 'html-loader',
+                exclude: /node_modules/
+            },
+            {
+                test: /\.html$/,
+                loader: 'raw-loader',
+                include: /node_modules/
             },
             {
                 test: /\.(woff|woff2|ttf|eot|ico)$/,

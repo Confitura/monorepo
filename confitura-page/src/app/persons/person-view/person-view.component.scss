@@ -1,0 +1,38 @@
+.person-container {
+  display: flex;
+  @media all and (max-width: 768px) {
+    flex-direction: column;
+  }
+  .person-photo {
+    flex-shrink: 0;
+    .img-speaker {
+
+      button {
+        visibility: hidden;
+
+      }
+      &:hover {
+        button {
+          visibility: visible;
+        }
+      }
+
+      position: relative;
+      img {
+        min-width: 300px;
+        min-height: 300px;
+      }
+    }
+  }
+
+  .person-info {
+    padding: 20px;
+
+    .person-name h3 {
+      &:before, &:after {
+        content: " # ";
+      }
+    }
+  }
+
+}

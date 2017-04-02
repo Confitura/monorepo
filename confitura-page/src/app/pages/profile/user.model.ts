@@ -5,4 +5,5 @@ export class User{
     www:string;
     email:string;
     bio:string;
+    photo:string;
 }

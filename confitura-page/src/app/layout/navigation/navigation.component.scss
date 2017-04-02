@@ -1,7 +1,9 @@
 @import "../../sizes";
 
 #confitura {
-
+  .nav > li > a {
+    cursor: pointer;
+  }
   @media all and (min-width: $size_small) {
     nav, nav > div {
       height: 100px;
@@ -41,7 +43,7 @@
       height: 55px;
       margin-bottom: 0;
     }
-    #navbar{
+    #navbar {
       background: #ffffff;
     }
     .nav > li > a {
@@ -53,7 +55,7 @@
     .navbar-brand {
       height: 55px;
     }
-    .navbar-header{
+    .navbar-header {
       height: 55px;
     }
     .confitura-logo {

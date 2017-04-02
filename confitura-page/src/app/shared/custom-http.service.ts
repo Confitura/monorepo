@@ -1,4 +1,4 @@
-import {Http, Response, RequestOptionsArgs, Headers} from "@angular/http";
+import {Headers, Http, RequestOptionsArgs, Response} from "@angular/http";
 import {Injectable} from "@angular/core";
 import {HttpConfiguration} from "./http-configuration.service";
 import {Observable} from "rxjs";
@@ -11,16 +11,23 @@ export class CustomHttp {
     }
 
     get(url: string, options: RequestOptionsArgs = {}): Observable<Response> {
-        this.addAuthorizationHeader(options);
-        return this.http.get(this.toFullUrl(url), options);
+        return this.doExecute(() => this.http.get(this.toFullUrl(url), options), options);
     }
-
 
 
     post(url: string, body: any, options: RequestOptionsArgs = {}): Observable<Response> {
-        this.addAuthorizationHeader(options);
-        return this.http.post(this.toFullUrl(url), body, options);
+        return this.doExecute(() => this.http.post(this.toFullUrl(url), body, options), options);
     }
+
+    put(url: string, body: any, options: RequestOptionsArgs = {}): Observable<Response> {
+        return this.doExecute(() => this.http.put(this.toFullUrl(url), body, options), options);
+    }
+
+    private doExecute(call: Function, options: RequestOptionsArgs) {
+        this.addAuthorizationHeader(options);
+        return call();
+    }
+
 
     private addAuthorizationHeader(options: RequestOptionsArgs) {
         if (this.currentUser.isAvailable()) {
@@ -34,7 +41,6 @@ export class CustomHttp {
     private toFullUrl(url: string) {
         return `${this.config.apiServer}${url}`;
     }
-
 
 
 }

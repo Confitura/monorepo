@@ -24,7 +24,7 @@ export class NavigationComponent implements OnInit {
     }
 
     logout() {
-        // this.login.logout();
+        this.login.logout();
     }
 
     closeMenu(){
