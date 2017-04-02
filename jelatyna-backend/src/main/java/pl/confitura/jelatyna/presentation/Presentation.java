@@ -35,4 +35,5 @@ public class Presentation {
     @ManyToOne(optional = false)
     private User speaker;
 
+
 }
