@@ -2,6 +2,7 @@ package pl.confitura.jelatyna.user;
 
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -24,6 +25,7 @@ public class User {
 //    @NotNull
     private String email;
 //    @NotNull
+    @Column(length = 1000)
     private String bio;
     private String username;
     private String twitter;

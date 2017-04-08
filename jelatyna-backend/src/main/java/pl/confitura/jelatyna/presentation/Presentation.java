@@ -30,8 +30,10 @@ public class Presentation {
     @NotBlank
     private String title;
     @NotBlank
+    @Column(length = 300)
     private String shortDescription;
     @NotBlank
+    @Column(length = 1000)
     private String description;
     @NotBlank
     private String level;
