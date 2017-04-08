@@ -8,7 +8,7 @@
                         <div class="form-group required">
                             <label for="title">Title</label>
                             <input type="text" id="title" class="form-control" [(ngModel)]="model.title" #title="ngModel" name="title"
-                                   required maxlength="100">
+                                   required maxlength="255">
                             <div class="alert alert-danger" role="alert" *ngIf="title.errors?.required && (title.touched || submitted)">
                                 This field is required
                             </div>
@@ -63,7 +63,7 @@
                             <label for="short-description">Short Description</label>
                             <textarea type="text" id="short-description" class="form-control" rows="5" [(ngModel)]="model.shortDescription"
                                       #shortDescription="ngModel"
-                                      name="shortDescription" required maxlength="10"></textarea>
+                                      name="shortDescription" required maxlength="300"></textarea>
                             <span class="help-block">Make it short and sweet for the potential participant. It will be used In Vote 4 Papers process. Max 300 characters. ({{model.shortDescription?.length || 0}}/300)</span>
                             <div class="alert alert-danger" role="alert"
                                  *ngIf="shortDescription.errors?.required && (shortDescription.touched || submitted)">
@@ -74,7 +74,7 @@
                             <label for="description">Description</label>
                             <textarea type="text" id="description" class="form-control" rows="5" [(ngModel)]="model.description"
                                       #description="ngModel"
-                                      name="description" required></textarea>
+                                      name="description" required maxlength="1000"></textarea>
                             <div class="alert alert-danger" role="alert"
                                  *ngIf="description.errors?.required && (description.touched || submitted)">
                                 This field is required

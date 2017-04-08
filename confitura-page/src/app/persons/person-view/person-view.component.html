@@ -2,11 +2,7 @@
     <div class="person-photo">
         <div class="img-speaker">
             <input type="file" ng2FileSelect [uploader]="uploader" multiple style="visibility: hidden">
-            <button class="btn" style="position: absolute;
-transform: translate(-50%,-50%);
-margin-right: -50%;
-top: 50%;
-left: 50%;" (click)="selectNewPhoto()">Upload New
+            <button class="btn btn-upload"  (click)="selectNewPhoto()">Upload New
             </button>
             <img class="img-responsive margin-auto" [src]="model.photo"/>
         </div>
