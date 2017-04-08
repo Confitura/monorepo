@@ -19,10 +19,13 @@ public class User {
     @Id
     private String id;
     private String origin;
+//    @NotNull
     private String name;
+//    @NotNull
     private String email;
-    private String username;
+//    @NotNull
     private String bio;
+    private String username;
     private String twitter;
     private String github;
     private String www;

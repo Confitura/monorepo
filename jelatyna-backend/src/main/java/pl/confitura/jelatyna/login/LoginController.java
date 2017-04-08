@@ -2,6 +2,8 @@ package pl.confitura.jelatyna.login;
 
 import static org.springframework.http.HttpStatus.PERMANENT_REDIRECT;
 
+import java.util.Base64;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -52,7 +54,7 @@ public class LoginController {
     }
 
     private User mapToSystemUser(OAuthUser userDto) {
-        String id = "twitter_" + userDto.getId();
+        String id = encodeId(userDto);
         if (!userRepository.exists(id)) {
             userRepository.save(new User()
                     .setId(id)
@@ -60,7 +62,11 @@ public class LoginController {
                     .setUsername(userDto.getUserName())
                     .setName(userDto.getName()));
         }
-        return userRepository.getOne(id);
+        return userRepository.findOne(id);
+    }
+
+    private String encodeId(OAuthUser userDto) {
+        return Base64.getEncoder().encodeToString(("twitter/" + userDto.getId()).getBytes());
     }
 
 }

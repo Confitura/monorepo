@@ -24,6 +24,7 @@ public class JelatynaApplication {
     public static void main(String[] args) {
         SpringApplication.run(JelatynaApplication.class, args);
     }
+
     @Bean
     InitializingBean initializingBean(TagRepository repository){
         return () -> {

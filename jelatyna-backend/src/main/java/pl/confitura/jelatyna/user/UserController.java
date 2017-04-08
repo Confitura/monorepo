@@ -1,9 +1,12 @@
 package pl.confitura.jelatyna.user;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.hateoas.Resource;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,7 +31,8 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public ResponseEntity<?> save(@RequestBody User user) {
+    @PreAuthorize("@security.isOwner(#user.id)")
+    public ResponseEntity<?> save(@Valid @RequestBody User user) {
         if (StringUtils.isEmpty(user.getPhoto())) {
             Gravatar gravatar = new Gravatar(300, GravatarRating.GENERAL_AUDIENCES, GravatarDefaultImage.BLANK);
             String url = gravatar.getUrl(user.getEmail());
@@ -39,9 +43,10 @@ public class UserController {
     }
 
     @PostMapping("/users/{userId}/presentations")
-    public ResponseEntity<Resource<Presentation>> addPresentationToUser(@RequestBody Presentation presentation, @PathVariable String userId) {
-        System.out.println(userId);
-        User speaker = repository.getOne(userId);
+    @PreAuthorize("@security.isOwner(#userId)")
+    public ResponseEntity<?> addPresentationToUser(@Valid @RequestBody Presentation presentation,
+            @PathVariable String userId) {
+        User speaker = repository.findOne(userId);
         presentation.setSpeaker(speaker);
         Presentation saved = presentationRepository.save(presentation);
         return ResponseEntity.ok(new Resource<>(saved));

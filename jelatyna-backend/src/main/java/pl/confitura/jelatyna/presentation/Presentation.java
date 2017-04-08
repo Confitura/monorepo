@@ -9,8 +9,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.constraints.NotBlank;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -25,15 +27,20 @@ public class Presentation {
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(columnDefinition = "varchar(100)")
     private String id;
+    @NotBlank
     private String title;
+    @NotBlank
     private String shortDescription;
+    @NotBlank
     private String description;
+    @NotBlank
     private String level;
+    @NotBlank
     private String language;
     @ManyToMany
     private Set<Tag> tags = new HashSet<>();
     @ManyToOne(optional = false)
+    @NotNull
     private User speaker;
-
 
 }

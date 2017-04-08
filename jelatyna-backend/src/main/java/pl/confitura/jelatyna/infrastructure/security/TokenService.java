@@ -8,6 +8,7 @@ import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -25,11 +26,11 @@ public class TokenService {
         return Jwts.builder()
                 .setClaims(new HashMap<String, Object>() {{
                     put("isAdmin", user.isAdmin());
-                    put("username", user.getUsername());
+                    put("isNew", StringUtils.isEmpty(user.getEmail()));
                 }})
                 .setId(user.getId())
                 .setSubject(user.getName())
-                .setExpiration(Date.from(LocalDateTime.now().plusSeconds(10).toInstant(ZoneOffset.UTC)))
+                .setExpiration(Date.from(LocalDateTime.now().plusHours(20).toInstant(ZoneOffset.UTC)))
                 .signWith(SignatureAlgorithm.HS512, getKey()).compact();
     }
 
