@@ -8,11 +8,16 @@
                         <div class="form-group required">
                             <label for="name">name</label>
                             <input type="text" id="name" class="form-control" [(ngModel)]="model.name" #name="ngModel" name="name" required>
-
+                            <div class="alert alert-danger" role="alert" *ngIf="name.errors?.required && (name.touched || submitted)">
+                                This field is required
+                            </div>
                         </div>
                         <div class="form-group required">
                             <label for="email">e-mail</label>
                             <input type="text" id="email" class="form-control" [(ngModel)]="model.email" #email="ngModel" name="email" required>
+                            <div class="alert alert-danger" role="alert" *ngIf="email.errors?.required && (email.touched || submitted)">
+                                This field is required
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="twitter">twitter</label>
@@ -28,13 +33,15 @@
                         </div>
                         <div class="form-group required">
                             <label for="bio">Bio</label>
-                            <textarea type="text" id="bio" class="form-control" rows="5" [(ngModel)]="model.bio" #model.bio="ngModel" name="bio" required></textarea>
+                            <textarea type="text" id="bio" class="form-control" rows="5" [(ngModel)]="model.bio" #bio="ngModel" name="bio" required></textarea>
+                            <div class="alert alert-danger" role="alert" *ngIf="bio.errors?.required && (bio.touched || submitted)">
+                                This field is required
+                            </div>
                         </div>
                         <div class="text-right">
                             <button type="submit" class="btn btn-primary" [disabled]="profileForm.submitted && !profileForm.form.valid">Save</button>
                             <a class="btn btn-warning" routerLink="/profile">Cancel</a>
                         </div>
-
                     </form>
                 </div>
             </div>

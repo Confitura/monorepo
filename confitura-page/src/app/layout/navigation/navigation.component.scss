@@ -3,6 +3,20 @@
 #confitura {
   .nav > li > a {
     cursor: pointer;
+    padding-bottom: 0;
+    &.active {
+      text-decoration: underline;
+    }
+    &.pink, &.pink:hover {
+      text-align: center;
+      padding-left: 0;
+      padding-right: 0;
+      background: #ff0040;
+      color: #ffffff;
+      @media all and(min-width: $size_small) {
+        width: 150px;
+      }
+    }
   }
   @media all and (min-width: $size_small) {
     nav, nav > div {
@@ -26,12 +40,10 @@
     padding-top: 0;
     padding-bottom: 0;
   }
-  /* logo */
   .confitura-logo {
     border: none;
     outline: none;
     margin-left: 20px;
-    //transition: 0.5s ease;
     background: url('../../img/logo.png') no-repeat center center;
     background-size: contain;
     width: 232px;

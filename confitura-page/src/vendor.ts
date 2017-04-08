@@ -16,7 +16,7 @@ import "normalize.css/normalize.css"
 //bootstrap
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
-// import 'bootstrap/less/bootstrap.less';
+import 'bootstrap-social/bootstrap-social.css';
 
 // Other vendors for example jQuery, Lodash or Bootstrap
 // You can import js, ts, css, sass, ...

@@ -5,22 +5,21 @@
                 <div class="beige" *ngIf="model">
                     <div>
                         <a class="btn-link" routerLink="/profile/{{model.id}}/edit">Edit My Profile</a> |
-                        <a class="btn-link" routerLink="/presentation">Add Presentation</a> |
-                        <a class="btn-link" routerLink="/presentation">Delete My Profile</a>
+                        <a class="btn-link" routerLink="/presentation">Add Presentation</a>
                     </div>
                     <jl-person-view [model]="model" (changed)="reload()"></jl-person-view>
-                    <table class="table table-bordered">
+                    <table class="table table-bordered table-striped">
                         <tr>
                             <th>title</th>
                             <th>status</th>
                             <th></th>
                         </tr>
-                        <tr *ngFor="let presentation of presentations | async">
+                        <tr *ngFor="let presentation of presentations | async" class="active">
                             <td>{{presentation.title}}</td>
-                            <td></td>
-                            <td>
+                            <td>New</td>
+                            <td style="width: 200px">
                                 <button class="btn" routerLink="/presentation/{{presentation.id}}">edit</button>
-                                <button class="btn btn-warning" (click)="remove(presentation)">Delete</button>
+                                <button class="btn btn-danger" (click)="remove(presentation)">Delete</button>
                             </td>
                         </tr>
                     </table>

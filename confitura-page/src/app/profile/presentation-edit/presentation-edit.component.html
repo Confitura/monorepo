@@ -4,11 +4,14 @@
             <div class="row-1140">
                 <div class="beige">
                     <h3>My Presentation</h3>
-                    <form (ngSubmit)="save()" #presentationForm="ngForm" novalidate>
+                    <form (ngSubmit)="save(presentationForm)" #presentationForm="ngForm" novalidate>
                         <div class="form-group required">
-                            <label for="titile">Title</label>
-                            <input type="text" id="titile" class="form-control" [(ngModel)]="model.title" #titile="ngModel" name="title"
-                                   required maxlength="50">
+                            <label for="title">Title</label>
+                            <input type="text" id="title" class="form-control" [(ngModel)]="model.title" #title="ngModel" name="title"
+                                   required maxlength="100">
+                            <div class="alert alert-danger" role="alert" *ngIf="title.errors?.required && (title.touched || submitted)">
+                                This field is required
+                            </div>
                         </div>
                         <div class="form-group required">
                             <label>Language</label>
@@ -16,11 +19,14 @@
                             <label class="checkbox">
                                 <input type="radio" name="language" value="polish" required [(ngModel)]="model.language"
                                        #language="ngModel"> polish
-
                             </label>
                             <label class="checkbox">
                                 <input type="radio" name="language" value="english" required [(ngModel)]="model.language"> english
                             </label>
+                            <div class="alert alert-danger" role="alert"
+                                 *ngIf="language.errors?.required && (language.touched || submitted)">
+                                This field is required
+                            </div>
                         </div>
                         <div class="form-group required">
                             <label>Level</label>
@@ -34,16 +40,19 @@
                             <label class="checkbox">
                                 <input type="radio" name="level" value="master" required [(ngModel)]="model.level"> master
                             </label>
+                            <div class="alert alert-danger" role="alert"
+                                 *ngIf="level.errors?.required && (level.touched || submitted)">
+                                This field is required
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="tags">Tags</label>
                             <tag-input [(ngModel)]="model.tags" id="tags" name="tags" theme="bootstrap" [onlyFromAutocomplete]="true"
                                        [maxItems]="3" [identifyBy]="'id'" [displayBy]="'name'">
-                                <tag-input-dropdown [autocompleteObservable]="tags" [showDropdownIfEmpty]="true" [identifyBy]="'id'" [displayBy]="'name'">
+                                <tag-input-dropdown [autocompleteObservable]="tags" [showDropdownIfEmpty]="true" [identifyBy]="'id'"
+                                                    [displayBy]="'name'">
                                 </tag-input-dropdown>
                             </tag-input>
-                            <!--<input type="text" id="tags" class="form-control" [(ngModel)]="model.tags" #tags="ngModel"-->
-                            <!--name="tags">-->
                         </div>
                         <div class="form-group">
                             <label for="cospeakers">Co-speakers</label>
@@ -55,13 +64,21 @@
                             <textarea type="text" id="short-description" class="form-control" rows="5" [(ngModel)]="model.shortDescription"
                                       #shortDescription="ngModel"
                                       name="shortDescription" required maxlength="10"></textarea>
-                            <span class="help-block">Make it short and interesting for the potential participant. It will be used In Vote 4 Papers process. Max 300 characters. ({{model.shortDescription?.length || 0}}/300)</span>
+                            <span class="help-block">Make it short and sweet for the potential participant. It will be used In Vote 4 Papers process. Max 300 characters. ({{model.shortDescription?.length || 0}}/300)</span>
+                            <div class="alert alert-danger" role="alert"
+                                 *ngIf="shortDescription.errors?.required && (shortDescription.touched || submitted)">
+                                This field is required
+                            </div>
                         </div>
                         <div class="form-group required">
                             <label for="description">Description</label>
                             <textarea type="text" id="description" class="form-control" rows="5" [(ngModel)]="model.description"
                                       #description="ngModel"
                                       name="description" required></textarea>
+                            <div class="alert alert-danger" role="alert"
+                                 *ngIf="description.errors?.required && (description.touched || submitted)">
+                                This field is required
+                            </div>
                         </div>
                         <div class="text-right">
                             <button type="submit" class="btn btn-primary"

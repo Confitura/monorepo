@@ -1,4 +1,3 @@
-<!-- /fixed navbar -->
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -11,27 +10,15 @@
             </a>
         </div>
         <div id="navbar" class="navbar-collapse collapse navbar-right">
-            <ul class="nav navbar-nav">
-                <li *ngFor="let item of menu">
-                    <a [routerLink]="item.url" [title]="item.label" (click)="closeMenu()">{{item.label}}</a>
-                </li>
-                <li >
-                    <a  title="logout" (click)="logout()">logout</a>
+            <ul class="nav navbar-nav" >
+                <li *ngFor="let item of menu" >
+                    <ng-template [ngIf]="!item.show || item.show() !== false" >
+                        <a *ngIf="item.url" [routerLink]="item.url" [title]="item.label" (click)="closeMenu()"
+                           [class]="item.clazz" routerLinkActive="active">{{item.label}}</a>
+                        <a *ngIf="item.action" [title]="item.label" (click)="item.action()" [class]="item.clazz" routerLinkActive="active">{{item.label}}</a>
+                    </ng-template>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
-
-<!--&lt;!&ndash; /own mobile navbar &ndash;&gt;-->
-<!--<nav id="mobile-nav" class="mobile-nav">-->
-<!--<a class="mlink wh" ui-sref="about" title="about us">about us</a>-->
-<!--<a class="mlink wh" ui-sref="partners" title="partners">partners</a>-->
-<!--<a class="mlink wh" ui-sref="speakers" title="speakers">speakers</a>-->
-<!--<a class="mlink wh" ui-sref="presentations" title="presentations">presentations</a>-->
-<!--<a class="mlink wh" ui-sref="agenda" title="agenda">agenda</a>-->
-<!--<a class="mlink wh" ui-sref="faq" title="faq">FAQ</a>-->
-
-<!--<a class="mlink wh" href="http://c4p.confitura.pl" title="call 4 papers">call 4 papers</a>-->
-<!--<a class="mlink pk" ui-sref="agenda" title="agenda">agenda</a>-->
-<!--</nav>-->

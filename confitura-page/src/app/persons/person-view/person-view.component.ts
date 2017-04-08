@@ -1,4 +1,4 @@
-import {Input, Component, OnInit, Output, EventEmitter} from "@angular/core";
+import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 import {User} from "../../pages/profile/user.model";
 import "./person-view.component.scss";
 import {HttpConfiguration} from "../../shared/http-configuration.service";
@@ -27,12 +27,12 @@ export class PersonViewComponent implements OnInit {
 
 
         });
-        this.uploader.onCompleteAll = ()=>{
+        this.uploader.onCompleteAll = () => {
             this.changed.emit(null);
         }
     }
 
-    selectNewPhoto(){
+    selectNewPhoto() {
         $("input[type=file]").click();
     }
 }

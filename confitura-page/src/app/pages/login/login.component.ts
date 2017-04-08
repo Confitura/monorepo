@@ -1,10 +1,11 @@
 import {Component, OnInit} from "@angular/core";
-import "./login.scss";
-import {ActivatedRoute, Params} from "@angular/router";
+import {ActivatedRoute, Params, Router} from "@angular/router";
 import {Location} from "@angular/common";
 import {LoginService} from "../../security/login.service";
 import {CurrentUser} from "../../security/current-user.service";
 import {JwtUser} from "../home/jwt-user.model";
+
+import "./login.scss";
 @Component({
     templateUrl: "./login.component.html"
 })
@@ -12,9 +13,8 @@ export class LoginComponent implements OnInit {
     user: JwtUser;
 
     constructor(private route: ActivatedRoute,
-                private location: Location,
-                private login: LoginService,
-                private currentUser: CurrentUser) {
+                private router:Router,
+                private login: LoginService) {
     }
 
     ngOnInit(): void {
@@ -27,7 +27,11 @@ export class LoginComponent implements OnInit {
                     this.login.login(token, verifier)
                         .subscribe((user: JwtUser) => {
                             this.user = user;
-                            this.location.replaceState("login");
+                            if(user.isNew) {
+                                this.router.navigate(["/profile/edit"])
+                            }else{
+                                this.router.navigate(["/profile"])
+                            }
                         });
                 }
             });

@@ -1,14 +1,15 @@
 import {Injectable, EventEmitter} from "@angular/core";
 import {JwtUser} from "../pages/home/jwt-user.model";
 import {Base64} from "js-base64";
+import {Router} from "@angular/router";
 @Injectable()
 export class CurrentUser {
 
     onLogin: EventEmitter<JwtUser> = new EventEmitter<JwtUser>();
 
-    constructor() {
+    constructor(private router:Router) {
         if (this.isAvailable()) {
-            console.log("user avrailable ", this.get());
+            console.log("user available ", this.get());
             this.onLogin.emit(this.get());
         }
     }
@@ -36,5 +37,6 @@ export class CurrentUser {
     logout() {
         sessionStorage.clear();
         this.onLogin.emit(this.get());
+        this.router.navigate(["/"]);
     }
 }

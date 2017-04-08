@@ -9,9 +9,10 @@ import "./profile-edit.component.scss";
     templateUrl: "./profile-edit.component.html"
 })
 export class ProfileEditComponent implements OnInit {
+    submitted = false;
     model: User = new User();
 
-    constructor(private service: UserService, private currentUser: CurrentUser, private router:Router) {
+    constructor(private service: UserService, private currentUser: CurrentUser, private router: Router) {
 
     }
 
@@ -25,10 +26,9 @@ export class ProfileEditComponent implements OnInit {
     }
 
     save() {
+        this.submitted = true;
         this.service.save(this.model)
-            .subscribe(response => {
-                this.router.navigate(["/profile"]);
-            })
+            .subscribe(response => this.router.navigate(["/profile"]));
     }
 
 }
