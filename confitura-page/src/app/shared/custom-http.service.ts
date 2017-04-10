@@ -3,6 +3,7 @@ import {Injectable} from "@angular/core";
 import {HttpConfiguration} from "./http-configuration.service";
 import {Observable} from "rxjs";
 import {CurrentUser} from "../security/current-user.service";
+import {LoginService} from "../security/login.service";
 @Injectable()
 export class CustomHttp {
     constructor(private config: HttpConfiguration,
@@ -25,7 +26,13 @@ export class CustomHttp {
 
     private doExecute(call: Function, options: RequestOptionsArgs) {
         this.addAuthorizationHeader(options);
-        return call();
+        const result: Observable<Response> = call();
+        return result.catch((error, caught) => {
+            if (error.status == 401) {
+                this.currentUser.logout();
+            }
+            return Observable.of(error);
+        });
     }
 
 
