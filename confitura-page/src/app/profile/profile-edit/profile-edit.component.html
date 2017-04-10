@@ -4,7 +4,7 @@
             <div class="row-1140">
                 <div class="beige">
                     <h3>My profile</h3>
-                    <form (ngSubmit)="save()" #profileForm="ngForm" novalidate>
+                    <form (ngSubmit)="save(profileForm)" #profileForm="ngForm" novalidate>
                         <div class="form-group required">
                             <label for="name">name</label>
                             <input type="text" id="name" class="form-control" [(ngModel)]="model.name" #name="ngModel" name="name" required maxlength="255">

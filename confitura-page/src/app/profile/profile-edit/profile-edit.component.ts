@@ -5,6 +5,7 @@ import {UserService} from "../../pages/profile/user.service";
 import {User} from "../../pages/profile/user.model";
 
 import "./profile-edit.component.scss";
+import {FormControl} from "@angular/forms";
 @Component({
     templateUrl: "./profile-edit.component.html"
 })
@@ -25,10 +26,12 @@ export class ProfileEditComponent implements OnInit {
         }
     }
 
-    save() {
+    save(profileFile: FormControl) {
         this.submitted = true;
-        this.service.save(this.model)
-            .subscribe(response => this.router.navigate(["/profile"]));
+        if (profileFile.valid) {
+            this.service.save(this.model)
+                .subscribe(response => this.router.navigate(["/profile"]));
+        }
     }
 
 }
