@@ -19,6 +19,3 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-  data:
-    rest:
-      base-path: /api
