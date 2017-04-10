@@ -15,7 +15,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
-    private TokenService tokenService;
+    private AuthenticationFilter authenticationFilter;
 
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -31,15 +31,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET,"/**/*").permitAll()
-                .antMatchers(HttpMethod.POST,"/resources").permitAll()
-                .antMatchers("/**/*").
-                authenticated()
+//                .antMatchers(HttpMethod.POST,"/**").authenticated()
+                .antMatchers(HttpMethod.DELETE,"/**").authenticated()
+                .antMatchers("/**/*").authenticated()
                 .and()
-                .addFilterBefore(filter(tokenService), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
     }
 
-    public JwtAuthenticationFilter filter(TokenService tokenService) {
-        return new JwtAuthenticationFilter(tokenService);
-    }
 }

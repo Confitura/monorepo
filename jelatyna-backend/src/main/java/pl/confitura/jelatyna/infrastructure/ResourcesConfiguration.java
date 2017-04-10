@@ -17,7 +17,9 @@ public class ResourcesConfiguration {
 
         @Override
         public void addResourceHandlers(ResourceHandlerRegistry registry) {
-            registry.addResourceHandler(rootPath + "/**/*").addResourceLocations("file:///" + folder + "/");
+            registry
+                    .addResourceHandler(rootPath + "/**/*")
+                    .addResourceLocations("file:///" + folder + "/");
         }
 
     }

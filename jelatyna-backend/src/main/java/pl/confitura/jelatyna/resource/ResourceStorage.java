@@ -33,9 +33,10 @@ public class ResourceStorage {
 
     @Transactional
     void storeSpeaker(@RequestParam MultipartFile file, JelatynaPrincipal principal) throws IOException {
-        User user = repository.getOne(principal.getId());
+        User user = repository.findOne(principal.getId());
         String path = doStore(user.getId(), file, "photos");
         user.setPhoto(path);
+        repository.save(user);
     }
 
     String doStore(String fileName, MultipartFile file, String... paths) throws IOException {
