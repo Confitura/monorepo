@@ -4,16 +4,21 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import pl.confitura.jelatyna.login.facebook.FacebookConfigurationProperties;
 
 @SpringBootApplication
 @CrossOrigin
 @EntityScan(
         basePackageClasses = { JelatynaApplication.class, Jsr310JpaConverters.class }
+)
+@EnableConfigurationProperties(
+        FacebookConfigurationProperties.class
 )
 public class JelatynaApplication {
 
