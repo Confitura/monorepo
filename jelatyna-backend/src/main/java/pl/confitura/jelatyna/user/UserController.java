@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.timgroup.jgravatar.Gravatar;
 import com.timgroup.jgravatar.GravatarDefaultImage;
 import com.timgroup.jgravatar.GravatarRating;
+import io.jsonwebtoken.ExpiredJwtException;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
 
@@ -39,7 +40,8 @@ public class UserController {
             user.setPhoto(url);
         }
         User saved = repository.save(user);
-        return ResponseEntity.ok(new Resource<>(saved));
+        throw new ExpiredJwtException(null,null,"");
+//        return ResponseEntity.notFound().build();
     }
 
     @PostMapping("/users/{userId}/presentations")

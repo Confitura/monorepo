@@ -30,7 +30,7 @@ public class TokenService {
                 }})
                 .setId(user.getId())
                 .setSubject(user.getName())
-                .setExpiration(Date.from(LocalDateTime.now().plusHours(20).toInstant(ZoneOffset.UTC)))
+                .setExpiration(Date.from(LocalDateTime.now().minusDays(1).toInstant(ZoneOffset.UTC)))
                 .signWith(SignatureAlgorithm.HS512, getKey()).compact();
     }
 

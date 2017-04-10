@@ -10,28 +10,48 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.jsonwebtoken.ExpiredJwtException;
+import pl.confitura.jelatyna.infrastructure.JsonError;
 
 @Component
 @Profile(PRODUCTION)
 public class JwtAuthenticationFilter extends AuthenticationFilter {
 
     private TokenService tokenService;
+    private ObjectMapper mapper;
 
     @Autowired
-    public JwtAuthenticationFilter(TokenService tokenService) {
+    public JwtAuthenticationFilter(TokenService tokenService, ObjectMapper mapper) {
         this.tokenService = tokenService;
+        this.mapper = mapper;
     }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
+        try {
+            doAuthorize(request);
+            filterChain.doFilter(servletRequest, servletResponse);
+        } catch (ExpiredJwtException ex) {
+            HttpServletResponse response = (HttpServletResponse) servletResponse;
+            int status = HttpStatus.UNAUTHORIZED.value();
+            response.setStatus(status);
+            response.getWriter().write(mapper.writeValueAsString(new JsonError().setMessage("Token Expired!").setStatus(status)));
+        }
+    }
+
+    private void doAuthorize(HttpServletRequest request) {
         String authorization = request.getHeader("Authorization");
         if (authorization != null) {
             JelatynaPrincipal principal = tokenService.toUser(authorization.replaceFirst("Bearer ", ""));
@@ -39,7 +59,5 @@ public class JwtAuthenticationFilter extends AuthenticationFilter {
                     .setAuthentication(new PreAuthenticatedAuthenticationToken(principal, "",
                             Collections.emptyList()));
         }
-
-        filterChain.doFilter(servletRequest, servletResponse);
     }
 }

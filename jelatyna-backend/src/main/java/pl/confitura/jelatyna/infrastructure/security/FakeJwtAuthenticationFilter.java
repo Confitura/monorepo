@@ -1,6 +1,7 @@
 package pl.confitura.jelatyna.infrastructure.security;
 
 import static java.util.Collections.emptyList;
+import static pl.confitura.jelatyna.infrastructure.Profiles.FAKE_SECURITY;
 
 import java.io.IOException;
 
@@ -15,10 +16,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.stereotype.Component;
 
-import pl.confitura.jelatyna.infrastructure.Profiles;
-
 @Component
-@Profile(Profiles.FAKE_SECURITY)
+@Profile(FAKE_SECURITY)
 @Primary
 public class FakeJwtAuthenticationFilter extends AuthenticationFilter {
     @Override
