@@ -63,6 +63,6 @@ public class FacebookLoginController {
                     .setUsername(userDto.getUserName())
                     .setName(userDto.getName()));
         }
-        return userRepository.getOne(id);
+        return userRepository.findOne(id);
     }
 }
