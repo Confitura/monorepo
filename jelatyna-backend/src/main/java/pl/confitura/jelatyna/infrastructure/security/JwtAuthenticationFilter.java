@@ -21,10 +21,12 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.ExpiredJwtException;
+import lombok.extern.slf4j.Slf4j;
 import pl.confitura.jelatyna.infrastructure.JsonError;
 
 @Component
 @Profile(PRODUCTION)
+@Slf4j
 public class JwtAuthenticationFilter extends AuthenticationFilter {
 
     private TokenService tokenService;
@@ -44,6 +46,7 @@ public class JwtAuthenticationFilter extends AuthenticationFilter {
             doAuthorize(request);
             filterChain.doFilter(servletRequest, servletResponse);
         } catch (ExpiredJwtException ex) {
+            log.error("Error on parsing token", ex);
             HttpServletResponse response = (HttpServletResponse) servletResponse;
             int status = HttpStatus.UNAUTHORIZED.value();
             response.setStatus(status);
