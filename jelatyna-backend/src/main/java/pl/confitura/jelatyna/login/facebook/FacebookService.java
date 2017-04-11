@@ -1,5 +1,12 @@
 package pl.confitura.jelatyna.login.facebook;
 
+import java.io.IOException;
+import java.util.Random;
+import java.util.concurrent.ExecutionException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.scribejava.apis.FacebookApi;
 import com.github.scribejava.core.builder.ServiceBuilder;
@@ -8,12 +15,8 @@ import com.github.scribejava.core.model.OAuthRequest;
 import com.github.scribejava.core.model.Response;
 import com.github.scribejava.core.model.Verb;
 import com.github.scribejava.core.oauth.OAuth20Service;
-import org.springframework.stereotype.Service;
-import pl.confitura.jelatyna.login.OAuthUser;
-
-import java.io.IOException;
-import java.util.Random;
-import java.util.concurrent.ExecutionException;
+import pl.confitura.jelatyna.login.OAuthUserService;
+import pl.confitura.jelatyna.user.User;
 
 @Service
 class FacebookService {
@@ -22,20 +25,19 @@ class FacebookService {
 
     private final OAuth20Service service;
     private final ObjectMapper mapper;
+    private OAuthUserService oauthUserService;
 
-    public FacebookService(FacebookConfigurationProperties config, ObjectMapper mapper) {
+    @Autowired
+    public FacebookService(FacebookConfigurationProperties config, ObjectMapper mapper, OAuthUserService oAuthUserService) {
         final String secretState = "secret" + new Random().nextInt(999_999);
-        service = new ServiceBuilder()
+        this.oauthUserService = oAuthUserService;
+        this.mapper = mapper;
+        this.service = new ServiceBuilder()
                 .apiKey(config.getApiKey())
                 .apiSecret(config.getApiSecret())
                 .state(secretState)
                 .callback(config.getCallback())
                 .build(FacebookApi.instance());
-        this.mapper = mapper;
-    }
-
-    private OAuthUser mapToUser(String body) throws IOException {
-        return mapper.readValue(body, OAuthUser.class);
     }
 
     String getAuthorizationUrl() {
@@ -50,19 +52,25 @@ class FacebookService {
         }
     }
 
-    OAuthUser getUser(OAuth2AccessToken accessToken) {
+    User getUser(String code) {
         try {
-            return doGetUser(accessToken);
+            final OAuth2AccessToken accessToken = getAccessToken(code);
+            return oauthUserService.mapToUser(doGetUser(accessToken));
         } catch (Exception e) {
             throw new RuntimeException("Exception while validating a user", e);
         }
     }
 
-    private OAuthUser doGetUser(OAuth2AccessToken accessToken) throws InterruptedException, ExecutionException, IOException {
+    private FacebookUser doGetUser(OAuth2AccessToken accessToken) throws InterruptedException, ExecutionException, IOException {
         final OAuthRequest request = new OAuthRequest(Verb.GET, PROTECTED_RESOURCE_URL);
         service.signRequest(accessToken, request);
         final Response response = service.execute(request);
         return mapToUser(response.getBody());
     }
+
+    private FacebookUser mapToUser(String body) throws IOException {
+        return mapper.readValue(body, FacebookUser.class);
+    }
+
 }
 
