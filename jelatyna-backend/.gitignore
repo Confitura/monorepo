@@ -26,3 +26,5 @@ nbdist/
 /deployment/jelatyna.retry
 /deployment/host_vars/confitura.pl/secret
 /logs/
+/application.pid
+/application.port

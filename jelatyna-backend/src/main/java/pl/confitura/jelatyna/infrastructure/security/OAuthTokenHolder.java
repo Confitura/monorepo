@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import net.jodah.expiringmap.ExpiringMap;
 
 @Service
-public class TokenHolder {
+public class OAuthTokenHolder {
     private Map<String, String> tokenToSecret = ExpiringMap.builder()
             .expiration(5, MINUTES)
             .build();
