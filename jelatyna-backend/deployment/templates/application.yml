@@ -6,6 +6,17 @@ twitter:
   api-key: {{twitter_key}}
   api-secret: {{twitter_secret}}
   callback: {{twitter_callback}}
+
+facebook:
+  api-key: {{facebook_key}}
+  api-secret: {{facebook_secret}}
+  callback: {{facebook_callback}}
+
+github:
+  api-key: {{github_key}}
+  api-secret: {{github_secret}}
+  callback: {{github_callback}}
+
 jwt:
   key: {{jwt_key}}
 resources:
