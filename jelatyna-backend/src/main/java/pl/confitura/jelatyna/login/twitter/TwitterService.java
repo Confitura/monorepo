@@ -58,7 +58,6 @@ public class TwitterService {
             return doGetUser(accessToken);
         } catch (Exception e) {
             throw new RuntimeException("Exception while validating a user", e);
-
         }
     }
 
