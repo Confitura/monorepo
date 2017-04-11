@@ -1,12 +1,9 @@
-package pl.confitura.jelatyna.login;
+package pl.confitura.jelatyna.login.twitter;
 
 import static org.springframework.http.HttpStatus.PERMANENT_REDIRECT;
 
-import java.util.Base64;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,26 +11,25 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.scribejava.core.model.OAuth1AccessToken;
 import com.github.scribejava.core.model.OAuth1RequestToken;
-import pl.confitura.jelatyna.infrastructure.security.TokenHolder;
+import pl.confitura.jelatyna.infrastructure.security.OAuthTokenHolder;
 import pl.confitura.jelatyna.infrastructure.security.TokenService;
-import pl.confitura.jelatyna.login.twitter.TwitterService;
-import pl.confitura.jelatyna.user.User;
-import pl.confitura.jelatyna.user.UserRepository;
 
 @RestController
-@RequestMapping("/login")
-@CrossOrigin()
-public class LoginController {
-    @Autowired
-    private TokenHolder holder;
-    @Autowired
+@RequestMapping("/login/twitter")
+public class TwitterLoginController {
+    private OAuthTokenHolder holder;
     private TwitterService twitter;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
     private TokenService tokenService;
 
-    @GetMapping("/twitter")
+    @Autowired
+    public TwitterLoginController(OAuthTokenHolder holder, TwitterService twitter,
+            TokenService tokenService) {
+        this.holder = holder;
+        this.twitter = twitter;
+        this.tokenService = tokenService;
+    }
+
+    @GetMapping
     public ResponseEntity<Object> redirectToTwitterLogin() {
         OAuth1RequestToken token = twitter.getRequestToken();
         holder.setSecret(token.getToken(), token.getTokenSecret());
@@ -43,30 +39,12 @@ public class LoginController {
                 .build();
     }
 
-    @GetMapping("/twitter/callback")
+    @GetMapping("/callback")
     public ResponseEntity<String> doLoginWithTwitter(@RequestParam("oauth_token") String token,
             @RequestParam("oauth_verifier") String verifier) {
         OAuth1AccessToken accessToken = twitter.getAccessToken(new OAuth1RequestToken(token, holder.getSecretFor(token)), verifier);
-        OAuthUser userDto = twitter.getUser(accessToken);
-        User user = mapToSystemUser(userDto);
-        return ResponseEntity.ok(tokenService.asToken(user));
+        return ResponseEntity.ok(tokenService.asToken(twitter.getUser(accessToken)));
 
-    }
-
-    private User mapToSystemUser(OAuthUser userDto) {
-        String id = encodeId(userDto);
-        if (!userRepository.exists(id)) {
-            userRepository.save(new User()
-                    .setId(id)
-                    .setOrigin("twitter")
-                    .setUsername(userDto.getUserName())
-                    .setName(userDto.getName()));
-        }
-        return userRepository.findOne(id);
-    }
-
-    private String encodeId(OAuthUser userDto) {
-        return Base64.getEncoder().encodeToString(("twitter/" + userDto.getId()).getBytes());
     }
 
 }
