@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import {ActivatedRoute, Params, Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {LoginService} from "../../security/login.service";
 import {JwtUser} from "../home/jwt-user.model";
 
@@ -19,26 +19,33 @@ export class LoginComponent implements OnInit {
 
     ngOnInit(): void {
         this.user = JSON.parse(sessionStorage.getItem("user")) as JwtUser;
-        this.route.queryParams
-            .subscribe((params: Params) => {
-                let token = params["oauth_token"];
-                let verifier = params["oauth_verifier"];
-                if (token && verifier) {
-                    this.login.login(token, verifier)
-                        .subscribe((user: JwtUser) => {
-                            this.user = user;
-                            if (user.isNew) {
-                                this.router.navigate(["/profile/edit"])
-                            } else {
-                                this.router.navigate(["/profile"])
-                            }
-                        });
-                }
-            });
+        let origin = this.route.snapshot.params["origin"];
+        let queryParams = this.route.snapshot.queryParams;
+        if (origin == "twitter") {
+            this.doLogin(() =>
+                this.login.loginWithTwitter(queryParams["oauth_token"], queryParams["oauth_verifier"]));
+        } else if (origin == "github") {
+            this.doLogin(() => this.login.loginWithGitHub(queryParams["code"]));
+        } else if (origin == "facebook") {
+            this.doLogin(() => this.login.loginWithFacebook(queryParams["code"]));
+        }
     }
 
-    twitterLogin() {
-        window.location.assign(`${this.config.apiServer}/login/twitter`);
+    loginWith(origin:string) {
+        window.location.assign(`${this.config.apiServer}/login/${origin}`);
+    }
+
+
+    private doLogin(callback: Function) {
+        callback()
+            .subscribe((user: JwtUser) => {
+                this.user = user;
+                if (user.isNew) {
+                    this.router.navigate(["/profile/edit"])
+                } else {
+                    this.router.navigate(["/profile"])
+                }
+            });
     }
 
 }

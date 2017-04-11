@@ -14,7 +14,7 @@ export class NavigationComponent implements OnInit {
         {label: "about us", url: "/about"},
         {label: "partners", url: "/partners"},
         {label: "profile", url: "/profile", show: () => this.loggedIn},
-        // {label: "login", url: "/login", clazz: "pink", show: () => !this.loggedIn},
+        {label: "login", url: "/login", clazz: "pink", show: () => !this.loggedIn},
         {label: "logout", action: () => this.logout(), clazz: "pink", show: () => this.loggedIn},
     ];
 

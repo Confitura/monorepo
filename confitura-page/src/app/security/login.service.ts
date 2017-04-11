@@ -10,23 +10,32 @@ export class LoginService {
     constructor(private http: CustomHttp, private currentUser: CurrentUser) {
     }
 
-    login(token: string, verifier: string): Observable<JwtUser> {
-        return Observable.create((observer: Observer<JwtUser>) => {
-            let searchParams = new URLSearchParams();
-            searchParams.set("oauth_token", token);
-            searchParams.set("oauth_verifier", verifier);
-            this.http.get("/login/twitter/callback", {
-                search: searchParams
-            })
-                .subscribe((response: Response) => {
-                    this.currentUser.set(response.text());
-                    observer.next(this.currentUser.get());
-                });
-        });
+    loginWithTwitter(token: string, verifier: string): Observable<JwtUser> {
+        return this.doLogin("twitter", new URLSearchParams(`oauth_token=${token}&oauth_verifier=${verifier}`));
     }
 
+
+    loginWithGitHub(code: string): Observable<JwtUser> {
+        return this.doLogin("github", new URLSearchParams(`code=${code}`));
+    }
+
+    loginWithFacebook(code: string): Observable<JwtUser> {
+        return this.doLogin("facebook", new URLSearchParams(`code=${code}`));
+    }
 
     logout() {
         this.currentUser.logout();
     }
+
+    private doLogin(system: string, searchParams: URLSearchParams) {
+        return Observable.create((observer: Observer<JwtUser>) => {
+            this.http.get(`/login/${system}/callback`, {
+                search: searchParams
+            }).subscribe((response: Response) => {
+                this.currentUser.set(response.text());
+                observer.next(this.currentUser.get());
+            });
+        });
+    }
+
 }

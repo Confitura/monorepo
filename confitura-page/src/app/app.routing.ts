@@ -11,6 +11,7 @@ const appRoutes: Routes = [
     {path: 'partners', component: PartnersComponent},
     {path: 'partners/:id', component: PartnerComponent},
     {path: 'login', component: LoginComponent},
+    {path: 'login/:origin', component: LoginComponent},
 
 ];
 export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);
