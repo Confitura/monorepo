@@ -5,12 +5,8 @@ import static com.github.scribejava.core.model.Verb.GET;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.scribejava.apis.GitHubApi;
@@ -26,43 +22,33 @@ import pl.confitura.jelatyna.user.User;
 public class GitHubService {
 
     private OAuth20Service gitHub;
-    @Value("${github.api-key}")
-    private String apiKey;
-    @Value("${github.api-secret}")
-    private String apiSecret;
-    @Value("${github.callback}")
-    private String callback;
     private OAuthUserService oauthUserService;
-
-    private ObjectMapper mapper = new ObjectMapper();
+    private ObjectMapper mapper;
 
     @Autowired
-    public GitHubService(OAuthUserService oauthUserService) {
+    public GitHubService(OAuthUserService oauthUserService, GitHubConfigurationProperties properties, ObjectMapper mapper) {
         this.oauthUserService = oauthUserService;
-    }
-
-    @PostConstruct
-    public void createService() {
-        gitHub = new ServiceBuilder()
-                .apiKey(apiKey)
-                .apiSecret(apiSecret)
-                .callback(callback)
+        this.gitHub = new ServiceBuilder()
+                .apiKey(properties.getApiKey())
+                .apiSecret(properties.getApiSecret())
+                .callback(properties.getCallback())
                 .build(GitHubApi.instance());
+        this.mapper = mapper;
     }
 
     String getAuthorizationUrl() {
         return gitHub.getAuthorizationUrl();
     }
 
-    User getUserFor(@RequestParam("code") String code, GithubLoginController githubLoginController) {
+    User getUserFor(String code) {
         try {
             return doGetUser(code);
-        } catch (Exception e) {
-            throw new RuntimeException("");
+        } catch (Exception ex) {
+            throw new RuntimeException("Error on fetching user from github", ex);
         }
     }
 
-    private User doGetUser(@RequestParam("code") String code)
+    private User doGetUser(String code)
             throws IOException, InterruptedException, ExecutionException {
         OAuth2AccessToken token = gitHub.getAccessToken(code);
         return oauthUserService.mapToUser(getGitHubUserFor(token));

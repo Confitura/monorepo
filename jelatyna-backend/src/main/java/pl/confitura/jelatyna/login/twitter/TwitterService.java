@@ -2,10 +2,7 @@ package pl.confitura.jelatyna.login.twitter;
 
 import static com.github.scribejava.core.model.Verb.GET;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,27 +18,18 @@ import pl.confitura.jelatyna.user.User;
 
 @Service
 public class TwitterService {
-    private ObjectMapper mapper = new ObjectMapper();
-    @Value("${twitter.api-key}")
-    private String apiKey;
-    @Value("${twitter.api-secret}")
-    private String apiSecret;
-    @Value("${twitter.callback}")
-    private String callback;
+    private ObjectMapper mapper;
     private OAuth10aService service;
     private OAuthUserService oauthUserService;
 
     @Autowired
-    public TwitterService(OAuthUserService oauthUserService) {
+    public TwitterService(OAuthUserService oauthUserService, TwitterConfigurationProperties properties, ObjectMapper mapper) {
         this.oauthUserService = oauthUserService;
-    }
-
-    @PostConstruct
-    public void createService() {
-        service = new ServiceBuilder()
-                .apiKey(apiKey)
-                .apiSecret(apiSecret)
-                .callback(callback)
+        this.mapper = mapper;
+        this.service = new ServiceBuilder()
+                .apiKey(properties.getApiKey())
+                .apiSecret(properties.getApiSecret())
+                .callback(properties.getCallback())
                 .build(TwitterApi.instance());
     }
 

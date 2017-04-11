@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import pl.confitura.jelatyna.login.facebook.FacebookConfigurationProperties;
+import pl.confitura.jelatyna.login.github.GitHubConfigurationProperties;
+import pl.confitura.jelatyna.login.twitter.TwitterConfigurationProperties;
 import pl.confitura.jelatyna.presentation.Tag;
 import pl.confitura.jelatyna.presentation.TagRepository;
 
@@ -24,7 +26,11 @@ import pl.confitura.jelatyna.presentation.TagRepository;
         basePackageClasses = { JelatynaApplication.class, Jsr310JpaConverters.class }
 )
 @EnableConfigurationProperties(
-        FacebookConfigurationProperties.class
+        {
+                FacebookConfigurationProperties.class,
+                GitHubConfigurationProperties.class,
+                TwitterConfigurationProperties.class
+        }
 )
 public class JelatynaApplication {
 

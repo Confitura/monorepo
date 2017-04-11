@@ -19,13 +19,13 @@ import pl.confitura.jelatyna.user.User;
 @RestController
 @RequestMapping("/login/github")
 @CrossOrigin()
-public class GithubLoginController {
+public class GitHubLoginController {
 
     private TokenService tokenService;
     private GitHubService service;
 
     @Autowired
-    public GithubLoginController(TokenService tokenService, GitHubService service) {
+    public GitHubLoginController(TokenService tokenService, GitHubService service) {
         this.tokenService = tokenService;
         this.service = service;
     }
@@ -41,7 +41,7 @@ public class GithubLoginController {
     @GetMapping("/callback")
     public ResponseEntity<String> doLoginWithGitHub(@RequestParam("code") String code)
             throws InterruptedException, ExecutionException, IOException {
-        User user = service.getUserFor(code, this);
+        User user = service.getUserFor(code);
         return ResponseEntity.ok(tokenService.asToken(user));
 
     }
