@@ -38,8 +38,15 @@ public class JelatynaApplication {
             List<Tag> tags = Arrays.asList(
                     new Tag("java", "Java"),
                     new Tag("javascript", "JavaScript"),
+                    new Tag("web", "Web"),
                     new Tag("scrum", "Scrum"),
-                    new Tag("agile", "Agile")
+                    new Tag("agile", "Agile"),
+                    new Tag("reactive", "Reactive"),
+                    new Tag("bigdata", "Big Data"),
+                    new Tag("jvm", "JVM"),
+                    new Tag("sc", "Software Craftsmanship"),
+                    new Tag("could", "Cloud"),
+                    new Tag("microservices", "Microservices")
             );
             repository.save(tags);
         };
