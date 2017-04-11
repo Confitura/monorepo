@@ -66,7 +66,6 @@ public class TwitterService {
             return oauthUserService.mapToUser(doGetUser(accessToken));
         } catch (Exception e) {
             throw new RuntimeException("Exception while validating a user", e);
-
         }
     }
 
