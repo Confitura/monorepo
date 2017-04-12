@@ -23,6 +23,8 @@ public class ResourceStorage {
     private String rootPath;
     @Value("${resources.folder}")
     private String folder;
+    @Value("${server.context-path}")
+    private String contextPath;
 
     private UserRepository repository;
 
@@ -44,6 +46,6 @@ public class ResourceStorage {
         Path filePath =
                 Paths.get(path.toString(), fileName + "." + com.google.common.io.Files.getFileExtension(file.getOriginalFilename()));
         Files.write(filePath, file.getBytes());
-        return rootPath + "/" + filePath.toString().replace(folder, "");
+        return contextPath + "/" + rootPath + "/" + filePath.toString().replace(folder, "");
     }
 }
