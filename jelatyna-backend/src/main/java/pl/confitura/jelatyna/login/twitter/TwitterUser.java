@@ -1,5 +1,7 @@
 package pl.confitura.jelatyna.login.twitter;
 
+import java.util.Base64;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -11,7 +13,7 @@ import pl.confitura.jelatyna.user.User;
 @Data
 @ToString
 public class TwitterUser extends OAuthUserBase {
-    private String id;
+
     private String name;
     @JsonProperty("screen_name")
     private String userName;
@@ -22,9 +24,18 @@ public class TwitterUser extends OAuthUserBase {
 
     @Override
     protected User toUser() {
-        return new User().setId(encodeId())
+        return new User()
+                .setId(encodeId())
                 .setOrigin(getSystem())
                 .setName(name)
                 .setTwitter(userName);
     }
+
+    @Override
+    public String encodeId() {
+        return Base64.getEncoder()
+                .encodeToString((getSystem() + "/" + userName)
+                        .getBytes());
+    }
+
 }
