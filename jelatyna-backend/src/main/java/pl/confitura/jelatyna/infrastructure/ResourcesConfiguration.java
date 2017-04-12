@@ -14,7 +14,7 @@ public class ResourcesConfiguration {
         private String rootPath;
         @Value("${resources.folder}")
         private String folder;
-        @Value("${servlet.contextPath}")
+        @Value("${server.context-path}")
         private String contextPath;
 
         @Override
