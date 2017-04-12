@@ -20,7 +20,7 @@ github:
 jwt:
   key: {{jwt_key}}
 resources:
-  path: resources
+  path: api/resources
   folder: {{resources_folder}}
 spring:
   datasource:
