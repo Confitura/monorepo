@@ -14,11 +14,13 @@ public class ResourcesConfiguration {
         private String rootPath;
         @Value("${resources.folder}")
         private String folder;
+        @Value("${servlet.contextPath}")
+        private String contextPath;
 
         @Override
         public void addResourceHandlers(ResourceHandlerRegistry registry) {
             registry
-                    .addResourceHandler(rootPath + "/**/*")
+                    .addResourceHandler(contextPath + "/" + rootPath + "/**/*")
                     .addResourceLocations("file:///" + folder + "/");
         }
 
