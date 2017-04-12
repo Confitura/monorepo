@@ -1,10 +1,10 @@
 
 server:
   port: 9090
-  tomcat:
-    accesslog:
-      enabled: true
-    basedir: /Users/margielm/jelatyna/tomcat
+#  tomcat:
+#    accesslog:
+#      enabled: true
+#    basedir: /Users/margielm/jelatyna/tomcat
 #      directory: ./tomcat/logs
 
 
@@ -14,7 +14,7 @@ twitter:
   callback: http://localhost:8080/login
 spring:
   datasource:
-    url: jdbc:mysql://${docker-machine.ip}:33061/confitura?useLegacyDatetimeCode=false&serverTimezone=Europe/Warsaw&useUnicode=yes&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:33061/confitura?useLegacyDatetimeCode=false&serverTimezone=Europe/Warsaw&useUnicode=yes&characterEncoding=UTF-8
     username: confitura
     password: confitura
   jpa:
@@ -24,4 +24,3 @@ spring:
 #      hibernate:
 #        show_sql: true
 #        format_sql: true
-docker-machine.ip: localhost
