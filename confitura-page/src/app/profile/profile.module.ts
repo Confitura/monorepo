@@ -6,10 +6,13 @@ import {ProfileViewComponent} from "./profile-view/profile-view.component";
 import {PersonModule} from "../persons/persons.module";
 import {PresentationEditComponent} from "./presentation-edit/presentation-edit.component";
 import {TagInputModule} from "ng2-tag-input";
+import {ProfileCompleteGuard} from "./shared/profile-complete-guard.service";
 
 @NgModule({
     imports: [routing, SharedModule, PersonModule,TagInputModule],
-    declarations: [ProfileEditComponent, ProfileViewComponent, PresentationEditComponent]
+    declarations: [ProfileEditComponent, ProfileViewComponent, PresentationEditComponent],
+    providers: [ProfileCompleteGuard]
+
 })
 export class ProfileModule {
 

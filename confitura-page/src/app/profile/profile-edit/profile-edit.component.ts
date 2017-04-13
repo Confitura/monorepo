@@ -1,6 +1,6 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit, ViewChild} from "@angular/core";
 import {CurrentUser} from "../../security/current-user.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {UserService} from "../../pages/profile/user.service";
 import {User} from "../../pages/profile/user.model";
 
@@ -10,10 +10,12 @@ import {FormControl} from "@angular/forms";
     templateUrl: "./profile-edit.component.html"
 })
 export class ProfileEditComponent implements OnInit {
+    isEdit = false;
     submitted = false;
     model: User = new User();
+    @ViewChild("profileForm") form: FormControl;
 
-    constructor(private service: UserService, private currentUser: CurrentUser, private router: Router) {
+    constructor(private service: UserService, private currentUser: CurrentUser, private router: Router, private route: ActivatedRoute) {
 
     }
 
@@ -21,17 +23,22 @@ export class ProfileEditComponent implements OnInit {
         if (this.currentUser.isAvailable()) {
             this.service.getBy(this.currentUser.get().jti)
                 .subscribe(user => {
-                    this.model = user
+                    this.model = user;
+                    this.isEdit = this.route.snapshot.params["id"] != null;
                 });
         }
     }
 
-    save(profileFile: FormControl) {
+    save() {
         this.submitted = true;
-        if (profileFile.valid) {
+        if (this.isValid()) {
             this.service.save(this.model)
                 .subscribe(response => this.router.navigate(["/profile"]));
         }
+    }
+
+    isValid() {
+        return this.form.valid;
     }
 
 }

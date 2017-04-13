@@ -30,12 +30,14 @@ module.exports = webpackMerge(commonConfig, {
     plugins: [
         new webpack.DefinePlugin({
             'API_URL': JSON.stringify("http://localhost:9090"),
+            // 'API_URL': JSON.stringify("https://confitura.pl/api/"),
             'ENV': JSON.stringify('dev')
         })
 
     ],
     devServer: {
         historyApiFallback: true,
+        https: false,
         stats: 'minimal',
         proxy:{
             "/resources/**": {

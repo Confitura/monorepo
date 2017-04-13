@@ -40,7 +40,7 @@
                         </div>
                         <div class="text-right">
                             <button type="submit" class="btn btn-primary" [disabled]="profileForm.submitted && !profileForm.form.valid">Save</button>
-                            <a class="btn btn-warning" routerLink="/profile">Cancel</a>
+                            <a class="btn btn-warning" routerLink="/profile" *ngIf="isEdit">Cancel</a>
                         </div>
                     </form>
                 </div>
