@@ -21,6 +21,6 @@ public class Partner {
     private String logo;
 
     public String getLogo(){
-        return "http://c4p.confitura.pl//files/sponsors/" + id + ".jpg";
+        return "https://2017.confitura.pl/files/sponsors/" + id + ".jpg";
     }
 }
