@@ -7,6 +7,7 @@ export class User {
     email: string;
     bio: string;
     photo: string;
+    admin:boolean;
 
 
 }

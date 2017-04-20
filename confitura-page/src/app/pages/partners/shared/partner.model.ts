@@ -1,8 +1,8 @@
 export class Partner{
-    id:number;
+    id:string;
     name:string;
     description:string;
     logo:string;
-    url:string;
+    www:string;
     type:string;
 }

@@ -2,6 +2,9 @@
     <div class="row-fluid">
         <div class="col-lg-12 partners-header"><h2>partners</h2></div>
     </div>
+    <div class="row-fluid row-1140 text-right" *jl-admin="">
+        <button class="btn btn-default" style="margin-top: 20px" routerLink="/admin2/partners/add">Add New Partner</button>
+    </div>
     <div class="row-fluid" *ngIf="partners.length > 0">
         <div class="col-lg-12 partners-type {{type}}-type" *ngFor="let type of types">
             <div *ngIf="partnersFor(type).length > 0" class="pt100 pb50">
@@ -22,7 +25,7 @@
     </div>
     <div class="row-fluid">
         <div class="col-lg-12 text-center pt100 pb100">
-            <p>Contact us on <a href="mailto:confitura@confitura.pl">confitura@confitura.pl</a> to learn about our  packages</p>
+            <p>Contact us on <a href="mailto:confitura@confitura.pl">confitura@confitura.pl</a> to learn about our packages</p>
         </div>
     </div>
 </section>
