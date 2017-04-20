@@ -15,14 +15,17 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtHandlerAdapter;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.extern.slf4j.Slf4j;
 import pl.confitura.jelatyna.user.User;
 
 @Service
+@Slf4j
 public class TokenService {
     @Value("${jwt.key}")
     private String key;
 
     public String asToken(User user) {
+        log.info("Transforming user to token {}", user);
         return Jwts.builder()
                 .setClaims(new HashMap<String, Object>() {{
                     put("isAdmin", user.isAdmin());

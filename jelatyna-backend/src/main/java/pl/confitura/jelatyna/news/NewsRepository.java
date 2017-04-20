@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @RestResource(path = "news")
 @CrossOrigin
 public interface NewsRepository extends Repository<News, Long> {
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("@security.isAdmin()")
     Page<News> findAll(Pageable pageable);
 
     @Query("FROM News as n WHERE n.published = true")

@@ -8,5 +8,5 @@ import lombok.experimental.Accessors;
 public class JelatynaPrincipal {
     public String id;
     public String name;
-    public Boolean admin;
+    public boolean admin;
 }

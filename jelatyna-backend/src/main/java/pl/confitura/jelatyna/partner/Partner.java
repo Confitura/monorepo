@@ -1,26 +1,25 @@
 package pl.confitura.jelatyna.partner;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+
+import org.hibernate.annotations.GenericGenerator;
 
 import lombok.Data;
 
 @Entity
-@Table(name = "sponsor")
 @Data
 public class Partner {
     @Id
-    private Long id;
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @Column(columnDefinition = "varchar(100)")
+    private String id;
     private String description;
     private String name;
-    private String webpage;
+    private String www;
     private String type;
-    @Transient
     private String logo;
-
-    public String getLogo(){
-        return "https://2017.confitura.pl/files/sponsors/" + id + ".jpg";
-    }
 }

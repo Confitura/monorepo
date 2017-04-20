@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,7 +26,11 @@ public class ResourceController {
     @PostMapping
     public void store(@RequestParam MultipartFile file, @AuthenticationPrincipal JelatynaPrincipal principal) throws IOException {
         storage.storeSpeaker(file, principal);
+    }
 
+    @PostMapping("/partners/{id}")
+    public void storePartnerLogo(@RequestParam MultipartFile file, @PathVariable String id) throws IOException {
+        storage.storePartnerLogo(file, id);
     }
 
 }

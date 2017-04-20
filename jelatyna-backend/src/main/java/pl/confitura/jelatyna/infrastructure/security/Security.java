@@ -30,6 +30,10 @@ public class Security {
         return ownerId.equals(getUserId());
     }
 
+    public boolean isAdmin() {
+        return getPrincipal().isAdmin();
+    }
+
     private JelatynaPrincipal getPrincipal() {
         return (JelatynaPrincipal) ((Authentication) request.getUserPrincipal()).getPrincipal();
     }
