@@ -5,4 +5,5 @@ export class Partner{
     logo:string;
     www:string;
     type:string;
+    published: boolean;
 }

@@ -3,13 +3,15 @@ import {Partner} from "./partner.model";
 import {Observable} from "rxjs";
 import {Injectable} from "@angular/core";
 import {CustomHttp} from "../../../shared/custom-http.service";
+import {CurrentUser} from "../../../security/current-user.service";
 @Injectable()
 export class PartnerService {
-    constructor(private http: CustomHttp) {
+    constructor(private http: CustomHttp, private currentUser: CurrentUser) {
     }
 
     getAll(): Observable<Partner[]> {
-        return this.http.get("/partners")
+        const url = this.currentUser.isAdmin() ? "/partners" : "/partners/search/published";
+        return this.http.get(url)
             .map((response: Response) => response.json()["_embedded"]["partners"] as Partner[]);
     }
 
