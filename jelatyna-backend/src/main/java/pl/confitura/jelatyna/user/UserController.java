@@ -32,7 +32,7 @@ public class UserController {
 
     @PostMapping("/users")
     @PreAuthorize("@security.isOwner(#user.id)")
-    public ResponseEntity<?> save(@Valid @RequestBody User user) {
+    public ResponseEntity<?> save(@RequestBody User user) {
         if (StringUtils.isEmpty(user.getPhoto())) {
             Gravatar gravatar = new Gravatar(300, GravatarRating.GENERAL_AUDIENCES, GravatarDefaultImage.BLANK);
             String url = gravatar.getUrl(user.getEmail());

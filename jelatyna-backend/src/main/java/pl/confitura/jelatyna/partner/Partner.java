@@ -17,9 +17,11 @@ public class Partner {
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(columnDefinition = "varchar(100)")
     private String id;
+    @Column(columnDefinition = "varchar(10000)")
     private String description;
     private String name;
     private String www;
     private String type;
     private String logo;
+    private boolean published;
 }

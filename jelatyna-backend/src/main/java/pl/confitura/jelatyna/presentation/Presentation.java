@@ -32,7 +32,7 @@ public class Presentation {
     @NotBlank
     @Column(length = 300)
     private String shortDescription;
-    @NotBlank
+    @NotBlank()
     @Column(length = 1000)
     private String description;
     @NotBlank

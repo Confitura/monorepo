@@ -1,5 +1,7 @@
 package pl.confitura.jelatyna.infrastructure;
 
+import static pl.confitura.jelatyna.infrastructure.Profiles.DEV;
+
 import java.io.IOException;
 
 import javax.servlet.Filter;
@@ -10,18 +12,23 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 @Component
 @Order(-20000)
+@Profile(DEV)
 public class CorsFilter implements Filter {
+    @Value("${ui.origin:*}")
+    private String origin;
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
 
         HttpServletResponse response = (HttpServletResponse) res;
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Origin", origin);
         response.setHeader("Access-Control-Allow-Credentials", "true");
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
         response.setHeader("Access-Control-Max-Age", "3600");

@@ -20,7 +20,7 @@ public class User {
     @Id
     private String id;
     private String origin;
-//    @NotNull
+    //    @NotBlank
     private String name;
 //    @NotNull
     private String email;
@@ -36,4 +36,8 @@ public class User {
     private boolean isVolunteer;
     @OneToMany(mappedBy = "speaker")
     private Set<Presentation> presentations;
+
+    interface Edit {
+
+    }
 }
