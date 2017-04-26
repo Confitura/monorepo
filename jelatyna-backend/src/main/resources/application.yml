@@ -1,11 +1,6 @@
 
 server:
   port: 9090
-#  tomcat:
-#    accesslog:
-#      enabled: true
-#    basedir: /Users/margielm/jelatyna/tomcat
-#      directory: ./tomcat/logs
 
 
 twitter:
@@ -20,7 +15,3 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-#    properties:
-#      hibernate:
-#        show_sql: true
-#        format_sql: true

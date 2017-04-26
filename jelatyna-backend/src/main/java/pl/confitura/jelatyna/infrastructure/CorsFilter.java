@@ -1,7 +1,5 @@
 package pl.confitura.jelatyna.infrastructure;
 
-import static pl.confitura.jelatyna.infrastructure.Profiles.DEV;
-
 import java.io.IOException;
 
 import javax.servlet.Filter;
@@ -13,13 +11,12 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 @Component
 @Order(-20000)
-@Profile(DEV)
+//@Profile(DEV)
 public class CorsFilter implements Filter {
     @Value("${ui.origin:*}")
     private String origin;
