@@ -3,7 +3,6 @@
     "bootstrap": "registry:dt/bootstrap",
     "faker": "registry:dt/faker",
     "jasmine": "registry:dt/jasmine",
-    "jquery": "registry:dt/jquery",
     "js-base64": "registry:dt/js-base64"
   },
   "dependencies": {

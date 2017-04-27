@@ -42,6 +42,10 @@
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@angular/upgrade/-/upgrade-4.0.0.tgz#bb5cac73a80064c4aa0aa896ac37d8cdda4d1411"
 
+"@types/marked@0.0.28":
+  version "0.0.28"
+  resolved "https://registry.yarnpkg.com/@types/marked/-/marked-0.0.28.tgz#44ba754e9fa51432583e8eb30a7c4dd249b52faa"
+
 "@types/simplemde@^1.11.6":
   version "1.11.6"
   resolved "https://registry.yarnpkg.com/@types/simplemde/-/simplemde-1.11.6.tgz#4b609b3d2034fb527414d409b8f271b9a19195b2"
@@ -709,6 +713,10 @@ builtin-modules@^1.0.0:
 builtin-status-codes@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/builtin-status-codes/-/builtin-status-codes-3.0.0.tgz#85982878e21b98e1c66425e03d0174788f569ee8"
+
+bxslider@^4.2.11:
+  version "4.2.11"
+  resolved "https://registry.yarnpkg.com/bxslider/-/bxslider-4.2.11.tgz#1cd3cd76ee40fc1918af9d228de591fb638d85a5"
 
 bytes@2.3.0:
   version "2.3.0"
