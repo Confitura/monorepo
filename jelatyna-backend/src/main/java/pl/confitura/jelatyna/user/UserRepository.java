@@ -1,5 +1,6 @@
 package pl.confitura.jelatyna.user;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.rest.core.annotation.RestResource;
 
@@ -11,4 +12,9 @@ public interface UserRepository extends Repository<User, String> {
     User findOne(String userId);
 
     boolean exists(String id);
+
+    @Query("FROM User WHERE isAdmin = true")
+    @RestResource(path = "admins", rel = "admins")
+    Iterable<User> findAdmins();
+
 }
