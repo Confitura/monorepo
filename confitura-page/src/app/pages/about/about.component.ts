@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import {Person} from "./person.model";
 import "./about.scss";
 import {PersonModalService} from "../../persons/person-modal/person-modal.service";
+import {User} from "../profile/user.model";
 @Component({
     templateUrl: "./about.component.html"
 })
@@ -20,11 +21,8 @@ export class AboutComponent implements OnInit {
         this.volunteers = this.service.getAllVolunteers();
     }
 
-    show(person:Person){
-        this.personModalService.showFor(person);
-    }
-
-    logError(){
+    show(user:User){
+        this.personModalService.showFor(user);
     }
 
 

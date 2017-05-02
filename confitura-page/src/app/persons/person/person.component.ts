@@ -1,13 +1,13 @@
-import {Component, Input, ElementRef, ViewChild} from "@angular/core";
-import {Person} from "../../pages/about/person.model";
+import {Component, ElementRef, Input, ViewChild} from "@angular/core";
 import {PersonModalService} from "../person-modal/person-modal.service";
+import {User} from "../../pages/profile/user.model";
 @Component({
     selector: "jl-person",
     templateUrl: "./person.component.html"
 })
 export class PersonComponent {
     @Input()
-    model: Person;
+    model: User;
     @ViewChild("img")
     imgElement: ElementRef;
 
@@ -26,5 +26,13 @@ export class PersonComponent {
 
     openModal() {
         this.modalService.showFor(this.model);
+    }
+
+    firstName(): string {
+        return this.model.name.split(" ")[0];
+    }
+
+    lastName(): string {
+        return this.model.name.replace(this.firstName(), "").trim();
     }
 }

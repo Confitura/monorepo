@@ -9,16 +9,16 @@ export class OrganizerService{
     constructor(private http:Http, private configuration:HttpConfiguration){}
 
     getAllOrganizers(){
-        return this.getAllFor("organizers");
+        return this.getAllFor("admins");
     }
 
     getAllVolunteers(){
-        return this.getAllFor("volunteers");
+        return Observable.of([]);//this.getAllFor("volunteers");
     }
 
     private getAllFor(type:string):Observable<Person[]>{
-        return this.http.get(`${this.configuration.apiServer}/${type}`)
-            .map((result: Response) => result.json()['_embedded'][type] as Person[])
+        return this.http.get(`${this.configuration.apiServer}/users/search/${type}`)
+            .map((result: Response) => result.json()['_embedded']['users'] as Person[])
             .map((persons: Person[]) => _.shuffle(persons));
     }
 

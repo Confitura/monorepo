@@ -1,5 +1,5 @@
 <div class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-lg" role="document" *ngIf="person">
+    <div class="modal-dialog modal-lg" role="document" *ngIf="model">
         <div class="modal-content">
             <div class="modal-body beige person-modal">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -9,23 +9,23 @@
                 <div class="person-container">
                     <div class="person-photo">
                         <div class="img-speaker">
-                            <img class="img-responsive margin-auto" [src]="person.photo"/>
+                            <img class="img-responsive margin-auto" [src]="model.photo"/>
                         </div>
                         <section class="social-speaker">
-                            <a href="http://www.twitter.com/{{person.twitter}}" title="twitter" target="_blank" *ngIf="person.twitter">
+                            <a href="http://www.twitter.com/{{model.twitter}}" title="twitter" target="_blank" *ngIf="model.twitter">
                                 <i class="fa fa-twitter prelegent-social" aria-hidden="true"></i>
                             </a>
-                            <a href="//{{person.url}}" title="direct" target="_blank" *ngIf="person.url">
+                            <a href="//{{model.url}}" title="direct" target="_blank" *ngIf="model.url">
                                 <i class="fa fa-arrow-up prelegent-social" aria-hidden="true"></i>
                             </a>
                         </section>
                     </div>
                     <div class="person-info">
                         <section>
-                            <div class="ta-leftperson-name person-name"><h3>{{person.firstName}} {{person.lastName}}</h3></div>
-                            <div class="mcci-content" [innerHTML]="person.bio"></div>
+                            <div class="ta-leftperson-name person-name"><h3>{{model.name}}</h3></div>
+                            <div class="mcci-content" [innerHTML]="model.bio"></div>
                         </section>
-                        <section *ngIf="person.presentations">
+                        <section *ngIf="model.presentations">
                             <a>
                                 <h3 class="presentation-title">
                                     title
