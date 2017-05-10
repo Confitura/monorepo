@@ -23,6 +23,9 @@ html, body {
 }
 
 body#confitura {
+  h2 {
+    margin-top: 0;
+  }
   @media all and (min-width: $size_small) {
     padding-top: 100px;
   }
