@@ -1,17 +1,19 @@
+@import "../../../sizes";
 section#partners-confitura {
   .unpublished {
     opacity: 0.1;
-    //padding: 10px;
-    //border: dashed 1px #000000;
   }
-  .partners-header {
-    position: relative;
-    background: transparent url(../../../img/header-register.jpg) center center no-repeat;
-    background-size: cover;
-    h2 {
-      color: #ffffff;
+  .partners-banner {
+    background: url("../../../img/partners_left.png") no-repeat left top, url("../../../img/partners_right.png") no-repeat right bottom;
+    background-color: #000000;
+    background-size: contain;
+    @media all and (max-width: $size_xsmall) {
+      background: url("../../../img/partners_right.png") no-repeat right bottom;
+      background-size: contain;
     }
-
+    h2 {
+      color: #fff;
+    }
   }
 
   .partners-type {
