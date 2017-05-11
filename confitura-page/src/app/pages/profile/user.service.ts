@@ -16,5 +16,10 @@ export class UserService{
         return this.http.post(`/users`, user);
     }
 
+    getAll(): Observable<User[]> {
+        return this.http.get(`/users`)
+            .map((response: Response) => response.json()["_embedded"]["users"] as User[]);
+    }
+
 
 }

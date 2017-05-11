@@ -9,7 +9,7 @@ import {FileUploadModule} from "ng2-file-upload";
     imports: [SharedModule, FileUploadModule],
     declarations: [PersonComponent, PersonModalComponent, PersonViewComponent],
     providers: [PersonModalService],
-    exports: [PersonComponent, PersonModalComponent, PersonViewComponent]
+    exports: [PersonComponent, PersonModalComponent, PersonViewComponent, PersonModalComponent]
 })
 export class PersonModule{
 
