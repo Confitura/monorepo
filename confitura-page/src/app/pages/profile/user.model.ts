@@ -3,7 +3,7 @@ export class User {
     name: string;
     twitter: string;
     github: string;
-    www: string;
+    www: strigitng;
     email: string;
     bio: string;
     photo: string;
