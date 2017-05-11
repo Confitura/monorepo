@@ -1,6 +1,7 @@
 
 server:
   port: 9090
+  context-path:
 
 
 twitter:
