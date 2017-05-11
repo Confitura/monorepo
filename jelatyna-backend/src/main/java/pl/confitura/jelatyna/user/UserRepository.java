@@ -3,6 +3,7 @@ package pl.confitura.jelatyna.user;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.rest.core.annotation.RestResource;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 @RestResource(path = "users")
 public interface UserRepository extends Repository<User, String> {
@@ -16,5 +17,8 @@ public interface UserRepository extends Repository<User, String> {
     @Query("FROM User WHERE isAdmin = true")
     @RestResource(path = "admins", rel = "admins")
     Iterable<User> findAdmins();
+
+    @PreAuthorize("@security.isAdmin()")
+    Iterable<User> findAll();
 
 }
