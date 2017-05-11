@@ -6,7 +6,7 @@ import "./about.scss";
 import {PersonModalService} from "../../persons/person-modal/person-modal.service";
 import {User} from "../profile/user.model";
 @Component({
-    templateUrl: "./about.component.html"
+    templateUrl: "./about.component.html",
 })
 export class AboutComponent implements OnInit {
     organizers: Observable<Person[]> = null;

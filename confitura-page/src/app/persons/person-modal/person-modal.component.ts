@@ -7,7 +7,7 @@ import {User} from "../../pages/profile/user.model";
     templateUrl: "./person-modal.component.html"
 })
 export class PersonModalComponent implements OnInit {
-    private model: User;
+    model: User;
 
     ngOnInit(): void {
     }

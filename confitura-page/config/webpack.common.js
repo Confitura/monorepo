@@ -1,8 +1,9 @@
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
-var CleanWebpackPlugin = require('clean-webpack-plugin');
 var helpers = require('./helpers');
+const ngtools = require('@ngtools/webpack');
+const path = require('path');
 
 module.exports = {
     entry: {
@@ -23,7 +24,7 @@ module.exports = {
         rules: [
             {
                 test: /\.ts$/,
-                use: ['awesome-typescript-loader', 'angular2-template-loader']
+                use: ['@ngtools/webpack']
             },
             {
                 test: /\.html$/,
@@ -46,7 +47,6 @@ module.exports = {
                 test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
                 use: {
                     loader: 'file-loader'
-
                 }
             },
             {
@@ -59,7 +59,17 @@ module.exports = {
             },
             {
                 test: /\.scss$/,
-                use: ExtractTextPlugin.extract([ "css-loader", "sass-loader"])
+                exclude: helpers.root('src', 'app'),
+                use: ["to-string-loader", "css-loader", "sass-loader"]
+            },
+            {
+                test: /\.scss$/,
+                include: helpers.root('src', 'app'),
+                use: ExtractTextPlugin.extract({
+                    fallback: "style-loader",
+                    use: [ "css-loader", "sass-loader"]
+                })
+
             }
         ]
     },
@@ -74,8 +84,8 @@ module.exports = {
             favicon: 'src/app/img/favicon.ico'
         }),
         new ExtractTextPlugin("[name].[contenthash].css"),
-        new CleanWebpackPlugin(['dist'], {
-            root: helpers.root()
+        new ngtools.AotPlugin({
+            tsConfigPath: path.join(process.cwd(), 'tsconfig-aot.json')
         })
     ]
 };

@@ -6,7 +6,7 @@ import "./navigation.component.scss";
 import {User} from "../../pages/profile/user.model";
 @Component({
     selector: "cf-navigation",
-    templateUrl: "./navigation.component.html"
+    templateUrl: "./navigation.component.html",
 })
 export class NavigationComponent implements OnInit {
     private loggedIn: boolean;
