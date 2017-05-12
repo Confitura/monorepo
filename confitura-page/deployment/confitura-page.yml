@@ -3,24 +3,46 @@
   become: yes
   become_user: root
   vars:
-    - folder: /var/www/2017.confitura.pl/
+    - folder: /var/www/2017.confitura.pl
     - archive: /tmp/confitura_page.tar.gz
 
   tasks:
     - name: archive distrubution
-      local_action: "command tar -czvf {{archive}} dist"
-      args:
-        chdir: ../
+      archive:
+        path: ../dist
+        dest: ../dist.gz
       become: no
+      delegate_to: localhost
 
     - name: create destination directory
       file:
         path: "{{folder}}"
         state: directory
 
-    - name: copy file to the server
+    - name: creates folder for new version
+      file:
+        path: "{{folder}}-new"
+        state: directory
+
+    - name: copy new version to the server
       unarchive:
-        src: "{{archive}}"
-        dest: "{{folder}}"
+        src: ../dist.gz
+        dest: "{{folder}}-new"
+
+    - name: delete old version
+      file:
+        path: "{{folder}}"
+        state: absent
+
+    - name: use new version
+      shell: mv {{folder}}-new {{folder}}
+
+
+    - name: delete archive
+      file:
+        path: ../dist.gz
+        state: absent
+      delegate_to: localhost
+      become: no
 
 

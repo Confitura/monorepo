@@ -2,6 +2,8 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const helpers = require('./helpers');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+
 
 module.exports = {
     entry: {
@@ -62,7 +64,7 @@ module.exports = {
                 include: helpers.root('src', 'app'),
                 use: ExtractTextPlugin.extract({
                     fallback: "style-loader",
-                    use: [ "css-loader", "sass-loader"]
+                    use: ["css-loader", "sass-loader"]
                 })
 
             }
@@ -78,6 +80,9 @@ module.exports = {
             template: 'src/index.html',
             favicon: 'src/app/img/favicon.ico'
         }),
-        new ExtractTextPlugin("[name].[contenthash].css")
+        new ExtractTextPlugin("[name].[contenthash].css"),
+        new CleanWebpackPlugin(['dist'], {
+            root: helpers.root()
+        })
     ]
 };
