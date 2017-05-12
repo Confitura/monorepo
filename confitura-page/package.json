@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "webpack-dev-server --env=dev --inline --progress --port 8080",
+    "start:aot": "webpack-dev-server --env=dev-aot --inline --progress --port 8080",
     "build": "npm run build:dev",
     "build:dev": "webpack --env=dev --progress --profile --colors",
     "build:prod": "webpack --env=prod --progress --profile --colors",

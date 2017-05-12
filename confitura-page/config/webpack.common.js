@@ -1,9 +1,7 @@
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
-var helpers = require('./helpers');
-const ngtools = require('@ngtools/webpack');
-const path = require('path');
+const helpers = require('./helpers');
 
 module.exports = {
     entry: {
@@ -22,10 +20,7 @@ module.exports = {
 
     module: {
         rules: [
-            {
-                test: /\.ts$/,
-                use: ['@ngtools/webpack']
-            },
+
             {
                 test: /\.html$/,
                 loader: 'html-loader',
@@ -83,9 +78,6 @@ module.exports = {
             template: 'src/index.html',
             favicon: 'src/app/img/favicon.ico'
         }),
-        new ExtractTextPlugin("[name].[contenthash].css"),
-        new ngtools.AotPlugin({
-            tsConfigPath: path.join(process.cwd(), 'tsconfig-aot.json')
-        })
+        new ExtractTextPlugin("[name].[contenthash].css")
     ]
 };

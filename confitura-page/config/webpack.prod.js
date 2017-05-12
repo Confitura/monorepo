@@ -1,10 +1,14 @@
-var webpackMerge = require('webpack-merge');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var commonConfig = require('./webpack.common.js');
-var helpers = require('./helpers');
-var webpack = require('webpack');
-var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-var ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
+const webpackMerge = require('webpack-merge');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const commonConfig = require('./webpack.common.js');
+const helpers = require('./helpers');
+const webpack = require('webpack');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
+const ngtools = require('@ngtools/webpack');
+const path = require('path');
+
+
 
 
 module.exports = webpackMerge(commonConfig, {
@@ -17,6 +21,10 @@ module.exports = webpackMerge(commonConfig, {
     },
     module: {
         rules: [
+            {
+                test: /\.ts$/,
+                use: ['@ngtools/webpack']
+            },
             {
                 test: /\.(gif|png|jpe?g|svg)$/i,
                 use: [
@@ -78,9 +86,10 @@ module.exports = webpackMerge(commonConfig, {
         new ScriptExtHtmlWebpackPlugin({
             async: /app.+/,
             defaultAttribute: 'sync'
+        }),
+        new ngtools.AotPlugin({
+            tsConfigPath: path.join(process.cwd(), 'tsconfig.json')
         })
-        // new webpack.LoaderOptionsPlugin({
-        //     minimize: true
-        // })
+
     ]
 });

@@ -1,8 +1,9 @@
 const webpackMerge = require('webpack-merge');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const commonConfig = require('./webpack.common.js');
 const helpers = require('./helpers');
 const webpack = require('webpack');
+const ngtools = require('@ngtools/webpack');
+const path = require('path');
 
 
 module.exports = webpackMerge(commonConfig, {
@@ -15,11 +16,11 @@ module.exports = webpackMerge(commonConfig, {
         filename: '[name].js',
         chunkFilename: '[id].chunk.js'
     },
-    module:{
-        rules:[
+    module: {
+        rules: [
             {
                 test: /\.ts$/,
-                use: ['awesome-typescript-loader', 'angular2-template-loader']
+                use: ['@ngtools/webpack']
             },
             {
                 test: /\.(png|jpe?g|gif|svg)$/,
@@ -35,6 +36,9 @@ module.exports = webpackMerge(commonConfig, {
         new webpack.DefinePlugin({
             'API_URL': JSON.stringify("http://localhost:9090"),
             'ENV': JSON.stringify('dev')
+        }),
+        new ngtools.AotPlugin({
+            tsConfigPath: path.join(process.cwd(), 'tsconfig.json')
         })
 
     ],
@@ -42,7 +46,7 @@ module.exports = webpackMerge(commonConfig, {
         historyApiFallback: true,
         https: false,
         stats: 'minimal',
-        proxy:{
+        proxy: {
             "/resources/**": {
                 target: "http://localhost:9090/",
                 secure: false
