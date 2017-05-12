@@ -13,11 +13,7 @@ export class NavigationComponent implements OnInit {
     menu: MenuItem[] = [
         {label: "about us", url: "/about"},
         {label: "partners", url: "/partners"},
-        {
-            label: "users", url: "/admin2/users", show: () => {
-            this.currentUser.isAdmin()
-        }
-        },
+        {label: "users", url: "/admin2/users", show: () => this.currentUser.isAdmin()},
         {label: "profile", url: "/profile", show: () => this.loggedIn},
         {label: "call 4 papers", url: "/login", clazz: "pink", show: () => !this.loggedIn},
         {label: "logout", action: () => this.logout(), clazz: "pink", show: () => this.loggedIn},
