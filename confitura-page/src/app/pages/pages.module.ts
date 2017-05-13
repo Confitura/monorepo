@@ -14,10 +14,12 @@ import {PartnerService} from "./partners/shared/partner.service";
 import {PartnerComponent} from "./partners/partner/partner.component";
 import {RouterModule} from "@angular/router";
 import {LoginComponent} from "./login/login.component";
+import {FileUploadModule} from "ng2-file-upload";
+import {PartnerBannerComponent} from "./partners/partner-banner/partner-banner.component";
 @NgModule({
-    imports: [SharedModule, PersonModule, RouterModule],
-    declarations: [HomeComponent, NewsBannerComponent, NewsComponent, AboutComponent, PageComponent, PartnersComponent, PartnerComponent, LoginComponent],
-    providers: [NewsService, OrganizerService, PageService, PartnerService],
+    imports: [SharedModule, PersonModule, RouterModule, FileUploadModule],
+    declarations: [HomeComponent, NewsBannerComponent, NewsComponent, AboutComponent, PageComponent, PartnersComponent, PartnerComponent, LoginComponent, PartnerBannerComponent],
+    providers: [NewsService, OrganizerService, PageService],
     exports: [HomeComponent, AboutComponent]
 })
 export class PagesModule {

@@ -1,10 +1,16 @@
+@import "../../sizes";
 #about {
-  .bg-about-header {
-    position: relative;
-    background: transparent url('../../img/header-about.jpg') center center no-repeat;
-    background-size: cover;
+  .about-banner {
+    display: flex;
+    background-color: #000000;
+    background: url("../../img/about_left.png") no-repeat left top, url("../../img/about_right.png") no-repeat right bottom;
+    background-size: contain;
+    @media all and (max-width: $size_xsmall) {
+      background: url("../../img/about_right.png") no-repeat right bottom;
+      background-size: contain;
+    }
     h2 {
-      color: #ffffff;
+      color: #fff;
     }
   }
   .about-excerpt {
@@ -12,7 +18,6 @@
     color: #000000;
     font-family: 'NeuzeitGro-Reg', Verdana, Tahoma, sans-serif;
     font-size: 2.2rem;
-    //line-height: 30px;
   }
   .img-speaker img {
     min-width: 100%;
@@ -29,40 +34,35 @@
     }
     .organizer {
       width: 375px;
-      height: 375px;
+      padding: 20px;
       @media all and (max-width: 767px) {
         width: 300px;
-        height: 300px;
       }
 
-      overflow: hidden;
+      //overflow: hidden;
       cursor: pointer;
-      span.name-speaker {
-        display: block;
-        font-size: 24px;
+
+      .name-speaker {
+        text-align: center;
+        font-size: 2.5rem;
         line-height: 30px;
-        font-family: 'NeuzeitGro-Reg', Verdana, Tahoma, sans-serif; /* NeuzeitGro-Bol */
-        color: #ffffff;
-        position: absolute;
-        bottom: 25px;
-        left: 25px;
-        text-align: left !important;
-        padding: 5px;
-        background-color: rgba(0, 0, 0, 0.4);
-        a:link,
-        a:active,
-        a:visited,
-        a:hover {
-          font-family: 'NeuzeitGro-Reg', Verdana, Tahoma, sans-serif; /* NeuzeitGro-Bol */
-          color: #ffffff;
-        }
-        a:hover {
-          text-decoration: underline;
+        font-family: 'NeuzeitGro-Reg', Verdana, Tahoma, sans-serif;
+        color: #000000;
+        padding-top: 15px;
+        a {
+          &, &:link, &:active, &:visited, &:hover {
+            font-family: 'NeuzeitGro-Reg', Verdana, Tahoma, sans-serif; /* NeuzeitGro-Bol */
+            color: #000;
+          }
+          &:hover {
+            text-decoration: underline;
+          }
         }
       }
     }
   }
 
 }
+
 @import "person";
 

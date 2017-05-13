@@ -23,6 +23,9 @@ html, body {
 }
 
 body#confitura {
+  h2 {
+    margin-top: 0;
+  }
   @media all and (min-width: $size_small) {
     padding-top: 100px;
   }
@@ -83,13 +86,13 @@ body#confitura {
   margin: 25px 0 60px 0;
 }
 
-.own-carousel {
+#main_banner {
   position: relative;
   display: block;
   width: 100%;
   height: 100vh;
-  background: transparent url('img/carousel.jpg') center center no-repeat;
-  background-size: cover;
+  background: black url("img/main_banner.png") no-repeat right top;
+  background-size: contain;
 }
 
 @media screen and (max-width: 900px) {
@@ -382,12 +385,8 @@ h3 {
 
 .news-confitura-left {
   position: relative;
-  background: transparent url(img/pink-woman-pc.jpg) center center no-repeat;
-  background-size: cover;
-  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img/pink-woman-pc.png', sizingMethod='scale');
-  -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='img/pink-woman-pc.png',sizingMethod='scale')";
   padding: 60px !important;
-
+  background-color: #ff0040;
 }
 
 .news-confitura-right {
@@ -428,14 +427,12 @@ h3 {
 @media screen and (min-width: 1200px) and (max-width: 1400px) {
   .news-title {
     display: block;
-    //line-height: 40px;
     font-family: 'NeuzeitGro-Bol', Verdana, Tahoma, sans-serif;
   }
 
   .news-excerpt,
   .news-date {
     display: block;
-    //line-height: 22px;
   }
 }
 
@@ -588,8 +585,19 @@ div#patronat {
   text-align: left !important;
 }
 
+.pt100 {
+  padding-top: 100px;
+}
+
+.pb100 {
+  padding-bottom: 100px;
+}
+
+.pb50 {
+  padding-bottom: 50px;
+}
 .pb150 {
-  padding-bottom: 150px !important;
+  padding-bottom: 150px;
 }
 
 .row-1140 {

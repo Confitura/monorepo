@@ -1,0 +1,60 @@
+<section id="partners-confitura" class="beige">
+    <div class="row-fluid beige" id="partner">
+        <div class="col-lg-12 beige pb150">
+            <div class="row-1140">
+                <div class="beige">
+                    <h3>Partner</h3>
+                    <form (ngSubmit)="save()" #form="ngForm" novalidate>
+                        <div class="form-group required">
+                            <label for="name">name</label>
+                            <input type="text" id="name" class="form-control" [(ngModel)]="model.name" #name="ngModel" name="name" required
+                                   maxlength="255">
+                            <div class="alert alert-danger" role="alert" *ngIf="name.errors?.required && (name.touched || submitted)">
+                                This field is required
+                            </div>
+                        </div>
+                        <div class="form-group required">
+                            <label>type</label>
+                            <select name="type" class="form-control" [(ngModel)]="model.type" #type="ngModel" required>
+                                <option *ngFor="let typeName of types" [value]="typeName">{{typeName}}</option>
+                            </select>
+                            <div class="alert alert-danger" role="alert"
+                                 *ngIf="type.errors?.required && (type.touched || submitted)">
+                                This field is required
+                            </div>
+                        </div>
+                        <div class="form-group required">
+                            <label for="www">www</label>
+                            <input type="text" id="www" class="form-control" [(ngModel)]="model.www" #www="ngModel" name="www" required
+                                   maxlength="255">
+                            <div class="alert alert-danger" role="alert" *ngIf="www.errors?.required && (www.touched || submitted)">
+                                This field is required
+                            </div>
+                        </div>
+                        <div class="form-group required">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="published" [(ngModel)]="model.published"> is published
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group required">
+                            <label for="description">description</label>
+                            <textarea type="text" id="description" class="form-control" rows="5" [(ngModel)]="model.description"
+                                      #description="ngModel" name="description" required maxlength="10000"></textarea>
+                            <div class="alert alert-danger" role="alert"
+                                 *ngIf="description.errors?.required && (description.touched || submitted)">
+                                This field is required
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <button type="submit" class="btn btn-primary" [disabled]="form.submitted && !form.form.valid">Save</button>
+                            <button class="btn btn-warning" (click)="cancel()">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

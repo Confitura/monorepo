@@ -33,6 +33,10 @@ export class CurrentUser {
         return this.getToken() != null;
     }
 
+    isAdmin() {
+        return this.isAvailable() && this.get().isAdmin;
+    }
+
 
     logout() {
         sessionStorage.clear();

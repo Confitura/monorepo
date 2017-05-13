@@ -2,7 +2,7 @@
     <div class="person-photo">
         <div class="img-speaker">
             <input type="file" ng2FileSelect [uploader]="uploader" multiple style="visibility: hidden">
-            <button class="btn btn-upload"  (click)="selectNewPhoto()">Upload New
+            <button class="btn btn-upload"  (click)="selectNewPhoto()">Upload New Photo
             </button>
             <img class="img-responsive margin-auto" [src]="model.photo"/>
         </div>
@@ -21,6 +21,7 @@
     <div class="person-info">
         <section>
             <div class="ta-left person-name"><h3>{{model.name}}</h3></div>
+            <div class="ta-left" *ngIf="model.admin"><h4>ADMIN</h4></div>
             <div class="mcci-content" [innerHTML]="model.bio"></div>
         </section>
         <section *ngIf="model.presentations">

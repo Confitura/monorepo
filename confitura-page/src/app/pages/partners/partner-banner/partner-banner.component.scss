@@ -1,0 +1,38 @@
+@import "../../../sizes";
+
+.partners-banner-container {
+  display: flex;
+  justify-content: space-around;
+  align-content: stretch;
+  .partner-logo {
+    height: 120px;
+
+  }
+  .gold-type .partner-logo {
+    padding-top: 15px;
+  }
+  .silver-type .partner-logo {
+    padding-top: 25px;
+  }
+  @media all and (max-width: $size_xsmall) {
+    flex-direction: column;
+
+    .platinum-type {
+      order: 1;
+    }
+
+    .gold-type {
+      order: 2;
+    }
+
+    .silver-type {
+      order: 3;
+    }
+  }
+  > div {
+    @media all and (min-width: $size_small) {
+      flex-basis: 100%;
+    }
+  }
+
+}

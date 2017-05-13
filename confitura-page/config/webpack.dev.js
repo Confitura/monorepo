@@ -1,8 +1,8 @@
-var webpackMerge = require('webpack-merge');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var commonConfig = require('./webpack.common.js');
-var helpers = require('./helpers');
-var webpack = require('webpack');
+const webpackMerge = require('webpack-merge');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const commonConfig = require('./webpack.common.js');
+const helpers = require('./helpers');
+const webpack = require('webpack');
 
 
 module.exports = webpackMerge(commonConfig, {
@@ -18,6 +18,10 @@ module.exports = webpackMerge(commonConfig, {
     module:{
         rules:[
             {
+                test: /\.ts$/,
+                use: ['awesome-typescript-loader', 'angular2-template-loader']
+            },
+            {
                 test: /\.(png|jpe?g|gif|svg)$/,
                 use: {
                     loader: 'file-loader',
@@ -30,7 +34,6 @@ module.exports = webpackMerge(commonConfig, {
     plugins: [
         new webpack.DefinePlugin({
             'API_URL': JSON.stringify("http://localhost:9090"),
-            // 'API_URL': JSON.stringify("https://confitura.pl/api/"),
             'ENV': JSON.stringify('dev')
         })
 

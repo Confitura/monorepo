@@ -24,8 +24,6 @@ export class PersonViewComponent implements OnInit {
             authToken: this.currentUser.getToken(),
             url: `${config.apiServer}resources`,
             autoUpload: true,
-
-
         });
         this.uploader.onCompleteAll = () => {
             this.changed.emit(null);

@@ -1,5 +1,4 @@
 import {NgModule} from "@angular/core";
-import {BrowserModule} from "@angular/platform-browser";
 import {HttpModule} from "@angular/http";
 import {HttpConfiguration} from "./http-configuration.service";
 import {CommonModule} from "@angular/common";
@@ -8,11 +7,13 @@ import {LoginService} from "../security/login.service";
 import {CurrentUser} from "../security/current-user.service";
 import {RouterModule} from "@angular/router";
 import {FormsModule} from "@angular/forms";
+import {AdminDirective} from "./admin.directive";
 @NgModule({
     providers: [HttpConfiguration, CustomHttp, LoginService, CurrentUser],
     imports: [CommonModule, HttpModule],
-    exports: [CommonModule, HttpModule, FormsModule, RouterModule]
+    declarations: [AdminDirective],
+    exports: [CommonModule, HttpModule, FormsModule, RouterModule, AdminDirective]
 })
-export class SharedModule{
+export class SharedModule {
 
 }

@@ -8,9 +8,11 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ProfileModule} from "./profile/profile.module";
 import {UserService} from "./pages/profile/user.service";
 import {PresentationService} from "./profile/shared/presentation.service";
+import {PartnerService} from "./pages/partners/shared/partner.service";
+import {AdminModule} from "./admin/admin.module";
 @NgModule({
-    imports: [LayoutModule, PagesModule, BrowserModule, BrowserAnimationsModule, ProfileModule, routing],
-    providers: [UserService, PresentationService],
+    imports: [LayoutModule, PagesModule, BrowserModule, BrowserAnimationsModule, ProfileModule, AdminModule, routing],
+    providers: [UserService, PresentationService, PartnerService],
     declarations: [AppComponent],
     bootstrap: [AppComponent]
 })

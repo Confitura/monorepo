@@ -1,21 +1,30 @@
-import {Http, Response} from "@angular/http";
+import {Response} from "@angular/http";
 import {Partner} from "./partner.model";
 import {Observable} from "rxjs";
 import {Injectable} from "@angular/core";
-import {HttpConfiguration} from "../../../shared/http-configuration.service";
+import {CustomHttp} from "../../../shared/custom-http.service";
+import {CurrentUser} from "../../../security/current-user.service";
 @Injectable()
 export class PartnerService {
-    constructor(private http: Http, private configuration:HttpConfiguration) {
+    constructor(private http: CustomHttp, private currentUser: CurrentUser) {
     }
 
     getAll(): Observable<Partner[]> {
-        return this.http.get(`${this.configuration.apiServer}/partners`)
-
+        const url = this.currentUser.isAdmin() ? "/partners" : "/partners/search/published";
+        return this.http.get(url)
             .map((response: Response) => response.json()["_embedded"]["partners"] as Partner[]);
     }
 
-    getBy(id: number): Observable<Partner> {
-        return this.http.get(`${this.configuration.apiServer}/partners/${id}`)
+    getBy(id: string): Observable<Partner> {
+        return this.http.get(`/partners/${id}`)
             .map((response: Response) => response.json() as Partner);
+    }
+
+    save(partner: Partner) {
+        return this.http.post("/partners", partner);
+    }
+
+    delete(partner: Partner) {
+        return this.http.remove(`/partners/${partner.id}`);
     }
 }

@@ -8,6 +8,8 @@ import '@angular/router';
 // RxJS
 import 'rxjs';
 import 'jquery';
+import 'bxslider/dist/jquery.bxslider.js';
+import 'bxslider/dist/jquery.bxslider.css';
 //selectize
 //selectize
 // import 'selectize';

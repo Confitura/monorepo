@@ -1,8 +1,9 @@
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
-var CleanWebpackPlugin = require('clean-webpack-plugin');
-var helpers = require('./helpers');
+const helpers = require('./helpers');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+
 
 module.exports = {
     entry: {
@@ -21,10 +22,7 @@ module.exports = {
 
     module: {
         rules: [
-            {
-                test: /\.ts$/,
-                use: ['awesome-typescript-loader', 'angular2-template-loader']
-            },
+
             {
                 test: /\.html$/,
                 loader: 'html-loader',
@@ -46,7 +44,6 @@ module.exports = {
                 test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
                 use: {
                     loader: 'file-loader'
-
                 }
             },
             {
@@ -59,7 +56,17 @@ module.exports = {
             },
             {
                 test: /\.scss$/,
-                use: ExtractTextPlugin.extract([ "css-loader", "sass-loader"])
+                exclude: helpers.root('src', 'app'),
+                use: ["to-string-loader", "css-loader", "sass-loader"]
+            },
+            {
+                test: /\.scss$/,
+                include: helpers.root('src', 'app'),
+                use: ExtractTextPlugin.extract({
+                    fallback: "style-loader",
+                    use: ["css-loader", "sass-loader"]
+                })
+
             }
         ]
     },
@@ -70,7 +77,8 @@ module.exports = {
         }),
 
         new HtmlWebpackPlugin({
-            template: 'src/index.html'
+            template: 'src/index.html',
+            favicon: 'src/app/img/favicon.ico'
         }),
         new ExtractTextPlugin("[name].[contenthash].css"),
         new CleanWebpackPlugin(['dist'], {

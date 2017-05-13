@@ -1,12 +1,19 @@
+@import "../../../sizes";
 section#partners-confitura {
-  .partners-header {
-    position: relative;
-    background: transparent url(../../../img/header-register.jpg) center center no-repeat;
-    background-size: cover;
-    h2 {
-      color: #ffffff;
+  .unpublished {
+    opacity: 0.1;
+  }
+  .partners-banner {
+    background: url("../../../img/partners_left.png") no-repeat left top, url("../../../img/partners_right.png") no-repeat right bottom;
+    background-color: #000000;
+    background-size: contain;
+    @media all and (max-width: $size_xsmall) {
+      background: url("../../../img/partners_right.png") no-repeat right bottom;
+      background-size: contain;
     }
-
+    h2 {
+      color: #fff;
+    }
   }
 
   .partners-type {
@@ -80,22 +87,10 @@ section#partners-confitura {
   }
   .row-1140 {
     display: block;
-    max-width: 1080px;
+    max-width: 1140px;
     margin: 0 auto !important;
   }
 
-  .pt100 {
-    padding-top: 100px;
-  }
-  .pb100 {
-    padding-bottom: 100px;
-  }
-  .pb50 {
-    padding-bottom: 50px;
-  }
-  .pb150 {
-    padding-bottom: 150px;
-  }
   img {
     margin: auto;
     max-width: 210px;

@@ -21,4 +21,6 @@ export class PartnersComponent implements OnInit {
     partnersFor(type: string) {
         return this.partners.filter(partner => partner.type == type);
     }
+
 }
+

@@ -7,12 +7,13 @@ import {PersonModule} from "../persons/persons.module";
 import {PresentationEditComponent} from "./presentation-edit/presentation-edit.component";
 import {TagInputModule} from "ng2-tag-input";
 import {ProfileCompleteGuard} from "./shared/profile-complete-guard.service";
+import {IsAuthenticatedGuard} from "./shared/is-authenticated-guard.service";
 import {SpeakerSelectComponent} from "./speaker-select/speaker.multiselect.component";
 
 @NgModule({
     imports: [routing, SharedModule, PersonModule,TagInputModule],
     declarations: [ProfileEditComponent, ProfileViewComponent, PresentationEditComponent, SpeakerSelectComponent],
-    providers: [ProfileCompleteGuard]
+    providers: [ProfileCompleteGuard, IsAuthenticatedGuard]
 
 })
 export class ProfileModule {
