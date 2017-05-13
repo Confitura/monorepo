@@ -17,4 +17,10 @@ export class UserService{
     }
 
 
+    find(query: string): Observable<User[]> {
+        return this.http.get(`/users/`, {search: {query: query}})
+            .map((response: Response) => {
+                return response.json() as User[];
+            });
+    }
 }

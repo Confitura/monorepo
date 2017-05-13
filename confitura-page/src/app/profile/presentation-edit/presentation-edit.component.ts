@@ -24,6 +24,11 @@ export class PresentationEditComponent implements OnInit {
                 let id = params["id"];
                 if (id) {
                     this.service.getOne(id)
+                        .flatMap(pres => this.service.getCospeakers(id)
+                            .map(it => {
+                            pres.cospeakers = it;
+                            return pres;
+                        }))
                         .subscribe((presentation: Presentation) => this.model = presentation);
                 }
             })

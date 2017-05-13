@@ -56,10 +56,10 @@
                         </div>
                         <div class="form-group">
                             <label for="cospeakers">Co-speakers</label>
-                            <input type="text" id="cospeakers" class="form-control" [(ngModel)]="model.cospeakers" #cospeakers="ngModel"
-                                   name="cospeakers" disabled>
-                            <span class="help-block">We will add co-speakers functionality very soon. Please come back and check!</span>
+                            <jl-speakers-select [(ngModel)]="model.cospeakers"
+                                                name="cospeakers">
 
+                            </jl-speakers-select>
                         </div>
                         <div class="form-group required">
                             <label for="short-description">Short Description</label>

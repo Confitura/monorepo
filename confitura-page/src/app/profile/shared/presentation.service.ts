@@ -5,6 +5,7 @@ import {Tag} from "./tag.model";
 import {Observable} from "rxjs";
 import {CustomHttp} from "../../shared/custom-http.service";
 import {CurrentUser} from "../../security/current-user.service";
+import {User} from "../../pages/profile/user.model";
 @Injectable()
 export class PresentationService {
     constructor(private http: CustomHttp, private user: CurrentUser) {
@@ -34,5 +35,9 @@ export class PresentationService {
 
     remove(presentation: Presentation) {
         return this.http.remove(`/presentations/${presentation.id}`)
+    }
+    getCospeakers(id: string): Observable<User[]> {
+        return this.http.get(`/presentations/${id}/cospeakers`)
+            .map(response => response.json()["_embedded"]["users"] as User[])
     }
 }

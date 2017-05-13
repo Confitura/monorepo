@@ -1,0 +1,11 @@
+<input class="form-control" [ngModel]="query" (ngModelChange)="search($event)">
+<div *ngFor="let speaker of speakers">
+    <a class="btn btn-success"(click)="addUser(speaker)">add</a>
+    <span>{{speaker.name}}</span>
+</div>
+
+selected:
+<div *ngFor="let speaker of value">
+    <a class="btn btn-danger"(click)="removeUser(speaker)">remove</a>
+    {{speaker.name}}
+</div>
