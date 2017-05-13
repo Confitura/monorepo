@@ -2,11 +2,9 @@ package pl.confitura.jelatyna.user;
 
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -35,6 +33,7 @@ public class User {
     private boolean isAdmin;
     private boolean isVolunteer;
     @OneToMany(mappedBy = "speaker")
+    @JsonIgnore
     private Set<Presentation> presentations;
 
     interface Edit {

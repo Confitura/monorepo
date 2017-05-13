@@ -2,6 +2,7 @@ package pl.confitura.jelatyna.user;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RestResource;
 
 @RestResource(path = "users")
@@ -17,4 +18,9 @@ public interface UserRepository extends Repository<User, String> {
     @RestResource(path = "admins", rel = "admins")
     Iterable<User> findAdmins();
 
+    @Query("FROM User WHERE " +
+            "lower(name) like :query OR " +
+            "lower(email) like :query OR " +
+            "lower(username) like :query ")
+    Iterable<User> find(@Param("query") String query);
 }

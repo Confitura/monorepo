@@ -1,6 +1,7 @@
 package pl.confitura.jelatyna.presentation;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -44,5 +45,7 @@ public class Presentation {
     @ManyToOne(optional = false)
     @NotNull
     private User speaker;
-
+    @ManyToMany
+    @NotNull
+    private List<User> cospeakers;
 }
