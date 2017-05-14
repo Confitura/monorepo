@@ -22,9 +22,10 @@ public interface UserRepository extends Repository<User, String> {
     @PreAuthorize("@security.isAdmin()")
     Iterable<User> findAll();
 
+    @RestResource(path = "byName", rel = "byName")
     @Query("FROM User WHERE " +
-            "lower(name) like :query OR " +
-            "lower(email) like :query OR " +
-            "lower(username) like :query ")
+            "lower(name) like concat('%',lower(:query),'%') OR " +
+            "lower(email) like concat('%',lower(:query),'%') OR " +
+            "lower(username) like concat('%',lower(:query),'%') ")
     Iterable<User> find(@Param("query") String query);
 }
