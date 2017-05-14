@@ -23,9 +23,9 @@ export class UserService{
 
 
     find(query: string): Observable<User[]> {
-        return this.http.get(`/users/`, {search: {query: query}})
+        return this.http.get(`/users/search/byName`, {search: {query: query}})
             .map((response: Response) => {
-                return response.json() as User[];
+                return response.json()["_embedded"]["users"]  as User[];
             });
     }
 }
