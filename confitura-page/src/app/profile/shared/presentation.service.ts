@@ -21,6 +21,12 @@ export class PresentationService {
             .map((objects: object[]) => objects.map(value => new Tag(value["id"], value["name"])));
     }
 
+    getAll(): Observable<Presentation[]> {
+        return this.http.get("/presentations?projection=inlineSpeaker")
+            .map((response: Response) => response.json()["_embedded"]["presentations"] as Presentation[]);
+
+    }
+
     getAllFor(userId: string): Observable<Presentation[]> {
         return this.http.get(`/users/${userId}/presentations`)
             .map((response: Response) => response.json()["_embedded"]["presentations"] as Presentation[])
@@ -29,7 +35,6 @@ export class PresentationService {
     getOne(id: string): Observable<Presentation> {
         return this.http.get(`/presentations/${id}?projection=inlineTags`)
             .map((response: Response) => response.json() as Presentation);
-
     }
 
     remove(presentation: Presentation) {

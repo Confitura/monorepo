@@ -1,0 +1,26 @@
+<section class="pb50 bg-white" id="presentation-list">
+    <header class="presentations-banner">
+        <h2>presentations</h2>
+    </header>
+    <div class="row-1140">
+        <ng-container *ngIf="list">
+            <article *ngFor="let item of list | async; odd as isOdd; even as isEven" class="presentation" [class.odd]="isOdd">
+
+                <div class="presentation-title">{{item.title}}</div>
+                <div class="presentation-speakers">
+                    <span>{{item.speaker.name}}</span>
+                </div>
+                <div>
+                    <span><strong>language:</strong> {{item.language}}</span>
+                    <span><strong>level:</strong> {{item.level}}</span>
+                </div>
+                <div><strong>tags:</strong> <span *ngFor="let tag of  item.tags" class="label label-danger">{{tag.name}}</span></div>
+                <div><strong>short description:</strong></div>
+                <div>{{item.shortDescription}}</div>
+                <div><strong>description:</strong></div>
+                <div>{{item.description}}</div>
+            </article>
+
+        </ng-container>
+    </div>
+</section>
