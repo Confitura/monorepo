@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import {Component} from "@angular/core";
 import {PersonModalService} from "./person-modal.service";
 import "./person-modal.component.scss";
 import {User} from "../../pages/profile/user.model";
@@ -6,11 +6,8 @@ import {User} from "../../pages/profile/user.model";
     selector: "jl-person-modal",
     templateUrl: "./person-modal.component.html"
 })
-export class PersonModalComponent implements OnInit {
+export class PersonModalComponent {
     model: User;
-
-    ngOnInit(): void {
-    }
 
     constructor(service: PersonModalService) {
         service.changed.subscribe((user: User) => {

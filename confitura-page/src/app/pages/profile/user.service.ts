@@ -4,15 +4,20 @@ import {Response} from "@angular/http";
 import {Observable} from "rxjs";
 import {User} from "./user.model";
 @Injectable()
-export class UserService{
-    constructor(private http:CustomHttp){}
+export class UserService {
+    constructor(private http: CustomHttp) {
+    }
 
-    getBy(id:string):Observable<User>{
-        return this.http.get(`/users/${id}`)
+    getBy(id: string, projection: string = null): Observable<User> {
+        let url = `/users/${id}`;
+        if (projection) {
+            url += `?projection=${projection}`;
+        }
+        return this.http.get(url)
             .map((response: Response) => response.json() as User);
     }
 
-    save(user:User){
+    save(user: User) {
         return this.http.post(`/users`, user);
     }
 
