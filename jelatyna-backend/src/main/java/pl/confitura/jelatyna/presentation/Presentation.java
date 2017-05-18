@@ -16,10 +16,12 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import pl.confitura.jelatyna.user.User;
 
 @Entity
 @Data
+@ToString(exclude = "speaker")
 @EqualsAndHashCode(exclude = "speaker")
 public class Presentation {
     @Id

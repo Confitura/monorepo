@@ -11,11 +11,13 @@ import org.springframework.data.rest.core.config.Projection;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 import pl.confitura.jelatyna.presentation.Presentation;
 
 @Entity
 @Data
+@ToString(exclude = "presentations")
 @EqualsAndHashCode(exclude = "presentations")
 @Accessors(chain = true)
 public class User {
