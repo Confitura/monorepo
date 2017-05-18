@@ -30,7 +30,7 @@
                         </section>
                         <section *ngIf="model.presentations" class="person-presentations">
                             <div *ngFor="let presentation of model.presentations">
-                                <a role="button" routerLink="/admin2/presentations" [fragment]="presentation.id">{{presentation.title}}</a>
+                                <a role="button" (click)="goTo(presentation)">{{presentation.title}}</a>
                             </div>
                         </section>
                     </div>
