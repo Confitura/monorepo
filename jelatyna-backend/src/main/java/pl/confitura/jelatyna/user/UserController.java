@@ -1,5 +1,7 @@
 package pl.confitura.jelatyna.user;
 
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.timgroup.jgravatar.Gravatar;
 import com.timgroup.jgravatar.GravatarDefaultImage;
 import com.timgroup.jgravatar.GravatarRating;
+import pl.confitura.jelatyna.infrastructure.security.Security;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
 
@@ -23,11 +26,13 @@ public class UserController {
 
     private UserRepository repository;
     private PresentationRepository presentationRepository;
+    private Security security;
 
     @Autowired
-    public UserController(UserRepository repository, PresentationRepository presentationRepository) {
+    public UserController(UserRepository repository, PresentationRepository presentationRepository, Security security) {
         this.repository = repository;
         this.presentationRepository = presentationRepository;
+        this.security = security;
     }
 
     @PostMapping("/users")
@@ -46,6 +51,9 @@ public class UserController {
     @PreAuthorize("@security.isOwner(#userId)")
     public ResponseEntity<?> addPresentationToUser(@Valid @RequestBody Presentation presentation,
             @PathVariable String userId) {
+        if (StringUtils.isEmpty(presentation.getId()) && !security.isAdmin()) {
+            return ResponseEntity.status(UNAUTHORIZED).build();
+        }
         User speaker = repository.findOne(userId);
         presentation.setSpeaker(speaker);
         Presentation saved = presentationRepository.save(presentation);
