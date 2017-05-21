@@ -1,6 +1,5 @@
-import {AfterViewChecked, Component, OnInit} from "@angular/core";
+import {AfterContentChecked, AfterViewChecked, Component, OnInit} from "@angular/core";
 import {PresentationService} from "../../../profile/shared/presentation.service";
-import {Observable} from "rxjs/Observable";
 import {Presentation} from "../../../profile/shared/presentation.model";
 import "./presentation-list.component.scss";
 import {PersonModalService} from "../../../persons/person-modal/person-modal.service";
@@ -10,40 +9,44 @@ import {ActivatedRoute} from "@angular/router";
 @Component({
     templateUrl: "./presentation-list.component.html"
 })
-export class PresentationListComponent implements OnInit, AfterViewChecked {
+export class PresentationListComponent implements OnInit{
 
 
-    list: Observable<Presentation[]>;
 
-    ngOnInit(): void {
-        this.list = this.service.getAll();
+    list: Presentation[];
+    private presentationId: string;
 
+    constructor(private service: PresentationService, private personModalService: PersonModalService, private userService: UserService, route: ActivatedRoute) {
+        route.fragment
+            .subscribe(presentationId => {
+                this.presentationId = presentationId;
+                this.scrollToSelectedPresentation();
+            });
     }
 
-    ngAfterViewChecked(): void {
-        let presentationId = this.route.snapshot.fragment;
-        if (presentationId) {
-            const element = document.getElementById(presentationId);
+    ngOnInit(): void {
+        this.service.getAll()
+            .subscribe((list) => {
+                this.list = list;
+                setTimeout(()=>
+                    this.scrollToSelectedPresentation());
+
+            })
+    }
+
+    private scrollToSelectedPresentation() {
+        if (this.presentationId) {
+            const element = document.getElementById(this.presentationId);
             if (element) {
-                console.log(element.offsetTop);
                 window.scrollTo(0, element.offsetTop - 100);
             }
 
         }
     }
 
-
-    constructor(private service: PresentationService, private personModalService: PersonModalService, private userService: UserService, private route: ActivatedRoute) {
-    }
-
     show(speaker: User) {
         this.userService.getBy(speaker.id, "withPresentations")
             .subscribe(user => this.personModalService.showFor(user));
     }
-
-    clean(id: string) {
-        return id.replace(/-/g, "")
-    }
-
 
 }
