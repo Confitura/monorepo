@@ -9,7 +9,7 @@ export class AdminDirective implements OnInit {
     }
 
     ngOnInit(): void {
-        if (this.currentUser.isAvailable() && this.currentUser.get().isAdmin) {
+        if (this.currentUser.isAdmin()) {
             this.container.createEmbeddedView(this.template);
         } else {
             this.container.clear();

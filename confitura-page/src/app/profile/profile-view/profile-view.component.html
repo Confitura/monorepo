@@ -4,8 +4,10 @@
             <div class="row-1140">
                 <div class="beige" *ngIf="model">
                     <div>
-                        <a class="btn-link" routerLink="/profile/{{model.id}}/edit">Edit My Profile</a> |
-                        <a class="btn-link" routerLink="/presentation">Add Presentation</a>
+                        <a class="btn-link" routerLink="/profile/{{model.id}}/edit">Edit My Profile</a>
+                        <ng-container *jl-admin=""> |
+                            <a class="btn-link" routerLink="/presentation" >Add Presentation</a>
+                        </ng-container>
                     </div>
                     <jl-person-view [model]="model" (changed)="reload()"></jl-person-view>
                     <table class="table table-bordered table-striped" *ngIf="(presentations | async)?.length > 0">
