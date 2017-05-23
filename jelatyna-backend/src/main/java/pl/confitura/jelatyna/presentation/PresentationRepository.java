@@ -17,4 +17,7 @@ public interface PresentationRepository extends Repository<Presentation, String>
 
     Presentation findOne(String id);
 
+    @PreAuthorize("@security.isAdmin()")
+    Iterable<Presentation> findAll();
+
 }

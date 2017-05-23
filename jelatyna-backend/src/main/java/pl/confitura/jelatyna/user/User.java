@@ -5,13 +5,16 @@ import java.util.Set;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.rest.core.config.Projection;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 import pl.confitura.jelatyna.presentation.Presentation;
 
 @Entity
 @Data
+@ToString(exclude = "presentations")
 @EqualsAndHashCode(exclude = "presentations")
 @Accessors(chain = true)
 public class User {
@@ -38,5 +41,30 @@ public class User {
 
     interface Edit {
 
+    }
+
+    @Projection(name = "withPresentations", types = { User.class })
+    interface WithPresentations {
+        String getId();
+
+        String getOrigin();
+
+        String getName();
+
+        String getEmail();
+
+        String getBio();
+
+        String getTwitter();
+
+        String getGithub();
+
+        String getWww();
+
+        String getPhoto();
+
+        boolean isAdmin();
+
+        Set<Presentation> getPresentations();
     }
 }
