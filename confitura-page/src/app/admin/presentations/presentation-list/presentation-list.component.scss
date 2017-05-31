@@ -1,6 +1,6 @@
 @import "../../../sizes";
 
-#presentation-list {
+//#presentation-list {
   .presentations-banner {
     display: flex;
     background: url("../../../img/about_left.png") no-repeat left top, url("../../../img/about_right.png") no-repeat right bottom;
@@ -32,4 +32,4 @@
       margin-right: 10px;
     }
   }
-}
+//}
