@@ -8,13 +8,14 @@ import pl.confitura.jelatyna.partner.Partner;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.Tag;
 import pl.confitura.jelatyna.user.User;
+import pl.confitura.jelatyna.voting.Vote;
 
 @Configuration
 public class SpringDataRestCustomization extends RepositoryRestConfigurerAdapter {
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
         config
-                .exposeIdsFor(Partner.class, User.class, Tag.class, Presentation.class);
+                .exposeIdsFor(Partner.class, User.class, Tag.class, Presentation.class, Vote.class);
     }
 
 }

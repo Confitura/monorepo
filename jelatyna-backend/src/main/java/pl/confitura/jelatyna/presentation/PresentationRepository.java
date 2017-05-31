@@ -1,5 +1,6 @@
 package pl.confitura.jelatyna.presentation;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.data.rest.core.annotation.RestResource;
@@ -19,5 +20,9 @@ public interface PresentationRepository extends Repository<Presentation, String>
 
     @PreAuthorize("@security.isAdmin()")
     Iterable<Presentation> findAll();
+
+    @Query("FROM Presentation ")
+    @RestResource(exported = false)
+    Iterable<Presentation> findAllForV4p();
 
 }
