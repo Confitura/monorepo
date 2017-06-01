@@ -16,6 +16,7 @@ export class NavigationComponent implements OnInit {
         {label: "users", url: "/admin2/users", show: () => this.currentUser.isAdmin()},
         {label: "presentations", url: "/admin2/presentations", show: () => this.currentUser.isAdmin()},
         {label: "profile", url: "/profile", show: () => this.loggedIn},
+        {label: "vote 4 papers", url: "/v4p"},
         {label: "call 4 papers", url: "/login", clazz: "pink", show: () => !this.loggedIn},
         {label: "logout", action: () => this.logout(), clazz: "pink", show: () => this.loggedIn},
     ];

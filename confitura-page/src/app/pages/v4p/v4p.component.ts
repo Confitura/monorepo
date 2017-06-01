@@ -1,4 +1,4 @@
-import {Component, HostListener} from "@angular/core";
+import {Component, OnDestroy} from "@angular/core";
 import {V4pService} from "./v4p.service";
 import {Vote} from "./vote.model";
 import {Presentation} from "../../profile/shared/presentation.model";
@@ -12,7 +12,10 @@ import {Hotkey, HotkeysService} from "angular2-hotkeys";
     templateUrl: "./v4p.component.html",
     host: {}
 })
-export class V4pComponent {
+export class V4pComponent implements OnDestroy {
+    ngOnDestroy(): void {
+        this.hotkeys.reset();
+    }
 
     votes: Vote[];
     presentation: Presentation;
@@ -20,7 +23,7 @@ export class V4pComponent {
     short = true;
     loading = false;
 
-    constructor(private  service: V4pService, private modal: PersonModalService, private router: Router, hotkeys: HotkeysService) {
+    constructor(private  service: V4pService, private modal: PersonModalService, private router: Router, private hotkeys: HotkeysService) {
         let token = localStorage.getItem("v4p-token");
         if (token == null) {
             router.navigate(["/v4p"])
@@ -36,6 +39,7 @@ export class V4pComponent {
                 }
             );
         }
+        hotkeys.reset();
         hotkeys
             .add(
                 [
@@ -136,7 +140,6 @@ export class V4pComponent {
     info() {
         this.short = !this.short;
     }
-
 
 
     hasRate(rate: number) {
