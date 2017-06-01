@@ -1,6 +1,6 @@
-<section class="bg-white pt50" id="v4p" (swipeleft)="right()" (swiperight)="left()">
+<section class="bg-white pt50" id="v4p" >
     <div id="spinner" *ngIf="loading"></div>
-    <div class="row-1140">
+    <div class="row-1140" (swipeleft)="right()" (swiperight)="left()">
         <section *ngIf="presentation" class="presentation">
             <div class="rate-container">
                 <span (click)="setRate(1)" class="fa fa-thumbs-o-up fa-3x" aria-hidden="true" [class.active]="hasRate(1)"
