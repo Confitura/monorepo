@@ -1,5 +1,7 @@
 package pl.confitura.jelatyna.voting;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +10,7 @@ import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import pl.confitura.jelatyna.presentation.Presentation;
@@ -25,7 +28,10 @@ public class Vote {
     @Column(name = "vote_order")
     private Integer order;
     @OneToOne
-//    @RestResource(exported = false)
     private Presentation presentation;
     private Integer rate;
+    @JsonIgnore
+    private LocalDateTime voteDate;
+    @JsonIgnore
+    private String client;
 }

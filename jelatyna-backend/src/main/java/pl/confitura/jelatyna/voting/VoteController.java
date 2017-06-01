@@ -2,6 +2,7 @@ package pl.confitura.jelatyna.voting;
 
 import static java.util.stream.Collectors.toList;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.google.common.collect.Lists;
+import pl.confitura.jelatyna.infrastructure.WebUtils;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
 
@@ -28,11 +30,13 @@ public class VoteController {
 
     private PresentationRepository presentationRepository;
     private VoteRepository voteRepository;
+    private WebUtils webUtils;
 
     @Autowired
-    public VoteController(PresentationRepository presentationRepository, VoteRepository voteRepository) {
+    public VoteController(PresentationRepository presentationRepository, VoteRepository voteRepository, WebUtils webUtils) {
         this.presentationRepository = presentationRepository;
         this.voteRepository = voteRepository;
+        this.webUtils = webUtils;
     }
 
     @RequestMapping(value = "/votes/start/{token}", method = RequestMethod.POST)
@@ -50,6 +54,7 @@ public class VoteController {
         Collections.shuffle(presentations);
         List<Vote> votes = IntStream.range(0, presentations.size())
                 .mapToObj(idx -> new Vote()
+                        .setClient(webUtils.getClientIp())
                         .setToken(token)
                         .setPresentation(presentations.get(idx))
                         .setOrder(idx))
@@ -62,6 +67,7 @@ public class VoteController {
     public ResponseEntity<Resource<Vote>> save(@RequestBody Vote vote) {
         Vote loaded = voteRepository.findOne(vote.getId());
         loaded.setRate(vote.getRate());
+        loaded.setVoteDate(LocalDateTime.now());
         return ResponseEntity.ok(new Resource<>(loaded));
     }
 }

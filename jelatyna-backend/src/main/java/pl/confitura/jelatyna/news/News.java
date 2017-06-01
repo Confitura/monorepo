@@ -17,7 +17,6 @@ public class News {
     private Long id;
     private String title;
     @Column(name="creationdate")
-
     private LocalDateTime creationDate;
     private String description;
     private boolean published;
