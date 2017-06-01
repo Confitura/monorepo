@@ -112,6 +112,10 @@
   version "0.0.28"
   resolved "https://registry.yarnpkg.com/@types/marked/-/marked-0.0.28.tgz#44ba754e9fa51432583e8eb30a7c4dd249b52faa"
 
+"@types/mousetrap@^1.5.32":
+  version "1.5.33"
+  resolved "https://registry.yarnpkg.com/@types/mousetrap/-/mousetrap-1.5.33.tgz#a0804505e76a6b4e597f35430c57fbe2a67794ef"
+
 "@types/node@^6.0.46":
   version "6.0.73"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-6.0.73.tgz#85dc4bb6f125377c75ddd2519a1eeb63f0a4ed70"
@@ -209,6 +213,13 @@ alphanum-sort@^1.0.1, alphanum-sort@^1.0.2:
 amdefine@>=0.0.4:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
+
+angular2-hotkeys@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/angular2-hotkeys/-/angular2-hotkeys-2.0.1.tgz#20bf63a4d46e0977b4d92caf3145f4469c4073fa"
+  dependencies:
+    "@types/mousetrap" "^1.5.32"
+    mousetrap "^1.6.0"
 
 angular2-template-loader@^0.6.2:
   version "0.6.2"
@@ -3873,6 +3884,10 @@ morgan@^1.3.1:
     depd "~1.1.0"
     on-finished "~2.3.0"
     on-headers "~1.0.1"
+
+mousetrap@^1.6.0:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/mousetrap/-/mousetrap-1.6.1.tgz#2a085f5c751294c75e7e81f6ec2545b29cbf42d9"
 
 mozjpeg@^4.0.0:
   version "4.1.1"

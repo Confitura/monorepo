@@ -40,6 +40,7 @@
     "@types/marked": "0.0.28",
     "@types/simplemde": "^1.11.6",
     "@ultimate/aot-loader": "^0.1.16",
+    "angular2-hotkeys": "^2.0.1",
     "angular2-template-loader": "^0.6.2",
     "awesome-typescript-loader": "^3.0.7",
     "bootstrap": "^3.3.7",

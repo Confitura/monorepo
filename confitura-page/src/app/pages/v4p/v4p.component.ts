@@ -7,6 +7,7 @@ import {PersonModalService} from "../../persons/person-modal/person-modal.servic
 import {User} from "../profile/user.model";
 import "./v4p.component.scss";
 import {Router} from "@angular/router";
+import {Hotkey, HotkeysService} from "angular2-hotkeys";
 @Component({
     templateUrl: "./v4p.component.html",
     host: {}
@@ -19,7 +20,7 @@ export class V4pComponent {
     short = true;
     loading = false;
 
-    constructor(private  service: V4pService, private modal: PersonModalService, private router: Router) {
+    constructor(private  service: V4pService, private modal: PersonModalService, private router: Router, hotkeys: HotkeysService) {
         let token = localStorage.getItem("v4p-token");
         if (token == null) {
             router.navigate(["/v4p"])
@@ -35,6 +36,44 @@ export class V4pComponent {
                 }
             );
         }
+        hotkeys
+            .add(
+                [
+                    new Hotkey("right", (): boolean => {
+                        this.right();
+                        modal.close();
+                        return false;
+                    }, [], "Next presentation"),
+                    new Hotkey("left", (): boolean => {
+                        this.left();
+                        modal.close();
+                        return false;
+                    }, [], "Previous presentation"),
+                    new Hotkey("up", (): boolean => {
+                        this.up();
+                        modal.close();
+                        return false;
+                    }, [], "Vote Up!"),
+                    new Hotkey("down", (): boolean => {
+                        this.down();
+                        modal.close();
+                        return false;
+                    }, [], "Vote Down!"),
+                    new Hotkey("b", (): boolean => {
+                        this.bio();
+                        return false;
+                    }, [], "Biography of the presenter"),
+                    new Hotkey("d", (): boolean => {
+                        this.info();
+                        modal.close();
+                        return false;
+                    }, [], "Toggle between short and full description"),
+                    new Hotkey("esc", (): boolean => {
+                        modal.close();
+                        return false;
+                    }, [], "Close presenter's modal")
+                ]
+            )
     }
 
 
@@ -42,28 +81,10 @@ export class V4pComponent {
         this.modal.showFor(speaker);
     }
 
-    @HostListener('document:keyup', ["$event"])
-    keyboard(event: KeyboardEvent) {
-        if (this.loading) {
-            return;
-        }
-        let key = event.key.toLowerCase();
-        if (key == "w") {
-            this.up();
-        } else if (key == "s") {
-            this.down();
-        } else if (key == "a") {
-            this.left();
-        } else if (key == "d") {
-            this.right();
-        } else if (key == "i") {
-            this.info();
-        } else if (key == "b") {
-            this.bio();
-        } else if (key == "?") {
-            this.help();
-        }
+    bio() {
+        this.show(this.presentation.speaker);
     }
+
 
     up() {
         let rate = this.currentVote().rate;
@@ -116,14 +137,7 @@ export class V4pComponent {
         this.short = !this.short;
     }
 
-    bio() {
-        console.log("bio");
-    }
 
-    help() {
-        console.log("help");
-
-    }
 
     hasRate(rate: number) {
         return this.rate() == rate;

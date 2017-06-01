@@ -11,8 +11,9 @@ import {PresentationService} from "./profile/shared/presentation.service";
 import {PartnerService} from "./pages/partners/shared/partner.service";
 import {AdminModule} from "./admin/admin.module";
 import {V4pModule} from "./pages/v4p/v4p.module";
+import {HotkeyModule} from "angular2-hotkeys";
 @NgModule({
-    imports: [LayoutModule, PagesModule, BrowserModule, BrowserAnimationsModule, ProfileModule, AdminModule, V4pModule, routing],
+    imports: [LayoutModule, PagesModule, BrowserModule, BrowserAnimationsModule, ProfileModule, AdminModule, V4pModule, routing, HotkeyModule.forRoot()],
     providers: [UserService, PresentationService, PartnerService],
     declarations: [AppComponent],
     bootstrap: [AppComponent]

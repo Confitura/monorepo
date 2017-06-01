@@ -14,13 +14,21 @@ export class PersonModalComponent {
     constructor(service: PersonModalService, private router: Router) {
         service.changed.subscribe((user: User) => {
             this.model = user;
-            this.openModal();
+            if (user) {
+                this.openModal();
+            } else {
+                this.closeModal();
+            }
         });
     }
 
     goTo(presentation: Presentation) {
-        $(".modal").modal("hide");
+        this.closeModal();
         this.router.navigate(["/admin2/presentations"], {fragment: presentation.id})
+    }
+
+    private closeModal() {
+        $(".modal").modal("hide");
     }
 
     private openModal() {

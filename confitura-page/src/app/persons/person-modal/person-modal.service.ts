@@ -8,4 +8,8 @@ export class PersonModalService {
     showFor(user:User){
         this.changed.emit(user);
     }
+
+    close() {
+        this.changed.emit(null);
+    }
 }
