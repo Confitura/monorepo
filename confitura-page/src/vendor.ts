@@ -19,6 +19,8 @@ import "normalize.css/normalize.css"
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-social/bootstrap-social.css';
+//hammerjs
+import "hammerjs/hammer.js";
 
 // Other vendors for example jQuery, Lodash or Bootstrap
 // You can import js, ts, css, sass, ...
