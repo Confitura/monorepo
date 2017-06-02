@@ -39,7 +39,6 @@ export class V4pComponent implements OnDestroy {
                 }
             );
         }
-        hotkeys.reset();
         hotkeys
             .add(
                 [
