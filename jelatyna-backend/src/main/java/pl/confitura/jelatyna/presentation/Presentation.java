@@ -30,7 +30,7 @@ public class Presentation {
     @Column(columnDefinition = "varchar(100)")
     private String id;
     @NotBlank
-    private String title;
+    private String title;gi
     @NotBlank
     @Column(length = 300)
     private String shortDescription;

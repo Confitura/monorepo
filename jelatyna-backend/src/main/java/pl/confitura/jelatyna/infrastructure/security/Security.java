@@ -24,7 +24,7 @@ public class Security {
     private PresentationRepository presentationRepository;
 
     public boolean isOwner(String userId) {
-        return userId.equals(getUserId()) || isAdmin();
+        return isAdmin() || userId.equals(getUserId());
     }
 
     public boolean presentationOwnedByUser(String presentationId) {
