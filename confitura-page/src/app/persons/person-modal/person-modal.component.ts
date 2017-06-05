@@ -27,6 +27,11 @@ export class PersonModalComponent {
         this.router.navigate(["/admin2/presentations"], {fragment: presentation.id})
     }
 
+    addPresentation(){
+        this.closeModal();
+        this.router.navigate([`/user/${this.model.id}/presentation`]);
+    }
+
     private closeModal() {
         $(".modal").modal("hide");
     }

@@ -10,8 +10,12 @@ export class PresentationService {
     constructor(private http: CustomHttp, private user: CurrentUser) {
     }
 
-    save(presentation: Presentation): Observable<Response> {
-        return this.http.post(`/users/${this.user.get().jti}/presentations`, presentation);
+    // save(presentation: Presentation): Observable<Response> {
+    //     return this.http.post(`/users/${this.user.get().jti}/presentations`, presentation);
+    // }
+
+    save(userId:string, presentation: Presentation): Observable<Response> {
+        return this.http.post(`/users/${userId}/presentations`, presentation);
     }
 
 

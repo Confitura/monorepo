@@ -11,6 +11,8 @@ const appRoutes: Routes = [
     {path: 'profile/:id/edit', component: ProfileEditComponent, canDeactivate: [ProfileCompleteGuard], canActivate: [IsAuthenticatedGuard]},
     {path: 'profile/:id', component: ProfileViewComponent, canActivate: [IsAuthenticatedGuard]},
     {path: 'presentation', component: PresentationEditComponent, canActivate: [IsAuthenticatedGuard]},
-    {path: 'presentation/:id', component: PresentationEditComponent, canActivate: [IsAuthenticatedGuard]}
+    {path: 'user/:userId/presentation', component: PresentationEditComponent, canActivate: [IsAuthenticatedGuard]},
+    {path: 'presentation/:id', component: PresentationEditComponent, canActivate: [IsAuthenticatedGuard]},
+    {path: 'user/:userId/presentation/:id', component: PresentationEditComponent, canActivate: [IsAuthenticatedGuard]},
 ];
 export const routing: ModuleWithProviders = RouterModule.forChild(appRoutes);
