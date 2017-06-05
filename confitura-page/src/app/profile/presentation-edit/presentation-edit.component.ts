@@ -17,7 +17,6 @@ export class PresentationEditComponent implements OnInit {
 
     constructor(private service: PresentationService,
                 private user: CurrentUser,
-                private router: Router,
                 private route: ActivatedRoute,
                 private location: Location) {
     }
@@ -42,7 +41,7 @@ export class PresentationEditComponent implements OnInit {
         this.submitted = true;
         if (form.valid) {
             this.service.save(this.userId, this.model)
-                .subscribe(() => this.router.navigate(["/profile"]));
+                .subscribe(() => this.location.back());
         }
     }
 
