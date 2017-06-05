@@ -6,6 +6,7 @@ import {PresentationService} from "../shared/presentation.service";
 import {Tag} from "../shared/tag.model";
 import {FormControl} from "@angular/forms";
 import {CurrentUser} from "../../security/current-user.service";
+import {Location} from "@angular/common";
 @Component({
     templateUrl: "./presentation-edit.component.html"
 })
@@ -17,7 +18,8 @@ export class PresentationEditComponent implements OnInit {
     constructor(private service: PresentationService,
                 private user: CurrentUser,
                 private router: Router,
-                private route: ActivatedRoute) {
+                private route: ActivatedRoute,
+                private location: Location) {
     }
 
     ngOnInit(): void {
@@ -42,6 +44,10 @@ export class PresentationEditComponent implements OnInit {
             this.service.save(this.userId, this.model)
                 .subscribe(() => this.router.navigate(["/profile"]));
         }
+    }
+
+    cancel() {
+        this.location.back();
     }
 
     public tags = (): Observable<Tag[]> => {

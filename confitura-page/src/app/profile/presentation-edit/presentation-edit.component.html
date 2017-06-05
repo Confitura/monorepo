@@ -86,7 +86,7 @@
                             <button type="submit" class="btn btn-primary"
                                     [disabled]="presentationForm.submitted && !presentationForm.form.valid">Save
                             </button>
-                            <a class="btn btn-warning" routerLink="/profile">Cancel</a>
+                            <button class="btn btn-warning" (click)="cancel()">Cancel</button>
                         </div>
 
                     </form>

@@ -1,6 +1,9 @@
 <section class="pt100 pb50 bg-white ">
     <div class="row-1140">
         <h3>All Users</h3>
+        <div style="text-align: right; margin-bottom: 20px;">
+            <button routerLink="/profile/edit" class="btn btn-default">Add User</button>
+        </div>
         <table class="table table-bordered table-striped table-hover" *ngIf="list">
             <thead>
             <tr>
@@ -15,8 +18,9 @@
                 <td>{{user.name}}</td>
                 <td>{{user.email}}</td>
                 <td>{{user.admin}}</td>
-                <td>
-                    <a role="button" (click)="view(user)">View</a>
+                <td style="text-align: center">
+                    <a role="button" (click)="view(user)">View</a> |
+                    <a role="button" (click)="addPresentationTo(user)">Add Presentation</a>
                 </td>
             </tr>
             </tbody>
