@@ -15,7 +15,9 @@ export class UserListComponent implements OnInit {
     }
 
     view(user: User) {
-        this.modalService.showFor(user);
+        // this.modalService.showFor(user);
+        this.router.navigate([`/profile/${user.id}`]);
+
     }
 
     ngOnInit(): void {

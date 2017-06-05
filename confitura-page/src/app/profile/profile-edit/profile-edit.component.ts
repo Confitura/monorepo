@@ -5,6 +5,7 @@ import {User} from "../../pages/profile/user.model";
 
 import "./profile-edit.component.scss";
 import {FormControl} from "@angular/forms";
+import {Location} from "@angular/common";
 @Component({
     templateUrl: "./profile-edit.component.html"
 })
@@ -14,7 +15,10 @@ export class ProfileEditComponent implements OnInit {
     model: User = new User();
     @ViewChild("profileForm") form: FormControl;
 
-    constructor(private service: UserService, private router: Router, private route: ActivatedRoute) {
+    constructor(private service: UserService,
+                private router: Router,
+                private route: ActivatedRoute,
+                private location: Location) {
     }
 
     ngOnInit(): void {
@@ -36,7 +40,7 @@ export class ProfileEditComponent implements OnInit {
         this.submitted = true;
         if (this.isValid()) {
             this.service.save(this.model)
-                .subscribe(response => this.router.navigate(["/profile"]));
+                .subscribe(response => this.router.navigate([`/profile/${this.model.id}`]));
         }
     }
 
@@ -44,4 +48,8 @@ export class ProfileEditComponent implements OnInit {
         return this.form.valid;
     }
 
+
+    cancel() {
+        this.location.back();
+    }
 }

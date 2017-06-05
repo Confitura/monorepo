@@ -4,6 +4,7 @@ import {LoginService} from "../../security/login.service";
 import {MenuItem} from "./menu-item.model";
 import "./navigation.component.scss";
 import {User} from "../../pages/profile/user.model";
+import {Router} from "@angular/router";
 @Component({
     selector: "cf-navigation",
     templateUrl: "./navigation.component.html",
@@ -15,15 +16,17 @@ export class NavigationComponent implements OnInit {
         {label: "partners", url: "/partners"},
         {label: "users", url: "/admin2/users", show: () => this.currentUser.isAdmin()},
         {label: "presentations", url: "/admin2/presentations", show: () => this.currentUser.isAdmin()},
-        {label: "profile", url: "/profile", show: () => this.loggedIn},
+        {label: "profile", action: () => this.goToProfile(), show: () => this.loggedIn},
         {label: "vote 4 papers", url: "/v4p"},
-        {label: "call 4 papers", url: "/login",  show: () => !this.loggedIn},
+        {label: "login", url: "/login", show: () => !this.loggedIn},
         {label: "logout", action: () => this.logout(), show: () => this.loggedIn},
         {label: "registration", url: "/registration", clazz: "pink"},
     ];
 
 
-    constructor(private currentUser: CurrentUser, private login: LoginService) {
+    constructor(private currentUser: CurrentUser,
+                private login: LoginService,
+                private router: Router) {
     }
 
     ngOnInit(): void {
@@ -36,6 +39,11 @@ export class NavigationComponent implements OnInit {
         this.login.logout();
         this.closeMenu();
     };
+
+    goToProfile() {
+        this.router.navigate([`/profile/${this.currentUser.get().jti}`]);
+
+    }
 
     closeMenu() {
         // $(".navbar-toggle").click();

@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
                 if (user.isNew) {
                     this.router.navigate([`/profile/${user.jti}/edit`])
                 } else {
-                    this.router.navigate(["/profile"])
+                    this.router.navigate([`/profile/${user.jti}`])
                 }
             });
     }

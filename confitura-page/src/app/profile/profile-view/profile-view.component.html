@@ -6,7 +6,7 @@
                     <div>
                         <a class="btn-link" routerLink="/profile/{{model.id}}/edit">Edit My Profile</a>
                         <ng-container *jl-admin=""> |
-                            <a class="btn-link" routerLink="/presentation" >Add Presentation</a>
+                            <a class="btn-link" routerLink="/user/{{model.id}}/presentation" >Add Presentation</a>
                         </ng-container>
                     </div>
                     <jl-person-view [model]="model" (changed)="reload()"></jl-person-view>
