@@ -9,7 +9,6 @@ import {RegistrationInfoComponent} from "./pages/registration/registration-info/
 const appRoutes: Routes = [
     {path: '', component: HomeComponent},
     {path: 'about', component: AboutComponent},
-    {path: 'registration', component: RegistrationInfoComponent},
     {path: 'partners', component: PartnersComponent},
     {path: 'partners/:id', component: PartnerComponent},
     {path: 'login', component: LoginComponent},

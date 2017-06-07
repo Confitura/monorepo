@@ -10,6 +10,4 @@ export class User {
     photo: string;
     admin:boolean;
     presentations: Presentation[];
-
-
 }

@@ -6,6 +6,7 @@ import {IsAdminGuard} from "./is-admin-guard.service";
 import {LoginComponent} from "../pages/login/login.component";
 import {UserListComponent} from "./users/user-list/user-list.component";
 import {PresentationListComponent} from "./presentations/presentation-list/presentation-list.component";
+import {ParticipantListComponent} from "./participants/participant-list.component";
 const routes: Routes = [
     {
         path: "admin2",
@@ -23,7 +24,8 @@ const routes: Routes = [
                     {path: "presentations", component: PresentationListComponent},
                     {path: "partners/add", component: PartnerEditComponent},
                     {path: "partners/edit/:id", component: PartnerEditComponent},
-                    {path: "partners/:id", component: PartnerComponent},]
+                    {path: "partners/:id", component: PartnerComponent},
+                    {path: "participants", component: ParticipantListComponent}]
             }
         ]
     }

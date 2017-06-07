@@ -13,9 +13,11 @@ import {AdminModule} from "./admin/admin.module";
 import {V4pModule} from "./pages/v4p/v4p.module";
 import {HotkeyModule} from "angular2-hotkeys";
 import {HammerConfig} from "./HammerConfig";
+import {ParticipantService} from "./admin/participants/participant.service";
+import {RegistrationModule} from "./pages/registration/registration.module";
 @NgModule({
-    imports: [LayoutModule, PagesModule, BrowserModule, BrowserAnimationsModule, ProfileModule, AdminModule, V4pModule, routing, HotkeyModule.forRoot()],
-    providers: [UserService, PresentationService, PartnerService,
+    imports: [LayoutModule, PagesModule, BrowserModule, BrowserAnimationsModule, ProfileModule, AdminModule, V4pModule, routing, HotkeyModule.forRoot(), RegistrationModule],
+    providers: [UserService, PresentationService, PartnerService, ParticipantService,
         {
             provide: HAMMER_GESTURE_CONFIG,
             useClass: HammerConfig,
