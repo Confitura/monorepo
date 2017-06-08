@@ -12,7 +12,7 @@ export class ParticipantListComponent implements OnInit {
 
 
     list: Observable<Participant[]>;
-    private uploader: FileUploader;
+    uploader: FileUploader;
 
     constructor(private  service: ParticipantService, private config: HttpConfiguration, private user: CurrentUser) {
         this.uploader = new FileUploader({
