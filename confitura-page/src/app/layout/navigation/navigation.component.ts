@@ -47,7 +47,8 @@ export class NavigationComponent implements OnInit {
     }
 
     closeMenu() {
-        // $(".navbar-toggle").click();
+        $("#navbar").collapse('hide');
+        
     }
 
 

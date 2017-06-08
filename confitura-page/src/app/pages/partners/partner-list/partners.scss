@@ -1,15 +1,16 @@
 @import "../../../sizes";
+
 section#partners-confitura {
   .unpublished {
     opacity: 0.1;
   }
   .partners-banner {
-    background: url("../../../img/partners_left.png") no-repeat left top, url("../../../img/partners_right.png") no-repeat right bottom;
-    background-color: #000000;
+    background: #000000 url("../../../img/partners_right.png") no-repeat right bottom;
+
     background-size: contain;
-    @media all and (max-width: $size_xsmall) {
-      background: url("../../../img/partners_right.png") no-repeat right bottom;
-      background-size: contain;
+    @media all and (min-width: $size_small) {
+      background: url("../../../img/partners_left.png") no-repeat left top, url("../../../img/partners_right.png") no-repeat right bottom;
+      background-color: #000000;
     }
     h2 {
       color: #fff;
@@ -98,7 +99,7 @@ section#partners-confitura {
 
   }
   #partner {
-    padding-top: 50px;
+    padding-top: 70px;
     img {
       max-width: 400px;
       max-height: 150px;
@@ -107,12 +108,12 @@ section#partners-confitura {
         max-height: 150px;
       }
     }
-    @media all and (min-width: 768px){
-      h3{
-        &:before{
+    @media all and (min-width: 768px) {
+      h3 {
+        &:before {
           content: "# ";
         }
-        &:after{
+        &:after {
           content: " #";
         }
       }
