@@ -1,5 +1,6 @@
 export class Participant {
     id: string;
+    name: string;
     email: string;
     originalBuyer: string;
     city: string;

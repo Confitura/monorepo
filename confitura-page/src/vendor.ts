@@ -22,5 +22,7 @@ import 'bootstrap-social/bootstrap-social.css';
 //hammerjs
 import "hammerjs/hammer.js";
 
-// Other vendors for example jQuery, Lodash or Bootstrap
-// You can import js, ts, css, sass, ...
+//datatables
+import "datatables.net-bs/css/dataTables.bootstrap.css";
+import "datatables.net/js/jquery.dataTables.js";
+import "datatables.net-bs/js/dataTables.bootstrap.js";

@@ -1,6 +1,5 @@
 import {Component, OnInit} from "@angular/core";
 import {ParticipantService} from "./participant.service";
-import {Observable} from "rxjs/Observable";
 import {Participant} from "./participant.model";
 import {FileUploader} from "ng2-file-upload";
 import {HttpConfiguration} from "../../shared/http-configuration.service";
@@ -11,7 +10,7 @@ import {CurrentUser} from "../../security/current-user.service";
 export class ParticipantListComponent implements OnInit {
 
 
-    list: Observable<Participant[]>;
+    list: Participant[];
     uploader: FileUploader;
 
     constructor(private  service: ParticipantService, private config: HttpConfiguration, private user: CurrentUser) {
@@ -25,7 +24,13 @@ export class ParticipantListComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.list = this.service.getAll();
+        this.service.getAll()
+            .subscribe(list => {
+                this.list = list;
+                setTimeout(() => $("#participants").DataTable({}));
+
+            });
+
     }
 
     upload() {
