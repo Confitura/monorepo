@@ -46,5 +46,6 @@ public class Presentation {
     @ManyToOne(optional = false)
     @NotNull
     private User speaker;
+    private String status;
 
 }
