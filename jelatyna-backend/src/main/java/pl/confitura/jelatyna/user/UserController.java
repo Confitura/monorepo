@@ -9,6 +9,7 @@ import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.hateoas.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,6 +46,16 @@ public class UserController {
         }
         User saved = repository.save(user);
         return ResponseEntity.ok(new Resource<>(saved));
+    }
+
+    @PostMapping("/users/{userId}/volunteer/{isVolunteer}")
+    @PreAuthorize("@security.isAdmin()")
+    @Transactional
+    public ResponseEntity<Object> markAsVolunteer(@PathVariable("userId") String userId,
+            @PathVariable("isVolunteer") boolean isVolunteer) {
+        User user = repository.findOne(userId);
+        user.setVolunteer(isVolunteer);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/users/{userId}/presentations")
