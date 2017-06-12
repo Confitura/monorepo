@@ -6,7 +6,14 @@
         <ng-container *ngIf="list">
             <article *ngFor="let presentation of list; odd as isOdd; even as isEven" class="presentation" [class.odd]="isOdd"
                      [id]="presentation.id">
-
+                <div style="padding-bottom: 10px;" *jl-admin="">
+                    <button class="btn btn-success"
+                            *ngIf="presentation.status != 'accepted'" (click)="accept(presentation)">Accept
+                    </button>
+                    <button class="btn btn-warning"
+                            *ngIf="presentation.status == 'accepted'" (click)="unaccept(presentation)">Unaccept
+                    </button>
+                </div>
                 <div class="presentation-title">{{presentation.title}}</div>
                 <div class="presentation-speakers">
                     <span (click)="show(presentation.speaker)" role="button">{{presentation.speaker.name}}</span>

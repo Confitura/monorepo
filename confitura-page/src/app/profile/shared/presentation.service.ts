@@ -10,11 +10,8 @@ export class PresentationService {
     constructor(private http: CustomHttp, private user: CurrentUser) {
     }
 
-    // save(presentation: Presentation): Observable<Response> {
-    //     return this.http.post(`/users/${this.user.get().jti}/presentations`, presentation);
-    // }
 
-    save(userId:string, presentation: Presentation): Observable<Response> {
+    save(userId: string, presentation: Presentation): Observable<Response> {
         return this.http.post(`/users/${userId}/presentations`, presentation);
     }
 
@@ -43,5 +40,13 @@ export class PresentationService {
 
     remove(presentation: Presentation) {
         return this.http.remove(`/presentations/${presentation.id}`)
+    }
+
+    accept(presentation: Presentation) {
+        return this.http.post(`/presentations/${presentation.id}/accept`, {});
+    }
+
+    unaccept(presentation: Presentation) {
+        return this.http.post(`/presentations/${presentation.id}/unaccept`, {});
     }
 }

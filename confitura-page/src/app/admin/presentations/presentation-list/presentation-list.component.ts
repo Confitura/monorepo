@@ -1,4 +1,4 @@
-import {AfterContentChecked, AfterViewChecked, Component, OnInit} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {PresentationService} from "../../../profile/shared/presentation.service";
 import {Presentation} from "../../../profile/shared/presentation.model";
 import "./presentation-list.component.scss";
@@ -9,8 +9,7 @@ import {ActivatedRoute} from "@angular/router";
 @Component({
     templateUrl: "./presentation-list.component.html"
 })
-export class PresentationListComponent implements OnInit{
-
+export class PresentationListComponent implements OnInit {
 
 
     list: Presentation[];
@@ -28,10 +27,28 @@ export class PresentationListComponent implements OnInit{
         this.service.getAll()
             .subscribe((list) => {
                 this.list = list;
-                setTimeout(()=>
+                setTimeout(() =>
                     this.scrollToSelectedPresentation());
 
             })
+    }
+
+
+    accept(presentation: Presentation) {
+        this.service.accept(presentation)
+            .subscribe(() => this.ngOnInit());
+    }
+
+    unaccept(presentation: Presentation) {
+        this.service.unaccept(presentation)
+            .subscribe(() => this.ngOnInit());
+
+    }
+
+
+    show(speaker: User) {
+        this.userService.getBy(speaker.id, "withPresentations")
+            .subscribe(user => this.personModalService.showFor(user));
     }
 
     private scrollToSelectedPresentation() {
@@ -44,9 +61,5 @@ export class PresentationListComponent implements OnInit{
         }
     }
 
-    show(speaker: User) {
-        this.userService.getBy(speaker.id, "withPresentations")
-            .subscribe(user => this.personModalService.showFor(user));
-    }
 
 }

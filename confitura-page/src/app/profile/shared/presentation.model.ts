@@ -9,4 +9,5 @@ export class Presentation{
     tags:string;
     shortDescription:string;
     description:string;
+    status: string;
 }
