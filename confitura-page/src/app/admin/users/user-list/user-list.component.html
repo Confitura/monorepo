@@ -10,6 +10,7 @@
                 <th>Name</th>
                 <th>Email</th>
                 <th>Is admin</th>
+                <th>Is volunteer</th>
                 <th></th>
             </tr>
             </thead>
@@ -18,9 +19,22 @@
                 <td>{{user.name}}</td>
                 <td>{{user.email}}</td>
                 <td>{{user.admin}}</td>
+                <td>{{user.volunteer}}</td>
                 <td style="text-align: center">
-                    <a role="button" (click)="view(user)">View</a> |
-                    <a role="button" (click)="addPresentationTo(user)">Add Presentation</a>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default" (click)="view(user)">View</button>
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a role="button" (click)="addPresentationTo(user)">Add Presentation</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a role="button" (click)="markAsVolunteer(user)" *ngIf="!user.volunteer">Set As Volunteer</a></li>
+                            <li><a role="button" (click)="notVolunteer(user)" *ngIf="user.volunteer">Remove Volunteer Role</a></li>
+                        </ul>
+                    </div>
                 </td>
             </tr>
             </tbody>

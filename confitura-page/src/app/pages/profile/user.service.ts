@@ -26,5 +26,9 @@ export class UserService {
             .map((response: Response) => response.json()["_embedded"]["users"] as User[]);
     }
 
+    markAsVolunteer(user: User, isVolunteer: boolean): Observable<Response> {
+        return this.http.post(`/users/${user.id}/volunteer/${isVolunteer}`, {});
+    }
+
 
 }

@@ -9,5 +9,6 @@ export class User {
     bio: string;
     photo: string;
     admin:boolean;
+    volunteer: boolean;
     presentations: Presentation[];
 }

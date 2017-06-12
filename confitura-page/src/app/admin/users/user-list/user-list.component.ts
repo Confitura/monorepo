@@ -10,12 +10,11 @@ import {Router} from "@angular/router";
 export class UserListComponent implements OnInit {
     list: Observable<User[]>;
 
-    constructor(private service: UserService, private modalService: PersonModalService, private router:Router) {
+    constructor(private service: UserService, private router: Router) {
 
     }
 
     view(user: User) {
-        // this.modalService.showFor(user);
         this.router.navigate([`/profile/${user.id}`]);
 
     }
@@ -26,5 +25,15 @@ export class UserListComponent implements OnInit {
 
     addPresentationTo(user:User){
         this.router.navigate([`/user/${user.id}/presentation`]);
+    }
+
+    markAsVolunteer(user: User) {
+        this.service.markAsVolunteer(user, true)
+            .subscribe(() => this.ngOnInit());
+    }
+
+    notVolunteer(user: User) {
+        this.service.markAsVolunteer(user, false)
+            .subscribe(() => this.ngOnInit());
     }
 }
