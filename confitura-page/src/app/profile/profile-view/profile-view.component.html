@@ -4,8 +4,10 @@
             <div class="row-1140">
                 <div class="beige" *ngIf="model">
                     <div>
-                        <a class="btn-link" routerLink="/profile/{{model.id}}/edit">Edit My Profile</a> |
-                        <a class="btn-link" routerLink="/presentation">Add Presentation</a>
+                        <a class="btn-link" routerLink="/profile/{{model.id}}/edit">Edit My Profile</a>
+                        <ng-container *jl-admin=""> |
+                            <a class="btn-link" routerLink="/user/{{model.id}}/presentation">Add Presentation</a>
+                        </ng-container>
                     </div>
                     <jl-person-view [model]="model" (changed)="reload()"></jl-person-view>
                     <table class="table table-bordered table-striped" *ngIf="(presentations | async)?.length > 0">
@@ -16,7 +18,10 @@
                         </tr>
                         <tr *ngFor="let presentation of presentations | async" class="active">
                             <td>{{presentation.title}}</td>
-                            <td>New</td>
+                            <td>
+                                <span style="font-size: 1.4rem" class="label label-default"
+                                      [class.label-success]="presentation.status =='accepted'">{{presentation.status || "reported"}}</span>
+                            </td>
                             <td style="width: 200px">
                                 <button class="btn" routerLink="/presentation/{{presentation.id}}">edit</button>
                                 <button class="btn btn-danger" (click)="remove(presentation)">Delete</button>

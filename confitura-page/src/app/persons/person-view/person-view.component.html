@@ -21,7 +21,10 @@
     <div class="person-info">
         <section>
             <div class="ta-left person-name"><h3>{{model.name}}</h3></div>
-            <div class="ta-left" *ngIf="model.admin"><h4>ADMIN</h4></div>
+            <div class="ta-left">
+                <span *ngIf="model.admin">ADMIN</span>
+                <span *ngIf="model.volunteer">VOLUNTEER</span>
+            </div>
             <div class="mcci-content" [innerHTML]="model.bio"></div>
         </section>
         <section *ngIf="model.presentations">

@@ -1,3 +1,4 @@
+import {Presentation} from "../../profile/shared/presentation.model";
 export class User {
     id: string;
     name: string;
@@ -8,6 +9,6 @@ export class User {
     bio: string;
     photo: string;
     admin:boolean;
-
-
+    volunteer: boolean;
+    presentations: Presentation[];
 }

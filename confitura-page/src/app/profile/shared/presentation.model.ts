@@ -4,8 +4,10 @@ export class Presentation{
     title:string;
     language:string;
     level:string;
+    speaker:User;
     cospeakers: User[] = [];
     tags:string;
     shortDescription:string;
     description:string;
+    status: string;
 }

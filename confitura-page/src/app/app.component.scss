@@ -216,7 +216,8 @@ body#confitura {
 }
 
 div[class^="col-"] {
-  padding: 0;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 #main-confitura,
@@ -587,6 +588,9 @@ div#patronat {
 
 .pt100 {
   padding-top: 100px;
+}
+.pt50 {
+  padding-top: 50px;
 }
 
 .pb100 {

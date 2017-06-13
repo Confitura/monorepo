@@ -3,7 +3,6 @@ import {Injectable} from "@angular/core";
 import {HttpConfiguration} from "./http-configuration.service";
 import {Observable} from "rxjs";
 import {CurrentUser} from "../security/current-user.service";
-import {LoginService} from "../security/login.service";
 @Injectable()
 export class CustomHttp {
     constructor(private config: HttpConfiguration,
@@ -14,8 +13,6 @@ export class CustomHttp {
     get(url: string, options: RequestOptionsArgs = {}): Observable<Response> {
         return this.doExecute(() => this.http.get(this.toFullUrl(url), options), options);
     }
-
-
 
 
     post(url: string, body: any, options: RequestOptionsArgs = {}): Observable<Response> {

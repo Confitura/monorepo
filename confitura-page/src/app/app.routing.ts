@@ -5,6 +5,7 @@ import {AboutComponent} from "./pages/about/about.component";
 import {PartnersComponent} from "./pages/partners/partner-list/partners.component";
 import {PartnerComponent} from "./pages/partners/partner/partner.component";
 import {LoginComponent} from "./pages/login/login.component";
+import {RegistrationInfoComponent} from "./pages/registration/registration-info/registration-info.component";
 const appRoutes: Routes = [
     {path: '', component: HomeComponent},
     {path: 'about', component: AboutComponent},

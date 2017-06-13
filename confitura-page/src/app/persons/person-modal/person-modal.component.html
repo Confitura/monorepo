@@ -7,7 +7,11 @@
                 </button>
 
                 <div class="person-container">
+
                     <div class="person-photo">
+                        <section style="text-align: center">
+                            <h4><a role="button" (click)="addPresentation()">Add Presentation</a></h4>
+                        </section>
                         <div class="img-speaker">
                             <img class="img-responsive margin-auto" [src]="model.photo"/>
                         </div>
@@ -22,25 +26,21 @@
                                 <i class="fa fa-arrow-up prelegent-social" aria-hidden="true"></i>
                             </a>
                         </section>
+
                     </div>
                     <div class="person-info">
                         <section>
                             <div class="ta-leftperson-name person-name"><h3>{{model.name}}</h3></div>
                             <div class="mcci-content" [innerHTML]="model.bio"></div>
                         </section>
-                        <section *ngIf="model.presentations">
-                            <a>
-                                <h3 class="presentation-title">
-                                    title
-                                </h3>
-                            </a>
+                        <section *ngIf="model.presentations" class="person-presentations">
+                            <div *ngFor="let presentation of model.presentations">
+                                <a role="button" (click)="goTo(presentation)">{{presentation.title}}</a>
+                            </div>
                         </section>
                     </div>
                 </div>
 
-                <aside class="navigation">
-                    <span class="next-arrow"></span>
-                </aside>
             </div>
         </div>
     </div>

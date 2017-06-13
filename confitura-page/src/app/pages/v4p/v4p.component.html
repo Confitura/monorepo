@@ -1,0 +1,48 @@
+<section class="bg-white pt50" id="v4p">
+    <div id="spinner" *ngIf="loading"></div>
+    <div class="row-1140" (swipeleft)="right()" (swiperight)="left()">
+        <section *ngIf="presentation" class="presentation">
+            <div class="rate-container">
+                <span (click)="setRate(1)" class="fa fa-thumbs-o-up fa-3x" aria-hidden="true" [class.active]="hasRate(1)"
+                      role="button"></span>
+                <span (click)="setRate(0)" class="fa fa-hand-grab-o fa-3x" aria-hidden="true" [class.active]="hasRate(0)"
+                      role="button"></span>
+                <span (click)="setRate(-1)" class="fa fa-thumbs-o-down fa-3x" aria-hidden="true" [class.active]="hasRate(-1)"
+                      role="button"></span>
+            </div>
+            <div class="info-container">
+                <div class="position-container">
+                    <span class="fa fa-chevron-left prev" role="button" (click)="left()"></span>
+                    <span class="position">{{currentIdx+1}}/{{votes.length}}</span>
+                    <span class="fa fa-chevron-right next" role="button" (click)="right()"></span>
+                </div>
+                <div class="presentation-title">{{presentation.title}}</div>
+                <div class="presentation-speakers">
+                    <span class="speaker-name" (click)="show(presentation.speaker)" role="button">{{presentation.speaker.name}}</span>
+                </div>
+                <div>
+                    <div>
+                        <span><strong>language:</strong> {{presentation.language}}</span>
+                        <span><strong>level:</strong> {{presentation.level}}</span>
+                    </div>
+                    <div *ngIf="presentation.tags.length">
+                        <strong>tags:</strong> <span *ngFor="let tag of  presentation.tags" class="label label-danger">{{tag.name}}</span>
+                    </div>
+
+                    <div class="description-type">
+                        <span [class.active]="short" (click)="short = true">Short Description</span>
+                        <span [class.active]="!short" (click)="short = false">Full Description</span>
+                    </div>
+                    <div *ngIf="short">
+                        <span>{{presentation.shortDescription}}</span>
+                    </div>
+                    <div *ngIf="!short">
+                        <span>{{presentation.description}}</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <jl-person-modal></jl-person-modal>
+</section>
+<hotkeys-cheatsheet></hotkeys-cheatsheet>

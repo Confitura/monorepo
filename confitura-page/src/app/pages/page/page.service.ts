@@ -12,7 +12,7 @@ export class PageService {
 
     get(name: string): Observable<Page> {
         return this.http.get(`/pages/${name}`)
-            .map((response: Response) => response.json() as Page);
+            .map((response: Response) => response.ok ? response.json() as Page : new Page());
     }
 
 

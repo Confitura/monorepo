@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
         }
     }
 
-    loginWith(origin:string) {
+    loginWith(origin: string) {
         window.location.assign(`${this.config.apiServer}/login/${origin}`);
     }
 
@@ -41,9 +41,9 @@ export class LoginComponent implements OnInit {
             .subscribe((user: JwtUser) => {
                 this.user = user;
                 if (user.isNew) {
-                    this.router.navigate(["/profile/edit"])
+                    this.router.navigate([`/profile/${user.jti}/edit`])
                 } else {
-                    this.router.navigate(["/profile"])
+                    this.router.navigate([`/profile/${user.jti}`])
                 }
             });
     }
