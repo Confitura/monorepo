@@ -5,7 +5,7 @@ export class Presentation{
     language:string;
     level:string;
     speaker:User;
-    cospeakers:string;
+    cospeakers: User[] = [];
     tags:string;
     shortDescription:string;
     description:string;
