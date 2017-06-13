@@ -3,9 +3,9 @@ import {PresentationService} from "../../../profile/shared/presentation.service"
 import {Presentation} from "../../../profile/shared/presentation.model";
 import "./presentation-list.component.scss";
 import {PersonModalService} from "../../../persons/person-modal/person-modal.service";
-import {User} from "../../../pages/profile/user.model";
-import {UserService} from "../../../pages/profile/user.service";
 import {ActivatedRoute} from "@angular/router";
+import {UserService} from "../../profile/user.service";
+import {User} from "../../profile/user.model";
 @Component({
     templateUrl: "./presentation-list.component.html"
 })
@@ -29,7 +29,6 @@ export class PresentationListComponent implements OnInit {
                 this.list = list;
                 setTimeout(() =>
                     this.scrollToSelectedPresentation());
-
             })
     }
 
@@ -47,8 +46,16 @@ export class PresentationListComponent implements OnInit {
 
 
     show(speaker: User) {
-        this.userService.getBy(speaker.id, "withPresentations")
+        this.userService.getBy(speaker.id)
             .subscribe(user => this.personModalService.showFor(user));
+    }
+
+    allSpeakersFor(presentation: Presentation): User[] {
+        let speakers = [presentation.speaker];
+        if (presentation.cospeakers) {
+            speakers = speakers.concat(presentation.cospeakers);
+        }
+        return speakers;
     }
 
     private scrollToSelectedPresentation() {

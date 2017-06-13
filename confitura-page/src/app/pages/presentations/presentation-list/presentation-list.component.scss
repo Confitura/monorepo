@@ -1,0 +1,47 @@
+@import "../../../sizes";
+
+.presentations-banner {
+  display: flex;
+  background: url("../../../img/about_left.png") no-repeat left top, url("../../../img/about_right.png") no-repeat right bottom;
+  background-size: contain;
+  background-color: #000000;
+  @media all and (max-width: $size_xsmall) {
+    background: url("../../../img/about_right.png") no-repeat right bottom;
+    background-size: contain;
+  }
+  h2 {
+    color: #fff;
+  }
+}
+
+.presentation {
+  padding: 60px;
+  &.odd {
+    background: #e4d7c6;
+  }
+  .presentation-title {
+    font-size: 4rem;
+    line-height: 4rem;
+    font-family: 'NeuzeitGro-Bol', Verdana, Tahoma, sans-serif;
+  }
+
+  .presentation-description {
+    font-size: 2rem;
+    padding-top: 60px;
+  }
+
+  .presentation-speakers {
+    font-size: 2.7rem;
+    padding-top: 15px;
+    font-family: 'NeuzeitGro-Bol', Verdana, Tahoma, sans-serif;
+    .presentation-speaker:not(:last-child)::after {
+      content: ", ";
+    }
+
+  }
+
+  .label {
+    margin-right: 10px;
+  }
+
+}

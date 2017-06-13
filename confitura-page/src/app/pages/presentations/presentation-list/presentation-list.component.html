@@ -16,18 +16,23 @@
                 </div>
                 <div class="presentation-title">{{presentation.title}}</div>
                 <div class="presentation-speakers">
-                    <span (click)="show(presentation.speaker)" role="button">{{presentation.speaker.name}}</span>
+                    <span class="presentation-speaker" (click)="show(speaker)" role="button"
+                          *ngFor="let speaker of allSpeakersFor(presentation)">{{speaker.name}}</span>
                 </div>
                 <div>
                     <span><strong>language:</strong> {{presentation.language}}</span>
                     <span><strong>level:</strong> {{presentation.level}}</span>
                 </div>
-                <div><strong>tags:</strong> <span *ngFor="let tag of  presentation.tags" class="label label-danger">{{tag.name}}</span>
+                <div *ngIf="presentation.tags.length != 0"><strong>tags:</strong> <span *ngFor="let tag of  presentation.tags"
+                                                                                        class="label label-danger">{{tag.name}}</span>
                 </div>
-                <div><strong>short description:</strong></div>
-                <div>{{presentation.shortDescription}}</div>
-                <div><strong>description:</strong></div>
-                <div>{{presentation.description}}</div>
+
+                <ng-container *jl-admin="">
+                    <div><strong>short description:</strong></div>
+                    <div class="presentation-description">{{presentation.shortDescription}}</div>
+                    <div><strong>description:</strong></div>
+                </ng-container>
+                <div class="presentation-description">{{presentation.description}}</div>
             </article>
 
         </ng-container>

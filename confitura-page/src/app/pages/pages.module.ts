@@ -15,9 +15,10 @@ import {RouterModule} from "@angular/router";
 import {LoginComponent} from "./login/login.component";
 import {FileUploadModule} from "ng2-file-upload";
 import {PartnerBannerComponent} from "./partners/partner-banner/partner-banner.component";
+import {PresentationListComponent} from "./presentations/presentation-list/presentation-list.component";
 @NgModule({
     imports: [SharedModule, PersonModule, RouterModule, FileUploadModule],
-    declarations: [HomeComponent, NewsBannerComponent, NewsComponent, AboutComponent, PageComponent, PartnersComponent, PartnerComponent, LoginComponent, PartnerBannerComponent],
+    declarations: [HomeComponent, NewsBannerComponent, NewsComponent, AboutComponent, PageComponent, PartnersComponent, PartnerComponent, LoginComponent, PartnerBannerComponent, PresentationListComponent],
     providers: [NewsService, OrganizerService, PageService],
     exports: [HomeComponent, AboutComponent, PageComponent]
 })

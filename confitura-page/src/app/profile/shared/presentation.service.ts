@@ -8,7 +8,8 @@ import {CurrentUser} from "../../security/current-user.service";
 import {User} from "../../pages/profile/user.model";
 @Injectable()
 export class PresentationService {
-    constructor(private http: CustomHttp, private user: CurrentUser) {
+    constructor(private http: CustomHttp,
+                private user: CurrentUser) {
     }
 
 
@@ -24,7 +25,11 @@ export class PresentationService {
     }
 
     getAll(): Observable<Presentation[]> {
-        return this.http.get("/presentations?projection=inlineSpeaker")
+        let url = "/presentations";
+        if (!this.user.isAdmin()) {
+            url += "/search/accepted";
+        }
+        return this.http.get(url + "?projection=inlineSpeaker")
             .map((response: Response) => response.json()["_embedded"]["presentations"] as Presentation[]);
 
     }
