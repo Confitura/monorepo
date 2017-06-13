@@ -29,6 +29,7 @@ public class TokenService {
         return Jwts.builder()
                 .setClaims(new HashMap<String, Object>() {{
                     put("isAdmin", user.isAdmin());
+                    put("isVolunteer", user.isVolunteer());
                     put("isNew", StringUtils.isEmpty(user.getEmail()));
                 }})
                 .setId(user.getId())

@@ -18,6 +18,8 @@ interface InlineTags {
 
     String getDescription();
 
+    String getStatus();
+
     Set<Tag> getTags();
 
 }

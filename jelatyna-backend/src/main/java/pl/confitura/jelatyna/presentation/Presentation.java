@@ -50,4 +50,5 @@ public class Presentation {
     @ManyToMany
     @NotNull
     private List<User> cospeakers;
+    private String status;
 }

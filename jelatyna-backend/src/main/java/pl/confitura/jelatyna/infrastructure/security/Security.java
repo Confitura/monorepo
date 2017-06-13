@@ -1,5 +1,7 @@
 package pl.confitura.jelatyna.infrastructure.security;
 
+import java.util.Optional;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +24,7 @@ public class Security {
     private PresentationRepository presentationRepository;
 
     public boolean isOwner(String userId) {
-        return userId.equals(getUserId());
+        return isAdmin() || userId.equals(getUserId());
     }
 
     public boolean presentationOwnedByUser(String presentationId) {
@@ -35,7 +37,9 @@ public class Security {
     }
 
     private JelatynaPrincipal getPrincipal() {
-        return (JelatynaPrincipal) ((Authentication) request.getUserPrincipal()).getPrincipal();
+        return (JelatynaPrincipal) Optional.ofNullable((Authentication) request.getUserPrincipal())
+                .map(Authentication::getPrincipal)
+                .orElse(new JelatynaPrincipal());
     }
 
     private String getUserId() {

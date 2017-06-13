@@ -19,6 +19,12 @@ github:
 
 jwt:
   key: {{jwt_key}}
+
+mail:
+  api-key: {{mail_key}}
+  from-email: confitura@confitura.pl
+  from-name: Confitura
+
 resources:
   path: resources
   folder: {{resources_folder}}

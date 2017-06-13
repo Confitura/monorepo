@@ -9,4 +9,5 @@ public class JelatynaPrincipal {
     public String id;
     public String name;
     public boolean admin;
+    public boolean volunteer;
 }

@@ -24,4 +24,6 @@ interface InlineSpeaker {
 
     User getSpeaker();
 
+    String getStatus();
+
 }

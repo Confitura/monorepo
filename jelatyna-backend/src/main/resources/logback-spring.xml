@@ -21,6 +21,7 @@
     </appender>
 
     <logger name="org.hibernate" level="INFO"/>
+    <logger name="com.microtripit" level="DEBUG"/>
 
     <root level="INFO">
         <appender-ref ref="FILE" />
