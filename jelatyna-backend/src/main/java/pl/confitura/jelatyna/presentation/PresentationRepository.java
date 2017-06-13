@@ -25,4 +25,8 @@ public interface PresentationRepository extends Repository<Presentation, String>
     @RestResource(exported = false)
     Iterable<Presentation> findAllForV4p();
 
+    @Query("FROM Presentation WHERE status ='accepted'")
+    @RestResource(path = "accepted", rel = "accepted")
+    Iterable<Presentation> findAccepted();
+
 }

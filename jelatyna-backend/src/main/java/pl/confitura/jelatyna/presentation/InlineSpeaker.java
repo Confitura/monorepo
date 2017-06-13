@@ -1,5 +1,6 @@
 package pl.confitura.jelatyna.presentation;
 
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.data.rest.core.config.Projection;
@@ -23,6 +24,8 @@ interface InlineSpeaker {
     Set<Tag> getTags();
 
     User getSpeaker();
+
+    List<User> getCospeakers();
 
     String getStatus();
 
