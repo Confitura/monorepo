@@ -19,20 +19,27 @@ export class SpeakerSelectComponent implements ControlValueAccessor {
     speakers: User[] = [];
     query = "";
     @Input() value: User[] = [];
+    @Input() ownerId: string;
 
     constructor(private userService: UserService) {
     }
 
     search(query: string) {
         this.query = query;
-        if (query.length >= 3) {
+        if (query.length >= 5) {
             this.userService
                 .find(this.query)
-                .subscribe(it => this.speakers = it)
+                .subscribe(users => {
+                    this.speakers = users
+                        .filter(this.notAnOwner)
+                        .filter(this.notYetSelected)
+
+                });
         } else {
             this.speakers = [];
         }
     }
+
 
     writeValue(value: any): void {
         if (value !== null && value !== undefined) {
@@ -45,6 +52,8 @@ export class SpeakerSelectComponent implements ControlValueAccessor {
         if (index < 0) {
             this.value.push(user);
             this.propagateChange(this.value);
+            this.query = "";
+            this.speakers = [];
         }
     }
 
@@ -76,4 +85,12 @@ export class SpeakerSelectComponent implements ControlValueAccessor {
 
     registerOnTouched(fn: any): void {
     }
+
+    notYetSelected = (user: User) => {
+        return this.value.map(speaker => speaker.id).indexOf(user.id) == -1;
+    };
+
+    notAnOwner = (user: User) => {
+        return user.id !== this.ownerId;
+    };
 }

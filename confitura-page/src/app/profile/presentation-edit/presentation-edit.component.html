@@ -56,8 +56,7 @@
                         </div>
                         <div class="form-group">
                             <label for="cospeakers">Co-speakers</label>
-                            <jl-speakers-select [(ngModel)]="model.cospeakers"
-                                                name="cospeakers">
+                            <jl-speakers-select id="cospeakers" [(ngModel)]="model.cospeakers" name="cospeakers" [ownerId]="userId">
 
                             </jl-speakers-select>
                         </div>
@@ -66,7 +65,7 @@
                             <textarea type="text" id="short-description" class="form-control" rows="5" [(ngModel)]="model.shortDescription"
                                       #shortDescription="ngModel"
                                       name="shortDescription" required maxlength="300"></textarea>
-                            <span class="help-block">Make it short and sweet for the potential participant. It will be used In Vote 4 Papers process. Max 300 characters. ({{model.shortDescription?.length || 0}}/300)</span>
+                            <span class="help-block small">Make it short and sweet for the potential participant. It will be used In Vote 4 Papers process. Max 300 characters. ({{model.shortDescription?.length || 0}}/300)</span>
                             <div class="alert alert-danger" role="alert"
                                  *ngIf="shortDescription.errors?.required && (shortDescription.touched || submitted)">
                                 This field is required

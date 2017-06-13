@@ -11,13 +11,14 @@ import {Location} from "@angular/common";
     templateUrl: "./presentation-edit.component.html"
 })
 export class PresentationEditComponent implements OnInit {
-    private userId: string = null;
+    userId: string = null;
     model: Presentation = new Presentation();
     submitted: boolean = false;
 
     constructor(private service: PresentationService,
                 private user: CurrentUser,
                 private route: ActivatedRoute,
+                private router: Router,
                 private location: Location) {
     }
 
@@ -51,7 +52,7 @@ export class PresentationEditComponent implements OnInit {
     }
 
     cancel() {
-        this.location.back();
+        this.router.navigate([`/profile/${this.userId}`]);
     }
 
     public tags = (): Observable<Tag[]> => {
