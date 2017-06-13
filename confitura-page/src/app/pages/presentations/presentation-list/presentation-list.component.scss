@@ -2,46 +2,58 @@
 
 .presentations-banner {
   display: flex;
-  background: url("../../../img/about_left.png") no-repeat left top, url("../../../img/about_right.png") no-repeat right bottom;
+  background: #000000 url("../../../img/about_right.png") no-repeat right bottom;
   background-size: contain;
-  background-color: #000000;
-  @media all and (max-width: $size_xsmall) {
-    background: url("../../../img/about_right.png") no-repeat right bottom;
-    background-size: contain;
+  @media all and (min-width: $size_small) {
+    background: url("../../../img/about_left.png") no-repeat left top, url("../../../img/about_right.png") no-repeat right bottom;
+    background-color: #000000;
   }
   h2 {
     color: #fff;
+    font-size: 5.5rem;
   }
 }
 
-.presentation {
-  padding: 60px;
-  &.odd {
-    background: #e4d7c6;
+#presentation-list {
+  @media all and (max-width: $size_xsmall) {
+    [ class ^= "row-" ] {
+      padding-right: 0;
+      padding-left: 0;
+    }
   }
-  .presentation-title {
-    font-size: 4rem;
-    line-height: 4rem;
-    font-family: 'NeuzeitGro-Bol', Verdana, Tahoma, sans-serif;
-  }
+  .presentation {
+    padding: 20px;
 
-  .presentation-description {
-    font-size: 2rem;
-    padding-top: 60px;
-  }
+    @media all and (min-width: $size_small) {
+      padding: 60px;
+    }
+    &.odd {
+      background: #e4d7c6;
+    }
+    .presentation-title {
+      font-size: 4rem;
+      line-height: 4rem;
+      font-family: 'NeuzeitGro-Bol', Verdana, Tahoma, sans-serif;
+    }
 
-  .presentation-speakers {
-    font-size: 2.7rem;
-    padding-top: 15px;
-    font-family: 'NeuzeitGro-Bol', Verdana, Tahoma, sans-serif;
-    .presentation-speaker:not(:last-child)::after {
-      content: ", ";
+    .presentation-description {
+      font-size: 2rem;
+      padding-top: 60px;
+    }
+
+    .presentation-speakers {
+      font-size: 2.7rem;
+      padding-top: 15px;
+      font-family: 'NeuzeitGro-Bol', Verdana, Tahoma, sans-serif;
+      .presentation-speaker:not(:last-child)::after {
+        content: ", ";
+      }
+
+    }
+
+    .label {
+      margin-right: 10px;
     }
 
   }
-
-  .label {
-    margin-right: 10px;
-  }
-
 }
