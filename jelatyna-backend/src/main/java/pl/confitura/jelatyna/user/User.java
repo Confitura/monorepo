@@ -2,13 +2,10 @@ package pl.confitura.jelatyna.user;
 
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.rest.core.config.Projection;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -42,6 +39,7 @@ public class User {
     private boolean isAdmin;
     private boolean isVolunteer;
     @OneToMany(mappedBy = "speaker")
+    @JsonIgnore
     private Set<Presentation> presentations;
 
     interface Edit {
