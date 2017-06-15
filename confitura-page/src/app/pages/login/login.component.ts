@@ -29,6 +29,7 @@ export class LoginComponent implements OnInit {
         } else if (origin == "facebook") {
             this.doLogin(() => this.login.loginWithFacebook(queryParams["code"]));
         } else if (origin == "google") {
+            debugger;
             this.doLogin(() => this.login.loginWithGoogle(queryParams["code"]));
         }
     }

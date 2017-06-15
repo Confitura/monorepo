@@ -24,8 +24,9 @@ export class LoginService {
     }
 
     loginWithGoogle(code: string): Observable<JwtUser> {
-        return this.doLogin("facebook", new URLSearchParams(`code=${code}`));
+        return this.doLogin("google", new URLSearchParams(`code=${code}`));
     }
+
 
     logout() {
         this.currentUser.logout();
@@ -41,5 +42,4 @@ export class LoginService {
             });
         });
     }
-
 }
