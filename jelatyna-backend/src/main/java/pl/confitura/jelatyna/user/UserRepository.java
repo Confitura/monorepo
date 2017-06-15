@@ -28,4 +28,8 @@ public interface UserRepository extends Repository<User, String> {
             "lower(email) like concat('%',lower(:query),'%') OR " +
             "lower(username) like concat('%',lower(:query),'%') ")
     Iterable<User> find(@Param("query") String query);
+
+    @RestResource(path = "speakers", rel = "speakers")
+    @Query("SELECT speaker FROM Presentation WHERE status ='accepted'")
+    Iterable<User> findAllAccepted();
 }

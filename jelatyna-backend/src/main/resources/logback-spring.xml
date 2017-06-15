@@ -20,7 +20,7 @@
         </encoder>
     </appender>
 
-    <logger name="org.hibernate" level="INFO"/>
+    <logger name="org.hibernate" level="DEBUG"/>
     <logger name="com.microtripit" level="DEBUG"/>
 
     <root level="INFO">
