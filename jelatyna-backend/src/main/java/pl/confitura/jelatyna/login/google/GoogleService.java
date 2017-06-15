@@ -22,6 +22,7 @@ import java.util.concurrent.ExecutionException;
 @Service
 public class GoogleService {
     private static final String PROTECTED_RESOURCE_URL = "https://www.googleapis.com/plus/v1/people/me";
+    private static final String GOOGLE_SCOPE = "https://www.googleapis.com/auth/userinfo.email";
 
     private OAuth20Service service;
     private OAuthUserService oauthUserService;
@@ -29,6 +30,9 @@ public class GoogleService {
 
     public GoogleService(final OAuthUserService oauthUserService, final GoogleConfigurationProperties properties, final ObjectMapper mapper) {
         this.service = new ServiceBuilder()
+                .scope(GOOGLE_SCOPE)
+                .responseType("code")
+                .callback(properties.getCallback())
                 .apiKey(properties.getApiKey())
                 .apiSecret(properties.getApiSecret())
                 .build(GoogleApi20.instance());

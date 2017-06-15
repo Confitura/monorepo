@@ -13,7 +13,7 @@ import pl.confitura.jelatyna.user.User;
 @Data
 @ToString
 public class GoogleUser extends OAuthUserBase {
-    private String name;
+    private String displayName;
 
     protected GoogleUser() {
         super("google");
@@ -24,6 +24,6 @@ public class GoogleUser extends OAuthUserBase {
         return new User()
                 .setId(encodeId())
                 .setOrigin(getSystem())
-                .setName(name);
+                .setName(displayName);
     }
 }
