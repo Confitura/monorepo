@@ -19,6 +19,10 @@ public interface UserRepository extends Repository<User, String> {
     @RestResource(path = "admins", rel = "admins")
     Iterable<User> findAdmins();
 
+    @Query("FROM User WHERE isVolunteer = true")
+    @RestResource(path = "volunteers", rel = "volunteers")
+    Iterable<User> findVolunteers();
+
     @PreAuthorize("@security.isAdmin()")
     Iterable<User> findAll();
 
