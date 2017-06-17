@@ -1,8 +1,6 @@
 package pl.confitura.jelatyna.presentation;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -50,6 +48,6 @@ public class Presentation {
     private User speaker;
     @ManyToMany
     @NotNull
-    private List<User> cospeakers = new ArrayList<>();
+    private Set<User> cospeakers = new HashSet<>();
     private String status;
 }

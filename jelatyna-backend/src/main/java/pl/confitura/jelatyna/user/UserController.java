@@ -3,6 +3,8 @@ package pl.confitura.jelatyna.user;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static org.springframework.util.StringUtils.isEmpty;
 
+import java.util.Set;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +13,13 @@ import org.springframework.hateoas.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.google.common.collect.Sets;
+import com.google.common.collect.Streams;
 import com.timgroup.jgravatar.Gravatar;
 import com.timgroup.jgravatar.GravatarDefaultImage;
 import com.timgroup.jgravatar.GravatarRating;
@@ -70,6 +75,21 @@ public class UserController {
         retainStatus(presentation);
         Presentation saved = presentationRepository.save(presentation);
         return ResponseEntity.ok(new Resource<>(saved));
+    }
+
+    @GetMapping("/users/search/speakers")
+    public ResponseEntity<?> getSpeakers() {
+        Object[] speakers = Streams.stream(repository.findAllAccepted())
+                .flatMap(row -> {
+                    Set<User> users = Sets.newHashSet((User) row[0]);
+                    if (row[1] != null) {
+                        users.add((User) row[1]);
+                    }
+                    return users.stream();
+                })
+                .distinct()
+                .toArray();
+        return ResponseEntity.ok(speakers);
     }
 
     private void retainStatus(Presentation presentation) {

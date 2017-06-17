@@ -2,10 +2,14 @@ package pl.confitura.jelatyna.user;
 
 import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import org.springframework.data.rest.core.config.Projection;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.data.rest.core.config.Projection;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -41,6 +45,10 @@ public class User {
     @OneToMany(mappedBy = "speaker")
     @JsonIgnore
     private Set<Presentation> presentations;
+
+//    @ManyToMany(mappedBy = "cospeakers")
+//    @JsonIgnore
+//    private Set<Presentation> cospeaking;
 
     interface Edit {
 

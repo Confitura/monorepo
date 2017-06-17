@@ -33,7 +33,11 @@ public interface UserRepository extends Repository<User, String> {
             "lower(username) like concat('%',lower(:query),'%') ")
     Iterable<User> find(@Param("query") String query);
 
-    @RestResource(path = "speakers", rel = "speakers")
-    @Query("SELECT speaker FROM Presentation WHERE status ='accepted'")
-    Iterable<User> findAllAccepted();
+    //    @RestResource(path = "speakers", rel = "speakers")
+    @RestResource(exported = false)
+//        @Query("Select s from User s")
+    @Query("Select p.speaker, co FROM Presentation p  " +
+            "LEFT JOIN p.cospeakers co " +
+            "WHERE p.status ='accepted'")
+    Iterable<Object[]> findAllAccepted();
 }
