@@ -4,12 +4,14 @@ import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static org.springframework.util.StringUtils.isEmpty;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
@@ -79,7 +81,7 @@ public class UserController {
 
     @GetMapping("/users/search/speakers")
     public ResponseEntity<?> getSpeakers() {
-        Object[] speakers = Streams.stream(repository.findAllAccepted())
+        Set<Resource<?>> speakers = Streams.stream(repository.findAllAccepted())
                 .flatMap(row -> {
                     Set<User> users = Sets.newHashSet((User) row[0]);
                     if (row[1] != null) {
@@ -88,8 +90,9 @@ public class UserController {
                     return users.stream();
                 })
                 .distinct()
-                .toArray();
-        return ResponseEntity.ok(speakers);
+                .map(user -> new Resource<>(user))
+                .collect(Collectors.toSet());
+        return ResponseEntity.ok(new Resources<>(speakers));
     }
 
     private void retainStatus(Presentation presentation) {
