@@ -5,11 +5,13 @@ import static java.time.LocalDateTime.now;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.stream.IntStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Streams;
 import com.opencsv.CSVReader;
 import lombok.extern.slf4j.Slf4j;
 import pl.confitura.jelatyna.infrastructure.security.JelatynaPrincipal;
@@ -47,6 +50,27 @@ public class RegistrationController {
         CSVReader reader = new CSVReader(new InputStreamReader(file.getInputStream()), ';');
         reader.forEach(row -> register(row[0], Integer.parseInt(row[1]), principal));
         return ResponseEntity.accepted().build();
+    }
+
+    @PostMapping("/participants/reminder")
+    @PreAuthorize("@security.isAdmin()")
+    @Transactional
+    public ResponseEntity<Object> reminder()
+            throws IOException {
+        doSendRemindTo(repository.findAllUnregistered());
+        return ResponseEntity.accepted().build();
+    }
+
+    @Async
+    private void doSendRemindTo(Iterable<Participant> participants) {
+        Streams.stream(participants)
+                .forEach(participant -> {
+                    try {
+                        sender.send(participant.getOriginalBuyer(), "registration-reminder", new HashMap<>());
+                    } catch (Exception e) {
+                        log.error("Error on sending reminder user to {}", participant.getOriginalBuyer());
+                    }
+                });
     }
 
     @PostMapping("/participants/{id}")

@@ -1,5 +1,6 @@
 package pl.confitura.jelatyna.registration;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.data.rest.core.annotation.RestResource;
@@ -16,5 +17,6 @@ public interface ParticipantRepository extends Repository<Participant, String> {
     Participant findOne(String id);
 
     @RestResource(exported = false)
-    boolean exists(String id);
+    @Query("FROM Participant WHERE registrationDate IS NULL")
+    Iterable<Participant> findAllUnregistered();
 }
