@@ -15,9 +15,10 @@ import {HotkeyModule} from "angular2-hotkeys";
 import {HammerConfig} from "./HammerConfig";
 import {ParticipantService} from "./admin/participants/participant.service";
 import {RegistrationModule} from "./pages/registration/registration.module";
+import {AgendaService} from "./admin/agenda/agenda.service";
 @NgModule({
     imports: [LayoutModule, PagesModule, BrowserModule, BrowserAnimationsModule, ProfileModule, AdminModule, V4pModule, routing, HotkeyModule.forRoot(), RegistrationModule],
-    providers: [UserService, PresentationService, PartnerService, ParticipantService,
+    providers: [UserService, PresentationService, PartnerService, ParticipantService, AgendaService,
         {
             provide: HAMMER_GESTURE_CONFIG,
             useClass: HammerConfig,

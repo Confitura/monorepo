@@ -6,9 +6,10 @@ import {UserListComponent} from "./users/user-list/user-list.component";
 import {PersonModule} from "../persons/persons.module";
 import {ParticipantListComponent} from "./participants/participant-list.component";
 import {FileUploadModule} from "ng2-file-upload";
+import {AgendaComponent} from "./agenda/agenda.component";
 @NgModule({
     imports: [AdminRoutingModule, SharedModule, PersonModule, FileUploadModule],
-    declarations: [PartnerEditComponent, UserListComponent, ParticipantListComponent]
+    declarations: [PartnerEditComponent, UserListComponent, ParticipantListComponent, AgendaComponent]
 })
 export class AdminModule {
 
