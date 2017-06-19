@@ -36,4 +36,8 @@ export class ParticipantListComponent implements OnInit {
     upload() {
         $("input[type=file]").click();
     }
+
+    sendReminder() {
+        this.service.sendReminder().subscribe();
+    }
 }

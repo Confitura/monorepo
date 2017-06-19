@@ -16,9 +16,12 @@ import {LoginComponent} from "./login/login.component";
 import {FileUploadModule} from "ng2-file-upload";
 import {PartnerBannerComponent} from "./partners/partner-banner/partner-banner.component";
 import {PresentationListComponent} from "./presentations/presentation-list/presentation-list.component";
+import {SpeakerListComponent} from "./speakers/speaker-list.component";
 @NgModule({
     imports: [SharedModule, PersonModule, RouterModule, FileUploadModule],
-    declarations: [HomeComponent, NewsBannerComponent, NewsComponent, AboutComponent, PageComponent, PartnersComponent, PartnerComponent, LoginComponent, PartnerBannerComponent, PresentationListComponent],
+    declarations: [HomeComponent, NewsBannerComponent, NewsComponent, AboutComponent,
+        PageComponent, PartnersComponent, PartnerComponent, LoginComponent,
+        PartnerBannerComponent, PresentationListComponent, SpeakerListComponent],
     providers: [NewsService, OrganizerService, PageService],
     exports: [HomeComponent, AboutComponent, PageComponent]
 })

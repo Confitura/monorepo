@@ -4,6 +4,7 @@
         <div style="text-align: right; margin-bottom: 20px;">
             <input type="file" ng2FileSelect [uploader]="uploader" multiple style="visibility: hidden">
             <button class="btn btn-default" (click)="upload()">Upload Participants</button>
+            <button class="btn btn-warning" (click)="sendReminder()">Send Reminder</button>
         </div>
         <table id="participants" class="table table-bordered table-striped table-hover" *ngIf="list">
             <thead>

@@ -6,10 +6,12 @@ import {PartnersComponent} from "./pages/partners/partner-list/partners.componen
 import {PartnerComponent} from "./pages/partners/partner/partner.component";
 import {LoginComponent} from "./pages/login/login.component";
 import {PresentationListComponent} from "./pages/presentations/presentation-list/presentation-list.component";
+import {SpeakerListComponent} from "./pages/speakers/speaker-list.component";
 const appRoutes: Routes = [
     {path: '', component: HomeComponent},
     {path: 'about', component: AboutComponent},
     {path: 'presentations', component: PresentationListComponent},
+    {path: 'speakers', component: SpeakerListComponent},
     {path: 'partners', component: PartnersComponent},
     {path: 'partners/:id', component: PartnerComponent},
     {path: 'login', component: LoginComponent},
