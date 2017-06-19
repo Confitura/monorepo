@@ -1,10 +1,10 @@
 package pl.confitura.jelatyna.agenda;
 
 import org.springframework.data.repository.Repository;
-import org.springframework.data.rest.core.annotation.RestResource;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.security.access.prepost.PreAuthorize;
 
-@RestResource(path = "rooms")
+@RepositoryRestResource(path = "rooms", excerptProjection = InlineRoom.class)
 public interface RoomRepository extends Repository<Room, String> {
 
     @PreAuthorize("@security.isAdmin()")

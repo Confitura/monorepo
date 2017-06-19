@@ -17,4 +17,6 @@ public class TimeSlot {
     @Column(columnDefinition = "varchar(100)")
     private String id;
     String label;
+
+    private boolean forAllRooms = false;
 }
