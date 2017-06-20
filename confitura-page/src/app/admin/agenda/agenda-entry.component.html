@@ -1,0 +1,9 @@
+<span *ngIf="!entry; then empty; else filled"></span>
+<ng-template #empty>PUSZTO</ng-template>
+<ng-template #filled>
+
+    <span *ngIf="entry.presentationId; then presentation; else label"></span>
+</ng-template>
+
+<ng-template #presentation>prezentacja: {{entry.presentationId}}</ng-template>
+<ng-template #label>{{entry.label}}</ng-template>

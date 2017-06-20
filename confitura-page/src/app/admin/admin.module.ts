@@ -10,9 +10,11 @@ import {AgendaComponent} from "./agenda/agenda.component";
 import {TimeSlot} from "./agenda/time-slot.model";
 import {TimeSlotComponent} from "./agenda/time-slot.component";
 import {RoomComponent} from "./agenda/room.component";
+import {AgendaEntry} from "./agenda/agenda.model";
+import {AgendaEntryComponent} from "./agenda/agenda-entry.component";
 @NgModule({
     imports: [AdminRoutingModule, SharedModule, PersonModule, FileUploadModule],
-    declarations: [PartnerEditComponent, UserListComponent, ParticipantListComponent, AgendaComponent, TimeSlotComponent, RoomComponent]
+    declarations: [PartnerEditComponent, UserListComponent, ParticipantListComponent, AgendaComponent, TimeSlotComponent, RoomComponent, AgendaEntryComponent]
 })
 export class AdminModule {
 

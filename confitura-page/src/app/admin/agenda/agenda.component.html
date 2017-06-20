@@ -20,15 +20,20 @@
             <div *ngIf="slot.forAllRooms; then singleSlot else perRoom"></div>
             <ng-template #singleSlot>
                 <td [attr.colspan]="rooms.length">
-                    {{agenda[slotIndex][0]?.label}}
-                    {{agenda[slotIndex][0]?.presentationId}}
+                    <cf-agenda-entry
+                            [entry]="agenda[slotIndex][0]"
+                            [timeSlotId]="slot.id"
+                    ></cf-agenda-entry>
                 </td>
             </ng-template>
             <ng-template #perRoom>
                 <td *ngFor="let room of rooms; index as roomIndex">
 
-                    {{agenda[slotIndex][roomIndex]?.label}}
-                    {{agenda[slotIndex][roomIndex]?.presentationId}}
+                    <cf-agenda-entry [entry]="agenda[slotIndex][roomIndex]"
+                                     [timeSlotId]="slot.id"
+                                     [roomId]="room.id">
+
+                    </cf-agenda-entry>
                 </td>
             </ng-template>
         </tr>
