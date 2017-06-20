@@ -1,10 +1,5 @@
-import {Component, Input, OnInit} from "@angular/core";
+import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 import {AgendaService} from "./agenda.service";
-import {AgendaEntry} from "./agenda.model";
-import {HttpConfiguration} from "../../shared/http-configuration.service";
-import {CurrentUser} from "../../security/current-user.service";
-import {Observable} from "rxjs/Observable";
-import {TimeSlot} from "./time-slot.model";
 import {Room} from "./room.model";
 @Component({
     templateUrl: "./room.component.html",
@@ -14,8 +9,21 @@ import {Room} from "./room.model";
 export class RoomComponent implements OnInit {
 
     @Input() room: Room;
+    @Output() changed: EventEmitter<any> = new EventEmitter();
+
+
+    constructor(private  service: AgendaService) {
+    }
 
     ngOnInit(): void {
     }
 
+
+    updateLabel() {
+        this.service.updateRoom(this.room).subscribe(it => this.changed.emit({}))
+    }
+
+    remove() {
+        this.service.removeRoom(this.room.id).subscribe(it => this.changed.emit({}))
+    }
 }

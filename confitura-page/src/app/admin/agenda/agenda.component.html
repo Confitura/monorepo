@@ -10,12 +10,12 @@
                 <br/>
             </th>
             <th *ngFor="let room of rooms">
-                <cf-room [room]="room"></cf-room>
+                <cf-room [room]="room" (changed)="refresh()"></cf-room>
             </th>
         </tr>
         <tr *ngFor="let slot of slots; index as slotIndex">
             <td>
-                <cf-time-slot [timeSlot]="slot"></cf-time-slot>
+                <cf-time-slot [timeSlot]="slot" (changed)="refresh()"></cf-time-slot>
             </td>
             <div *ngIf="slot.forAllRooms; then singleSlot else perRoom"></div>
             <ng-template #singleSlot>

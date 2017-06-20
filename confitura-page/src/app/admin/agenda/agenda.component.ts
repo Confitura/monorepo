@@ -10,11 +10,11 @@ import {Room} from "./room.model";
     templateUrl: "./agenda.component.html"
 })
 export class AgendaComponent implements OnInit {
-    slots: TimeSlot[];
-    rooms: Room[];
 
-    list: AgendaEntry[];
-    agenda: any;
+    slots: TimeSlot[] = [];
+    rooms: Room[] = [];
+    list: AgendaEntry[] = [];
+    agenda: any = [];
 
     constructor(private  service: AgendaService,
                 private config: HttpConfiguration,
@@ -27,7 +27,7 @@ export class AgendaComponent implements OnInit {
         this.refresh();
     }
 
-    private refresh() {
+    refresh() {
         Observable.zip(
             this.service.getRooms(),
             this.service.getTimeSlots(),
@@ -92,7 +92,7 @@ export class AgendaComponent implements OnInit {
     public addTimeSlot(forAllRooms: boolean) {
         this.service.addTimeSlot({
             label: "new time slot",
-            displayOrder: this.rooms.length,
+            displayOrder: this.slots.length,
             forAllRooms: forAllRooms
         }).subscribe(it => this.refresh())
     }
