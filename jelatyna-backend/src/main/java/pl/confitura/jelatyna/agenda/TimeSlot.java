@@ -5,6 +5,7 @@ import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Data
@@ -19,4 +20,7 @@ public class TimeSlot {
     String label;
 
     private boolean forAllRooms = false;
+
+    @NotNull
+    private int displayOrder;
 }
