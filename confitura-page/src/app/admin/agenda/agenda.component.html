@@ -22,7 +22,8 @@
                 <td [attr.colspan]="rooms.length">
                     <cf-agenda-entry
                             [entry]="agenda[slotIndex][0]"
-                            [timeSlotId]="slot.id"
+                            [timeSlot]="slot"
+                            (changed)="refresh()"
                     ></cf-agenda-entry>
                 </td>
             </ng-template>
@@ -30,10 +31,10 @@
                 <td *ngFor="let room of rooms; index as roomIndex">
 
                     <cf-agenda-entry [entry]="agenda[slotIndex][roomIndex]"
-                                     [timeSlotId]="slot.id"
-                                     [roomId]="room.id">
-
-                    </cf-agenda-entry>
+                                     [timeSlot]="slot"
+                                     [room]="room"
+                                     (changed)="refresh()"
+                    ></cf-agenda-entry>
                 </td>
             </ng-template>
         </tr>

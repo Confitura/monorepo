@@ -17,6 +17,10 @@ export class AgendaService {
             .map((response: Response) => response.json()["_embedded"]["agendaEntries"] as AgendaEntry[]);
     }
 
+    addEntry(param: { timeSlot?: string; room?: string; label?: string }) {
+        return this.http.post(`/agenda/`, param);
+    }
+
     getRooms(): Observable<Room[]> {
         return this.http.get('/rooms')
             .map((response: Response) => response.json()["_embedded"]["rooms"] as Room[]);
