@@ -6,5 +6,6 @@ import org.springframework.data.rest.core.config.Projection;
 interface InlineRoom {
     String getId();
     String getLabel();
+    int getDisplayOrder();
 
 }

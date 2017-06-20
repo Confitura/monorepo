@@ -7,5 +7,6 @@ interface InlineTimeSlot {
     String getId();
     String getLabel();
     boolean getForAllRooms();
+    int getDisplayOrder();
 
 }
