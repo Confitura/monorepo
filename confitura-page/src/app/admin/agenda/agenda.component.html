@@ -1,36 +1,22 @@
 <section class="pt100 pb50 bg-white ">
     <div class="row-1140">
         <h3>Agenda</h3>
-        <pre>{{list|json}}</pre>
-        <h4>slots</h4>
-        <table class="table">
-            <tr *ngFor="let slot of slots">
-                <td>{{slot.id}}</td>
-                <td>{{slot.label}}</td>
-                <td>{{slot.forAllRooms}}</td>
-            </tr>
-        </table>
-        <h4>rooms</h4>
-        <table class="table">
-            <tr *ngFor="let room of rooms">
-                <td>{{room.id}}</td>
-                <td>{{room.label}}</td>
-            </tr>
-        </table>
-        <pre>{{agenda|json}}</pre>
     </div>
 
     <table class="table table-bordered">
         <tr>
             <th>
-                <button class="btn btn-sm">add room</button>
+                <button class="btn btn-sm" (click)="addRoom()">add room</button>
                 <br/>
-                <button class="btn btn-sm">add time slot</button>
             </th>
-            <th *ngFor="let room of rooms">{{room.label}}</th>
+            <th *ngFor="let room of rooms">
+                <cf-room [room]="room"></cf-room>
+            </th>
         </tr>
         <tr *ngFor="let slot of slots; index as slotIndex">
-            <td>{{slot.label}}</td>
+            <td>
+                <cf-time-slot [timeSlot]="slot"></cf-time-slot>
+            </td>
             <div *ngIf="slot.forAllRooms; then singleSlot else perRoom"></div>
             <ng-template #singleSlot>
                 <td [attr.colspan]="rooms.length">
@@ -40,10 +26,20 @@
             </ng-template>
             <ng-template #perRoom>
                 <td *ngFor="let room of rooms; index as roomIndex">
+
                     {{agenda[slotIndex][roomIndex]?.label}}
                     {{agenda[slotIndex][roomIndex]?.presentationId}}
                 </td>
             </ng-template>
+        </tr>
+        <tr>
+            <td>
+                <button class="btn btn-sm" (click)="addTimeSlot(false)">add slot for every rooms</button>
+                <br/>
+                <button class="btn btn-sm" (click)="addTimeSlot(true)">add slot for all rooms</button>
+            </td>
+
+            <td [attr.colspan]="rooms.length"></td>
         </tr>
     </table>
 </section>

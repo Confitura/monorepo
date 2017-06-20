@@ -7,9 +7,12 @@ import {PersonModule} from "../persons/persons.module";
 import {ParticipantListComponent} from "./participants/participant-list.component";
 import {FileUploadModule} from "ng2-file-upload";
 import {AgendaComponent} from "./agenda/agenda.component";
+import {TimeSlot} from "./agenda/time-slot.model";
+import {TimeSlotComponent} from "./agenda/time-slot.component";
+import {RoomComponent} from "./agenda/room.component";
 @NgModule({
     imports: [AdminRoutingModule, SharedModule, PersonModule, FileUploadModule],
-    declarations: [PartnerEditComponent, UserListComponent, ParticipantListComponent, AgendaComponent]
+    declarations: [PartnerEditComponent, UserListComponent, ParticipantListComponent, AgendaComponent, TimeSlotComponent, RoomComponent]
 })
 export class AdminModule {
 

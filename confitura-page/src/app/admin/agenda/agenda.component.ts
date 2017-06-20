@@ -81,4 +81,19 @@ export class AgendaComponent implements OnInit {
         }
         return roomIdToIndex;
     }
+
+    public addRoom() {
+        this.service.addRoom({
+            label: "new room",
+            displayOrder: this.rooms.length
+        }).subscribe(it => this.refresh())
+    }
+
+    public addTimeSlot(forAllRooms: boolean) {
+        this.service.addTimeSlot({
+            label: "new time slot",
+            displayOrder: this.rooms.length,
+            forAllRooms: forAllRooms
+        }).subscribe(it => this.refresh())
+    }
 }

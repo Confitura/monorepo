@@ -18,15 +18,23 @@ export class AgendaService {
     }
 
     getRooms(): Observable<Room[]> {
-        return this.http.get('/rooms')
+        return this.http.get('/rooms?sort=displayOrder')
             .map((response: Response) => response.json()["_embedded"]["rooms"] as Room[]);
     }
     getTimeSlots(): Observable<TimeSlot[]> {
-        return this.http.get('/time-slots')
+        return this.http.get('/time-slots?sort=displayOrder')
             .map((response: Response) => response.json()["_embedded"]["timeSlots"] as TimeSlot[]);
     }
 
     save(participant: AgendaEntry) {
         return this.http.post(`/agenda/${participant.id}`, participant);
+    }
+
+    addRoom(param: { label: string; displayOrder: number }) {
+        return this.http.post(`/rooms/`, param);
+    }
+
+    addTimeSlot(param: { label: string; displayOrder: number, forAllRooms: boolean }) {
+        return this.http.post(`/time-slots/`, param);
     }
 }
