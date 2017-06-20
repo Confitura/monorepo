@@ -15,9 +15,16 @@ import {HotkeyModule} from "angular2-hotkeys";
 import {HammerConfig} from "./HammerConfig";
 import {ParticipantService} from "./admin/participants/participant.service";
 import {RegistrationModule} from "./pages/registration/registration.module";
+import {ConfirmationService} from "./shared/confirmation.service";
+import {NgLoadingBarModule} from "ng-loading-bar";
+
+
 @NgModule({
-    imports: [LayoutModule, PagesModule, BrowserModule, BrowserAnimationsModule, ProfileModule, AdminModule, V4pModule, routing, HotkeyModule.forRoot(), RegistrationModule],
-    providers: [UserService, PresentationService, PartnerService, ParticipantService,
+    imports: [LayoutModule, PagesModule, BrowserModule, BrowserAnimationsModule,
+        ProfileModule, AdminModule, V4pModule, routing, HotkeyModule.forRoot(), RegistrationModule,
+        NgLoadingBarModule.forRoot()
+    ],
+    providers: [UserService, PresentationService, PartnerService, ParticipantService, ConfirmationService,
         {
             provide: HAMMER_GESTURE_CONFIG,
             useClass: HammerConfig,

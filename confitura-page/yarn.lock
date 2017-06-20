@@ -130,6 +130,10 @@
   version "1.11.6"
   resolved "https://registry.yarnpkg.com/@types/simplemde/-/simplemde-1.11.6.tgz#4b609b3d2034fb527414d409b8f271b9a19195b2"
 
+"@types/sweetalert@^1.1.27":
+  version "1.1.27"
+  resolved "https://registry.yarnpkg.com/@types/sweetalert/-/sweetalert-1.1.27.tgz#208c1b88d74e622644b20b3860643bfb1049d8ee"
+
 "@ultimate/aot-loader@^0.1.16":
   version "0.1.16"
   resolved "https://registry.yarnpkg.com/@ultimate/aot-loader/-/aot-loader-0.1.16.tgz#be9a048cc730614f5c9fe6e009557b7b4e8ca8b3"
@@ -3955,6 +3959,10 @@ negotiator@0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.1.tgz#2b327184e8992101177b28563fb5e7102acd0ca9"
 
+ng-loading-bar@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/ng-loading-bar/-/ng-loading-bar-0.0.8.tgz#5f9559a8d1afa7cedafd93fe92aaf9bdb61b914a"
+
 ng2-cookies@^1.0.4:
   version "1.0.12"
   resolved "https://registry.yarnpkg.com/ng2-cookies/-/ng2-cookies-1.0.12.tgz#3f3e613e0137b0649b705c678074b4bd08149ccc"
@@ -5793,6 +5801,10 @@ svgo@^0.7.0:
     mkdirp "~0.5.1"
     sax "~1.2.1"
     whet.extend "~0.9.9"
+
+sweetalert@^1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/sweetalert/-/sweetalert-1.1.3.tgz#d2c31ea492b22b6a8d887aea15989a238fc084ae"
 
 symbol-observable@^1.0.1:
   version "1.0.4"

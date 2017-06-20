@@ -1,5 +1,6 @@
 //@import url("http://hello.mywebfonts.net/count/30e5ac");
 @import "sizes";
+@import "colors";
 
 @font-face {
   font-family: 'NeuzeitGro-Bol';
@@ -243,7 +244,7 @@ div[class^="col-"] {
   color: #ffffff !important;
 }
 
-h2 {
+header h2, .h2 {
   display: block;
   width: 100%;
   color: #000000;
@@ -257,7 +258,6 @@ h2 {
   padding-bottom: 90px !important;
 
 }
-
 
 .main-confitura-content-inner,
 .about-confitura-content-inner,
@@ -281,7 +281,6 @@ h3 {
   font-family: 'NeuzeitGro-Bol', Verdana, Tahoma, sans-serif;
   text-align: center;
 }
-
 
 .mcci-content,
 .about-confitura-content-inner div,
@@ -589,6 +588,7 @@ div#patronat {
 .pt100 {
   padding-top: 100px;
 }
+
 .pt50 {
   padding-top: 50px;
 }
@@ -600,6 +600,7 @@ div#patronat {
 .pb50 {
   padding-bottom: 50px;
 }
+
 .pb150 {
   padding-bottom: 150px;
 }
@@ -620,6 +621,18 @@ div#patronat {
   margin: 0 auto;
 }
 
-p{
+p {
   font-size: 2.2rem;
+}
+
+#confitura #loading-bar {
+  .bar {
+    height: 3px;
+    top: 54px;
+    background: $red;
+    @media all and (min-width: $size_small) {
+      height: 5px;
+      top: 98px;
+    }
+  }
 }
