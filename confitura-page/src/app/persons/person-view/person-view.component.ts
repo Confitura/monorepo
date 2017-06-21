@@ -22,7 +22,7 @@ export class PersonViewComponent implements OnInit {
     constructor(private config: HttpConfiguration, private currentUser: CurrentUser) {
         this.uploader = new FileUploader({
             authToken: this.currentUser.getToken(),
-            url: `${config.apiServer}resources`,
+            url: `${config.apiServer}resources/${this.model.id}`,
             autoUpload: true,
         });
         this.uploader.onCompleteAll = () => {
