@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
 import {Router} from "@angular/router";
 import {V4pService} from "../v4p.service";
-import * as jsSHA from "jsSHA";
+import * as jsSHA from "jssha";
 import "./v4p-start.component.scss";
 @Component({
     templateUrl: "./v4p-start.component.html"

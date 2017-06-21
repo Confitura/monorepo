@@ -1,0 +1,58 @@
+<section class="pt100 pb50 bg-white ">
+    <div class="row-1140">
+        <h3>Agenda</h3>
+    </div>
+
+    <table class="table table-bordered">
+        <tr>
+            <th>
+                <button class="btn btn-sm" (click)="addRoom()">add room</button>
+                <br/>
+            </th>
+            <th *ngFor="let room of rooms">
+                <cf-room [room]="room" (changed)="refresh()"></cf-room>
+            </th>
+        </tr>
+        <tr *ngFor="let slot of slots; index as slotIndex">
+            <td>
+                <cf-time-slot [timeSlot]="slot" (changed)="refresh()"></cf-time-slot>
+            </td>
+            <div *ngIf="slot.forAllRooms; then singleSlot else perRoom"></div>
+            <ng-template #singleSlot>
+                <td [attr.colspan]="rooms.length">
+                    <cf-agenda-entry
+                            [entry]="agenda[slotIndex][0]"
+                            [timeSlot]="slot"
+                            [presentationPicker]="picker"
+                            (changed)="refresh()"
+                    ></cf-agenda-entry>
+                </td>
+            </ng-template>
+            <ng-template #perRoom>
+                <td *ngFor="let room of rooms; index as roomIndex">
+
+                    <cf-agenda-entry [entry]="agenda[slotIndex][roomIndex]"
+                                     [timeSlot]="slot"
+                                     [room]="room"
+                                     [presentationPicker]="picker"
+                                     (changed)="refresh()"
+                    ></cf-agenda-entry>
+                </td>
+            </ng-template>
+        </tr>
+        <tr>
+            <td>
+                <button class="btn btn-sm" (click)="addTimeSlot(false)">add slot for every rooms</button>
+                <br/>
+                <button class="btn btn-sm" (click)="addTimeSlot(true)">add slot for all rooms</button>
+            </td>
+
+            <td [attr.colspan]="rooms.length"></td>
+        </tr>
+    </table>
+
+    <cf-presentation-picker #picker></cf-presentation-picker>
+
+</section>
+
+
