@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import pl.confitura.jelatyna.infrastructure.security.JelatynaPrincipal;
 import pl.confitura.jelatyna.partner.Partner;
 import pl.confitura.jelatyna.partner.PartnerRepository;
 import pl.confitura.jelatyna.user.User;
@@ -39,8 +38,9 @@ public class ResourceStorage {
     }
 
     @Transactional
-    void storeSpeaker(@RequestParam MultipartFile file, JelatynaPrincipal principal) throws IOException {
-        User user = repository.findOne(principal.getId());
+    @PreAuthorize("@security.isOwner(#userId)")
+    void storeSpeaker(@RequestParam MultipartFile file, String userId) throws IOException {
+        User user = repository.findOne(userId);
         String path = doStore(user.getId(), file, "photos");
         user.setPhoto(path);
         repository.save(user);
