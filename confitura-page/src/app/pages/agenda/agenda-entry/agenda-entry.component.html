@@ -1,5 +1,9 @@
-<div *ngIf="entry.presentationId" (click)="modal.show()">
-    <div class="agenda-title">{{entry.presentation.title}}</div>
+<div *ngIf="entry.presentationId">
+    <div class="agenda-title">
+        <a href="/presentations#{{entry.presentation.id}}">
+            {{entry.presentation.title}}
+        </a>
+    </div>
     <div class="agenda-persons">
         <span class="agenda-person">{{entry.speaker.name}}</span>
         <span class="agenda-person" *ngFor="let speaker of entry.cospeakers">
@@ -11,6 +15,3 @@
     <div class="agenda-title">{{entry.label}}</div>
 </div>
 
-<cf-entry-modal [entry]="entry" #modal>
-
-</cf-entry-modal>
