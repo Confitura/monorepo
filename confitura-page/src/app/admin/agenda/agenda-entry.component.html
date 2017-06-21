@@ -14,6 +14,7 @@
 
 <ng-template #filled>
     <span *ngIf="entry.presentationId; then hasPresentation; else hasLabel"></span>
+    <button class="btn btn-sm btn-danger" (click)="remove()">delete</button>
 </ng-template>
 
 <ng-template #hasPresentation>prezentacja: <b>{{presentation?.title}}</b></ng-template>

@@ -72,5 +72,9 @@ export class AgendaEntryComponent implements OnInit {
         });
     }
 
+    remove() {
+        this.service.removeEntry(this.entry.id).subscribe(it => this.changed.emit({}))
+    }
+
 
 }

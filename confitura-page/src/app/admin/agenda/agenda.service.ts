@@ -34,6 +34,10 @@ export class AgendaService {
         return this.http.post(`/agenda/${participant.id}`, participant);
     }
 
+    removeEntry(id: string) {
+        return this.http.remove(`/agenda/${id}`);
+    }
+
     addRoom(param: { label: string; displayOrder: number }) {
         return this.http.post(`/rooms/`, param);
     }
