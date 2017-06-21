@@ -19,6 +19,7 @@ export class AgendaEntryComponent implements OnInit {
     @Output() changed: EventEmitter<any> = new EventEmitter();
 
     presentation: Presentation;
+    addingLabel = false;
 
 
     constructor(private  service: AgendaService, private presentationService: PresentationService) {
@@ -30,12 +31,21 @@ export class AgendaEntryComponent implements OnInit {
         }
     }
 
-    addLabel() {
+    addLabel(label: string) {
+        let room = null, timeSlot = null;
+
+        if (this.room) {
+            room = this.room._links.self.href
+        }
+        if (this.timeSlot) {
+            timeSlot = this.timeSlot._links.self.href
+        }
         this.service.addEntry({
-            room: this.room._links.self.href,
-            timeSlot: this.timeSlot._links.self.href,
-            label: "test"
+            room: room,
+            timeSlot: timeSlot,
+            label: label
         }).subscribe(it => this.changed.emit({}))
+        this.addingLabel = false;
     }
 
     addPresentation() {

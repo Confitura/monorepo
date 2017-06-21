@@ -1,10 +1,18 @@
 <span *ngIf="!entry; then empty; else filled"></span>
+
 <ng-template #empty>
-    <button class="btn btn-block btn-info" (click)="addLabel()">add label</button>
+    <button class="btn btn-block btn-info" (click)="addingLabel=true" *ngIf="!addingLabel">add label</button>
+    <form (submit)="addLabel(newLabel.value)" *ngIf="addingLabel">
+        <label>
+            <input class="form-control" name="label" #newLabel>
+        </label>
+        <button class="btn btn-small btn-success" type="submit">add</button>
+        <button class="btn btn-small btn-warning" (click)="addingLabel=false">cancel</button>
+    </form>
     <button class="btn btn-block btn-default" (click)="addPresentation()">add presentation</button>
 </ng-template>
-<ng-template #filled>
 
+<ng-template #filled>
     <span *ngIf="entry.presentationId; then hasPresentation; else hasLabel"></span>
 </ng-template>
 
