@@ -1,0 +1,37 @@
+<section id="agenda-confitura">
+    <div class="row-fluid">
+        <div class="col-lg-12 news-confitura-header bg-agenda-header"><h2>agenda</h2></div>
+    </div>
+    <div class="row-fluid row-1140 text-center">
+        <div class="room-link-cnt" data-offset-top="60" data-offset-bottom="200">
+            <a class="room-link"
+               href="javascript:void(0)"
+               (click)="selectRoom(room)"
+               [ngClass]="{'room-active': isActive(room)}"
+               *ngFor="let room of rooms">{{room.label}}</a>
+        </div>
+        <div class="row-fluid row-1122">
+            <div class="agenda-row"
+                 *ngFor="let slot of slots; index as slotIndex;  odd as isOdd; even as isEven "
+                 [class.agenda-white]="(slotIndex%2)==0"
+                 [class.agenda-beige]="(slotIndex%2)!=0">
+                <div class="agenda-hours">{{slot.label}}</div>
+
+
+                <div *ngIf="slot.forAllRooms; then singleSlot else perRoom; index"></div>
+                <ng-template #singleSlot>
+                    <div class="agenda-content agenda-content-{{selectedRooms.length}}">
+                        <cf-entry [entry]="agenda[slotIndex][0]"></cf-entry>
+                    </div>
+                </ng-template>
+                <ng-template #perRoom>
+
+                    <div class="agenda-content agenda-content-{{rooms.length}}"
+                         *ngFor="let room of selectedRooms; index as roomIndex">
+                        <cf-entry [entry]="agenda[slotIndex][roomIndex]"></cf-entry>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</section>

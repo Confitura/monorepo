@@ -17,11 +17,27 @@ import {FileUploadModule} from "ng2-file-upload";
 import {PartnerBannerComponent} from "./partners/partner-banner/partner-banner.component";
 import {PresentationListComponent} from "./presentations/presentation-list/presentation-list.component";
 import {SpeakerListComponent} from "./speakers/speaker-list.component";
+import {AgendaComponent} from "./agenda/agenda.component";
+import {AgendaEntryComponent} from "./agenda/agenda-entry/agenda-entry.component";
+import {AgendaEntryModalComponent} from "./agenda/entry-modal/entry-modal.component";
 @NgModule({
     imports: [SharedModule, PersonModule, RouterModule, FileUploadModule],
-    declarations: [HomeComponent, NewsBannerComponent, NewsComponent, AboutComponent,
-        PageComponent, PartnersComponent, PartnerComponent, LoginComponent,
-        PartnerBannerComponent, PresentationListComponent, SpeakerListComponent],
+    declarations: [
+        HomeComponent,
+        NewsBannerComponent,
+        NewsComponent,
+        AboutComponent,
+        PageComponent,
+        PartnersComponent,
+        PartnerComponent,
+        LoginComponent,
+        PartnerBannerComponent,
+        PresentationListComponent,
+        SpeakerListComponent,
+        AgendaComponent,
+        AgendaEntryModalComponent,
+        AgendaEntryComponent
+    ],
     providers: [NewsService, OrganizerService, PageService],
     exports: [HomeComponent, AboutComponent, PageComponent]
 })
