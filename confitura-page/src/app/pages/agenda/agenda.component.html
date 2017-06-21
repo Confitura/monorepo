@@ -28,7 +28,7 @@
 
                     <div class="agenda-content agenda-content-{{rooms.length}}"
                          *ngFor="let room of selectedRooms; index as roomIndex">
-                        <cf-entry [entry]="agenda[slotIndex][roomIndex]"></cf-entry>
+                        <cf-entry [entry]="agenda[slotIndex][rooms.indexOf(room)]"></cf-entry>
                     </div>
                 </ng-template>
             </div>
