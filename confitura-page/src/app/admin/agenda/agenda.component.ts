@@ -15,14 +15,9 @@ export class AgendaComponent implements OnInit {
 
     slots: TimeSlot[] = [];
     rooms: Room[] = [];
-    list: AgendaEntry[] = [];
-    agenda: any = [];
+    agenda: any[] = [];
 
-    constructor(private  service: AgendaService,
-                private config: HttpConfiguration,
-                private user: CurrentUser) {
-
-
+    constructor(private  service: AgendaService) {
     }
 
     ngOnInit(): void {
@@ -30,58 +25,11 @@ export class AgendaComponent implements OnInit {
     }
 
     refresh() {
-        Observable.zip(
-            this.service.getRooms(),
-            this.service.getTimeSlots(),
-            this.service.getAll(),
-            (rooms, slots, entries) => {
-                this.rooms = rooms;
-                this.slots = slots;
-                this.list = entries;
-                let roomIdToIndex = this.idToIndex(rooms);
-                let slotIdToIndex = this.idToIndex(slots);
-                let matrix = this.createEmptyMatrix(slots, slotIdToIndex, rooms);
-
-                for (let entry of entries) {
-                    let slotIndex = slotIdToIndex[entry.timeSlotId];
-                    if (entry.roomId == null) {
-                        if (matrix[slotIndex][0] == null) {
-                            matrix[slotIndex][0] = entry
-                        } else {
-                            alert("conflict in agenda. Two entries in same slot");
-                        }
-                    } else {
-                        let roomIndex = roomIdToIndex[entry.roomId];
-                        matrix[slotIndex][roomIndex] = entry;
-                    }
-                }
-
-                this.agenda = matrix;
-                return {}
-            }
-        ).subscribe();
-    }
-
-    private createEmptyMatrix(slots: any, slotIdToIndex: any, rooms: any) {
-        let matrix = new Array(slots.length);
-        for (let slot of slots) {
-            let slotIndex = slotIdToIndex[slot.id];
-            if (slot.forAllRooms) {
-                matrix[slotIndex] = new Array(1);
-            } else {
-                matrix[slotIndex] = new Array(rooms.length)
-            }
-        }
-        return matrix;
-    }
-
-    private idToIndex(entries: any[]) {
-        let roomIdToIndex = {};
-        let index = 0;
-        for (let entry of entries) {
-            roomIdToIndex[entry.id] = index++;
-        }
-        return roomIdToIndex;
+        this.service.getAgenda().subscribe(it => {
+            this.rooms = it.rooms;
+            this.slots = it.slots;
+            this.agenda = it.agenda;
+        });
     }
 
     public addRoom() {
