@@ -1,15 +1,19 @@
 package pl.confitura.jelatyna.agenda;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
-import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "AGENDA_TIME_SLOT")
+@Table(name = "agenda_time_slot")
 public class TimeSlot {
 
     @Id

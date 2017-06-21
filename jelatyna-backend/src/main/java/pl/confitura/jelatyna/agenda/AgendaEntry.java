@@ -1,17 +1,25 @@
 package pl.confitura.jelatyna.agenda;
 
-import lombok.Data;
-import org.hibernate.annotations.GenericGenerator;
-import pl.confitura.jelatyna.presentation.Presentation;
-
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
+
+import org.hibernate.annotations.GenericGenerator;
+
+import lombok.Data;
+import pl.confitura.jelatyna.presentation.Presentation;
 
 @Entity
 @Table(
-        name = "AGENDA",
-        uniqueConstraints = @UniqueConstraint(columnNames = {"TIME_SLOT_ID", "ROOM_ID"})
+        name = "agenda",
+        uniqueConstraints = @UniqueConstraint(columnNames = { "time_slot_id", "room_id" })
 )
 @Data
 public class AgendaEntry {
@@ -25,11 +33,11 @@ public class AgendaEntry {
 
     @ManyToOne
     @NotNull
-    @JoinColumn(name = "TIME_SLOT_ID")
+    @JoinColumn(name = "time_slot_id")
     private TimeSlot timeSlot;
 
     @ManyToOne
-    @JoinColumn(name = "ROOM_ID")
+    @JoinColumn(name = "room_id")
     private Room room;
 
     private String label;
