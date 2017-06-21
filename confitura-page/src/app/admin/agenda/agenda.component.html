@@ -23,6 +23,7 @@
                     <cf-agenda-entry
                             [entry]="agenda[slotIndex][0]"
                             [timeSlot]="slot"
+                            [presentationPicker]="picker"
                             (changed)="refresh()"
                     ></cf-agenda-entry>
                 </td>
@@ -33,6 +34,7 @@
                     <cf-agenda-entry [entry]="agenda[slotIndex][roomIndex]"
                                      [timeSlot]="slot"
                                      [room]="room"
+                                     [presentationPicker]="picker"
                                      (changed)="refresh()"
                     ></cf-agenda-entry>
                 </td>
@@ -48,4 +50,9 @@
             <td [attr.colspan]="rooms.length"></td>
         </tr>
     </table>
+
+    <cf-presentation-picker #picker></cf-presentation-picker>
+
 </section>
+
+

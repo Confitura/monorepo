@@ -17,7 +17,7 @@ export class AgendaService {
             .map((response: Response) => response.json()["_embedded"]["agendaEntries"] as AgendaEntry[]);
     }
 
-    addEntry(param: { timeSlot?: string; room?: string; label?: string }) {
+    addEntry(param: { timeSlot: string; room: string; label?: string , presentation?: string}) {
         return this.http.post(`/agenda/`, param);
     }
 
