@@ -1,0 +1,9 @@
+<div *ngIf="entry.presentationId">
+    <div class="agenda-title">{{entry.presentation.title}}</div>
+    <div class="agenda-persons">
+        <span class="agenda-person">{{entry.speaker.name}}</span>
+    </div>
+</div>
+<div *ngIf="entry.label">
+    <div class="agenda-title">{{entry.label}}</div>
+</div>
