@@ -12,6 +12,8 @@ public interface AgendaRepository extends Repository<AgendaEntry, String> {
 
     Iterable<AgendaEntry> findAll();
 
+    AgendaEntry findOne(String id);
+
     @PreAuthorize("@security.isAdmin()")
     void delete(String id);
 
