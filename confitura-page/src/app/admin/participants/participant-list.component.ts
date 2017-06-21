@@ -4,6 +4,8 @@ import {Participant} from "./participant.model";
 import {FileUploader} from "ng2-file-upload";
 import {HttpConfiguration} from "../../shared/http-configuration.service";
 import {CurrentUser} from "../../security/current-user.service";
+import {ConfirmationService} from "../../shared/confirmation.service";
+import AlertType = SweetAlert.AlertType;
 @Component({
     templateUrl: "./participant-list.component.html"
 })
@@ -13,7 +15,10 @@ export class ParticipantListComponent implements OnInit {
     list: Participant[];
     uploader: FileUploader;
 
-    constructor(private  service: ParticipantService, private config: HttpConfiguration, private user: CurrentUser) {
+    constructor(private  service: ParticipantService,
+                private config: HttpConfiguration,
+                private user: CurrentUser,
+                private confirmation: ConfirmationService) {
         this.uploader = new FileUploader({
             authToken: this.user.getToken(),
             url: `${config.apiServer}/participants/upload`,
@@ -24,10 +29,11 @@ export class ParticipantListComponent implements OnInit {
     }
 
     ngOnInit(): void {
+
         this.service.getAll()
             .subscribe(list => {
                 this.list = list;
-                setTimeout(() => $("#participants").DataTable({}));
+                setTimeout(() => $("#participants").DataTable({deferRender: true}));
 
             });
 
@@ -35,5 +41,10 @@ export class ParticipantListComponent implements OnInit {
 
     upload() {
         $("input[type=file]").click();
+    }
+
+    sendReminder() {
+        this.confirmation.show("you want to send reminder emails to all unregistered participants?")
+            .then(() => this.service.sendReminder().subscribe());
     }
 }

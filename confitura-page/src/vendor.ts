@@ -26,3 +26,7 @@ import "hammerjs/hammer.js";
 import "datatables.net-bs/css/dataTables.bootstrap.css";
 import "datatables.net/js/jquery.dataTables.js";
 import "datatables.net-bs/js/dataTables.bootstrap.js";
+
+//sweetalert
+import "sweetalert/dist/sweetalert.css";
+import "sweetalert/dist/sweetalert.min.js";

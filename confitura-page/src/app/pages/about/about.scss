@@ -32,34 +32,7 @@
       flex-direction: column;
       align-items: center;
     }
-    .organizer {
-      width: 375px;
-      padding: 20px;
-      @media all and (max-width: 767px) {
-        width: 300px;
-      }
 
-      //overflow: hidden;
-      cursor: pointer;
-
-      .name-speaker {
-        text-align: center;
-        font-size: 2.5rem;
-        line-height: 30px;
-        font-family: 'NeuzeitGro-Reg', Verdana, Tahoma, sans-serif;
-        color: #000000;
-        padding-top: 15px;
-        a {
-          &, &:link, &:active, &:visited, &:hover {
-            font-family: 'NeuzeitGro-Reg', Verdana, Tahoma, sans-serif; /* NeuzeitGro-Bol */
-            color: #000;
-          }
-          &:hover {
-            text-decoration: underline;
-          }
-        }
-      }
-    }
   }
 
 }

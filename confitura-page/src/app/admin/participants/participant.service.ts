@@ -24,4 +24,8 @@ export class ParticipantService {
     save(participant: Participant) {
         return this.http.post(`/participants/${participant.id}`, participant);
     }
+
+    sendReminder() {
+        return this.http.post(`/participants/reminder`, {});
+    }
 }

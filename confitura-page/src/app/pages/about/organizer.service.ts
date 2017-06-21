@@ -13,7 +13,7 @@ export class OrganizerService{
     }
 
     getAllVolunteers(){
-        return Observable.of([]);//this.getAllFor("volunteers");
+        return this.getAllFor("volunteers");
     }
 
     private getAllFor(type:string):Observable<Person[]>{

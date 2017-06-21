@@ -1,0 +1,17 @@
+@import "../../sizes";
+
+#speaker-list {
+  .speakers {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+    @media all and (min-width: $size_small) {
+      flex-direction: row;
+    }
+    jl-person {
+      min-width: 25%;
+    }
+  }
+}

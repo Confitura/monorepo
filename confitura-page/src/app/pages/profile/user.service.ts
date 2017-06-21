@@ -26,6 +26,12 @@ export class UserService {
             .map((response: Response) => response.json()["_embedded"]["users"] as User[]);
     }
 
+    getAllSpeakers(): Observable<User[]> {
+        return this.http.get(`/users/search/speakers`)
+            .map((response: Response) => response.json()["_embedded"]["users"] as User[]);
+
+    }
+
     markAsVolunteer(user: User, isVolunteer: boolean): Observable<Response> {
         return this.http.post(`/users/${user.id}/volunteer/${isVolunteer}`, {});
     }

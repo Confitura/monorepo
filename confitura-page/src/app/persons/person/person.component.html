@@ -1,4 +1,4 @@
 <div class="margin-auto" (click)="openModal()" *ngIf="model">
-    <span class="img-speaker"><img [src]="model.photo" onerror="this.error=''; this.className+=' empty'" class=""></span>
+    <div class="img-speaker"><img [src]="model.photo" onerror="this.error=''; this.className+=' empty'" class=""></div>
     <div class="name-speaker"><a role="button">{{firstName()}}<br/>{{lastName()}}</a></div>
 </div>
