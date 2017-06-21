@@ -1,11 +1,11 @@
 import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
-import {AgendaService} from "./agenda.service";
-import {AgendaEntry} from "./agenda.model";
+import {AgendaService} from "../../pages/agenda/shared/agenda.service";
+import {AgendaEntry} from "../../pages/agenda/shared/agenda.model";
 import {HttpConfiguration} from "../../shared/http-configuration.service";
 import {CurrentUser} from "../../security/current-user.service";
 import {Observable} from "rxjs/Observable";
-import {TimeSlot} from "./time-slot.model";
-import {Room} from "./room.model";
+import {TimeSlot} from "../../pages/agenda/shared/time-slot.model";
+import {Room} from "../../pages/agenda/shared/room.model";
 @Component({
     templateUrl: "./time-slot.component.html",
     selector: "cf-time-slot"

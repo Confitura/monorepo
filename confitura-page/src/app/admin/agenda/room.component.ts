@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
-import {AgendaService} from "./agenda.service";
-import {Room} from "./room.model";
+import {AgendaService} from "../../pages/agenda/shared/agenda.service";
+import {Room} from "../../pages/agenda/shared/room.model";
 @Component({
     templateUrl: "./room.component.html",
     selector: "cf-room"

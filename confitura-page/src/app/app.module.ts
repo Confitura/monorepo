@@ -17,7 +17,7 @@ import {ParticipantService} from "./admin/participants/participant.service";
 import {RegistrationModule} from "./pages/registration/registration.module";
 import {ConfirmationService} from "./shared/confirmation.service";
 import {NgLoadingBarModule} from "ng-loading-bar";
-import {AgendaService} from "./admin/agenda/agenda.service";
+import {AgendaService} from "./pages/agenda/shared/agenda.service";
 
 
 @NgModule({

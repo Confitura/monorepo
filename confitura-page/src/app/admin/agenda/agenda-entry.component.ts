@@ -1,10 +1,10 @@
 import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
-import {AgendaService} from "./agenda.service";
-import {Room} from "./room.model";
-import {AgendaEntry} from "./agenda.model";
+import {AgendaService} from "../../pages/agenda/shared/agenda.service";
+import {Room} from "../../pages/agenda/shared/room.model";
+import {AgendaEntry} from "../../pages/agenda/shared/agenda.model";
 import {PresentationService} from "../../profile/shared/presentation.service";
 import {Presentation} from "../../profile/shared/presentation.model";
-import {TimeSlot} from "./time-slot.model";
+import {TimeSlot} from "../../pages/agenda/shared/time-slot.model";
 import {PresentationPickerComponent} from "./presentaion-picker/presentaion-picker.component";
 @Component({
     templateUrl: "./agenda-entry.component.html",
