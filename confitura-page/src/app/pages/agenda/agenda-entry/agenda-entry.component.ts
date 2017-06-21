@@ -10,4 +10,5 @@ export class AgendaEntryComponent implements OnInit {
 
     ngOnInit(): void {
     }
+
 }

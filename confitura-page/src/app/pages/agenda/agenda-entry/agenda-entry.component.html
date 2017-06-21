@@ -1,9 +1,16 @@
-<div *ngIf="entry.presentationId">
+<div *ngIf="entry.presentationId" (click)="modal.show()">
     <div class="agenda-title">{{entry.presentation.title}}</div>
     <div class="agenda-persons">
         <span class="agenda-person">{{entry.speaker.name}}</span>
+        <span class="agenda-person" *ngFor="let speaker of entry.cospeakers">
+            {{speaker.name}}
+        </span>
     </div>
 </div>
 <div *ngIf="entry.label">
     <div class="agenda-title">{{entry.label}}</div>
 </div>
+
+<cf-entry-modal [entry]="entry" #modal>
+
+</cf-entry-modal>

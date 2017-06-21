@@ -19,6 +19,7 @@ import {PresentationListComponent} from "./presentations/presentation-list/prese
 import {SpeakerListComponent} from "./speakers/speaker-list.component";
 import {AgendaComponent} from "./agenda/agenda.component";
 import {AgendaEntryComponent} from "./agenda/agenda-entry/agenda-entry.component";
+import {AgendaEntryModalComponent} from "./agenda/entry-modal/entry-modal.component";
 @NgModule({
     imports: [SharedModule, PersonModule, RouterModule, FileUploadModule],
     declarations: [
@@ -34,6 +35,7 @@ import {AgendaEntryComponent} from "./agenda/agenda-entry/agenda-entry.component
         PresentationListComponent,
         SpeakerListComponent,
         AgendaComponent,
+        AgendaEntryModalComponent,
         AgendaEntryComponent
     ],
     providers: [NewsService, OrganizerService, PageService],
