@@ -28,7 +28,6 @@ public class AgendaEntry {
     @JoinColumn(name = "TIME_SLOT_ID")
     private TimeSlot timeSlot;
 
-    @Null
     @ManyToOne
     @JoinColumn(name = "ROOM_ID")
     private Room room;
