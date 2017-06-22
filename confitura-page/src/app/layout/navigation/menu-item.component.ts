@@ -12,4 +12,14 @@ export class MenuItemComponent {
         return !this.model.show || this.model.show() !== false;
     }
 
+    closeMenu() {
+        $("#navbar").collapse('hide');
+
+    }
+
+    click() {
+        this.model.action();
+        this.closeMenu();
+    }
+
 }

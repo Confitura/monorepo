@@ -45,7 +45,6 @@ export class NavigationComponent implements OnInit {
 
     logout() {
         this.login.logout();
-        this.closeMenu();
     };
 
     goToProfile() {
@@ -53,10 +52,7 @@ export class NavigationComponent implements OnInit {
 
     }
 
-    closeMenu() {
-        $("#navbar").collapse('hide');
 
-    }
 
 
 }

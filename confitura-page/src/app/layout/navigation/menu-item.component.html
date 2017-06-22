@@ -1,8 +1,10 @@
 <ng-container *ngIf="isVisible()">
     <a *ngIf="model.url" [routerLink]="model.url" [title]="model.label" (click)="closeMenu()"
        [class]="model.clazz" routerLinkActive="active">{{model.label}}</a>
-    <a *ngIf="model.action" [title]="model.label" (click)="model.action()" [class]="model.clazz"
+
+    <a *ngIf="model.action" [title]="model.label" (click)="click()" [class]="model.clazz"
        routerLinkActive="active">{{model.label}}</a>
+
     <ng-container *ngIf="model.children">
         <a [title]="model.label" [class]="model.clazz" class="dropdown-toggle"
            routerLinkActive="active" data-toggle="dropdown" role="button">{{model.label}} <span class="caret"></span></a>
