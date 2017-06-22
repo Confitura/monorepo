@@ -10,8 +10,7 @@ import {FileUploader} from "ng2-file-upload";
     templateUrl: "./person-view.component.html"
 })
 export class PersonViewComponent implements OnInit {
-    ngOnInit(): void {
-    }
+
 
     @Input()
     model: User;
@@ -20,9 +19,13 @@ export class PersonViewComponent implements OnInit {
     changed: EventEmitter<any> = new EventEmitter();
 
     constructor(private config: HttpConfiguration, private currentUser: CurrentUser) {
+
+    }
+
+    ngOnInit(): void {
         this.uploader = new FileUploader({
             authToken: this.currentUser.getToken(),
-            url: `${config.apiServer}resources/${this.model.id}`,
+            url: `${this.config.apiServer}resources/${this.model.id}`,
             autoUpload: true,
         });
         this.uploader.onCompleteAll = () => {

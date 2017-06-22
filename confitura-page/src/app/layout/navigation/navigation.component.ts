@@ -16,11 +16,15 @@ export class NavigationComponent implements OnInit {
         {label: "partners", url: "/partners"},
         {label: "presentations", url: "/presentations"},
         {label: "speakers", url: "/speakers"},
-        {label: "participants", url: "/admin2/participants", show: () => this.currentUser.isAdmin()},
-        {label: "users", url: "/admin2/users", show: () => this.currentUser.isAdmin()},
-        {label: "agenda", url: "/admin2/agenda", show: () => this.currentUser.isAdmin()},
         {label: "profile", action: () => this.goToProfile(), show: () => this.loggedIn},
-        // {label: "vote 4 papers", url: "/v4p"},
+        {
+            label: "admin", show: () => this.currentUser.isAdmin(),
+            children: [
+                {label: "participants", url: "/admin2/participants"},
+                {label: "manage agenda", url: "/admin2/agenda"},
+                {label: "users", url: "/admin2/users"},
+            ]
+        },
         {label: "login", url: "/login", show: () => !this.loggedIn},
         {label: "logout", action: () => this.logout(), show: () => this.loggedIn},
         {label: "registration", url: "/registration", clazz: "pink"},

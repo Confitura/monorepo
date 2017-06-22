@@ -4,4 +4,5 @@ export class MenuItem {
     action?: Function;
     clazz?: string;
     show?: Function = () => true;
+    children?: MenuItem[];
 }

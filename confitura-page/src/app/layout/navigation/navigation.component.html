@@ -10,14 +10,8 @@
             </a>
         </div>
         <div id="navbar" class="navbar-collapse collapse navbar-right">
-            <ul class="nav navbar-nav" >
-                <li *ngFor="let item of menu" >
-                    <ng-template [ngIf]="!item.show || item.show() !== false" >
-                        <a *ngIf="item.url" [routerLink]="item.url" [title]="item.label" (click)="closeMenu()"
-                           [class]="item.clazz" routerLinkActive="active">{{item.label}}</a>
-                        <a *ngIf="item.action" [title]="item.label" (click)="item.action()" [class]="item.clazz" routerLinkActive="active">{{item.label}}</a>
-                    </ng-template>
-                </li>
+            <ul class="nav navbar-nav">
+                <li cf-menu-item [model]="item" *ngFor="let item of menu"></li>
             </ul>
         </div>
     </div>
