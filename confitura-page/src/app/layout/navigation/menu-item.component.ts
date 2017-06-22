@@ -8,4 +8,8 @@ export class MenuItemComponent {
     @Input()
     model: MenuItem;
 
+    isVisible(): boolean {
+        return !this.model.show || this.model.show() !== false;
+    }
+
 }

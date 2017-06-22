@@ -1,4 +1,4 @@
-<ng-container *ngIf="!model.show || model.show() !== false">
+<ng-container *ngIf="isVisible()">
     <a *ngIf="model.url" [routerLink]="model.url" [title]="model.label" (click)="closeMenu()"
        [class]="model.clazz" routerLinkActive="active">{{model.label}}</a>
     <a *ngIf="model.action" [title]="model.label" (click)="model.action()" [class]="model.clazz"
