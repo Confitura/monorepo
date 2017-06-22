@@ -22,7 +22,7 @@ export class NavigationComponent implements OnInit {
             label: "admin", show: () => this.currentUser.isAdmin(),
             children: [
                 {label: "participants", url: "/admin2/participants"},
-                {label: "manage agenda", url: "/admin2/agenda"},
+                {label: "manage schedule", url: "/admin2/agenda"},
                 {label: "users", url: "/admin2/users"},
             ]
         },
