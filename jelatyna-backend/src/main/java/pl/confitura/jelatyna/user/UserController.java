@@ -49,11 +49,11 @@ public class UserController {
     @PreAuthorize("@security.isOwner(#user.id)")
     public ResponseEntity<?> save(@RequestBody User user) {
         setDefaultPhotoFor(user);
-        setIdIfManualyCreated(user);
+        setIdIfManuallyCreated(user);
         return ResponseEntity.ok(new Resource<>(repository.save(user)));
     }
 
-    private void setIdIfManualyCreated(@RequestBody User user) {
+    private void setIdIfManuallyCreated(@RequestBody User user) {
         if (StringUtils.isEmpty(user.getId())) {
             user.setId(UUID.randomUUID().toString());
         }
