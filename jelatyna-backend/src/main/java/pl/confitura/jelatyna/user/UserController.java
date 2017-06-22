@@ -4,6 +4,7 @@ import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static org.springframework.util.StringUtils.isEmpty;
 
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -15,6 +16,7 @@ import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,13 +48,15 @@ public class UserController {
     @PostMapping("/users")
     @PreAuthorize("@security.isOwner(#user.id)")
     public ResponseEntity<?> save(@RequestBody User user) {
-        if (isEmpty(user.getPhoto())) {
-            Gravatar gravatar = new Gravatar(300, GravatarRating.GENERAL_AUDIENCES, GravatarDefaultImage.BLANK);
-            String url = gravatar.getUrl(user.getEmail());
-            user.setPhoto(url);
+        setDefaultPhotoFor(user);
+        setIdIfManualyCreated(user);
+        return ResponseEntity.ok(new Resource<>(repository.save(user)));
+    }
+
+    private void setIdIfManualyCreated(@RequestBody User user) {
+        if (StringUtils.isEmpty(user.getId())) {
+            user.setId(UUID.randomUUID().toString());
         }
-        User saved = repository.save(user);
-        return ResponseEntity.ok(new Resource<>(saved));
     }
 
     @PostMapping("/users/{userId}/volunteer/{isVolunteer}")
@@ -99,6 +103,14 @@ public class UserController {
         if (!isEmpty(presentation.getId())) {
             Presentation saved = presentationRepository.findOne(presentation.getId());
             presentation.setStatus(saved.getStatus());
+        }
+    }
+
+    private void setDefaultPhotoFor(@RequestBody User user) {
+        if (isEmpty(user.getPhoto())) {
+            Gravatar gravatar = new Gravatar(300, GravatarRating.GENERAL_AUDIENCES, GravatarDefaultImage.BLANK);
+            String url = gravatar.getUrl(user.getEmail());
+            user.setPhoto(url);
         }
     }
 }
