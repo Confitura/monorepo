@@ -1,27 +1,104 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, OnChanges, OnInit, SimpleChanges} from "@angular/core";
 import {TimeSlot} from "./shared/time-slot.model";
 import {Room} from "./shared/room.model";
 import {AgendaService} from "./shared/agenda.service";
 
 import "./agenda.scss"
 import {months} from "moment";
+import {Tag} from "../../profile/shared/tag.model";
+import {Observable} from "rxjs/Observable";
+import {PresentationService} from "../../profile/shared/presentation.service";
+import {AgendaEntry} from "./shared/agenda.model";
 
 @Component({
     templateUrl: "./agenda.component.html"
 })
-export class AgendaComponent implements OnInit {
+export class AgendaComponent implements OnInit, OnChanges {
 
     slots: TimeSlot[] = [];
     rooms: Room[] = [];
     selectedRooms: Room[] = [];
     activeRooms: any = null;
-    agenda: any[] = [];
+    agenda: AgendaEntry[][] = [];
+    filteredAgenda: AgendaEntry[][] = [];
+    tags: Tag[];
 
-    constructor(private  service: AgendaService) {
+    selectedTag: Tag = null;
+    selectedLevels = {
+        "beginner": true,
+        "advanced": true,
+        "master": true
+    };
+    selectedLanguages = {
+        "polish": true,
+        "english": true
+    };
+
+    constructor(private  service: AgendaService, private presentationService: PresentationService) {
+    }
+
+    selectTag(tag: Tag) {
+        this.selectedTag = tag;
+        this.filter();
+    }
+
+    selectLevel(level: string) {
+        this.selectedLevels[level] = !this.selectedLevels[level];
+        this.filter();
+    }
+
+    isLevelSelected(level: string) {
+        return !!this.selectedLevels[level];
+    }
+
+    selectLanguage(language: string) {
+        this.selectedLanguages[language] = !this.selectedLanguages[language];
+        this.filter();
+    }
+
+    isLanguageSelected(language: string) {
+        return !!this.selectedLanguages[language];
     }
 
     ngOnInit(): void {
+        this.getTags().subscribe(it => this.tags = it);
         this.refresh();
+    }
+
+    filter() {
+
+
+        this.filteredAgenda = this.agenda.map(timeSlot => {
+            return timeSlot.map(entry => {
+
+                if (!entry.presentationId) {
+                    return entry;
+                }
+
+                if (this.hasSelectedLang(entry)
+                    && this.hasSelectedLevel(entry)
+                    && this.hasSelectedTag(entry)) {
+                    return entry;
+                }
+
+                return this.emptyEntry();
+            })
+        });
+
+    }
+
+    private emptyEntry() {
+        let entry = new AgendaEntry();
+        return entry;
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        console.log("changes");
+        console.log(changes);
+    }
+
+    getTags(): Observable<Tag[]> {
+        return this.presentationService.allTags();
     }
 
     refresh() {
@@ -37,6 +114,7 @@ export class AgendaComponent implements OnInit {
                 }
                 this.selectedRooms = this.rooms.filter(room => this.isActive(room));
             }
+            this.filter()
 
         });
     }
@@ -48,5 +126,19 @@ export class AgendaComponent implements OnInit {
 
     isActive(room: Room) {
         return this.activeRooms[room.id]
+    }
+
+    private hasSelectedLang(entry: AgendaEntry) {
+        return !!this.selectedLanguages[entry.presentation.language];
+    }
+
+    private hasSelectedLevel(entry: AgendaEntry) {
+        return !!this.selectedLevels[entry.presentation.level];
+    }
+
+    private hasSelectedTag(entry: AgendaEntry) {
+        return !this.selectedTag || entry.tags.filter(tag =>
+            tag.id === this.selectedTag.id)
+                .length > 0;
     }
 }

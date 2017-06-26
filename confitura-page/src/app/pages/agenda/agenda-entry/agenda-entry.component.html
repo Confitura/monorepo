@@ -1,13 +1,22 @@
 <div *ngIf="entry.presentationId">
     <div class="agenda-title">
+        <span *ngIf="entry.presentation.language=='english'" class="small">[en]</span>
         <a href="/presentations#{{entry.presentation.id}}">
             {{entry.presentation.title}}
         </a>
     </div>
+
     <div class="agenda-persons">
         <span class="agenda-person">{{entry.speaker.name}}</span>
         <span class="agenda-person" *ngFor="let speaker of entry.cospeakers">
             {{speaker.name}}
+        </span>
+    </div>
+    <div class="bagdes">
+
+        <span class="label label-success">{{entry.presentation.level}}</span>
+        <span class="label label-default" *ngFor="let tag of entry.tags">
+            {{tag.name}}
         </span>
     </div>
 </div>
