@@ -19,4 +19,8 @@ public interface ParticipantRepository extends Repository<Participant, String> {
     @RestResource(exported = false)
     @Query("FROM Participant WHERE registrationDate IS NULL")
     Iterable<Participant> findAllUnregistered();
+
+    @RestResource(exported = false)
+    @Query("FROM Participant WHERE registrationDate IS NOT NULL")
+    Iterable<Participant> findAllRegistered();
 }

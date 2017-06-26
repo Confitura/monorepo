@@ -5,10 +5,8 @@ import static java.time.LocalDateTime.now;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.stream.IntStream;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
@@ -21,26 +19,23 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Streams;
+import com.microtripit.mandrillapp.lutung.model.MandrillApiError;
 import com.opencsv.CSVReader;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import pl.confitura.jelatyna.infrastructure.security.JelatynaPrincipal;
 import pl.confitura.jelatyna.mail.MailSender;
+import pl.confitura.jelatyna.mail.MessageInfo;
 
-//@RestController
 @RepositoryRestController
 @Slf4j
+@AllArgsConstructor
 public class RegistrationController {
 
     private MailSender sender;
     private ParticipantRepository repository;
-
-    @Autowired
-    public RegistrationController(MailSender sender, ParticipantRepository repository) {
-        this.sender = sender;
-        this.repository = repository;
-    }
+    private TicketGenerator generator;
 
     @PostMapping("/participants/upload")
     @PreAuthorize("@security.isAdmin()")
@@ -61,16 +56,12 @@ public class RegistrationController {
         return ResponseEntity.accepted().build();
     }
 
-    @Async
-    private void doSendRemindTo(Iterable<Participant> participants) {
-        Streams.stream(participants)
-                .forEach(participant -> {
-                    try {
-                        sender.send(participant.getOriginalBuyer(), "registration-reminder", new HashMap<>());
-                    } catch (Exception e) {
-                        log.error("Error on sending reminder user to {}", participant.getOriginalBuyer());
-                    }
-                });
+    @PostMapping("/participants/ticket")
+    @PreAuthorize("@security.isAdmin()")
+    @Transactional
+    public ResponseEntity<Object> sendTickets() throws IOException {
+        doSendTicketTo(repository.findAllRegistered());
+        return ResponseEntity.accepted().build();
     }
 
     @PostMapping("/participants/{id}")
@@ -94,12 +85,51 @@ public class RegistrationController {
             try {
                 Participant participant =
                         repository.save(new Participant().setCreationDate(now()).setOriginalBuyer(mail).setCreatedBy(creatorName));
-                sender.send(mail, "pre-registration", ImmutableMap.of("token", participant.getId()));
+                sender.send("pre-registration", new MessageInfo().setEmail(mail).setToken(participant.getId()));
                 participant.setEmailSent(true);
             } catch (Exception ex) {
                 log.error("Error on sending email", ex);
             }
 
         });
+
+    }
+
+    @Async
+    private void doSendRemindTo(Iterable<Participant> participants) {
+        Streams.stream(participants)
+                .forEach(participant -> {
+                    try {
+                        MessageInfo info = new MessageInfo()
+                                .setEmail(participant.getOriginalBuyer())
+                                .setToken(participant.getId());
+                        sender.send("registration-reminder", info);
+                    } catch (Exception e) {
+                        log.error("Error on sending reminder user to {}", participant.getOriginalBuyer());
+                    }
+                });
+    }
+
+    @Async
+    private void doSendTicketTo(Iterable<Participant> participants) {
+        Streams.stream(participants)
+                .forEach(this::sendTicketTo);
+    }
+
+    private void sendTicketTo(Participant participant) {
+        try {
+            doSendTicketTo(participant);
+        } catch (Exception e) {
+            log.error("Error on sending ticket to {}", participant.getOriginalBuyer());
+            log.error("Exception from sender:", e);
+        }
+    }
+
+    private void doSendTicketTo(Participant participant) throws IOException, MandrillApiError {
+        MessageInfo info = new MessageInfo()
+                .setEmail(participant.getEmail())
+                .setName(participant.getName())
+                .setTicket(generator.generateFor(participant.getId()));
+        sender.send("registration-ticket", info);
     }
 }
