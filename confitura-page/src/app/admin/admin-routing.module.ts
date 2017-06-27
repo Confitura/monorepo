@@ -7,6 +7,8 @@ import {LoginComponent} from "../pages/login/login.component";
 import {UserListComponent} from "./users/user-list/user-list.component";
 import {ParticipantListComponent} from "./participants/participant-list.component";
 import {AgendaComponent} from "./agenda/agenda.component";
+import {ScannerComponent} from "./scanner/scanner.component";
+import {IsVolunteerGuard} from "./is-volunteer-guard.service";
 const routes: Routes = [
     {
         path: "admin2",
@@ -18,21 +20,22 @@ const routes: Routes = [
             },
             {
                 path: "",
-                canActivateChild: [IsAdminGuard],
                 children: [
-                    {path: "users", component: UserListComponent},
-                    {path: "partners/add", component: PartnerEditComponent},
-                    {path: "partners/edit/:id", component: PartnerEditComponent},
-                    {path: "partners/:id", component: PartnerComponent},
-                    {path: "agenda", component: AgendaComponent},
-                    {path: "participants", component: ParticipantListComponent}]
+                    {path: "scanner", component: ScannerComponent, canActivate: [IsAdminGuard, IsVolunteerGuard]},
+                    {path: "scanner/:id", component: ScannerComponent, canActivate: [IsAdminGuard]},
+                    {path: "users", component: UserListComponent, canActivate: [IsAdminGuard]},
+                    {path: "partners/add", component: PartnerEditComponent, canActivate: [IsAdminGuard]},
+                    {path: "partners/edit/:id", component: PartnerEditComponent, canActivate: [IsAdminGuard]},
+                    {path: "partners/:id", component: PartnerComponent, canActivate: [IsAdminGuard]},
+                    {path: "agenda", component: AgendaComponent, canActivate: [IsAdminGuard]},
+                    {path: "participants", component: ParticipantListComponent, canActivate: [IsAdminGuard]}]
             }
         ]
     }
 ];
 @NgModule({
     imports: [RouterModule.forChild(routes)],
-    providers: [IsAdminGuard]
+    providers: [IsAdminGuard, IsVolunteerGuard]
 
 })
 export class AdminRoutingModule {

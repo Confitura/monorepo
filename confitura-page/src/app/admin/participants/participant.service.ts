@@ -28,4 +28,15 @@ export class ParticipantService {
     sendReminder() {
         return this.http.post(`/participants/reminder`, {});
     }
+
+    sendTickets() {
+        return this.http.post(`/participants/ticket`, {});
+    }
+
+    arrived(id: string): Observable<any> {
+        return this.http.post(`/participants/${id}/arrived`, {})
+            .map((response: Response) => {
+                return {status: response.status, json: response.json()};
+            });
+    }
 }

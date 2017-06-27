@@ -19,11 +19,12 @@ export class NavigationComponent implements OnInit {
         {label: "speakers", url: "/speakers"},
         {label: "profile", action: () => this.goToProfile(), show: () => this.loggedIn},
         {
-            label: "admin", show: () => this.currentUser.isAdmin(),
+            label: "admin", show: () => this.currentUser.isPrivileged(),
             children: [
-                {label: "participants", url: "/admin2/participants"},
-                {label: "manage schedule", url: "/admin2/agenda"},
-                {label: "users", url: "/admin2/users"},
+                {label: "scanner", url: "/admin2/scanner", show: () => this.currentUser.isPrivileged()},
+                {label: "participants", url: "/admin2/participants", show: () => this.currentUser.isAdmin()},
+                {label: "manage schedule", url: "/admin2/agenda", show: () => this.currentUser.isAdmin()},
+                {label: "users", url: "/admin2/users", show: () => this.currentUser.isAdmin()},
             ]
         },
         {label: "login", url: "/login", show: () => !this.loggedIn},

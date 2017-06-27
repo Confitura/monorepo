@@ -37,6 +37,14 @@ export class CurrentUser {
         return this.isAvailable() && this.get().isAdmin;
     }
 
+    isVolunteer() {
+        return this.isAvailable() && this.get().isVolunteer;
+    }
+
+    isPrivileged() {
+        return this.isVolunteer() || this.isAdmin();
+    }
+
 
     logout() {
         sessionStorage.clear();

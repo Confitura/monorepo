@@ -11,6 +11,7 @@ import {TimeSlotComponent} from "./agenda/time-slot.component";
 import {RoomComponent} from "./agenda/room.component";
 import {AgendaEntryComponent} from "./agenda/agenda-entry.component";
 import {PresentationPickerComponent} from "./agenda/presentaion-picker/presentaion-picker.component";
+import {ScannerComponent} from "./scanner/scanner.component";
 @NgModule({
     imports: [AdminRoutingModule, SharedModule, PersonModule, FileUploadModule],
     declarations: [
@@ -21,7 +22,8 @@ import {PresentationPickerComponent} from "./agenda/presentaion-picker/presentai
         TimeSlotComponent,
         RoomComponent,
         AgendaEntryComponent,
-        PresentationPickerComponent
+        PresentationPickerComponent,
+        ScannerComponent
     ]
 })
 export class AdminModule {

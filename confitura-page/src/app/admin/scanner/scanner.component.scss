@@ -1,0 +1,16 @@
+#scanner {
+  height: 100vh;
+  font-size: 2.7rem;
+  dl {
+    dt {
+      padding-top: 20px;
+      font-family: 'NeuzeitGro-Bol', Verdana, Tahoma, sans-serif;
+    }
+  }
+  .btn-scan {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+
+  }
+}

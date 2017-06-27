@@ -47,4 +47,9 @@ export class ParticipantListComponent implements OnInit {
         this.confirmation.show("you want to send reminder emails to all unregistered participants?")
             .then(() => this.service.sendReminder().subscribe());
     }
+
+    sendTickets() {
+        this.confirmation.show("you want to send tickets to all registered participants?")
+            .then(() => this.service.sendTickets().subscribe());
+    }
 }
