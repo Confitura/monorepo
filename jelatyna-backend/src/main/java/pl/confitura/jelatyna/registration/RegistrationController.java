@@ -8,9 +8,11 @@ import java.time.LocalDateTime;
 import java.util.stream.IntStream;
 
 import org.springframework.data.rest.webmvc.RepositoryRestController;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -79,6 +81,30 @@ public class RegistrationController {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("/participants/{id}/arrived")
+    @PreAuthorize("@security.isVolunteer()")
+    @Transactional
+    public ResponseEntity<Object> arrived(@PathVariable String id, @AuthenticationPrincipal Authentication authentication) {
+        Participant participant = repository.findOne(id);
+        if (participant == null) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return arrived(participant, (JelatynaPrincipal) authentication.getPrincipal());
+        }
+    }
+
+    private ResponseEntity<Object> arrived(Participant participant, JelatynaPrincipal principal) {
+        HttpStatus status = HttpStatus.OK;
+        if (participant.alreadyArrived()) {
+            status = HttpStatus.CONFLICT;
+        } else {
+            participant
+                    .setArrivalDate(LocalDateTime.now())
+                    .setRegisteredBy(principal.getId());
+        }
+        return ResponseEntity.status(status).body(participant);
+    }
+
     private void register(String mail, int count, JelatynaPrincipal principal) {
         String creatorName = principal.getName();
         IntStream.range(0, count).forEach((it) -> {
@@ -113,6 +139,7 @@ public class RegistrationController {
     @Async
     private void doSendTicketTo(Iterable<Participant> participants) {
         Streams.stream(participants)
+                .filter(Participant::ticketNotSentYet)
                 .forEach(this::sendTicketTo);
     }
 
@@ -125,11 +152,13 @@ public class RegistrationController {
         }
     }
 
+    @Transactional
     private void doSendTicketTo(Participant participant) throws IOException, MandrillApiError {
         MessageInfo info = new MessageInfo()
                 .setEmail(participant.getEmail())
                 .setName(participant.getName())
                 .setTicket(generator.generateFor(participant.getId()));
         sender.send("registration-ticket", info);
+        repository.save(participant.setTicketSendDate(LocalDateTime.now()));
     }
 }

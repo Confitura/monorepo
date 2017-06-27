@@ -33,5 +33,16 @@ public class Participant {
     private String originalBuyer;
     private LocalDateTime creationDate;
     private LocalDateTime registrationDate;
+    private LocalDateTime arrivalDate;
+    private String registeredBy;
+    private LocalDateTime ticketSendDate;
     private boolean emailSent;
+
+    boolean alreadyArrived() {
+        return this.arrivalDate != null;
+    }
+
+    boolean ticketNotSentYet() {
+        return this.ticketSendDate == null;
+    }
 }

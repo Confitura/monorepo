@@ -36,6 +36,10 @@ public class Security {
         return getPrincipal().isAdmin();
     }
 
+    public boolean isVolunteer() {
+        return getPrincipal().isVolunteer() || isAdmin();
+    }
+
     private JelatynaPrincipal getPrincipal() {
         return (JelatynaPrincipal) Optional.ofNullable((Authentication) request.getUserPrincipal())
                 .map(Authentication::getPrincipal)
