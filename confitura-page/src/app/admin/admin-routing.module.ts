@@ -21,7 +21,7 @@ const routes: Routes = [
             {
                 path: "",
                 children: [
-                    {path: "scanner", component: ScannerComponent, canActivate: [IsAdminGuard, IsVolunteerGuard]},
+                    {path: "scanner", component: ScannerComponent, canActivate: [IsAdminGuard]},
                     {path: "scanner/:id", component: ScannerComponent, canActivate: [IsAdminGuard]},
                     {path: "users", component: UserListComponent, canActivate: [IsAdminGuard]},
                     {path: "partners/add", component: PartnerEditComponent, canActivate: [IsAdminGuard]},
