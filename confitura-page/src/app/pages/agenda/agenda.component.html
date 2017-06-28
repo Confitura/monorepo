@@ -3,12 +3,60 @@
         <div class="col-lg-12 news-confitura-header bg-agenda-header"><h2>agenda</h2></div>
     </div>
     <div class="row-fluid row-1140 text-center">
+
         <div class="room-link-cnt" data-offset-top="60" data-offset-bottom="200">
             <a class="room-link"
-               href="javascript:void(0)"
+               role="button"
                (click)="selectRoom(room)"
                [ngClass]="{'room-active': isActive(room)}"
                *ngFor="let room of rooms">{{room.label}}</a>
+        </div>
+
+        <div class="row row-1122" style="margin: 20px;">
+            <div class="col-lg-4">
+                tag:
+                <select class="form-control"
+                        id="selectedTag"
+                        name="selectedTag"
+                        [ngModel]="selectedTag"
+                        (ngModelChange)="selectTag($event)">
+                    <option [ngValue]="null">all</option>
+                    <option *ngFor="let tag of tags" [ngValue]="tag">{{tag.name}}</option>
+                </select>
+
+            </div>
+
+            <div class="col-lg-4 col-md-4 col-xs-6">
+                level:<br/>
+
+                <div class="btn-group" role="group" aria-label="selectedLevel">
+                    <button type="button" class="btn btn-default"
+                            [class.active]="isLevelSelected('beginner')"
+                            (click)="selectLevel('beginner')">beginner
+                    </button>
+                    <button type="button" class="btn btn-default"
+                            [class.active]="isLevelSelected('advanced')"
+                            (click)="selectLevel('advanced')">advanced
+                    </button>
+                </div>
+
+            </div>
+
+            <div class="col-lg-4 col-md-4 col-xs-6">
+                language: <br/>
+
+                <div class="btn-group" role="group" aria-label="selectedLanguage">
+                    <button type="button" class="btn btn-default"
+                            [class.active]="isLanguageSelected('polish')"
+                            (click)="selectLanguage('polish')">polish
+                    </button>
+                    <button type="button" class="btn btn-default"
+                            [class.active]="isLanguageSelected('english')"
+                            (click)="selectLanguage('english')">english
+                    </button>
+                </div>
+
+            </div>
         </div>
         <div class="row-fluid row-1122">
             <div class="agenda-row"
@@ -21,14 +69,14 @@
                 <div *ngIf="slot.forAllRooms; then singleSlot else perRoom; index"></div>
                 <ng-template #singleSlot>
                     <div class="agenda-content agenda-content-{{selectedRooms.length}}">
-                        <cf-entry [entry]="agenda[slotIndex][0]"></cf-entry>
+                        <cf-entry [entry]="filteredAgenda[slotIndex][0]" *ngIf="filteredAgenda[slotIndex].length>0"></cf-entry>
                     </div>
                 </ng-template>
                 <ng-template #perRoom>
 
                     <div class="agenda-content agenda-content-{{rooms.length}}"
                          *ngFor="let room of selectedRooms; index as roomIndex">
-                        <cf-entry [entry]="agenda[slotIndex][rooms.indexOf(room)]"></cf-entry>
+                        <cf-entry [entry]="filteredAgenda[slotIndex][rooms.indexOf(room)]"></cf-entry>
                     </div>
                 </ng-template>
             </div>
