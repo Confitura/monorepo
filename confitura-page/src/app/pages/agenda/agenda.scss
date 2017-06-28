@@ -3,16 +3,12 @@
   margin-bottom: 50px;
   .bg-agenda-header {
     position: relative;
-    //background: transparent url('../../img/header-agenda.jpg') center center no-repeat;
     background-size: cover;
     h2 {
       color: #ffffff;
     }
   }
-  a.room-link:active,
-  a.room-link:link,
-  a.room-link:visited,
-  a.room-link:hover {
+  a.room-link {
     display: inline-block;
     width: 210px;
     height: 80px;

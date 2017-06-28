@@ -26,8 +26,7 @@ export class AgendaComponent implements OnInit, OnChanges {
     selectedTag: Tag = null;
     selectedLevels = {
         "beginner": true,
-        "advanced": true,
-        "master": true
+        "advanced": true
     };
     selectedLanguages = {
         "polish": true,
@@ -66,8 +65,6 @@ export class AgendaComponent implements OnInit, OnChanges {
     }
 
     filter() {
-
-
         this.filteredAgenda = this.agenda.map(timeSlot => {
             return timeSlot.map(entry => {
 
@@ -88,8 +85,7 @@ export class AgendaComponent implements OnInit, OnChanges {
     }
 
     private emptyEntry() {
-        let entry = new AgendaEntry();
-        return entry;
+        return new AgendaEntry();
     }
 
     ngOnChanges(changes: SimpleChanges): void {
