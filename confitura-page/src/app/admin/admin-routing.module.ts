@@ -8,7 +8,7 @@ import {UserListComponent} from "./users/user-list/user-list.component";
 import {ParticipantListComponent} from "./participants/participant-list.component";
 import {AgendaComponent} from "./agenda/agenda.component";
 import {ScannerComponent} from "./scanner/scanner.component";
-import {IsVolunteerGuard} from "./is-volunteer-guard.service";
+import {IsPrivilegedGuard} from "./is-privileged-guard.service";
 const routes: Routes = [
     {
         path: "admin2",
@@ -20,8 +20,9 @@ const routes: Routes = [
             },
             {
                 path: "",
+                canActivateChild: [IsPrivilegedGuard],
                 children: [
-                    {path: "scanner", component: ScannerComponent, canActivate: [IsAdminGuard]},
+                    {path: "scanner", component: ScannerComponent},
                     {path: "scanner/:id", component: ScannerComponent, canActivate: [IsAdminGuard]},
                     {path: "users", component: UserListComponent, canActivate: [IsAdminGuard]},
                     {path: "partners/add", component: PartnerEditComponent, canActivate: [IsAdminGuard]},
@@ -35,7 +36,7 @@ const routes: Routes = [
 ];
 @NgModule({
     imports: [RouterModule.forChild(routes)],
-    providers: [IsAdminGuard, IsVolunteerGuard]
+    providers: [IsAdminGuard, IsPrivilegedGuard]
 
 })
 export class AdminRoutingModule {

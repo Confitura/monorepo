@@ -3,8 +3,7 @@ import {TimeSlot} from "./shared/time-slot.model";
 import {Room} from "./shared/room.model";
 import {AgendaService} from "./shared/agenda.service";
 
-import "./agenda.scss"
-import {months} from "moment";
+import "./agenda.scss";
 import {Tag} from "../../profile/shared/tag.model";
 import {Observable} from "rxjs/Observable";
 import {PresentationService} from "../../profile/shared/presentation.service";
@@ -67,7 +66,6 @@ export class AgendaComponent implements OnInit, OnChanges {
     filter() {
         this.filteredAgenda = this.agenda.map(timeSlot => {
             return timeSlot.map(entry => {
-
                 if (!entry.presentationId) {
                     return entry;
                 }
@@ -133,8 +131,7 @@ export class AgendaComponent implements OnInit, OnChanges {
     }
 
     private hasSelectedTag(entry: AgendaEntry) {
-        return !this.selectedTag || entry.tags.filter(tag =>
-            tag.id === this.selectedTag.id)
-                .length > 0;
+        return !this.selectedTag ||
+            (entry.tags && entry.tags.some(tag => tag.id === this.selectedTag.id));
     }
 }

@@ -2,14 +2,14 @@ import {ActivatedRouteSnapshot, CanActivate, CanActivateChild, RouterStateSnapsh
 import {CurrentUser} from "../security/current-user.service";
 import {Injectable} from "@angular/core";
 @Injectable()
-export class IsVolunteerGuard implements CanActivateChild, CanActivate {
+export class IsPrivilegedGuard implements CanActivateChild, CanActivate {
 
     constructor(private currentUser: CurrentUser) {
     }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
         return new Promise((resolve) => {
-            resolve(this.currentUser.isAvailable() && this.currentUser.get().isVolunteer)
+            resolve(this.currentUser.isAvailable() && this.currentUser.isPrivileged())
         });
     }
 
