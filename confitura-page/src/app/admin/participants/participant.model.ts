@@ -9,4 +9,6 @@ export class Participant {
     role: string;
     gender: string;
     creationDate: string;
+    registrationDate: string;
+    ticketSendDate: string;
 }

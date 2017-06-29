@@ -15,9 +15,11 @@
                 <th>Email</th>
                 <th>City</th>
                 <th>Experience</th>
-                <th>t-shirt</th>
+                <th>T-shirt</th>
                 <th>Buyer</th>
                 <th>Creation Date</th>
+                <th>Registration Date</th>
+                <th>Ticket Generation Date</th>
             </tr>
             </thead>
             <tbody>
@@ -30,6 +32,8 @@
                 <td>{{participant.size}}</td>
                 <td>{{participant.originalBuyer}}</td>
                 <td>{{participant.creationDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td>{{participant.registrationDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td>{{participant.ticketSendDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
             </tr>
             </tbody>
         </table>
