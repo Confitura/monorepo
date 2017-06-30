@@ -47,7 +47,9 @@ public class TokenService {
                 return new JelatynaPrincipal()
                         .setName(body.getSubject())
                         .setId(body.getId())
-                        .setAdmin((Boolean) body.get("isAdmin"));
+                        .setAdmin((Boolean) body.get("isAdmin"))
+                        .setVolunteer((Boolean) body.get("isVolunteer"))
+                        ;
             }
         });
     }

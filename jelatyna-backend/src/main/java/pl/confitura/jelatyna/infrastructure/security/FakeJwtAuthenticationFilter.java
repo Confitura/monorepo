@@ -23,9 +23,10 @@ public class FakeJwtAuthenticationFilter extends AuthenticationFilter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
-        JelatynaPrincipal principal = new JelatynaPrincipal().setId("FAKE").setName("Jack Faker");
-        SecurityContextHolder.getContext().setAuthentication(
-                new PreAuthenticatedAuthenticationToken(principal, "", emptyList()));
+        JelatynaPrincipal principal = new JelatynaPrincipal()
+                .setId("FAKE").setName("Jack Faker").setAdmin(true);
+        SecurityContextHolder.getContext()
+                .setAuthentication(new PreAuthenticatedAuthenticationToken(principal, "", emptyList()));
 
         filterChain.doFilter(servletRequest, servletResponse);
 
