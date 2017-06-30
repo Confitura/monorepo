@@ -23,7 +23,7 @@ const routes: Routes = [
                 canActivateChild: [IsPrivilegedGuard],
                 children: [
                     {path: "scanner", component: ScannerComponent},
-                    {path: "scanner/:id", component: ScannerComponent, canActivate: [IsAdminGuard]},
+                    {path: "scanner/:id", component: ScannerComponent},
                     {path: "users", component: UserListComponent, canActivate: [IsAdminGuard]},
                     {path: "partners/add", component: PartnerEditComponent, canActivate: [IsAdminGuard]},
                     {path: "partners/edit/:id", component: PartnerEditComponent, canActivate: [IsAdminGuard]},

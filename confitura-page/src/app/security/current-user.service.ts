@@ -16,17 +16,17 @@ export class CurrentUser {
 
     set(token: string) {
         let user = Base64.decode(token.split(".")[1]);
-        sessionStorage.setItem("user", user);
-        sessionStorage.setItem("token", token);
+        localStorage.setItem("user", user);
+        localStorage.setItem("token", token);
         this.onLogin.emit(this.get());
     }
 
     get(): JwtUser {
-        return JSON.parse(sessionStorage.getItem("user")) as JwtUser;
+        return JSON.parse(localStorage.getItem("user")) as JwtUser;
     }
 
     getToken() {
-        return sessionStorage.getItem("token");
+        return localStorage.getItem("token");
     }
 
     isAvailable() {
@@ -47,7 +47,7 @@ export class CurrentUser {
 
 
     logout() {
-        sessionStorage.clear();
+        localStorage.clear();
         this.onLogin.emit(this.get());
         this.router.navigate(["/"]);
     }
