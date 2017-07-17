@@ -36,6 +36,7 @@ public class Participant {
     private LocalDateTime arrivalDate;
     private String registeredBy;
     private LocalDateTime ticketSendDate;
+    private LocalDateTime surveySendDate;
     private boolean emailSent;
 
     boolean alreadyArrived() {
@@ -44,5 +45,9 @@ public class Participant {
 
     boolean ticketNotSentYet() {
         return this.ticketSendDate == null;
+    }
+
+    public boolean surveyNotSentYet() {
+        return surveySendDate != null;
     }
 }

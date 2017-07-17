@@ -66,6 +66,14 @@ public class RegistrationController {
         return ResponseEntity.accepted().build();
     }
 
+    @PostMapping("/participants/survey")
+    @PreAuthorize("@security.isAdmin()")
+    @Transactional
+    public ResponseEntity<Object> sendSurveys() throws IOException {
+        doSendSurveyTo(repository.findAllRegistered());
+        return ResponseEntity.accepted().build();
+    }
+
     @PostMapping("/participants/{id}")
     @Transactional
     public ResponseEntity<Object> save(@RequestBody Participant participant, @PathVariable String id) {
@@ -160,5 +168,32 @@ public class RegistrationController {
                 .setTicket(generator.generateFor(participant.getId()));
         sender.send("registration-ticket", info);
         repository.save(participant.setTicketSendDate(LocalDateTime.now()));
+    }
+
+    @Async
+    private void doSendSurveyTo(Iterable<Participant> participants) {
+        Streams.stream(participants)
+                .filter(Participant::alreadyArrived)
+                .filter(Participant::surveyNotSentYet)
+                .forEach(this::sendSurveyTo);
+    }
+
+
+    private void sendSurveyTo(Participant participant) {
+        try {
+            doSendSurvey(participant);
+        } catch (Exception e) {
+            log.error("Error on sending survey to {}", participant.getOriginalBuyer());
+            log.error("Exception from sender:", e);
+        }
+    }
+
+    @Transactional
+    private void doSendSurvey(Participant participant) throws IOException, MandrillApiError {
+        MessageInfo info = new MessageInfo()
+                .setEmail(participant.getEmail())
+                .setName(participant.getName());
+        sender.send("survey", info);
+        repository.save(participant.setSurveySendDate(LocalDateTime.now()));
     }
 }
