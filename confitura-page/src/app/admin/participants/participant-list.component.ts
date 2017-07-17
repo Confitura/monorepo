@@ -49,7 +49,12 @@ export class ParticipantListComponent implements OnInit {
     }
 
     sendTickets() {
-        this.confirmation.show("you want to send tickets to all registered participants?")
+        this.confirmation.show("you want to send tickets to participants which hasn't recieved one?")
             .then(() => this.service.sendTickets().subscribe());
+    }
+
+    sendSurveys() {
+        this.confirmation.show("you want to send surveys to all attendees?")
+            .then(() => this.service.sendSurveys().subscribe());
     }
 }

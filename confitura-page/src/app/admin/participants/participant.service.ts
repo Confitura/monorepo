@@ -33,6 +33,10 @@ export class ParticipantService {
         return this.http.post(`/participants/ticket`, {});
     }
 
+    sendSurveys() {
+        return this.http.post(`/participants/survey`, {});
+    }
+
     arrived(id: string): Observable<any> {
         return this.http.post(`/participants/${id}/arrived`, {})
             .map((response: Response) => {
