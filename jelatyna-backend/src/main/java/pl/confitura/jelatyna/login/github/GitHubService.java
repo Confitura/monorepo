@@ -28,8 +28,7 @@ public class GitHubService {
     @Autowired
     public GitHubService(OAuthUserService oauthUserService, GitHubConfigurationProperties properties, ObjectMapper mapper) {
         this.oauthUserService = oauthUserService;
-        this.gitHub = new ServiceBuilder()
-                .apiKey(properties.getApiKey())
+        this.gitHub = new ServiceBuilder(properties.getApiKey())
                 .apiSecret(properties.getApiSecret())
                 .callback(properties.getCallback())
                 .build(GitHubApi.instance());

@@ -6,18 +6,7 @@ import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurerAdapter;
 
 @Configuration
-//@Profile(DEV)
-public class CorsConfiguration {
-//    @Bean
-//    public WebMvcConfigurer corsConfigurer() {
-//        return new WebMvcConfigurerAdapter() {
-//            @Override
-//            public void addCorsMappings(CorsRegistry registry) {
-//
-//                registry.addMapping("/**");
-//            }
-//        };
-//    }
+public class JelatynaCorsConfiguration {
 
     @Bean
     public RepositoryRestConfigurerAdapter repositoryRestConfigurerAdapter() {

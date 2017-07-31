@@ -26,8 +26,7 @@ public class TwitterService {
     public TwitterService(OAuthUserService oauthUserService, TwitterConfigurationProperties properties, ObjectMapper mapper) {
         this.oauthUserService = oauthUserService;
         this.mapper = mapper;
-        this.service = new ServiceBuilder()
-                .apiKey(properties.getApiKey())
+        this.service = new ServiceBuilder(properties.getApiKey())
                 .apiSecret(properties.getApiSecret())
                 .callback(properties.getCallback())
                 .build(TwitterApi.instance());

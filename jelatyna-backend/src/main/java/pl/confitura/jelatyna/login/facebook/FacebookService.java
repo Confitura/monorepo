@@ -32,8 +32,7 @@ class FacebookService {
         final String secretState = "secret" + new Random().nextInt(999_999);
         this.oauthUserService = oAuthUserService;
         this.mapper = mapper;
-        this.service = new ServiceBuilder()
-                .apiKey(config.getApiKey())
+        this.service = new ServiceBuilder(config.getApiKey())
                 .apiSecret(config.getApiSecret())
                 .state(secretState)
                 .callback(config.getCallback())
