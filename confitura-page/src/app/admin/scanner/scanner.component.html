@@ -1,7 +1,7 @@
 <section id="scanner" class="bg-white pt100">
     <div class="row-1140">
         <div class="alert alert-danger text-center" role="alert" *ngIf="error">{{error}}</div>
-        <div class="alert alert-success text-center" role="alert" *ngIf="!error  && model">All good!</div>
+        <div class="alert alert-success text-center" role="alert" *ngIf="!error  && model != null">All good!</div>
         <dl *ngIf="model">
             <dt>name</dt>
             <dd>{{model.name}}</dd>
@@ -11,7 +11,7 @@
             <dd>{{model.size}}</dd>
         </dl>
     </div>
-    <a class="btn btn-lg btn-default btn-scan" href="zxing://scan/?ret=http://2017.confitura.pl/admin2/scanner/{CODE}&SCAN_FORMATS=QR_CODE">
+    <a class="btn btn-lg btn-default btn-scan" href="zxing://scan/?ret=https://2017.confitura.pl/admin2/scanner/{CODE}&SCAN_FORMATS=QR_CODE">
         <span class="fa fa-qrcode fa-4x"></span>
     </a>
 </section>

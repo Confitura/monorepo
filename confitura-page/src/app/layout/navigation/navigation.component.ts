@@ -29,7 +29,7 @@ export class NavigationComponent implements OnInit {
         },
         {label: "login", url: "/login", show: () => !this.loggedIn},
         {label: "logout", action: () => this.logout(), show: () => this.loggedIn},
-        {label: "registration", url: "/registration", clazz: "pink"},
+        {label: "LIVE stream", url: "https://www.youtube.com/user/confiturapl/featured", clazz: "pink"},
     ];
 
 

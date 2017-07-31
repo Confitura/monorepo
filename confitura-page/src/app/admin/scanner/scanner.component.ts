@@ -22,6 +22,7 @@ export class ScannerComponent {
                 .subscribe(
                     (response: { status: number, json: Participant }) => {
                         this.model = response.json;
+                        console.log(this.model);
                         if (response.status == 409) {
                             this.error = "User already registered!"
                         }
