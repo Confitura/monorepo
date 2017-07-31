@@ -5,7 +5,7 @@ import {ProfileEditComponent} from "./profile-edit/profile-edit.component";
 import {ProfileViewComponent} from "./profile-view/profile-view.component";
 import {PersonModule} from "../persons/persons.module";
 import {PresentationEditComponent} from "./presentation-edit/presentation-edit.component";
-import {TagInputModule} from "ng2-tag-input";
+import {TagInputModule} from "ngx-chips";
 import {ProfileCompleteGuard} from "./shared/profile-complete-guard.service";
 import {IsAuthenticatedGuard} from "./shared/is-authenticated-guard.service";
 import {SpeakerSelectComponent} from "./speaker-select/speaker.multiselect.component";

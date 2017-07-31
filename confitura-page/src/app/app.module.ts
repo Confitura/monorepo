@@ -11,7 +11,6 @@ import {PresentationService} from "./profile/shared/presentation.service";
 import {PartnerService} from "./pages/partners/shared/partner.service";
 import {AdminModule} from "./admin/admin.module";
 import {V4pModule} from "./pages/v4p/v4p.module";
-import {HotkeyModule} from "angular2-hotkeys";
 import {HammerConfig} from "./HammerConfig";
 import {ParticipantService} from "./admin/participants/participant.service";
 import {RegistrationModule} from "./pages/registration/registration.module";
@@ -22,7 +21,7 @@ import {AgendaService} from "./pages/agenda/shared/agenda.service";
 
 @NgModule({
     imports: [LayoutModule, PagesModule, BrowserModule, BrowserAnimationsModule,
-        ProfileModule, AdminModule, V4pModule, routing, HotkeyModule.forRoot(), RegistrationModule,
+        ProfileModule, AdminModule, V4pModule, routing, RegistrationModule,
         NgLoadingBarModule.forRoot()
     ],
     providers: [UserService, PresentationService, PartnerService, ParticipantService, ConfirmationService, AgendaService,
