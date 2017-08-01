@@ -39,7 +39,7 @@ public class Participant {
     private LocalDateTime surveySendDate;
     private boolean emailSent;
 
-    boolean alreadyArrived() {
+    public boolean alreadyArrived() {
         return this.arrivalDate != null;
     }
 
@@ -48,6 +48,6 @@ public class Participant {
     }
 
     public boolean surveyNotSentYet() {
-        return surveySendDate != null;
+        return surveySendDate == null;
     }
 }
