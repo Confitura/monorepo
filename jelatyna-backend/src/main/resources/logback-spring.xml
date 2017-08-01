@@ -20,8 +20,8 @@
         </encoder>
     </appender>
 
-    <logger name="org.hibernate" level="DEBUG"/>
-    <logger name="com.microtripit" level="DEBUG"/>
+    <logger name="org.hibernate" level="INFO"/>
+    <logger name="com.microtripit" level="INFO"/>
 
     <root level="INFO">
         <appender-ref ref="FILE" />
