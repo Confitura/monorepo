@@ -16,6 +16,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import pl.confitura.jelatyna.login.facebook.FacebookConfigurationProperties;
 import pl.confitura.jelatyna.login.github.GitHubConfigurationProperties;
+import pl.confitura.jelatyna.login.google.GoogleConfigurationProperties;
 import pl.confitura.jelatyna.login.twitter.TwitterConfigurationProperties;
 import pl.confitura.jelatyna.mail.MailConfigurationProperties;
 import pl.confitura.jelatyna.presentation.Tag;
@@ -34,6 +35,7 @@ import pl.confitura.jelatyna.presentation.TagRepository;
                 GitHubConfigurationProperties.class,
                 TwitterConfigurationProperties.class,
                 MailConfigurationProperties.class,
+                GoogleConfigurationProperties.class,
         }
 )
 public class JelatynaApplication {
