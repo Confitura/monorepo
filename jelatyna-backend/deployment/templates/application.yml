@@ -17,6 +17,11 @@ github:
   api-secret: {{github_secret}}
   callback: {{github_callback}}
 
+google:
+  api-key: {{google_key}}
+  api-secret: {{google_secret}}
+  callback: {{google_callback}}
+
 jwt:
   key: {{jwt_key}}
 

@@ -1,5 +1,10 @@
 package pl.confitura.jelatyna.login.google;
 
+import java.io.IOException;
+import java.util.concurrent.ExecutionException;
+
+import org.springframework.stereotype.Service;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.scribejava.apis.GoogleApi20;
 import com.github.scribejava.core.builder.ServiceBuilder;
@@ -8,12 +13,8 @@ import com.github.scribejava.core.model.OAuthRequest;
 import com.github.scribejava.core.model.Response;
 import com.github.scribejava.core.model.Verb;
 import com.github.scribejava.core.oauth.OAuth20Service;
-import org.springframework.stereotype.Service;
 import pl.confitura.jelatyna.login.OAuthUserService;
 import pl.confitura.jelatyna.user.User;
-
-import java.io.IOException;
-import java.util.concurrent.ExecutionException;
 
 /**
  * @author tj
@@ -29,11 +30,10 @@ public class GoogleService {
     private ObjectMapper mapper;
 
     public GoogleService(final OAuthUserService oauthUserService, final GoogleConfigurationProperties properties, final ObjectMapper mapper) {
-        this.service = new ServiceBuilder()
+        this.service = new ServiceBuilder(properties.getApiKey())
                 .scope(GOOGLE_SCOPE)
                 .responseType("code")
                 .callback(properties.getCallback())
-                .apiKey(properties.getApiKey())
                 .apiSecret(properties.getApiSecret())
                 .build(GoogleApi20.instance());
 
