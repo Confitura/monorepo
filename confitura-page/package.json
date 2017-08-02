@@ -42,7 +42,7 @@
     "@types/simplemde": "^1.11.7",
     "@types/sweetalert": "^1.1.27",
     "@ultimate/aot-loader": "^0.1.16",
-    "angular2-hotkeys": "^2.0.2",
+    "angular2-hotkeys": "^2.0.3",
     "angular2-template-loader": "^0.6.2",
     "awesome-typescript-loader": "^3.2.2",
     "bootstrap": "^3.3.7",
@@ -91,7 +91,7 @@
   "devDependencies": {
     "clean-webpack-plugin": "^0.1.16",
     "concurrently": "^3.5.0",
-    "json-server": "^0.11.2",
+    "json-server": "^0.12.0",
     "less": "^2.7.2",
     "less-loader": "^4.0.5",
     "lite-server": "^2.3.0",
