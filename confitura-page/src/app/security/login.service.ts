@@ -23,6 +23,11 @@ export class LoginService {
         return this.doLogin("facebook", new URLSearchParams(`code=${code}`));
     }
 
+    loginWithGoogle(code: string): Observable<JwtUser> {
+        return this.doLogin("google", new URLSearchParams(`code=${code}`));
+    }
+
+
     logout() {
         this.currentUser.logout();
     }
@@ -37,5 +42,4 @@ export class LoginService {
             });
         });
     }
-
 }
