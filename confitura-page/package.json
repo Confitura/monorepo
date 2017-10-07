@@ -37,7 +37,7 @@
     "@types/jquery": "^3.2.10",
     "@types/js-base64": "^2.1.5",
     "@types/jssha": "^0.0.29",
-    "@types/lodash": "^4.14.71",
+    "@types/lodash": "^4.14.72",
     "@types/marked": "^0.0.28",
     "@types/simplemde": "^1.11.7",
     "@types/sweetalert": "^1.1.27",
@@ -84,6 +84,7 @@
     "to-string-loader": "^1.1.5",
     "typings": "^2.1.1",
     "webpack": "^3.4.1",
+    "webpack-bundle-analyzer": "^2.9.0",
     "webpack-dev-server": "^2.6.1",
     "webpack-merge": "^4.1.0",
     "zone.js": "^0.8.16"

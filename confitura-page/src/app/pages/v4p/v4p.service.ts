@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import {CustomHttp} from "../../shared/custom-http.service";
 import {Observable} from "rxjs/Observable";
+import "rxjs/add/operator/map"
 import {Vote} from "./vote.model";
 import {Response} from "@angular/http";
 import {Presentation} from "../../profile/shared/presentation.model";

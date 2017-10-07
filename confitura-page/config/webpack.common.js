@@ -8,7 +8,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 module.exports = {
     entry: {
         'polyfills': './src/polyfills.ts',
-        'vendor': './src/vendor.ts',
+        // 'vendor': './src/vendor.ts',
         'app': './src/main.ts'
     },
 
@@ -72,10 +72,18 @@ module.exports = {
     },
 
     plugins: [
-        new webpack.optimize.CommonsChunkPlugin({
-            name: ['app', 'vendor', 'polyfills']
-        }),
 
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'vendor',
+            minChunks: function (m) {
+                return m.context && m.context.includes('node_modules')
+            }
+        }),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'runtime',
+            chunks: ['vendor'],
+            minChunks: Infinity
+        }),
         new HtmlWebpackPlugin({
             template: 'src/index.html',
             favicon: 'src/app/img/favicon.ico'
@@ -83,6 +91,8 @@ module.exports = {
         new ExtractTextPlugin("[name].[contenthash].css"),
         new CleanWebpackPlugin(['dist'], {
             root: helpers.root()
-        })
+        }),
+        new webpack.HashedModuleIdsPlugin(),
     ]
-};
+}
+;

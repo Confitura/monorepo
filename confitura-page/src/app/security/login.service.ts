@@ -2,7 +2,8 @@ import {Injectable} from "@angular/core";
 import {Response, URLSearchParams} from "@angular/http";
 import {CustomHttp} from "../shared/custom-http.service";
 import {CurrentUser} from "./current-user.service";
-import {Observable, Observer} from "rxjs";
+import {Observable} from "rxjs/Observable";
+import {Observer} from "rxjs/Observer";
 import {JwtUser} from "../pages/home/jwt-user.model";
 @Injectable()
 export class LoginService {

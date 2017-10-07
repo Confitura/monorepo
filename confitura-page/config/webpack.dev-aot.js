@@ -4,6 +4,8 @@ const helpers = require('./helpers');
 const webpack = require('webpack');
 const ngtools = require('@ngtools/webpack');
 const path = require('path');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
 
 
 module.exports = webpackMerge(commonConfig, {
@@ -39,7 +41,9 @@ module.exports = webpackMerge(commonConfig, {
         }),
         new ngtools.AotPlugin({
             tsConfigPath: path.join(process.cwd(), 'tsconfig.json')
-        })
+        }),
+        new BundleAnalyzerPlugin()
+
 
     ],
     devServer: {

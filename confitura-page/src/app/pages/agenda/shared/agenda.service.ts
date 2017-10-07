@@ -1,10 +1,13 @@
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/Observable";
-import {AgendaEntry} from "./agenda.model";
 import {CustomHttp} from "../../../shared/custom-http.service";
 import {Response} from "@angular/http";
 import {Room} from "./room.model";
 import {TimeSlot} from "./time-slot.model";
+import {AgendaEntry} from "./agenda.model";
+import "rxjs/add/observable/zip";
+
+
 @Injectable()
 export class AgendaService {
 
@@ -17,7 +20,7 @@ export class AgendaService {
             this.getRooms(),
             this.getTimeSlots(),
             this.getAll(),
-            (rooms, slots, entries) => {
+            (rooms:any[], slots:any[], entries:any[]) => {
                 let roomIdToIndex = this.idToIndex(rooms);
                 let slotIdToIndex = this.idToIndex(slots);
                 let matrix = this.createEmptyMatrix(slots, slotIdToIndex, rooms);
