@@ -42,7 +42,7 @@ module.exports = webpackMerge(commonConfig, {
         new ngtools.AotPlugin({
             tsConfigPath: path.join(process.cwd(), 'tsconfig.json')
         }),
-        new BundleAnalyzerPlugin()
+        // new BundleAnalyzerPlugin()
 
 
     ],

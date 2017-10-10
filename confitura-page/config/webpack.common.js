@@ -8,6 +8,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 module.exports = {
     entry: {
         'polyfills': './src/polyfills.ts',
+        'vendor': './src/vendor.ts',
         'app': './src/main.ts'
     },
 
@@ -15,6 +16,7 @@ module.exports = {
         extensions: ['.js', '.ts'],
         alias: {
             jquery: 'jquery/src/jquery',
+            jQuery: 'jquery/src/jquery',
             select2: 'select2'
         }
     },
@@ -72,6 +74,7 @@ module.exports = {
     plugins: [
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor',
+            chunks: ['vendor', 'vendor.js'],
             minChunks: function (m) {
                 return m.context && m.context.includes('node_modules')
             }
@@ -79,7 +82,7 @@ module.exports = {
         new webpack.optimize.CommonsChunkPlugin({
             name: 'manifest',
             // chunks: ['vendor'],
-            // minChunks: Infinity
+            minChunks: Infinity
         }),
         new HtmlWebpackPlugin({
             template: 'src/index.html',

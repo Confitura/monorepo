@@ -7,7 +7,7 @@
 // import '@angular/router';
 // RxJS
 // import 'rxjs';
-// import 'jquery';
+import 'jquery';
 import 'bxslider/dist/jquery.bxslider.js';
 import 'bxslider/dist/jquery.bxslider.css';
 //selectize
@@ -28,6 +28,5 @@ import "datatables.net/js/jquery.dataTables.js";
 import "datatables.net-bs/js/dataTables.bootstrap.js";
 
 //sweetalert
-import "sweetalert/dist/sweetalert.css";
 import "sweetalert/dist/sweetalert.min.js";
 

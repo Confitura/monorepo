@@ -2,9 +2,11 @@ import {Headers, Http, RequestOptionsArgs, Response} from "@angular/http";
 import {Injectable} from "@angular/core";
 import {HttpConfiguration} from "./http-configuration.service";
 import {Observable} from "rxjs/Observable";
+import "rxjs/add/observable/of";
 import "rxjs/add/operator/catch";
 
 import {CurrentUser} from "../security/current-user.service";
+
 @Injectable()
 export class CustomHttp {
     constructor(private config: HttpConfiguration,
