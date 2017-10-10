@@ -1,10 +1,12 @@
 import {Component, OnInit} from "@angular/core";
 import {OrganizerService} from "./organizer.service";
-import {Observable} from "rxjs";
+import {Observable} from "rxjs/Observable";
+import "rxjs/add/operator/map";
 import {Person} from "./person.model";
 import "./about.scss";
 import {PersonModalService} from "../../persons/person-modal/person-modal.service";
 import {User} from "../profile/user.model";
+
 @Component({
     templateUrl: "./about.component.html",
 })
@@ -12,7 +14,7 @@ export class AboutComponent implements OnInit {
     organizers: Observable<Person[]> = null;
     volunteers: Observable<Person[]> = null;
 
-    constructor(private service: OrganizerService, private personModalService:PersonModalService) {
+    constructor(private service: OrganizerService, private personModalService: PersonModalService) {
 
     }
 
@@ -21,7 +23,7 @@ export class AboutComponent implements OnInit {
         this.volunteers = this.service.getAllVolunteers();
     }
 
-    show(user:User){
+    show(user: User) {
         this.personModalService.showFor(user);
     }
 

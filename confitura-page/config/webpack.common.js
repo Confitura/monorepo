@@ -16,13 +16,13 @@ module.exports = {
         extensions: ['.js', '.ts'],
         alias: {
             jquery: 'jquery/src/jquery',
+            jQuery: 'jquery/src/jquery',
             select2: 'select2'
         }
     },
 
     module: {
         rules: [
-
             {
                 test: /\.html$/,
                 loader: 'html-loader',
@@ -73,16 +73,28 @@ module.exports = {
 
     plugins: [
         new webpack.optimize.CommonsChunkPlugin({
-            name: ['app', 'vendor', 'polyfills']
+            name: 'vendor',
+            chunks: ['vendor', 'vendor.js'],
+            minChunks: function (m) {
+                return m.context && m.context.includes('node_modules')
+            }
         }),
-
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'manifest',
+            // chunks: ['vendor'],
+            minChunks: Infinity
+        }),
         new HtmlWebpackPlugin({
             template: 'src/index.html',
-            favicon: 'src/app/img/favicon.ico'
+            favicon: 'src/app/img/favicon.ico',
+            chunksSortMode: 'manual',
+            chunks: ['manifest', 'polyfills', 'vendor', 'app']
         }),
         new ExtractTextPlugin("[name].[contenthash].css"),
         new CleanWebpackPlugin(['dist'], {
             root: helpers.root()
-        })
+        }),
+        new webpack.HashedModuleIdsPlugin(),
     ]
-};
+}
+;

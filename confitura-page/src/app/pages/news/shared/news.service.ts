@@ -1,7 +1,8 @@
 import {Injectable} from "@angular/core";
 import {Response, URLSearchParams} from "@angular/http";
 import {News} from "./news.model";
-import {Observable} from "rxjs";
+import {Observable} from "rxjs/Observable";
+import "rxjs/add/operator/map";
 import {CustomHttp} from "../../../shared/custom-http.service";
 
 @Injectable()

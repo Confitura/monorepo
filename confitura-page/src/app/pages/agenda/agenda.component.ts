@@ -96,7 +96,7 @@ export class AgendaComponent implements OnInit, OnChanges {
     }
 
     refresh() {
-        this.service.getAgenda().subscribe(it => {
+        this.service.getAgenda().subscribe((it:any) => {
             this.rooms = it.rooms;
             this.slots = it.slots;
             this.agenda = it.agenda;

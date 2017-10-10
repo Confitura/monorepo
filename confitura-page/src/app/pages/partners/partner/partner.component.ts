@@ -7,6 +7,7 @@ import {CurrentUser} from "../../../security/current-user.service";
 import {HttpConfiguration} from "../../../shared/http-configuration.service";
 import * as Marked from "marked";
 import {Location} from "@angular/common";
+import "rxjs/add/operator/switchMap"
 
 @Component({
     templateUrl: "./partner.component.html"

@@ -1,8 +1,10 @@
 import {Injectable} from "@angular/core";
 import {CustomHttp} from "../../shared/custom-http.service";
 import {Response} from "@angular/http";
-import {Observable} from "rxjs";
+import {Observable} from "rxjs/Observable";
 import {User} from "./user.model";
+import "rxjs/add/operator/map";
+
 @Injectable()
 export class UserService {
     constructor(private http: CustomHttp) {

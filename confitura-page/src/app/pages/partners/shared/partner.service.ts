@@ -1,9 +1,11 @@
 import {Response} from "@angular/http";
 import {Partner} from "./partner.model";
-import {Observable} from "rxjs";
+import {Observable} from "rxjs/Observable";
+import "rxjs/add/operator/map";
 import {Injectable} from "@angular/core";
 import {CustomHttp} from "../../../shared/custom-http.service";
 import {CurrentUser} from "../../../security/current-user.service";
+
 @Injectable()
 export class PartnerService {
     constructor(private http: CustomHttp, private currentUser: CurrentUser) {

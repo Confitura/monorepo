@@ -1,12 +1,12 @@
 // Angular 2
-import '@angular/platform-browser';
-import '@angular/platform-browser-dynamic';
-import '@angular/core';
-import '@angular/common';
-import '@angular/http';
-import '@angular/router';
+// import '@angular/platform-browser';
+// import '@angular/platform-browser-dynamic';
+// import '@angular/core';
+// import '@angular/common';
+// import '@angular/http';
+// import '@angular/router';
 // RxJS
-import 'rxjs';
+// import 'rxjs';
 import 'jquery';
 import 'bxslider/dist/jquery.bxslider.js';
 import 'bxslider/dist/jquery.bxslider.css';
@@ -28,5 +28,5 @@ import "datatables.net/js/jquery.dataTables.js";
 import "datatables.net-bs/js/dataTables.bootstrap.js";
 
 //sweetalert
-import "sweetalert/dist/sweetalert.css";
 import "sweetalert/dist/sweetalert.min.js";
+

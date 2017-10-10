@@ -4,6 +4,8 @@ import {ParticipantService} from "../../../admin/participants/participant.servic
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormControl} from "@angular/forms";
 import {Observable} from "rxjs/Observable";
+import "rxjs/add/operator/catch"
+
 @Component({templateUrl: "./registration-form.component.html"})
 export class RegistrationFormComponent {
     submitted = false;

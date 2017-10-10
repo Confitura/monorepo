@@ -2,11 +2,12 @@ import {Component, OnDestroy} from "@angular/core";
 import {V4pService} from "./v4p.service";
 import {Vote} from "./vote.model";
 import {Presentation} from "../../profile/shared/presentation.model";
-import * as _ from "lodash";
 import {PersonModalService} from "../../persons/person-modal/person-modal.service";
 import {User} from "../profile/user.model";
 import "./v4p.component.scss";
 import {Router} from "@angular/router";
+
+const _sortBy = require("lodash/sortBy");
 
 // import {Hotkey, HotkeysService} from "angular2-hotkeys";
 @Component({
@@ -34,7 +35,7 @@ export class V4pComponent implements OnDestroy {
             router.navigate(["/v4p"])
         } else {
             service.start(token).subscribe((votes) => {
-                    this.votes = _.sortBy(votes, "order");
+                    this.votes = _sortBy(votes, "order");
                     this.currentIdx = this.votes.filter(it => it.rate != null).length;
                     if (this.currentIdx == this.votes.length) {
                         this.done();

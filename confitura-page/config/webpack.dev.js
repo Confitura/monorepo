@@ -3,6 +3,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const commonConfig = require('./webpack.common.js');
 const helpers = require('./helpers');
 const webpack = require('webpack');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 
 module.exports = webpackMerge(commonConfig, {
@@ -35,7 +36,8 @@ module.exports = webpackMerge(commonConfig, {
         new webpack.DefinePlugin({
             'API_URL': JSON.stringify("http://localhost:9090"),
             'ENV': JSON.stringify('dev')
-        })
+        }),
+        // new BundleAnalyzerPlugin()
 
     ],
     devServer: {

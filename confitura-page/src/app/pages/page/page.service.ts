@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Response} from "@angular/http";
 import {Page} from "./page.model";
-import {Observable} from "rxjs";
+import {Observable} from "rxjs/Observable";
 import {CustomHttp} from "../../shared/custom-http.service";
 @Injectable()
 export class PageService {

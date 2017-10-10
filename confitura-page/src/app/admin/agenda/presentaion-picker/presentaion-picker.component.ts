@@ -1,7 +1,7 @@
 import {Component, ElementRef, OnInit} from "@angular/core";
-import {Observable} from "rxjs/Observable";
 import {PresentationService} from "../../../profile/shared/presentation.service";
 import {Presentation} from "../../../profile/shared/presentation.model";
+
 @Component({
     templateUrl: "./presentaion-picker.component.html",
     selector: "cf-presentation-picker"

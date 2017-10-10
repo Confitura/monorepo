@@ -4,6 +4,8 @@ import {ActivatedRoute} from "@angular/router";
 import {ParticipantService} from "../participants/participant.service";
 import {Participant} from "../participants/participant.model";
 import {Observable} from "rxjs/Observable";
+import "rxjs/add/operator/catch"
+
 @Component({
     templateUrl: "./scanner.component.html"
 })
@@ -22,7 +24,6 @@ export class ScannerComponent {
                 .subscribe(
                     (response: { status: number, json: Participant }) => {
                         this.model = response.json;
-                        console.log(this.model);
                         if (response.status == 409) {
                             this.error = "User already registered!"
                         }

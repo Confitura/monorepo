@@ -1,12 +1,8 @@
-import {Component, OnInit, ViewChild} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {AgendaService} from "../../pages/agenda/shared/agenda.service";
-import {AgendaEntry} from "../../pages/agenda/shared/agenda.model";
-import {HttpConfiguration} from "../../shared/http-configuration.service";
-import {CurrentUser} from "../../security/current-user.service";
-import {Observable} from "rxjs/Observable";
 import {TimeSlot} from "../../pages/agenda/shared/time-slot.model";
 import {Room} from "../../pages/agenda/shared/room.model";
-import {PresentationPickerComponent} from "./presentaion-picker/presentaion-picker.component";
+
 @Component({
     templateUrl: "./agenda.component.html"
 })
@@ -25,11 +21,12 @@ export class AgendaComponent implements OnInit {
     }
 
     refresh() {
-        this.service.getAgenda().subscribe(it => {
-            this.rooms = it.rooms;
-            this.slots = it.slots;
-            this.agenda = it.agenda;
-        });
+        this.service.getAgenda()
+            .subscribe((it: { rooms: Room[], slots: TimeSlot[], agenda: any[] }) => {
+                this.rooms = it.rooms;
+                this.slots = it.slots;
+                this.agenda = it.agenda;
+            });
     }
 
     public addRoom() {
