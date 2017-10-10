@@ -1,6 +1,6 @@
 {
   "name": "confitura-page",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "scripts": {
     "start": "webpack-dev-server --env=dev --inline --progress --port 8080",
     "start:aot": "webpack-dev-server --env=dev-aot --inline --progress --port 8080",
