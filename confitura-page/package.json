@@ -11,7 +11,10 @@
     "tsc": "tsc",
     "tsc:w": "tsc -w",
     "mock": "json-server mock/db.json",
-    "deploy": "npm run build:prod && cd deployment && ansible-playbook confitura-page.yml"
+    "deploy": "npm run build:prod && cd deployment && ansible-playbook confitura-page.yml",
+    "release:patch": "npm version patch && git push --follow-tags",
+    "release:minor": "npm version minor && git push --follow-tags",
+    "release:major": "npm version major && git push --follow-tags"
   },
   "license": "ISC",
   "dependencies": {
