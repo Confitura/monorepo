@@ -4,7 +4,7 @@
   "scripts": {
     "start": "webpack-dev-server --env=dev --inline --progress --port 8080",
     "start:aot": "webpack-dev-server --env=dev-aot --inline --progress --port 8080",
-    "build": "npm run build:dev",
+    "build": "npm run build:prod",
     "build:dev": "webpack --env=dev --progress --profile --colors",
     "build:prod": "webpack --env=prod --progress --profile --colors",
     "liteweb": "lite-server",

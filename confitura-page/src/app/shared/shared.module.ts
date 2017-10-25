@@ -8,10 +8,11 @@ import {CurrentUser} from "../security/current-user.service";
 import {RouterModule} from "@angular/router";
 import {FormsModule} from "@angular/forms";
 import {AdminDirective} from "./admin.directive";
+import {ImageResizer} from "./ImageResizer.service";
 @NgModule({
-    providers: [HttpConfiguration, CustomHttp, LoginService, CurrentUser],
     imports: [CommonModule, HttpModule],
     declarations: [AdminDirective],
+    providers: [HttpConfiguration, CustomHttp, LoginService, CurrentUser, ImageResizer],
     exports: [CommonModule, HttpModule, FormsModule, RouterModule, AdminDirective]
 })
 export class SharedModule {
