@@ -3,7 +3,7 @@ import {Injectable} from "@angular/core";
 @Injectable()
 export class ImageResizer {
     applyResizing(url: string, width = 350): string {
-        if (ENV == "prod") {
+        if (ENV == "prod" && url != null) {
             return url.replace("photos", `photos/${width}`);
         } else {
             return url;
