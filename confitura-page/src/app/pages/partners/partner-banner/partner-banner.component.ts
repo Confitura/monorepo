@@ -30,7 +30,6 @@ export class PartnerBannerComponent implements OnInit {
               pager: false,
               randomStart: true,
               autoHover: true
-
             }));
       });
 

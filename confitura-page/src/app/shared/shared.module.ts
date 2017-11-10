@@ -1,5 +1,4 @@
 import {NgModule} from '@angular/core';
-import {HttpModule} from '@angular/http';
 import {CommonModule} from '@angular/common';
 import {LoginService} from '../security/login.service';
 import {CurrentUser} from '../security/current-user.service';
@@ -10,12 +9,13 @@ import {ImageResizer} from './ImageResizer.service';
 import {PhotoComponent} from './photo/photo.component';
 import {SocialLinksComponent} from './social-links/social-links.component';
 import {HttpClientModule} from '@angular/common/http';
+import {LazySrcDirective} from './lazy-src.directive';
 
 @NgModule({
-  imports: [CommonModule, HttpModule, HttpClientModule],
-  declarations: [AdminDirective, PhotoComponent, SocialLinksComponent],
+  imports: [CommonModule, HttpClientModule],
+  declarations: [AdminDirective, PhotoComponent, SocialLinksComponent, LazySrcDirective],
   providers: [LoginService, CurrentUser, ImageResizer],
-  exports: [CommonModule, HttpModule, FormsModule, RouterModule, AdminDirective, PhotoComponent, SocialLinksComponent]
+  exports: [CommonModule, FormsModule, RouterModule, AdminDirective, PhotoComponent, SocialLinksComponent, LazySrcDirective]
 })
 export class SharedModule {
 

@@ -6,7 +6,9 @@ import {CurrentUser} from '../security/current-user.service';
 })
 export class AdminDirective implements OnInit {
 
-  constructor(private currentUser: CurrentUser, private container: ViewContainerRef, private template: TemplateRef<any>) {
+  constructor(private currentUser: CurrentUser,
+              private container: ViewContainerRef,
+              private template: TemplateRef<any>) {
   }
 
   ngOnInit(): void {
