@@ -1,15 +1,13 @@
-import {Component, OnInit} from "@angular/core";
-import {Http} from "@angular/http";
-import {ActivatedRoute} from "@angular/router";
-import Result = jasmine.Result;
+import {Component} from '@angular/core';
+
 @Component({
-    templateUrl: './home.component.html'
+  templateUrl: './home.component.html'
 })
 export class HomeComponent {
 
-    constructor(private http: Http, private route: ActivatedRoute) {
+  constructor() {
 
-    }
+  }
 
 
 }

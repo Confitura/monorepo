@@ -1,3 +1,3 @@
 export class Page {
-    content: string;
+  content: string;
 }

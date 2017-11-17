@@ -1,16 +1,16 @@
 <section id="news-confitura" *ngIf="list.length > 0">
-    <div class="row-fluid">
-        <div class="col-lg-12 news-confitura-header"><h2 class="h2">news</h2></div>
-    </div>
+  <div class="row-fluid">
+    <div class="col-lg-12 news-confitura-header"><h2 class="h2">news</h2></div>
+  </div>
 
-    <div class="news-container col-lg-12" >
-        <div class="news-confitura-left">
-            <jl-news [model]="list[0]" class="font-white"></jl-news>
-        </div>
-        <div class="news-confitura-right" ng-if="news.list.length > 1">
-            <jl-news [model]="list[1]" class="semi-square black font-white"></jl-news>
-            <jl-news [model]="list[2]" class="semi-square beige"></jl-news>
-        </div>
+  <div class="news-container col-lg-12">
+    <div class="news-confitura-left">
+      <cf-news [model]="list[0]" class="font-white"></cf-news>
     </div>
+    <div class="news-confitura-right" ng-if="news.list.length > 1">
+      <cf-news [model]="list[1]" class="semi-square black font-white"></cf-news>
+      <cf-news [model]="list[2]" class="semi-square beige"></cf-news>
+    </div>
+  </div>
 
 </section>

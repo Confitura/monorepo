@@ -1,18 +1,18 @@
 <nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button class="mobile-menu navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                    id="mobile-menu" title="open menu">
-                <div></div>
-            </button>
-            <a class="navbar-brand" routerLink="/">
-                <div class="confitura-logo"></div>
-            </a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse navbar-right">
-            <ul class="nav navbar-nav">
-                <li cf-menu-item [model]="item" *ngFor="let item of menu"></li>
-            </ul>
-        </div>
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button class="mobile-menu navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+              id="mobile-menu" title="open menu">
+        <div></div>
+      </button>
+      <a class="navbar-brand" routerLink="/">
+        <div class="confitura-logo"></div>
+      </a>
     </div>
+    <div id="navbar" class="navbar-collapse collapse navbar-right">
+      <ul class="nav navbar-nav">
+        <li cf-menu-item [model]="item" *ngFor="let item of menu"></li>
+      </ul>
+    </div>
+  </div>
 </nav>

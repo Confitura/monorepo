@@ -1,21 +1,21 @@
 <section id="partners-confitura" class="partners-banner">
-    <div class="row-fluid">
-        <div class="col-lg-12 col-md-12"><h2 class="h2">our partners</h2></div>
-    </div>
-    <div class="row-fluid col-lg-12 partners-banner-container">
-        <div *ngFor="let type of types" class="{{type}}-type">
-            <div class="partners-items" *ngIf="hasAnyPartnersFor(type)">
-                <div class="partner-logo text-center">
-                    <ul class="bxslider">
-                        <li *ngFor="let partner of getPartnersFor(type)">
-                            <a [href]="partner.www" target="_blank">
-                                <img [src]="partner.logo" [ngClass]="{'unpublished': !partner.published}"/>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <span class="partner-type text-center">{{type}}</span>
-            </div>
+  <div class="row-fluid">
+    <div class="col-lg-12 col-md-12"><h2 class="h2">our partners</h2></div>
+  </div>
+  <div class="row-fluid col-lg-12 partners-banner-container">
+    <div *ngFor="let type of types" class="{{type}}-type">
+      <div class="partners-items" *ngIf="hasAnyPartnersFor(type)">
+        <div class="partner-logo text-center">
+          <ul class="bxslider">
+            <li *ngFor="let partner of getPartnersFor(type)">
+              <a [href]="partner.www" target="_blank">
+                <img src="http://2017.confitura.pl/{{partner.logo}}" [ngClass]="{'unpublished': !partner.published}"/>
+              </a>
+            </li>
+          </ul>
         </div>
+        <span class="partner-type text-center">{{type}}</span>
+      </div>
     </div>
+  </div>
 </section>

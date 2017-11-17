@@ -63,7 +63,7 @@
   margin: auto;
   border-radius: 250px;
   &.empty {
-    background: url('../../img/logo-square.png');
+    background: url('/assets/img/logo-square.png');
     height: 250px;
     background-size: contain;
   }
@@ -82,13 +82,13 @@ div.vote-next, div.vote-prev {
 
 div.vote-next {
   &, &:hover {
-    background: url('../../img/black-next.png') no-repeat;
+    background: url('/assets/img/black-next.png') no-repeat;
   }
 }
 
 div.vote-prev {
   &, &:hover {
-    background: url('../../img/black-prev.png') no-repeat;
+    background: url('/assets/img/black-prev.png') no-repeat;
   }
 }
 
@@ -193,7 +193,7 @@ div.vote-prev {
   cursor: pointer;
 }
 
-jl-person {
+cf-person {
   width: 300px;
   margin: 20px;
   @media all and (max-width: 767px) {

@@ -1,21 +1,22 @@
-import {ActivatedRouteSnapshot, CanActivate, CanActivateChild, RouterStateSnapshot} from "@angular/router";
-import {CurrentUser} from "../security/current-user.service";
-import {Injectable} from "@angular/core";
+import {ActivatedRouteSnapshot, CanActivate, CanActivateChild, RouterStateSnapshot} from '@angular/router';
+import {CurrentUser} from '../security/current-user.service';
+import {Injectable} from '@angular/core';
+
 @Injectable()
 export class IsAdminGuard implements CanActivateChild, CanActivate {
 
-    constructor(private currentUser: CurrentUser) {
-    }
+  constructor(private currentUser: CurrentUser) {
+  }
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
-        return new Promise((resolve) => {
-            resolve(this.currentUser.isAvailable() && this.currentUser.get().isAdmin)
-        });
-    }
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
+    return new Promise((resolve) => {
+      resolve(this.currentUser.isAvailable() && this.currentUser.get().isAdmin);
+    });
+  }
 
 
-    canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
-        return this.canActivate(childRoute, state);
-    }
+  canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
+    return this.canActivate(childRoute, state);
+  }
 
 }

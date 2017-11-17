@@ -1,18 +1,18 @@
 <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div *ngIf="entry.presentationId">
-                <div class="agenda-title">{{entry.presentation.title}}</div>
-                <div class="agenda-persons">
-                    <span class="agenda-person">{{entry.speaker.name}}</span>
-                    <span class="agenda-person" *ngFor="let speaker of entry.cospeakers">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div *ngIf="entry.presentationId">
+        <div class="agenda-title">{{entry.presentation.title}}</div>
+        <div class="agenda-persons">
+          <span class="agenda-person">{{entry.speaker.name}}</span>
+          <span class="agenda-person" *ngFor="let speaker of entry.cospeakers">
             {{speaker.name}}
         </span>
-                </div>
-            </div>
-            <div *ngIf="entry.label">
-                <div class="agenda-title">{{entry.label}}</div>
-            </div>
         </div>
+      </div>
+      <div *ngIf="entry.label">
+        <div class="agenda-title">{{entry.label}}</div>
+      </div>
     </div>
+  </div>
 </div>

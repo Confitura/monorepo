@@ -1,137 +1,137 @@
-import {Component, OnChanges, OnInit, SimpleChanges} from "@angular/core";
-import {TimeSlot} from "./shared/time-slot.model";
-import {Room} from "./shared/room.model";
-import {AgendaService} from "./shared/agenda.service";
+import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {TimeSlot} from './shared/time-slot.model';
+import {Room} from './shared/room.model';
+import {AgendaService} from './shared/agenda.service';
 
-import "./agenda.scss";
-import {Tag} from "../../profile/shared/tag.model";
-import {Observable} from "rxjs/Observable";
-import {PresentationService} from "../../profile/shared/presentation.service";
-import {AgendaEntry} from "./shared/agenda.model";
+import './agenda.scss';
+import {Tag} from '../../profile/shared/tag.model';
+import {Observable} from 'rxjs/Observable';
+import {PresentationService} from '../../profile/shared/presentation.service';
+import {AgendaEntry} from './shared/agenda.model';
 
 @Component({
-    templateUrl: "./agenda.component.html"
+  templateUrl: './agenda.component.html'
 })
 export class AgendaComponent implements OnInit, OnChanges {
 
-    slots: TimeSlot[] = [];
-    rooms: Room[] = [];
-    selectedRooms: Room[] = [];
-    activeRooms: any = null;
-    agenda: AgendaEntry[][] = [];
-    filteredAgenda: AgendaEntry[][] = [];
-    tags: Tag[];
+  slots: TimeSlot[] = [];
+  rooms: Room[] = [];
+  selectedRooms: Room[] = [];
+  activeRooms: any = null;
+  agenda: AgendaEntry[][] = [];
+  filteredAgenda: AgendaEntry[][] = [];
+  tags: Tag[];
 
-    selectedTag: Tag = null;
-    selectedLevels = {
-        "beginner": true,
-        "advanced": true
-    };
-    selectedLanguages = {
-        "polish": true,
-        "english": true
-    };
+  selectedTag: Tag = null;
+  selectedLevels = {
+    'beginner': true,
+    'advanced': true
+  };
+  selectedLanguages = {
+    'polish': true,
+    'english': true
+  };
 
-    constructor(private  service: AgendaService, private presentationService: PresentationService) {
-    }
+  constructor(private  service: AgendaService, private presentationService: PresentationService) {
+  }
 
-    selectTag(tag: Tag) {
-        this.selectedTag = tag;
-        this.filter();
-    }
+  selectTag(tag: Tag) {
+    this.selectedTag = tag;
+    this.filter();
+  }
 
-    selectLevel(level: string) {
-        this.selectedLevels[level] = !this.selectedLevels[level];
-        this.filter();
-    }
+  selectLevel(level: string) {
+    this.selectedLevels[level] = !this.selectedLevels[level];
+    this.filter();
+  }
 
-    isLevelSelected(level: string) {
-        return !!this.selectedLevels[level];
-    }
+  isLevelSelected(level: string) {
+    return !!this.selectedLevels[level];
+  }
 
-    selectLanguage(language: string) {
-        this.selectedLanguages[language] = !this.selectedLanguages[language];
-        this.filter();
-    }
+  selectLanguage(language: string) {
+    this.selectedLanguages[language] = !this.selectedLanguages[language];
+    this.filter();
+  }
 
-    isLanguageSelected(language: string) {
-        return !!this.selectedLanguages[language];
-    }
+  isLanguageSelected(language: string) {
+    return !!this.selectedLanguages[language];
+  }
 
-    ngOnInit(): void {
-        this.getTags().subscribe(it => this.tags = it);
-        this.refresh();
-    }
+  ngOnInit(): void {
+    this.getTags().subscribe(it => this.tags = it);
+    this.refresh();
+  }
 
-    filter() {
-        this.filteredAgenda = this.agenda.map(timeSlot => {
-            return timeSlot.map(entry => {
-                if (!entry.presentationId) {
-                    return entry;
-                }
+  filter() {
+    this.filteredAgenda = this.agenda.map(timeSlot => {
+      return timeSlot.map(entry => {
+        if (!entry.presentationId) {
+          return entry;
+        }
 
-                if (this.hasSelectedLang(entry)
-                    && this.hasSelectedLevel(entry)
-                    && this.hasSelectedTag(entry)) {
-                    return entry;
-                }
+        if (this.hasSelectedLang(entry)
+          && this.hasSelectedLevel(entry)
+          && this.hasSelectedTag(entry)) {
+          return entry;
+        }
 
-                return this.emptyEntry();
-            })
-        });
+        return this.emptyEntry();
+      });
+    });
 
-    }
+  }
 
-    private emptyEntry() {
-        return new AgendaEntry();
-    }
+  private emptyEntry() {
+    return new AgendaEntry();
+  }
 
-    ngOnChanges(changes: SimpleChanges): void {
-        console.log("changes");
-        console.log(changes);
-    }
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('changes');
+    console.log(changes);
+  }
 
-    getTags(): Observable<Tag[]> {
-        return this.presentationService.allTags();
-    }
+  getTags(): Observable<Tag[]> {
+    return this.presentationService.allTags();
+  }
 
-    refresh() {
-        this.service.getAgenda().subscribe((it:any) => {
-            this.rooms = it.rooms;
-            this.slots = it.slots;
-            this.agenda = it.agenda;
+  refresh() {
+    this.service.getAgenda().subscribe((it: any) => {
+      this.rooms = it.rooms;
+      this.slots = it.slots;
+      this.agenda = it.agenda;
 
-            if (this.activeRooms == null) {
-                this.activeRooms = {};
-                for (let room of this.rooms) {
-                    this.activeRooms[room.id] = true;
-                }
-                this.selectedRooms = this.rooms.filter(room => this.isActive(room));
-            }
-            this.filter()
-
-        });
-    }
-
-    selectRoom(room: Room) {
-        this.activeRooms[room.id] = !this.activeRooms[room.id];
+      if (this.activeRooms == null) {
+        this.activeRooms = {};
+        for (const room of this.rooms) {
+          this.activeRooms[room.id] = true;
+        }
         this.selectedRooms = this.rooms.filter(room => this.isActive(room));
-    }
+      }
+      this.filter();
 
-    isActive(room: Room) {
-        return this.activeRooms[room.id]
-    }
+    });
+  }
 
-    private hasSelectedLang(entry: AgendaEntry) {
-        return !!this.selectedLanguages[entry.presentation.language];
-    }
+  selectRoom(room: Room) {
+    this.activeRooms[room.id] = !this.activeRooms[room.id];
+    this.selectedRooms = this.rooms.filter(currentRoom => this.isActive(room));
+  }
 
-    private hasSelectedLevel(entry: AgendaEntry) {
-        return !!this.selectedLevels[entry.presentation.level];
-    }
+  isActive(room: Room) {
+    return this.activeRooms[room.id];
+  }
 
-    private hasSelectedTag(entry: AgendaEntry) {
-        return !this.selectedTag ||
-            (entry.tags && entry.tags.some(tag => tag.id === this.selectedTag.id));
-    }
+  private hasSelectedLang(entry: AgendaEntry) {
+    return !!this.selectedLanguages[entry.presentation.language];
+  }
+
+  private hasSelectedLevel(entry: AgendaEntry) {
+    return !!this.selectedLevels[entry.presentation.level];
+  }
+
+  private hasSelectedTag(entry: AgendaEntry) {
+    return !this.selectedTag ||
+      (entry.tags && entry.tags.some(tag => tag.id === this.selectedTag.id));
+  }
 }

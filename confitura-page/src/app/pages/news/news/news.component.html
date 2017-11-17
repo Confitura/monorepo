@@ -1,10 +1,10 @@
 <ng-template [ngIf]="model != null">
-    <div class="news-title  ease">
-        {{model.title}}
-    </div>
-    <div class="news-excerpt ease" [innerHTML]="model.shortDescription">
-    </div>
-    <div class="news-date ease">
-        {{model.creationDate | date:"MMM dd yyyy, HH:mm"}}
-    </div>
+  <div class="news-title  ease">
+    {{model.title}}
+  </div>
+  <div class="news-excerpt ease" [innerHTML]="model.shortDescription">
+  </div>
+  <div class="news-date ease">
+    {{model.creationDate | date:"MMM dd yyyy, HH:mm"}}
+  </div>
 </ng-template>

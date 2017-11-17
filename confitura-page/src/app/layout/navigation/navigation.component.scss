@@ -45,7 +45,7 @@
     border: none;
     outline: none;
     margin-left: 20px;
-    background: url('../../img/logo.png') no-repeat center center;
+    background: url('/assets/img/logo.png') no-repeat center center;
     background-size: contain;
     width: 232px;
     height: 100%;
@@ -84,7 +84,7 @@
       margin-top: 0;
       margin-bottom: 0;
       div {
-        background: url('../../img/mobile-menu.png') no-repeat center;
+        background: url('/assets/img/mobile-menu.png') no-repeat center;
         background-size: contain;
         width: 30px;
         height: 100%;

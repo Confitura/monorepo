@@ -1,106 +1,106 @@
 <section class="pb50 bg-white" id="registration">
-    <header class="registration-banner">
-        <h2>Registration Form</h2>
-    </header>
+  <header class="registration-banner">
+    <h2>Registration Form</h2>
+  </header>
 
-    <div class="row-1140 pt50">
-        <div class="alert alert-danger" role="alert" *ngIf="error"><strong>Motyla Noga..</strong> {{error}}</div>
-        <form (ngSubmit)="save()" #registrationForm="ngForm" novalidate *ngIf="model">
-            <div class="form-group">
-                <label for="buyer">original buyer</label>
-                <input type="text" id="buyer" class="form-control" [value]="model.originalBuyer" disabled>
+  <div class="row-1140 pt50">
+    <div class="alert alert-danger" role="alert" *ngIf="error"><strong>Motyla Noga..</strong> {{error}}</div>
+    <form (ngSubmit)="save()" #registrationForm="ngForm" novalidate *ngIf="model">
+      <div class="form-group">
+        <label for="buyer">original buyer</label>
+        <input type="text" id="buyer" class="form-control" [value]="model.originalBuyer" disabled>
 
-            </div>
-            <div class="form-group required">
-                <label for="name">full name</label>
-                <input type="text" id="name" class="form-control" [(ngModel)]="model.name" #name="ngModel" name="name" required
-                       maxlength="255">
-                <div class="alert alert-danger" role="alert" *ngIf="name.errors?.required && (name.touched || submitted)">
-                    This field is required
-                </div>
-            </div>
-            <div class="form-group required">
-                <label for="email">e-mail</label>
-                <input type="email" id="email" class="form-control" [(ngModel)]="model.email" #email="ngModel" name="email" required
-                       maxlength="255" email>
-                <div class="alert alert-danger" role="alert" *ngIf="email.errors?.required && (email.touched || submitted)">
-                    This field is required
-                </div>
-                <div class="alert alert-danger" role="alert" *ngIf="email.errors?.email && (email.touched || submitted)">
-                    This is not valid email
-                </div>
-            </div>
-            <div class="form-group required">
-                <label for="city">city</label>
-                <input type="text" id="city" class="form-control" [(ngModel)]="model.city" #city="ngModel" name="city" required
-                       maxlength="255">
-                <div class="alert alert-danger" role="alert" *ngIf="city.errors?.required && (city.touched || submitted)">
-                    This field is required
-                </div>
-            </div>
-            <div class="form-group required">
-                <label>sex</label>
-                <label class="checkbox">
-                    <input type="radio" name="sex" value="F" required [(ngModel)]="model.gender" #sex="ngModel"> female
-                </label>
-                <label class="checkbox">
-                    <input type="radio" name="sex" value="M" required [(ngModel)]="model.gender" #sex="ngModel"> male
-                </label>
-                <div class="alert alert-danger" role="alert" *ngIf="sex.errors?.required && (sex.touched || submitted)">
-                    This field is required
-                </div>
-            </div>
-            <div class="form-group required">
-                <label for="size">t-shirt size</label>
-                <select name="size" id="size" class="form-control" [(ngModel)]="model.size" #size="ngModel" required>
-                    <option></option>
-                    <option value="S">S</option>
-                    <option value="M">M</option>
-                    <option value="L">L</option>
-                    <option value="XL">XL</option>
-                    <option value="XXL">XXL</option>
-                </select>
-                <div class="alert alert-danger" role="alert" *ngIf="size.errors?.required && (size.touched || submitted)">
-                    This field is required
-                </div>
-            </div>
-            <div class="form-group required">
-                <label for="experience">your experience</label>
-                <select name="experience" id="experience" class="form-control" [(ngModel)]="model.experience" #experience="ngModel"
-                        required>
-                    <option></option>
-                    <option value="I am just learning">I am just learning</option>
-                    <option value="Less than a year">Less than a year</option>
-                    <option value="1-2 years">1-2 years</option>
-                    <option value="2-4 years">2-4 years</option>
-                    <option value="4-8 years">4-8 years</option>
-                    <option value="Over 8 years">Over 8 years</option>
-                </select>
-                <div class="alert alert-danger" role="alert" *ngIf="experience.errors?.required && (experience.touched || submitted)">
-                    This field is required
-                </div>
-            </div>
-            <div class="form-group required">
-                <label for="role">your role</label>
-                <select name="role" id="role" class="form-control" [(ngModel)]="model.role" #role="ngModel" required>
-                    <option></option>
-                    <option value="student">Student</option>
-                    <option value="Developer">Developer</option>
-                    <option value="Team Leader">Team Leader</option>
-                    <option value="Project Leader">Project Leader</option>
-                    <option value="Architect">Architect</option>
-                    <option value="Tester">Tester</option>
-                    <option value="Other">Other</option>
-                </select>
-                <div class="alert alert-danger" role="alert" *ngIf="role.errors?.required && (role.touched || submitted)">
-                    This field is required
-                </div>
-            </div>
-            <div class="text-right">
-                <button type="submit" class="btn btn-primary" [disabled]="registrationForm.submitted && !registrationForm.form.valid">Save
-                </button>
-            </div>
-        </form>
-    </div>
+      </div>
+      <div class="form-group required">
+        <label for="name">full name</label>
+        <input type="text" id="name" class="form-control" [(ngModel)]="model.name" #name="ngModel" name="name" required
+               maxlength="255">
+        <div class="alert alert-danger" role="alert" *ngIf="name.errors?.required && (name.touched || submitted)">
+          This field is required
+        </div>
+      </div>
+      <div class="form-group required">
+        <label for="email">e-mail</label>
+        <input type="email" id="email" class="form-control" [(ngModel)]="model.email" #email="ngModel" name="email" required
+               maxlength="255" email>
+        <div class="alert alert-danger" role="alert" *ngIf="email.errors?.required && (email.touched || submitted)">
+          This field is required
+        </div>
+        <div class="alert alert-danger" role="alert" *ngIf="email.errors?.email && (email.touched || submitted)">
+          This is not valid email
+        </div>
+      </div>
+      <div class="form-group required">
+        <label for="city">city</label>
+        <input type="text" id="city" class="form-control" [(ngModel)]="model.city" #city="ngModel" name="city" required
+               maxlength="255">
+        <div class="alert alert-danger" role="alert" *ngIf="city.errors?.required && (city.touched || submitted)">
+          This field is required
+        </div>
+      </div>
+      <div class="form-group required">
+        <label>sex</label>
+        <label class="checkbox">
+          <input type="radio" name="sex" value="F" required [(ngModel)]="model.gender" #sex="ngModel"> female
+        </label>
+        <label class="checkbox">
+          <input type="radio" name="sex" value="M" required [(ngModel)]="model.gender" #sex="ngModel"> male
+        </label>
+        <div class="alert alert-danger" role="alert" *ngIf="sex.errors?.required && (sex.touched || submitted)">
+          This field is required
+        </div>
+      </div>
+      <div class="form-group required">
+        <label for="size">t-shirt size</label>
+        <select name="size" id="size" class="form-control" [(ngModel)]="model.size" #size="ngModel" required>
+          <option></option>
+          <option value="S">S</option>
+          <option value="M">M</option>
+          <option value="L">L</option>
+          <option value="XL">XL</option>
+          <option value="XXL">XXL</option>
+        </select>
+        <div class="alert alert-danger" role="alert" *ngIf="size.errors?.required && (size.touched || submitted)">
+          This field is required
+        </div>
+      </div>
+      <div class="form-group required">
+        <label for="experience">your experience</label>
+        <select name="experience" id="experience" class="form-control" [(ngModel)]="model.experience" #experience="ngModel"
+                required>
+          <option></option>
+          <option value="I am just learning">I am just learning</option>
+          <option value="Less than a year">Less than a year</option>
+          <option value="1-2 years">1-2 years</option>
+          <option value="2-4 years">2-4 years</option>
+          <option value="4-8 years">4-8 years</option>
+          <option value="Over 8 years">Over 8 years</option>
+        </select>
+        <div class="alert alert-danger" role="alert" *ngIf="experience.errors?.required && (experience.touched || submitted)">
+          This field is required
+        </div>
+      </div>
+      <div class="form-group required">
+        <label for="role">your role</label>
+        <select name="role" id="role" class="form-control" [(ngModel)]="model.role" #role="ngModel" required>
+          <option></option>
+          <option value="student">Student</option>
+          <option value="Developer">Developer</option>
+          <option value="Team Leader">Team Leader</option>
+          <option value="Project Leader">Project Leader</option>
+          <option value="Architect">Architect</option>
+          <option value="Tester">Tester</option>
+          <option value="Other">Other</option>
+        </select>
+        <div class="alert alert-danger" role="alert" *ngIf="role.errors?.required && (role.touched || submitted)">
+          This field is required
+        </div>
+      </div>
+      <div class="text-right">
+        <button type="submit" class="btn btn-primary" [disabled]="registrationForm.submitted && !registrationForm.form.valid">Save
+        </button>
+      </div>
+    </form>
+  </div>
 
 </section>

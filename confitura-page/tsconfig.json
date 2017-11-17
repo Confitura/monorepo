@@ -1,20 +1,19 @@
 {
+  "compileOnSave": false,
   "compilerOptions": {
-    "target": "es5",
-    "module": "es2015",
-    "moduleResolution": "node",
+    "outDir": "./dist/out-tsc",
     "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "lib": [
-      "es2015",
-      "dom"
+    "target": "es5",
+    "typeRoots": [
+      "node_modules/@types"
     ],
-    "noImplicitAny": true,
-    "suppressImplicitAnyIndexErrors": true
-  },
-  "angularCompilerOptions": {
-    "genDir": "dist",
-    "entryModule": "src/app/app.module#AppModule"
+    "lib": [
+      "es2017",
+      "dom"
+    ]
   }
 }

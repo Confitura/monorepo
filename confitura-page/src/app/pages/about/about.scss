@@ -1,12 +1,13 @@
 @import "../../sizes";
+
 #about {
   .about-banner {
     display: flex;
     background-color: #000000;
-    background: url("../../img/about_left.png") no-repeat left top, url("../../img/about_right.png") no-repeat right bottom;
+    background: url("/assets/img/about_left.png") no-repeat left top, url("/assets//img/about_right.png") no-repeat right bottom;
     background-size: contain;
     @media all and (max-width: $size_xsmall) {
-      background: url("../../img/about_right.png") no-repeat right bottom;
+      background: url("/assets/img/about_right.png") no-repeat right bottom;
       background-size: contain;
     }
     h2 {
