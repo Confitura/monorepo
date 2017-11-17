@@ -1,8 +1,8 @@
 export class MenuItem {
-    label: string;
-    url?: string;
-    action?: Function;
-    clazz?: string;
-    show?: Function = () => true;
-    children?: MenuItem[];
+  label: string;
+  url?: string;
+  action?: Function;
+  clazz?: string;
+  children?: MenuItem[];
+  show?: Function = () => true;
 }

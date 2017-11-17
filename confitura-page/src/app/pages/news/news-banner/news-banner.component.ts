@@ -1,20 +1,22 @@
-import {Component, OnInit} from "@angular/core";
-import {NewsService} from "../shared/news.service";
-import {News} from "../shared/news.model";
-import  "../shared/news.scss";
+import {Component, OnInit} from '@angular/core';
+import {NewsService} from '../shared/news.service';
+import {News} from '../shared/news.model';
+
 @Component({
-    selector: "jl-news-banner",
-    templateUrl: "./news-banner.component.html"
+  selector: 'cf-news-banner',
+  templateUrl: './news-banner.component.html',
+  styleUrls: ['../shared/news.component.scss']
+
 })
 export class NewsBannerComponent implements OnInit {
-    list: News[] = [];
+  list: News[] = [];
 
-    constructor(private service: NewsService) {
-    }
+  constructor(private service: NewsService) {
+  }
 
-    ngOnInit(): void {
-        this.service.getPage(0, 3)
-            .subscribe((list: News[]) => this.list = list);
-    }
+  ngOnInit(): void {
+    this.service.getPage(0, 3)
+      .subscribe((list: News[]) => this.list = list);
+  }
 
 }

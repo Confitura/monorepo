@@ -3,11 +3,11 @@
 #v4p-start {
   .v4p-banner {
     display: flex;
-    background: url("../../../img/about_left.png") no-repeat left top, url("../../../img/about_right.png") no-repeat right bottom;
+    background: url("/assets/img/about_left.png") no-repeat left top, url("/assets/img/about_right.png") no-repeat right bottom;
     background-color: #000000;
     background-size: contain;
     @media all and (max-width: $size_xsmall) {
-      background: #000000 url("../../../img/about_right.png") no-repeat right bottom;
+      background: #000000 url("/assets/img/about_right.png") no-repeat right bottom;
       background-size: contain;
     }
     h2 {

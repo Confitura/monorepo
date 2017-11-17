@@ -35,3 +35,4 @@ typings/
 /typings/
 /.idea/
 /deployment/confitura-page.retry
+/yarn-error.log

@@ -1,14 +1,11 @@
-import {
-    HammerGestureConfig,
-    HAMMER_GESTURE_CONFIG,
-} from '@angular/platform-browser';
+import {HammerGestureConfig} from '@angular/platform-browser';
 
-declare var Hammer: any;
+declare let Hammer: any;
 
-export class HammerConfig extends HammerGestureConfig  {
-    buildHammer(element: HTMLElement) {
-        return  new Hammer(element, {
-            touchAction: "pan-y"
-        });
-    }
+export class HammerConfig extends HammerGestureConfig {
+  buildHammer(element: HTMLElement) {
+    return new Hammer(element, {
+      touchAction: 'pan-y'
+    });
+  }
 }

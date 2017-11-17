@@ -2,15 +2,15 @@
 <span class="help-block small">Type at lest 5 characters to start searching by first name, last name, or email</span>
 
 <div *ngFor="let speaker of speakers" style="padding-top: 5px;">
-    <a class="btn btn-sm btn-success btn-xs" (click)="addUser(speaker)">
-        <span class="glyphicon glyphicon-plus"></span>
-    </a>
-    <span>{{speaker.name}}</span>
+  <a class="btn btn-sm btn-success btn-xs" (click)="addUser(speaker)">
+    <span class="glyphicon glyphicon-plus"></span>
+  </a>
+  <span>{{speaker.name}}</span>
 </div>
 
 <div *ngFor="let speaker of value" style="padding-top: 5px;">
-    <a class="btn  btn-danger btn-xs" (click)="removeUser(speaker)">
-        <span class="glyphicon glyphicon-minus"></span>
-    </a>
-    {{speaker.name}}
+  <a class="btn  btn-danger btn-xs" (click)="removeUser(speaker)">
+    <span class="glyphicon glyphicon-minus"></span>
+  </a>
+  {{speaker.name}}
 </div>

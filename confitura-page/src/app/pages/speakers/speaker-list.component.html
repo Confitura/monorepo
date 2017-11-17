@@ -1,11 +1,11 @@
 <section class="pb50 bg-white" id="speaker-list">
-    <header class="presentations-banner">
-        <h2>speakers</h2>
-    </header>
-    <div class="row-1140 speakers">
-        <ng-container *ngIf="list">
-            <jl-person [model]="speaker" *ngFor="let speaker of list | async" class="organizer"></jl-person>
-        </ng-container>
-    </div>
-    <jl-person-modal></jl-person-modal>
+  <header class="presentations-banner">
+    <h2>speakers</h2>
+  </header>
+  <div class="row-1140 speakers">
+    <ng-container *ngIf="list">
+      <cf-person [model]="speaker" *ngFor="let speaker of list | async" class="organizer"></cf-person>
+    </ng-container>
+  </div>
+  <cf-person-modal></cf-person-modal>
 </section>
