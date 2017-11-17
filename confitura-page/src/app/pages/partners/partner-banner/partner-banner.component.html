@@ -9,7 +9,7 @@
           <ul class="bxslider">
             <li *ngFor="let partner of getPartnersFor(type)">
               <a [href]="partner.www" target="_blank">
-                <img src="http://2017.confitura.pl/{{partner.logo}}" [ngClass]="{'unpublished': !partner.published}"/>
+                <img [src]="partner.logo" [ngClass]="{'unpublished': !partner.published}"/>
               </a>
             </li>
           </ul>
