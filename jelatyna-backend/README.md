@@ -2,6 +2,10 @@
 [![Build Status](https://travis-ci.org/Confitura/jelatyna-backend.svg?branch=master)](https://travis-ci.org/Confitura/jelatyna-backend)
 # jelatyna-backend
 
+This project is part of stack for managing [Confitura](confitura.pl) conference 
+
+In order to use this project you will also need an UI - for this there is separate repo [confitura-page](https://github.com/Confitura/confitura-page) 
+ 
 
 ## how to start backend
 
@@ -16,4 +20,7 @@ When starting app in development mode application will not use real oAuth provid
 Instead there are few fake accounts. Details are below
 
 ### admin
-to login as admin login with gmail account (google+)
+to be an admin use twitter to login 
+
+### volunteer
+to be volunteer login with gmail account (google+)

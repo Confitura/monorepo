@@ -18,7 +18,7 @@ public class GoogleServiceFake implements GoogleService{
     public User getUserFor(String code) {
         return new User()
                 .setId("google_id")
-                .setAdmin(true)
+                .setVolunteer(true)
                 .setEmail("google@example.com")
                 .setBio("from google")
                 .setId("google");
