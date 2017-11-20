@@ -10,3 +10,10 @@
 
 ### Windows:
 `mvnw.bat spring-boot:run`
+
+## users
+When starting app in development mode application will not use real oAuth providers. 
+Instead there are few fake accounts. Details are below
+
+### admin
+to login as admin login with gmail account (google+)
