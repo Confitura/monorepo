@@ -2,7 +2,7 @@ export class MenuItem {
   label: string;
   url?: string;
   action?: Function;
-  clazz?: string;
+  clazz? = '';
   children?: MenuItem[];
   show?: Function = () => true;
 }

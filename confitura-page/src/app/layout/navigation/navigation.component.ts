@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {CurrentUser} from '../../security/current-user.service';
 import {LoginService} from '../../security/login.service';
 import {MenuItem} from './menu-item.model';
@@ -9,11 +9,12 @@ import {Router} from '@angular/router';
   selector: 'cf-navigation',
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.scss'],
+  encapsulation: ViewEncapsulation.Emulated
 })
 export class NavigationComponent implements OnInit {
   private loggedIn: boolean;
   menu: MenuItem[] = [
-    {label: 'about us', url: '/about'},
+    {label: 'about us', url: '/about', clazz: ''},
     {label: 'partners', url: '/partners'},
     {label: 'schedule', url: '/schedule'},
     {label: 'presentations', url: '/presentations'},
