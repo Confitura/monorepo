@@ -12,10 +12,8 @@
             <section style="text-align: center" *cf-admin="">
               <h4><a role="button" (click)="addPresentation()">Add Presentation</a></h4>
             </section>
-            <div class="img-speaker">
-              <img class="img-responsive margin-auto" [src]="model.photo"/>
-            </div>
-            <section class="social-speaker">
+            <cf-photo [src]="model.photo"></cf-photo>
+            <section class="social-links">
               <a href="https://www.twitter.com/{{model.twitter}}" title="twitter" target="_blank" *ngIf="model.twitter">
                 <i class="fa fa-twitter prelegent-social" aria-hidden="true"></i>
               </a>

@@ -9,12 +9,13 @@ import {RouterModule} from '@angular/router';
 import {FormsModule} from '@angular/forms';
 import {AdminDirective} from './admin.directive';
 import {ImageResizer} from './ImageResizer.service';
+import {PhotoComponent} from './photo/photo.component';
 
 @NgModule({
   imports: [CommonModule, HttpModule],
-  declarations: [AdminDirective],
+  declarations: [AdminDirective, PhotoComponent],
   providers: [HttpConfiguration, CustomHttp, LoginService, CurrentUser, ImageResizer],
-  exports: [CommonModule, HttpModule, FormsModule, RouterModule, AdminDirective]
+  exports: [CommonModule, HttpModule, FormsModule, RouterModule, AdminDirective, PhotoComponent]
 })
 export class SharedModule {
 

@@ -5,8 +5,7 @@ import 'ng-loading-bar/loading-bar.css';
 
 @Component({
   selector: 'cf-application',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  templateUrl: './app.component.html'
 
 
 })

@@ -1,15 +1,15 @@
 <ng-container *ngIf="isVisible()">
-  <a *ngIf="model.url" [routerLink]="model.url" [title]="model.label" (click)="closeMenu()"
-     [class]="model.clazz" routerLinkActive="active">{{model.label}}</a>
+    <a *ngIf="model.url" [routerLink]="model.url" [title]="model.label" (click)="closeMenu()"
+       class="menu-item {{model.clazz}}" routerLinkActive="active">{{model.label}}</a>
 
-  <a *ngIf="model.action" [title]="model.label" (click)="click()" [class]="model.clazz"
-     routerLinkActive="active">{{model.label}}</a>
+    <a *ngIf="model.action" [title]="model.label" (click)="click()" [class]="model.clazz"
+       routerLinkActive="active">{{model.label}}</a>
 
-  <ng-container *ngIf="model.children">
-    <a [title]="model.label" [class]="model.clazz" class="dropdown-toggle"
-       routerLinkActive="active" data-toggle="dropdown" role="button">{{model.label}} <span class="caret"></span></a>
-    <ul class="dropdown-menu">
-      <li cf-menu-item [model]="child" *ngFor="let child of model.children"></li>
-    </ul>
-  </ng-container>
+    <ng-container *ngIf="model.children">
+        <a [title]="model.label" [class]="model.clazz" class="dropdown-toggle"
+           routerLinkActive="active" data-toggle="dropdown" role="button">{{model.label}} <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+            <li cf-menu-item [model]="child" *ngFor="let child of model.children"></li>
+        </ul>
+    </ng-container>
 </ng-container>
