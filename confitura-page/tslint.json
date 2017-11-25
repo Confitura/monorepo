@@ -123,7 +123,10 @@
     ],
     "component-selector": [
       true,
-      "element",
+      [
+        "element",
+        "attribute"
+      ],
       "cf",
       "kebab-case"
     ],

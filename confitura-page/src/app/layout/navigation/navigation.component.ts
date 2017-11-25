@@ -47,7 +47,7 @@ export class NavigationComponent implements OnInit {
 
   logout() {
     this.login.logout();
-  };
+  }
 
   goToProfile() {
     this.router.navigate([`/profile/${this.currentUser.get().jti}`]);
