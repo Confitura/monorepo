@@ -1,9 +1,11 @@
 @import "../../../sizes";
+@import "../partner-list/partners.component";
 
 .partners-banner-container {
   display: flex;
   justify-content: space-around;
   align-content: stretch;
+
   .partner-logo {
     height: 120px;
 

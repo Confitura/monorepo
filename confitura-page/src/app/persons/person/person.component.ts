@@ -4,7 +4,8 @@ import {User} from '../../pages/profile/user.model';
 
 @Component({
   selector: 'cf-person',
-  templateUrl: './person.component.html'
+  templateUrl: './person.component.html',
+  styleUrls: ['./person.component.scss']
 })
 export class PersonComponent {
   @Input()

@@ -8,7 +8,8 @@ import {ActivatedRoute, Params} from '@angular/router';
 import {ConfirmationService} from '../../shared/confirmation.service';
 
 @Component({
-  templateUrl: './profile-view.component.html'
+  templateUrl: './profile-view.component.html',
+  styleUrls: ['./profile-view.component.scss']
 })
 export class ProfileViewComponent implements OnInit {
 

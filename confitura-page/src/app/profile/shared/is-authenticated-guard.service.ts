@@ -13,7 +13,7 @@ export class IsAuthenticatedGuard implements CanActivate {
       if (!isAvailable) {
         this.router.navigate(['/login']);
       }
-      resolve(isAvailable);
+      resolve(true);
     });
   }
 

@@ -8,7 +8,7 @@ import {Router} from '@angular/router';
 @Component({
   selector: 'cf-navigation',
   templateUrl: './navigation.component.html',
-  styleUrls: ['./navigation.component.scss'],
+  styleUrls: ['./navigation.component.scss']
 })
 export class NavigationComponent implements OnInit {
   private loggedIn: boolean;

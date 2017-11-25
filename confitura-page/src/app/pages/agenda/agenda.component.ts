@@ -2,15 +2,14 @@ import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {TimeSlot} from './shared/time-slot.model';
 import {Room} from './shared/room.model';
 import {AgendaService} from './shared/agenda.service';
-
-import './agenda.scss';
 import {Tag} from '../../profile/shared/tag.model';
 import {Observable} from 'rxjs/Observable';
 import {PresentationService} from '../../profile/shared/presentation.service';
 import {AgendaEntry} from './shared/agenda.model';
 
 @Component({
-  templateUrl: './agenda.component.html'
+  templateUrl: './agenda.component.html',
+  styleUrls: ['./agenda.scss']
 })
 export class AgendaComponent implements OnInit, OnChanges {
 

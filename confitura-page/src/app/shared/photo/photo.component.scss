@@ -1,0 +1,13 @@
+:host {
+  cursor: pointer;
+  .photo {
+    overflow: hidden;
+    border-radius: 200px;
+    text-align: center;
+    width: 300px;
+    height: 300px;
+    img {
+      width: 100%;
+    }
+  }
+}

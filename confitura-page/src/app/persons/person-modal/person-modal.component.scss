@@ -1,15 +1,34 @@
-.person-modal {
+@media all and (max-width: 768px) {
+  .modal-dialog {
+    margin: 0;
+  }
+}
 
+.modal-content {
+  border: none;
+}
+
+.person-presentations {
+  padding-top: 20px;
+}
+
+.person-container {
+  display: flex;
   @media all and (max-width: 768px) {
-    .modal-dialog {
-      margin: 0;
+    flex-direction: column;
+  }
+  .person-photo{
+    flex-shrink: 0;
+  }
+  .person-info {
+    padding: 20px;
+
+    .person-name h3 {
+      &:before, &:after {
+        content: " # ";
+      }
     }
   }
-  .modal-content {
-    border: none;
-  }
 
-  .person-presentations {
-    padding-top: 20px;
-  }
+
 }

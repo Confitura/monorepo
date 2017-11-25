@@ -16,4 +16,4 @@ const appRoutes: Routes = [
   {path: 'presentation/:id', component: PresentationEditComponent, canActivate: [IsAuthenticatedGuard]},
   {path: 'user/:userId/presentation/:id', component: PresentationEditComponent, canActivate: [IsAuthenticatedGuard]},
 ];
-export const routing: ModuleWithProviders = RouterModule.forChild(appRoutes);
+export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);

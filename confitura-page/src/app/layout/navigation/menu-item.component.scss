@@ -1,0 +1,48 @@
+@import "../../sizes";
+
+:host {
+  a.menu-item {
+    cursor: pointer;
+    padding-bottom: 0;
+    color: #000000;
+    &.active {
+      text-decoration: underline;
+    }
+    &.pink, &.pink:hover {
+      text-align: center;
+      padding-left: 0;
+      padding-right: 0;
+      background: #ff0040;
+      color: #ffffff;
+      @media all and(min-width: $size_small) {
+        width: 170px;
+      }
+    }
+  }
+
+  @media all and (min-width: $size_small) {
+    a.menu-item {
+      line-height: 100px;
+      padding-top: 0;
+      padding-right: 15px;
+      padding-left: 7px;
+      font-size: 2.2rem;
+      color: black;
+      font-weight: 700;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    @media all and (max-width: $size_small) {
+
+      a.menu-item {
+        line-height: 55px;
+        margin-left: 15px;
+        font-size: 2rem;
+        text-align: center;
+      }
+
+    }
+  }
+}

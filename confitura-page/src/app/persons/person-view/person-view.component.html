@@ -4,19 +4,9 @@
       <input type="file" ng2FileSelect [uploader]="uploader" multiple style="visibility: hidden">
       <button class="btn btn-upload" (click)="selectNewPhoto()">Upload New Photo
       </button>
-      <img class="img-responsive margin-auto" [src]="model.photo"/>
+      <cf-photo [src]="model.photo"></cf-photo>
     </div>
-    <section class="social-speaker">
-      <a href="https://www.twitter.com/{{model.twitter}}" title="twitter" target="_blank" *ngIf="model.twitter">
-        <i class="fa fa-twitter prelegent-social" aria-hidden="true"></i>
-      </a>
-      <a href="{{model.www}}" title="www" target="_blank" *ngIf="model.www">
-        <i class="fa fa-arrow-up prelegent-social" aria-hidden="true"></i>
-      </a>
-      <a href="https://github.com/{{model.github}}" title="github" target="_blank" *ngIf="model.github">
-        <i class="fa fa-github prelegent-social" aria-hidden="true"></i>
-      </a>
-    </section>
+    <cf-social-links [twitter]="model.twitter" [github]="model.github" [www]="model.www"></cf-social-links>
   </div>
   <div class="person-info">
     <section>
@@ -26,13 +16,6 @@
         <span *ngIf="model.volunteer">VOLUNTEER</span>
       </div>
       <div class="mcci-content" [innerHTML]="model.bio"></div>
-    </section>
-    <section *ngIf="model.presentations">
-      <a>
-        <h3 class="presentation-title">
-          title
-        </h3>
-      </a>
     </section>
   </div>
 </div>

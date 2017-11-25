@@ -3,7 +3,8 @@ import {MenuItem} from './menu-item.model';
 
 @Component({
   selector: '[cf-menu-item]',
-  templateUrl: './menu-item.component.html'
+  templateUrl: './menu-item.component.html',
+  styleUrls: ['./menu-item.component.scss']
 })
 export class MenuItemComponent {
   @Input()
