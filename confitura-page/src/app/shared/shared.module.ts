@@ -10,12 +10,13 @@ import {FormsModule} from '@angular/forms';
 import {AdminDirective} from './admin.directive';
 import {ImageResizer} from './ImageResizer.service';
 import {PhotoComponent} from './photo/photo.component';
+import { SocialLinksComponent } from './social-links/social-links.component';
 
 @NgModule({
   imports: [CommonModule, HttpModule],
-  declarations: [AdminDirective, PhotoComponent],
+  declarations: [AdminDirective, PhotoComponent, SocialLinksComponent],
   providers: [HttpConfiguration, CustomHttp, LoginService, CurrentUser, ImageResizer],
-  exports: [CommonModule, HttpModule, FormsModule, RouterModule, AdminDirective, PhotoComponent]
+  exports: [CommonModule, HttpModule, FormsModule, RouterModule, AdminDirective, PhotoComponent, SocialLinksComponent]
 })
 export class SharedModule {
 

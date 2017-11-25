@@ -6,6 +6,7 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/catch';
 
 import {CurrentUser} from '../security/current-user.service';
+import * as _ from 'lodash';
 
 @Injectable()
 export class CustomHttp {
@@ -41,7 +42,7 @@ export class CustomHttp {
 
   private addAuthorizationHeader(options: RequestOptionsArgs) {
     if (this.currentUser.isAvailable()) {
-      if (options.headers === null) {
+      if (_.isUndefined(options.headers)) {
         options.headers = new Headers();
       }
       options.headers.set('Authorization', `Bearer ${this.currentUser.getToken()}`);

@@ -11,7 +11,7 @@ import {Router} from '@angular/router';
 
 })
 export class PersonModalComponent {
-  model: User;
+  model: User = new User();
 
   constructor(service: PersonModalService, private router: Router) {
     service.changed.subscribe((user: User) => {

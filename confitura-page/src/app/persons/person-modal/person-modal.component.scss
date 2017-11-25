@@ -30,30 +30,5 @@
     }
   }
 
-  .social-links {
-    display: block;
-    text-align: center;
-    a {
-      &:link, &:active, &:visited, &:hover {
-        border: none;
-        outline: none;
-        font-size: 24px;
-        color: #e4d7c6;
-        text-decoration: none;
-      }
-    }
-    [class*="fa fa-"] {
-      background-color: #b9ad9f;
-      border-radius: 30px !important;
-      -webkit-border-radius: 30px !important;
-      -moz-border-radius: 30px !important;
-      display: inline-block;
-      height: 30px;
-      line-height: 30px;
-      width: 30px;
-      font-size: 15px;
-      text-align: center;
-      margin: 20px 0;
-    }
-  }
+
 }
