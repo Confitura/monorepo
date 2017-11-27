@@ -16,7 +16,7 @@ export class NewsService {
     params.set('size', `${size}`);
     params.set('sort', 'creationDate,desc');
 
-    return this.http.get(`/news/search/published`, {search: params})
+    return this.http.get(`/news/search/published`)
       .map((response: Response) => {
         return response.json()['_embedded']['news'] as News[];
       });

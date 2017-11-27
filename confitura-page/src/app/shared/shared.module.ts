@@ -11,9 +11,10 @@ import {AdminDirective} from './admin.directive';
 import {ImageResizer} from './ImageResizer.service';
 import {PhotoComponent} from './photo/photo.component';
 import { SocialLinksComponent } from './social-links/social-links.component';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
-  imports: [CommonModule, HttpModule],
+  imports: [CommonModule, HttpModule, HttpClientModule],
   declarations: [AdminDirective, PhotoComponent, SocialLinksComponent],
   providers: [HttpConfiguration, CustomHttp, LoginService, CurrentUser, ImageResizer],
   exports: [CommonModule, HttpModule, FormsModule, RouterModule, AdminDirective, PhotoComponent, SocialLinksComponent]

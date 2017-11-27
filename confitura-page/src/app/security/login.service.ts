@@ -36,9 +36,7 @@ export class LoginService {
 
   private doLogin(system: string, searchParams: URLSearchParams) {
     return Observable.create((observer: Observer<JwtUser>) => {
-      this.http.get(`/login/${system}/callback`, {
-        search: searchParams
-      }).subscribe((response: Response) => {
+      this.http.get(`/login/${system}/callback`).subscribe((response: Response) => {
         this.currentUser.set(response.text());
         observer.next(this.currentUser.get());
       });
