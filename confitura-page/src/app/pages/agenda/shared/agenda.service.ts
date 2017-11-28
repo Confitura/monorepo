@@ -97,12 +97,10 @@ export class AgendaService {
     return this.http.delete(`/agenda/${id}`);
   }
 
-  // TODO: fix params
   addRoom(params: { label: string; displayOrder: number }) {
     return this.http.post(`/rooms/`, params);
   }
 
-  // TODO: fix params
   addTimeSlot(params: { label: string; displayOrder: number, forAllRooms: boolean }) {
     return this.http.post(`/time-slots/`, params);
   }

@@ -45,9 +45,7 @@ export class PartnerEditComponent implements OnInit {
     this.submitted = true;
     if (this.form.valid) {
       this.service.save(this.model)
-
         .subscribe(partner => {
-          console.log(partner.id);
           this.router.navigate(['/admin2/partner', partner.id]);
         });
     }
@@ -56,6 +54,5 @@ export class PartnerEditComponent implements OnInit {
   cancel() {
     this.location.back();
   }
-
 
 }

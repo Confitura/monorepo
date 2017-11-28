@@ -19,9 +19,13 @@ export class OrganizerService {
   }
 
   private getAllFor(type: string): Observable<Person[]> {
-    return this.http.get<any>(`/users/search/${type}`)
-      .map((result: any) => result['_embedded']['users'] as Person[])
+    return this.http.get<EmbeddedUsers>(`/users/search/${type}`)
+      .map(result => result._embedded.users)
       .map((persons: Person[]) => _.shuffle(persons));
   }
 
+}
+
+class EmbeddedUsers {
+  _embedded: { users: Person[] };
 }
