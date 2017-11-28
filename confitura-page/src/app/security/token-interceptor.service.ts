@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/of';
 import {CurrentUser} from './current-user.service';
 
 @Injectable()
@@ -11,23 +12,23 @@ export class TokenInterceptor implements HttpInterceptor {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    this.addAuthorizationHeader(request);
-    return next.handle(request)
-      .catch((error: any, caught: Observable<any>) => {
-        console.log(caught);
+    const clone = this.addAuthorizationHeader(request);
+    return next.handle(clone)
+      .catch((error: any) => {
         if (error.status === 401) {
           this.currentUser.logout();
         }
-        return Observable.of(error);
+        throw error;
       });
   }
 
   private addAuthorizationHeader(req: HttpRequest<any>) {
     if (this.currentUser.isAvailable()) {
-      req.clone({
+      return req.clone({
         setHeaders: {Authorization: `Bearer ${this.currentUser.getToken()}`}
       });
     }
+    return req;
   }
 
 }

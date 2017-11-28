@@ -19,6 +19,7 @@ import {NgLoadingBarModule} from 'ng-loading-bar';
 import {AgendaService} from './pages/agenda/shared/agenda.service';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {TokenInterceptor} from './security/token-interceptor.service';
+import {BaseUrlInterceptor} from './shared/base-url-interceptor.service';
 
 
 @NgModule({
@@ -34,6 +35,11 @@ import {TokenInterceptor} from './security/token-interceptor.service';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: BaseUrlInterceptor,
       multi: true,
     }],
   declarations: [AppComponent],

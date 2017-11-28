@@ -2,9 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {ParticipantService} from './participant.service';
 import {Participant} from './participant.model';
 import {FileUploader} from 'ng2-file-upload';
-import {HttpConfiguration} from '../../shared/http-configuration.service';
 import {CurrentUser} from '../../security/current-user.service';
 import {ConfirmationService} from '../../shared/confirmation.service';
+import {environment} from '../../../environments/environment';
 
 @Component({
   templateUrl: './participant-list.component.html'
@@ -15,13 +15,12 @@ export class ParticipantListComponent implements OnInit {
   list: Participant[];
   uploader: FileUploader;
 
-  constructor(private  service: ParticipantService,
-              private config: HttpConfiguration,
+  constructor(private service: ParticipantService,
               private user: CurrentUser,
               private confirmation: ConfirmationService) {
     this.uploader = new FileUploader({
       authToken: this.user.getToken(),
-      url: `${config.apiServer}/participants/upload`,
+      url: `${environment.API_URL}/participants/upload`,
       autoUpload: true,
     });
 
@@ -34,7 +33,6 @@ export class ParticipantListComponent implements OnInit {
       .subscribe(list => {
         this.list = list;
         setTimeout(() => $('#participants').DataTable({deferRender: true}));
-
       });
 
   }

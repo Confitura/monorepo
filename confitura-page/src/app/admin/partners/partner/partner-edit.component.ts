@@ -2,7 +2,6 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Partner} from '../../../pages/partners/shared/partner.model';
 import {PartnerService} from '../../../pages/partners/shared/partner.service';
-import {Response} from '@angular/http';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as SimpleMDE from 'simplemde';
 
@@ -47,8 +46,7 @@ export class PartnerEditComponent implements OnInit {
     if (this.form.valid) {
       this.service.save(this.model)
 
-        .subscribe((response: Response) => {
-          const partner = response.json() as Partner;
+        .subscribe(partner => {
           console.log(partner.id);
           this.router.navigate(['/admin2/partner', partner.id]);
         });

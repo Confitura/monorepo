@@ -1,18 +1,17 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import {CustomHttp} from '../../../shared/custom-http.service';
-import {Response} from '@angular/http';
 import {Room} from './room.model';
 import {TimeSlot} from './time-slot.model';
 import {AgendaEntry} from './agenda.model';
 import 'rxjs/add/observable/zip';
+import {HttpClient} from '@angular/common/http';
 
 
 @Injectable()
 export class AgendaService {
 
 
-  constructor(private http: CustomHttp) {
+  constructor(private http: HttpClient) {
   }
 
   getAgenda() {
@@ -72,8 +71,8 @@ export class AgendaService {
   }
 
   getAll(): Observable<AgendaEntry[]> {
-    return this.http.get('/agenda')
-      .map((response: Response) => response.json()['_embedded']['agendaEntries'] as AgendaEntry[]);
+    return this.http.get<EmbeddedAgendaEntries>('/agenda')
+      .map(response => response._embedded.agendaEntries);
   }
 
   addEntry(param: { timeSlot: string; room: string; label?: string, presentation?: string }) {
@@ -81,13 +80,13 @@ export class AgendaService {
   }
 
   getRooms(): Observable<Room[]> {
-    return this.http.get('/rooms')
-      .map((response: Response) => response.json()['_embedded']['rooms'] as Room[]);
+    return this.http.get<EmbeddedRooms>('/rooms')
+      .map(response => response._embedded.rooms);
   }
 
   getTimeSlots(): Observable<TimeSlot[]> {
-    return this.http.get('/time-slots')
-      .map((response: Response) => response.json()['_embedded']['timeSlots'] as TimeSlot[]);
+    return this.http.get<EmbeddedTimeslots>('/time-slots')
+      .map(response => response._embedded.timeSlots);
   }
 
   save(participant: AgendaEntry) {
@@ -95,15 +94,17 @@ export class AgendaService {
   }
 
   removeEntry(id: string) {
-    return this.http.remove(`/agenda/${id}`);
+    return this.http.delete(`/agenda/${id}`);
   }
 
-  addRoom(param: { label: string; displayOrder: number }) {
-    return this.http.post(`/rooms/`, param);
+  // TODO: fix params
+  addRoom(params: { label: string; displayOrder: number }) {
+    return this.http.post(`/rooms/`, params);
   }
 
-  addTimeSlot(param: { label: string; displayOrder: number, forAllRooms: boolean }) {
-    return this.http.post(`/time-slots/`, param);
+  // TODO: fix params
+  addTimeSlot(params: { label: string; displayOrder: number, forAllRooms: boolean }) {
+    return this.http.post(`/time-slots/`, params);
   }
 
   updateRoom(room: Room) {
@@ -115,10 +116,22 @@ export class AgendaService {
   }
 
   removeRoom(id: string) {
-    return this.http.remove(`/rooms/${id}`);
+    return this.http.delete(`/rooms/${id}`);
   }
 
   removeTimeSlot(id: string) {
-    return this.http.remove(`/time-slots/${id}`);
+    return this.http.delete(`/time-slots/${id}`);
   }
+}
+
+class EmbeddedTimeslots {
+  _embedded: { timeSlots: TimeSlot[] };
+}
+
+class EmbeddedRooms {
+  _embedded: { rooms: Room[] };
+}
+
+class EmbeddedAgendaEntries {
+  _embedded: { agendaEntries: AgendaEntry[] };
 }

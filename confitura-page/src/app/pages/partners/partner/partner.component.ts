@@ -4,10 +4,10 @@ import {ActivatedRoute} from '@angular/router';
 import {Partner} from '../shared/partner.model';
 import {FileUploader} from 'ng2-file-upload';
 import {CurrentUser} from '../../../security/current-user.service';
-import {HttpConfiguration} from '../../../shared/http-configuration.service';
 import * as Marked from 'marked';
 import {Location} from '@angular/common';
 import 'rxjs/add/operator/switchMap';
+import {environment} from '../../../../environments/environment';
 
 @Component({
   templateUrl: './partner.component.html'
@@ -19,7 +19,6 @@ export class PartnerComponent {
   constructor(private route: ActivatedRoute,
               private service: PartnerService,
               private currentUser: CurrentUser,
-              private config: HttpConfiguration,
               private location: Location) {
     this.uploader = new FileUploader({
       authToken: this.currentUser.getToken(),
@@ -40,8 +39,7 @@ export class PartnerComponent {
       .subscribe((partner) => {
         this.partner = partner;
         $(window).scrollTop(0);
-        this.uploader.options.url = `${config.apiServer}/resources/partners/${partner.id}`;
-
+        this.uploader.options.url = `${environment.API_URL}/resources/partners/${partner.id}`;
       });
 
   }
