@@ -1,22 +1,21 @@
 import {Injectable} from '@angular/core';
-import {CustomHttp} from '../../shared/custom-http.service';
 import {Response} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {User} from './user.model';
 import 'rxjs/add/operator/map';
+import {HttpClient, HttpParams} from '@angular/common/http';
 
 @Injectable()
 export class UserService {
-  constructor(private http: CustomHttp) {
+  constructor(private http: HttpClient) {
   }
 
   getBy(id: string, projection: string = null): Observable<User> {
-    let url = `/users/${id}`;
+    const params = new HttpParams();
     if (projection) {
-      url += `?projection=${projection}`;
+      params.set('projection', projection);
     }
-    return this.http.get(url)
-      .map((response: Response) => response.json() as User);
+    return this.http.get<User>(`/users/${id}`, {params});
   }
 
   save(user: User) {
@@ -24,13 +23,13 @@ export class UserService {
   }
 
   getAll(): Observable<User[]> {
-    return this.http.get(`/users`)
-      .map((response: Response) => response.json()['_embedded']['users'] as User[]);
+    return this.http.get<EmbeddedUsers>(`/users`)
+      .map(response => response._embedded.users);
   }
 
   getAllSpeakers(): Observable<User[]> {
-    return this.http.get(`/users/search/speakers`)
-      .map((response: Response) => response.json()['_embedded']['users'] as User[]);
+    return this.http.get<EmbeddedUsers>(`/users/search/speakers`)
+      .map(response => response._embedded.users);
 
   }
 
@@ -40,9 +39,12 @@ export class UserService {
 
 
   find(query: string): Observable<User[]> {
-    return this.http.get(`/users/search/byName`, {search: {query: query}})
-      .map((response: Response) => {
-        return response.json()['_embedded']['users']  as User[];
-      });
+    const params = new HttpParams().set('query', query);
+    return this.http.get<EmbeddedUsers>(`/users/search/byName`, {params})
+      .map(response => response._embedded.users);
   }
+}
+
+class EmbeddedUsers {
+  _embedded: { users: User[] };
 }

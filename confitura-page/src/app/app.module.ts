@@ -17,17 +17,30 @@ import {RegistrationModule} from './pages/registration/registration.module';
 import {ConfirmationService} from './shared/confirmation.service';
 import {NgLoadingBarModule} from 'ng-loading-bar';
 import {AgendaService} from './pages/agenda/shared/agenda.service';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {TokenInterceptor} from './security/token-interceptor.service';
+import {BaseUrlInterceptor} from './shared/base-url-interceptor.service';
 
 
 @NgModule({
   imports: [LayoutModule, PagesModule, BrowserModule, BrowserAnimationsModule,
     ProfileModule, AdminModule, V4pModule, routing, RegistrationModule,
-    NgLoadingBarModule.forRoot()
+    NgLoadingBarModule.forRoot(), HttpClientModule
   ],
   providers: [UserService, PresentationService, PartnerService, ParticipantService, ConfirmationService, AgendaService,
     {
       provide: HAMMER_GESTURE_CONFIG,
       useClass: HammerConfig,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: BaseUrlInterceptor,
+      multi: true,
     }],
   declarations: [AppComponent],
   bootstrap: [AppComponent]

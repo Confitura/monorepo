@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LoginService} from '../../security/login.service';
 import {JwtUser} from '../home/jwt-user.model';
+import {environment} from '../../../environments/environment';
 
-import {HttpConfiguration} from '../../shared/http-configuration.service';
 
 @Component({
   templateUrl: './login.component.html',
@@ -14,8 +14,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private login: LoginService,
-              private config: HttpConfiguration) {
+              private login: LoginService) {
   }
 
   ngOnInit(): void {
@@ -35,7 +34,7 @@ export class LoginComponent implements OnInit {
   }
 
   loginWith(origin: string) {
-    window.location.assign(`${this.config.apiServer}/login/${origin}`);
+    window.location.assign(`${environment.API_URL}/login/${origin}`);
   }
 
 

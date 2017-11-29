@@ -1,28 +1,31 @@
 import {Injectable} from '@angular/core';
-import {CustomHttp} from '../../shared/custom-http.service';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import {Vote} from './vote.model';
-import {Response} from '@angular/http';
 import {Presentation} from '../../profile/shared/presentation.model';
+import {HttpClient, HttpParams} from '@angular/common/http';
 
 @Injectable()
 export class V4pService {
-  constructor(private http: CustomHttp) {
+  constructor(private http: HttpClient) {
 
   }
 
   start(token: string): Observable<Vote[]> {
-    return this.http.post(`/votes/start/${token}`, {})
-      .map((response: Response) => response.json()['_embedded']['votes'] as Vote[]);
+    return this.http.post<EmbeddedVotes>(`/votes/start/${token}`, {})
+      .map(response => response._embedded.votes);
   }
 
   getPresentationFor(vote: Vote): Observable<Presentation> {
-    return this.http.get(`/votes/${vote.id}/presentation?projection=inlineSpeaker`)
-      .map((response: Response) => response.json() as Presentation);
+    const params = new HttpParams().set('projection', 'inlineSpeaker');
+    return this.http.get<Presentation>(`/votes/${vote.id}/presentation`, {params});
   }
 
   save(vote: Vote) {
     return this.http.post(`/votes`, vote);
   }
+}
+
+class EmbeddedVotes {
+  _embedded: { votes: Vote[] };
 }

@@ -1,32 +1,31 @@
 import {Injectable} from '@angular/core';
-import {Response, URLSearchParams} from '@angular/http';
-import {CustomHttp} from '../shared/custom-http.service';
 import {CurrentUser} from './current-user.service';
 import {Observable} from 'rxjs/Observable';
-import {Observer} from 'rxjs/Observer';
+import 'rxjs/add/operator/map';
 import {JwtUser} from '../pages/home/jwt-user.model';
+import {HttpClient, HttpParams} from '@angular/common/http';
 
 @Injectable()
 export class LoginService {
 
-  constructor(private http: CustomHttp, private currentUser: CurrentUser) {
+  constructor(private http: HttpClient,
+              private currentUser: CurrentUser) {
   }
 
   loginWithTwitter(token: string, verifier: string): Observable<JwtUser> {
-    return this.doLogin('twitter', new URLSearchParams(`oauth_token=${token}&oauth_verifier=${verifier}`));
+    return this.doLogin('twitter', new HttpParams().set('oauth_token', token).set('oauth_verifier', verifier));
   }
 
-
   loginWithGitHub(code: string): Observable<JwtUser> {
-    return this.doLogin('github', new URLSearchParams(`code=${code}`));
+    return this.doLogin('github', new HttpParams({fromString: `code=${code}`}));
   }
 
   loginWithFacebook(code: string): Observable<JwtUser> {
-    return this.doLogin('facebook', new URLSearchParams(`code=${code}`));
+    return this.doLogin('facebook', new HttpParams({fromString: `code=${code}`}));
   }
 
   loginWithGoogle(code: string): Observable<JwtUser> {
-    return this.doLogin('google', new URLSearchParams(`code=${code}`));
+    return this.doLogin('google', new HttpParams({fromString: `code=${code}`}));
   }
 
 
@@ -34,14 +33,12 @@ export class LoginService {
     this.currentUser.logout();
   }
 
-  private doLogin(system: string, searchParams: URLSearchParams) {
-    return Observable.create((observer: Observer<JwtUser>) => {
-      this.http.get(`/login/${system}/callback`, {
-        search: searchParams
-      }).subscribe((response: Response) => {
-        this.currentUser.set(response.text());
-        observer.next(this.currentUser.get());
+  private doLogin(system: string, params: HttpParams) {
+    return this.http.get(`/login/${system}/callback`, {params, responseType: 'text'})
+      .map(token => {
+        this.currentUser.set(token);
+        return this.currentUser.get();
       });
-    });
+
   }
 }
