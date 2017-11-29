@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/of';
+import {catchError} from 'rxjs/operators';
 import {CurrentUser} from './current-user.service';
 
 @Injectable()
@@ -14,7 +13,7 @@ export class TokenInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const clone = this.addAuthorizationHeader(request);
     return next.handle(clone)
-      .catch((error: any) => {
+      .catch<HttpEvent<any>, HttpEvent<any>>((error: any) => {
         if (error.status === 401) {
           this.currentUser.logout();
         }
