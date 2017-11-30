@@ -1,6 +1,6 @@
 {
   "name": "confitura-page",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -82,6 +82,5 @@
     "ts-node": "~3.2.0",
     "tslint": "~5.7.0",
     "typescript": "~2.4.2"
-
   }
 }
