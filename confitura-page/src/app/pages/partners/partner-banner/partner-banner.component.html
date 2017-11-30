@@ -7,9 +7,9 @@
       <div class="partners-items" *ngIf="hasAnyPartnersFor(type)">
         <div class="partner-logo text-center">
           <ul class="bxslider">
-            <li *ngFor="let partner of getPartnersFor(type)">
+            <li *ngFor="let partner of getPartnersFor(type)" class="partner-logo-item">
               <a [href]="partner.www" target="_blank">
-                <img [src]="partner.logo" [ngClass]="{'unpublished': !partner.published}"/>
+                <img [cfLazySrc]="partner.logo" [ngClass]="{'unpublished': !partner.published}"/>
               </a>
             </li>
           </ul>
