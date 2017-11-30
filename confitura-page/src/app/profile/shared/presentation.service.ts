@@ -14,8 +14,8 @@ export class PresentationService {
   }
 
 
-  save(userId: string, presentation: Presentation): Observable<Response> {
-    return this.http.post(`/users/${userId}/presentations`, presentation);
+  save(userId: string, presentation: Presentation): Observable<any> {
+    return this.http.post<any>(`/users/${userId}/presentations`, presentation);
   }
 
 

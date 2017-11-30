@@ -33,8 +33,8 @@ export class UserService {
 
   }
 
-  markAsVolunteer(user: User, isVolunteer: boolean): Observable<Response> {
-    return this.http.post(`/users/${user.id}/volunteer/${isVolunteer}`, {});
+  markAsVolunteer(user: User, isVolunteer: boolean): Observable<any> {
+    return this.http.post<any>(`/users/${user.id}/volunteer/${isVolunteer}`, {});
   }
 
 
