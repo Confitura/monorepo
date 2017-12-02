@@ -11,29 +11,25 @@ import {ScannerComponent} from './scanner/scanner.component';
 import {IsPrivilegedGuard} from './is-privileged-guard.service';
 
 const routes: Routes = [
+
   {
-    path: 'admin2',
+    path: '',
+    component: LoginComponent,
+  },
+  {
+    path: '',
+    canActivateChild: [IsPrivilegedGuard],
     children: [
-      {
-        path: '',
-        pathMatch: 'full',
-        component: LoginComponent,
-      },
-      {
-        path: '',
-        canActivateChild: [IsPrivilegedGuard],
-        children: [
-          {path: 'scanner', component: ScannerComponent},
-          {path: 'scanner/:id', component: ScannerComponent},
-          {path: 'users', component: UserListComponent, canActivate: [IsAdminGuard]},
-          {path: 'partners/add', component: PartnerEditComponent, canActivate: [IsAdminGuard]},
-          {path: 'partners/edit/:id', component: PartnerEditComponent, canActivate: [IsAdminGuard]},
-          {path: 'partners/:id', component: PartnerComponent, canActivate: [IsAdminGuard]},
-          {path: 'agenda', component: AgendaComponent, canActivate: [IsAdminGuard]},
-          {path: 'participants', component: ParticipantListComponent, canActivate: [IsAdminGuard]}]
-      }
-    ]
+      {path: 'scanner', component: ScannerComponent},
+      {path: 'scanner/:id', component: ScannerComponent},
+      {path: 'users', component: UserListComponent, canActivate: [IsAdminGuard]},
+      {path: 'partners/add', component: PartnerEditComponent, canActivate: [IsAdminGuard]},
+      {path: 'partners/edit/:id', component: PartnerEditComponent, canActivate: [IsAdminGuard]},
+      {path: 'partners/:id', component: PartnerComponent, canActivate: [IsAdminGuard]},
+      {path: 'agenda', component: AgendaComponent, canActivate: [IsAdminGuard]},
+      {path: 'participants', component: ParticipantListComponent, canActivate: [IsAdminGuard]}]
   }
+
 ];
 
 @NgModule({

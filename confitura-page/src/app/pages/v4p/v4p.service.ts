@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
+import {map} from 'rxjs/operators';
 import {Vote} from './vote.model';
 import {Presentation} from '../../profile/shared/presentation.model';
 import {HttpClient, HttpParams} from '@angular/common/http';
@@ -13,7 +13,7 @@ export class V4pService {
 
   start(token: string): Observable<Vote[]> {
     return this.http.post<EmbeddedVotes>(`/votes/start/${token}`, {})
-      .map(response => response._embedded.votes);
+      .pipe(map(response => response._embedded.votes));
   }
 
   getPresentationFor(vote: Vote): Observable<Presentation> {

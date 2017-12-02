@@ -5,7 +5,7 @@ import {Presentation} from '../../profile/shared/presentation.model';
 import {PersonModalService} from '../../persons/person-modal/person-modal.service';
 import {User} from '../profile/user.model';
 import {Router} from '@angular/router';
-import * as _ from 'lodash';
+import sortBy from 'lodash.sortby';
 
 // import {Hotkey, HotkeysService} from "angular2-hotkeys";
 @Component({
@@ -31,7 +31,7 @@ export class V4pComponent implements OnDestroy {
       router.navigate(['/v4p']);
     } else {
       service.start(token).subscribe((votes) => {
-          this.votes = _.sortBy(votes, 'order');
+        this.votes = sortBy(votes, 'order');
           this.currentIdx = this.votes.filter(it => it.rate != null).length;
           if (this.currentIdx === this.votes.length) {
             this.done();
@@ -117,29 +117,32 @@ export class V4pComponent implements OnDestroy {
 
   left() {
     if (this.currentIdx > 0) {
-      this.service.save(this.currentVote()).subscribe((response) => {
-        this.currentIdx--;
-        this.loadPresentation();
-      });
+      this.service.save(this.currentVote())
+        .subscribe(() => {
+          this.currentIdx--;
+          this.loadPresentation();
+        });
     }
 
   }
 
   right() {
     if (this.currentIdx + 1 < this.votes.length) {
-      this.service.save(this.currentVote()).subscribe((response) => {
-        this.currentIdx++;
-        this.loadPresentation();
-      });
+      this.service.save(this.currentVote())
+        .subscribe(() => {
+          this.currentIdx++;
+          this.loadPresentation();
+        });
     } else {
       this.done();
     }
   }
 
   done() {
-    this.service.save(this.currentVote()).subscribe((response) => {
-      this.router.navigate(['v4p/end']);
-    });
+    this.service.save(this.currentVote())
+      .subscribe(() => {
+        this.router.navigate(['v4p/end']);
+      });
   }
 
   info() {

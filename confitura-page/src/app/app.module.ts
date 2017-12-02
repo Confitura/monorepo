@@ -1,5 +1,4 @@
 import {AppComponent} from './app.component';
-import {routing} from './app.routing';
 import {NgModule} from '@angular/core';
 import {LayoutModule} from './layout/layout.module';
 import {PagesModule} from './pages/pages.module';
@@ -9,8 +8,6 @@ import {ProfileModule} from './profile/profile.module';
 import {UserService} from './pages/profile/user.service';
 import {PresentationService} from './profile/shared/presentation.service';
 import {PartnerService} from './pages/partners/shared/partner.service';
-import {AdminModule} from './admin/admin.module';
-import {V4pModule} from './pages/v4p/v4p.module';
 import {HammerConfig} from './HammerConfig';
 import {ParticipantService} from './admin/participants/participant.service';
 import {RegistrationModule} from './pages/registration/registration.module';
@@ -20,11 +17,12 @@ import {AgendaService} from './pages/agenda/shared/agenda.service';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {TokenInterceptor} from './security/token-interceptor.service';
 import {BaseUrlInterceptor} from './shared/base-url-interceptor.service';
+import {AppRoutingModule} from './app-routing.module';
 
 
 @NgModule({
   imports: [LayoutModule, PagesModule, BrowserModule, BrowserAnimationsModule,
-    ProfileModule, AdminModule, V4pModule, routing, RegistrationModule,
+    ProfileModule, AppRoutingModule, RegistrationModule,
     NgLoadingBarModule.forRoot(), HttpClientModule
   ],
   providers: [UserService, PresentationService, PartnerService, ParticipantService, ConfirmationService, AgendaService,

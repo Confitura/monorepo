@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {Person} from './person.model';
 import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import * as _ from 'lodash';
+import {map} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
+import shuffle from 'lodash.shuffle';
 
 @Injectable()
 export class OrganizerService {
@@ -20,8 +20,10 @@ export class OrganizerService {
 
   private getAllFor(type: string): Observable<Person[]> {
     return this.http.get<EmbeddedUsers>(`/users/search/${type}`)
-      .map(result => result._embedded.users)
-      .map((persons: Person[]) => _.shuffle(persons));
+      .pipe(
+        map(result => result._embedded.users),
+        map((persons: Person[]) => shuffle(persons))
+      );
   }
 
 }

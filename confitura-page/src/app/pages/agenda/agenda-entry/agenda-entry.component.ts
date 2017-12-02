@@ -1,16 +1,12 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {AgendaEntry} from '../shared/agenda.model';
-
-import './agenda-entry.component.scss';
 
 @Component({
   templateUrl: './agenda-entry.component.html',
-  selector: 'cf-entry'
+  selector: 'cf-entry',
+  styleUrls: ['./agenda-entry.component.scss']
 })
-export class AgendaEntryComponent implements OnInit {
+export class AgendaEntryComponent {
   @Input() entry: AgendaEntry;
-
-  ngOnInit(): void {
-  }
 
 }

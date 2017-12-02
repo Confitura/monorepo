@@ -5,7 +5,6 @@ import {PartnerService} from '../../../pages/partners/shared/partner.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as SimpleMDE from 'simplemde';
 
-import 'simplemde/dist/simplemde.min.css';
 import {Location} from '@angular/common';
 
 @Component({

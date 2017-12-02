@@ -114,7 +114,7 @@ export class AgendaComponent implements OnInit, OnChanges {
 
   selectRoom(room: Room) {
     this.activeRooms[room.id] = !this.activeRooms[room.id];
-    this.selectedRooms = this.rooms.filter(currentRoom => this.isActive(room));
+    this.selectedRooms = this.rooms.filter(currentRoom => this.isActive(currentRoom));
   }
 
   isActive(room: Room) {

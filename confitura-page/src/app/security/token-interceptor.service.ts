@@ -13,12 +13,13 @@ export class TokenInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const clone = this.addAuthorizationHeader(request);
     return next.handle(clone)
-      .catch<HttpEvent<any>, HttpEvent<any>>((error: any) => {
-        if (error.status === 401) {
-          this.currentUser.logout();
-        }
-        throw error;
-      });
+      .pipe(
+        catchError<HttpEvent<any>, HttpEvent<any>>((error: any) => {
+          if (error.status === 401) {
+            this.currentUser.logout();
+          }
+          throw error;
+        }));
   }
 
   private addAuthorizationHeader(req: HttpRequest<any>) {

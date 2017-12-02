@@ -1,8 +1,6 @@
 import {Partner} from './partner.model';
 import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/reduce';
+import {map, reduce, switchMap} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
 import {CurrentUser} from '../../../security/current-user.service';
 import {ImageResizer} from '../../../shared/ImageResizer.service';
@@ -18,9 +16,11 @@ export class PartnerService {
   getAll(): Observable<Partner[]> {
     const url = this.currentUser.isAdmin() ? '/partners' : '/partners/search/published';
     return this.http.get<EmbeddedPartners>(url)
-      .switchMap((response: EmbeddedPartners) => response._embedded.partners)
-      .map(partner => ({...partner, logo: this.resizer.applyResizing(partner.logo)}))
-      .reduce((list, partner) => [...list, partner], []);
+      .pipe(
+        switchMap((response: EmbeddedPartners) => response._embedded.partners),
+        map(partner => ({...partner, logo: this.resizer.applyResizing(partner.logo)})),
+        reduce<Partner, Partner[]>((list, partner) => [...list, partner], [])
+      );
   }
 
   getBy(id: string): Observable<Partner> {

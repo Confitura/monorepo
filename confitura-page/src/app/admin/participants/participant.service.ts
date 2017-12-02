@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
+import {map} from 'rxjs/operators';
 import {Participant} from './participant.model';
 import {HttpClient, HttpResponse} from '@angular/common/http';
 
@@ -11,7 +11,9 @@ export class ParticipantService {
 
   getAll(): Observable<Participant[]> {
     return this.http.get<EmbeddedParticipants>('/participants')
-      .map(response => response._embedded.participants);
+      .pipe(
+        map(response => response._embedded.participants)
+      );
   }
 
 
@@ -37,7 +39,9 @@ export class ParticipantService {
 
   arrived(id: string): Observable<any> {
     return this.http.post<any>(`/participants/${id}/arrived`, {}, {observe: 'response'})
-      .map((response: HttpResponse<any>) => ({status: response.status, json: response.body}));
+      .pipe(
+        map((response: HttpResponse<any>) => ({status: response.status, json: response.body}))
+      );
   }
 }
 

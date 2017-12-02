@@ -32,7 +32,6 @@ export class ParticipantListComponent implements OnInit {
     this.service.getAll()
       .subscribe(list => {
         this.list = list;
-        setTimeout(() => $('#participants').DataTable({deferRender: true}));
       });
 
   }

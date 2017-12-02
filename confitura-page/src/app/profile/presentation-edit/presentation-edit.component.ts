@@ -7,7 +7,7 @@ import {FormControl} from '@angular/forms';
 import {CurrentUser} from '../../security/current-user.service';
 import {Location} from '@angular/common';
 import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/mergeMap';
+import {flatMap, map} from 'rxjs/operators';
 
 @Component({
   templateUrl: './presentation-edit.component.html'
@@ -34,11 +34,14 @@ export class PresentationEditComponent implements OnInit {
         const id = params['id'];
         if (id) {
           this.service.getOne(id)
-            .flatMap((presentation: Presentation) => this.service.getCospeakers(id)
-              .map(it => {
-                presentation.cospeakers = it;
-                return presentation;
-              }))
+            .pipe(
+              flatMap((presentation: Presentation) => this.service.getCospeakers(id)
+                .pipe(
+                  map(it => {
+                    presentation.cospeakers = it;
+                    return presentation;
+                  })))
+            )
             .subscribe((presentation: Presentation) => this.model = presentation);
         }
       });

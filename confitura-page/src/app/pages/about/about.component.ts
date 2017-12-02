@@ -1,9 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {OrganizerService} from './organizer.service';
 import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
 import {Person} from './person.model';
-import './about.scss';
 import {PersonModalService} from '../../persons/person-modal/person-modal.service';
 import {User} from '../profile/user.model';
 

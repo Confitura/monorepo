@@ -1,21 +1,22 @@
 import {Injectable} from '@angular/core';
-import {Response} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {User} from './user.model';
-import 'rxjs/add/operator/map';
 import {HttpClient, HttpParams} from '@angular/common/http';
+import {ImageResizer} from '../../shared/ImageResizer.service';
+import {map} from 'rxjs/operators';
 
 @Injectable()
 export class UserService {
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private resizer: ImageResizer) {
   }
 
   getBy(id: string, projection: string = null): Observable<User> {
-    const params = new HttpParams();
+    let params = new HttpParams();
     if (projection) {
-      params.set('projection', projection);
+      params = params.set('projection', projection);
     }
-    return this.http.get<User>(`/users/${id}`, {params});
+    return this.http.get<User>(`/users/${id}`, {params})
+      .pipe(map(user => ({...user, photo: this.resizer.applyResizing(user.photo)})));
   }
 
   save(user: User) {
@@ -24,12 +25,12 @@ export class UserService {
 
   getAll(): Observable<User[]> {
     return this.http.get<EmbeddedUsers>(`/users`)
-      .map(response => response._embedded.users);
+      .pipe(map(response => response._embedded.users));
   }
 
   getAllSpeakers(): Observable<User[]> {
     return this.http.get<EmbeddedUsers>(`/users/search/speakers`)
-      .map(response => response._embedded.users);
+      .pipe(map(response => response._embedded.users));
 
   }
 
@@ -41,7 +42,7 @@ export class UserService {
   find(query: string): Observable<User[]> {
     const params = new HttpParams().set('query', query);
     return this.http.get<EmbeddedUsers>(`/users/search/byName`, {params})
-      .map(response => response._embedded.users);
+      .pipe(map(response => response._embedded.users));
   }
 }
 
