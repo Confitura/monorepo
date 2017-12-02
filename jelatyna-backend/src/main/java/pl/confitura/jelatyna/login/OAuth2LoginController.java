@@ -32,7 +32,7 @@ public class OAuth2LoginController {
     }
 
     @GetMapping()
-    public ResponseEntity<Object> redirectToGitHubLogin(
+    public ResponseEntity<Object> redirectToLogin(
             @PathVariable("provider") String provider
     ) {
         AbstractOAuth20Service service = services.get(provider);
@@ -43,7 +43,7 @@ public class OAuth2LoginController {
     }
 
     @GetMapping("/callback")
-    public ResponseEntity<String> doLoginWithGitHub(
+    public ResponseEntity<String> doLogin(
             @PathVariable("provider") String provider,
             @RequestParam("code") String code)
             throws InterruptedException, ExecutionException, IOException {
