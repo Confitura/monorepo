@@ -7,6 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import pl.confitura.jelatyna.login.facebook.FacebookService;
 import pl.confitura.jelatyna.login.github.GithubService;
 import pl.confitura.jelatyna.login.google.GoogleService;
@@ -14,8 +15,11 @@ import pl.confitura.jelatyna.login.google.GoogleService;
 import java.util.HashMap;
 import java.util.Map;
 
+import static pl.confitura.jelatyna.infrastructure.Profiles.FAKE_SECURITY;
+
 @EnableConfigurationProperties(OAuthConfiguration.OAuthConfigurationProperties.class)
 @Configuration
+@Profile("!" + FAKE_SECURITY)
 public class OAuthConfiguration {
 
     @Autowired

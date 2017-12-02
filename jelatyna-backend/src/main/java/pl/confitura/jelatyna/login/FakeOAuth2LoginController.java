@@ -8,7 +8,6 @@ import pl.confitura.jelatyna.infrastructure.security.TokenService;
 import pl.confitura.jelatyna.user.User;
 
 import java.io.IOException;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import static org.springframework.http.HttpStatus.PERMANENT_REDIRECT;
@@ -17,28 +16,23 @@ import static pl.confitura.jelatyna.infrastructure.Profiles.FAKE_SECURITY;
 @RestController
 @RequestMapping("/login/{provider}")
 @CrossOrigin()
-@Profile("!" + FAKE_SECURITY)
-public class OAuth2LoginController {
+@Profile(FAKE_SECURITY)
+public class FakeOAuth2LoginController {
 
     private TokenService tokenService;
-    private Map<String, AbstractOAuth20Service> services;
 
     @Autowired
-    public OAuth2LoginController(
-            TokenService tokenService,
-            Map<String, AbstractOAuth20Service> services) {
+    public FakeOAuth2LoginController(TokenService tokenService) {
         this.tokenService = tokenService;
-        this.services = services;
     }
 
     @GetMapping()
     public ResponseEntity<Object> redirectToGitHubLogin(
             @PathVariable("provider") String provider
     ) {
-        AbstractOAuth20Service service = services.get(provider);
         return ResponseEntity
                 .status(PERMANENT_REDIRECT)
-                .header("Location", service.getAuthorizationUrl())
+                .header("Location", "http://localhost:8080/login/" + provider)
                 .build();
     }
 
@@ -47,7 +41,10 @@ public class OAuth2LoginController {
             @PathVariable("provider") String provider,
             @RequestParam("code") String code)
             throws InterruptedException, ExecutionException, IOException {
-        User user = services.get(provider).getUserFor(code);
+        User user = new User()
+                .setId("dHdpdHRlci9tYXJnaWVsbQ==")
+                .setName("Fake User " + provider)
+                .setAdmin(true);
         return ResponseEntity.ok(tokenService.asToken(user));
 
     }
