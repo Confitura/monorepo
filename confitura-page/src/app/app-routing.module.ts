@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {RouterModule, Routes,} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 import {PartnersComponent} from './pages/partners/partner-list/partners.component';
 import {AboutComponent} from './pages/about/about.component';
 import {AgendaComponent} from './pages/agenda/agenda.component';
