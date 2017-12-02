@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {CurrentUser} from './current-user.service';
 import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
+import {map} from 'rxjs/operators';
 import {JwtUser} from '../pages/home/jwt-user.model';
 import {HttpClient, HttpParams} from '@angular/common/http';
 
@@ -35,10 +35,12 @@ export class LoginService {
 
   private doLogin(system: string, params: HttpParams) {
     return this.http.get(`/login/${system}/callback`, {params, responseType: 'text'})
-      .map(token => {
-        this.currentUser.set(token);
-        return this.currentUser.get();
-      });
+      .pipe(
+        map(token => {
+          this.currentUser.set(token);
+          return this.currentUser.get();
+        })
+      );
 
   }
 }

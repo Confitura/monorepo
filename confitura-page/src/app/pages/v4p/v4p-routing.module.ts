@@ -6,13 +6,14 @@ import {V4pEndComponent} from './end/v4p-end.component';
 
 const routes: Routes = [
   {
-    path: 'v4p/voting',
+    path: '',
+    component: V4pStartComponent
+  },
+  {
+    path: 'voting',
     component: V4pComponent
   }, {
-    path: 'v4p',
-    component: V4pStartComponent
-  }, {
-    path: 'v4p/end',
+    path: 'end',
     component: V4pEndComponent
   },
 ];

@@ -6,8 +6,8 @@ import {FileUploader} from 'ng2-file-upload';
 import {CurrentUser} from '../../../security/current-user.service';
 import * as Marked from 'marked';
 import {Location} from '@angular/common';
-import 'rxjs/add/operator/switchMap';
 import {environment} from '../../../../environments/environment';
+import {switchMap} from 'rxjs/operators';
 
 @Component({
   templateUrl: './partner.component.html'
@@ -35,7 +35,9 @@ export class PartnerComponent {
 
 
     this.route.params
-      .switchMap((params) => this.service.getBy(params['id']))
+      .pipe(
+        switchMap((params) => this.service.getBy(params['id']))
+      )
       .subscribe((partner) => {
         this.partner = partner;
         $(window).scrollTop(0);
@@ -55,6 +57,6 @@ export class PartnerComponent {
 
   delete() {
     this.service.delete(this.partner)
-      .subscribe((response) => this.location.back());
+      .subscribe(() => this.location.back());
   }
 }

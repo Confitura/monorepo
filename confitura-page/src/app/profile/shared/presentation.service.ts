@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 import {Presentation} from './presentation.model';
-import {Response} from '@angular/http';
 import {Tag} from './tag.model';
 import {Observable} from 'rxjs/Observable';
 import {CurrentUser} from '../../security/current-user.service';
 import {User} from '../../pages/profile/user.model';
 import {HttpClient, HttpParams} from '@angular/common/http';
+import {map} from 'rxjs/operators';
 
 @Injectable()
 export class PresentationService {
@@ -21,7 +21,7 @@ export class PresentationService {
 
   allTags() {
     return this.http.get<EmbeddedTags>('/tags')
-      .map(response => response._embedded.tags);
+      .pipe(map(response => response._embedded.tags));
   }
 
   getAll(): Observable<Presentation[]> {
@@ -31,13 +31,13 @@ export class PresentationService {
     }
     const params = new HttpParams().set('projection', 'inlineSpeaker');
     return this.http.get<EmbeddedPresentations>(url, {params})
-      .map(response => response._embedded.presentations);
+      .pipe(map(response => response._embedded.presentations));
 
   }
 
   getAllFor(userId: string): Observable<Presentation[]> {
     return this.http.get<EmbeddedPresentations>(`/users/${userId}/presentations`)
-      .map(response => response._embedded.presentations);
+      .pipe(map(response => response._embedded.presentations));
   }
 
   getOne(id: string): Observable<Presentation> {
@@ -51,7 +51,7 @@ export class PresentationService {
 
   getCospeakers(id: string): Observable<User[]> {
     return this.http.get<EmbeddedUsers>(`/presentations/${id}/cospeakers`)
-      .map(response => response._embedded.users);
+      .pipe(map(response => response._embedded.users));
   }
 
   accept(presentation: Presentation) {
@@ -66,6 +66,7 @@ export class PresentationService {
 class EmbeddedTags {
   _embedded: { tags: Tag[] };
 }
+
 class EmbeddedUsers {
   _embedded: { users: User[] };
 }

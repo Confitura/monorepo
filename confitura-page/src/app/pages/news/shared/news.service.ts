@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {News} from './news.model';
 import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
 import {HttpClient, HttpParams} from '@angular/common/http';
+import {map} from 'rxjs/operators';
 
 @Injectable()
 export class NewsService {
@@ -16,7 +16,7 @@ export class NewsService {
       .set('sort', 'creationDate,desc');
 
     return this.http.get<EmbeddedNews>(`/news/search/published`, {params})
-      .map(response => response._embedded.news);
+      .pipe(map(response => response._embedded.news));
   }
 }
 

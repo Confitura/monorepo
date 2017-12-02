@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
 import {Room} from './room.model';
 import {TimeSlot} from './time-slot.model';
 import {AgendaEntry} from './agenda.model';
-import 'rxjs/add/observable/zip';
 import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/observable/zip';
 
 
 @Injectable()
