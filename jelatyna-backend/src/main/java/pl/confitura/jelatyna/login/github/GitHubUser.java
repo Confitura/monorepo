@@ -18,7 +18,7 @@ public class GitHubUser extends OAuthUserBase {
     private String bio;
 
     public GitHubUser() {
-        super("github");
+        super(GithubService.SYSTEM);
     }
 
     @Override

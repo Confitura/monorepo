@@ -16,7 +16,7 @@ public class GoogleUser extends OAuthUserBase {
     private String displayName;
 
     protected GoogleUser() {
-        super("google");
+        super(GoogleService.SYSTEM);
     }
 
     @Override

@@ -14,9 +14,6 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-import pl.confitura.jelatyna.login.facebook.FacebookConfigurationProperties;
-import pl.confitura.jelatyna.login.github.GitHubConfigurationProperties;
-import pl.confitura.jelatyna.login.google.GoogleConfigurationProperties;
 import pl.confitura.jelatyna.login.twitter.TwitterConfigurationProperties;
 import pl.confitura.jelatyna.mail.MailConfigurationProperties;
 import pl.confitura.jelatyna.presentation.Tag;
@@ -31,11 +28,8 @@ import pl.confitura.jelatyna.presentation.TagRepository;
 )
 @EnableConfigurationProperties(
         {
-                FacebookConfigurationProperties.class,
-                GitHubConfigurationProperties.class,
                 TwitterConfigurationProperties.class,
-                MailConfigurationProperties.class,
-                GoogleConfigurationProperties.class,
+                MailConfigurationProperties.class
         }
 )
 public class JelatynaApplication {
