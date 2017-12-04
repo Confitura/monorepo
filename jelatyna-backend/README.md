@@ -24,3 +24,15 @@ to be an admin use twitter to login
 
 ### volunteer
 to be volunteer login with gmail account (google+)
+
+## access to db
+
+### connect to db from IDEA
+You can use h2 server mode to connect from external too like IDEA Database tool.
+To do it use same version of driver used in app and connect using `jdbc:h2:tcp://localhost:9092/mem:jelatyna` url and `confitura` as both user and password
+
+### store changes
+By default application starts with in memory h2 database. This means that with every restart application state is the same.
+
+If you want to store your changes you can use file base storage. Change url in `application-fake-db.yml` to `jdbc:h2:PATH_TO_YOUR_STORAGE` and use `jdbc:h2:tcp://localhost:9092/PATH_TO_YOUR_STORAGE` to connect via tcp (eg. from IDEA)
+
