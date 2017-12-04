@@ -5,13 +5,15 @@ import lombok.Data;
 import pl.confitura.jelatyna.login.OAuthUserBase;
 import pl.confitura.jelatyna.user.User;
 
+import static pl.confitura.jelatyna.login.facebook.FacebookService.SYSTEM;
+
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class FacebookUser extends OAuthUserBase {
     private String name;
 
     protected FacebookUser() {
-        super("facebook");
+        super(SYSTEM);
     }
 
     @Override

@@ -1,26 +1,25 @@
 server:
   port: {{port}}
   context-path: /api
-
 twitter:
   api-key: {{twitter_key}}
   api-secret: {{twitter_secret}}
   callback: {{twitter_callback}}
+app.oauth.oauth2:
+  facebook:
+    api-key: {{facebook_key}}
+    api-secret: {{facebook_secret}}
+    callback: {{facebook_callback}}
 
-facebook:
-  api-key: {{facebook_key}}
-  api-secret: {{facebook_secret}}
-  callback: {{facebook_callback}}
+  github:
+    api-key: {{github_key}}
+    api-secret: {{github_secret}}
+    callback: {{github_callback}}
 
-github:
-  api-key: {{github_key}}
-  api-secret: {{github_secret}}
-  callback: {{github_callback}}
-
-google:
-  api-key: {{google_key}}
-  api-secret: {{google_secret}}
-  callback: {{google_callback}}
+  google:
+    api-key: {{google_key}}
+    api-secret: {{google_secret}}
+    callback: {{google_callback}}
 
 jwt:
   key: {{jwt_key}}
