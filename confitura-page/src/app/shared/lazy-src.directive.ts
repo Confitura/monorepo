@@ -1,10 +1,11 @@
-import {Directive, HostBinding, Input, OnInit} from '@angular/core';
+import {Directive, HostBinding, Input, OnChanges, SimpleChanges} from '@angular/core';
 import * as lozad from 'lozad';
 
 @Directive({
   selector: '[cfLazySrc]'
 })
-export class LazySrcDirective implements OnInit {
+export class LazySrcDirective implements OnChanges {
+
 
   @Input()
   cfLazySrc: string;
@@ -19,7 +20,7 @@ export class LazySrcDirective implements OnInit {
 
   }
 
-  ngOnInit(): void {
+  ngOnChanges(changes: SimpleChanges): void {
     this.dataSrc = this.cfLazySrc;
     setTimeout(() => {
       lozad().observe();
