@@ -20,10 +20,10 @@ When starting app in development mode application will not use real oAuth provid
 Instead there are few fake accounts. Details are below
 
 ### admin
-to be an admin use twitter to login 
+to be an admin use Google to login 
 
 ### volunteer
-to be volunteer login with gmail account (google+)
+to be volunteer login with facebook
 
 ## access to db
 
