@@ -6,9 +6,7 @@
     "module": "es2015",
     "types": [
       "bootstrap",
-      "datatables.net",
-      "dw-bxslider-4",
-      "sweetalert"
+      "dw-bxslider-4"
     ]
   },
   "exclude": [
