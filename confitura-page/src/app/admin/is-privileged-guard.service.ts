@@ -1,5 +1,5 @@
 import {ActivatedRouteSnapshot, CanActivate, CanActivateChild, RouterStateSnapshot} from '@angular/router';
-import {CurrentUser} from '../security/current-user.service';
+import {CurrentUser} from '../core/security/current-user.service';
 import {Injectable} from '@angular/core';
 
 @Injectable()

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {CurrentUser} from '../../security/current-user.service';
-import {LoginService} from '../../security/login.service';
+import {CurrentUser} from '../../core/security/current-user.service';
+import {LoginService} from '../../core/security/login.service';
 import {MenuItem} from './menu-item.model';
 import {User} from '../../pages/profile/user.model';
 import {Router} from '@angular/router';

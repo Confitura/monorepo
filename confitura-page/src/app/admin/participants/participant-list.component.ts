@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {ParticipantService} from './participant.service';
 import {Participant} from './participant.model';
 import {FileUploader} from 'ng2-file-upload';
-import {CurrentUser} from '../../security/current-user.service';
-import {ConfirmationService} from '../../shared/confirmation.service';
+import {CurrentUser} from '../../core/security/current-user.service';
+import {ConfirmationService} from '../../core/confirmation.service';
 import {environment} from '../../../environments/environment';
 
 @Component({

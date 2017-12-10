@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {CurrentUser} from './current-user.service';
 import {Observable} from 'rxjs/Observable';
 import {map} from 'rxjs/operators';
-import {JwtUser} from '../pages/home/jwt-user.model';
+import {JwtUser} from '../../pages/home/jwt-user.model';
 import {HttpClient, HttpParams} from '@angular/common/http';
 
 @Injectable()

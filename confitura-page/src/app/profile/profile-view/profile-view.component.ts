@@ -5,7 +5,7 @@ import {UserService} from '../../pages/profile/user.service';
 import {Presentation} from '../shared/presentation.model';
 import {PresentationService} from '../shared/presentation.service';
 import {ActivatedRoute, Params} from '@angular/router';
-import {ConfirmationService} from '../../shared/confirmation.service';
+import {ConfirmationService} from '../../core/confirmation.service';
 
 @Component({
   templateUrl: './profile-view.component.html',

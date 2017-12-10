@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Presentation} from './presentation.model';
 import {Tag} from './tag.model';
 import {Observable} from 'rxjs/Observable';
-import {CurrentUser} from '../../security/current-user.service';
+import {CurrentUser} from '../../core/security/current-user.service';
 import {User} from '../../pages/profile/user.model';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {map} from 'rxjs/operators';

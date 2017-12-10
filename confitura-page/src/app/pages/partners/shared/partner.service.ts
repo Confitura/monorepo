@@ -2,8 +2,8 @@ import {Partner} from './partner.model';
 import {Observable} from 'rxjs/Observable';
 import {map, reduce, switchMap} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
-import {CurrentUser} from '../../../security/current-user.service';
-import {ImageResizer} from '../../../shared/ImageResizer.service';
+import {CurrentUser} from '../../../core/security/current-user.service';
+import {ImageResizer} from '../../../core/ImageResizer.service';
 import {HttpClient} from '@angular/common/http';
 
 @Injectable()

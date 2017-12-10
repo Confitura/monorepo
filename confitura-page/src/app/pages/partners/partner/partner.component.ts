@@ -3,7 +3,7 @@ import {Component} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Partner} from '../shared/partner.model';
 import {FileUploader} from 'ng2-file-upload';
-import {CurrentUser} from '../../../security/current-user.service';
+import {CurrentUser} from '../../../core/security/current-user.service';
 import * as Marked from 'marked';
 import {Location} from '@angular/common';
 import {environment} from '../../../../environments/environment';

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {LoginService} from '../../security/login.service';
+import {LoginService} from '../../core/security/login.service';
 import {JwtUser} from '../home/jwt-user.model';
 import {environment} from '../../../environments/environment';
 

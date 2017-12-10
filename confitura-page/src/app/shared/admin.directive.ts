@@ -1,5 +1,5 @@
 import {Directive, OnInit, TemplateRef, ViewContainerRef} from '@angular/core';
-import {CurrentUser} from '../security/current-user.service';
+import {CurrentUser} from '../core/security/current-user.service';
 
 @Directive({
   selector: '[cfAdmin]'
