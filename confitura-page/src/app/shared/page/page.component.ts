@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {PageService} from './page.service';
 import {Page} from './page.model';
+import {PageService} from '../../core/page.service';
 
 @Component({
   selector: 'cf-page',
@@ -13,14 +13,13 @@ export class PageComponent implements OnInit {
 
   page: Page;
 
-  ngOnInit(): void {
-    this.service.get(this.title)
-      .subscribe(page => this.page = page);
-  }
-
   constructor(private service: PageService) {
 
   }
 
+  ngOnInit(): void {
+    this.service.get(this.title)
+      .subscribe(page => this.page = page);
+  }
 
 }

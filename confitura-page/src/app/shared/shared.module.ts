@@ -7,11 +7,13 @@ import {PhotoComponent} from './photo/photo.component';
 import {SocialLinksComponent} from './social-links/social-links.component';
 import {HttpClientModule} from '@angular/common/http';
 import {LazySrcDirective} from './lazy-src.directive';
+import {PageComponent} from './page/page.component';
 
 @NgModule({
   imports: [CommonModule, HttpClientModule],
-  declarations: [AdminDirective, PhotoComponent, SocialLinksComponent, LazySrcDirective],
-  exports: [CommonModule, FormsModule, RouterModule, AdminDirective, PhotoComponent, SocialLinksComponent, LazySrcDirective]
+  declarations: [AdminDirective, PhotoComponent, SocialLinksComponent, LazySrcDirective, PageComponent],
+  exports: [CommonModule, FormsModule, RouterModule, AdminDirective, PhotoComponent,
+    SocialLinksComponent, LazySrcDirective, PageComponent]
 })
 export class SharedModule {
 

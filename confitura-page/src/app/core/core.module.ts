@@ -19,12 +19,13 @@ import {NavigationComponent} from './navigation/navigation.component';
 import {FooterComponent} from './footer/footer.component';
 import {CookiesComponent} from './cookies/cookies.component';
 import {MenuItemComponent} from './navigation/menu-item.component';
+import {PageService} from './page.service';
 
 @NgModule({
   imports: [CommonModule, HttpClientModule, RouterModule],
   declarations: [NavigationComponent, FooterComponent, CookiesComponent, MenuItemComponent],
   providers: [LoginService, CurrentUser, ImageResizer, ConfirmationService, UserService, PresentationService,
-    PartnerService, ParticipantService, AgendaService,
+    PartnerService, ParticipantService, AgendaService, PageService,
     {
       provide: HAMMER_GESTURE_CONFIG,
       useClass: HammerConfig,
