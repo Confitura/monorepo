@@ -1,6 +1,5 @@
 import {AppComponent} from './app.component';
 import {NgModule} from '@angular/core';
-import {LayoutModule} from './layout/layout.module';
 import {PagesModule} from './pages/pages.module';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -13,7 +12,7 @@ import {CoreModule} from './core/core.module';
 
 
 @NgModule({
-  imports: [LayoutModule, CoreModule, PagesModule, BrowserModule, BrowserAnimationsModule,
+  imports: [CoreModule, PagesModule, BrowserModule, BrowserAnimationsModule,
     ProfileModule, AppRoutingModule, RegistrationModule,
     NgLoadingBarModule.forRoot(), HttpClientModule
   ],

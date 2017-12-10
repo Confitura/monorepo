@@ -15,9 +15,14 @@ import {TokenInterceptor} from './security/token-interceptor.service';
 import {HammerConfig} from '../HammerConfig';
 import {PartnerService} from '../pages/partners/shared/partner.service';
 import {HAMMER_GESTURE_CONFIG} from '@angular/platform-browser';
+import {NavigationComponent} from './navigation/navigation.component';
+import {FooterComponent} from './footer/footer.component';
+import {CookiesComponent} from './cookies/cookies.component';
+import {MenuItemComponent} from './navigation/menu-item.component';
 
 @NgModule({
-  imports: [CommonModule, HttpClientModule],
+  imports: [CommonModule, HttpClientModule, RouterModule],
+  declarations: [NavigationComponent, FooterComponent, CookiesComponent, MenuItemComponent],
   providers: [LoginService, CurrentUser, ImageResizer, ConfirmationService, UserService, PresentationService,
     PartnerService, ParticipantService, AgendaService,
     {
@@ -34,7 +39,7 @@ import {HAMMER_GESTURE_CONFIG} from '@angular/platform-browser';
       useClass: BaseUrlInterceptor,
       multi: true,
     }],
-  exports: [CommonModule, RouterModule]
+  exports: [CommonModule, RouterModule, NavigationComponent, FooterComponent, CookiesComponent]
 })
 export class CoreModule {
 
