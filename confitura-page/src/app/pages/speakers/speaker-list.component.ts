@@ -1,8 +1,7 @@
 import {Component} from '@angular/core';
-import {UserService} from '../profile/user.service';
 import {Observable} from 'rxjs/Observable';
-import {User} from '../profile/user.model';
-
+import {User} from '../../core/user/user.model';
+import {UserService} from '../../core/user/user.service';
 
 @Component({
   templateUrl: './speaker-list.component.html',

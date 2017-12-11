@@ -10,7 +10,6 @@ import {BaseUrlInterceptor} from '../shared/base-url-interceptor.service';
 import {AgendaService} from '../pages/agenda/shared/agenda.service';
 import {PresentationService} from '../profile/shared/presentation.service';
 import {ParticipantService} from '../admin/participants/participant.service';
-import {UserService} from '../pages/profile/user.service';
 import {TokenInterceptor} from './security/token-interceptor.service';
 import {HammerConfig} from '../HammerConfig';
 import {PartnerService} from '../pages/partners/shared/partner.service';
@@ -19,10 +18,16 @@ import {NavigationComponent} from './navigation/navigation.component';
 import {FooterComponent} from './footer/footer.component';
 import {CookiesComponent} from './cookies/cookies.component';
 import {MenuItemComponent} from './navigation/menu-item.component';
+import {UserService} from './user/user.service';
 
 @NgModule({
   imports: [CommonModule, HttpClientModule, RouterModule],
-  declarations: [NavigationComponent, FooterComponent, CookiesComponent, MenuItemComponent],
+  declarations: [
+    NavigationComponent,
+    FooterComponent,
+    CookiesComponent,
+    MenuItemComponent,
+  ],
   providers: [LoginService, CurrentUser, ImageResizer, ConfirmationService, UserService, PresentationService,
     PartnerService, ParticipantService, AgendaService,
     {

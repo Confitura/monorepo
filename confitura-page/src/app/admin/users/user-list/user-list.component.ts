@@ -1,8 +1,8 @@
-import {UserService} from '../../../pages/profile/user.service';
 import {Component, OnInit} from '@angular/core';
-import {User} from '../../../pages/profile/user.model';
 import {Observable} from 'rxjs/Observable';
 import {Router} from '@angular/router';
+import {User} from '../../../core/user/user.model';
+import {UserService} from '../../../core/user/user.service';
 
 @Component({
   templateUrl: './user-list.component.html'
@@ -10,7 +10,8 @@ import {Router} from '@angular/router';
 export class UserListComponent implements OnInit {
   list: Observable<User[]>;
 
-  constructor(private service: UserService, private router: Router) {
+  constructor(private service: UserService,
+              private router: Router) {
 
   }
 

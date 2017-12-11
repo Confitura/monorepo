@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {OrganizerService} from './organizer.service';
 import {Observable} from 'rxjs/Observable';
 import {Person} from './person.model';
-import {User} from '../profile/user.model';
 import {PersonModalService} from '../../shared/person-modal/person-modal.service';
+import {User} from '../../core/user/user.model';
 
 @Component({
   templateUrl: './about.component.html',
@@ -27,6 +27,4 @@ export class AboutComponent implements OnInit {
   show(user: User) {
     this.personModalService.showFor(user);
   }
-
-
 }

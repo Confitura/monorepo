@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import {User} from '../../pages/profile/user.model';
-import {UserService} from '../../pages/profile/user.service';
 import {Presentation} from '../shared/presentation.model';
 import {PresentationService} from '../shared/presentation.service';
 import {ActivatedRoute, Params} from '@angular/router';
 import {ConfirmationService} from '../../core/confirmation.service';
+import {User} from '../../core/user/user.model';
+import {UserService} from '../../core/user/user.service';
 
 @Component({
   templateUrl: './profile-view.component.html',

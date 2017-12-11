@@ -2,10 +2,10 @@ import {Component, OnDestroy} from '@angular/core';
 import {V4pService} from './v4p.service';
 import {Vote} from './vote.model';
 import {Presentation} from '../../profile/shared/presentation.model';
-import {User} from '../profile/user.model';
 import {Router} from '@angular/router';
 import sortBy from 'lodash.sortby';
 import {PersonModalService} from '../../shared/person-modal/person-modal.service';
+import {User} from '../../core/user/user.model';
 
 // import {Hotkey, HotkeysService} from "angular2-hotkeys";
 @Component({

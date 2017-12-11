@@ -1,9 +1,9 @@
 import {ActivatedRouteSnapshot, CanDeactivate, RouterStateSnapshot} from '@angular/router';
 import {Injectable} from '@angular/core';
 import {CurrentUser} from '../../core/security/current-user.service';
-import {UserService} from '../../pages/profile/user.service';
 import {ProfileEditComponent} from '../profile-edit/profile-edit.component';
-import {User} from '../../pages/profile/user.model';
+import {UserService} from '../../core/user/user.service';
+import {User} from '../../core/user/user.model';
 
 @Injectable()
 export class ProfileCompleteGuard implements CanDeactivate<ProfileEditComponent> {
