@@ -3,7 +3,6 @@ import {AdminRoutingModule} from './admin-routing.module';
 import {PartnerEditComponent} from './partners/partner/partner-edit.component';
 import {SharedModule} from '../shared/shared.module';
 import {UserListComponent} from './users/user-list/user-list.component';
-import {PersonModule} from '../persons/persons.module';
 import {ParticipantListComponent} from './participants/participant-list.component';
 import {FileUploadModule} from 'ng2-file-upload';
 import {AgendaComponent} from './agenda/agenda.component';
@@ -14,7 +13,7 @@ import {PresentationPickerComponent} from './agenda/presentaion-picker/presentai
 import {ScannerComponent} from './scanner/scanner.component';
 
 @NgModule({
-  imports: [AdminRoutingModule, SharedModule, PersonModule, FileUploadModule],
+  imports: [AdminRoutingModule, SharedModule, FileUploadModule],
   declarations: [
     PartnerEditComponent,
     UserListComponent,

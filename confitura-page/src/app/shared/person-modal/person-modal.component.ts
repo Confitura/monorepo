@@ -8,7 +8,6 @@ import {Router} from '@angular/router';
   selector: 'cf-person-modal',
   templateUrl: './person-modal.component.html',
   styleUrls: ['./person-modal.component.scss']
-
 })
 export class PersonModalComponent {
   model: User = new User();

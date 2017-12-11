@@ -2,10 +2,10 @@ import {Component, OnDestroy} from '@angular/core';
 import {V4pService} from './v4p.service';
 import {Vote} from './vote.model';
 import {Presentation} from '../../profile/shared/presentation.model';
-import {PersonModalService} from '../../persons/person-modal/person-modal.service';
 import {User} from '../profile/user.model';
 import {Router} from '@angular/router';
 import sortBy from 'lodash.sortby';
+import {PersonModalService} from '../../shared/person-modal/person-modal.service';
 
 // import {Hotkey, HotkeysService} from "angular2-hotkeys";
 @Component({
@@ -21,7 +21,7 @@ export class V4pComponent implements OnDestroy {
   short = true;
   loading = false;
 
-  constructor(private  service: V4pService,
+  constructor(private service: V4pService,
               private modal: PersonModalService,
               private router: Router,
               // private hotkeys: HotkeysService
@@ -31,7 +31,7 @@ export class V4pComponent implements OnDestroy {
       router.navigate(['/v4p']);
     } else {
       service.start(token).subscribe((votes) => {
-        this.votes = sortBy(votes, 'order');
+          this.votes = sortBy(votes, 'order');
           this.currentIdx = this.votes.filter(it => it.rate != null).length;
           if (this.currentIdx === this.votes.length) {
             this.done();

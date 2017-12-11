@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {PresentationService} from '../../../profile/shared/presentation.service';
 import {Presentation} from '../../../profile/shared/presentation.model';
-import {PersonModalService} from '../../../persons/person-modal/person-modal.service';
 import {ActivatedRoute} from '@angular/router';
 import {UserService} from '../../profile/user.service';
 import {User} from '../../profile/user.model';
+import {PersonModalService} from '../../../shared/person-modal/person-modal.service';
 
 @Component({
   templateUrl: './presentation-list.component.html',

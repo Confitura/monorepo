@@ -6,7 +6,6 @@ import {NewsComponent} from './news/news/news.component';
 import {OrganizerService} from './about/organizer.service';
 import {AboutComponent} from './about/about.component';
 import {SharedModule} from '../shared/shared.module';
-import {PersonModule} from '../persons/persons.module';
 import {PartnersComponent} from './partners/partner-list/partners.component';
 import {PartnerComponent} from './partners/partner/partner.component';
 import {RouterModule} from '@angular/router';
@@ -20,7 +19,7 @@ import {AgendaEntryModalComponent} from './agenda/entry-modal/entry-modal.compon
 import {LoginComponent} from './login/login.component';
 
 @NgModule({
-  imports: [SharedModule, PersonModule, RouterModule, FileUploadModule],
+  imports: [SharedModule, RouterModule, FileUploadModule],
   declarations: [
     HomeComponent,
     NewsBannerComponent,
