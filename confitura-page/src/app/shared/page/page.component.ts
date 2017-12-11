@@ -1,10 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Page} from './page.model';
-import {PageService} from '../../core/page.service';
+import {PageService} from './page.service';
 
 @Component({
   selector: 'cf-page',
-  template: '<div *ngIf="page" [innerHTML]="page.content"></div>'
+  template: '<div *ngIf="page" [innerHTML]="page.content"></div>',
+  providers: [PageService]
 })
 
 export class PageComponent implements OnInit {
