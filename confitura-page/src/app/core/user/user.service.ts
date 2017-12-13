@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {User} from './user.model';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import {ImageResizer} from '../../shared/ImageResizer.service';
+import {ImageResizer} from '../../core/ImageResizer.service';
 import {map} from 'rxjs/operators';
 
 @Injectable()

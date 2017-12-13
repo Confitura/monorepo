@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {User} from '../../pages/profile/user.model';
-import {CurrentUser} from '../../security/current-user.service';
+import {CurrentUser} from '../../core/security/current-user.service';
 import {FileUploader} from 'ng2-file-upload';
 import {environment} from '../../../environments/environment';
+import {User} from '../../core/user/user.model';
 
 @Component({
   selector: 'cf-person-view',

@@ -1,6 +1,6 @@
 import {Component, ElementRef, Input, ViewChild} from '@angular/core';
 import {PersonModalService} from '../person-modal/person-modal.service';
-import {User} from '../../pages/profile/user.model';
+import {User} from '../../core/user/user.model';
 
 @Component({
   selector: 'cf-person',

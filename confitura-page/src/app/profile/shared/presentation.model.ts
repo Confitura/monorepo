@@ -1,4 +1,4 @@
-import {User} from '../../pages/profile/user.model';
+import {User} from '../../core/user/user.model';
 
 export class Presentation {
   id: string;

@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {CurrentUser} from '../../security/current-user.service';
-import {LoginService} from '../../security/login.service';
+import {CurrentUser} from '../security/current-user.service';
+import {LoginService} from '../security/login.service';
 import {MenuItem} from './menu-item.model';
-import {User} from '../../pages/profile/user.model';
 import {Router} from '@angular/router';
 
 @Component({
@@ -42,7 +41,7 @@ export class NavigationComponent implements OnInit {
   ngOnInit(): void {
     this.loggedIn = this.currentUser.isAvailable();
     this.currentUser
-      .onLogin.subscribe((user: User) => this.loggedIn = this.currentUser.isAvailable());
+      .onLogin.subscribe(() => this.loggedIn = this.currentUser.isAvailable());
   }
 
   logout() {

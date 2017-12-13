@@ -1,9 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
-import {UserService} from '../../pages/profile/user.service';
-import {User} from '../../pages/profile/user.model';
 import {FormControl} from '@angular/forms';
 import {Location} from '@angular/common';
+import {User} from '../../core/user/user.model';
+import {UserService} from '../../core/user/user.service';
 
 @Component({
   templateUrl: './profile-edit.component.html',

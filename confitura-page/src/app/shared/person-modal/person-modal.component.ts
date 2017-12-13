@@ -1,14 +1,13 @@
 import {Component} from '@angular/core';
 import {PersonModalService} from './person-modal.service';
-import {User} from '../../pages/profile/user.model';
 import {Presentation} from '../../profile/shared/presentation.model';
 import {Router} from '@angular/router';
+import {User} from '../../core/user/user.model';
 
 @Component({
   selector: 'cf-person-modal',
   templateUrl: './person-modal.component.html',
   styleUrls: ['./person-modal.component.scss']
-
 })
 export class PersonModalComponent {
   model: User = new User();

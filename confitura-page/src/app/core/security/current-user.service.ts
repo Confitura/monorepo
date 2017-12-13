@@ -1,5 +1,5 @@
 import {EventEmitter, Injectable} from '@angular/core';
-import {JwtUser} from '../pages/home/jwt-user.model';
+import {JwtUser} from '../../pages/home/jwt-user.model';
 import {Base64} from 'js-base64';
 import {Router} from '@angular/router';
 

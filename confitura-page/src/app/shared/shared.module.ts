@@ -1,21 +1,45 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {LoginService} from '../security/login.service';
-import {CurrentUser} from '../security/current-user.service';
 import {RouterModule} from '@angular/router';
 import {FormsModule} from '@angular/forms';
 import {AdminDirective} from './admin.directive';
-import {ImageResizer} from './ImageResizer.service';
 import {PhotoComponent} from './photo/photo.component';
 import {SocialLinksComponent} from './social-links/social-links.component';
 import {HttpClientModule} from '@angular/common/http';
 import {LazySrcDirective} from './lazy-src.directive';
+import {PageComponent} from './page/page.component';
+import {PersonModalComponent} from './person-modal/person-modal.component';
+import {PersonComponent} from './person/person.component';
+import {PersonViewComponent} from './person-view/person-view.component';
+import {FileUploadModule} from 'ng2-file-upload';
+import {PersonModalService} from './person-modal/person-modal.service';
 
 @NgModule({
-  imports: [CommonModule, HttpClientModule],
-  declarations: [AdminDirective, PhotoComponent, SocialLinksComponent, LazySrcDirective],
-  providers: [LoginService, CurrentUser, ImageResizer],
-  exports: [CommonModule, FormsModule, RouterModule, AdminDirective, PhotoComponent, SocialLinksComponent, LazySrcDirective]
+  imports: [CommonModule, HttpClientModule, FileUploadModule],
+  declarations: [
+    AdminDirective,
+    PhotoComponent,
+    SocialLinksComponent,
+    LazySrcDirective,
+    PageComponent,
+    PersonModalComponent,
+    PersonComponent,
+    PersonViewComponent
+  ],
+  exports: [
+    CommonModule,
+    FormsModule,
+    RouterModule,
+    AdminDirective,
+    PhotoComponent,
+    SocialLinksComponent,
+    LazySrcDirective,
+    PageComponent,
+    PersonModalComponent,
+    PersonComponent,
+    PersonViewComponent
+  ],
+  providers: [PersonModalService]
 })
 export class SharedModule {
 

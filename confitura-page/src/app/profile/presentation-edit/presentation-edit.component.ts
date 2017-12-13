@@ -4,7 +4,7 @@ import {Presentation} from '../shared/presentation.model';
 import {PresentationService} from '../shared/presentation.service';
 import {Tag} from '../shared/tag.model';
 import {FormControl} from '@angular/forms';
-import {CurrentUser} from '../../security/current-user.service';
+import {CurrentUser} from '../../core/security/current-user.service';
 import {Location} from '@angular/common';
 import {Observable} from 'rxjs/Observable';
 import {flatMap, map} from 'rxjs/operators';

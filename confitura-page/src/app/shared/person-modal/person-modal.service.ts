@@ -1,5 +1,5 @@
 import {EventEmitter, Injectable} from '@angular/core';
-import {User} from '../../pages/profile/user.model';
+import {User} from '../../core/user/user.model';
 
 @Injectable()
 export class PersonModalService {

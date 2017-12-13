@@ -1,7 +1,7 @@
 import {Component, forwardRef, Input} from '@angular/core';
-import {User} from '../../pages/profile/user.model';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {UserService} from '../../pages/profile/user.service';
+import {User} from '../../core/user/user.model';
+import {UserService} from '../../core/user/user.service';
 
 /* based on https://blog.thoughtram.io/angular/2016/07/27/custom-form-controls-in-angular-2.html */
 @Component({

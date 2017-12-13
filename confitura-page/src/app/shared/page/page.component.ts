@@ -1,10 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {PageService} from './page.service';
 import {Page} from './page.model';
+import {PageService} from './page.service';
 
 @Component({
   selector: 'cf-page',
-  template: '<div *ngIf="page" [innerHTML]="page.content"></div>'
+  template: '<div *ngIf="page" [innerHTML]="page.content"></div>',
+  providers: [PageService]
 })
 
 export class PageComponent implements OnInit {
@@ -13,14 +14,13 @@ export class PageComponent implements OnInit {
 
   page: Page;
 
-  ngOnInit(): void {
-    this.service.get(this.title)
-      .subscribe(page => this.page = page);
-  }
-
   constructor(private service: PageService) {
 
   }
 
+  ngOnInit(): void {
+    this.service.get(this.title)
+      .subscribe(page => this.page = page);
+  }
 
 }
