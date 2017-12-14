@@ -23,7 +23,11 @@ export class CurrentUser {
   }
 
   get(): JwtUser {
-    return JSON.parse(localStorage.getItem('user')) as JwtUser;
+    if (this.isAvailable()) {
+      return JSON.parse(localStorage.getItem('user')) as JwtUser;
+    } else {
+      return new JwtUser();
+    }
   }
 
   getToken() {
@@ -44,6 +48,10 @@ export class CurrentUser {
 
   isPrivileged() {
     return this.isVolunteer() || this.isAdmin();
+  }
+
+  is(id: string) {
+    return id && id === this.get().jti;
   }
 
 

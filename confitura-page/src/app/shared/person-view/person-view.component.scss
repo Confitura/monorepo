@@ -5,27 +5,25 @@
   }
   .person-photo {
     flex-shrink: 0;
-    .img-speaker {
-      position: relative;
+    position: relative;
+    button.btn-upload {
+      visibility: hidden;
+      position: absolute;
+      transform: translate(-50%, -100%);
+      margin-right: -50%;
+      top: 50%;
+      left: 50%;
+
+    }
+    &:hover {
       button.btn-upload {
-        visibility: hidden;
-        position: absolute;
-        transform: translate(-50%, -50%);
-        margin-right: -50%;
-        top: 50%;
-        left: 50%;
+        visibility: visible;
+      }
+    }
 
-      }
-      &:hover {
-        button.btn-upload {
-          visibility: visible;
-        }
-      }
-
-      img {
-        min-width: 300px;
-        min-height: 300px;
-      }
+    img {
+      min-width: 300px;
+      min-height: 300px;
     }
   }
 

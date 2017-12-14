@@ -13,11 +13,13 @@ import {PersonComponent} from './person/person.component';
 import {PersonViewComponent} from './person-view/person-view.component';
 import {FileUploadModule} from 'ng2-file-upload';
 import {PersonModalService} from './person-modal/person-modal.service';
+import {AdminOrOwnerDirective} from './admin-or-owner.directive';
 
 @NgModule({
   imports: [CommonModule, HttpClientModule, FileUploadModule],
   declarations: [
     AdminDirective,
+    AdminOrOwnerDirective,
     PhotoComponent,
     SocialLinksComponent,
     LazySrcDirective,
@@ -31,6 +33,7 @@ import {PersonModalService} from './person-modal/person-modal.service';
     FormsModule,
     RouterModule,
     AdminDirective,
+    AdminOrOwnerDirective,
     PhotoComponent,
     SocialLinksComponent,
     LazySrcDirective,
