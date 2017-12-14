@@ -1,4 +1,4 @@
-import {Directive, HostBinding, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Directive, ElementRef, HostBinding, Input, OnChanges, SimpleChanges} from '@angular/core';
 import * as lozad from 'lozad';
 
 @Directive({
@@ -16,15 +16,18 @@ export class LazySrcDirective implements OnChanges {
   @HostBinding('class.lozad')
   lozad = true;
 
-  constructor() {
+  @HostBinding('src')
+  src: string;
 
+  constructor(private element: ElementRef) {
+    console.log(element);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    this.element.nativeElement.removeAttribute('src');
+    this.element.nativeElement.removeAttribute('data-loaded');
     this.dataSrc = this.cfLazySrc;
-    setTimeout(() => {
-      lozad().observe();
-    }, 0);
+    setTimeout(() => lozad().observe(), 0);
   }
 
 
