@@ -20,7 +20,6 @@ export class LazySrcDirective implements OnChanges {
   src: string;
 
   constructor(private element: ElementRef) {
-    console.log(element);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
