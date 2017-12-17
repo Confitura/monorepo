@@ -30,7 +30,9 @@ export class UserService {
 
   getAllSpeakers(): Observable<User[]> {
     return this.http.get<EmbeddedUsers>(`/users/search/speakers`)
-      .pipe(map(response => response._embedded.users));
+      .pipe(
+        map(response => response._embedded.users)
+      );
 
   }
 
