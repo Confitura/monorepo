@@ -16,7 +16,6 @@ export class AdminOrOwnerDirective implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.cfAdminOrOwner);
     if (this.currentUser.isAdmin() || this.currentUser.is(this.cfAdminOrOwner)) {
       this.container.createEmbeddedView(this.template);
     } else {
