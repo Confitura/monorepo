@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.confitura.jelatyna.infrastructure.fakedb.FakeDbConfig;
 import pl.confitura.jelatyna.infrastructure.security.TokenService;
 import pl.confitura.jelatyna.user.User;
 
@@ -41,10 +42,13 @@ public class FakeOAuth2LoginController {
             @PathVariable("provider") String provider,
             @RequestParam("code") String code)
             throws InterruptedException, ExecutionException, IOException {
-        User user = new User()
-                .setId("dHdpdHRlci9tYXJnaWVsbQ==")
-                .setName("Fake User " + provider)
-                .setAdmin(true);
+
+        User user = FakeDbConfig.bySystem.get(provider);
+        if (user == null) {
+            user = new User()
+                    .setId("dHdpdHRlci9tYXJnaWVsbQ==")
+                    .setName("Fake User " + provider);
+        }
         return ResponseEntity.ok(tokenService.asToken(user));
 
     }
