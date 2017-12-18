@@ -13,8 +13,8 @@ for page to be fully functional you also need a backend: [jelatyna-backend](http
 
 3. Install node packages
 
-`yarn install`
+   `yarn install`
 
 ### start page
-`yarn start`
+   `yarn start`
  
