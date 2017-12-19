@@ -1,0 +1,26 @@
+@import "../../../sizes";
+
+.partner-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 1140px;
+  margin: 50px auto auto;
+  padding-top: 30px;
+  align-items: center;
+  @media all and (min-width: $size_small) {
+    flex-direction: row;
+    align-items: start;
+    margin: auto;
+  }
+  .partner-logo {
+    width: 350px;
+    flex-shrink: 0;
+
+  }
+  .partner-info {
+    padding: 20px;
+    @media all and (min-width: $size_small) {
+      padding-top: 0;
+    }
+  }
+}

@@ -10,7 +10,8 @@ import {environment} from '../../../../environments/environment';
 import {switchMap} from 'rxjs/operators';
 
 @Component({
-  templateUrl: './partner.component.html'
+  templateUrl: './partner.component.html',
+  styleUrls: ['partner.component.scss']
 })
 export class PartnerComponent {
   partner: Partner;
