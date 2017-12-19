@@ -3,7 +3,6 @@ import {CommonModule} from '@angular/common';
 import {LoginService} from './security/login.service';
 import {CurrentUser} from './security/current-user.service';
 import {RouterModule} from '@angular/router';
-import {ImageResizer} from './ImageResizer.service';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {ConfirmationService} from './confirmation.service';
 import {BaseUrlInterceptor} from '../shared/base-url-interceptor.service';
@@ -28,7 +27,7 @@ import {UserService} from './user/user.service';
     CookiesComponent,
     MenuItemComponent,
   ],
-  providers: [LoginService, CurrentUser, ImageResizer, ConfirmationService, UserService, PresentationService,
+  providers: [LoginService, CurrentUser, ConfirmationService, UserService, PresentationService,
     PartnerService, ParticipantService, AgendaService,
     {
       provide: HAMMER_GESTURE_CONFIG,
