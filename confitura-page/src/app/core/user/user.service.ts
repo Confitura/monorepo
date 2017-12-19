@@ -2,12 +2,11 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {User} from './user.model';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import {ImageResizer} from '../../core/ImageResizer.service';
 import {map} from 'rxjs/operators';
 
 @Injectable()
 export class UserService {
-  constructor(private http: HttpClient, private resizer: ImageResizer) {
+  constructor(private http: HttpClient) {
   }
 
   getBy(id: string, projection: string = null): Observable<User> {
@@ -15,8 +14,7 @@ export class UserService {
     if (projection) {
       params = params.set('projection', projection);
     }
-    return this.http.get<User>(`/users/${id}`, {params})
-      .pipe(map(user => ({...user, photo: this.resizer.applyResizing(user.photo)})));
+    return this.http.get<User>(`/users/${id}`, {params});
   }
 
   save(user: User) {
