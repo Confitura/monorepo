@@ -1,100 +1,112 @@
 @import "../../sizes";
 
-  .container-fluid {
-    background-color: #ffffff;
-    color: #000000;
-    .nav li a {
-      cursor: pointer;
-      padding-bottom: 0;
-      &.active {
-        text-decoration: underline;
-      }
-      &.pink, &.pink:hover {
-        text-align: center;
-        padding-left: 0;
-        padding-right: 0;
-        background: #ff0040;
-        color: #ffffff;
-        @media all and(min-width: $size_small) {
-          width: 170px;
-        }
-      }
+.container-fluid {
+  background-color: #ffffff;
+  color: #000000;
+  .nav li a {
+    cursor: pointer;
+    padding-bottom: 0;
+    &.active {
+      text-decoration: underline;
     }
-
-    @media all and (min-width: $size_small) {
-      nav, nav > div {
-        height: 100px;
-        margin-bottom: 0;
-      }
-      .nav > li > a {
-        line-height: 100px;
-        padding-top: 0;
-        padding-right: 15px;
-        padding-left: 7px;
-        font-size: 2.2rem;
-        color: black;
-        font-weight: 700;
-        &:hover {
-          text-decoration: underline;
-        }
-      }
-    }
-
-    .navbar-brand {
-      height: 100px;
-      padding-top: 0;
-      padding-bottom: 0;
-    }
-
-    .confitura-logo {
-      border: none;
-      outline: none;
-      margin-left: 20px;
-      background: url('/assets/img/logo.png') no-repeat center center;
-      background-size: contain;
-      width: 232px;
-      height: 100%;
-    }
-
-    @media all and (max-width: $size_small) {
-      nav, nav > div {
-        height: 55px;
-        margin-bottom: 0;
-      }
-      #navbar {
-        background: #ffffff !important;
-      }
-      .nav li > a {
-        line-height: 55px;
-        margin-left: 15px;
-        font-size: 2rem;
-        text-align: center;
-      }
-      .navbar-brand {
-        height: 55px;
-      }
-      .navbar-header {
-        height: 55px;
-      }
-      .confitura-logo {
-        width: 200px;
-      }
-      #mobile-menu {
-        display: block !important;
-        height: 55px;
-        line-height: 55px;
-        padding-right: 20px;
-        border: none;
-        background: none;
-        margin-top: 0;
-        margin-bottom: 0;
-        div {
-          background: url('/assets/img/mobile-menu.png') no-repeat center;
-          background-size: contain;
-          width: 30px;
-          height: 100%;
-          float: right;
-        }
+    &.pink, &.pink:hover {
+      text-align: center;
+      padding-left: 0;
+      padding-right: 0;
+      background: #ff0040;
+      color: #ffffff;
+      @media all and(min-width: $size_small) {
+        width: 170px;
       }
     }
   }
+
+  @media all and (min-width: $size_small) {
+    nav, nav > div {
+      height: 100px;
+      margin-bottom: 0;
+    }
+    .nav > li > a {
+      line-height: 100px;
+      padding-top: 0;
+      padding-right: 15px;
+      padding-left: 7px;
+      font-size: 2.2rem;
+      color: black;
+      font-weight: 700;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .navbar-brand {
+    height: 100px;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .confitura-logo {
+    border: none;
+    outline: none;
+    margin-left: 20px;
+    background: url('/assets/img/logo.png') no-repeat center center;
+    background-size: contain;
+    width: 232px;
+    height: 100%;
+  }
+  @media all and (min-width: $size_small) {
+    .navbar-brand {
+      display: none;
+    }
+  }
+  @media all and (min-width: $size_large) {
+    .navbar-brand {
+      display: block;
+    }
+  }
+
+
+
+  @media all and (max-width: $size_small) {
+    nav, nav > div {
+      height: 55px;
+      margin-bottom: 0;
+    }
+    #navbar {
+      background: #ffffff !important;
+    }
+    .nav li > a {
+      line-height: 55px;
+      margin-left: 15px;
+      font-size: 2rem;
+      text-align: center;
+    }
+    .navbar-brand {
+      height: 55px;
+    }
+    .navbar-header {
+      height: 55px;
+    }
+    .confitura-logo {
+      width: 200px;
+    }
+    #mobile-menu {
+      display: block !important;
+      height: 55px;
+      line-height: 55px;
+      padding-right: 20px;
+      border: none;
+      background: none;
+      margin-top: 0;
+      margin-bottom: 0;
+      div {
+        background: url('/assets/img/mobile-menu.png') no-repeat center;
+        background-size: contain;
+        width: 30px;
+        height: 100%;
+        float: right;
+      }
+    }
+  }
+}

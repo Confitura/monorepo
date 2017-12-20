@@ -5,9 +5,33 @@
     cursor: pointer;
     padding-bottom: 0;
     color: #000000;
-    &.active {
+    padding-top: 0;
+    font-size: 2.4rem;
+    line-height: 45px;
+    text-align: center;
+    margin-left: 0;
+
+    &:hover {
       text-decoration: underline;
     }
+
+
+    @media all and (min-width: $size_small) {
+      line-height: 55px;
+      font-size: 1.5rem;
+    }
+    @media all and (min-width: $size_medium) {
+      line-height: 100px;
+      font-weight: 700;
+      padding-right: 15px;
+      padding-left: 7px;
+      font-size: 2.4rem;
+    }
+
+      &.active {
+      text-decoration: underline;
+    }
+
     &.pink, &.pink:hover {
       text-align: center;
       padding-left: 0;
@@ -19,30 +43,16 @@
       }
     }
   }
-
-  @media all and (min-width: $size_small) {
-    a.menu-item {
-      line-height: 100px;
-      padding-top: 0;
-      padding-right: 15px;
-      padding-left: 7px;
-      font-size: 2.2rem;
-      color: black;
-      font-weight: 700;
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-
-    @media all and (max-width: $size_small) {
-
-      a.menu-item {
-        line-height: 55px;
-        margin-left: 15px;
-        font-size: 2rem;
-        text-align: center;
-      }
-
-    }
-  }
+  //a.menu-item {
+  //  line-height: 55px;
+  //  margin-left: 15px;
+  //  font-size: 2rem;
+  //  text-align: center;
+  //
+  //  @media all and (min-width: $size_small) {
+  //    a.menu-item {
+  //
+  //    }
+  //  }
+  //}
 }
