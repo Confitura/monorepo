@@ -4,18 +4,29 @@
   display: flex;
   flex-direction: column;
   max-width: 1140px;
-  margin: 50px auto auto;
-  padding-top: 30px;
-  align-items: center;
+  margin: 60px auto auto;
+  align-items: stretch;
+
   @media all and (min-width: $size_small) {
     flex-direction: row;
-    align-items: start;
     margin: auto;
   }
-  .partner-logo {
-    width: 350px;
-    flex-shrink: 0;
 
+  .partner-logo {
+    flex-shrink: 0;
+    background-color: #FFFFFF;
+    padding: 20px 40px;
+    text-align: center;
+
+    @media all and (min-width: $size_small) {
+      min-height: 500px;
+      width: 350px;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+    img {
+      margin: auto;
+    }
   }
   .partner-info {
     padding: 20px;

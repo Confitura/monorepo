@@ -1,7 +1,7 @@
 <section id="partners-confitura" class="beige">
   <div class="row-fluid beige" id="partner">
-    <div class="pb50 partner-container" *ngIf="partner">
-      <div class="beige partner-logo">
+    <div class="partner-container" *ngIf="partner">
+      <div class="partner-logo">
         <div *cfAdmin="" class="text-center">
           <input type="file" ng2FileSelect [uploader]="uploader" multiple style="visibility: hidden">
           <a role="button" (click)="uploadLogo()">Upload Logo</a> |
@@ -9,7 +9,7 @@
           <a role="button" (click)="delete()">Delete</a>
         </div>
         <a [href]="partner.www" target="_blank" rel="noopener">
-          <img class="img-responsive margin-auto" [src]="partner.logo"/>
+          <img class="img-responsive" [src]="partner.logo"/>
         </a>
       </div>
       <div class="beige partner-info">
