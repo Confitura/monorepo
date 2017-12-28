@@ -29,4 +29,10 @@ public interface PresentationRepository extends Repository<Presentation, String>
     @RestResource(path = "accepted", rel = "accepted")
     Iterable<Presentation> findAccepted();
 
+    @RestResource(exported = false)
+    Long count();
+
+    @Query("SELECT count(p.id) FROM Presentation p WHERE status ='accepted'")
+    @RestResource(exported = false)
+    Long countAccepted();
 }

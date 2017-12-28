@@ -16,3 +16,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+management:
+  context-path: /api/actuator
+  security:
+    roles: ADMIN

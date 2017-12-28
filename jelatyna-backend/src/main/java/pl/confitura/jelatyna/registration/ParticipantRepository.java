@@ -23,4 +23,15 @@ public interface ParticipantRepository extends Repository<Participant, String> {
     @RestResource(exported = false)
     @Query("FROM Participant WHERE registrationDate IS NOT NULL")
     Iterable<Participant> findAllRegistered();
+
+    @RestResource(exported = false)
+    Long count();
+
+    @Query("SELECT count(p.id) FROM Participant p WHERE registrationDate IS NOT NULL")
+    @RestResource(exported = false)
+    Long countRegistered();
+
+    @Query("SELECT count(p.id) FROM Participant p WHERE arrivalDate IS NOT NULL")
+    @RestResource(exported = false)
+    Long countArrived();
 }
