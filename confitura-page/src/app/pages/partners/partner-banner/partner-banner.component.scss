@@ -6,31 +6,34 @@
   justify-content: space-around;
   align-content: stretch;
 
+  .partner-logo-item > a {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+
   .partner-logo, .partner-logo-item {
     height: 120px;
+  }
+  flex-direction: column;
+
+  .platinum-type {
+    order: 2;
+  }
+
+  .gold-type {
+    order: 1;
+  }
+
+  .silver-type {
+    order: 3;
+  }
+  @media all and (min-width: $size_medium){
+    flex-direction: row;
 
   }
-  .gold-type .partner-logo {
-    padding-top: 15px;
-  }
-  .silver-type .partner-logo {
-    padding-top: 25px;
-  }
-  @media all and (max-width: $size_xsmall) {
-    flex-direction: column;
 
-    .platinum-type {
-      order: 1;
-    }
-
-    .gold-type {
-      order: 2;
-    }
-
-    .silver-type {
-      order: 3;
-    }
-  }
   > div {
     @media all and (min-width: $size_small) {
       flex-basis: 100%;

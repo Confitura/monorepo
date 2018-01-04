@@ -4,7 +4,7 @@
   </header>
   <section>
     <div class="row-fluid">
-      <div class="col-lg-12">
+      <div class="col-lg-12 bg-white">
         <div class="bg-white row-1140 text-center about-excerpt">
           <cf-page title="about"></cf-page>
         </div>
@@ -28,10 +28,10 @@
     </section>
     <section *ngIf="(volunteers |async)?.length > 0 ">
       <div class="row-fluid">
-        <div class="col-lg-12 speakers-confitura-header"><h2 class="h2">volunteers</h2></div>
+        <div class="col-lg-12 speakers-confitura-header bg-white"><h2 class="h2">volunteers</h2></div>
       </div>
       <div class="row-fluid">
-        <div class="col-lg-12  pb150">
+        <div class="col-lg-12  pb150 bg-white">
           <div class="row-1140">
             <div class=" organizers">
               <cf-person [model]="item" *ngFor="let item of volunteers | async" class="organizer"></cf-person>

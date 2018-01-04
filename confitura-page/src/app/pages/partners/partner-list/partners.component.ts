@@ -5,7 +5,6 @@ import {Partner} from '../shared/partner.model';
 @Component({
   templateUrl: './partners.component.html',
   styleUrls: ['./partners.component.scss']
-
 })
 export class PartnersComponent implements OnInit {
   types = ['platinum', 'gold', 'silver', 'bronze', 'media', 'technical'];

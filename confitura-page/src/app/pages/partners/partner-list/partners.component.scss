@@ -19,6 +19,7 @@ section#partners-confitura {
 
   .partners-type {
     background-color: #ffffff;
+    padding-top: 100px;
   }
 
   .partners-items {
@@ -31,7 +32,7 @@ section#partners-confitura {
   .partner-type {
     font-size: 3rem;
     font-family: 'NeuzeitGro-Bol', Verdana, Tahoma, sans-serif;
-    padding-top: 70px;
+    padding-top: 50px;
     @media all and (max-width: 768px) {
       padding-top: 5px;
       padding-bottom: 20px;
@@ -43,13 +44,6 @@ section#partners-confitura {
     align-content: stretch;
     .partner-logo {
       height: 120px;
-
-    }
-    .gold-type .partner-logo {
-      padding-top: 15px;
-    }
-    .silver-type .partner-logo {
-      padding-top: 25px;
     }
     @media all and (max-width: 768px) {
       flex-direction: column;

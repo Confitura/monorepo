@@ -1,4 +1,3 @@
-//@import url("http://hello.mywebfonts.net/count/30e5ac");
 @import "sizes";
 @import "colors";
 
@@ -14,36 +13,28 @@
   src: url('/assets/fonts/30E5AC_1_0.eot?#iefix') format('embedded-opentype'), url('/assets/fonts/30E5AC_1_0.woff2') format('woff2'), url('/assets/fonts/30E5AC_1_0.woff') format('woff'), url('/assets/fonts/30E5AC_1_0.ttf') format('truetype');
 }
 
-/* general */
-* {
-  outline: none !important;
-}
 
-html, body {
-  background-color: #ffffff;
-}
 
 body#confitura {
+  padding-left: 0;
+  padding-right: 0;
+  font-family: 'NeuzeitGro-Reg', Verdana, Tahoma, sans-serif; /* NeuzeitGro-Bol */
+  background-color: black;
   h2 {
     margin-top: 0;
   }
   @media all and (min-width: $size_small) {
     padding-top: 100px;
   }
-  font-family: 'NeuzeitGro-Reg', Verdana, Tahoma, sans-serif; /* NeuzeitGro-Bol */
-  background-color: black;
-}
 
-.container-fluid {
-  padding: 0;
-}
-
-@media (max-width: 767px) {
-  body#confitura {
-    padding-left: 0;
-    padding-right: 0;
+  ng-component > * {
+    margin-top: 55px;
+    @media all and (min-width: $size_small){
+      margin-top: 0;
+    }
   }
 }
+
 
 /* effects - css3*/
 .ease {
@@ -214,6 +205,8 @@ body#confitura {
   background: #ffffff;
   color: #000000;
   display: block;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 div[class^="col-"] {
