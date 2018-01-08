@@ -14,9 +14,9 @@ export class NavigationComponent implements OnInit {
   menu: MenuItem[] = [
     {label: 'about us', url: '/about'},
     {label: 'partners', url: '/partners'},
-    {label: 'schedule', url: '/schedule'},
-    {label: 'presentations', url: '/presentations'},
-    {label: 'speakers', url: '/speakers'},
+    // {label: 'schedule', url: '/schedule'},
+    // {label: 'presentations', url: '/presentations'},
+    // {label: 'speakers', url: '/speakers'},
     {label: 'profile', action: () => this.goToProfile(), show: () => this.loggedIn},
     {
       label: 'admin', show: () => this.currentUser.isPrivileged(),
@@ -27,9 +27,9 @@ export class NavigationComponent implements OnInit {
         {label: 'users', url: '/admin2/users', show: () => this.currentUser.isAdmin()},
       ]
     },
-    {label: 'login', url: '/login', show: () => !this.loggedIn},
-    {label: 'logout', action: () => this.logout(), show: () => this.loggedIn},
-    {label: 'LIVE stream', url: 'https://www.youtube.com/user/confiturapl/featured', clazz: 'pink'},
+    {label: 'login', url: '/login', show: () => !this.loggedIn, clazz: 'pink'},
+    {label: 'logout', action: () => this.logout(), show: () => this.loggedIn, clazz: 'pink'},
+    // {label: 'LIVE stream', url: 'https://www.youtube.com/user/confiturapl/featured', clazz: 'pink'},
   ];
 
 
