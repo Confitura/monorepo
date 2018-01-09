@@ -13,6 +13,10 @@ import {User} from '../../core/user/user.model';
 export class AboutComponent implements OnInit {
   organizers: Observable<Person[]> = null;
   volunteers: Observable<Person[]> = null;
+  lat = 52.225101;
+  lng = 20.962129;
+  zoom = 17;
+
 
   constructor(private service: OrganizerService,
               private personModalService: PersonModalService) {

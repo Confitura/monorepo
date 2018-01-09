@@ -17,9 +17,13 @@ import {AgendaComponent} from './agenda/agenda.component';
 import {AgendaEntryComponent} from './agenda/agenda-entry/agenda-entry.component';
 import {AgendaEntryModalComponent} from './agenda/entry-modal/entry-modal.component';
 import {LoginComponent} from './login/login.component';
+import {AgmCoreModule} from '@agm/core';
 
 @NgModule({
-  imports: [SharedModule, RouterModule, FileUploadModule],
+  imports: [SharedModule, RouterModule, FileUploadModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyA6nOtsqyZJRfMwy6kmaK2_MgX51TtmViA'
+    })],
   declarations: [
     HomeComponent,
     NewsBannerComponent,
