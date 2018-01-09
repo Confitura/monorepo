@@ -8,6 +8,11 @@
         <div class="bg-white row-1140 text-center about-excerpt">
           <cf-page title="about"></cf-page>
         </div>
+        <div class="bg-white ">
+          <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
+            <agm-marker [latitude]="lat" [longitude]="lng" title="Confitura 2018"></agm-marker>
+          </agm-map>
+        </div>
       </div>
     </div>
   </section>
@@ -24,6 +29,8 @@
             </div>
           </div>
         </div>
+      </div>
+      <div class="row-fluid beige">
       </div>
     </section>
     <section *ngIf="(volunteers |async)?.length > 0 ">
@@ -43,3 +50,6 @@
   </div>
 </div>
 <cf-person-modal></cf-person-modal>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6nOtsqyZJRfMwy6kmaK2_MgX51TtmViA&callback=initMap">
+</script>
