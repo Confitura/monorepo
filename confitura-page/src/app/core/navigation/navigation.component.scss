@@ -45,12 +45,8 @@
     padding-bottom: 0;
     height: 55px;
 
-    @media all and (min-width: $size_small) {
-      display: none;
-    }
     @media all and (min-width: $size_large) {
       height: 100px;
-      display: block;
       padding-left: 15px;
     }
   }

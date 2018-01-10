@@ -1,4 +1,6 @@
-.banner-button > a{
+@import "../../sizes";
+
+.banner-button > a {
   color: #FFFFFF;
 }
 
@@ -9,4 +11,49 @@
   height: 100vh;
   background: black url("/assets/img/main_banner.svg") no-repeat right top;
   background-size: contain;
+  background-position-y: 100%;
+  @media all and (min-width: $size_small) {
+    height: calc(100vh - 55px);
+  }
+
+  @media all and (min-width: $size_medium) {
+    height: calc(100vh - 100px);
+  }
+  .carousel-caption {
+    bottom: 120px;
+    padding-bottom: 30px;
+    @media all and (min-width: $size_medium) {
+      text-align: left;
+      left: 13.25%;
+    }
+
+    .conference-name {
+      font-weight: 700;
+      font-size: 5rem;
+      font-family: NeuzeitGro-Bol, Verdana, Tahoma, sans-serif;
+    }
+    .conference-slogan {
+      font-size: 2.5rem;
+      margin: 25px 0 60px 0;
+    }
+  }
+
+}
+
+.basic-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  @media all and (min-width: $size_medium) {
+    flex-direction: row;
+  }
+
+  .date-info, .venue-info {
+    flex-basis: 50%;
+    flex-shrink: 0;
+    padding-right: 15px;
+    padding-left: 15px;
+    padding-top: 20px;
+
+  }
 }
