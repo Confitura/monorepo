@@ -22,6 +22,8 @@
   .carousel-caption {
     bottom: 120px;
     padding-bottom: 30px;
+    right: 0;
+    left: 0;
     @media all and (min-width: $size_medium) {
       text-align: left;
       left: 13.25%;
