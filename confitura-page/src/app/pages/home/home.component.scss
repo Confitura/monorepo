@@ -1,3 +1,12 @@
 .banner-button > a{
   color: #FFFFFF;
 }
+
+#main_banner {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100vh;
+  background: black url("/assets/img/main_banner.svg") no-repeat right top;
+  background-size: contain;
+}

@@ -78,14 +78,7 @@ body#confitura {
   margin: 25px 0 60px 0;
 }
 
-#main_banner {
-  position: relative;
-  display: block;
-  width: 100%;
-  height: 100vh;
-  background: black url("/assets/img/main_banner.png") no-repeat right top;
-  background-size: contain;
-}
+
 
 @media screen and (max-width: 900px) {
   .carousel-caption {
