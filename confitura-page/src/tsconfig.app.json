@@ -9,6 +9,9 @@
       "dw-bxslider-4"
     ]
   },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": false
+  },
   "exclude": [
     "test.ts",
     "**/*.spec.ts"
