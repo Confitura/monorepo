@@ -26,6 +26,7 @@
     "@angular/platform-browser": "^5.0.3",
     "@angular/platform-browser-dynamic": "^5.0.3",
     "@angular/router": "^5.0.3",
+    "@angular/service-worker": "^5.2.0",
     "angular2-hotkeys": "^2.0.3",
     "angular2-template-loader": "^0.6.2",
     "bootstrap": "^3.3.7",
