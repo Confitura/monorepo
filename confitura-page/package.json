@@ -42,7 +42,6 @@
     "lodash.sortby": "^4.7.0",
     "lozad": "^1.0.9",
     "marked": "^0.3.9",
-    "ng-loading-bar": "^0.0.10",
     "ng2-cookies": "^1.0.12",
     "ng2-file-upload": "^1.2.1",
     "ngx-chips": "^1.5.3",
@@ -54,7 +53,7 @@
     "zone.js": "^0.8.14"
   },
   "devDependencies": {
-    "@angular/cli": "1.6.0",
+    "@angular/cli": "1.6.4",
     "@angular/compiler-cli": "^5.0.3",
     "@angular/language-service": "^5.0.3",
     "@types/bootstrap": "^3.3.36",
