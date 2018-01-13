@@ -36,3 +36,4 @@ typings/
 /.idea/
 /deployment/confitura-page.retry
 /yarn-error.log
+.DS_Store
