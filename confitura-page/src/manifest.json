@@ -1,6 +1,7 @@
 {
   "name": "Confitura 2018",
   "short_name":"Confitura",
+  "start_url": "/",
   "icons": [
     {
       "src": "/assets/icons/android-chrome-192x192.png",
