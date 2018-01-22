@@ -1,8 +1,11 @@
 @import "../../sizes";
 
 #about {
-  agm-map{
-    height: 400px;
+  agm-map {
+    height: 100vh;
+    @media all and (min-width: $size_medium) {
+      height: 400px;
+    }
   }
   .about-banner {
     display: flex;
