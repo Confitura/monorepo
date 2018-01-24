@@ -1,0 +1,117 @@
+
+#footer-confitura .footer-left, #footer-confitura .footer-right {
+  padding-top: 60px;
+  font-family: 'NeuzeitGro-Bol', Verdana, Tahoma, sans-serif;
+  font-size: 24px;
+  line-height: 30px;
+  height: 400px;
+}
+
+#footer-confitura .footer-left {
+  padding-left: 60px;
+  @media all and (max-width: 768px) {
+    padding-left: 0;
+
+  }
+}
+
+#footer-confitura .footer-right {
+  padding-right: 60px;
+
+  @media all and (max-width: 768px) {
+    padding-right: 0;
+    padding-top: 0;
+    height: 200px;
+
+  }
+}
+
+.footer-logo {
+  display: block;
+  width: 306px;
+  height: 100px;
+  padding-bottom: 90px;
+  img {
+    height: 100%;
+  }
+  @media all and (max-width: 768px) {
+    margin: auto;
+  }
+
+}
+
+.footer-content-left {
+  @media all and (max-width: 768px) {
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: center;
+  }
+}
+
+.footer-social {
+  display: block;
+  color: #ff0040;
+  padding-top: 40px;
+}
+
+.footer-social a {
+  color: #ff0040;
+
+}
+
+.footer-social [class*="fa fa-"] {
+  background-color: #ffffff;
+  border-radius: 30px;
+  color: #000000;
+  display: inline-block;
+  height: 30px;
+  line-height: 30px;
+  margin: auto 3px;
+  width: 30px;
+  font-size: 15px;
+  text-align: center;
+}
+
+.footer-social [class*="fa fa-"]:hover {
+  background-color: #ff0040;
+}
+
+.main-confitura-footer button, .main-confitura-footer button:hover,
+.about-confitura-footer button, .about-confitura-footer button:hover,
+.agenda-confitura-footer button, .agenda-confitura-footer button:hover {
+  display: block;
+  border: none;
+  outline: none;
+  width: 320px;
+  height: 80px;
+  background: #ebebeb;
+  font-size: 24px;
+  color: #000000;
+  margin: 80px auto 0;
+  font-family: 'NeuzeitGro-Bol', Verdana, Tahoma, sans-serif;
+}
+
+@media screen and (max-width: 375px) {
+  .main-confitura-footer button, .main-confitura-footer button:hover,
+  .about-confitura-footer button, .about-confitura-footer button:hover,
+  .agenda-confitura-footer button, .agenda-confitura-footer button:hover {
+    margin-top: 40px;
+  }
+}
+
+.about-confitura-footer button,
+.about-confitura-footer button:hover {
+  margin-top: 0 !important;
+}
+
+.agenda-confitura-footer button,
+.agenda-confitura-footer button:hover {
+  margin-top: 20px !important;
+  margin-bottom: 150px !important;
+}
+
+.main-confitura-footer button:hover,
+.about-confitura-footer button:hover,
+.agenda-confitura-footer button:hover {
+  text-decoration: underline;
+}

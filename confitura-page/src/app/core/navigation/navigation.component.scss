@@ -41,13 +41,15 @@
   }
 
   .navbar-brand {
-    padding-top: 0;
-    padding-bottom: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
     height: 55px;
 
-    @media all and (min-width: $size_large) {
+    @media all and (min-width: $size_medium) {
       height: 100px;
       padding-left: 15px;
+      padding-top: 30px;
+      padding-bottom: 30px;
     }
   }
 
@@ -55,10 +57,10 @@
     border: none;
     outline: none;
     margin-left: 20px;
-    background: url('/assets/img/logo.png') no-repeat center center;
-    background-size: contain;
     height: 100%;
-    width: 200px;
+    img {
+      height: 100%;
+    }
 
   }
 
