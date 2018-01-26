@@ -1,6 +1,6 @@
 {
   "name": "confitura-page",
-  "version": "6.8.1",
+  "version": "6.8.2",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --aot",
