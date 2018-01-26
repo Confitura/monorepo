@@ -5,16 +5,16 @@
         <h3>Sign up / Sign in</h3>
         <p>with:</p>
         <div>
-          <a class="btn btn-social-icon btn-lg btn-twitter" (click)="loginWith('twitter')">
+          <a class="btn btn-social-icon btn-lg btn-twitter" [href]="loginLinkTo('twitter')">
             <span class="fa fa-twitter"></span>
           </a>
-          <a class="btn btn-social-icon btn-lg btn-github" (click)="loginWith('github')">
+          <a class="btn btn-social-icon btn-lg btn-github" [href]="loginLinkTo('github')">
             <span class="fa fa-github"></span>
           </a>
-          <a class="btn btn-social-icon btn-lg btn-facebook" (click)="loginWith('facebook')">
+          <a class="btn btn-social-icon btn-lg btn-facebook" [href]="loginLinkTo('facebook')">
             <span class="fa fa-facebook"></span>
           </a>
-          <a class="btn btn-social-icon btn-lg btn-google" (click)="loginWith('google')">
+          <a class="btn btn-social-icon btn-lg btn-google" [href]="loginLinkTo('google')">
             <span class="fa fa-google"></span>
           </a>
         </div>

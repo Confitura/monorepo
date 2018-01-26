@@ -33,10 +33,9 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  loginWith(origin: string) {
-    window.location.assign(`${environment.API_URL}/login/${origin}`);
+  loginLinkTo(service: string): string {
+    return `${environment.API_URL}/login/${service}`;
   }
-
 
   private doLogin(callback: Function) {
     callback()
