@@ -53,9 +53,18 @@
   .date-info, .venue-info {
     flex-basis: 50%;
     flex-shrink: 0;
-    padding-right: 15px;
-    padding-left: 15px;
+    padding-right: 0;
+    padding-left: 0;
     padding-top: 20px;
 
+    @media all and (min-width: $size_medium) {
+      padding-right: 15px;
+      padding-left: 15px;
+    }
   }
+
+}
+
+.about {
+  padding-bottom: 20px;
 }

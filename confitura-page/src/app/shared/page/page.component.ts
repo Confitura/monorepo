@@ -1,10 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Page} from './page.model';
 import {PageService} from './page.service';
+import * as SimpleMDE from 'simplemde';
 
 @Component({
   selector: 'cf-page',
-  template: '<div *ngIf="page" [innerHTML]="page.content"></div>',
+  templateUrl: './page.component.html',
   providers: [PageService]
 })
 
@@ -14,6 +15,9 @@ export class PageComponent implements OnInit {
 
   page: Page;
 
+  editMode = false;
+  editor: SimpleMDE;
+
   constructor(private service: PageService) {
 
   }
@@ -21,6 +25,26 @@ export class PageComponent implements OnInit {
   ngOnInit(): void {
     this.service.get(this.title)
       .subscribe(page => this.page = page);
+  }
+
+  edit() {
+    this.editMode = true;
+    setTimeout(() => {
+      this.editor = new SimpleMDE();
+      this.editor.value(this.page.content);
+      this.editor.codemirror.on('change', () => {
+        this.page.content = this.editor.value();
+      });
+    });
+  }
+
+  save() {
+    this.service.save(this.page)
+      .subscribe(() => this.editMode = false);
+  }
+
+  cancel() {
+    this.editMode = false;
   }
 
 }

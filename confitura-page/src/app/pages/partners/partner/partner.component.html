@@ -16,7 +16,7 @@
         <div class="ta-left pt30 person-name">
           <h3>{{partner.name}}</h3>
         </div>
-        <div class="partner-description" [innerHTML]="renderDescription()"></div>
+        <div class="partner-description" [innerHTML]="partner.description | md"></div>
       </div>
     </div>
   </div>

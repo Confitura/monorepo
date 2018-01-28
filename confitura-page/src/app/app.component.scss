@@ -319,21 +319,6 @@ h3 {
   text-align: center;
 }
 
-.about-items a:link,
-.about-items a:active,
-.about-items a:visited,
-.about-items a:hover {
-  border: none;
-  color: #000000 !important;
-  text-decoration: none;
-  font-size: 48px;
-  font-family: 'NeuzeitGro-Bol', Verdana, Tahoma, sans-serif;
-}
-
-.about-items a:hover {
-  text-decoration: underline;
-}
-
 .news-confitura-left {
   position: relative;
   padding: 60px !important;
@@ -515,4 +500,9 @@ p {
 .main-content {
   padding-top: 20px;
   font-size: 2.5rem;
+}
+
+.secondary-content {
+  padding-top: 20px;
+  font-size: 2rem;
 }

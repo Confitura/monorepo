@@ -1,0 +1,25 @@
+<div *ngIf="page">
+  <ng-container *ngIf="!editMode">
+    <div class="text-right">
+      <button type="button" class="btn btn-primary" (click)="edit()">Edit</button>
+    </div>
+    <div [innerHTML]="page.content | md"></div>
+  </ng-container>
+  <ng-container *ngIf="editMode">
+    <form (ngSubmit)="save()" #form="ngForm" novalidate>
+      <div class="form-group text-right">
+        <button type="submit" class="btn btn-success">Save</button>
+        <button type="button" class="btn btn-default" (click)="cancel()">Cancel</button>
+      </div>
+      <div class="form-group">
+      <textarea id="content" class="form-control" rows="5" [(ngModel)]="page.content"
+                #content="ngModel" name="content" required maxlength="10000">
+      </textarea>
+      </div>
+      <div class="form-group text-right">
+        <button type="submit" class="btn btn-success">Save</button>
+        <button type="button" class="btn btn-default" (click)="cancel()">Cancel</button>
+      </div>
+    </form>
+  </ng-container>
+</div>

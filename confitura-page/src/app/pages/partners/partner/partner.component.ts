@@ -47,10 +47,6 @@ export class PartnerComponent {
 
   }
 
-  renderDescription(): string {
-    return Marked(this.partner.description);
-  }
-
 
   uploadLogo() {
     $('input[type=file]').click();
