@@ -1,6 +1,6 @@
 <div *ngIf="page">
   <ng-container *ngIf="!editMode">
-    <div class="text-right">
+    <div class="text-right" *cfAdmin>
       <button type="button" class="btn btn-primary" (click)="edit()">Edit</button>
     </div>
     <div [innerHTML]="page.content | md"></div>
