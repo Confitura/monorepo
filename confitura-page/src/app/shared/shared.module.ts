@@ -15,9 +15,10 @@ import {FileUploadModule} from 'ng2-file-upload';
 import {PersonModalService} from './person-modal/person-modal.service';
 import {AdminOrOwnerDirective} from './admin-or-owner.directive';
 import { ResizeImgPipe } from './resize-img.pipe';
+import {MdPipe} from './md/md.pipe';
 
 @NgModule({
-  imports: [CommonModule, HttpClientModule, FileUploadModule],
+  imports: [CommonModule, HttpClientModule, FileUploadModule, FormsModule],
   declarations: [
     AdminDirective,
     AdminOrOwnerDirective,
@@ -29,6 +30,7 @@ import { ResizeImgPipe } from './resize-img.pipe';
     PersonComponent,
     PersonViewComponent,
     ResizeImgPipe,
+    MdPipe,
   ],
   exports: [
     CommonModule,
@@ -43,7 +45,8 @@ import { ResizeImgPipe } from './resize-img.pipe';
     PersonModalComponent,
     PersonComponent,
     PersonViewComponent,
-    ResizeImgPipe
+    ResizeImgPipe,
+    MdPipe
   ],
   providers: [PersonModalService]
 })

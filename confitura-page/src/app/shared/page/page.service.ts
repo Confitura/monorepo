@@ -14,4 +14,8 @@ export class PageService {
     return this.http.get<Page>(`/pages/${name}`);
   }
 
+  save(page: Page): Observable<Page> {
+    return this.http.post<Page>(`/pages`, page);
+  }
+
 }
