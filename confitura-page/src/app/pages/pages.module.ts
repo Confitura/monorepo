@@ -18,6 +18,7 @@ import {AgendaEntryComponent} from './agenda/agenda-entry/agenda-entry.component
 import {AgendaEntryModalComponent} from './agenda/entry-modal/entry-modal.component';
 import {LoginComponent} from './login/login.component';
 import {AgmCoreModule} from '@agm/core';
+import {FaqComponent} from './faq/faq.component';
 
 @NgModule({
   imports: [SharedModule, RouterModule, FileUploadModule,
@@ -37,7 +38,8 @@ import {AgmCoreModule} from '@agm/core';
     SpeakerListComponent,
     AgendaComponent,
     AgendaEntryModalComponent,
-    AgendaEntryComponent
+    AgendaEntryComponent,
+    FaqComponent
   ],
   providers: [NewsService, OrganizerService],
   exports: [HomeComponent, AboutComponent]
