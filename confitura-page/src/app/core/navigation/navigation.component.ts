@@ -14,6 +14,7 @@ export class NavigationComponent implements OnInit {
   menu: MenuItem[] = [
     {label: 'about us', url: '/about'},
     {label: 'partners', url: '/partners'},
+    {label: 'FAQ', url: '/faq', show: () => this.currentUser.isAdmin()},
     // {label: 'schedule', url: '/schedule'},
     // {label: 'presentations', url: '/presentations'},
     // {label: 'speakers', url: '/speakers'},

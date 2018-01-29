@@ -1,0 +1,39 @@
+@import "../../sizes";
+@import "../../colors";
+
+#faq {
+  article {
+    padding-top: 55px;
+    @media all and (min-width: $size_xsmall) {
+      padding-top: 0;
+    }
+
+  }
+  ::ng-deep cf-page {
+    h2 {
+      font-weight: 800;
+    }
+    p {
+      margin-bottom: 20px;
+      border-left: 2px $red solid;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      padding-left: 10px;
+    }
+  }
+
+  .faq-banner {
+    display: flex;
+    background: url("/assets/img/about_left.png") no-repeat left top, url("/assets/img/about_right.png") no-repeat right bottom;
+    background-color: #000000;
+    background-size: contain;
+    @media all and (max-width: $size_xsmall) {
+      background: url("/assets/img/about_right.png") no-repeat right bottom;
+      background-color: #000000;
+      background-size: contain;
+    }
+    h2 {
+      color: #fff;
+    }
+  }
+}

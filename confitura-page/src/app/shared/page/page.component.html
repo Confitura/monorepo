@@ -1,9 +1,9 @@
-<div *ngIf="page">
+<div>
   <ng-container *ngIf="!editMode">
     <div class="text-right" *cfAdmin>
       <button type="button" class="btn btn-primary" (click)="edit()">Edit</button>
     </div>
-    <div [innerHTML]="page.content | md"></div>
+    <div *ngIf="page" [innerHTML]="page.content | md"></div>
   </ng-container>
   <ng-container *ngIf="editMode">
     <form (ngSubmit)="save()" #form="ngForm" novalidate>

@@ -2,6 +2,10 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Page} from './page.model';
 import {PageService} from './page.service';
 import * as SimpleMDE from 'simplemde';
+import {Observable} from 'rxjs/Observable';
+import {catchError} from 'rxjs/operators';
+import 'rxjs/add/observable/throw';
+
 
 @Component({
   selector: 'cf-page',
@@ -24,6 +28,12 @@ export class PageComponent implements OnInit {
 
   ngOnInit(): void {
     this.service.get(this.title)
+      .pipe(
+        catchError(error => {
+          this.page = {id: this.title, content: ''};
+          return Observable.throw(error);
+        })
+      )
       .subscribe(page => this.page = page);
   }
 
