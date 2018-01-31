@@ -8,7 +8,6 @@ import {UserService} from '../../core/user/user.service';
 @Component({
   templateUrl: './profile-edit.component.html',
   styleUrls: ['./profile-edit.component.scss']
-
 })
 export class ProfileEditComponent implements OnInit {
   isEdit = false;
