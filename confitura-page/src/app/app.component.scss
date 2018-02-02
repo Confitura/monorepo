@@ -190,18 +190,18 @@ div[class^="col-"] {
 }
 
 header h2, .h2 {
-  display: block;
-  width: 100%;
-  color: #000000;
+//  display: block;
+//  width: 100%;
+//  color: #000000;
   text-decoration: underline;
   text-align: center;
-  font-weight: bold;
-  text-shadow: none;
-  font-size: 6rem;
+//  font-weight: bold;
+//  text-shadow: none;
+  font-size: 3rem;
   font-family: 'NeuzeitGro-Bol', Verdana, Tahoma, sans-serif;
-  padding-top: 100px !important;
-  padding-bottom: 90px !important;
-
+//  padding-top: 100px !important;
+//  padding-bottom: 90px !important;
+//
 }
 
 .main-confitura-content-inner,
@@ -219,10 +219,10 @@ header h2, .h2 {
 }
 
 h3 {
-  display: block;
-  font-weight: bold;
-  text-shadow: none;
-  font-size: 4rem;
+//  display: block;
+//  font-weight: bold;
+//  text-shadow: none;
+  font-size: 2.5rem;
   font-family: 'NeuzeitGro-Bol', Verdana, Tahoma, sans-serif;
   text-align: center;
 }
@@ -453,12 +453,17 @@ p {
   }
 }
 
-.main-content {
-  padding-top: 20px;
-  font-size: 2.5rem;
-}
+//.main-content {
+//  padding-top: 20px;
+//  font-size: 1rem;
+//}
 
 .secondary-content {
   padding-top: 20px;
   font-size: 2rem;
+}
+
+
+p.big{
+
 }

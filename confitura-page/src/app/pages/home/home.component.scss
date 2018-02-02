@@ -10,10 +10,12 @@
   width: 100%;
   height: 100vh;
   background: black url("/assets/img/main_banner.svg") no-repeat right top;
-  background-size: contain;
+  background-size: 130%;
   background-position-y: 100%;
   @media all and (min-width: $size_small) {
     height: calc(100vh - 55px);
+    background-size: contain;
+
   }
 
   @media all and (min-width: $size_medium) {
@@ -31,11 +33,11 @@
 
     .conference-name {
       font-weight: 700;
-      font-size: 5rem;
+      font-size: 3rem;
       font-family: NeuzeitGro-Bol, Verdana, Tahoma, sans-serif;
     }
     .conference-slogan {
-      font-size: 2.5rem;
+      font-size: 1.5rem;
       margin: 25px 0 60px 0;
     }
   }
