@@ -7,19 +7,7 @@
       height: 400px;
     }
   }
-  .about-banner {
-    display: flex;
-    background-color: #000000;
-    background: url("/assets/img/about_left.png") no-repeat left top, url("/assets//img/about_right.png") no-repeat right bottom;
-    background-size: contain;
-    @media all and (max-width: $size_xsmall) {
-      background: url("/assets/img/about_right.png") no-repeat right bottom;
-      background-size: contain;
-    }
-    h2 {
-      color: #fff;
-    }
-  }
+
   .about-excerpt {
     padding: 50px 0 0 0;
     color: #000000;

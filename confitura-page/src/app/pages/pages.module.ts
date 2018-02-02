@@ -21,7 +21,10 @@ import {AgmCoreModule} from '@agm/core';
 import {FaqComponent} from './faq/faq.component';
 
 @NgModule({
-  imports: [SharedModule, RouterModule, FileUploadModule,
+  imports: [
+    SharedModule,
+    RouterModule,
+    FileUploadModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyA6nOtsqyZJRfMwy6kmaK2_MgX51TtmViA'
     })],
