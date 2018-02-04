@@ -22,7 +22,7 @@ export class OrganizerService {
     return this.http.get<EmbeddedUsers>(`/users/search/${type}`)
       .pipe(
         map(result => result._embedded.users),
-        map((persons: Person[]) => shuffle(persons))
+        map((persons: Person[]) => persons)
       );
   }
 
