@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Presentation} from '../shared/presentation.model';
 import {PresentationService} from '../shared/presentation.service';
@@ -10,12 +10,17 @@ import {Observable} from 'rxjs/Observable';
 import {flatMap, map} from 'rxjs/operators';
 
 @Component({
-  templateUrl: './presentation-edit.component.html'
+  templateUrl: './presentation-edit.component.html',
+  styleUrls: ['presentation-edit.component.scss']
 })
 export class PresentationEditComponent implements OnInit {
+  languages = ['polish', 'english'];
+  levels = ['basic', 'advanced', 'master'];
   userId: string = null;
   model = new Presentation();
   submitted = false;
+
+  @ViewChild('form') form: FormControl;
 
   constructor(private service: PresentationService,
               private user: CurrentUser,
@@ -48,9 +53,9 @@ export class PresentationEditComponent implements OnInit {
 
   }
 
-  save(form: FormControl) {
+  save() {
     this.submitted = true;
-    if (form.valid) {
+    if (this.form.valid) {
       this.service.save(this.userId, this.model)
         .subscribe(() => this.location.back());
     }

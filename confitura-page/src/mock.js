@@ -1,12 +1,13 @@
 const express = require('express');
 const faker = require('faker');
+// const Base64 = require('base64-js');
 const app = express();
 let id = 0;
 
 
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
   next();
 });
 
@@ -34,7 +35,6 @@ app.get('/users/search/:type', function (req, res) {
 });
 
 app.get('/pages/:id', function (req, res) {
-
   const content = `## ${req.params.id}
   ${faker.lorem.paragraphs(5)}
   `;
@@ -43,6 +43,34 @@ app.get('/pages/:id', function (req, res) {
     content: content
   });
 });
+
+
+app.get('/login/twitter/callback', (req, res) => {
+  const user = {
+    jti: '1',
+    sub: 'John Smith',
+    isAdmin: true,
+    isNew: false
+  };
+  const encodedUser = Buffer.from(JSON.stringify(user)).toString('base64');
+  res.send(`header.${encodedUser}.signature`);
+});
+
+
+app.get('/login/twitter', (req, res) => {
+  res.redirect('http://localhost:8080/login/twitter');
+});
+
+app.get('/users/:id', (req, res) => {
+  res.send({
+    id: req.params.id,
+    name: 'John Smith',
+    email: 'john@smith.com',
+    bio: 'Helo Hello Helo',
+    admin: true
+  });
+});
+
 
 app.listen(3000, () => console.log('Example app listening on port 3000!'));
 

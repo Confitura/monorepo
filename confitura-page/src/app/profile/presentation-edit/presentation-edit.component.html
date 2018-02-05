@@ -1,97 +1,182 @@
-<section id="partners-confitura" class="beige">
-  <div class="row-fluid beige" id="partner">
-    <div class="col-lg-12 beige">
-      <div class="row-1140 pb50">
-        <div class="beige">
-          <h3>My Presentation</h3>
-          <form (ngSubmit)="save(presentationForm)" #presentationForm="ngForm" novalidate>
-            <div class="form-group required">
-              <label for="title">Title</label>
-              <input type="text" id="title" class="form-control" [(ngModel)]="model.title" #title="ngModel" name="title"
-                     required maxlength="255">
-              <div class="alert alert-danger" role="alert" *ngIf="title.errors?.required && (title.touched || submitted)">
-                This field is required
-              </div>
-            </div>
-            <div class="form-group required">
-              <label>Language</label>
+<article class="bg-white" id="faq">
+  <div class="row-1140 pt50 pb50">
 
-              <label class="checkbox">
-                <input type="radio" name="language" value="polish" required [(ngModel)]="model.language"
-                       #language="ngModel"> polish
-              </label>
-              <label class="checkbox">
-                <input type="radio" name="language" value="english" required [(ngModel)]="model.language"> english
-              </label>
-              <div class="alert alert-danger" role="alert"
-                   *ngIf="language.errors?.required && (language.touched || submitted)">
-                This field is required
-              </div>
-            </div>
-            <div class="form-group required">
-              <label>Level</label>
-              <label class="checkbox">
-                <input type="radio" name="level" value="beginner" required [(ngModel)]="model.level" #level="ngModel">
-                beginner
-              </label>
-              <label class="checkbox">
-                <input type="radio" name="level" value="advanced" required [(ngModel)]="model.level"> advanced
-              </label>
-              <label class="checkbox">
-                <input type="radio" name="level" value="master" required [(ngModel)]="model.level"> master
-              </label>
-              <div class="alert alert-danger" role="alert"
-                   *ngIf="level.errors?.required && (level.touched || submitted)">
-                This field is required
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="tags">Tags</label>
-              <!--<tag-input [(ngModel)]="model.tags" id="tags" name="tags" theme="bootstrap" [onlyFromAutocomplete]="true"-->
-                         <!--[maxItems]="3" [identifyBy]="'id'" [displayBy]="'name'">-->
-                <!--<tag-input-dropdown [autocompleteObservable]="tags" [showDropdownIfEmpty]="true" [identifyBy]="'id'"-->
-                                    <!--[displayBy]="'name'">-->
-                <!--</tag-input-dropdown>-->
-              <!--</tag-input>-->
-            </div>
-            <div class="form-group">
-              <label for="cospeakers">Co-speakers</label>
-              <cf-speakers-select id="cospeakers" [(ngModel)]="model.cospeakers" name="cospeakers" [ownerId]="userId">
-
-              </cf-speakers-select>
-            </div>
-            <div class="form-group required">
-              <label for="short-description">Short Description</label>
-              <textarea type="text" id="short-description" class="form-control" rows="5" [(ngModel)]="model.shortDescription"
-                        #shortDescription="ngModel"
-                        name="shortDescription" required maxlength="300"></textarea>
-              <span class="help-block small">Make it short and sweet for the potential participant. It will be used In Vote 4 Papers process. Max 300 characters. ({{model.shortDescription?.length || 0}}/300)</span>
-              <div class="alert alert-danger" role="alert"
-                   *ngIf="shortDescription.errors?.required && (shortDescription.touched || submitted)">
-                This field is required
-              </div>
-            </div>
-            <div class="form-group required">
-              <label for="description">Description</label>
-              <textarea type="text" id="description" class="form-control" rows="5" [(ngModel)]="model.description"
-                        #description="ngModel"
-                        name="description" required maxlength="1000"></textarea>
-              <div class="alert alert-danger" role="alert"
-                   *ngIf="description.errors?.required && (description.touched || submitted)">
-                This field is required
-              </div>
-            </div>
-            <div class="text-right">
-              <button type="submit" class="btn btn-primary"
-                      [disabled]="presentationForm.submitted && !presentationForm.form.valid">Save
-              </button>
-              <button class="btn btn-warning" (click)="cancel()">Cancel</button>
-            </div>
-
-          </form>
-        </div>
+    <h3>My Presentation</h3>
+    <form class="presentation-form" (ngSubmit)="save()" #form="ngForm" novalidate>
+      <mat-form-field>
+        <input matInput placeholder="title" type="text"
+               name="title"
+               [(ngModel)]="model.title"
+               #title="ngModel"
+               required maxlength="255">
+        <mat-error *ngIf="title?.hasError('required')">
+          title is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <div required="">
+        <label>language: </label>
+        <mat-radio-group [(ngModel)]="model.language"
+                         name="language" #language="ngModel"
+                         required>
+          <mat-radio-button [value]="language" *ngFor="let language of languages" [required]="true">{{language}}&nbsp;</mat-radio-button>
+        </mat-radio-group>
       </div>
+      <div>
+        <label>level: </label>
+        <mat-radio-group [(ngModel)]="model.level"
+                         name="level" #level="ngModel"
+                         required>
+          <mat-radio-button [value]="level" *ngFor="let level of levels">{{level}}&nbsp;</mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <mat-form-field>
+        <textarea matInput placeholder="short description"
+                  matTextareaAutosize
+                  matAutosizeMinRows="2"
+                  [(ngModel)]="model.shortDescription"
+                  name="shortDescription"
+                  #shortDescription="ngModel"
+                  required maxlength="300"></textarea>
+        <mat-hint>
+          Make it short and sweet for the potential participant.
+          It will be used In Vote 4 Papers process.
+        </mat-hint>
+        <mat-hint align="end">({{shortDescription?.length || 0}}/300)</mat-hint>
+        <mat-error *ngIf="shortDescription?.hasError('required')">
+          short description is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
 
-    </div>
+      <mat-form-field>
+        <textarea matInput placeholder="description"
+                  matTextareaAutosize
+                  matAutosizeMinRows="5"
+                  [(ngModel)]="model.description"
+                  name="description"
+                  #description="ngModel"
+                  required maxlength="1000"></textarea>
+        <mat-hint align="end">({{description?.length || 0}}/1000)</mat-hint>
+        <mat-error *ngIf="description?.hasError('required')">
+          description is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <div>
+        <button mat-raised-button type="submit"
+                [disabled]="form.submitted && !form.form.valid">Save
+        </button>
+        <button mat-raised-button type="button" color="warn" (click)="cancel()">Cancel</button>
+      </div>
+      <!--<mat-form-field >-->
+      <!--<mat-chip-list #chipList>-->
+      <!--<mat-chip *ngFor="let cospeaker of model.cospeakers" [selectable]="selectable"-->
+      <!--[removable]="removable" (remove)="remove(fruit)">-->
+      <!--{{fruit.name}}-->
+      <!--<mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>-->
+      <!--</mat-chip>-->
+      <!--<input placeholder="New fruit..."-->
+      <!--[matChipInputFor]="chipList"-->
+      <!--[matChipInputSeparatorKeyCodes]="separatorKeysCodes"-->
+      <!--[matChipInputAddOnBlur]="addOnBlur"-->
+      <!--(matChipInputTokenEnd)="add($event)" />-->
+      <!--</mat-chip-list>-->
+      <!--</mat-form-field>-->
+    </form>
   </div>
-</section>
+</article>
+<!--<section id="partners-confitura" class="beige">-->
+<!--<div class="row-fluid beige" id="partner">-->
+<!--<div class="col-lg-12 beige">-->
+<!--<div class="row-1140 pb50">-->
+<!--<div class="beige">-->
+<!--<h3>My Presentation</h3>-->
+<!--<form (ngSubmit)="save(presentationForm)" #presentationForm="ngForm" novalidate>-->
+<!--<div class="form-group required">-->
+<!--<label for="title">Title</label>-->
+<!--<input type="text" id="title" class="form-control" [(ngModel)]="model.title" #title="ngModel" name="title"-->
+<!--required maxlength="255">-->
+<!--<div class="alert alert-danger" role="alert" *ngIf="title.errors?.required && (title.touched || submitted)">-->
+<!--This field is required-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="form-group required">-->
+<!--<label>Language</label>-->
+
+<!--<label class="checkbox">-->
+<!--<input type="radio" name="language" value="polish" required [(ngModel)]="model.language"-->
+<!--#language="ngModel"> polish-->
+<!--</label>-->
+<!--<label class="checkbox">-->
+<!--<input type="radio" name="language" value="english" required [(ngModel)]="model.language"> english-->
+<!--</label>-->
+<!--<div class="alert alert-danger" role="alert"-->
+<!--*ngIf="language.errors?.required && (language.touched || submitted)">-->
+<!--This field is required-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="form-group required">-->
+<!--<label>Level</label>-->
+<!--<label class="checkbox">-->
+<!--<input type="radio" name="level" value="beginner" required [(ngModel)]="model.level" #level="ngModel">-->
+<!--beginner-->
+<!--</label>-->
+<!--<label class="checkbox">-->
+<!--<input type="radio" name="level" value="advanced" required [(ngModel)]="model.level"> advanced-->
+<!--</label>-->
+<!--<label class="checkbox">-->
+<!--<input type="radio" name="level" value="master" required [(ngModel)]="model.level"> master-->
+<!--</label>-->
+<!--<div class="alert alert-danger" role="alert"-->
+<!--*ngIf="level.errors?.required && (level.touched || submitted)">-->
+<!--This field is required-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="form-group">-->
+<!--<label for="tags">Tags</label>-->
+<!--&lt;!&ndash;<tag-input [(ngModel)]="model.tags" id="tags" name="tags" theme="bootstrap" [onlyFromAutocomplete]="true"&ndash;&gt;-->
+<!--&lt;!&ndash;[maxItems]="3" [identifyBy]="'id'" [displayBy]="'name'">&ndash;&gt;-->
+<!--&lt;!&ndash;<tag-input-dropdown [autocompleteObservable]="tags" [showDropdownIfEmpty]="true" [identifyBy]="'id'"&ndash;&gt;-->
+<!--&lt;!&ndash;[displayBy]="'name'">&ndash;&gt;-->
+<!--&lt;!&ndash;</tag-input-dropdown>&ndash;&gt;-->
+<!--&lt;!&ndash;</tag-input>&ndash;&gt;-->
+<!--</div>-->
+<!--<div class="form-group">-->
+<!--<label for="cospeakers">Co-speakers</label>-->
+<!--<cf-speakers-select id="cospeakers" [(ngModel)]="model.cospeakers" name="cospeakers" [ownerId]="userId">-->
+
+<!--</cf-speakers-select>-->
+<!--</div>-->
+<!--<div class="form-group required">-->
+<!--<label for="short-description">Short Description</label>-->
+<!--<textarea type="text" id="short-description" class="form-control" rows="5" [(ngModel)]="model.shortDescription"-->
+<!--#shortDescription="ngModel"-->
+<!--name="shortDescription" required maxlength="300"></textarea>-->
+<!--<span class="help-block small">Make it short and sweet for the potential participant. It will be used In Vote 4 Papers process. Max 300 characters. ({{model.shortDescription?.length || 0}}/300)</span>-->
+<!--<div class="alert alert-danger" role="alert"-->
+<!--*ngIf="shortDescription.errors?.required && (shortDescription.touched || submitted)">-->
+<!--This field is required-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="form-group required">-->
+<!--<label for="description">Description</label>-->
+<!--<textarea type="text" id="description" class="form-control" rows="5" [(ngModel)]="model.description"-->
+<!--#description="ngModel"-->
+<!--name="description" required maxlength="1000"></textarea>-->
+<!--<div class="alert alert-danger" role="alert"-->
+<!--*ngIf="description.errors?.required && (description.touched || submitted)">-->
+<!--This field is required-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="text-right">-->
+<!--<button type="submit" class="btn btn-primary"-->
+<!--[disabled]="presentationForm.submitted && !presentationForm.form.valid">Save-->
+<!--</button>-->
+<!--<button class="btn btn-warning" (click)="cancel()">Cancel</button>-->
+<!--</div>-->
+
+<!--</form>-->
+<!--</div>-->
+<!--</div>-->
+
+<!--</div>-->
+<!--</div>-->
+<!--</section>-->

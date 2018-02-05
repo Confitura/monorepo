@@ -8,7 +8,7 @@ import {TagInputModule} from 'ngx-chips';
 import {ProfileCompleteGuard} from './shared/profile-complete-guard.service';
 import {IsAuthenticatedGuard} from './shared/is-authenticated-guard.service';
 import {SpeakerSelectComponent} from './speaker-select/speaker.multiselect.component';
-import {MatButtonModule, MatFormFieldModule, MatInputModule} from '@angular/material';
+import {MatButtonModule, MatFormFieldModule, MatInputModule, MatRadioModule} from '@angular/material';
 
 
 @NgModule({
@@ -17,7 +17,9 @@ import {MatButtonModule, MatFormFieldModule, MatInputModule} from '@angular/mate
     TagInputModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule],
+    MatButtonModule,
+    MatRadioModule,
+  ],
   declarations: [ProfileEditComponent, ProfileViewComponent, PresentationEditComponent, SpeakerSelectComponent],
   providers: [ProfileCompleteGuard, IsAuthenticatedGuard]
 
