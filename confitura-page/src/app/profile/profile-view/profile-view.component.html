@@ -1,35 +1,31 @@
-<section id="partners-confitura" class="beige">
-  <div class="row-fluid beige" id="partner">
-    <div class="col-lg-12 beige pb150">
-      <div class="row-1140 ">
-        <div *ngIf="model">
-          <div class="action-buttons">
-            <a class="btn btn-default" role="button" routerLink="/profile/{{model.id}}/edit">Edit My Profile</a>
-            <ng-container>
-              <a class="btn btn-default" role="button" routerLink="/user/{{model.id}}/presentation">Add Presentation</a>
-            </ng-container>
-          </div>
-          <cf-person-view [model]="model" (changed)="reload()"></cf-person-view>
-          <table class="table table-bordered table-striped" *ngIf="(presentations | async)?.length > 0">
-            <tr>
-              <th>title</th>
-              <th>status</th>
-              <th></th>
-            </tr>
-            <tr *ngFor="let presentation of presentations | async" class="active">
-              <td>{{presentation.title}}</td>
-              <td>
-                <span style="font-size: 1.4rem" class="label label-default"
-                      [class.label-success]="presentation.status =='accepted'">{{presentation.status || "reported"}}</span>
-              </td>
-              <td style="width: 200px">
-                <button class="btn" routerLink="/presentation/{{presentation.id}}">edit</button>
-                <button class="btn btn-danger" (click)="remove(presentation)">Delete</button>
-              </td>
-            </tr>
-          </table>
-        </div>
-      </div>
+<section class="bg-white">
+  <div class="row-1140 pt-5 pb-5" *ngIf="model">
+    <div class="action-buttons text-right">
+      <a mat-button routerLink="/profile/{{model.id}}/edit">Edit profile</a>
+      <a mat-button routerLink="/user/{{model.id}}/presentation" color="primary">Add presentation</a>
     </div>
+    <cf-person-view [model]="model" (changed)="reload()"></cf-person-view>
+    <table class="table table-bordered table-striped">
+      <tr>
+        <th>title</th>
+        <th>status</th>
+        <th></th>
+      </tr>
+      <tr *ngFor="let presentation of presentations | async" class="active">
+        <td>{{presentation.title}}</td>
+        <td>
+          <mat-chip-list>
+            <mat-chip>{{presentation.status || "reported"}}</mat-chip>
+          </mat-chip-list>
+        </td>
+        <td>
+          <button class="btn" routerLink="/presentation/{{presentation.id}}">edit</button>
+          <button class="btn btn-danger" (click)="remove(presentation)">Delete</button>
+        </td>
+      </tr>
+    </table>
+
   </div>
+
+
 </section>

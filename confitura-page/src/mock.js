@@ -67,7 +67,21 @@ app.get('/users/:id', (req, res) => {
     name: 'John Smith',
     email: 'john@smith.com',
     bio: 'Helo Hello Helo',
-    admin: true
+    admin: true,
+    presentations: [
+      {id: '1', title: 'Hello, World!'}
+    ]
+  });
+});
+
+app.get('/users/:id/presentations', (req, res) => {
+  res.send({
+    _embedded: {
+      presentations: [
+        {id: '1', title: 'Hello, World!'},
+        {id: '2', title: 'Second Presentation'},
+      ]
+    }
   });
 });
 
