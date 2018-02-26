@@ -19,9 +19,14 @@ import {AgendaEntryModalComponent} from './agenda/entry-modal/entry-modal.compon
 import {LoginComponent} from './login/login.component';
 import {AgmCoreModule} from '@agm/core';
 import {FaqComponent} from './faq/faq.component';
+import {TagInputModule} from 'ngx-chips';
 
 @NgModule({
-  imports: [SharedModule, RouterModule, FileUploadModule,
+  imports: [
+    SharedModule,
+    RouterModule,
+    FileUploadModule,
+    TagInputModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyA6nOtsqyZJRfMwy6kmaK2_MgX51TtmViA'
     })],

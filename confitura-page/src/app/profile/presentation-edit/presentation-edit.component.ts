@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Presentation} from '../shared/presentation.model';
 import {PresentationService} from '../shared/presentation.service';
@@ -6,16 +6,20 @@ import {Tag} from '../shared/tag.model';
 import {FormControl} from '@angular/forms';
 import {CurrentUser} from '../../core/security/current-user.service';
 import {Location} from '@angular/common';
-import {Observable} from 'rxjs/Observable';
-import {flatMap, map} from 'rxjs/operators';
 
 @Component({
-  templateUrl: './presentation-edit.component.html'
+  templateUrl: './presentation-edit.component.html',
+  styleUrls: ['presentation-edit.component.scss']
 })
 export class PresentationEditComponent implements OnInit {
-  userId: string = null;
+  languages = ['polish', 'english'];
+  levels = ['basic', 'advanced', 'master'];
+  owner: string = null;
   model = new Presentation();
   submitted = false;
+  tags: Tag[] = [];
+
+  @ViewChild('form') form: FormControl;
 
   constructor(private service: PresentationService,
               private user: CurrentUser,
@@ -25,42 +29,44 @@ export class PresentationEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loadAllTags();
     this.route.params
       .subscribe((params: Params) => {
-        this.userId = params['userId'];
-        if (this.userId == null) {
-          this.userId = this.user.get().jti;
-        }
-        const id = params['id'];
-        if (id) {
-          this.service.getOne(id)
-            .pipe(
-              flatMap((presentation: Presentation) => this.service.getCospeakers(id)
-                .pipe(
-                  map(it => {
-                    presentation.cospeakers = it;
-                    return presentation;
-                  })))
-            )
-            .subscribe((presentation: Presentation) => this.model = presentation);
-        }
+        this.getOwnerId(params);
+        this.getPresentation(params);
       });
 
   }
 
-  save(form: FormControl) {
+  private getPresentation(params: Params) {
+    const id = params['id'];
+    if (id) {
+      this.service.getOne(id)
+        .subscribe(presentation => this.model = presentation);
+    }
+  }
+
+  private getOwnerId(params: Params) {
+    this.owner = params['owner'];
+    if (this.owner == null) {
+      this.owner = this.user.get().jti;
+    }
+  }
+
+  private loadAllTags() {
+    this.service.allTags()
+      .subscribe(tags => this.tags = tags);
+  }
+
+  save() {
     this.submitted = true;
-    if (form.valid) {
-      this.service.save(this.userId, this.model)
+    if (this.form.valid) {
+      this.service.save(this.owner, this.model)
         .subscribe(() => this.location.back());
     }
   }
 
   cancel() {
-    this.router.navigate([`/profile/${this.userId}`]);
-  }
-
-  public tags = (): Observable<Tag[]> => {
-    return this.service.allTags();
+    this.router.navigate([`/profile/${this.owner}`]);
   }
 }

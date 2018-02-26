@@ -1,4 +1,11 @@
 .action-buttons {
-  padding: 20px;
-  text-align: center;
+}
+
+.presentations {
+  &__status-column {
+    width: 150px;
+  }
+  &__action-column {
+    width: 270px;
+  }
 }

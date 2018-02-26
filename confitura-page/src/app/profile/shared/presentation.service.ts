@@ -21,7 +21,9 @@ export class PresentationService {
 
   allTags() {
     return this.http.get<EmbeddedTags>('/tags')
-      .pipe(map(response => response._embedded.tags));
+      .pipe(
+        map(response => response._embedded.tags)
+      );
   }
 
   getAll(): Observable<Presentation[]> {
@@ -47,6 +49,13 @@ export class PresentationService {
 
   remove(presentation: Presentation) {
     return this.http.delete(`/presentations/${presentation.id}`);
+  }
+
+  addCospeaker(id: string, email: string): Observable<User> {
+    return this.http.post<User>(`/presentations/${id}/cospeakers/${email}`, {});
+  }
+  removeCospeaker(id: string, email: string): Observable<Response> {
+    return this.http.delete<Response>(`/presentations/${id}/cospeakers/${email}`, {});
   }
 
   getCospeakers(id: string): Observable<User[]> {

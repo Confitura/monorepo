@@ -4,18 +4,6 @@ section#partners-confitura {
   .unpublished {
     opacity: 0.1;
   }
-  .partners-banner {
-    background: #000000 url("/assets/img/partners_right.png") no-repeat right bottom;
-
-    background-size: contain;
-    @media all and (min-width: $size_small) {
-      background: url("/assets/img/partners_left.png") no-repeat left top, url("/assets/img/partners_right.png") no-repeat right bottom;
-      background-color: #000000;
-    }
-    h2 {
-      color: #fff;
-    }
-  }
 
   .partners-type {
     background-color: #ffffff;

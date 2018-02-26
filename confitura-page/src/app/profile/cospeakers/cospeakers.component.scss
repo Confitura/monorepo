@@ -1,0 +1,28 @@
+.add-form {
+  display: flex;
+  align-items: center;
+  &__email {
+    flex-grow: 1;
+  }
+
+  &__add {
+    margin-right: 2px;
+    margin-left: 2px;
+  }
+
+  &__done {
+    margin-right: 2px;
+    margin-left: 2px;
+  }
+
+}
+
+.cospeakers-list {
+  &__name {
+    padding-left: 5px;
+  }
+  &__delete-button {
+    margin-left: auto;
+  }
+}
+

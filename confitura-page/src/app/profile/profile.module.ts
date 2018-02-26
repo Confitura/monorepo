@@ -8,7 +8,11 @@ import {TagInputModule} from 'ngx-chips';
 import {ProfileCompleteGuard} from './shared/profile-complete-guard.service';
 import {IsAuthenticatedGuard} from './shared/is-authenticated-guard.service';
 import {SpeakerSelectComponent} from './speaker-select/speaker.multiselect.component';
-import {MatButtonModule, MatFormFieldModule, MatInputModule} from '@angular/material';
+import {
+  MatButtonModule, MatChipsModule, MatFormFieldModule, MatIconModule, MatInputModule, MatListModule, MatRadioModule, MatSnackBarModule,
+  MatTableModule
+} from '@angular/material';
+import { CospeakersComponent } from './cospeakers/cospeakers.component';
 
 
 @NgModule({
@@ -17,8 +21,14 @@ import {MatButtonModule, MatFormFieldModule, MatInputModule} from '@angular/mate
     TagInputModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule],
-  declarations: [ProfileEditComponent, ProfileViewComponent, PresentationEditComponent, SpeakerSelectComponent],
+    MatButtonModule,
+    MatRadioModule,
+    MatChipsModule,
+    MatListModule,
+    MatIconModule,
+    MatSnackBarModule
+  ],
+  declarations: [ProfileEditComponent, ProfileViewComponent, PresentationEditComponent, SpeakerSelectComponent, CospeakersComponent],
   providers: [ProfileCompleteGuard, IsAuthenticatedGuard]
 
 })

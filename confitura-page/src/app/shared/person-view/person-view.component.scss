@@ -1,11 +1,18 @@
+@import "../../sizes";
+
 .person-container {
   display: flex;
-  @media all and (max-width: 768px) {
-    flex-direction: column;
+  flex-direction: column;
+  @media all and (min-width: $size_medium) {
+    flex-direction: row;
   }
   .person-photo {
     flex-shrink: 0;
     position: relative;
+    margin: auto;
+    @media all and (min-width: $size_medium) {
+      margin: inherit;
+    }
     button.btn-upload {
       visibility: hidden;
       position: absolute;

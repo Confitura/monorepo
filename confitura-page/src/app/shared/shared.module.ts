@@ -16,6 +16,7 @@ import {PersonModalService} from './person-modal/person-modal.service';
 import {AdminOrOwnerDirective} from './admin-or-owner.directive';
 import { ResizeImgPipe } from './resize-img.pipe';
 import {MdPipe} from './md/md.pipe';
+import { PageHeaderComponent } from './page-header/page-header.component';
 
 @NgModule({
   imports: [CommonModule, HttpClientModule, FileUploadModule, FormsModule],
@@ -31,6 +32,7 @@ import {MdPipe} from './md/md.pipe';
     PersonViewComponent,
     ResizeImgPipe,
     MdPipe,
+    PageHeaderComponent,
   ],
   exports: [
     CommonModule,
@@ -46,7 +48,8 @@ import {MdPipe} from './md/md.pipe';
     PersonComponent,
     PersonViewComponent,
     ResizeImgPipe,
-    MdPipe
+    MdPipe,
+    PageHeaderComponent
   ],
   providers: [PersonModalService]
 })

@@ -5,6 +5,7 @@ import {AgendaEntry} from './agenda.model';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/zip';
+import {map} from 'rxjs/operators';
 
 
 @Injectable()
@@ -72,7 +73,9 @@ export class AgendaService {
 
   getAll(): Observable<AgendaEntry[]> {
     return this.http.get<EmbeddedAgendaEntries>('/agenda')
-      .map(response => response._embedded.agendaEntries);
+      .pipe(
+        map(response => response._embedded.agendaEntries)
+      );
   }
 
   addEntry(param: { timeSlot: string; room: string; label?: string, presentation?: string }) {
@@ -81,12 +84,16 @@ export class AgendaService {
 
   getRooms(): Observable<Room[]> {
     return this.http.get<EmbeddedRooms>('/rooms')
-      .map(response => response._embedded.rooms);
+      .pipe(
+        map(response => response._embedded.rooms)
+      );
   }
 
   getTimeSlots(): Observable<TimeSlot[]> {
     return this.http.get<EmbeddedTimeslots>('/time-slots')
-      .map(response => response._embedded.timeSlots);
+      .pipe(
+        map(response => response._embedded.timeSlots)
+      );
   }
 
   save(participant: AgendaEntry) {

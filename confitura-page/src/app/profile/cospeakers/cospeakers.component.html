@@ -1,0 +1,37 @@
+<article class="bg-white" id="faq">
+  <div class="row-500 pt50 pb50">
+
+    <h3>Co speakers</h3>
+    <form (submit)="add()" class="add-form" #form="ngForm">
+      <mat-form-field class="add-form__email">
+        <input matInput
+               placeholder="email address"
+               type="email"
+               email
+               [(ngModel)]="email"
+               name="email"
+               #emailInput="ngModel"
+               maxlength="255">
+        <mat-hint>Type an email address of your co-speaker</mat-hint>
+        <mat-error *ngIf="emailInput.hasError('email')">
+          this is not a valid email address
+        </mat-error>
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit" class=add-form__add [disabled]="form.invalid">add</button>
+      <button mat-button type="button" class="add-form__done" (click)="done()">Done</button>
+    </form>
+    <div>
+      <mat-list class="cospeakers-list">
+        <mat-list-item *ngFor="let speaker of list">
+          <img matListAvatar [src]="speaker.photo" alt="...">
+          <div matLine="" class="cospeakers-list__name">{{speaker.name}}</div>
+          <small matLine="" class="cospeakers-list__email text-muted">{{speaker.email}}</small>
+          <button mat-icon-button class=cospeakers-list__delete-button
+                  (click)="remove(speaker)">
+            <mat-icon aria-label="clear button">clear</mat-icon>
+          </button>
+        </mat-list-item>
+      </mat-list>
+    </div>
+  </div>
+</article>
