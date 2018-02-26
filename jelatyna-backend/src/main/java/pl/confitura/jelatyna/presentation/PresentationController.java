@@ -50,7 +50,7 @@ public class PresentationController {
     }
 
     @PreAuthorize("@security.presentationOwnedByUser(#presentationId) || @security.isAdmin()")
-    @DeleteMapping("/presentations/{presentationId}/cospeakers/{email}")
+    @DeleteMapping("/presentations/{presentationId}/cospeakers/{email:.+}")
     public ResponseEntity<?> removeCospeaker(@PathVariable String presentationId, @PathVariable String email){
         Presentation presentation = this.repository.findOne(presentationId);
         presentation.setCospeakers(removeCospeakerByEmail(email, presentation.getCospeakers()));
@@ -58,7 +58,7 @@ public class PresentationController {
     }
 
     @PreAuthorize("@security.presentationOwnedByUser(#presentationId) || @security.isAdmin()")
-    @PostMapping("/presentations/{presentationId}/cospeakers/{email}")
+    @PostMapping("/presentations/{presentationId}/cospeakers/{email:.+}")
     @Transactional
     public ResponseEntity<?> addCospeaker(@PathVariable String presentationId, @PathVariable String email){
         User user = this.userRepository.findOneByEmail(email);
