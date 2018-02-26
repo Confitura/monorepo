@@ -40,4 +40,7 @@ public interface UserRepository extends Repository<User, String> {
             "LEFT JOIN p.cospeakers co " +
             "WHERE p.status ='accepted'")
     Iterable<Object[]> findAllAccepted();
+
+    @RestResource(exported = false)
+    User findOneByEmail(String email);
 }
