@@ -5,6 +5,7 @@ import {ProfileViewComponent} from './profile-view/profile-view.component';
 import {PresentationEditComponent} from './presentation-edit/presentation-edit.component';
 import {ProfileCompleteGuard} from './shared/profile-complete-guard.service';
 import {IsAuthenticatedGuard} from './shared/is-authenticated-guard.service';
+import {CospeakersComponent} from './cospeakers/cospeakers.component';
 
 const appRoutes: Routes = [
   {path: 'profile', component: ProfileViewComponent, canActivate: [IsAuthenticatedGuard]},
@@ -13,6 +14,7 @@ const appRoutes: Routes = [
   {path: 'profile/:id', component: ProfileViewComponent, canActivate: [IsAuthenticatedGuard]},
   {path: 'presentation', component: PresentationEditComponent, canActivate: [IsAuthenticatedGuard]},
   {path: 'user/:userId/presentation', component: PresentationEditComponent, canActivate: [IsAuthenticatedGuard]},
+  {path: 'presentation/:id/cospeakers', component: CospeakersComponent, canActivate: [IsAuthenticatedGuard]},
   {path: 'presentation/:id', component: PresentationEditComponent, canActivate: [IsAuthenticatedGuard]},
   {path: 'user/:userId/presentation/:id', component: PresentationEditComponent, canActivate: [IsAuthenticatedGuard]},
 ];

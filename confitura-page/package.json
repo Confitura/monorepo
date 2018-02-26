@@ -51,7 +51,7 @@
     "marked": "^0.3.9",
     "ng2-cookies": "^1.0.12",
     "ng2-file-upload": "^1.2.1",
-    "ngx-chips": "^1.5.3",
+    "ngx-chips": "^1.6.3-rc.3",
     "popper.js": "^1.12.9",
     "reflect-metadata": "^0.1.10",
     "rxjs": "^5.5.2",

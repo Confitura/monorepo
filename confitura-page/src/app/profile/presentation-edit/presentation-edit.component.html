@@ -1,7 +1,7 @@
 <article class="bg-white" id="faq">
   <div class="row-1140 pt50 pb50">
 
-    <h3>My Presentation</h3>
+    <h3 class="pt-4">My Presentation</h3>
     <form class="presentation-form" (ngSubmit)="save()" #form="ngForm" novalidate>
       <mat-form-field>
         <input matInput placeholder="title" type="text"
@@ -28,6 +28,16 @@
                          required>
           <mat-radio-button [value]="level" *ngFor="let level of levels">{{level}}&nbsp;</mat-radio-button>
         </mat-radio-group>
+      </div>
+      <div>
+        <label>tags: </label>
+        <tag-input [(ngModel)]="model.tags" [onlyFromAutocomplete]="true"
+                   name="tags" >
+          <tag-input-dropdown [showDropdownIfEmpty]="true"
+                              [autocompleteItems]="tags "
+                              [identifyBy]="'id'" [displayBy]="'name'">
+          </tag-input-dropdown>
+        </tag-input>
       </div>
       <mat-form-field>
         <textarea matInput placeholder="short description"

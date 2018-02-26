@@ -6,8 +6,6 @@ import {Tag} from '../shared/tag.model';
 import {FormControl} from '@angular/forms';
 import {CurrentUser} from '../../core/security/current-user.service';
 import {Location} from '@angular/common';
-import {Observable} from 'rxjs/Observable';
-import {flatMap, map} from 'rxjs/operators';
 
 @Component({
   templateUrl: './presentation-edit.component.html',
@@ -16,9 +14,10 @@ import {flatMap, map} from 'rxjs/operators';
 export class PresentationEditComponent implements OnInit {
   languages = ['polish', 'english'];
   levels = ['basic', 'advanced', 'master'];
-  userId: string = null;
+  owner: string = null;
   model = new Presentation();
   submitted = false;
+  tags: Tag[] = [];
 
   @ViewChild('form') form: FormControl;
 
@@ -30,42 +29,44 @@ export class PresentationEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loadAllTags();
     this.route.params
       .subscribe((params: Params) => {
-        this.userId = params['userId'];
-        if (this.userId == null) {
-          this.userId = this.user.get().jti;
-        }
-        const id = params['id'];
-        if (id) {
-          this.service.getOne(id)
-            .pipe(
-              flatMap((presentation: Presentation) => this.service.getCospeakers(id)
-                .pipe(
-                  map(it => {
-                    presentation.cospeakers = it;
-                    return presentation;
-                  })))
-            )
-            .subscribe((presentation: Presentation) => this.model = presentation);
-        }
+        this.getOwnerId(params);
+        this.getPresentation(params);
       });
 
+  }
+
+  private getPresentation(params: Params) {
+    const id = params['id'];
+    if (id) {
+      this.service.getOne(id)
+        .subscribe(presentation => this.model = presentation);
+    }
+  }
+
+  private getOwnerId(params: Params) {
+    this.owner = params['owner'];
+    if (this.owner == null) {
+      this.owner = this.user.get().jti;
+    }
+  }
+
+  private loadAllTags() {
+    this.service.allTags()
+      .subscribe(tags => this.tags = tags);
   }
 
   save() {
     this.submitted = true;
     if (this.form.valid) {
-      this.service.save(this.userId, this.model)
+      this.service.save(this.owner, this.model)
         .subscribe(() => this.location.back());
     }
   }
 
   cancel() {
-    this.router.navigate([`/profile/${this.userId}`]);
-  }
-
-  public tags = (): Observable<Tag[]> => {
-    return this.service.allTags();
+    this.router.navigate([`/profile/${this.owner}`]);
   }
 }

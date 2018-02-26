@@ -13,8 +13,6 @@
   src: url('/assets/fonts/30E5AC_1_0.eot?#iefix') format('embedded-opentype'), url('/assets/fonts/30E5AC_1_0.woff2') format('woff2'), url('/assets/fonts/30E5AC_1_0.woff') format('woff'), url('/assets/fonts/30E5AC_1_0.ttf') format('truetype');
 }
 
-
-
 body#confitura {
   padding-left: 0;
   padding-right: 0;
@@ -32,18 +30,16 @@ body#confitura {
 
   ng-component:first-child {
     margin-top: 55px;
-    @media all and (min-width: $size_small){
+    @media all and (min-width: $size_small) {
       margin-top: 0;
     }
   }
 }
 
-
 /* effects - css3*/
 .ease {
   transition: 0.5s ease;
 }
-
 
 .btn-pink, .btn-pink:hover {
   width: 320px;
@@ -61,7 +57,6 @@ body#confitura {
 .btn-pink:hover {
   //text-decoration: underline;
 }
-
 
 /* agenda carousel */
 #agenda-carousel-inner {
@@ -190,18 +185,18 @@ div[class^="col-"] {
 }
 
 h2, .h2 {
-//  display: block;
-//  width: 100%;
-//  color: #000000;
+  //  display: block;
+  //  width: 100%;
+  //  color: #000000;
   text-decoration: underline;
   text-align: center;
-//  font-weight: bold;
-//  text-shadow: none;
+  //  font-weight: bold;
+  //  text-shadow: none;
   font-size: 3rem;
   font-family: 'NeuzeitGro-Bol', Verdana, Tahoma, sans-serif;
-//  padding-top: 100px !important;
-//  padding-bottom: 90px !important;
-//
+  //  padding-top: 100px !important;
+  //  padding-bottom: 90px !important;
+  //
 }
 
 .main-confitura-content-inner,
@@ -219,9 +214,9 @@ h2, .h2 {
 }
 
 h3 {
-//  display: block;
-//  font-weight: bold;
-//  text-shadow: none;
+  //  display: block;
+  //  font-weight: bold;
+  //  text-shadow: none;
   font-size: 2.5rem;
   font-family: 'NeuzeitGro-Bol', Verdana, Tahoma, sans-serif;
   text-align: center;
@@ -243,8 +238,6 @@ h3 {
   padding-bottom: 80px;
   text-align: center;
 }
-
-
 
 .about-items {
   background: transparent;
@@ -425,10 +418,8 @@ div#patronat {
   display: block;
   max-width: 1140px;
   margin: 0 auto !important;
-  @media all and (max-width: 1140px) {
-    padding-left: 20px;
-    padding-right: 20px;
-  }
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .row-1080 {
@@ -436,7 +427,6 @@ div#patronat {
   max-width: 1080px;
   margin: 0 auto;
 }
-
 
 #confitura #loading-bar {
   .bar {
@@ -459,5 +449,17 @@ div#patronat {
   padding-top: 20px;
   font-size: 2rem;
 }
+
+button[class*="mat-"]:focus {
+  outline: none;
+}
+
+.row-500 {
+  max-width: 500px;
+  margin: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
 
 
