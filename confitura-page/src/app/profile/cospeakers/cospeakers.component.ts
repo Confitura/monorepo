@@ -57,7 +57,7 @@ export class CospeakersComponent implements OnInit {
       });
   }
 
-  done(){
+  done() {
     this.location.back();
   }
 
