@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-sm navbar-default bg-white fixed-top justify-content-between">
+<nav class="navbar navbar-expand-lg navbar-default bg-white fixed-top justify-content-between">
   <a class="navbar-brand" routerLink="/">
     <div class="confitura-logo">
       <img src="/assets/img/logo_black.svg" alt="">
@@ -11,7 +11,7 @@
 
   <div class="collapse navbar-collapse justify-content-end" id="navbar">
     <ul class="navbar-nav">
-      <li cf-menu-item [model]="item" *ngFor="let item of menu" class="nav-item"></li>
+      <li cf-menu-item [model]="item" *ngFor="let item of menu" class="nav-item" [class.dropdown]="item.children"></li>
     </ul>
   </div>
 </nav>

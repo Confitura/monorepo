@@ -16,7 +16,6 @@
       text-decoration: underline;
     }
 
-
     @media all and (min-width: $size_small) {
       line-height: 55px;
       font-size: 1.5rem;
@@ -29,7 +28,7 @@
       font-size: 1.5rem;
     }
 
-      &.active {
+    &.active {
       text-decoration: underline;
     }
 
@@ -39,21 +38,9 @@
       padding-right: 0;
       background: #ff0040;
       color: #ffffff;
-      @media all and(min-width: $size_small) {
+      @media all and(min-width: $size_medium) {
         width: 170px;
       }
     }
   }
-  //a.menu-item {
-  //  line-height: 55px;
-  //  margin-left: 15px;
-  //  font-size: 2rem;
-  //  text-align: center;
-  //
-  //  @media all and (min-width: $size_small) {
-  //    a.menu-item {
-  //
-  //    }
-  //  }
-  //}
 }

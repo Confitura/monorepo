@@ -6,10 +6,10 @@
        routerLinkActive="active">{{model.label}}</a>
 
     <ng-container *ngIf="model.children">
-        <a [title]="model.label"  class="dropdown-toggle menu-item "
-           routerLinkActive="active" data-toggle="dropdown" role="button">{{model.label}} <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-            <li cf-menu-item [model]="child" *ngFor="let child of model.children"></li>
-        </ul>
+      <a [title]="model.label" class="dropdown-toggle menu-item"
+         routerLinkActive="active" data-toggle="dropdown" role="button">{{model.label}} <span class="caret"></span></a>
+      <div class="dropdown-menu">
+        <div cf-menu-item [model]="child" *ngFor="let child of model.children" class="dropdown-item"></div>
+      </div>
     </ng-container>
 </ng-container>

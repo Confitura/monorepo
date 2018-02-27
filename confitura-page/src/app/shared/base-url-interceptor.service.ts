@@ -7,7 +7,7 @@ import {Injectable} from '@angular/core';
 export class BaseUrlInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const url =  environment.API_URL + req.url;
+    const url = (environment.API_URL + req.url).replace(/([^:]\/)\/+/g, '$1');
     const clone = req.clone({url: url});
     return next.handle(clone);
   }

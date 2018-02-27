@@ -97,16 +97,22 @@ app.get('/presentations/:id/cospeakers', (req, res) => {
     }
   });
 });
+
 app.post('/presentations/:id/cospeakers/:email', (req, res) => {
   const email = req.params.email;
-  if (email.indexOf('wrong') !== -1) {
+  if (email.includes('wrong')) {
     res.status(400).jsonp({error: 'error'});
+  } else if (email.includes('not')) {
+    res.status(404).jsonp({error: 'error'});
+
   } else {
     const user = {id: id++, name: faker.name.findName(), email: email, photo: faker.image.avatar()};
     cospeakers = [...cospeakers, user];
     res.send(user);
   }
+
 });
+
 app.del('/presentations/:id/cospeakers/:email', (req, res) => {
   res.send({});
 });

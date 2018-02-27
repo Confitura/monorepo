@@ -1,4 +1,10 @@
+@import "../../sizes";
+
 .action-buttons {
+  text-align: center;
+  @media all and (min-width: $size_medium) {
+    text-align: right;
+  }
 }
 
 .presentations {
@@ -6,6 +12,9 @@
     width: 150px;
   }
   &__action-column {
-    width: 270px;
+    width: 100px;
+    @media all and (min-width: $size_medium) {
+      width: 270px;
+    }
   }
 }

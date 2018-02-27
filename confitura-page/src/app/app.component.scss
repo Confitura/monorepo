@@ -18,11 +18,9 @@ body#confitura {
   padding-right: 0;
   font-family: 'NeuzeitGro-Reg', Verdana, Tahoma, sans-serif; /* NeuzeitGro-Bol */
   background-color: black;
+  padding-top: 55px;
   h2 {
     margin-top: 0;
-  }
-  @media all and (min-width: $size_small) {
-    padding-top: 55px;
   }
   @media all and (min-width: $size_medium) {
     padding-top: 100px;

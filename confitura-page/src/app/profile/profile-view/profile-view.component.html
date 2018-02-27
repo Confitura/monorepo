@@ -1,6 +1,6 @@
 <section class="bg-white">
-  <div class="row-1140 pt-5 pb-5" *ngIf="model">
-    <div class="action-buttons text-right">
+  <div class="row-1140 pt-3 pb-3" *ngIf="model">
+    <div class="action-buttons pb-2">
       <a mat-button routerLink="/profile/{{model.id}}/edit">Edit profile</a>
       <a mat-button routerLink="/user/{{model.id}}/presentation" color="primary">Add presentation</a>
     </div>
@@ -18,7 +18,7 @@
             <mat-chip>{{presentation.status || "reported"}}</mat-chip>
           </mat-chip-list>
         </td>
-        <td>
+        <td class="text-center">
           <a class="btn" routerLink="/presentation/{{presentation.id}}">edit</a>
           <a class="btn" routerLink="/presentation/{{presentation.id}}/cospeakers">co-speakers</a>
           <button class="btn btn-danger" (click)="remove(presentation)">Delete</button>

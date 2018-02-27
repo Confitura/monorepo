@@ -38,7 +38,11 @@ export class CospeakersComponent implements OnInit {
     this.service.addCospeaker(this.presentationId, this.email)
       .pipe(
         catchError(error => {
-          this.snackBar.open(error.error, null, {
+          let message = 'Ups! Something went wrong.';
+          if (error.status === 404) {
+            message = 'Ups! Speaker with given email does not exist in our system';
+          }
+          this.snackBar.open(message, null, {
             duration: 5000,
           });
           return Observable.throw(error);
