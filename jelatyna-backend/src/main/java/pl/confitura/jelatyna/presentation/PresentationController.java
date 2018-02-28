@@ -54,6 +54,7 @@ public class PresentationController {
     public ResponseEntity<?> removeCospeaker(@PathVariable String presentationId, @PathVariable String email){
         Presentation presentation = this.repository.findOne(presentationId);
         presentation.setCospeakers(removeCospeakerByEmail(email, presentation.getCospeakers()));
+        repository.save(presentation);
         return ResponseEntity.ok().build();
     }
 
