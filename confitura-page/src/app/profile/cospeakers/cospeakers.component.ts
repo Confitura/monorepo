@@ -39,10 +39,11 @@ export class CospeakersComponent implements OnInit {
       .pipe(
         catchError(error => {
           let message = 'Ups! Something went wrong.';
+          console.log(error);
           if (error.status === 404) {
             message = 'Ups! Speaker with given email does not exist in our system';
           } else if (error.status === 409) {
-            message = error.message;
+            message = error.error;
           }
 
           this.snackBar.open(message, null, {

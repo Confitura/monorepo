@@ -101,9 +101,9 @@ app.get('/presentations/:id/cospeakers', (req, res) => {
 app.post('/presentations/:id/cospeakers/:email', (req, res) => {
   const email = req.params.email;
   if (email.includes('wrong')) {
-    res.status(400).jsonp({error: 'error'});
+    res.status(400).jsonp('error');
   } else if (email.includes('not')) {
-    res.status(404).jsonp({error: 'error'});
+    res.status(404).jsonp('error');
 
   } else {
     const user = {id: id++, name: faker.name.findName(), email: email, photo: faker.image.avatar()};
