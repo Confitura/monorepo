@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.hateoas.Resources;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +24,6 @@ public class PresentationController {
 
     private PresentationRepository repository;
     private UserRepository userRepository;
-
 
     @PreAuthorize("@security.isAdmin()")
     @PostMapping("/presentations/{presentationId}/accept")
@@ -44,14 +44,14 @@ public class PresentationController {
 
     @PreAuthorize("@security.presentationOwnedByUser(#presentationId) || @security.isAdmin()")
     @GetMapping("/presentations/{presentationId}/cospeakers")
-    public ResponseEntity<Resources<User>> getCospeakers(@PathVariable String presentationId){
+    public ResponseEntity<Resources<User>> getCospeakers(@PathVariable String presentationId) {
         Set<User> cospeakers = this.repository.findOne(presentationId).getCospeakers();
         return ResponseEntity.ok(new Resources<>(cospeakers));
     }
 
     @PreAuthorize("@security.presentationOwnedByUser(#presentationId) || @security.isAdmin()")
     @DeleteMapping("/presentations/{presentationId}/cospeakers/{email:.+}")
-    public ResponseEntity<?> removeCospeaker(@PathVariable String presentationId, @PathVariable String email){
+    public ResponseEntity<?> removeCospeaker(@PathVariable String presentationId, @PathVariable String email) {
         Presentation presentation = this.repository.findOne(presentationId);
         presentation.setCospeakers(removeCospeakerByEmail(email, presentation.getCospeakers()));
         repository.save(presentation);
@@ -61,12 +61,19 @@ public class PresentationController {
     @PreAuthorize("@security.presentationOwnedByUser(#presentationId) || @security.isAdmin()")
     @PostMapping("/presentations/{presentationId}/cospeakers/{email:.+}")
     @Transactional
-    public ResponseEntity<?> addCospeaker(@PathVariable String presentationId, @PathVariable String email){
+    public ResponseEntity<?> addCospeaker(@PathVariable String presentationId, @PathVariable String email) {
         User user = this.userRepository.findOneByEmail(email);
-        if (user == null){
+        if (user == null) {
             return ResponseEntity.notFound().build();
         }
+
         Presentation presentation = this.repository.findOne(presentationId);
+        if (presentation.isOwnedBy(email)) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("You cannot add yourself as a speaker!");
+        }
+        if (presentation.hasCospeaker(email)) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("This speaker is already added to this presentation");
+        }
         presentation.getCospeakers().add(user);
         return ResponseEntity.ok(user);
     }

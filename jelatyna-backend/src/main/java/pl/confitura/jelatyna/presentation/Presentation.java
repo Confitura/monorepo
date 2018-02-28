@@ -13,6 +13,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -50,4 +51,12 @@ public class Presentation {
     @NotNull
     private Set<User> cospeakers = new HashSet<>();
     private String status;
+
+    boolean isOwnedBy(String email) {
+        return speaker.getEmail().equalsIgnoreCase(email);
+    }
+
+    boolean hasCospeaker(@PathVariable String email) {
+        return getCospeakers().stream().anyMatch(it -> it.getEmail().equalsIgnoreCase(email));
+    }
 }
