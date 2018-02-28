@@ -41,7 +41,10 @@ export class CospeakersComponent implements OnInit {
           let message = 'Ups! Something went wrong.';
           if (error.status === 404) {
             message = 'Ups! Speaker with given email does not exist in our system';
+          } else if (error.status === 409) {
+            message = error.message;
           }
+
           this.snackBar.open(message, null, {
             duration: 5000,
           });
