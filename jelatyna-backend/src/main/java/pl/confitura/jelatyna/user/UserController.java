@@ -1,6 +1,5 @@
 package pl.confitura.jelatyna.user;
 
-import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static org.springframework.util.StringUtils.isEmpty;
 
 import java.util.Set;
@@ -73,9 +72,9 @@ public class UserController {
     @PreAuthorize("@security.isOwner(#userId)")
     public ResponseEntity<?> addPresentationToUser(@Valid @RequestBody Presentation presentation,
             @PathVariable String userId) {
-        if (isEmpty(presentation.getId()) && !security.isAdmin()) {
-            return ResponseEntity.status(UNAUTHORIZED).build();
-        }
+//        if (isEmpty(presentation.getId()) && !security.isAdmin()) {
+//            return ResponseEntity.status(UNAUTHORIZED).build();
+//        }
         User speaker = repository.findOne(userId);
         presentation.setSpeaker(speaker);
         retainStatus(presentation);
