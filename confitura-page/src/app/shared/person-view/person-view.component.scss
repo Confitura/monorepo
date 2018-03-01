@@ -36,8 +36,13 @@
 
   .person-info {
     padding: 20px;
+    flex-grow: 1;
 
-    .person-name h3 {
+    &__bio {
+      white-space: pre-line;
+    }
+
+    .&__name h3 {
       &:before, &:after {
         content: " # ";
       }
