@@ -40,7 +40,7 @@
       <mat-form-field>
         <textarea matInput matTextareaAutosize placeholder="Bio"
                   name="bio" [(ngModel)]="model.bio" #bio="ngModel"
-                  required maxlength="10000"></textarea>
+                  required maxlength="2000"></textarea>
         <mat-error *ngIf="bio.hasError('required')">
           Please tell us something about yourself!
         </mat-error>

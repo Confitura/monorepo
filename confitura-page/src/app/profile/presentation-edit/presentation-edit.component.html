@@ -13,26 +13,37 @@
           title is <strong>required</strong>
         </mat-error>
       </mat-form-field>
-      <div required="">
-        <label>language: </label>
-        <mat-radio-group [(ngModel)]="model.language"
-                         name="language" #language="ngModel"
-                         required>
-          <mat-radio-button [value]="language" *ngFor="let language of languages" [required]="true">{{language}}&nbsp;</mat-radio-button>
-        </mat-radio-group>
+      <div>
+        <div class="presentation-form__language">
+          <label class="presentation-form__language-label">language: </label>
+          <mat-radio-group [(ngModel)]="model.language"
+                           name="language" #language="ngModel"
+                           required>
+            <mat-radio-button [value]="language" *ngFor="let language of languages" [required]="true">{{language}}&nbsp;</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <mat-error *ngIf="form.submitted && language?.hasError('required')">
+          language is <strong>required</strong>
+        </mat-error>
       </div>
       <div>
-        <label>level: </label>
-        <mat-radio-group [(ngModel)]="model.level"
-                         name="level" #level="ngModel"
-                         required>
-          <mat-radio-button [value]="level" *ngFor="let level of levels">{{level}}&nbsp;</mat-radio-button>
-        </mat-radio-group>
+        <div class="presentation-form__level">
+          <label class="presentation-form__level-label">level: </label>
+          <mat-radio-group [(ngModel)]="model.level"
+                           name="level" #level="ngModel"
+                           required>
+            <mat-radio-button [value]="level" *ngFor="let level of levels">{{level}}&nbsp;</mat-radio-button>
+          </mat-radio-group>
+
+        </div>
+        <mat-error *ngIf="form.submitted && level?.hasError('required')">
+          level is <strong>required</strong>
+        </mat-error>
       </div>
       <div>
         <label>tags: </label>
         <tag-input [(ngModel)]="model.tags" [onlyFromAutocomplete]="true"
-                   name="tags" >
+                   name="tags">
           <tag-input-dropdown [showDropdownIfEmpty]="true"
                               [autocompleteItems]="tags "
                               [identifyBy]="'id'" [displayBy]="'name'">
@@ -51,7 +62,7 @@
           Make it short and sweet for the potential participant.
           It will be used In Vote 4 Papers process.
         </mat-hint>
-        <mat-hint align="end">({{shortDescription?.length || 0}}/300)</mat-hint>
+        <mat-hint align="end">({{model.shortDescription?.length || 0}}/300)</mat-hint>
         <mat-error *ngIf="shortDescription?.hasError('required')">
           short description is <strong>required</strong>
         </mat-error>
@@ -65,7 +76,7 @@
                   name="description"
                   #description="ngModel"
                   required maxlength="1000"></textarea>
-        <mat-hint align="end">({{description?.length || 0}}/1000)</mat-hint>
+        <mat-hint align="end">({{model.description?.length || 0}}/1000)</mat-hint>
         <mat-error *ngIf="description?.hasError('required')">
           description is <strong>required</strong>
         </mat-error>

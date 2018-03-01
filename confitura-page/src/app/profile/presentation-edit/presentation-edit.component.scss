@@ -8,4 +8,20 @@
   > * {
     margin-bottom: 10px;
   }
+
+  &__language {
+    display: flex;
+  }
+
+  &__language-label {
+    padding-right: 5px;
+  }
+
+  &__level {
+    display: flex;
+  }
+
+  &__level-label {
+    padding-right: 5px;
+  }
 }
