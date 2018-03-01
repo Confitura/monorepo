@@ -42,7 +42,7 @@
       white-space: pre-line;
     }
 
-    .&__name h3 {
+    &__name h3 {
       &:before, &:after {
         content: " # ";
       }
