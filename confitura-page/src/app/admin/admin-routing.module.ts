@@ -25,7 +25,6 @@ const routes: Routes = [
       {path: 'users', component: UserListComponent, canActivate: [IsAdminGuard]},
       {path: 'partners/add', component: PartnerEditComponent, canActivate: [IsAdminGuard]},
       {path: 'partners/edit/:id', component: PartnerEditComponent, canActivate: [IsAdminGuard]},
-      {path: 'partners/:id', component: PartnerComponent, canActivate: [IsAdminGuard]},
       {path: 'agenda', component: AgendaComponent, canActivate: [IsAdminGuard]},
       {path: 'participants', component: ParticipantListComponent, canActivate: [IsAdminGuard]}]
   }

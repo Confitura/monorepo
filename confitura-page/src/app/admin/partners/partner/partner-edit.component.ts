@@ -45,7 +45,7 @@ export class PartnerEditComponent implements OnInit {
     if (this.form.valid) {
       this.service.save(this.model)
         .subscribe(partner => {
-          this.router.navigate(['/admin2/partner', partner.id]);
+          this.router.navigate(['/partners', partner.id]);
         });
     }
   }
