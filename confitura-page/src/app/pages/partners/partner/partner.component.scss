@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: column;
   max-width: 1140px;
-  margin: 60px auto auto;
+  margin: 0 auto auto;
   align-items: stretch;
 
   @media all and (min-width: $size_small) {
@@ -12,7 +12,7 @@
     margin: auto;
   }
 
-  .partner-logo {
+  .partner__logo-container {
     flex-shrink: 0;
     background-color: #FFFFFF;
     padding: 20px 40px;
@@ -28,10 +28,14 @@
       margin: auto;
     }
   }
-  .partner-info {
+  .partner__info-container {
     padding: 20px;
     @media all and (min-width: $size_small) {
       padding-top: 0;
     }
   }
+}
+
+.partner__logo {
+  width: 100%;
 }
