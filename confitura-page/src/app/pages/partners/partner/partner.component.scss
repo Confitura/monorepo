@@ -30,9 +30,6 @@
   }
   .partner__info-container {
     padding: 20px;
-    @media all and (min-width: $size_small) {
-      padding-top: 0;
-    }
   }
 }
 
