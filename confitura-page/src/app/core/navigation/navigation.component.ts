@@ -28,7 +28,7 @@ export class NavigationComponent implements OnInit {
         {label: 'users', url: '/admin2/users', show: () => this.currentUser.isAdmin()},
       ]
     },
-    {label: 'login', url: '/login', show: () => !this.loggedIn, clazz: 'pink'},
+    {label: 'Call 4 Papers', url: '/login', show: () => !this.loggedIn, clazz: 'pink'},
     {label: 'logout', action: () => this.logout(), show: () => this.loggedIn, clazz: 'pink'},
     // {label: 'LIVE stream', url: 'https://www.youtube.com/user/confiturapl/featured', clazz: 'pink'},
   ];
