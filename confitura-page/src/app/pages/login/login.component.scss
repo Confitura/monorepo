@@ -1,0 +1,41 @@
+@import "../../sizes";
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  @media all and (min-width: $size_small) {
+    flex-direction: row;
+  }
+
+  &__separator {
+    flex-grow: 0;
+    flex-shrink: 0;
+    margin: 25px 0;
+    height: 1px;
+    background: black;
+    background: linear-gradient(1deg, transparent, black 50%, transparent);
+    @media all and (min-width: $size_small) {
+      height: auto;
+      width: 1px;
+      margin-top: -10px;
+      margin-bottom: -40px;
+      background: linear-gradient(0deg, transparent, black 20%, black 80%, transparent);
+    }
+
+    //gradient(linear, 0 0, 100% 0, from(white), to(white), color-stop(50%, black));
+  }
+}
+
+.sign-in {
+  flex-grow: 1;
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+.sign-up {
+  flex-grow: 1;
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+

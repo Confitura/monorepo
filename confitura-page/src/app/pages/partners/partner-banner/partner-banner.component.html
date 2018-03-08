@@ -1,8 +1,6 @@
 <section id="partners-confitura" class="partners-banner" *ngIf="list.length > 0">
-  <div class="row-fluid">
-    <div class="col-lg-12 col-md-12"><h2 class="h2">our partners</h2></div>
-  </div>
-  <div class="row-fluid col-lg-12 partners-banner-container">
+  <h2>our partners</h2>
+  <div class="row-fluid col-lg-12 partners-banner-container pt-5">
     <div *ngFor="let type of types" class="{{type}}-type">
       <div class="partners-items" *ngIf="hasAnyPartnersFor(type)">
         <div class="partner-logo text-center">
