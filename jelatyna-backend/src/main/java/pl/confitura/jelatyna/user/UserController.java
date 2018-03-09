@@ -109,7 +109,7 @@ public class UserController {
         if (isEmpty(user.getPhoto())) {
             Gravatar gravatar = new Gravatar(300, GravatarRating.GENERAL_AUDIENCES, GravatarDefaultImage.BLANK);
             String url = gravatar.getUrl(user.getEmail());
-            user.setPhoto(url);
+            user.setPhoto(url.replace("http:", "https:"));
         }
     }
 }
