@@ -1,41 +1,54 @@
 @import "../../sizes";
 
 .login-container {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: 1fr;
+  grid-template-areas: "h " "i" "si" "s" "su";
   @media all and (min-width: $size_small) {
-    flex-direction: row;
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-rows: auto auto 10px auto 40px;
+    grid-template-areas: "h  h  h " "i  i  i " ".  s  . " "si s  su" ".  s  . ";
   }
 
   &__separator {
+    grid-area: s;
     flex-grow: 0;
     flex-shrink: 0;
-    margin: 25px 0;
     height: 1px;
     background: black;
-    background: linear-gradient(1deg, transparent, black 50%, transparent);
+    background: linear-gradient(90deg, transparent, black 50%, transparent);
+    margin-top: 30px;
+    margin-bottom: 30px;
     @media all and (min-width: $size_small) {
       height: auto;
       width: 1px;
-      margin-top: -10px;
-      margin-bottom: -40px;
-      background: linear-gradient(0deg, transparent, black 20%, black 80%, transparent);
+      margin-top: 0;
+      margin-bottom: 0;
+      background: linear-gradient(180deg, transparent, black 20%, black 80%, transparent);
     }
-
-    //gradient(linear, 0 0, 100% 0, from(white), to(white), color-stop(50%, black));
   }
-}
 
-.sign-in {
-  flex-grow: 1;
-  padding-right: 20px;
-  padding-left: 20px;
-}
+  &__sign-in {
+    grid-area: si;
+    padding-left: 40px;
+    padding-right: 40px;
+  }
 
-.sign-up {
-  flex-grow: 1;
-  padding-right: 20px;
-  padding-left: 20px;
+  &__sign-up {
+    grid-area: su;
+    padding-right: 40px;
+    padding-left: 40px;
+
+  }
+
+  &__header {
+    grid-area: h;
+  }
+
+  &__info {
+    grid-area: i;
+  }
 }
 
 
