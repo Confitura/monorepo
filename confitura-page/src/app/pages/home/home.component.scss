@@ -12,6 +12,7 @@
   background-size: 130%;
   background-position-y: 100%;
   height: calc(100vh - 55px);
+  min-height: 500px;
   @media all and (min-width: $size_small) {
     background-size: contain;
   }
