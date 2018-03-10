@@ -4,6 +4,12 @@
     {
       "name": "app",
       "installMode": "prefetch",
+      "cacheConfig": {
+        "strategy": "freshness",
+        "maxSize": 0,
+        "maxAge": "2h",
+        "timeout": "10s"
+      },
       "resources": {
         "files": [
           "/favicon.ico",
@@ -20,6 +26,12 @@
       "name": "assets",
       "installMode": "lazy",
       "updateMode": "prefetch",
+      "cacheConfig": {
+        "strategy": "freshness",
+        "maxSize": 0,
+        "maxAge": "2h",
+        "timeout": "10s"
+      },
       "resources": {
         "files": [
           "/assets/**"
