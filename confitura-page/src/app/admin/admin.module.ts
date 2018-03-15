@@ -11,9 +11,30 @@ import {RoomComponent} from './agenda/room.component';
 import {AgendaEntryComponent} from './agenda/agenda-entry.component';
 import {PresentationPickerComponent} from './agenda/presentaion-picker/presentaion-picker.component';
 import {ScannerComponent} from './scanner/scanner.component';
+import {
+  MatButtonModule,
+  MatChipsModule, MatDividerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatPaginatorModule,
+  MatRadioModule, MatSortModule,
+  MatTableModule
+} from '@angular/material';
 
 @NgModule({
-  imports: [AdminRoutingModule, SharedModule, FileUploadModule],
+  imports: [
+    AdminRoutingModule,
+    SharedModule,
+    FileUploadModule,
+    MatTableModule,
+    MatChipsModule,
+    MatRadioModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatMenuModule,
+    MatIconModule,
+    MatDividerModule,
+    MatPaginatorModule,
+    MatSortModule
+  ],
   declarations: [
     PartnerEditComponent,
     UserListComponent,

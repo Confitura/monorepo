@@ -12,13 +12,15 @@ app.use(function (req, res, next) {
   next();
 });
 
-let person = function (firstName, lastName, type) {
+let person = function (type) {
   id += 1;
-  const name = faker.name.findName();
   return {
-    name,
+    name: faker.name.findName(),
+    email: faker.internet.email(),
+    admin: type % 5 === 0,
+    volunteer: type % 5 === 1,
     id: `${type}_${id}`,
-    photo: `http://placehold.it/300x300?text=${name}`
+    photo: faker.image.avatar()
   };
 };
 
@@ -26,11 +28,7 @@ app.get('/users/search/:type', function (req, res) {
   const type = req.params.type;
   res.send({
     _embedded: {
-      users: [
-        person('John', 'Smith', type),
-        person('Rob', 'Smith', type),
-        person('Samanta', 'Smith', type),
-      ]
+      users: new Array(10).fill(1).map(() => person(type))
     }
   });
 });
@@ -59,7 +57,7 @@ app.get('/login/twitter/callback', (req, res) => {
 
 
 app.get('/login/twitter', (req, res) => {
-  res.redirect('http://localhost:8080/login/twitter');
+  res.redirect('http://localhost:9090/login/twitter');
 });
 
 app.get('/users/:id', (req, res) => {
@@ -126,6 +124,17 @@ app.get('/tags', (req, res) => {
         {id: '2', name: 'JavaScript'},
         {id: '3', name: 'Agile'}
       ]
+    }
+  });
+});
+
+app.get('/users', (req, res) => {
+  res.send({
+    _embedded: {
+      users: new Array(300)
+        .fill(1)
+        .map((item, idx) => person(idx))
+
     }
   });
 });

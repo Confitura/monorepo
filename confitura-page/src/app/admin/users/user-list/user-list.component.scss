@@ -1,0 +1,18 @@
+@import "../../../sizes";
+
+.users-filter {
+  display: flex;
+  align-items: center;
+
+  &__freeform {
+    flex-basis: 25%;
+    @media all and (min-width: $size_small) {
+      margin-left: 20px;
+    }
+  }
+  &__add-user {
+    @media all and (min-width: $size_small) {
+      margin-left: auto;
+    }
+  }
+}

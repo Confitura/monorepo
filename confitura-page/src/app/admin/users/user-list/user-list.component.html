@@ -1,44 +1,64 @@
-<section class="pt100 pb50 bg-white ">
+<section class="bg-white pt-5 pb-5">
   <div class="row-1140">
     <h3>All Users</h3>
     <div style="text-align: right; margin-bottom: 20px;">
-      <button routerLink="/profile/edit" class="btn btn-default">Add User</button>
     </div>
-    <table class="table table-bordered table-striped table-hover" *ngIf="list">
-      <thead>
-      <tr>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Is admin</th>
-        <th>Is volunteer</th>
-        <th></th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let user of list | async">
-        <td>{{user.name}}</td>
-        <td>{{user.email}}</td>
-        <td>{{user.admin}}</td>
-        <td>{{user.volunteer}}</td>
-        <td style="text-align: center">
-          <div class="btn-group">
-            <button type="button" class="btn btn-default" (click)="view(user)">View</button>
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false">
-              <span class="caret"></span>
-              <span class="sr-only">Toggle Dropdown</span>
-            </button>
-            <ul class="dropdown-menu">
-              <li><a role="button" (click)="addPresentationTo(user)">Add Presentation</a></li>
-              <li role="separator" class="divider"></li>
-              <li><a role="button" (click)="markAsVolunteer(user)" *ngIf="!user.volunteer">Set As Volunteer</a></li>
-              <li><a role="button" (click)="notVolunteer(user)" *ngIf="user.volunteer">Remove Volunteer Role</a></li>
-            </ul>
-          </div>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+    <div class="users-filter">
+      <mat-radio-group [(ngModel)]="filter.type" (change)="doFilter()">
+        <mat-radio-button value="*">All</mat-radio-button>
+        <mat-radio-button value="a">Admins</mat-radio-button>
+        <mat-radio-button value="v">Volunteers</mat-radio-button>
+      </mat-radio-group>
+      <mat-form-field class="users-filter__freeform">
+        <input matInput placeholder="filter" type="text" [(ngModel)]="filter.text" (keyup)="doFilter()">
+      </mat-form-field>
+      <button routerLink="/profile/edit" class="btn btn-default users-filter__add-user">Add User</button>
+
+    </div>
+    <mat-table [dataSource]="dataSource" matSort #table>
+
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+        <mat-cell *matCellDef="let user"> {{user.name}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>email</mat-header-cell>
+        <mat-cell *matCellDef="let user"> {{user.email}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="role">
+        <mat-header-cell *matHeaderCellDef>role</mat-header-cell>
+        <mat-cell *matCellDef="let user">
+          <mat-chip-list *ngIf="user.admin || user.volunteer">
+            <mat-chip>{{getRoleFor(user)}}</mat-chip>
+          </mat-chip-list>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let user">
+          <button mat-icon-button [matMenuTriggerFor]="menu" style="float: right;">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="view(user)">View</button>
+            <button mat-menu-item (click)="addPresentationTo(user)">Add Presentation</button>
+            <mat-divider></mat-divider>
+            <button mat-menu-item (click)="markAsVolunteer(user)">Set As Volunteer</button>
+            <button mat-menu-item (click)="notVolunteer(user)">Remove All Roles</button>
+          </mat-menu>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: columns"></mat-row>
+    </mat-table>
+    <mat-paginator #paginator
+                   [pageSize]="10"
+                   [pageSizeOptions]="[5, 10, 20]"
+                   [showFirstLastButtons]="true">
+    </mat-paginator>
   </div>
   <cf-person-modal></cf-person-modal>
 </section>
