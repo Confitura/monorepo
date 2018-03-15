@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {User} from '../../../core/user/user.model';
 import {UserService} from '../../../core/user/user.service';
@@ -48,6 +48,7 @@ export class UserListComponent implements OnInit {
 
   matchesText(user: User) {
     return [user.name, user.email]
+      .map(it => it === null ? '' : it)
       .map(it => it.toLowerCase())
       .some(it => it.includes(this.filter.text.toLowerCase()));
   }
