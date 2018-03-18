@@ -11,7 +11,7 @@ app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Methods', '*');
   next();
 });
-
+require('./presentations')(app);
 let person = function (type) {
   id += 1;
   return {
@@ -111,7 +111,7 @@ app.post('/presentations/:id/cospeakers/:email', (req, res) => {
 
 });
 
-app.del('/presentations/:id/cospeakers/:email', (req, res) => {
+app.delete('/presentations/:id/cospeakers/:email', (req, res) => {
   res.send({});
 });
 

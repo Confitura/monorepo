@@ -6,6 +6,7 @@ import {ActivatedRoute, Params} from '@angular/router';
 import {ConfirmationService} from '../../core/confirmation.service';
 import {User} from '../../core/user/user.model';
 import {UserService} from '../../core/user/user.service';
+import {Location} from '@angular/common';
 
 @Component({
   templateUrl: './profile-view.component.html',
@@ -47,6 +48,5 @@ export class ProfileViewComponent implements OnInit {
       .then(() => this.presentationService.remove(presentation)
         .subscribe(() => this.reload()));
   }
-
 
 }

@@ -67,6 +67,6 @@ export class PresentationEditComponent implements OnInit {
   }
 
   cancel() {
-    this.router.navigate([`/profile/${this.owner}`]);
+    this.location.back();
   }
 }

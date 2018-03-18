@@ -1,8 +1,8 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, EventEmitter, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {User} from '../../../core/user/user.model';
 import {UserService} from '../../../core/user/user.service';
-import {MatPaginator, MatSort, MatTable, MatTableDataSource} from '@angular/material';
+import {MatPaginator, MatSort, MatTable, MatTableDataSource, PageEvent} from '@angular/material';
 
 @Component({
   templateUrl: './user-list.component.html',
@@ -19,11 +19,13 @@ export class UserListComponent implements OnInit {
 
   constructor(private service: UserService,
               private router: Router) {
+    console.log('constructor');
   }
 
 
   ngOnInit(): void {
-
+    console.log('onInit');
+    this.paginator.page.subscribe(event => console.log(event));
     this.service.getAll()
       .subscribe(users => {
         this.dataSource = new MatTableDataSource<User>(users);
@@ -54,12 +56,11 @@ export class UserListComponent implements OnInit {
   }
 
   view(user: User) {
-    this.router.navigate([`/profile/${user.id}`]);
-
+    this.router.navigate([`/admin/users`, user.id], {queryParams: {back: true}});
   }
 
   addPresentationTo(user: User) {
-    this.router.navigate([`/user/${user.id}/presentation`]);
+    this.router.navigate([`/user/${user.id}/presentation`], {queryParams: {back: true}});
   }
 
   markAsVolunteer(user: User) {

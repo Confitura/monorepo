@@ -1,7 +1,10 @@
-<article class="bg-white" id="faq">
-  <div class="row-500 pt-3 pb-3">
+<article class="bg-white">
+  <div class="row-500 pt-5 pb-5">
 
-    <h3>My profile</h3>
+    <h3>
+      <cf-back-button style="float: left;"></cf-back-button>
+      My profile
+    </h3>
     <form class="profile-form" (ngSubmit)="save()" #profileForm="ngForm" novalidate>
       <mat-form-field>
         <input matInput placeholder="full name" type="text"

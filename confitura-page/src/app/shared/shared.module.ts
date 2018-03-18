@@ -17,9 +17,18 @@ import {AdminOrOwnerDirective} from './admin-or-owner.directive';
 import { ResizeImgPipe } from './resize-img.pipe';
 import {MdPipe} from './md/md.pipe';
 import { PageHeaderComponent } from './page-header/page-header.component';
+import {BackButtonComponent} from './back-button/back-button.component';
+import {MatButtonModule, MatIconModule} from '@angular/material';
 
 @NgModule({
-  imports: [CommonModule, HttpClientModule, FileUploadModule, FormsModule],
+  imports: [
+    CommonModule,
+    HttpClientModule,
+    FileUploadModule,
+    FormsModule,
+    MatIconModule,
+    MatButtonModule
+  ],
   declarations: [
     AdminDirective,
     AdminOrOwnerDirective,
@@ -33,6 +42,7 @@ import { PageHeaderComponent } from './page-header/page-header.component';
     ResizeImgPipe,
     MdPipe,
     PageHeaderComponent,
+    BackButtonComponent,
   ],
   exports: [
     CommonModule,
@@ -49,7 +59,8 @@ import { PageHeaderComponent } from './page-header/page-header.component';
     PersonViewComponent,
     ResizeImgPipe,
     MdPipe,
-    PageHeaderComponent
+    PageHeaderComponent,
+    BackButtonComponent
   ],
   providers: [PersonModalService]
 })

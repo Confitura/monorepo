@@ -1,60 +1,45 @@
 @import "../../../sizes";
+@import "../../../colors";
 
-.presentations-banner {
-  display: flex;
-  background: #000000 url("/assets/img/about_right.png") no-repeat right bottom;
-  background-size: contain;
+.presentation {
   @media all and (min-width: $size_small) {
-    background: url("/assets/img/about_left.png") no-repeat left top, url("/assets/img/about_right.png") no-repeat right bottom;
-    background-color: #000000;
+    padding: 60px;
   }
-  h2 {
-    color: #fff;
-    font-size: 5.5rem;
+  &.odd {
+    background: $beige;
   }
-}
-
-#presentation-list {
-  @media all and (max-width: $size_xsmall) {
-    [ class ^= "row-" ] {
-      padding-right: 0;
-      padding-left: 0;
-    }
+  .presentation-title {
+    font-size: 2rem;
+    font-family: 'NeuzeitGro-Bol', Verdana, Tahoma, sans-serif;
+    word-wrap: break-word;
   }
-  .presentation {
-    padding: 20px;
 
-    @media all and (min-width: $size_small) {
-      padding: 60px;
-    }
-    &.odd {
-      background: #e4d7c6;
-    }
-    .presentation-title {
-      font-size: 4rem;
-      line-height: 4rem;
-      font-family: 'NeuzeitGro-Bol', Verdana, Tahoma, sans-serif;
-      word-wrap: break-word;
-    }
-
-    .presentation-description {
-      font-size: 2rem;
-      padding-top: 60px;
-    }
-
-    .presentation-speakers {
-      font-size: 2.7rem;
-      padding-top: 15px;
-      font-family: 'NeuzeitGro-Bol', Verdana, Tahoma, sans-serif;
-      .presentation-speaker:not(:last-child)::after {
-        content: ", ";
-      }
-
-    }
-
-    .label {
-      margin-right: 10px;
+  .presentation-speakers {
+    font-size: 1.2rem;
+    //padding-top: 15px;
+    font-family: 'NeuzeitGro-Bol', Verdana, Tahoma, sans-serif;
+    .presentation-speaker:not(:last-child)::after {
+      content: ", ";
     }
 
   }
+
+  .label {
+    margin-right: 10px;
+  }
+  &__metadata {
+    display: flex;
+    align-items: center;
+  }
+
+  &__language, &__level {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+  }
+
+  &__icon {
+    margin-right: 5px;
+  }
+
 }

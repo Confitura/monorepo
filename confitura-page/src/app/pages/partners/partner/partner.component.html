@@ -5,7 +5,7 @@
         <div *cfAdmin="" class="text-center">
           <input type="file" ng2FileSelect [uploader]="uploader" multiple style="visibility: hidden">
           <a role="button" (click)="uploadLogo()">Upload Logo</a> |
-          <a role="button" routerLink="/admin2/partners/edit/{{partner.id}}">Edit</a> |
+          <a role="button" routerLink="/admin/partners/edit/{{partner.id}}">Edit</a> |
           <a role="button" (click)="delete()">Delete</a>
         </div>
         <a [href]="partner.www" target="_blank" rel="noopener">

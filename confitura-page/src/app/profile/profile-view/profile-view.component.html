@@ -1,8 +1,9 @@
 <section class="bg-white">
   <div class="row-1140 pt-3 pb-3" *ngIf="model">
     <div class="action-buttons pb-2">
-      <a mat-button routerLink="/profile/{{model.id}}/edit">Edit profile</a>
-      <a mat-button routerLink="/user/{{model.id}}/presentation" color="primary">Add presentation</a>
+      <cf-back-button></cf-back-button>
+      <a class="action-buttons__edit" mat-button routerLink="/profile/{{model.id}}/edit">Edit profile</a>
+      <a class="action-buttons__add" mat-button routerLink="/user/{{model.id}}/presentation" color="primary">Add presentation</a>
     </div>
     <cf-person-view [model]="model" (changed)="reload()"></cf-person-view>
     <table class="table table-bordered table-striped">

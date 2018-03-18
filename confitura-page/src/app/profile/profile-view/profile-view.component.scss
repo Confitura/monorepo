@@ -1,9 +1,15 @@
 @import "../../sizes";
 
 .action-buttons {
-  text-align: center;
+  display: flex;
+  align-items: center;
+  &__edit {
+    margin-left: auto;
+  }
+
+  //text-align: center;
   @media all and (min-width: $size_medium) {
-    text-align: right;
+    //text-align: right;
   }
 }
 

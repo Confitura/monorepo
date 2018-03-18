@@ -1,8 +1,6 @@
 <section class="bg-white pt-5 pb-5">
   <div class="row-1140">
     <h3>All Users</h3>
-    <div style="text-align: right; margin-bottom: 20px;">
-    </div>
     <div class="users-filter">
       <mat-radio-group [(ngModel)]="filter.type" (change)="doFilter()">
         <mat-radio-button value="*">All</mat-radio-button>
@@ -12,8 +10,9 @@
       <mat-form-field class="users-filter__freeform">
         <input matInput placeholder="filter" type="text" [(ngModel)]="filter.text" (keyup)="doFilter()">
       </mat-form-field>
-      <button routerLink="/profile/edit" class="btn btn-default users-filter__add-user">Add User</button>
-
+      <button mat-raised-button routerLink="/profile/edit" [queryParams]="{back: true}" class="users-filter__add-user">Add
+        User
+      </button>
     </div>
     <mat-table [dataSource]="dataSource" matSort #table>
 

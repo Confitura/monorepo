@@ -43,4 +43,12 @@
       }
     }
   }
+
+  .dropdown-item > a.menu-item {
+    line-height: 50px;
+    font-size: 1.2rem;
+    @media all and (min-width: $size_small) {
+      text-align: left;
+    }
+  }
 }

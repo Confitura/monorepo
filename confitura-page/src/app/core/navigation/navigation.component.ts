@@ -16,21 +16,20 @@ export class NavigationComponent implements OnInit {
     {label: 'partners', url: '/partners'},
     {label: 'FAQ', url: '/faq', show: () => this.currentUser.isAdmin()},
     // {label: 'schedule', url: '/schedule'},
-    // {label: 'presentations', url: '/presentations'},
+    {label: 'presentations', url: '/presentations', show: () => this.currentUser.isAdmin()},
     // {label: 'speakers', url: '/speakers'},
     {label: 'profile', action: () => this.goToProfile(), show: () => this.loggedIn},
     {
       label: 'admin', show: () => this.currentUser.isPrivileged(),
       children: [
-        {label: 'scanner', url: '/admin2/scanner', show: () => this.currentUser.isPrivileged()},
-        {label: 'participants', url: '/admin2/participants', show: () => this.currentUser.isAdmin()},
-        {label: 'manage schedule', url: '/admin2/agenda', show: () => this.currentUser.isAdmin()},
-        {label: 'users', url: '/admin2/users', show: () => this.currentUser.isAdmin()},
+        {label: 'scanner', url: '/admin/scanner', show: () => this.currentUser.isPrivileged()},
+        {label: 'participants', url: '/admin/participants', show: () => this.currentUser.isAdmin()},
+        {label: 'manage schedule', url: '/admin/agenda', show: () => this.currentUser.isAdmin()},
+        {label: 'users', url: '/admin/users', show: () => this.currentUser.isAdmin()},
       ]
     },
     {label: 'Call 4 Papers', url: '/login', show: () => !this.loggedIn, clazz: 'pink'},
     {label: 'logout', action: () => this.logout(), show: () => this.loggedIn, clazz: 'pink'},
-    // {label: 'LIVE stream', url: 'https://www.youtube.com/user/confiturapl/featured', clazz: 'pink'},
   ];
 
 

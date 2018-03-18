@@ -9,6 +9,7 @@ import {ParticipantListComponent} from './participants/participant-list.componen
 import {AgendaComponent} from './agenda/agenda.component';
 import {ScannerComponent} from './scanner/scanner.component';
 import {IsPrivilegedGuard} from './is-privileged-guard.service';
+import {ProfileViewComponent} from '../profile/profile-view/profile-view.component';
 
 const routes: Routes = [
 
@@ -23,6 +24,7 @@ const routes: Routes = [
       {path: 'scanner', component: ScannerComponent},
       {path: 'scanner/:id', component: ScannerComponent},
       {path: 'users', component: UserListComponent, canActivate: [IsAdminGuard]},
+      {path: 'users/:id', component: ProfileViewComponent, canActivate: [IsAdminGuard]},
       {path: 'partners/add', component: PartnerEditComponent, canActivate: [IsAdminGuard]},
       {path: 'partners/edit/:id', component: PartnerEditComponent, canActivate: [IsAdminGuard]},
       {path: 'agenda', component: AgendaComponent, canActivate: [IsAdminGuard]},

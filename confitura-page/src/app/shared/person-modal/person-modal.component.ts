@@ -25,7 +25,7 @@ export class PersonModalComponent {
 
   goTo(presentation: Presentation) {
     this.closeModal();
-    this.router.navigate(['/admin2/presentations'], {fragment: presentation.id});
+    this.router.navigate(['/admin/presentations'], {fragment: presentation.id});
   }
 
   addPresentation() {

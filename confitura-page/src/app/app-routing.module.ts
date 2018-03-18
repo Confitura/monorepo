@@ -14,7 +14,7 @@ import {FaqComponent} from './pages/faq/faq.component';
 const appRoutes: Routes = [
 
   {
-    path: 'admin2',
+    path: 'admin',
     loadChildren: 'app/admin/admin.module#AdminModule',
   },
   {
