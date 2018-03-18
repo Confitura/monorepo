@@ -32,10 +32,15 @@
     align-items: center;
   }
 
-  &__language, &__level {
+  &__language, &__level, &__tags {
     display: flex;
     align-items: center;
     margin-right: 10px;
+  }
+
+  &__tag:not(:last-child)::after {
+    content: ",";
+    padding-right: 5px;
   }
 
   &__icon {

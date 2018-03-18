@@ -22,7 +22,7 @@ module.exports = (app) => {
       level: faker.random.arrayElement(['master', 'basic', 'advanced']),
       speaker: person.single(),
       cospeakers: person.list(3),
-      tags: [],
+      tags: [{id: 1, name: 'Java'}, {id: 2, name: 'JavaScript'}],
       language: faker.random.arrayElement(['polish', 'english']),
       status: 'reported'
     };

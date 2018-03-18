@@ -26,9 +26,10 @@
             <mat-icon class="presentation__icon" matTooltip="level">school</mat-icon>
             {{presentation.level}}
           </div>
-        </div>
-        <div *ngIf="presentation.tags.length != 0">
-          <strong>tags:</strong> <span *ngFor="let tag of  presentation.tags" class="label label-danger">{{tag.name}}</span>
+          <div class="presentation__tags" *ngIf="presentation.tags.length != 0">
+            <mat-icon class="presentation__icon" matTooltip="level">local_offer</mat-icon>
+            <span *ngFor="let tag of  presentation.tags" class="presentation__tag"> {{tag.name}}</span>
+          </div>
         </div>
 
         <ng-container *cfAdmin>
