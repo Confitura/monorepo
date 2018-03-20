@@ -1,7 +1,7 @@
-<div id="about">
+<section class="about">
   <cf-page-header title="about"></cf-page-header>
   <section class="bg-white">
-    <div class="bg-white row-1140 text-center pt50">
+    <div class="bg-white row-1140 text-center pt-5">
       <cf-page title="about"></cf-page>
     </div>
     <div class="bg-white ">
@@ -9,14 +9,12 @@
         <agm-marker [latitude]="lat" [longitude]="lng" title="Confitura 2018"></agm-marker>
       </agm-map>
     </div>
-
-
   </section>
 
-  <section class="beige pt-5 pb-5" *ngIf="(organizers | async)?.length > 0 ">
+  <section class="bg-beige pt-5 pb-5" *ngIf="(organizers | async)?.length > 0 ">
     <div class="row-1140">
       <h2>organizers</h2>
-      <div class="beige organizers">
+      <div class="about__organizers bg-beige">
         <cf-person [model]="person" *ngFor="let person of organizers | async" class="organizer"></cf-person>
       </div>
     </div>
@@ -24,11 +22,11 @@
   <section class="pt-5 pb-5 bg-white" *ngIf="(volunteers | async)?.length > 0 ">
     <div class="row-1140">
       <h2 class="h2">volunteers</h2>
-      <div class="organizers">
+      <div class="about__organizers bg-white">
         <cf-person [model]="person" *ngFor="let person of volunteers | async" class="organizer"></cf-person>
       </div>
     </div>
   </section>
 
-</div>
+</section>
 <cf-person-modal></cf-person-modal>
