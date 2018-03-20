@@ -1,7 +1,7 @@
 @import "../../sizes";
 
 .about {
-  agm-map {
+  &__map {
     height: 100vh;
     @media all and (min-width: $size_medium) {
       height: 400px;

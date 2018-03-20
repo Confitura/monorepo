@@ -4,8 +4,8 @@
     <div class="bg-white row-1140 text-center pt-5">
       <cf-page title="about"></cf-page>
     </div>
-    <div class="bg-white ">
-      <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
+    <div class="bg-white">
+      <agm-map class="about__map" [latitude]="lat" [longitude]="lng" [zoom]="zoom">
         <agm-marker [latitude]="lat" [longitude]="lng" title="Confitura 2018"></agm-marker>
       </agm-map>
     </div>
