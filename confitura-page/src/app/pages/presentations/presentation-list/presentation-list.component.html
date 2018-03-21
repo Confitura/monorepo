@@ -27,7 +27,7 @@
             {{presentation.level}}
           </div>
           <div class="presentation__tags" *ngIf="presentation.tags.length != 0">
-            <mat-icon class="presentation__icon" matTooltip="level">local_offer</mat-icon>
+            <mat-icon class="presentation__icon" matTooltip="tags">local_offer</mat-icon>
             <span *ngFor="let tag of  presentation.tags" class="presentation__tag"> {{tag.name}}</span>
           </div>
         </div>

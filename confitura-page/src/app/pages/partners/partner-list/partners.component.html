@@ -1,11 +1,11 @@
-<section id="partners-confitura">
+<section class="bg-white partners">
   <cf-page-header title="partners"></cf-page-header>
-  <div class="row-1140 text-right" *cfAdmin="">
+  <div class="row-1140 text-right" *cfAdmin>
     <button class="btn btn-default" style="margin-top: 20px" routerLink="/admin/partners/add">Add New Partner</button>
   </div>
   <div *ngIf="partners.length > 0">
     <ng-container *ngFor="let type of types">
-      <div class="col-lg-12 partners-type {{type}}-type" *ngIf="partnersFor(type).length > 0">
+      <div class="partners-type {{type}}-type" *ngIf="partnersFor(type).length > 0">
         <div class="bg-white row-1140 text-center partner-header">{{type}}</div>
         <div class="bg-white row-1140 text-center">
           <div class="text-center">

@@ -1,6 +1,6 @@
 @import "../../../sizes";
 
-section#partners-confitura {
+.partners {
   .unpublished {
     opacity: 0.1;
   }
@@ -135,10 +135,10 @@ section#partners-confitura {
 
   .partners-logo-container {
     display: flex;
-    flex-flow: row wrap;
+    flex-direction: column;
     justify-content: space-around;
-    @media all and (max-width: 767px) {
-      flex-direction: column;
+    @media all and (min-width: $size_small) {
+      flex-flow: row wrap;
     }
     a {
       padding: 20px;
