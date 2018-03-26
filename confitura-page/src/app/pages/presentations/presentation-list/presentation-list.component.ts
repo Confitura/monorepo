@@ -13,12 +13,12 @@ import {User} from '../../../core/user/user.model';
 })
 export class PresentationListComponent implements OnInit {
 
+  original: Presentation[];
   list: Presentation[];
   filter = {
     status: '*',
     text: ''
   };
-  private original: Presentation[];
 
   constructor(private service: PresentationService,
               private personModalService: PersonModalService,

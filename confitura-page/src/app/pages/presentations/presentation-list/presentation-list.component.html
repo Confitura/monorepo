@@ -10,6 +10,7 @@
       </mat-radio-group>
       <mat-form-field class="filter__status">
         <input type="text" matInput [(ngModel)]="filter.text" placeholder="free text" (keyup)="doFilter()">
+        <mat-hint>viewing {{list.length}} ot of {{original.length}} reported</mat-hint>
       </mat-form-field>
       <button mat-icon-button (click)="clear()">
         <mat-icon>clear</mat-icon>
