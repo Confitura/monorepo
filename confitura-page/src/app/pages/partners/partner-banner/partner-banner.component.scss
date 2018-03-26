@@ -1,37 +1,58 @@
 @import "../../../sizes";
-@import "../partner-list/partners.component";
 
 .partners-banner-container {
   display: flex;
   justify-content: space-around;
   align-content: stretch;
+  flex-direction: column;
+
+  .partner-type {
+    font-size: 2rem;
+    font-family: 'NeuzeitGro-Bol', Verdana, Tahoma, sans-serif;
+    padding-top: 50px;
+    @media all and (max-width: 768px) {
+      padding-top: 5px;
+      padding-bottom: 20px;
+    }
+  }
 
   .partner-logo-item > a {
     height: 100%;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-around;
+    img {
+      object-fit: contain;
+      width: 100%;
+      height: 100%;
+    }
   }
 
   .partner-logo, .partner-logo-item {
     height: 120px;
   }
-  flex-direction: column;
 
   .platinum-type {
-    order: 2;
+    order: 1;
+    @media all and (min-width: $size_small) {
+      order: 2;
+    }
   }
 
   .gold-type {
-    order: 1;
+    order: 2;
+    @media all and (min-width: $size_small) {
+      order: 1;
+    }
   }
 
   .silver-type {
     order: 3;
   }
-  @media all and (min-width: $size_medium){
-    flex-direction: row;
 
+  @media all and (min-width: $size_medium) {
+    flex-direction: row;
   }
 
   > div {
@@ -39,5 +60,4 @@
       flex-basis: 100%;
     }
   }
-
 }

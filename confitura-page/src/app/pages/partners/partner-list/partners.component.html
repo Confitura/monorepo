@@ -10,7 +10,7 @@
         <div class="bg-white row-1140 text-center">
           <div class="text-center">
             <div class="vcenter text-center partners-logo-container">
-              <a routerLink="{{partner.id}}" class="a-abs" *ngFor="let partner of partnersFor(type)"
+              <a routerLink="{{partner.id}}" *ngFor="let partner of partnersFor(type)"
                  [ngClass]="{'unpublished': !partner.published}">
                 <img [cfLazySrc]="partner.logo | resizeImg" class="img-responsive"/>
               </a>
