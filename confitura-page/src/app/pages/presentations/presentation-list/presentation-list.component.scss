@@ -1,32 +1,48 @@
 @import "../../../sizes";
 @import "../../../colors";
 
+.filter {
+  display: flex;
+  align-items: center;
+  &__status {
+    flex-grow: 1;
+    padding-left: 10px;
+  }
+}
+
 .presentation {
+  padding: 20px;
+  margin-right: -20px;
+  margin-left: -20px;
   @media all and (min-width: $size_small) {
     padding: 60px;
+    margin-right: 0;
+    margin-left: 0;
   }
   &.odd {
     background: $beige;
   }
-  .presentation-title {
+
+  &__title-container {
+    display: flex;
+  }
+  &__menu {
+    margin-left: auto;
+  }
+  &__title {
     font-size: 2rem;
     font-family: 'NeuzeitGro-Bol', Verdana, Tahoma, sans-serif;
     word-wrap: break-word;
   }
 
-  .presentation-speakers {
+  &__speakers {
     font-size: 1.2rem;
-    //padding-top: 15px;
     font-family: 'NeuzeitGro-Bol', Verdana, Tahoma, sans-serif;
-    .presentation-speaker:not(:last-child)::after {
-      content: ", ";
-    }
-
+  }
+  &__speaker:not(:last-child)::after {
+    content: ", ";
   }
 
-  .label {
-    margin-right: 10px;
-  }
   &__metadata {
     display: flex;
     align-items: center;

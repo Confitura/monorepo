@@ -1,46 +1,70 @@
 <section class="bg-white">
-  <cf-page-header title="presentations"></cf-page-header>
-  <div class="row-1140">
-    <ng-container *ngIf="list">
-      <article *ngFor="let presentation of list; odd as isOdd; even as isEven" class="presentation" [class.odd]="isOdd"
-               [id]="presentation.id">
-        <div *cfAdmin>
-          <button class="btn btn-success"
-                  *ngIf="presentation.status != 'accepted'" (click)="accept(presentation)">Accept
-          </button>
-          <button class="btn btn-warning"
-                  *ngIf="presentation.status == 'accepted'" (click)="unaccept(presentation)">Unaccept
-          </button>
-        </div>
-        <div class="presentation-title">{{presentation.title}}</div>
-        <div class="presentation-speakers">
-                    <span class="presentation-speaker" (click)="show(speaker)" role="button"
-                          *ngFor="let speaker of allSpeakersFor(presentation)">{{speaker.name}}</span>
-        </div>
-        <div class="presentation__metadata">
-          <div class="presentation__language">
-            <mat-icon class="presentation__icon" matTooltip="language">language</mat-icon>
-            {{presentation.language}}
-          </div>
-          <div class="presentation__level">
-            <mat-icon class="presentation__icon" matTooltip="level">school</mat-icon>
-            {{presentation.level}}
-          </div>
-          <div class="presentation__tags" *ngIf="presentation.tags.length != 0">
-            <mat-icon class="presentation__icon" matTooltip="tags">local_offer</mat-icon>
-            <span *ngFor="let tag of  presentation.tags" class="presentation__tag"> {{tag.name}}</span>
-          </div>
-        </div>
+  <cf-page-header>presentations</cf-page-header>
+  <div class="row-1140 presentation-list pt-5 pb-5" *ngIf="list">
 
+    <div class="filter" *cfAdmin>
+      <mat-radio-group [(ngModel)]="filter.status" (change)="doFilter()">
+        <mat-radio-button value="*">All</mat-radio-button>
+        <mat-radio-button value="na">Not Accepted</mat-radio-button>
+        <mat-radio-button value="a">Accepted</mat-radio-button>
+      </mat-radio-group>
+      <mat-form-field class="filter__status">
+        <input type="text" matInput [(ngModel)]="filter.text" placeholder="free text" (keyup)="doFilter()">
+      </mat-form-field>
+      <button mat-icon-button (click)="clear()">
+        <mat-icon>clear</mat-icon>
+      </button>
+    </div>
+
+    <article *ngFor="let presentation of list; odd as isOdd; even as isEven"
+             class="presentation" [class.odd]="isOdd" [id]="presentation.id">
+      <div class="presentation__title-container">
+        <div class="presentation__title">{{presentation.title}}</div>
+        <div class="presentation__menu" *cfAdmin>
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="accept(presentation)">
+              <span>Accepted</span>
+            </button>
+            <button mat-menu-item (click)="unaccept(presentation)">
+              <span>Not Accepted</span>
+            </button>
+          </mat-menu>
+        </div>
+      </div>
+      <div class="presentation__speakers">
+        <span class="presentation__speaker" (click)="show(speaker)"
+              *ngFor="let speaker of allSpeakersFor(presentation)">{{speaker.name}}</span>
+      </div>
+      <div class="presentation__metadata">
+        <div class="presentation__language">
+          <mat-icon class="presentation__icon" matTooltip="language">language</mat-icon>
+          {{presentation.language}}
+        </div>
+        <div class="presentation__level">
+          <mat-icon class="presentation__icon" matTooltip="level">school</mat-icon>
+          {{presentation.level}}
+        </div>
+        <div class="presentation__tags" *ngIf="presentation.tags.length != 0">
+          <mat-icon class="presentation__icon" matTooltip="tags">local_offer</mat-icon>
+          <span *ngFor="let tag of  presentation.tags" class="presentation__tag"> {{tag.name}}</span>
+        </div>
         <ng-container *cfAdmin>
-          <h4 class="pt-3">short description:</h4>
-          <div class="presentation-description">{{presentation.shortDescription}}</div>
-          <h4 class="pt-3">description:</h4>
+          <mat-chip-list *ngIf="isAccepted(presentation)">
+            <mat-chip color="primary" [selected]="true">accepted</mat-chip>
+          </mat-chip-list>
         </ng-container>
-        <div class="presentation-description ">{{presentation.description}}</div>
-      </article>
+      </div>
 
-    </ng-container>
+      <ng-container *cfAdmin>
+        <h4 class="pt-3">short description:</h4>
+        <div class="presentation__description">{{presentation.shortDescription}}</div>
+        <h4 class="pt-3">description:</h4>
+      </ng-container>
+      <div class="presentation__description">{{presentation.description}}</div>
+    </article>
   </div>
   <cf-person-modal></cf-person-modal>
 </section>

@@ -215,19 +215,7 @@ a.social-link:link, a.social-link:active, a.social-link:visited, a.social-link:h
   padding-bottom: 150px;
 }
 
-.row-1140 {
-  display: block;
-  max-width: 1140px;
-  margin: 0 auto !important;
-  padding-left: 20px;
-  padding-right: 20px;
-}
 
-.row-1080 {
-  display: block;
-  max-width: 1080px;
-  margin: 0 auto;
-}
 
 #confitura #loading-bar {
   .bar {
@@ -264,15 +252,25 @@ button[class*="mat-"]:focus {
   padding-right: 20px;
 }
 
+.row-1140 {
+  display: block;
+  max-width: 1140px;
+  margin: 0 auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.row-1080 {
+  display: block;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
 .partner-logo .bx-wrapper {
   border: none;
   box-shadow: none;
   object-fit: contain;
   width: 100%;
   height: 100%;
-  //img {
-
-  //
-  //}
 }
 

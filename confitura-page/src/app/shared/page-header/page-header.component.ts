@@ -7,7 +7,7 @@ import {Component, Input} from '@angular/core';
 })
 export class PageHeaderComponent {
   @Input()
-  title: string;
+  title: string = null;
 
   constructor() {
   }

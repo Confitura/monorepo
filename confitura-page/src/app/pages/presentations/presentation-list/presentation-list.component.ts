@@ -13,30 +13,33 @@ import {User} from '../../../core/user/user.model';
 })
 export class PresentationListComponent implements OnInit {
 
-
   list: Presentation[];
-  private presentationId: string;
+  filter = {
+    status: '*',
+    text: ''
+  };
+  private original: Presentation[];
 
   constructor(private service: PresentationService,
               private personModalService: PersonModalService,
               private userService: UserService,
-              route: ActivatedRoute) {
-    route.fragment
-      .subscribe(presentationId => {
-        this.presentationId = presentationId;
-        this.scrollToSelectedPresentation();
-      });
+              private route: ActivatedRoute) {
+    this.doFilterByStatus = this.doFilterByStatus.bind(this);
+    this.doFilterByText = this.doFilterByText.bind(this);
   }
 
   ngOnInit(): void {
     this.service.getAll()
-      .subscribe((list) => {
-        this.list = list;
-        setTimeout(() =>
-          this.scrollToSelectedPresentation());
+      .subscribe(list => {
+        this.original = list;
+        this.doFilter();
+        setTimeout(() => this.scrollToSelectedPresentation(), 500);
       });
   }
 
+  isAccepted(presentation: Presentation) {
+    return presentation.status === 'accepted';
+  }
 
   accept(presentation: Presentation) {
     this.service.accept(presentation)
@@ -46,9 +49,7 @@ export class PresentationListComponent implements OnInit {
   unaccept(presentation: Presentation) {
     this.service.unaccept(presentation)
       .subscribe(() => this.ngOnInit());
-
   }
-
 
   show(speaker: User) {
     this.userService.getBy(speaker.id)
@@ -56,16 +57,50 @@ export class PresentationListComponent implements OnInit {
   }
 
   allSpeakersFor(presentation: Presentation): User[] {
-    let speakers = [presentation.speaker];
-    if (presentation.cospeakers) {
-      speakers = speakers.concat(presentation.cospeakers);
-    }
-    return speakers;
+    return [presentation.speaker, ...presentation.cospeakers];
   }
 
+  clear() {
+    this.filter = {
+      status: '*',
+      text: ''
+    };
+    this.doFilter();
+  }
+
+  doFilter() {
+    console.log('filter', this.filter);
+    this.list = this.original
+      .filter(this.doFilterByStatus)
+      .filter(this.doFilterByText);
+  }
+
+  doFilterByText(presentation) {
+    return [
+      presentation.title,
+      presentation.description,
+      ...this.allSpeakersFor(presentation).map(it => it.name)
+    ]
+      .map(it => it.toLowerCase())
+      .some(it => it.includes(this.filter.text.toLowerCase()));
+  }
+
+  doFilterByStatus(presentation) {
+    switch (this.filter.status) {
+      case 'a':
+        return presentation.status === 'accepted';
+      case 'na':
+        return presentation.status !== 'accepted';
+      default:
+        return true;
+    }
+  }
+
+
   private scrollToSelectedPresentation() {
-    if (this.presentationId) {
-      const element = document.getElementById(this.presentationId);
+    const presentationId = this.route.snapshot.fragment;
+    if (presentationId) {
+      const element = document.getElementById(presentationId);
       if (element) {
         window.scrollTo(0, element.offsetTop - 100);
       }

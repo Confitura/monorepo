@@ -118,17 +118,6 @@ app.delete('/presentations/:id/cospeakers/:email', (req, res) => {
 });
 
 
-app.get('/tags', (req, res) => {
-  res.send({
-    _embedded: {
-      tags: [
-        {id: '1', name: 'Java'},
-        {id: '2', name: 'JavaScript'},
-        {id: '3', name: 'Agile'}
-      ]
-    }
-  });
-});
 
 app.get('/users', (req, res) => {
   res.send({

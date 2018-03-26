@@ -20,7 +20,10 @@ import {LoginComponent} from './login/login.component';
 import {AgmCoreModule} from '@agm/core';
 import {FaqComponent} from './faq/faq.component';
 import {TagInputModule} from 'ngx-chips';
-import {MatChipsModule, MatIconModule, MatTooltipModule} from '@angular/material';
+import {
+  MatButtonModule, MatChipsModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatRadioModule,
+  MatTooltipModule
+} from '@angular/material';
 
 @NgModule({
   imports: [
@@ -31,6 +34,11 @@ import {MatChipsModule, MatIconModule, MatTooltipModule} from '@angular/material
     MatIconModule,
     MatTooltipModule,
     MatChipsModule,
+    MatButtonModule,
+    MatMenuModule,
+    MatRadioModule,
+    MatFormFieldModule,
+    MatInputModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyA6nOtsqyZJRfMwy6kmaK2_MgX51TtmViA'
     })],
