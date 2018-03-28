@@ -21,6 +21,7 @@ export class LazySrcDirective implements OnChanges {
 
   @HostListener('error')
   onerror() {
+    console.log('ERRORE!!');
     this.element.nativeElement.removeAttribute('src');
   }
 
@@ -28,6 +29,9 @@ export class LazySrcDirective implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    this.element.nativeElement.removeAttribute('src');
+    const nativeElement = this.element.nativeElement;
+    nativeElement.removeAttribute('data-loaded');
     this.dataSrc = this.cfLazySrc;
     setTimeout(() => {
       lozad().observe();
