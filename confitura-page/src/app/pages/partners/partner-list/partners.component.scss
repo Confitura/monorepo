@@ -9,120 +9,39 @@
     z-index: 1;
   }
 
-
-  .partners-items {
-    background: transparent;
-    min-height: 350px;
-    @media all and (max-width: 768px) {
-      min-height: 150px;
-    }
-  }
-  .partner-type {
-    font-size: 3rem;
-    font-family: 'NeuzeitGro-Bol', Verdana, Tahoma, sans-serif;
-    padding-top: 50px;
-    @media all and (max-width: 768px) {
-      padding-top: 5px;
-      padding-bottom: 20px;
-    }
-  }
-  .partners-banner-container {
-    display: flex;
-    justify-content: space-around;
-    align-content: stretch;
-    .partner-logo {
-      height: 120px;
-    }
-    @media all and (max-width: 768px) {
-      flex-direction: column;
-
-      .platinum-type {
-        order: 1;
-      }
-
-      .gold-type {
-        order: 2;
-      }
-
-      .silver-type {
-        order: 3;
-      }
-    }
-    > div {
-      @media all and (min-width: 767px) {
-        flex-basis: 100%;
-      }
-    }
-
-  }
-  .partner-header {
+  &__type-name {
     display: block;
     text-align: center;
     font-size: 2.5rem;
-    height: 110px;
     font-family: 'NeuzeitGro-Bol', Verdana, Tahoma, sans-serif;
   }
-  .min-h {
-    height: 150px !important;
-  }
 
-  img {
-    margin: auto;
-    max-width: 210px;
-    max-height: 80px;
+  &__type-container {
+    & img {
+      object-fit: contain;
+      width: 200px;
+      height: 70px;
+    }
 
-  }
-  #partner {
-    padding-top: 70px;
-    img {
-      max-width: 400px;
-      max-height: 150px;
-      @media all and (max-width: 767px) {
-        max-width: 250px;
-        max-height: 150px;
+    &--platinum img {
+      width: 250px;
+      height: 150px;
+      @media all and (min-width: $size_small) {
+        width: 350px;
       }
     }
-    @media all and (min-width: 768px) {
-      h3 {
-        &:before {
-          content: "# ";
-        }
-        &:after {
-          content: " #";
-        }
+    &--gold img {
+      width: 220px;
+      height: 90px;
+
+      @media all and (min-width: $size_small) {
+        width: 300px;
       }
     }
-
-  }
-  .platinum-type img {
-    max-width: 350px;
-    max-height: 120px;
-    @media all and (max-width: 767px) {
-      max-width: 250px;
-      max-height: 150px;
+    &--silver img {
+      width: 200px;
+      height: 70px;
     }
-  }
-  .gold-type img {
-    max-width: 300px;
-    max-height: 90px;
-    @media all and (max-width: 767px) {
-      max-width: 250px;
-      max-height: 90px;
-    }
-  }
-  .silver-type img {
-    max-width: 250px;
-    max-height: 70px;
-    @media all and (max-width: 767px) {
-      max-width: 250px;
-      max-height: 70px;
-    }
-  }
-  .partner-description {
-    display: block;
-    text-shadow: none;
-    font-size: 2.5rem;
-    padding-top: 20px;
   }
 
   &__logo-container {

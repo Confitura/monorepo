@@ -3,10 +3,10 @@
   <button *cfAdmin mat-fab class="partners__add-button" routerLink="/admin/partners/add">
     <mat-icon>add</mat-icon>
   </button>
-  <div class="row-1140" *ngIf="partners.length > 0">
+  <div class="row-1140 pt-5" *ngIf="partners.length > 0">
     <ng-container *ngFor="let type of types">
-      <div class="partners-type {{type}}-type" *ngIf="partnersFor(type).length > 0">
-        <div class="partner-header">{{type}}</div>
+      <div class="partners__type-container partners__type-container--{{type}}" *ngIf="partnersFor(type).length > 0">
+        <div class="partners__type-name">{{type}}</div>
         <div class="partners__logo-container">
           <a class="partners__logo" routerLink="{{partner.id}}" *ngFor="let partner of partnersFor(type)"
              [ngClass]="{'partners__logo--unpublished': !partner.published}">
