@@ -1,14 +1,14 @@
 @import "../../../sizes";
 
 .partners {
-  .unpublished {
-    opacity: 0.1;
+
+  &__add-button {
+    position: fixed;
+    right: 40px;
+    bottom: 40px;
+    z-index: 1;
   }
 
-  .partners-type {
-    background-color: #ffffff;
-    padding-top: 100px;
-  }
 
   .partners-items {
     background: transparent;
@@ -64,9 +64,6 @@
   }
   .min-h {
     height: 150px !important;
-  }
-  .vcenter {
-    position: relative !important;
   }
 
   img {
@@ -128,15 +125,22 @@
     padding-top: 20px;
   }
 
-  .partners-logo-container {
+  &__logo-container {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    justify-items: center;
+    align-items: center;
     @media all and (min-width: $size_small) {
       flex-flow: row wrap;
     }
-    a {
-      padding: 20px;
+
+  }
+
+  &__logo {
+    padding: 20px;
+    &--unpublished {
+      opacity: 0.1;
     }
   }
 }

@@ -31,7 +31,8 @@ module.exports = (app) => {
       description: faker.lorem.paragraphs(),
       type: faker.random.arrayElement(['platinum', 'silver', 'gold', 'brown']),
       www: faker.internet.url(),
-      logo: faker.random.arrayElement(['https://2018.confitura.pl/api/resources/photos/350/bf364499-9ac2-4b5c-a6f3-90fe08698272.png', 'https://touk.pl/img/logo.png'])
+      logo: faker.random.arrayElement(['https://2018.confitura.pl/api/resources/photos/350/bf364499-9ac2-4b5c-a6f3-90fe08698272.png', 'https://touk.pl/img/logo.png']),
+      published: true
     };
   }
 };
