@@ -17,8 +17,8 @@ export class SocialLinksComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.www && !this.www.startsWith("http")) {
-      this.www = "http://" + this.www;
+    if (this.www && !this.www.startsWith('http')) {
+      this.www = 'http://' + this.www;
     }
   }
 
