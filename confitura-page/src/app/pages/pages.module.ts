@@ -24,6 +24,7 @@ import {
   MatButtonModule, MatChipsModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatRadioModule, MatSelectModule,
   MatTooltipModule
 } from '@angular/material';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -40,6 +41,7 @@ import {
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyA6nOtsqyZJRfMwy6kmaK2_MgX51TtmViA'
     })],

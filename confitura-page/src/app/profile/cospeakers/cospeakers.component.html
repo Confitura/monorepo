@@ -7,14 +7,16 @@
         <input matInput
                placeholder="email address"
                type="email"
-               email
-               [(ngModel)]="email"
+               [formControl]="emailControl"
                name="email"
-               #emailInput="ngModel"
-               maxlength="255">
+               maxlength="255"
+        >
         <mat-hint>Type an email address of your co-speaker</mat-hint>
-        <mat-error *ngIf="emailInput.hasError('email')">
+        <mat-error *ngIf="emailControl.hasError('email')">
           this is not a valid email address
+        </mat-error>
+        <mat-error *ngIf="emailControl.hasError('speaker')">
+          {{emailControl.getError('speaker').value}}
         </mat-error>
       </mat-form-field>
       <button mat-raised-button color="primary" type="submit" class=add-form__add [disabled]="form.invalid">add</button>

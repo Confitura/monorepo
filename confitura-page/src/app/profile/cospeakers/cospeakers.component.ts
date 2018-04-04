@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ConfirmationService} from '../../core/confirmation.service';
 import {PresentationService} from '../shared/presentation.service';
 import {ActivatedRoute} from '@angular/router';
@@ -6,7 +6,7 @@ import {User} from '../../core/user/user.model';
 import {catchError} from 'rxjs/operators';
 import {Observable} from 'rxjs/Observable';
 import {MatSnackBar} from '@angular/material';
-import {FormControl} from '@angular/forms';
+import {FormControl, Validators} from '@angular/forms';
 import {Location} from '@angular/common';
 
 @Component({
@@ -16,10 +16,16 @@ import {Location} from '@angular/common';
 })
 export class CospeakersComponent implements OnInit {
 
-  email: string;
-  list: User[] = [];
   private presentationId: string;
-  @ViewChild('form') form: FormControl;
+  private validator: (value: any) => any;
+  list: User[] = [];
+  emailControl = new FormControl('', [
+      Validators.required,
+      Validators.email,
+    ], () => new Promise(resolve => {
+      this.validator = resolve;
+    })
+  );
 
   constructor(private confirmation: ConfirmationService,
               private service: PresentationService,
@@ -35,25 +41,24 @@ export class CospeakersComponent implements OnInit {
   }
 
   add() {
-    this.service.addCospeaker(this.presentationId, this.email)
+    if (this.emailControl.invalid) {
+      return;
+    }
+    this.service.addCospeaker(this.presentationId, this.emailControl.value)
       .pipe(
         catchError(error => {
           let message = 'Ups! Something went wrong.';
-          console.log(error);
           if (error.status === 404) {
             message = 'Ups! Speaker with given email does not exist in our system';
           } else if (error.status === 409) {
             message = error.error;
           }
-
-          this.snackBar.open(message, null, {
-            duration: 5000,
-          });
+          this.validator({speaker: {value: message}});
           return Observable.throw(error);
         }))
       .subscribe(user => {
         this.list = [...this.list, user];
-        this.form.reset();
+        this.emailControl.setValue(null);
       });
   }
 

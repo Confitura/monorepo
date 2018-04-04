@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AdminDirective} from './admin.directive';
 import {PhotoComponent} from './photo/photo.component';
 import {SocialLinksComponent} from './social-links/social-links.component';
@@ -47,6 +47,7 @@ import {MatButtonModule, MatIconModule} from '@angular/material';
   exports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     RouterModule,
     AdminDirective,
     AdminOrOwnerDirective,
