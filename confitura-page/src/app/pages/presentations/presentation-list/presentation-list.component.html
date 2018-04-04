@@ -3,12 +3,29 @@
   <div class="row-1140 presentation-list pt-5 pb-5" *ngIf="list">
 
     <div class="filter" *cfAdmin>
-      <mat-radio-group [(ngModel)]="filter.status" (change)="doFilter()">
-        <mat-radio-button value="*">All</mat-radio-button>
-        <mat-radio-button value="na">Not Accepted</mat-radio-button>
-        <mat-radio-button value="a">Accepted</mat-radio-button>
-      </mat-radio-group>
-      <mat-form-field class="filter__status">
+      <mat-form-field class="filter__group">
+        <mat-select placeholder="status" (change)="doFilter()" [(ngModel)]="filter.status">
+          <mat-option value="*">Any</mat-option>
+          <mat-option value="na">Not Accepted</mat-option>
+          <mat-option value="a">Accepted</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="filter__group">
+        <mat-select placeholder="language" (change)="doFilter()" [(ngModel)]="filter.language">
+          <mat-option value="*">Any</mat-option>
+          <mat-option value="polish">Polish</mat-option>
+          <mat-option value="english">English</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="filter__group">
+        <mat-select placeholder="level" (change)="doFilter()" [(ngModel)]="filter.level">
+          <mat-option value="*">Any</mat-option>
+          <mat-option value="basic">Basic</mat-option>
+          <mat-option value="advanced">Advanced</mat-option>
+          <mat-option value="master">Master</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="filter__status  filter__group">
         <input type="text" matInput [(ngModel)]="filter.text" placeholder="free text" (keyup)="doFilter()">
         <mat-hint>viewing {{list.length}} ot of {{original.length}} reported</mat-hint>
       </mat-form-field>

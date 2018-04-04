@@ -12,13 +12,15 @@ import {User} from '../../../core/user/user.model';
 
 })
 export class PresentationListComponent implements OnInit {
-
-  original: Presentation[];
-  list: Presentation[];
-  filter = {
+  private EMPTY_FILTER = {
     status: '*',
+    language: '*',
+    level: '*',
     text: ''
   };
+  original: Presentation[];
+  list: Presentation[];
+  filter = {...this.EMPTY_FILTER};
 
   constructor(private service: PresentationService,
               private personModalService: PersonModalService,
@@ -26,6 +28,7 @@ export class PresentationListComponent implements OnInit {
               private route: ActivatedRoute) {
     this.doFilterByStatus = this.doFilterByStatus.bind(this);
     this.doFilterByText = this.doFilterByText.bind(this);
+    this.doFilterBy = this.doFilterBy.bind(this);
   }
 
   ngOnInit(): void {
@@ -61,10 +64,7 @@ export class PresentationListComponent implements OnInit {
   }
 
   clear() {
-    this.filter = {
-      status: '*',
-      text: ''
-    };
+    this.filter = {...this.EMPTY_FILTER};
     this.doFilter();
   }
 
@@ -72,6 +72,8 @@ export class PresentationListComponent implements OnInit {
     console.log('filter', this.filter);
     this.list = this.original
       .filter(this.doFilterByStatus)
+      .filter(this.doFilterBy('language'))
+      .filter(this.doFilterBy('level'))
       .filter(this.doFilterByText);
   }
 
@@ -94,6 +96,13 @@ export class PresentationListComponent implements OnInit {
       default:
         return true;
     }
+  }
+
+  doFilterBy(field: string) {
+    return (presentation: Presentation) => {
+      return this.filter[field] === '*' ||
+        this.filter[field] === presentation[field];
+    };
   }
 
 

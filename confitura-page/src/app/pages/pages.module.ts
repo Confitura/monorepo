@@ -21,7 +21,7 @@ import {AgmCoreModule} from '@agm/core';
 import {FaqComponent} from './faq/faq.component';
 import {TagInputModule} from 'ngx-chips';
 import {
-  MatButtonModule, MatChipsModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatRadioModule,
+  MatButtonModule, MatChipsModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatRadioModule, MatSelectModule,
   MatTooltipModule
 } from '@angular/material';
 
@@ -39,6 +39,7 @@ import {
     MatRadioModule,
     MatFormFieldModule,
     MatInputModule,
+    MatSelectModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyA6nOtsqyZJRfMwy6kmaK2_MgX51TtmViA'
     })],

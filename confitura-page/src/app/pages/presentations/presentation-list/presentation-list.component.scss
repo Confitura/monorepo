@@ -3,10 +3,16 @@
 
 .filter {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  @media all and (min-width: $size_small) {
+    flex-direction: row;
+    align-items: center;
+  }
+  &__group {
+    padding-left: 10px;
+  }
   &__status {
     flex-grow: 1;
-    padding-left: 10px;
   }
 }
 
@@ -45,7 +51,12 @@
 
   &__metadata {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
+  }
+
+  &__tags {
+    flex-wrap: wrap;
   }
 
   &__language, &__level, &__tags {
