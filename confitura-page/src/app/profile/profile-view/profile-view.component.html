@@ -3,7 +3,7 @@
     <div class="action-buttons pb-2">
       <cf-back-button></cf-back-button>
       <a class="action-buttons__edit" mat-button routerLink="/profile/{{model.id}}/edit">Edit profile</a>
-      <a class="action-buttons__add" mat-button routerLink="/user/{{model.id}}/presentation" color="primary">Add presentation</a>
+      <a *cfAdmin class="action-buttons__add" mat-button routerLink="/user/{{model.id}}/presentation" color="primary">Add presentation</a>
     </div>
     <cf-person-view [model]="model" (changed)="reload()"></cf-person-view>
     <table class="table table-bordered table-striped">
