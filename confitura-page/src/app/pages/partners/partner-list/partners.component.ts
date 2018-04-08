@@ -7,7 +7,7 @@ import {Partner} from '../shared/partner.model';
   styleUrls: ['./partners.component.scss']
 })
 export class PartnersComponent implements OnInit {
-  types = ['platinum', 'gold', 'silver', 'bronze', 'media', 'technical'];
+  types = ['platinum', 'gold', 'big data & AI', 'silver', 'bronze', 'media', 'technical'];
   partners: Partner[] = [];
 
 
@@ -21,6 +21,11 @@ export class PartnersComponent implements OnInit {
 
   partnersFor(type: string) {
     return this.partners.filter(partner => partner.type === type);
+  }
+
+  getSimplifiedType(type: string) {
+    console.log(type);
+    return type.split(' ')[0];
   }
 
 }

@@ -2,6 +2,18 @@
 
 .partners {
 
+  &__list {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-auto-flow: dense;
+    grid-auto-rows: auto;
+    grid-row-gap: 40px;
+    @media all and (min-width: $size_small) {
+      grid-template-columns: 2fr 1px 1fr;
+      grid-row-gap: 60px;
+    }
+  }
+
   &__add-button {
     position: fixed;
     right: 40px;
@@ -17,30 +29,64 @@
   }
 
   &__type-container {
-    & img {
+    @media all and (min-width: $size_small) {
+      grid-column: 1 / span 3;
+    }
+
+    img {
       object-fit: contain;
       width: 200px;
       height: 70px;
     }
 
-    &--platinum img {
-      width: 250px;
-      height: 150px;
-      @media all and (min-width: $size_small) {
-        width: 350px;
-      }
-    }
-    &--gold img {
-      width: 220px;
-      height: 90px;
+    &--platinum {
+      grid-column: 1 / -1;
+      grid-row: 1 / span 1;
 
-      @media all and (min-width: $size_small) {
-        width: 300px;
+      img {
+        width: 250px;
+        height: 150px;
+        @media all and (min-width: $size_small) {
+          width: 350px;
+        }
       }
     }
-    &--silver img {
-      width: 200px;
-      height: 70px;
+    &--gold {
+      grid-column: 1 / span 1;
+
+      img {
+        width: 220px;
+        height: 90px;
+
+        @media all and (min-width: $size_small) {
+          width: 300px;
+        }
+      }
+    }
+
+    &--big {
+      grid-row: 3;
+      @media all and (min-width: $size_small) {
+        grid-row: 2 / span 1;
+        grid-column: 3 / span 1;
+      }
+      img {
+        width: 220px;
+        height: 90px;
+
+        @media all and (min-width: $size_small) {
+          width: 300px;
+        }
+      }
+    }
+    &--silver {
+      @media all and (min-width: $size_small) {
+        grid-column: 1 / span 3;
+      }
+      img {
+        width: 200px;
+        height: 70px;
+      }
     }
   }
 
@@ -62,4 +108,25 @@
       opacity: 0.1;
     }
   }
+
+  &__separator {
+    display: none;
+    height: 1px;
+    background: black;
+    background: linear-gradient(90deg, transparent, black 50%, transparent);
+    margin-top: 30px;
+    margin-bottom: 30px;
+    @media all and (min-width: $size_small) {
+      display: block;
+      grid-column: 2 / span 1;
+      grid-row: 2 / span 1;
+      height: auto;
+      width: 1px;
+      margin-top: 0;
+      margin-bottom: 0;
+      background: linear-gradient(180deg, transparent, black 20%, black 80%, transparent);
+    }
+  }
 }
+
+
