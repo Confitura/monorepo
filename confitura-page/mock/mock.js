@@ -59,7 +59,7 @@ app.get('/login/twitter/callback', (req, res) => {
 
 
 app.get('/login/twitter', (req, res) => {
-  res.redirect('http://localhost:9090/login/twitter');
+  res.redirect('http://localhost:8080/login/twitter');
 });
 
 app.get('/users/:id', (req, res) => {

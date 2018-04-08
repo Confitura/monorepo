@@ -1,28 +1,23 @@
 <section class="bg-white partners">
-  <cf-page-header title="partners"></cf-page-header>
-  <div class="row-1140 text-right" *cfAdmin>
-    <button class="btn btn-default" style="margin-top: 20px" routerLink="/admin/partners/add">Add New Partner</button>
-  </div>
-  <div *ngIf="partners.length > 0">
+  <cf-page-header>partners</cf-page-header>
+  <button *cfAdmin mat-fab class="partners__add-button" routerLink="/admin/partners/add">
+    <mat-icon>add</mat-icon>
+  </button>
+  <div class="row-1140 pt-5 partners__list" *ngIf="partners.length > 0">
     <ng-container *ngFor="let type of types">
-      <div class="partners-type {{type}}-type" *ngIf="partnersFor(type).length > 0">
-        <div class="bg-white row-1140 text-center partner-header">{{type}}</div>
-        <div class="bg-white row-1140 text-center">
-          <div class="text-center">
-            <div class="vcenter text-center partners-logo-container">
-              <a routerLink="{{partner.id}}" *ngFor="let partner of partnersFor(type)"
-                 [ngClass]="{'unpublished': !partner.published}">
-                <img [cfLazySrc]="partner.logo | resizeImg" class="img-responsive"/>
-              </a>
-            </div>
-          </div>
-
+      <div class="partners__type-container partners__type-container--{{getSimplifiedType(type)}}" *ngIf="partnersFor(type).length > 0">
+        <div class="partners__type-name">{{type}}</div>
+        <div class="partners__logo-container">
+          <a class="partners__logo" routerLink="{{partner.id}}" *ngFor="let partner of partnersFor(type)"
+             [ngClass]="{'partners__logo--unpublished': !partner.published}">
+            <img [cfLazySrc]="partner.logo | resizeImg"/>
+          </a>
         </div>
       </div>
     </ng-container>
-
+    <div class="partners__separator"></div>
   </div>
-  <div >
+  <div>
     <div class="text-center pt-5 pb-5">
       <p class="lead">Contact us on <a href="mailto:confitura@confitura.pl">confitura@confitura.pl</a> to learn about our packages</p>
     </div>
