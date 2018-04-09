@@ -7,7 +7,7 @@ import {Partner} from '../shared/partner.model';
   styleUrls: ['./partners.component.scss']
 })
 export class PartnersComponent implements OnInit {
-  types = ['platinum', 'gold', 'big data & AI', 'silver', 'bronze', 'media', 'technical'];
+  types = Partner.TYPES;
   partners: Partner[] = [];
 
 

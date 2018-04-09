@@ -7,6 +7,7 @@ import {HttpClient} from '@angular/common/http';
 
 @Injectable()
 export class PartnerService {
+
   constructor(private http: HttpClient,
               private currentUser: CurrentUser) {
   }

@@ -12,7 +12,7 @@ import {Location} from '@angular/common';
 })
 export class PartnerEditComponent implements OnInit {
 
-  types = ['platinum', 'gold', 'silver', 'bronze', 'media', 'technical'];
+  types = Partner.TYPES;
   editor: SimpleMDE;
   model: Partner = new Partner();
   submitted = false;
