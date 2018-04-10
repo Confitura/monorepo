@@ -71,30 +71,22 @@
 }
 
 .short-info {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-areas: "dt" "di" "pt" "ps" "pi";
+  display: flex;
+  flex-direction: column;
   @media all and (min-width: $size_small) {
-
-    grid-gap: 10px;
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas: "dt pt" "di ps" "di pi";
+    flex-direction: row;
+  }
+  &__date {
+    flex-basis: 50%;
+    @media all and (min-width: $size_small) {
+      padding-left: 20px;
+    }
   }
 
-  &__date-title {
-    grid-area: dt;
-  }
-  &__date-info {
-    grid-area: di;
-  }
-
-  &__place-title {
-    grid-area: pt;
-  }
-  &__place-subtitle {
-    grid-area: ps;
-  }
-  &__place-info {
-    grid-area: pi;
+  &__place {
+    flex-basis: 50%;
+    @media all and (min-width: $size_small) {
+      padding-right: 20px;
+    }
   }
 }
