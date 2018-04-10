@@ -47,7 +47,7 @@ export class PresentationEditComponent implements OnInit {
   }
 
   private getOwnerId(params: Params) {
-    this.owner = params['owner'];
+    this.owner = params['userId'];
     if (this.owner == null) {
       this.owner = this.user.get().jti;
     }
