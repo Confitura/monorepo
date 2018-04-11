@@ -2,10 +2,10 @@ server:
   port: {{port}}
   servlet:
     context-path: /api
-  twitter:
-    api-key: {{twitter_key}}
-    api-secret: {{twitter_secret}}
-    callback: {{twitter_callback}}
+twitter:
+  api-key: {{twitter_key}}
+  api-secret: {{twitter_secret}}
+  callback: {{twitter_callback}}
 app.oauth.oauth2:
   facebook:
     api-key: {{facebook_key}}
