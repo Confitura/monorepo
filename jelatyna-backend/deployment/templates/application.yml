@@ -1,7 +1,7 @@
 server:
   port: {{port}}
-  context-path: /api
-twitter:
+  servlet:
+    context-path: /api
   api-key: {{twitter_key}}
   api-secret: {{twitter_secret}}
   callback: {{twitter_callback}}
@@ -39,4 +39,4 @@ spring:
     password: {{db_pass}}
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none

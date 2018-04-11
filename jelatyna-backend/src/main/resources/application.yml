@@ -1,7 +1,8 @@
 
 server:
   port: 3000
-  context-path:
+  servlet:
+    context-path:
 
 
 twitter:
