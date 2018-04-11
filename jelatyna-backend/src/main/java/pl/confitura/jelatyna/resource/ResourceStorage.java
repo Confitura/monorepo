@@ -25,7 +25,7 @@ public class ResourceStorage {
     private String rootPath;
     @Value("${resources.folder}")
     private String folder;
-    @Value("${server.context-path}")
+    @Value("${server.servlet.context-path}")
     private String contextPath;
 
     private UserRepository repository;
