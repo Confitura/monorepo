@@ -11,12 +11,12 @@ public interface TimeSlotsRepository extends Repository<TimeSlot, String> {
     @PreAuthorize("@security.isAdmin()")
     TimeSlot save(TimeSlot timeSlot);
 
-    TimeSlot findOne(String id);
+    TimeSlot findById(String id);
 
     @Query("select slot from TimeSlot slot order by displayOrder")
     Iterable<TimeSlot> findAll();
 
     @PreAuthorize("@security.isAdmin()")
-    void delete(String id);
+    void deleteById(String id);
 
 }

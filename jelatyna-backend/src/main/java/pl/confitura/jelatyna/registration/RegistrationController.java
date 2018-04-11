@@ -77,7 +77,7 @@ public class RegistrationController {
     @PostMapping("/participants/{id}")
     @Transactional
     public ResponseEntity<Object> save(@RequestBody Participant participant, @PathVariable String id) {
-        repository.findOne(id)
+        repository.findById(id)
                 .setName(participant.getName())
                 .setCity(participant.getCity())
                 .setEmail(participant.getEmail())
@@ -93,7 +93,7 @@ public class RegistrationController {
     @PreAuthorize("@security.isVolunteer()")
     @Transactional
     public ResponseEntity<Object> arrived(@PathVariable String id, @AuthenticationPrincipal Authentication authentication) {
-        Participant participant = repository.findOne(id);
+        Participant participant = repository.findById(id);
         if (participant == null) {
             return ResponseEntity.notFound().build();
         } else {
@@ -130,7 +130,7 @@ public class RegistrationController {
     }
 
     @Async
-    private void doSendRemindTo(Iterable<Participant> participants) {
+    void doSendRemindTo(Iterable<Participant> participants) {
         Streams.stream(participants)
                 .forEach(participant -> {
                     try {
@@ -145,7 +145,7 @@ public class RegistrationController {
     }
 
     @Async
-    private void doSendTicketTo(Iterable<Participant> participants) {
+    void doSendTicketTo(Iterable<Participant> participants) {
         Streams.stream(participants)
                 .filter(Participant::ticketNotSentYet)
                 .forEach(this::sendTicketTo);
@@ -161,7 +161,7 @@ public class RegistrationController {
     }
 
     @Transactional
-    private void doSendTicketTo(Participant participant) throws IOException, MandrillApiError {
+    void doSendTicketTo(Participant participant) throws IOException, MandrillApiError {
         MessageInfo info = new MessageInfo()
                 .setEmail(participant.getEmail())
                 .setName(participant.getName())
@@ -171,7 +171,7 @@ public class RegistrationController {
     }
 
     @Async
-    private void doSendSurveyTo(Iterable<Participant> participants) {
+    void doSendSurveyTo(Iterable<Participant> participants) {
         Streams.stream(participants)
                 .filter(Participant::alreadyArrived)
                 .filter(Participant::surveyNotSentYet)
@@ -189,7 +189,7 @@ public class RegistrationController {
     }
 
     @Transactional
-    private void doSendSurvey(Participant participant) throws IOException, MandrillApiError {
+    void doSendSurvey(Participant participant) throws IOException, MandrillApiError {
         MessageInfo info = new MessageInfo()
                 .setEmail(participant.getEmail())
                 .setName(participant.getName());

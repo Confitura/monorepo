@@ -2,7 +2,7 @@ package pl.confitura.jelatyna.login.google;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
-import lombok.ToString;
+import lombok.EqualsAndHashCode;
 import pl.confitura.jelatyna.login.OAuthUserBase;
 import pl.confitura.jelatyna.user.User;
 
@@ -11,7 +11,7 @@ import pl.confitura.jelatyna.user.User;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data
-@ToString
+@EqualsAndHashCode(callSuper = true)
 public class GoogleUser extends OAuthUserBase {
     private String displayName;
 

@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.data.rest.core.annotation.RestResource;
-import org.springframework.security.access.method.P;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 @RepositoryRestResource(path = "presentations", excerptProjection = InlineTags.class)
@@ -14,9 +14,9 @@ public interface PresentationRepository extends Repository<Presentation, String>
     Presentation save(Presentation presentation);
 
     @PreAuthorize("@security.presentationOwnedByUser(#id)")
-    void delete(@P("id") String id);
+    void deleteById(@P("id") String id);
 
-    Presentation findOne(String id);
+    Presentation findById(String id);
 
     @PreAuthorize("@security.isAdmin()")
     Iterable<Presentation> findAll();

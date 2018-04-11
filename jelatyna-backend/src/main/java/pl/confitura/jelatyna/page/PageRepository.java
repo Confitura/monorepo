@@ -6,7 +6,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 @RestResource(path = "pages")
 public interface PageRepository extends Repository<Page, String> {
-    Page findOne(String id);
+    Page findById(String id);
 
     @PreAuthorize("@security.isAdmin()")
     Page save(Page page);

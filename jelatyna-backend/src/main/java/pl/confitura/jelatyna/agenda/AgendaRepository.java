@@ -12,9 +12,9 @@ public interface AgendaRepository extends Repository<AgendaEntry, String> {
 
     Iterable<AgendaEntry> findAll();
 
-    AgendaEntry findOne(String id);
+    AgendaEntry findById(String id);
 
     @PreAuthorize("@security.isAdmin()")
-    void delete(String id);
+    void deleteById(String id);
 
 }

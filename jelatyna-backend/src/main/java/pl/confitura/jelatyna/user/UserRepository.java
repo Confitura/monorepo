@@ -11,9 +11,9 @@ public interface UserRepository extends Repository<User, String> {
 
     User save(User user);
 
-    User findOne(String userId);
+    User findById(String userId);
 
-    boolean exists(String id);
+    boolean existsById(String id);
 
     @Query("FROM User WHERE isAdmin = true")
     @RestResource(path = "admins", rel = "admins")
@@ -42,5 +42,5 @@ public interface UserRepository extends Repository<User, String> {
     Iterable<Object[]> findAllAccepted();
 
     @RestResource(exported = false)
-    User findOneByEmail(String email);
+    User findByEmail(String email);
 }

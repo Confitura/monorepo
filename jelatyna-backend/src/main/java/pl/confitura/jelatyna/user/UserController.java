@@ -64,7 +64,7 @@ public class UserController {
     @Transactional
     public ResponseEntity<Object> markAsVolunteer(@PathVariable("userId") String userId,
             @PathVariable("isVolunteer") boolean isVolunteer) {
-        User user = repository.findOne(userId);
+        User user = repository.findById(userId);
         user.setVolunteer(isVolunteer);
         return ResponseEntity.ok().build();
     }
@@ -76,7 +76,7 @@ public class UserController {
         if (isEmpty(presentation.getId()) && !security.isAdmin()) {
             return ResponseEntity.status(UNAUTHORIZED).build();
         }
-        User speaker = repository.findOne(userId);
+        User speaker = repository.findById(userId);
         presentation.setSpeaker(speaker);
         retainStatus(presentation);
         Presentation saved = presentationRepository.save(presentation);
@@ -101,7 +101,7 @@ public class UserController {
 
     private void retainStatus(Presentation presentation) {
         if (!isEmpty(presentation.getId())) {
-            Presentation saved = presentationRepository.findOne(presentation.getId());
+            Presentation saved = presentationRepository.findById(presentation.getId());
             presentation.setStatus(saved.getStatus());
         }
     }

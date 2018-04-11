@@ -11,12 +11,12 @@ public interface RoomRepository extends Repository<Room, String> {
     @PreAuthorize("@security.isAdmin()")
     Room save(Room room);
 
-    Room findOne(String id);
+    Room findById(String id);
 
     @Query("select room from Room room order by displayOrder")
     Iterable<Room> findAll();
 
     @PreAuthorize("@security.isAdmin()")
-    void delete(String id);
+    void deleteById(String id);
 
 }

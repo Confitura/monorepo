@@ -14,7 +14,7 @@ public interface ParticipantRepository extends Repository<Participant, String> {
     @PreAuthorize("@security.isAdmin()")
     Iterable<Participant> findAll();
 
-    Participant findOne(String id);
+    Participant findById(String id);
 
     @RestResource(exported = false)
     @Query("FROM Participant WHERE registrationDate IS NULL")
