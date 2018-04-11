@@ -28,7 +28,7 @@ public class Security {
     }
 
     public boolean presentationOwnedByUser(String presentationId) {
-        String ownerId = presentationRepository.findOne(presentationId).getSpeaker().getId();
+        String ownerId = presentationRepository.findById(presentationId).getSpeaker().getId();
         return ownerId.equals(getUserId());
     }
 

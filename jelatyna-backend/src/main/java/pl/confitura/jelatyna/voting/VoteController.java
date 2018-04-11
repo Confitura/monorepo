@@ -65,7 +65,7 @@ public class VoteController {
     @PostMapping("/votes")
     @Transactional
     public ResponseEntity<Resource<Vote>> save(@RequestBody Vote vote) {
-        Vote loaded = voteRepository.findOne(vote.getId());
+        Vote loaded = voteRepository.findById(vote.getId());
         loaded.setRate(vote.getRate());
         loaded.setVoteDate(LocalDateTime.now());
         return ResponseEntity.ok(new Resource<>(loaded));

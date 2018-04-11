@@ -54,7 +54,7 @@ public class JelatynaApplication {
                     new Tag("could", "Cloud"),
                     new Tag("microservices", "Microservices")
             );
-            repository.save(tags);
+            repository.saveAll(tags);
         };
     }
 

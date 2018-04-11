@@ -11,7 +11,7 @@ public interface VoteRepository extends Repository<Vote, String> {
     @RestResource(exported = false)
     Set<Vote> save(Iterable<Vote> votes);
 
-    Vote findOne(String id);
+    Vote findById(String id);
 
     @RestResource(exported = false)
     Iterable<Vote> findAll();

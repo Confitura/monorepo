@@ -11,13 +11,13 @@ public interface PartnerRepository extends Repository<Partner, String> {
     @PreAuthorize("@security.isAdmin()")
     Partner save(Partner partner);
 
-    Partner findOne(String id);
+    Partner findById(String id);
 
     @PreAuthorize("@security.isAdmin()")
     Iterable<Partner> findAll();
 
     @PreAuthorize("@security.isAdmin()")
-    void delete(String id);
+    void deleteById(String id);
 
     @Query("FROM Partner as p WHERE p.published = true")
     @RestResource(path = "published", rel = "published")

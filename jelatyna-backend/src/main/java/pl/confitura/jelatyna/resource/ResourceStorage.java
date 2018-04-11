@@ -40,7 +40,7 @@ public class ResourceStorage {
     @Transactional
     @PreAuthorize("@security.isOwner(#userId)")
     void storeSpeaker(@RequestParam MultipartFile file, String userId) throws IOException {
-        User user = repository.findOne(userId);
+        User user = repository.findById(userId);
         String path = doStore(user.getId(), file, "photos");
         user.setPhoto(path);
         repository.save(user);
@@ -49,7 +49,7 @@ public class ResourceStorage {
     @Transactional
     @PreAuthorize("@security.isAdmin()")
     void storePartnerLogo(@RequestParam MultipartFile file, String id) throws IOException {
-        Partner partner = partnerRepository.findOne(id);
+        Partner partner = partnerRepository.findById(id);
         partner.setLogo(doStore(id, file, "photos"));
         partnerRepository.save(partner);
     }

@@ -3,12 +3,12 @@ package pl.confitura.jelatyna.login.github;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
-import lombok.ToString;
+import lombok.EqualsAndHashCode;
 import pl.confitura.jelatyna.login.OAuthUserBase;
 import pl.confitura.jelatyna.user.User;
 
 @Data
-@ToString
+@EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class GitHubUser extends OAuthUserBase {
     private String name;

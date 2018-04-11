@@ -1,6 +1,6 @@
 
 server:
-  port: 9090
+  port: 3000
   context-path:
 
 
@@ -20,3 +20,9 @@ management:
   context-path: /api/actuator
   security:
     roles: ADMIN
+
+
+jwt.key: 2134254235b4235
+resources.path: /tmp
+resources.folder: argh
+mail.apiKey: blh

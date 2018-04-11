@@ -29,7 +29,7 @@ public class PresentationController {
     @PostMapping("/presentations/{presentationId}/accept")
     @Transactional
     public ResponseEntity<?> accept(@PathVariable String presentationId) {
-        this.repository.findOne(presentationId).setStatus("accepted");
+        this.repository.findById(presentationId).setStatus("accepted");
         return ResponseEntity.ok().build();
     }
 
@@ -37,7 +37,7 @@ public class PresentationController {
     @PostMapping("/presentations/{presentationId}/unaccept")
     @Transactional
     public ResponseEntity<?> unaccept(@PathVariable String presentationId) {
-        this.repository.findOne(presentationId).setStatus("reported");
+        this.repository.findById(presentationId).setStatus("reported");
         return ResponseEntity.ok().build();
 
     }
@@ -45,14 +45,14 @@ public class PresentationController {
     @PreAuthorize("@security.presentationOwnedByUser(#presentationId) || @security.isAdmin()")
     @GetMapping("/presentations/{presentationId}/cospeakers")
     public ResponseEntity<Resources<User>> getCospeakers(@PathVariable String presentationId) {
-        Set<User> cospeakers = this.repository.findOne(presentationId).getCospeakers();
+        Set<User> cospeakers = this.repository.findById(presentationId).getCospeakers();
         return ResponseEntity.ok(new Resources<>(cospeakers));
     }
 
     @PreAuthorize("@security.presentationOwnedByUser(#presentationId) || @security.isAdmin()")
     @DeleteMapping("/presentations/{presentationId}/cospeakers/{email:.+}")
     public ResponseEntity<?> removeCospeaker(@PathVariable String presentationId, @PathVariable String email) {
-        Presentation presentation = this.repository.findOne(presentationId);
+        Presentation presentation = this.repository.findById(presentationId);
         presentation.setCospeakers(removeCospeakerByEmail(email, presentation.getCospeakers()));
         repository.save(presentation);
         return ResponseEntity.ok().build();
@@ -62,12 +62,12 @@ public class PresentationController {
     @PostMapping("/presentations/{presentationId}/cospeakers/{email:.+}")
     @Transactional
     public ResponseEntity<?> addCospeaker(@PathVariable String presentationId, @PathVariable String email) {
-        User user = this.userRepository.findOneByEmail(email);
+        User user = this.userRepository.findByEmail(email);
         if (user == null) {
             return ResponseEntity.notFound().build();
         }
 
-        Presentation presentation = this.repository.findOne(presentationId);
+        Presentation presentation = this.repository.findById(presentationId);
         if (presentation.isOwnedBy(email)) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("You cannot add yourself as a speaker!");
         }
