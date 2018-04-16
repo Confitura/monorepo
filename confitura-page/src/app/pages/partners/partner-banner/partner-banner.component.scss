@@ -1,19 +1,24 @@
 @import "../../../sizes";
 
-.partners-banner-container {
+.partners-banner__container {
   display: flex;
   justify-content: space-around;
   align-content: stretch;
   flex-direction: column;
+  @media all and (min-width: $size_medium) {
+    flex-direction: row;
+  }
 
   .partner-type {
     font-size: 2rem;
     font-family: 'NeuzeitGro-Bol', Verdana, Tahoma, sans-serif;
-    padding-top: 50px;
-    @media all and (max-width: 768px) {
-      padding-top: 5px;
-      padding-bottom: 20px;
+    padding-top: 5px;
+    padding-bottom: 20px;
+    @media all and (min-width: $size_medium) {
+      padding-top: 50px;
+      padding-bottom: 0;
     }
+
   }
 
   .partner-logo-item > a {
@@ -39,6 +44,7 @@
     order: 1;
     @media all and (min-width: $size_small) {
       order: 2;
+      flex-basis: 33%;
     }
   }
 
@@ -46,6 +52,19 @@
     order: 2;
     @media all and (min-width: $size_small) {
       order: 1;
+      flex-basis: 33%;
+    }
+    .partner-logo-item > a > img {
+      width: 80%;
+      height: 80%;
+
+    }
+  }
+
+  .big-type {
+    order: 3;
+    @media all and (min-width: $size_small) {
+      flex-basis: 16.5%;
     }
     .partner-logo-item > a > img {
       width: 80%;
@@ -54,15 +73,14 @@
   }
 
   .silver-type {
-    order: 3;
+    order: 4;
+    @media all and (min-width: $size_small) {
+      flex-basis: 16.5%;
+    }
     .partner-logo-item > a > img {
       width: 80%;
       height: 80%;
     }
-  }
-
-  @media all and (min-width: $size_medium) {
-    flex-direction: row;
   }
 
   > div {

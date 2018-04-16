@@ -10,7 +10,7 @@ import {PartnerService} from '../shared/partner.service';
 })
 export class PartnerBannerComponent implements OnInit {
 
-  types = ['gold', 'platinum', 'silver'];
+  types = ['platinum', 'gold', 'big data & AI', 'silver'];
   list: Partner[] = [];
 
   constructor(private service: PartnerService) {
@@ -42,5 +42,9 @@ export class PartnerBannerComponent implements OnInit {
   getPartnersFor(type: string): Partner[] {
     return this.list
       .filter((partner: Partner) => partner.type === type);
+  }
+
+  getSimpleType(type) {
+    return type.split(' ')[0];
   }
 }
