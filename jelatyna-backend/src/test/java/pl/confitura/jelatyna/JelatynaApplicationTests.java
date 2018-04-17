@@ -1,20 +1,31 @@
 package pl.confitura.jelatyna;
 
-import java.io.IOException;
+import org.junit.jupiter.api.Test;
+import org.springframework.hateoas.MediaTypes;
 
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-@Ignore
-public class JelatynaApplicationTests {
+class JelatynaApplicationTests extends BaseIntegrationTest {
 
     @Test
-    public void contextLoads() throws IOException {
+    void dataRestJpaWorks() throws Exception {
+
+        mockMvc
+                .perform(
+                        get("/")
+                                .accept(MediaTypes.HAL_JSON)
+                )
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaTypes.HAL_JSON));
+
+
+        mockMvc
+                .perform(
+                        delete("/rooms/1")
+                                .accept(MediaTypes.HAL_JSON)
+                )
+                .andExpect(status().isForbidden());
     }
 
 }
