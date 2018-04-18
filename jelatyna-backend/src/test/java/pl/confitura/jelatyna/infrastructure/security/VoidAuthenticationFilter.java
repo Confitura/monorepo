@@ -12,7 +12,7 @@ import java.io.IOException;
 
 @Component
 @Primary
-public class TestAuthenticationFilter extends AuthenticationFilter {
+public class VoidAuthenticationFilter extends AuthenticationFilter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {

@@ -1,5 +1,7 @@
 package pl.confitura.jelatyna;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 @ExtendWith(SpringExtension.class)
@@ -20,12 +23,27 @@ public class BaseIntegrationTest {
 
     MockMvc mockMvc;
 
-    @Autowired WebApplicationContext context;
-    @Autowired FilterChainProxy filterChain;
+    @Autowired
+    WebApplicationContext context;
+    @Autowired
+    FilterChainProxy filterChain;
+    @Autowired
+    ObjectMapper objectMapper;
 
     @BeforeEach
     public void setUp() {
-        this.mockMvc = webAppContextSetup(context).addFilters(filterChain).build();
+        this.mockMvc = webAppContextSetup(context)
+                .addFilters(filterChain)
+                .apply(springSecurity())
+                .build();
         SecurityContextHolder.clearContext();
+    }
+
+    public String json(Object o){
+        try {
+            return objectMapper.writeValueAsString(o);
+        } catch (JsonProcessingException e) {
+            return "";
+        }
     }
 }
