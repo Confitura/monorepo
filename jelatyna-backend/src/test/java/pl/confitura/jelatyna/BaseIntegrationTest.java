@@ -18,7 +18,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
-@ActiveProfiles("dev, fake-db")
+@ActiveProfiles("test, fake-db")
 public class BaseIntegrationTest {
 
     MockMvc mockMvc;
