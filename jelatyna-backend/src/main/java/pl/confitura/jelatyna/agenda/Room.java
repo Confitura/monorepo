@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import lombok.experimental.Accessors;
 import org.hibernate.annotations.GenericGenerator;
 
 import lombok.Data;
@@ -14,6 +15,7 @@ import lombok.Data;
 @Entity
 @Table(name = "agenda_room")
 @Data
+@Accessors(chain = true)
 public class Room {
     @Id
     @GeneratedValue(generator = "uuid2")
