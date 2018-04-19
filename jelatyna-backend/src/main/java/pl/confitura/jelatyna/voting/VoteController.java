@@ -59,7 +59,7 @@ public class VoteController {
                         .setPresentation(presentations.get(idx))
                         .setOrder(idx))
                 .collect(toList());
-        return this.voteRepository.save(votes);
+        return this.voteRepository.saveAll(votes);
     }
 
     @PostMapping("/votes")

@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 @ActiveProfiles("test, fake-db")
 public class BaseIntegrationTest {
 
-    MockMvc mockMvc;
+    protected MockMvc mockMvc;
 
     @Autowired
     WebApplicationContext context;
