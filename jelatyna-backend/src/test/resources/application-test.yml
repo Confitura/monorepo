@@ -1,0 +1,22 @@
+resources.path: /tmp
+resources.folder: /tmp
+jwt.key: abc
+
+app.oauth.oauth2:
+  github:
+    apiKey: apiKey
+    apiSecret: apiSecret
+    callback: callback
+  facebook:
+    apiKey: apiKey
+    apiSecret: apiSecret
+    callback: callback
+  google:
+    apiKey: apiKey
+    apiSecret: apiSecret
+    callback: callback
+
+mail:
+  apiKey: ket
+  fromEmail: from
+  fromName: name
