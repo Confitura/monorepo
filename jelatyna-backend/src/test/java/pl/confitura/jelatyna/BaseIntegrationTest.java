@@ -7,43 +7,41 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.FilterChainProxy;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.web.context.WebApplicationContext;
 
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
+import java.io.IOException;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @ActiveProfiles("test, fake-db")
 public class BaseIntegrationTest {
 
+    @Autowired
     protected MockMvc mockMvc;
 
-    @Autowired
-    WebApplicationContext context;
-    @Autowired
-    FilterChainProxy filterChain;
     @Autowired
     ObjectMapper objectMapper;
 
     @BeforeEach
     public void setUp() {
-        this.mockMvc = webAppContextSetup(context)
-                .addFilters(filterChain)
-                .apply(springSecurity())
-                .build();
         SecurityContextHolder.clearContext();
     }
 
-    public String json(Object o){
+    protected String json(Object o) {
         try {
             return objectMapper.writeValueAsString(o);
         } catch (JsonProcessingException e) {
             return "";
+        }
+    }
+
+    protected <T> T fromJson(String s, Class<T> valueType) {
+        try {
+            return objectMapper.readValue(s, valueType);
+        } catch (IOException e) {
+            return null;
         }
     }
 }

@@ -1,25 +1,17 @@
 package pl.confitura.jelatyna.infrastructure.security;
 
-import java.util.Optional;
-
-import javax.servlet.http.HttpServletRequest;
-
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.annotation.RequestScope;
-
-import lombok.extern.slf4j.Slf4j;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
 
+import java.util.Optional;
+
 @Component
-@RequestScope
 @Slf4j
 public class Security {
-
-    @Autowired
-    private HttpServletRequest request;
-
     @Autowired
     private PresentationRepository presentationRepository;
 
@@ -41,12 +33,12 @@ public class Security {
     }
 
     private JelatynaPrincipal getPrincipal() {
-        return (JelatynaPrincipal) Optional.ofNullable((Authentication) request.getUserPrincipal())
+        return (JelatynaPrincipal) Optional.ofNullable(SecurityContextHolder.getContext().getAuthentication())
                 .map(Authentication::getPrincipal)
                 .orElse(new JelatynaPrincipal());
     }
 
-    private String getUserId() {
+    public String getUserId() {
         return getPrincipal().getId();
     }
 }

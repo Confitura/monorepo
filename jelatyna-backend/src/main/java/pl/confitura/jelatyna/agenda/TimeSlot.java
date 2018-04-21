@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import lombok.experimental.Accessors;
 import org.hibernate.annotations.GenericGenerator;
 
 import lombok.Data;
@@ -14,6 +15,7 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "agenda_time_slot")
+@Accessors(chain = true)
 public class TimeSlot {
 
     @Id
