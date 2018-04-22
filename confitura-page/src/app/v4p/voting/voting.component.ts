@@ -1,20 +1,20 @@
 import {Component, OnDestroy} from '@angular/core';
-import {V4pService} from './v4p.service';
-import {Vote} from './vote.model';
-import {Presentation} from '../profile/shared/presentation.model';
+import {V4pService} from '../shared/v4p.service';
+import {Vote} from '../shared/vote.model';
+import {Presentation} from '../../profile/shared/presentation.model';
 import {Router} from '@angular/router';
 import {sortBy} from 'lodash';
-import {PersonModalService} from '../shared/person-modal/person-modal.service';
-import {User} from '../core/user/user.model';
+import {PersonModalService} from '../../shared/person-modal/person-modal.service';
+import {User} from '../../core/user/user.model';
 
 import {Hotkey, HotkeysService} from 'angular2-hotkeys';
 
 @Component({
-  templateUrl: './v4p.component.html',
-  styleUrls: ['./v4p.component.scss']
+  templateUrl: './voting.component.html',
+  styleUrls: ['./voting.component.scss']
 
 })
-export class V4pComponent implements OnDestroy {
+export class VotingComponent implements OnDestroy {
 
   votes: Vote[];
   rates = [

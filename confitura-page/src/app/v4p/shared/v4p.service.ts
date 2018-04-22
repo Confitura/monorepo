@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {map} from 'rxjs/operators';
 import {Vote} from './vote.model';
-import {Presentation} from '../profile/shared/presentation.model';
+import {Presentation} from '../../profile/shared/presentation.model';
 import {HttpClient, HttpParams} from '@angular/common/http';
 
 @Injectable()

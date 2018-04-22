@@ -1,10 +1,11 @@
-@import "../sizes";
-@import "../colors";
+@import "../../sizes";
+@import "../../colors";
 
 .vote-container {
   display: grid;
   grid-template-columns: auto 1fr;
   grid-template-rows: auto 1fr;
+
   grid-template-areas: "nav          nav" "rate         rate" "presentation presentation";
 
   @media all and (min-width: $size_small) {
