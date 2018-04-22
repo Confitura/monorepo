@@ -1,5 +1,49 @@
-@import "../../sizes";
-@import "../../colors";
+@import "../sizes";
+@import "../colors";
+
+.vote-container {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas: "nav          nav" "rate         rate" "presentation presentation";
+
+  @media all and (min-width: $size_small) {
+    grid-template-areas: "nav  nav" "rate presentation";
+  }
+}
+
+.v4p__nav {
+  grid-area: nav;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  margin: auto;
+}
+
+.v4p__rating {
+  grid-area: rate;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+
+  @media all and (min-width: $size_small) {
+    flex-direction: column;
+    justify-items: center;
+    justify-content: flex-start;
+  }
+}
+
+.v4p__rate {
+  padding: 10px;
+
+}
+
+cf-presentation {
+  grid-area: presentation;
+  padding: 10px;
+
+}
 
 #v4p {
   .presentation {

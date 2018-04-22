@@ -1,0 +1,32 @@
+<section class="bg-white ">
+  <div id="spinner" *ngIf="loading"></div>
+  <div class="row-1140 pt-5 pb-5 vote-container" (swipeleft)="right()" (swiperight)="left()" *ngIf="presentation">
+    <nav class="v4p__nav">
+      <div>
+        <button mat-icon-button (click)="left()">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+      </div>
+      <div>
+        {{currentIdx+1}} / {{votes.length}}
+      </div>
+      <div>
+        <button mat-icon-button (click)="right()">
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+      </div>
+    </nav>
+    <aside class="v4p__rating">
+      <div *ngFor="let rate of rates" class="v4p__rate">
+        <button mat-icon-button
+                (click)="setRate(rate.value)"
+                [color]=" hasRate(rate.value) ? 'warn' : 'default'">
+          <mat-icon>{{rate.icon}}</mat-icon>
+        </button>
+      </div>
+    </aside>
+    <cf-presentation [presentation]="presentation"></cf-presentation>
+  </div>
+  <cf-person-modal></cf-person-modal>
+</section>
+<hotkeys-cheatsheet></hotkeys-cheatsheet>

@@ -3,7 +3,6 @@ import {Person} from './person.model';
 import {Observable} from 'rxjs/Observable';
 import {map} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
-import shuffle from 'lodash.shuffle';
 
 @Injectable()
 export class OrganizerService {
