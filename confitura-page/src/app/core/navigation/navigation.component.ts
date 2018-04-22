@@ -28,7 +28,7 @@ export class NavigationComponent implements OnInit {
     },
     {label: 'speaker\'s zone', url: '/login', show: () => !this.loggedIn},
     {label: 'logout', action: () => this.logout(), show: () => this.loggedIn},
-    {label: 'Vote 4 Papers', url: '/v4p', show: () => !this.loggedIn, clazz: 'pink'},
+    {label: 'Vote 4 Papers', url: '/v4p', clazz: 'pink'},
   ];
 
 
