@@ -1,6 +1,8 @@
 package pl.confitura.jelatyna.infrastructure;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurerAdapter;
 
@@ -27,4 +29,8 @@ public class SpringDataRestCustomization extends RepositoryRestConfigurerAdapter
                         Page.class);
     }
 
+    @Bean
+    public SpelAwareProxyProjectionFactory projectionFactory() {
+        return new SpelAwareProxyProjectionFactory();
+    }
 }

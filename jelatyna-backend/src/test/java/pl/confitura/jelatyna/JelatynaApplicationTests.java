@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static pl.confitura.jelatyna.infrastructure.security.SecurityHelper.admin;
+import static pl.confitura.jelatyna.infrastructure.security.SecurityHelper.user;
 
 class JelatynaApplicationTests extends BaseIntegrationTest {
 
@@ -31,6 +32,7 @@ class JelatynaApplicationTests extends BaseIntegrationTest {
         mockMvc
                 .perform(
                         post("/rooms/")
+                                .with(user("user"))
                                 .content(json(room))
                                 .accept(MediaTypes.HAL_JSON)
                 )

@@ -1,11 +1,10 @@
 package pl.confitura.jelatyna.user;
 
+import java.util.LinkedHashSet;
+import java.util.Optional;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 import org.springframework.data.rest.core.config.Projection;
 
@@ -14,6 +13,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.experimental.Accessors;
+import pl.confitura.jelatyna.agenda.AgendaEntry;
+import pl.confitura.jelatyna.agenda.TimeSlot;
 import pl.confitura.jelatyna.presentation.Presentation;
 
 @Entity
@@ -45,6 +46,27 @@ public class User {
     @OneToMany(mappedBy = "speaker")
     @JsonIgnore
     private Set<Presentation> presentations;
+
+    @ManyToMany
+    private Set<AgendaEntry> personalAgenda = new LinkedHashSet<>();
+
+    public void addToPersonalAgenda(AgendaEntry agendaEntry) {
+        personalAgenda.add(agendaEntry);
+    }
+
+    public boolean personalAgendaContainsTimeSlot(TimeSlot timeSlot) {
+        return personalAgenda.stream().anyMatch(it -> it.getTimeSlot().equals(timeSlot));
+    }
+
+    public Optional<AgendaEntry> getFromPersonalAgendaWithTimeSlot(TimeSlot timeSlot) {
+        return personalAgenda.stream()
+                .filter(it -> it.getTimeSlot().equals(timeSlot))
+                .findAny();
+    }
+
+    public void removeFromPersonalAgenda(AgendaEntry entry) {
+        personalAgenda.remove(entry);
+    }
 
 //    @ManyToMany(mappedBy = "cospeakers")
 //    @JsonIgnore
