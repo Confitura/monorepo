@@ -15,10 +15,7 @@ export class NavigationComponent implements OnInit {
     {label: 'about us', url: '/about'},
     {label: 'partners', url: '/partners'},
     {label: 'FAQ', url: '/faq'},
-    {label: 'V4P', url: '/v4p'},
-    // {label: 'schedule', url: '/schedule'},
     {label: 'presentations', url: '/presentations', show: () => this.currentUser.isAdmin()},
-    // {label: 'speakers', url: '/speakers'},
     {label: 'profile', action: () => this.goToProfile(), show: () => this.loggedIn},
     {
       label: 'admin', show: () => this.currentUser.isPrivileged(),
@@ -29,8 +26,9 @@ export class NavigationComponent implements OnInit {
         {label: 'users', url: '/admin/users', show: () => this.currentUser.isAdmin()},
       ]
     },
-    {label: 'Call 4 Papers', url: '/login', show: () => !this.loggedIn, clazz: 'pink'},
-    {label: 'logout', action: () => this.logout(), show: () => this.loggedIn, clazz: 'pink'},
+    {label: 'speaker\'s zone', url: '/login', show: () => !this.loggedIn},
+    {label: 'logout', action: () => this.logout(), show: () => this.loggedIn},
+    {label: 'Vote 4 Papers', url: '/v4p', show: () => !this.loggedIn, clazz: 'pink'},
   ];
 
 
