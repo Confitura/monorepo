@@ -8,11 +8,14 @@ import pl.confitura.jelatyna.user.User;
 import java.util.Set;
 
 @Projection(name = "inlineAgenda", types = {AgendaEntry.class})
-interface InlineAgenda {
+public interface InlineAgenda {
     String getId();
 
     @Value("#{target.timeSlot.id}")
     String getTimeSlotId();
+
+    @Value("#{target.timeSlot.label}")
+    String getTimeSlotLabel();
 
     @Value("#{target.room == null ? null : target.room.id}")
     String getRoomId();

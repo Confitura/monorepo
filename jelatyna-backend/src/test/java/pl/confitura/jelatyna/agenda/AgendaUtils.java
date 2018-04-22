@@ -32,21 +32,35 @@ public class AgendaUtils {
 
         createAgenda(rooms, timeSlots, pressentations);
         Iterable<AgendaEntry> iterableAgenda = agendaRepository.findAll();
-        return StreamSupport.stream(iterableAgenda.spliterator(), false).collect(Collectors.toList());
+        return StreamSupport
+                .stream(iterableAgenda.spliterator(), false)
+                .peek(it->it.getPresentation().getTitle())
+                .peek(it->it.getPresentation().getTags().size())
+                .peek(it->it.getPresentation().getCospeakers().size())
+                .distinct()
+                .collect(Collectors.toList());
 
     }
 
     private void createAgenda(List<Room> rooms, List<TimeSlot> timeSlots, List<List<Presentation>> pressentations) {
         for (int timeSlotIndex = 0; timeSlotIndex < timeSlots.size(); timeSlotIndex++) {
             TimeSlot timeSlot = timeSlots.get(timeSlotIndex);
-            for (int roomIndex = 0; roomIndex < rooms.size(); roomIndex++) {
-                Room room = rooms.get(roomIndex);
-                Presentation presentation = pressentations.get(timeSlotIndex).get(roomIndex);
+            if (timeSlot.isForAllRooms()) {
+                Presentation presentation = pressentations.get(timeSlotIndex).get(0);
                 AgendaEntry agendaEntry = new AgendaEntry()
                         .setPresentation(presentation)
-                        .setRoom(room)
                         .setTimeSlot(timeSlot);
                 agendaRepository.save(agendaEntry);
+            } else {
+                for (int roomIndex = 0; roomIndex < rooms.size(); roomIndex++) {
+                    Room room = rooms.get(roomIndex);
+                    Presentation presentation = pressentations.get(timeSlotIndex).get(roomIndex);
+                    AgendaEntry agendaEntry = new AgendaEntry()
+                            .setPresentation(presentation)
+                            .setRoom(room)
+                            .setTimeSlot(timeSlot);
+                    agendaRepository.save(agendaEntry);
+                }
             }
         }
     }
