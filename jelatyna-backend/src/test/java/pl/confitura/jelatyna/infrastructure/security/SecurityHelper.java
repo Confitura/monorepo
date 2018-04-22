@@ -30,4 +30,10 @@ public class SecurityHelper {
                 .setName(user.getName());
         return authentication(createToken(jelatynaPrincipal));
     }
+    public static RequestPostProcessor user(String user){
+        JelatynaPrincipal jelatynaPrincipal = new JelatynaPrincipal()
+                .setId(user)
+                .setName(user);
+        return authentication(createToken(jelatynaPrincipal));
+    }
 }
