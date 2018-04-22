@@ -7,13 +7,16 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 
 @Injectable()
 export class V4pService {
-  constructor(private http: HttpClient) {
 
+  constructor(private http: HttpClient) {
   }
 
   start(token: string): Observable<Vote[]> {
-    return this.http.post<EmbeddedVotes>(`/votes/start/${token}`, {})
-      .pipe(map(response => response._embedded.votes));
+    return this.http
+      .post<EmbeddedVotes>(`/votes/start/${token}`, {})
+      .pipe(
+        map(response => response._embedded.votes)
+      );
   }
 
   getPresentationFor(vote: Vote): Observable<Presentation> {

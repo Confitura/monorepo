@@ -8,19 +8,21 @@ import {RegistrationModule} from './pages/registration/registration.module';
 import {HttpClientModule} from '@angular/common/http';
 import {AppRoutingModule} from './app-routing.module';
 import {CoreModule} from './core/core.module';
-import {environment} from '../environments/environment';
 import {ServiceWorkerModule} from '@angular/service-worker';
+import {HotkeyModule} from 'angular2-hotkeys';
 
 
 @NgModule({
-  imports: [CoreModule,
+  imports: [
+    AppRoutingModule,
+    CoreModule,
     PagesModule,
     BrowserModule,
     BrowserAnimationsModule,
     ProfileModule,
-    AppRoutingModule,
     RegistrationModule,
     HttpClientModule,
+    HotkeyModule.forRoot(),
     ServiceWorkerModule.register('/ngsw-worker.js', {enabled: false})
   ],
   declarations: [AppComponent],

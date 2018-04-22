@@ -1,6 +1,51 @@
 @import "../../sizes";
 @import "../../colors";
 
+.vote-container {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr;
+
+  grid-template-areas: "nav  nav" "rate presentation";
+
+  @media all and (min-width: $size_small) {
+    grid-template-areas: "nav  nav" "rate presentation";
+  }
+}
+
+.v4p__nav {
+  grid-area: nav;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  @media all and (min-width: $size_xsmall) {
+    margin: auto;
+    justify-content: space-evenly;
+    width: 50%;
+  }
+}
+
+.v4p__rating {
+  grid-area: rate;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  justify-content: flex-start;
+  padding-top: 20px;
+}
+
+.v4p__rate {
+  padding: 10px;
+
+}
+
+cf-presentation {
+  grid-area: presentation;
+  padding: 10px;
+
+}
+
 #v4p {
   .presentation {
     padding: 30px 10px 10px 10px;

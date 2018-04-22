@@ -40,28 +40,7 @@ export class PresentationListComponent implements OnInit {
       });
   }
 
-  isAccepted(presentation: Presentation) {
-    return presentation.status === 'accepted';
-  }
 
-  accept(presentation: Presentation) {
-    this.service.accept(presentation)
-      .subscribe(() => this.ngOnInit());
-  }
-
-  unaccept(presentation: Presentation) {
-    this.service.unaccept(presentation)
-      .subscribe(() => this.ngOnInit());
-  }
-
-  show(speaker: User) {
-    this.userService.getBy(speaker.id)
-      .subscribe(user => this.personModalService.showFor(user));
-  }
-
-  allSpeakersFor(presentation: Presentation): User[] {
-    return [presentation.speaker, ...presentation.cospeakers];
-  }
 
   clear() {
     this.filter = {...this.EMPTY_FILTER};
@@ -105,7 +84,9 @@ export class PresentationListComponent implements OnInit {
     };
   }
 
-
+  private allSpeakersFor(presentation: Presentation): User[] {
+    return [presentation.speaker, ...presentation.cospeakers];
+  }
   private scrollToSelectedPresentation() {
     const presentationId = this.route.snapshot.fragment;
     if (presentationId) {

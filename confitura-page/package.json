@@ -31,7 +31,7 @@
     "@angular/router": "^5.0.3",
     "@angular/service-worker": "^5.2.0",
     "@types/lodash": "^4.14.100",
-    "angular2-hotkeys": "^2.0.3",
+    "angular2-hotkeys": "^2.0.4",
     "angular2-template-loader": "^0.6.2",
     "bootstrap": "^4.0.0",
     "bootstrap-social": "^5.1.1",

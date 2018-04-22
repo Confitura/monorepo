@@ -24,7 +24,6 @@ import {
   MatButtonModule, MatChipsModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatRadioModule, MatSelectModule,
   MatTooltipModule
 } from '@angular/material';
-import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -41,7 +40,6 @@ import {ReactiveFormsModule} from '@angular/forms';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyA6nOtsqyZJRfMwy6kmaK2_MgX51TtmViA'
     })],
@@ -59,7 +57,7 @@ import {ReactiveFormsModule} from '@angular/forms';
     AgendaComponent,
     AgendaEntryModalComponent,
     AgendaEntryComponent,
-    FaqComponent
+    FaqComponent,
   ],
   providers: [NewsService, OrganizerService],
   exports: [HomeComponent, AboutComponent]

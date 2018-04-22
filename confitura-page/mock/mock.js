@@ -11,6 +11,9 @@ app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Methods', '*');
   next();
 });
+app.use((req, res, next) => {
+  setTimeout(() => next(), 0);
+});
 require('./presentations')(app);
 require('./partners')(app);
 

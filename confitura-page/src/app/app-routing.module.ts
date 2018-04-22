@@ -19,7 +19,7 @@ const appRoutes: Routes = [
   },
   {
     path: 'v4p',
-    loadChildren: 'app/pages/v4p/v4p.module#V4pModule',
+    loadChildren: 'app/v4p/v4p.module#V4pModule',
   },
   {path: '', component: HomeComponent},
   {path: 'about', component: AboutComponent},

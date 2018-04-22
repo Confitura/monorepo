@@ -18,17 +18,35 @@ import {FooterComponent} from './footer/footer.component';
 import {CookiesComponent} from './cookies/cookies.component';
 import {MenuItemComponent} from './navigation/menu-item.component';
 import {UserService} from './user/user.service';
+import {MatProgressBarModule} from '@angular/material';
+import {ProgressBarComponent} from './progress-bar/progress-bar.component';
+import {ProgressBarService} from './progress-bar/progress-bar.service';
+import {ProgressBarInterceptor} from './progress-bar/progress-bar.interceptor';
 
 @NgModule({
-  imports: [CommonModule, HttpClientModule, RouterModule],
+  imports: [
+    CommonModule,
+    HttpClientModule,
+    RouterModule,
+    MatProgressBarModule
+  ],
   declarations: [
     NavigationComponent,
     FooterComponent,
     CookiesComponent,
     MenuItemComponent,
+    ProgressBarComponent,
   ],
-  providers: [LoginService, CurrentUser, ConfirmationService, UserService, PresentationService,
-    PartnerService, ParticipantService, AgendaService,
+  providers: [
+    LoginService,
+    CurrentUser,
+    ConfirmationService,
+    UserService,
+    PresentationService,
+    PartnerService,
+    ParticipantService,
+    AgendaService,
+    ProgressBarService,
     {
       provide: HAMMER_GESTURE_CONFIG,
       useClass: HammerConfig,
@@ -42,7 +60,12 @@ import {UserService} from './user/user.service';
       provide: HTTP_INTERCEPTORS,
       useClass: BaseUrlInterceptor,
       multi: true,
-    }],
+    }, {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ProgressBarInterceptor,
+      multi: true,
+    }
+  ],
   exports: [CommonModule, RouterModule, NavigationComponent, FooterComponent, CookiesComponent]
 })
 export class CoreModule {

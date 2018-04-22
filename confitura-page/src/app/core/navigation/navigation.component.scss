@@ -21,25 +21,6 @@
     }
   }
 
-  //@media all and (min-width: $size_small) {
-  //  nav, nav > div {
-  //    height: 100px;
-  //    margin-bottom: 0;
-  //  }
-  //  .nav > li > a {
-  //    line-height: 100px;
-  //    padding-top: 0;
-  //    padding-right: 15px;
-  //    padding-left: 7px;
-  //    font-size: 2.2rem;
-  //    color: black;
-  //    font-weight: 700;
-  //    &:hover {
-  //      text-decoration: underline;
-  //    }
-  //  }
-  //}
-
   .navbar-brand {
     padding-top: 10px;
     padding-bottom: 10px;
@@ -64,7 +45,7 @@
 
   }
 
-  .navbar-toggler{
+  .navbar-toggler {
     height: 55px;
     line-height: 55px;
     border: none;
@@ -79,5 +60,12 @@
       float: right;
     }
   }
+}
+
+cf-progress-bar {
+  position: fixed;
+  z-index: 1000;
+  right: 0;
+  left: 0;
 }
 
