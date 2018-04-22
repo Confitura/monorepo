@@ -16,9 +16,12 @@
     </div>
   </div>
   <div class="presentation__speakers">
-        <span class="presentation__speaker"
-              *ngFor="let speaker of allSpeakersFor(presentation)"
-              (click)="show(speaker)">{{speaker.name}}</span>
+    <div class="presentation__speaker"
+         *ngFor="let speaker of allSpeakersFor(presentation)"
+         (click)="show(speaker)">
+      <img class="presentation__speaker-img" src="{{speaker.photo}}">
+      <span>{{speaker.name}}</span>
+    </div>
   </div>
   <div class="presentation__metadata">
     <div class="presentation__language">

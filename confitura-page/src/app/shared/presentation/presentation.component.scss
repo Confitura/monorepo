@@ -25,16 +25,24 @@
   &__speakers {
     font-size: 1.2rem;
     font-family: 'NeuzeitGro-Bol', Verdana, Tahoma, sans-serif;
+    display: flex;
   }
   &__speaker {
+    display: flex;
     cursor: pointer;
+    margin-right: 5px;
+    margin-bottom: 5px;
     &:hover {
       color: red;
     }
 
-    &:not(:last-child)::after {
-      content: ", ";
-    }
+  }
+  &__speaker-img {
+    width: 25px;
+    height: 25px;
+    border-radius: 25px;
+    object-fit: contain;
+    margin-right: 5px;
   }
 
   &__metadata {

@@ -33,10 +33,14 @@
         <mat-icon>clear</mat-icon>
       </button>
     </div>
-    <cf-presentation *ngFor="let presentation of list; odd as isOdd;"
-                     [presentation]="presentation"
-                     [class.odd]="isOdd"
-    ></cf-presentation>
+    <cf-presentation
+      class="presentation-list__presentation"
+      *ngFor="let presentation of list; odd as isOdd;"
+      [presentation]="presentation"
+      [class.presentation-list__presentation--odd]="isOdd"
+    >
+
+    </cf-presentation>
   </div>
   <cf-person-modal></cf-person-modal>
 </section>

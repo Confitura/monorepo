@@ -14,14 +14,11 @@ export class ProgressBarService {
 
   started() {
     this.counter++;
-    console.log('started', this.counter);
   }
 
   done() {
     if (this.counter > 0) {
       this.counter--;
     }
-    console.log('done ', this.counter);
-
   }
 }

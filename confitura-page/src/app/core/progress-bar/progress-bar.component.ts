@@ -12,7 +12,6 @@ export class ProgressBarComponent {
   }
 
   shouldShow() {
-    // return true;
     return this.service.shouldShow();
   }
 
