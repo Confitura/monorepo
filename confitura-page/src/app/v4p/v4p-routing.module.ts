@@ -7,9 +7,12 @@ import {V4pEndComponent} from './end/v4p-end.component';
 const routes: Routes = [
   {
     path: '',
-    component: V4pStartComponent
+    redirectTo: 'start'
   },
   {
+    path: 'start',
+    component: V4pStartComponent
+  }, {
     path: 'voting',
     component: VotingComponent
   }, {

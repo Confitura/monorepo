@@ -19,14 +19,22 @@
     font-size: 2rem;
     font-family: 'NeuzeitGro-Bol', Verdana, Tahoma, sans-serif;
     word-wrap: break-word;
+    word-break: break-word;
   }
 
   &__speakers {
     font-size: 1.2rem;
     font-family: 'NeuzeitGro-Bol', Verdana, Tahoma, sans-serif;
   }
-  &__speaker:not(:last-child)::after {
-    content: ", ";
+  &__speaker {
+    cursor: pointer;
+    &:hover {
+      color: red;
+    }
+
+    &:not(:last-child)::after {
+      content: ", ";
+    }
   }
 
   &__metadata {

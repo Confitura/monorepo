@@ -24,7 +24,6 @@ import {PresentationComponent} from './presentation/presentation.component';
 @NgModule({
   imports: [
     CommonModule,
-    HttpClientModule,
     FileUploadModule,
     FormsModule,
     MatIconModule,
@@ -66,8 +65,7 @@ import {PresentationComponent} from './presentation/presentation.component';
     MdPipe,
     PageHeaderComponent,
     BackButtonComponent,
-    PresentationComponent
-
+    PresentationComponent,
   ],
   providers: [PersonModalService]
 })

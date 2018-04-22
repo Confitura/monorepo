@@ -13,6 +13,8 @@ import {User} from '../../core/user/user.model';
 export class PresentationComponent implements OnInit {
   @Input()
   presentation: Presentation;
+  @Input()
+  descriptionType: 'both' | 'short' | 'full' = 'both';
 
   constructor(private service: PresentationService,
               private userService: UserService,
@@ -43,6 +45,10 @@ export class PresentationComponent implements OnInit {
 
   allSpeakersFor(presentation: Presentation): User[] {
     return [presentation.speaker, ...presentation.cospeakers];
+  }
+
+  shouldShowDescription(type: string) {
+    return this.descriptionType === 'both' || this.descriptionType === type;
   }
 
 }

@@ -16,8 +16,9 @@
     </div>
   </div>
   <div class="presentation__speakers">
-        <span class="presentation__speaker" (click)="show(speaker)"
-              *ngFor="let speaker of allSpeakersFor(presentation)">{{speaker.name}}</span>
+        <span class="presentation__speaker"
+              *ngFor="let speaker of allSpeakersFor(presentation)"
+              (click)="show(speaker)">{{speaker.name}}</span>
   </div>
   <div class="presentation__metadata">
     <div class="presentation__language">
@@ -39,10 +40,12 @@
     </ng-container>
   </div>
 
-  <ng-container *cfAdmin>
+  <div *ngIf="shouldShowDescription('short')">
     <h4 class="pt-3">short description:</h4>
     <div class="presentation__description">{{presentation.shortDescription}}</div>
+  </div>
+  <div *ngIf="shouldShowDescription('full')">
     <h4 class="pt-3">description:</h4>
-  </ng-container>
-  <div class="presentation__description">{{presentation.description}}</div>
+    <div class="presentation__description">{{presentation.description}}</div>
+  </div>
 </article>

@@ -12,16 +12,15 @@ import {Hotkey, HotkeysService} from 'angular2-hotkeys';
 @Component({
   templateUrl: './voting.component.html',
   styleUrls: ['./voting.component.scss']
-
 })
 export class VotingComponent implements OnDestroy {
-
-  votes: Vote[];
   rates = [
     {value: 1, icon: 'exposure_plus_1'},
     {value: 0, icon: 'exposure_zero'},
     {value: -1, icon: 'exposure_neg_1'},
   ];
+  votes: Vote[];
+
   presentation: Presentation;
   currentIdx = 0;
   short = true;
@@ -89,7 +88,7 @@ export class VotingComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // this.hotkeys.reset();
+    this.hotkeys.reset();
   }
 
   show(speaker: User) {
