@@ -18,7 +18,7 @@ import { ResizeImgPipe } from './resize-img.pipe';
 import {MdPipe} from './md/md.pipe';
 import { PageHeaderComponent } from './page-header/page-header.component';
 import {BackButtonComponent} from './back-button/back-button.component';
-import {MatButtonModule, MatCardModule, MatChipsModule, MatIconModule, MatMenuModule} from '@angular/material';
+import {MatButtonModule, MatCardModule, MatChipsModule, MatIconModule, MatMenuModule, MatTooltipModule} from '@angular/material';
 import {PresentationComponent} from './presentation/presentation.component';
 
 @NgModule({
@@ -30,7 +30,7 @@ import {PresentationComponent} from './presentation/presentation.component';
     MatButtonModule,
     MatChipsModule,
     MatMenuModule,
-    MatCardModule
+    MatCardModule,
   ],
   declarations: [
     AdminDirective,
@@ -67,6 +67,7 @@ import {PresentationComponent} from './presentation/presentation.component';
     PageHeaderComponent,
     BackButtonComponent,
     PresentationComponent,
+    MatTooltipModule
   ],
   providers: [PersonModalService]
 })

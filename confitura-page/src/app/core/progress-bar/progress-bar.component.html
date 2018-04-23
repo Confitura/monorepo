@@ -1,1 +1,5 @@
-<mat-progress-bar mode="indeterminate" *ngIf="shouldShow()" color="warn"></mat-progress-bar>
+<mat-progress-bar mode="indeterminate"
+                  *ngIf="shouldShow()"
+                  color="warn"
+                  [@visibleState]="shouldShow()"
+></mat-progress-bar>
