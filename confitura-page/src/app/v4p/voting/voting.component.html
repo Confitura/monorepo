@@ -1,9 +1,7 @@
 <section class="bg-white ">
   <div id="spinner" *ngIf="loading"></div>
   <div class="row-1140 pt-5 pb-5 vote-container"
-       *ngIf="presentation"
-       (swipeleft)="right()"
-       (swiperight)="left()">
+       *ngIf="presentation">
     <nav class="v4p__nav">
       <div>
         <button mat-icon-button (click)="left()">

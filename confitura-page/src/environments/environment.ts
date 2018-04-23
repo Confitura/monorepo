@@ -5,6 +5,6 @@
 
   export const environment = {
     production: false,
-    API_URL: 'http://localhost:3000/'
-    // API_URL: 'https://2018.confitura.pl/api/'
+    // API_URL: 'http://localhost:3000/'
+    API_URL: 'https://2018.confitura.pl/api/'
 };
