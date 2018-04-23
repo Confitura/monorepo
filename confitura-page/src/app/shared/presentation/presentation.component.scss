@@ -30,6 +30,7 @@
   }
   &__speaker {
     display: flex;
+    align-items: center;
     cursor: pointer;
     margin-right: 5px;
     margin-bottom: 5px;
@@ -39,11 +40,11 @@
 
   }
   &__speaker-img {
-    width: 25px;
-    height: 25px;
-    border-radius: 25px;
-    object-fit: contain;
-    margin-right: 5px;
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
+    object-fit: cover;
+    margin-right: 10px;
   }
 
   &__metadata {
