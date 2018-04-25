@@ -4,9 +4,9 @@
       <img src="/assets/img/logo_black.svg" alt="">
     </div>
   </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar"
-          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="mobile-menu"></span>
+
+  <button mat-icon-button data-toggle="collapse" data-target="#navbar" class="navbar__toggle ">
+    <mat-icon>menu</mat-icon>
   </button>
 
   <div class="collapse navbar-collapse justify-content-end" id="navbar">
@@ -14,7 +14,11 @@
       <li cf-menu-item [model]="item" *ngFor="let item of menu" class="nav-item" [class.dropdown]="item.children"></li>
     </ul>
   </div>
+  <button mat-fab class="navbar__toggle-fab" data-toggle="collapse" data-target="#navbar" color="accent">
+    <mat-icon>menu</mat-icon>
+  </button>
 </nav>
+
 <div>
   <cf-progress-bar></cf-progress-bar>
 </div>

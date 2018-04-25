@@ -25,6 +25,7 @@
     padding-top: 10px;
     padding-bottom: 10px;
     height: 55px;
+    margin: auto;
 
     @media all and (min-width: $size_medium) {
       height: 100px;
@@ -44,22 +45,22 @@
     }
 
   }
-
-  .navbar-toggler {
-    height: 55px;
-    line-height: 55px;
-    border: none;
-    background: none;
-    margin-top: 0;
-    margin-bottom: 0;
-    span.mobile-menu {
-      background: url('/assets/img/mobile-menu.png') no-repeat center;
-      background-size: contain;
-      width: 30px;
-      height: 100%;
-      float: right;
+  &__toggle-fab {
+    position: fixed;
+    right: 40px;
+    bottom: 40px;
+    @media all and (min-width: $size_small) {
+      display: none;
     }
   }
+
+  &__toggle {
+    display: none;
+    @media all and (min-width: $size_small) and (max-width: $size_medium) {
+      display: block;
+    }
+  }
+
 }
 
 cf-progress-bar {

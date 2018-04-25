@@ -19,6 +19,8 @@
     @media all and (min-width: $size_small) {
       line-height: 55px;
       font-size: 1.5rem;
+      padding-right: 7px;
+      padding-left: 7px;
     }
     @media all and (min-width: $size_medium) {
       line-height: 100px;

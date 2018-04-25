@@ -18,7 +18,7 @@ import {FooterComponent} from './footer/footer.component';
 import {CookiesComponent} from './cookies/cookies.component';
 import {MenuItemComponent} from './navigation/menu-item.component';
 import {UserService} from './user/user.service';
-import {MatProgressBarModule} from '@angular/material';
+import {MatButtonModule, MatIconModule, MatProgressBarModule} from '@angular/material';
 import {ProgressBarComponent} from './progress-bar/progress-bar.component';
 import {ProgressBarService} from './progress-bar/progress-bar.service';
 import {ProgressBarInterceptor} from './progress-bar/progress-bar.interceptor';
@@ -28,7 +28,9 @@ import {ProgressBarInterceptor} from './progress-bar/progress-bar.interceptor';
     CommonModule,
     HttpClientModule,
     RouterModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatButtonModule,
+    MatIconModule
   ],
   declarations: [
     NavigationComponent,
@@ -66,7 +68,13 @@ import {ProgressBarInterceptor} from './progress-bar/progress-bar.interceptor';
       multi: true,
     }
   ],
-  exports: [CommonModule, RouterModule, NavigationComponent, FooterComponent, CookiesComponent]
+  exports: [
+    CommonModule,
+    RouterModule,
+    NavigationComponent,
+    FooterComponent,
+    CookiesComponent
+  ]
 })
 export class CoreModule {
 
