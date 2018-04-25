@@ -1,6 +1,9 @@
 @import "../../../sizes";
 
 .partners {
+  &__content {
+    position: relative;
+  }
 
   &__list {
     display: grid;
@@ -15,9 +18,9 @@
   }
 
   &__add-button {
-    position: fixed;
+    position: absolute;
     right: 40px;
-    bottom: 40px;
+    top: -30px;
     z-index: 1;
   }
 

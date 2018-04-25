@@ -24,7 +24,6 @@ export class PartnersComponent implements OnInit {
   }
 
   getSimplifiedType(type: string) {
-    console.log(type);
     return type.split(' ')[0];
   }
 
