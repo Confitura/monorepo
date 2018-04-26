@@ -15,6 +15,8 @@ export class VoteListComponent implements OnInit, AfterViewInit {
         'positiveVotes',
         'negativeVotes',
         'totalVotes',
+        'rateOfPositive',
+        'rateOfNegative'
     ];
     dataSource = new MatTableDataSource();
 

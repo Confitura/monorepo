@@ -31,6 +31,17 @@
             <mat-cell *matCellDef="let element"> {{element.totalVotes}} </mat-cell>
         </ng-container>
 
+        <!-- rateOfPositive Column -->
+        <ng-container matColumnDef="rateOfPositive">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>  rateOfPositive</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.rateOfPositive}}% </mat-cell>
+        </ng-container>
+
+        <!-- rateOfNegative Column -->
+        <ng-container matColumnDef="rateOfNegative">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>  rateOfNegative</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.rateOfNegative}}% </mat-cell>
+        </ng-container>
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
