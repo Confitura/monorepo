@@ -37,6 +37,7 @@
       class="presentation-list__presentation"
       *ngFor="let presentation of list; odd as isOdd;"
       [presentation]="presentation"
+      [voteStats]="statistics[presentation.id]"
       [class.presentation-list__presentation--odd]="isOdd"
     >
 

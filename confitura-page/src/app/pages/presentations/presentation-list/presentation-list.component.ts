@@ -5,6 +5,10 @@ import {ActivatedRoute} from '@angular/router';
 import {PersonModalService} from '../../../shared/person-modal/person-modal.service';
 import {UserService} from '../../../core/user/user.service';
 import {User} from '../../../core/user/user.model';
+import {VoteStatsServiceService} from '../../../admin/votes/vote-list/vote-stats.service';
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/observable/from';
+import 'rxjs/add/operator/mergeMap';
 
 @Component({
   templateUrl: './presentation-list.component.html',
@@ -21,14 +25,17 @@ export class PresentationListComponent implements OnInit {
   original: Presentation[];
   list: Presentation[];
   filter = {...this.EMPTY_FILTER};
+  statistics = {};
 
   constructor(private service: PresentationService,
               private personModalService: PersonModalService,
               private userService: UserService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private voteStatsServiceService: VoteStatsServiceService) {
     this.doFilterByStatus = this.doFilterByStatus.bind(this);
     this.doFilterByText = this.doFilterByText.bind(this);
     this.doFilterBy = this.doFilterBy.bind(this);
+    this.getStats();
   }
 
   ngOnInit(): void {
@@ -95,5 +102,13 @@ export class PresentationListComponent implements OnInit {
         window.scrollTo(0, element.offsetTop - 100);
       }
     }
+  }
+
+  private getStats() {
+    this.voteStatsServiceService.getAll()
+      .flatMap(it => Observable.from(it))
+      .subscribe(statistics => {
+          this.statistics[statistics.presentationId] = statistics;
+       });
   }
 }

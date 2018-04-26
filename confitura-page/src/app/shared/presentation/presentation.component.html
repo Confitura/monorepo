@@ -15,6 +15,13 @@
       </mat-menu>
     </div>
   </div>
+  <div class="presentation__votes" *cfAdmin="">
+    <mat-chip-list *ngIf="voteStats">
+      <mat-chip>all: {{voteStats.totalVotes}}</mat-chip>
+      <mat-chip>+1: {{voteStats.positiveVotes}} ({{voteStats.rateOfPositive}}%)</mat-chip>
+      <mat-chip>-1: {{voteStats.negativeVotes}} ({{voteStats.rateOfNegative}}%)</mat-chip>
+    </mat-chip-list>
+  </div>
   <div class="presentation__speakers">
     <div class="presentation__speaker"
          *ngFor="let speaker of allSpeakersFor(presentation)"

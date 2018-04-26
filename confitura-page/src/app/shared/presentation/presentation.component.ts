@@ -4,6 +4,7 @@ import {PresentationService} from '../../profile/shared/presentation.service';
 import {UserService} from '../../core/user/user.service';
 import {PersonModalService} from '../person-modal/person-modal.service';
 import {User} from '../../core/user/user.model';
+import {VoteStats} from '../../admin/votes/vote-list/vote-stats.model';
 
 @Component({
   selector: 'cf-presentation',
@@ -13,6 +14,8 @@ import {User} from '../../core/user/user.model';
 export class PresentationComponent implements OnInit {
   @Input()
   presentation: Presentation;
+  @Input()
+  voteStats: VoteStats;
   @Input()
   descriptionType: 'both' | 'short' | 'full' = 'both';
 

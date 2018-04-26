@@ -17,6 +17,7 @@ import {
   MatRadioModule, MatSortModule,
   MatTableModule
 } from '@angular/material';
+import {VoteListComponent} from './votes/vote-list/vote-list.component';
 
 @NgModule({
   imports: [
@@ -45,7 +46,8 @@ import {
     RoomComponent,
     AgendaEntryComponent,
     PresentationPickerComponent,
-    ScannerComponent
+    ScannerComponent,
+    VoteListComponent
   ]
 })
 export class AdminModule {
