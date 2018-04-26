@@ -3,22 +3,17 @@ package pl.confitura.jelatyna.voting;
 import static java.util.stream.Collectors.toList;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.IntStream;
+import java.util.*;
+import java.util.stream.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import com.google.common.collect.Lists;
 import pl.confitura.jelatyna.infrastructure.WebUtils;
@@ -69,5 +64,27 @@ public class VoteController {
         loaded.setRate(vote.getRate());
         loaded.setVoteDate(LocalDateTime.now());
         return ResponseEntity.ok(new Resource<>(loaded));
+    }
+
+
+    @PreAuthorize("@security.isAdmin()")
+    @GetMapping("/votes/statistics")
+    @ResponseBody
+    @Transactional
+    public List<PresentationStats> statistics() {
+        Iterable<Vote> allVotes = voteRepository.findAll();
+        Stream<Vote> votesStream = StreamSupport.stream(allVotes.spliterator(), true);
+
+        Map<String, Optional<PresentationStats>> statsByPresentation = votesStream
+                .map(PresentationStats::new)
+                .collect(Collectors.groupingBy(PresentationStats::getPresentationId,
+                        Collectors.reducing(PresentationStats::add)));
+
+        return statsByPresentation.values().stream()
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .sorted(Comparator.comparing(PresentationStats::getPositiveVotes))
+                .collect(toList());
+
     }
 }
