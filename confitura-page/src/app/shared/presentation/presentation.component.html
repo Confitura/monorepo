@@ -15,6 +15,13 @@
       </mat-menu>
     </div>
   </div>
+  <div class="presentations__voteStats" *ngIf="voteStats">
+    <mat-chip-list>
+      <mat-chip>all: {{voteStats.totalVotes}}</mat-chip>
+      <mat-chip>+1: {{voteStats.positiveVotes}}</mat-chip>
+      <mat-chip>-1: {{voteStats.negativeVotes}}</mat-chip>
+    </mat-chip-list>
+  </div>
   <div class="presentation__speakers">
     <div class="presentation__speaker"
          *ngFor="let speaker of allSpeakersFor(presentation)"
