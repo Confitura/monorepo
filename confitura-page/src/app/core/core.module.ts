@@ -22,6 +22,7 @@ import {MatButtonModule, MatIconModule, MatProgressBarModule} from '@angular/mat
 import {ProgressBarComponent} from './progress-bar/progress-bar.component';
 import {ProgressBarService} from './progress-bar/progress-bar.service';
 import {ProgressBarInterceptor} from './progress-bar/progress-bar.interceptor';
+import {VoteStatsServiceService} from '../admin/votes/vote-list/vote-stats.service';
 
 @NgModule({
   imports: [
@@ -47,6 +48,7 @@ import {ProgressBarInterceptor} from './progress-bar/progress-bar.interceptor';
     PresentationService,
     PartnerService,
     ParticipantService,
+    VoteStatsServiceService,
     AgendaService,
     ProgressBarService,
     {

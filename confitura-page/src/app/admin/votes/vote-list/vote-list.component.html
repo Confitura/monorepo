@@ -1,0 +1,37 @@
+<div class="example-container mat-elevation-z8">
+    <mat-table #table [dataSource]="dataSource" matSort>
+
+        <!-- title Column -->
+        <ng-container matColumnDef="title">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> title</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.title}} </mat-cell>
+        </ng-container>
+
+        <!-- presentationId Column -->
+        <ng-container matColumnDef="presentationId">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>  presentationId</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.presentationId}} </mat-cell>
+        </ng-container>
+
+        <!-- positiveVotes Column -->
+        <ng-container matColumnDef="positiveVotes">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>  positiveVotes</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.positiveVotes}} </mat-cell>
+        </ng-container>
+
+        <!-- negativeVotes Column -->
+        <ng-container matColumnDef="negativeVotes">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>  negativeVotes</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.negativeVotes}} </mat-cell>
+        </ng-container>
+
+        <!-- totalVotes Column -->
+        <ng-container matColumnDef="totalVotes">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>  totalVotes</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.totalVotes}} </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+</div>
