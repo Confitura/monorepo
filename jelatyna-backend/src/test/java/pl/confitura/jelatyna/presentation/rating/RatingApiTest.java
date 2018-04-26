@@ -78,6 +78,22 @@ class RatingApiTest extends BaseIntegrationTest {
 
     @Test
     @Transactional
+    public void userShouldBeAbleToAddComment() throws Exception {
+
+        Rate rate = new Rate().setValue(RateValue.AWESOME).setComment("comment");
+        // when user rates presentation with comment
+        rate(presentation, user, rate)
+                .andExpect(status().isCreated());
+
+        // then comment is added to presentation
+        mockMvc.perform(get("/presentations/" + presentation.getId() + "/ratings"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$._embedded.rates").value(hasSize(1)))
+                .andExpect(jsonPath("$._embedded.rates[0].comment").value(rate.getComment()));
+    }
+
+    @Test
+    @Transactional
     public void userShouldNotBeAbleToRateSamePresentationTwice() throws Exception {
 
         rate(presentation, user, rate);
