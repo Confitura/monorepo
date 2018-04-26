@@ -15,8 +15,8 @@
       </mat-menu>
     </div>
   </div>
-  <div class="presentations__voteStats" *ngIf="voteStats">
-    <mat-chip-list>
+  <div class="presentations__votes" *cfAdmin="">
+    <mat-chip-list *ngIf="voteStats">
       <mat-chip>all: {{voteStats.totalVotes}}</mat-chip>
       <mat-chip>+1: {{voteStats.positiveVotes}} ({{voteStats.rateOfPositive}}%)</mat-chip>
       <mat-chip>-1: {{voteStats.negativeVotes}} ({{voteStats.rateOfNegative}}%)</mat-chip>
