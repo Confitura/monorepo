@@ -8,12 +8,16 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.IntStream;
 
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,12 +35,20 @@ public class VoteController {
     private PresentationRepository presentationRepository;
     private VoteRepository voteRepository;
     private WebUtils webUtils;
+    private LocalValidatorFactoryBean beanValidator;
 
     @Autowired
-    public VoteController(PresentationRepository presentationRepository, VoteRepository voteRepository, WebUtils webUtils) {
+    public VoteController(PresentationRepository presentationRepository, VoteRepository voteRepository,
+        WebUtils webUtils, LocalValidatorFactoryBean beanValidator) {
         this.presentationRepository = presentationRepository;
         this.voteRepository = voteRepository;
         this.webUtils = webUtils;
+        this.beanValidator = beanValidator;
+    }
+
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        binder.addValidators(beanValidator);
     }
 
     @RequestMapping(value = "/votes/start/{token}", method = RequestMethod.POST)
@@ -64,7 +76,7 @@ public class VoteController {
 
     @PostMapping("/votes")
     @Transactional
-    public ResponseEntity<Resource<Vote>> save(@RequestBody Vote vote) {
+    public ResponseEntity<Resource<Vote>> save(@RequestBody @Valid Vote vote) {
         Vote loaded = voteRepository.findById(vote.getId());
         loaded.setRate(vote.getRate());
         loaded.setVoteDate(LocalDateTime.now());

@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -29,6 +31,8 @@ public class Vote {
     private Integer order;
     @OneToOne
     private Presentation presentation;
+    @Max(1)
+    @Min(-1)
     private Integer rate;
     @JsonIgnore
     private LocalDateTime voteDate;
