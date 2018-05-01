@@ -18,6 +18,6 @@ public class OAuthUserService {
         if (!userRepository.existsById(id)) {
             userRepository.save(oauthUser.toUser());
         }
-        return userRepository.findById(id);
+        return userRepository.findBySocialId(id);
     }
 }
