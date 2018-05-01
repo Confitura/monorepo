@@ -1,18 +1,21 @@
 package pl.confitura.jelatyna.login;
 
+import static org.springframework.http.HttpStatus.PERMANENT_REDIRECT;
+import static pl.confitura.jelatyna.infrastructure.Profiles.FAKE_SECURITY;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import pl.confitura.jelatyna.infrastructure.fakedb.FakeDbConfig;
 import pl.confitura.jelatyna.infrastructure.security.TokenService;
 import pl.confitura.jelatyna.user.User;
-
-import java.io.IOException;
-import java.util.concurrent.ExecutionException;
-
-import static org.springframework.http.HttpStatus.PERMANENT_REDIRECT;
-import static pl.confitura.jelatyna.infrastructure.Profiles.FAKE_SECURITY;
 
 @RestController
 @RequestMapping("/login/{provider}")
@@ -40,8 +43,7 @@ public class FakeOAuth2LoginController {
     @GetMapping("/callback")
     public ResponseEntity<String> doLoginWithGitHub(
             @PathVariable("provider") String provider,
-            @RequestParam("code") String code)
-            throws InterruptedException, ExecutionException, IOException {
+            @RequestParam("code") String code) {
 
         User user = FakeDbConfig.bySystem.get(provider);
         if (user == null) {

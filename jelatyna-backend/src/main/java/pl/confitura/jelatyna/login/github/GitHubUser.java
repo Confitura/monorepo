@@ -24,7 +24,7 @@ public class GitHubUser extends OAuthUserBase {
     @Override
     protected User toUser() {
         return new User()
-                .setId(encodeId())
+                .setSocialId(encodeId())
                 .setOrigin(getSystem())
                 .setName(getName())
                 .setGithub(login)
