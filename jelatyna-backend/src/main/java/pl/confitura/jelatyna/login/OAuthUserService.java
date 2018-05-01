@@ -15,7 +15,7 @@ public class OAuthUserService {
 
     public User mapToUser(OAuthUserBase oauthUser) {
         String id = oauthUser.encodeId();
-        if (!userRepository.existsById(id)) {
+        if (!userRepository.existsBySocialId(id)) {
             userRepository.save(oauthUser.toUser());
         }
         return userRepository.findBySocialId(id);
