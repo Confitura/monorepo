@@ -13,8 +13,15 @@ import {PresentationPickerComponent} from './agenda/presentaion-picker/presentai
 import {ScannerComponent} from './scanner/scanner.component';
 import {
   MatButtonModule,
-  MatChipsModule, MatDividerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatPaginatorModule,
-  MatRadioModule, MatSortModule,
+  MatChipsModule,
+  MatDividerModule,
+  MatFormFieldModule,
+  MatIconModule,
+  MatInputModule,
+  MatMenuModule,
+  MatPaginatorModule,
+  MatRadioModule,
+  MatSortModule,
   MatTableModule
 } from '@angular/material';
 import {VoteListComponent} from './votes/vote-list/vote-list.component';
