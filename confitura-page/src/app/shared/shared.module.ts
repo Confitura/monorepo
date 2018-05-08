@@ -30,7 +30,7 @@ import {PresentationComponent} from './presentation/presentation.component';
     MatButtonModule,
     MatChipsModule,
     MatMenuModule,
-    MatCardModule,
+    MatCardModule
   ],
   declarations: [
     AdminDirective,

@@ -1,0 +1,84 @@
+<section class="about">
+  <cf-page-header title="workshops"></cf-page-header>
+  <section class="bg-white">
+    <div class="bg-white row-1140 text-center pt-5">
+      <cf-page title="workshops"></cf-page>
+    </div>
+    <div class="bg-white">
+
+      <div class="lead row-1140 pt-5 pb-5">
+        <p class="lead center">
+          This year we are also offering post-conference 4-hours workshops on Sunday, July 1.
+          All topics will give you a huge dose of knowledge about Java or/and Big Data. The workshops will be conducted in Polish.
+        </p>
+        <p class="lead center">
+          Workshop Day is hosted by our partner Sages. Sages cooperates with experts from different areas of IT who
+          share their knowledge in conferences, community workshops and commercial trainings. If you have any questions
+          regarding workshops, please contact Sages at biuro@sages.com.pl.
+        </p>
+        <p class="lead center">
+          The number of seats is limited. Tickets will be available soon. Registration is required.
+        </p>
+      </div>
+
+
+      <div class="lead short-info">
+        <div>
+          <h3>TRACK A</h3>
+
+          <h4>Blockchain coding in Java</h4>
+
+          <p>Today blockchain technology and cryptocurrencies are very hot topic. It is good to know how this database works
+            and in which systems it may or may not be useful. During the workshop we will launch a private blockchain
+            instance using the Ethereum implementation and prepare a client application in Java that will use it for data storage.
+            We will also dispel the myths around blockchain.
+          </p>
+
+          <h4>Introduction to streaming data and stream processing with Apache Kafka</h4>
+
+          <p>
+            Apache Kafka has become the leading data streaming technology and is used in production by over 2000 companies
+            like Netflix, Airbnb, Uber and LinkedIn. Kafka is used for building real-time data pipelines and streaming apps.
+            It is horizontally scalable, fault-tolerant and very fast. This workshop will explore the basic concepts of messaging
+            systems based on publish - subscribe messaging in Kafka.
+          </p>
+        </div>
+        <div>
+          <h3>TRACK B</h3>
+
+          <h4>Apache Spark lesson 2</h4>
+
+          <p>
+            So you've went through all the word counts and other hello-world type of codes, but you have some real data
+            to analyse and you found answers to your issues missing we can help! This tutorial goes beyond the basic examples
+            and shows how to deal with common issues of Data Scientist and Engineers using Spark for real (big) data sets. We
+            focus on the Spark SQL, i.e. DataSets and DataFrames, show why it's good for both Java/Scala nad Python users, how
+            to avoid typical errors and how to deal with them.
+          </p>
+
+          <h4>Introduction to Natural Language Processing</h4>
+
+          <p>
+            Natural Language Processing (NLP) is gaining a lot of popularity in recent years, thanks to advancements in state-of-the-art methods and algorithms, processing power available and rising expectations of end users of technology products. During this workshop we will make the first steps towards processing natural language, discuss the main stages necessary to perform typical tasks and make an overview of available methods and tools for processing English and Polish. Finally, we will talk about current research directions and perspectives for months and years to come.
+          </p>
+        </div>
+      </div>
+
+      <div class="lead row-1140 pt-5 pb-5">
+        <h3 class="lead center">
+          Venue
+        </h3>
+        <p class="lead center">
+          Post-conference workshops will take place in Golden Floor Plaza, 123A Jerozolimskie Avenue, Warsaw, Poland.
+        </p>
+      </div>
+
+      <agm-map class="workshops__map" [latitude]="lat" [longitude]="lng" [zoom]="zoom">
+        <agm-marker [latitude]="lat" [longitude]="lng" title="Confitura 2018"></agm-marker>
+      </agm-map>
+    </div>
+  </section>
+
+
+</section>
+<cf-person-modal></cf-person-modal>

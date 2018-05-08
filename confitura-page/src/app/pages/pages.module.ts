@@ -24,6 +24,7 @@ import {
   MatButtonModule, MatChipsModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatRadioModule, MatSelectModule,
   MatTooltipModule
 } from '@angular/material';
+import {WorkshopsComponent} from './workshops/workshops.component';
 
 @NgModule({
   imports: [
@@ -58,6 +59,7 @@ import {
     AgendaEntryModalComponent,
     AgendaEntryComponent,
     FaqComponent,
+    WorkshopsComponent
   ],
   providers: [NewsService, OrganizerService],
   exports: [HomeComponent, AboutComponent]

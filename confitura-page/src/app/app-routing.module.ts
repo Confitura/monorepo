@@ -9,6 +9,7 @@ import {SpeakerListComponent} from './pages/speakers/speaker-list.component';
 import {HomeComponent} from './pages/home/home.component';
 import {LoginComponent} from './pages/login/login.component';
 import {FaqComponent} from './pages/faq/faq.component';
+import {WorkshopsComponent} from './pages/workshops/workshops.component';
 
 
 const appRoutes: Routes = [
@@ -31,6 +32,7 @@ const appRoutes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'login/:origin', component: LoginComponent},
   {path: 'faq', component: FaqComponent},
+  {path: 'workshops', component: WorkshopsComponent},
 ];
 
 @NgModule({
