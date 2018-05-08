@@ -9,7 +9,7 @@
   tasks:
     - name: archive distrubution
       archive:
-        path: ../dist
+        path: ../dist/confitura-page
         dest: ../dist.gz
       become: no
       delegate_to: localhost
