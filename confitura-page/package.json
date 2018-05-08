@@ -11,7 +11,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "deploy": "ng build --prod  && cd deployment && ansible-playbook confitura-page.yml",
+    "deploy": "ng build --prod  && yarn deploy:only",
+    "deploy:only": "cd deployment && ansible-playbook confitura-page.yml",
     "release:patch": "yarn build:full && npm version patch && git push --follow-tags",
     "release:minor": "yarn build:full && npm version minor && git push --follow-tags",
     "release:major": "yarn build:full && npm version major && git push --follow-tags"
