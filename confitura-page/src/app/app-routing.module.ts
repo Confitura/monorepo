@@ -10,6 +10,7 @@ import {HomeComponent} from './pages/home/home.component';
 import {LoginComponent} from './pages/login/login.component';
 import {FaqComponent} from './pages/faq/faq.component';
 import {WorkshopsComponent} from './pages/workshops/workshops.component';
+import {IsActiveGuard} from './v4p/IsActiveGuard';
 
 
 const appRoutes: Routes = [
@@ -21,6 +22,7 @@ const appRoutes: Routes = [
   {
     path: 'v4p',
     loadChildren: 'app/v4p/v4p.module#V4pModule',
+    canActivate: [IsActiveGuard],
   },
   {path: '', component: HomeComponent},
   {path: 'about', component: AboutComponent},

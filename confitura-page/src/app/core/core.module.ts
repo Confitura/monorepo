@@ -23,6 +23,7 @@ import {ProgressBarComponent} from './progress-bar/progress-bar.component';
 import {ProgressBarService} from './progress-bar/progress-bar.service';
 import {ProgressBarInterceptor} from './progress-bar/progress-bar.interceptor';
 import {VoteStatsServiceService} from '../admin/votes/vote-list/vote-stats.service';
+import {IsActiveGuard} from '../v4p/IsActiveGuard';
 
 @NgModule({
   imports: [
@@ -51,6 +52,7 @@ import {VoteStatsServiceService} from '../admin/votes/vote-list/vote-stats.servi
     VoteStatsServiceService,
     AgendaService,
     ProgressBarService,
+    IsActiveGuard,
     {
       provide: HAMMER_GESTURE_CONFIG,
       useClass: HammerConfig,
