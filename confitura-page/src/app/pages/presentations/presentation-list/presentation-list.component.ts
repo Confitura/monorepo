@@ -55,7 +55,6 @@ export class PresentationListComponent implements OnInit {
   }
 
   doFilter() {
-    console.log('filter', this.filter);
     this.list = this.original
       .filter(this.doFilterByStatus)
       .filter(this.doFilterBy('language'))

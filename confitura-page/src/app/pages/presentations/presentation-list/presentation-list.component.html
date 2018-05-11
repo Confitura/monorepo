@@ -2,23 +2,23 @@
   <cf-page-header>presentations</cf-page-header>
   <div class="row-1140 presentation-list pt-5 pb-5" *ngIf="list">
 
-    <div class="filter" *cfAdmin>
-      <mat-form-field class="filter__group">
-        <mat-select placeholder="status" (change)="doFilter()" [(ngModel)]="filter.status">
+    <div class="filter">
+      <mat-form-field class="filter__group" *cfAdmin>
+        <mat-select placeholder="status" (selectionChange)="doFilter()" [(ngModel)]="filter.status">
           <mat-option value="*">Any</mat-option>
           <mat-option value="na">Not Accepted</mat-option>
           <mat-option value="a">Accepted</mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field class="filter__group">
-        <mat-select placeholder="language" (change)="doFilter()" [(ngModel)]="filter.language">
+        <mat-select placeholder="language" (selectionChange)="doFilter()" [(ngModel)]="filter.language">
           <mat-option value="*">Any</mat-option>
           <mat-option value="polish">Polish</mat-option>
           <mat-option value="english">English</mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field class="filter__group">
-        <mat-select placeholder="level" (change)="doFilter()" [(ngModel)]="filter.level">
+        <mat-select placeholder="level" (selectionChange)="doFilter()" [(ngModel)]="filter.level">
           <mat-option value="*">Any</mat-option>
           <mat-option value="basic">Basic</mat-option>
           <mat-option value="advanced">Advanced</mat-option>
