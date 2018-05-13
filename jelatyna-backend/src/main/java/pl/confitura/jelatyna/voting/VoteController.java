@@ -2,23 +2,24 @@ package pl.confitura.jelatyna.voting;
 
 import static java.util.stream.Collectors.toList;
 
+import com.google.common.collect.Lists;
+
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.*;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
-import org.springframework.hateoas.Resource;
-import org.springframework.hateoas.Resources;
+import org.springframework.hateoas.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-
-import com.google.common.collect.Lists;
 import pl.confitura.jelatyna.infrastructure.WebUtils;
-import pl.confitura.jelatyna.presentation.Presentation;
-import pl.confitura.jelatyna.presentation.PresentationRepository;
+import pl.confitura.jelatyna.presentation.*;
 
 @RepositoryRestController
 public class VoteController {
@@ -26,12 +27,20 @@ public class VoteController {
     private PresentationRepository presentationRepository;
     private VoteRepository voteRepository;
     private WebUtils webUtils;
+    private LocalValidatorFactoryBean beanValidator;
 
     @Autowired
-    public VoteController(PresentationRepository presentationRepository, VoteRepository voteRepository, WebUtils webUtils) {
+    public VoteController(PresentationRepository presentationRepository, VoteRepository voteRepository,
+                          WebUtils webUtils, LocalValidatorFactoryBean beanValidator) {
         this.presentationRepository = presentationRepository;
         this.voteRepository = voteRepository;
         this.webUtils = webUtils;
+        this.beanValidator = beanValidator;
+    }
+
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        binder.addValidators(beanValidator);
     }
 
     @RequestMapping(value = "/votes/start/{token}", method = RequestMethod.POST)
@@ -59,7 +68,7 @@ public class VoteController {
 
     @PostMapping("/votes")
     @Transactional
-    public ResponseEntity<Resource<Vote>> save(@RequestBody Vote vote) {
+    public ResponseEntity<Resource<Vote>> save(@RequestBody @Valid Vote vote) {
         Vote loaded = voteRepository.findById(vote.getId());
         loaded.setRate(vote.getRate());
         loaded.setVoteDate(LocalDateTime.now());

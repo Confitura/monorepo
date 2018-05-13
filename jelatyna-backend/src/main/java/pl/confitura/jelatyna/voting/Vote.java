@@ -1,24 +1,21 @@
 package pl.confitura.jelatyna.voting;
 
-import java.time.LocalDateTime;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-
-import org.hibernate.annotations.GenericGenerator;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.time.LocalDateTime;
+import javax.persistence.*;
+import javax.validation.constraints.*;
+
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.hibernate.annotations.GenericGenerator;
 import pl.confitura.jelatyna.presentation.Presentation;
 
 @Entity
 @Data
 @Accessors(chain = true)
 public class Vote {
+
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
@@ -29,6 +26,8 @@ public class Vote {
     private Integer order;
     @OneToOne
     private Presentation presentation;
+    @Max(1)
+    @Min(-1)
     private Integer rate;
     @JsonIgnore
     private LocalDateTime voteDate;
