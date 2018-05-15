@@ -6,7 +6,7 @@
  *  # user buys ticket
  *  # system generates token for user
  *  # system sends token
- *  # user enters token in apps (after logging in)
+ *  # user enters token in apps (after logging in) - must check if token valid
  *  # user with token is marked as 'legal' participant
  *
  *  to keep in mind:
