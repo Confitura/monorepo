@@ -19,4 +19,6 @@ public class Rate {
 
     @Enumerated(EnumType.STRING)
     private RateValue value;
+
+    private String comment;
 }

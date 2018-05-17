@@ -27,7 +27,7 @@ public class TwitterUser extends OAuthUserBase {
     @Override
     protected User toUser() {
         return new User()
-                .setId(encodeId())
+                .setSocialId(encodeId())
                 .setOrigin(getSystem())
                 .setName(name)
                 .setTwitter(userName);

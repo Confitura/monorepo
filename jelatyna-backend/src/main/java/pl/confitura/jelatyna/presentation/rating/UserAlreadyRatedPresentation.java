@@ -11,7 +11,7 @@ public class UserAlreadyRatedPresentation extends RuntimeException {
     private final String presentationId;
 
     public UserAlreadyRatedPresentation(String userId, String presentationId) {
-        super("User " + userId + "already rated presentation " + presentationId);
+        super("User " + userId + " already rated presentation " + presentationId);
         this.userId = userId;
         this.presentationId = presentationId;
     }
