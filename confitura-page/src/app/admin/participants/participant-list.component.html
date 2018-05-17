@@ -8,6 +8,31 @@
       <button class="btn btn-warning" (click)="sendTickets()">Send Tickets</button>
       <button class="btn btn-warning" (click)="sendSurveys()">Send Surveys</button>
     </div>
+
+    <div *ngIf="uploader.isUploading">
+      <mat-spinner></mat-spinner>
+    </div>
+
+    <div *ngIf="uploadResponse">
+      <table class="table table-bordered table-striped table-hover">
+        <tr>
+          <td colspan="3">
+            UPLOADED
+          </td>
+        </tr>
+        <tr>
+          <th>buyer</th>
+          <th>created and sent email</th>
+          <th>requested</th>
+        </tr>
+        <tr *ngFor="let item of uploadResponse">
+          <td>{{item.buyerEmail}}</td>
+          <td>{{item.successCount}}</td>
+          <td>{{item.requestedCount}}</td>
+        </tr>
+      </table>
+    </div>
+
     <table id="participants" class="table table-bordered table-striped table-hover" *ngIf="list">
       <thead>
       <tr>

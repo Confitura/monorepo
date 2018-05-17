@@ -14,16 +14,19 @@ export class ParticipantListComponent implements OnInit {
 
   list: Participant[];
   uploader: FileUploader;
+  uploadResponse;
 
   constructor(private service: ParticipantService,
               private user: CurrentUser,
               private confirmation: ConfirmationService) {
     this.uploader = new FileUploader({
       authToken: this.user.getToken(),
-      url: `${environment.API_URL}/participants/upload`,
+      url: `${environment.API_URL}participants/upload`,
       autoUpload: true,
     });
 
+    this.uploader.onBeforeUploadItem = () => this.uploadResponse = null;
+    this.uploader.onSuccessItem = (item, response) => this.showResponse(response);
     this.uploader.onCompleteAll = () => this.ngOnInit();
   }
 
@@ -53,5 +56,9 @@ export class ParticipantListComponent implements OnInit {
   sendSurveys() {
     this.confirmation.show('you want to send surveys to all attendees?')
       .then(() => this.service.sendSurveys().subscribe());
+  }
+
+  private showResponse(responseString: string) {
+    this.uploadResponse = JSON.parse(responseString);
   }
 }

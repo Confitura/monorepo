@@ -22,7 +22,8 @@ import {
   MatPaginatorModule,
   MatRadioModule,
   MatSortModule,
-  MatTableModule
+  MatTableModule,
+  MatProgressSpinnerModule
 } from '@angular/material';
 import {VoteListComponent} from './votes/vote-list/vote-list.component';
 
@@ -42,7 +43,8 @@ import {VoteListComponent} from './votes/vote-list/vote-list.component';
     MatIconModule,
     MatDividerModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    MatProgressSpinnerModule
   ],
   declarations: [
     PartnerEditComponent,
