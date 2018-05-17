@@ -13,4 +13,11 @@ public class Token {
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private String token;
+
+    public Token() {
+    }
+
+    public Token(String token) {
+        this.token = token;
+    }
 }
