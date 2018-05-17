@@ -1,11 +1,7 @@
 package pl.confitura.jelatyna.registration;
 
-import static java.time.LocalDateTime.now;
-
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.time.LocalDateTime;
-import java.util.stream.IntStream;
 
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.HttpStatus;
@@ -18,12 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.google.common.collect.Streams;
 import com.microtripit.mandrillapp.lutung.model.MandrillApiError;
-import com.opencsv.CSVReader;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import pl.confitura.jelatyna.infrastructure.security.JelatynaPrincipal;
@@ -38,16 +31,6 @@ public class RegistrationController {
     private MailSender sender;
     private ParticipantRepository repository;
     private TicketGenerator generator;
-
-    @PostMapping("/participants/upload")
-    @PreAuthorize("@security.isAdmin()")
-    @Transactional
-    public ResponseEntity<Object> upload(@RequestParam MultipartFile file, @AuthenticationPrincipal JelatynaPrincipal principal)
-            throws IOException {
-        CSVReader reader = new CSVReader(new InputStreamReader(file.getInputStream()), ';');
-        reader.forEach(row -> register(row[0], Integer.parseInt(row[1]), principal));
-        return ResponseEntity.accepted().build();
-    }
 
     @PostMapping("/participants/reminder")
     @PreAuthorize("@security.isAdmin()")
@@ -113,21 +96,6 @@ public class RegistrationController {
         return ResponseEntity.status(status).body(participant);
     }
 
-    private void register(String mail, int count, JelatynaPrincipal principal) {
-        String creatorName = principal.getName();
-        IntStream.range(0, count).forEach((it) -> {
-            try {
-                Participant participant =
-                        repository.save(new Participant().setCreationDate(now()).setOriginalBuyer(mail).setCreatedBy(creatorName));
-                sender.send("pre-registration", new MessageInfo().setEmail(mail).setToken(participant.getId()));
-                participant.setEmailSent(true);
-            } catch (Exception ex) {
-                log.error("Error on sending email", ex);
-            }
-
-        });
-
-    }
 
     @Async
     void doSendRemindTo(Iterable<Participant> participants) {
