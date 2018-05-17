@@ -11,6 +11,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
+import lombok.experimental.Accessors;
 import org.hibernate.annotations.GenericGenerator;
 
 import lombok.Data;
@@ -22,6 +23,7 @@ import pl.confitura.jelatyna.presentation.Presentation;
         uniqueConstraints = @UniqueConstraint(columnNames = { "time_slot_id", "room_id" })
 )
 @Data
+@Accessors(chain = true)
 public class AgendaEntry {
 
 

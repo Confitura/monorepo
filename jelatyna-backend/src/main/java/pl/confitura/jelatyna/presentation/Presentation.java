@@ -3,27 +3,25 @@ package pl.confitura.jelatyna.presentation;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import lombok.experimental.Accessors;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import pl.confitura.jelatyna.presentation.rating.Rate;
 import pl.confitura.jelatyna.user.User;
 
 @Entity
 @Data
-@ToString(exclude = "speaker")
-@EqualsAndHashCode(exclude = "speaker")
+@ToString(exclude = {"speaker", "ratings"})
+@EqualsAndHashCode(exclude = {"speaker", "ratings"})
+@Accessors(chain = true)
 public class Presentation {
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -50,6 +48,10 @@ public class Presentation {
     @ManyToMany
     @NotNull
     private Set<User> cospeakers = new HashSet<>();
+
+    @OneToMany(fetch = FetchType.LAZY)
+    private Set<Rate> ratings = new HashSet<>();
+
     private String status;
 
     boolean isOwnedBy(String email) {

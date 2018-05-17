@@ -1,22 +1,21 @@
 package pl.confitura.jelatyna.presentation;
 
-import java.util.Set;
-import java.util.stream.Collectors;
-
+import lombok.AllArgsConstructor;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-
-import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+import pl.confitura.jelatyna.presentation.rating.Rate;
+import pl.confitura.jelatyna.presentation.rating.RatingService;
 import pl.confitura.jelatyna.user.User;
 import pl.confitura.jelatyna.user.UserRepository;
+
+import javax.validation.Valid;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RepositoryRestController
 @AllArgsConstructor
@@ -24,6 +23,7 @@ public class PresentationController {
 
     private PresentationRepository repository;
     private UserRepository userRepository;
+    private RatingService ratingService;
 
     @PreAuthorize("@security.isAdmin()")
     @PostMapping("/presentations/{presentationId}/accept")
@@ -80,6 +80,24 @@ public class PresentationController {
 
     private Set<User> removeCospeakerByEmail(@PathVariable String email, Set<User> cospeakers) {
         return cospeakers.stream().filter(it -> !it.getEmail().equalsIgnoreCase(email)).collect(Collectors.toSet());
+    }
+
+    @PostMapping("/presentations/{presentationId}/ratings")
+    @Transactional
+    public ResponseEntity<?>  addRating(@PathVariable String presentationId, @RequestBody @Valid Rate rate){
+        Rate createdRate = ratingService.rate(presentationId, rate);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(createdRate);
+    }
+
+    @PutMapping("/presentations/{presentationId}/ratings/{ratingId}")
+    @Transactional
+    public ResponseEntity<?>  updateRating(@PathVariable String ratingId, @RequestBody @Valid Rate rate){
+        ratingService.updateRating(rate.setId(ratingId));
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .build();
     }
 
 }

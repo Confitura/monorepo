@@ -20,3 +20,5 @@ mail:
   apiKey: ket
   fromEmail: from
   fromName: name
+
+spring.jpa.properties.hibernate.show_sql: true
