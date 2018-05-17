@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.registration.token;
+package pl.confitura.jelatyna.registration.ticket;
 
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
@@ -8,16 +8,16 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "VALID_TOKENS")
-public class Token {
+public class Ticket {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    private String token;
+    private String id;
 
-    public Token() {
+    public Ticket() {
     }
 
-    public Token(String token) {
-        this.token = token;
+    public Ticket(String id) {
+        this.id = id;
     }
 }
