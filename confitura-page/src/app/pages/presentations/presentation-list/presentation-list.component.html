@@ -38,9 +38,10 @@
       *ngFor="let presentation of list; odd as isOdd;"
       [presentation]="presentation"
       [voteStats]="statistics[presentation.id]"
+      [descriptionType]="getDescriptionType()"
       [class.presentation-list__presentation--odd]="isOdd"
-    >
 
+    >
     </cf-presentation>
   </div>
   <cf-person-modal></cf-person-modal>

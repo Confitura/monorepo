@@ -25,6 +25,10 @@ module.exports = (app) => {
     res.send({_embedded: {presentations}});
   });
 
+  app.get('/presentations/search/accepted', (req, res) => {
+    res.send({_embedded: {presentations: presentations.filter(it => it.status === 'accepted')}});
+  });
+
   app.get('/tags', (req, res) => {
     res.send({
       _embedded: {

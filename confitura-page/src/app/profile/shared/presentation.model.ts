@@ -12,3 +12,9 @@ export class Presentation {
   description: string;
   status: string;
 }
+
+export enum DescriptionType {
+  Both = 'both',
+  Short = 'short',
+  Full = 'full'
+}

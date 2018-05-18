@@ -11,7 +11,7 @@ export class VoteStatsServiceService {
                 private currentUser: CurrentUser) {
     }
 
-    getAll(): Observable<VoteStats[]> {
+  getAll(): Observable<VoteStats[]> {
         if (this.currentUser.isAdmin()) {
             return this.http.get<VoteStats[]>('/votes/statistics');
         } else {

@@ -34,7 +34,6 @@ export class PresentationService {
     const params = new HttpParams().set('projection', 'inlineSpeaker');
     return this.http.get<EmbeddedPresentations>(url, {params})
       .pipe(map(response => response._embedded.presentations));
-
   }
 
   getAllFor(userId: string): Observable<Presentation[]> {
@@ -54,6 +53,7 @@ export class PresentationService {
   addCospeaker(id: string, email: string): Observable<User> {
     return this.http.post<User>(`/presentations/${id}/cospeakers/${email}`, {});
   }
+
   removeCospeaker(id: string, email: string): Observable<Response> {
     return this.http.delete<Response>(`/presentations/${id}/cospeakers/${email}`, {});
   }

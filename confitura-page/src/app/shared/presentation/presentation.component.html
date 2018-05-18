@@ -15,7 +15,7 @@
       </mat-menu>
     </div>
   </div>
-  <div class="presentation__votes" *cfAdmin="">
+  <div class="presentation__votes" *cfAdmin>
     <mat-chip-list *ngIf="voteStats">
       <mat-chip>all: {{voteStats.totalVotes}}</mat-chip>
       <mat-chip>+1: {{voteStats.positiveVotes}} ({{voteStats.rateOfPositive}}%)</mat-chip>
@@ -50,12 +50,14 @@
     </ng-container>
   </div>
 
-  <div *ngIf="shouldShowDescription('short')">
-    <h4 class="pt-3">short description:</h4>
-    <div class="presentation__description">{{presentation.shortDescription}}</div>
-  </div>
-  <div *ngIf="shouldShowDescription('full')">
-    <h4 class="pt-3">description:</h4>
-    <div class="presentation__description">{{presentation.description}}</div>
+  <div class="pt-3">
+    <div *ngIf="shouldShowDescription(descriptionTypes.Short)">
+      <h4 class="pt-3" *ngIf="shouldShowDescription(descriptionTypes.Both)">short description:</h4>
+      <div class="presentation__description">{{presentation.shortDescription}}</div>
+    </div>
+    <div *ngIf="shouldShowDescription(descriptionTypes.Full)">
+      <h4 class="pt-3" *ngIf="shouldShowDescription(descriptionTypes.Both)">description:</h4>
+      <div class="presentation__description">{{presentation.description}}</div>
+    </div>
   </div>
 </article>

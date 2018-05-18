@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {PresentationService} from '../../../profile/shared/presentation.service';
-import {Presentation} from '../../../profile/shared/presentation.model';
+import {DescriptionType, Presentation} from '../../../profile/shared/presentation.model';
 import {ActivatedRoute} from '@angular/router';
 import {PersonModalService} from '../../../shared/person-modal/person-modal.service';
 import {UserService} from '../../../core/user/user.service';
@@ -9,6 +9,7 @@ import {VoteStatsServiceService} from '../../../admin/votes/vote-list/vote-stats
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/from';
 import 'rxjs/add/operator/mergeMap';
+import {CurrentUser} from '../../../core/security/current-user.service';
 
 @Component({
   templateUrl: './presentation-list.component.html',
@@ -31,7 +32,8 @@ export class PresentationListComponent implements OnInit {
               private personModalService: PersonModalService,
               private userService: UserService,
               private route: ActivatedRoute,
-              private voteStatsServiceService: VoteStatsServiceService) {
+              private voteStatsServiceService: VoteStatsServiceService,
+              private currentUser: CurrentUser) {
     this.doFilterByStatus = this.doFilterByStatus.bind(this);
     this.doFilterByText = this.doFilterByText.bind(this);
     this.doFilterBy = this.doFilterBy.bind(this);
@@ -90,9 +92,14 @@ export class PresentationListComponent implements OnInit {
     };
   }
 
+  getDescriptionType() {
+    return this.currentUser.isAdmin() ? DescriptionType.Both : DescriptionType.Full;
+  }
+
   private allSpeakersFor(presentation: Presentation): User[] {
     return [presentation.speaker, ...presentation.cospeakers];
   }
+
   private scrollToSelectedPresentation() {
     const presentationId = this.route.snapshot.fragment;
     if (presentationId) {

@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Presentation} from '../../profile/shared/presentation.model';
+import {DescriptionType, Presentation} from '../../profile/shared/presentation.model';
 import {PresentationService} from '../../profile/shared/presentation.service';
 import {UserService} from '../../core/user/user.service';
 import {PersonModalService} from '../person-modal/person-modal.service';
@@ -17,7 +17,10 @@ export class PresentationComponent implements OnInit {
   @Input()
   voteStats: VoteStats;
   @Input()
-  descriptionType: 'both' | 'short' | 'full' = 'both';
+  descriptionType: DescriptionType = DescriptionType.Both;
+
+  descriptionTypes = DescriptionType;
+
 
   constructor(private service: PresentationService,
               private userService: UserService,
@@ -50,8 +53,8 @@ export class PresentationComponent implements OnInit {
     return [presentation.speaker, ...presentation.cospeakers];
   }
 
-  shouldShowDescription(type: string) {
-    return this.descriptionType === 'both' || this.descriptionType === type;
+  shouldShowDescription(type: DescriptionType) {
+    return this.descriptionType === DescriptionType.Both || this.descriptionType === type;
   }
 
 }
