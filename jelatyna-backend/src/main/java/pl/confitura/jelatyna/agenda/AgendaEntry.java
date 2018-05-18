@@ -46,4 +46,8 @@ public class AgendaEntry {
 
     @OneToOne
     private Presentation presentation;
+
+    public int getTimeSlotOrder(){
+        return timeSlot.getDisplayOrder();
+    }
 }

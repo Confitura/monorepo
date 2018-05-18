@@ -1,10 +1,7 @@
 package pl.confitura.jelatyna.presentation.rating;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.MediaTypes;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,18 +13,16 @@ import pl.confitura.jelatyna.agenda.UserUtils;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.user.User;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
-import static org.springframework.hateoas.MediaTypes.*;
+import static org.springframework.hateoas.MediaTypes.HAL_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static pl.confitura.jelatyna.infrastructure.security.SecurityHelper.user;
 
-@TestInstance(PER_CLASS)
 class RatingApiTest extends BaseIntegrationTest {
 
     @Autowired
@@ -37,20 +32,17 @@ class RatingApiTest extends BaseIntegrationTest {
     @Autowired
     PresentationUtils presentationUtils;
 
-    @Autowired
-    EntityManager entityManager;
-
     private User user;
     private List<AgendaEntry> agenda;
     private Presentation presentation;
     private Rate rate;
 
-    @BeforeAll
+    @BeforeEach
     public void setUp() {
         user = userUtils.createUser("user");
         agenda = agendaUtils.createAgenda(
                 new String[]{"", "room1", "room2"},
-                new String[]{"10-11", "presentation1", "presentation2"},
+                new String[]{"09-12", "presentation1", "presentation2"},
                 new String[]{"12-18", "presentation3", "presentation4"}
         );
         presentation = agenda.get(0).getPresentation();
