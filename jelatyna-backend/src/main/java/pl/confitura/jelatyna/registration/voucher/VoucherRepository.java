@@ -20,9 +20,10 @@ interface VoucherRepository extends Repository<Voucher, String> {
     List<Voucher> findAll();
 
     @RestResource(exported = false)
-    @PreAuthorize("@security.isAdmin()")
     boolean existsById(String token);
 
     @Query("select t from Voucher t where t not in (select p.voucher from pl.confitura.jelatyna.registration.Participant p)")
     List<Voucher> findUnusedVouchers();
+
+    Voucher findById(String id);
 }
