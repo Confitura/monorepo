@@ -12,21 +12,38 @@ import org.hibernate.annotations.GenericGenerator;
 
 import lombok.Data;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
 @Entity
 @Data
 @Table(name = "agenda_time_slot")
 @Accessors(chain = true)
 public class TimeSlot {
 
+    private static final DateTimeFormatter HOUR_FORMAT = DateTimeFormatter.ofPattern("HH:mm");
+
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(columnDefinition = "varchar(100)")
     private String id;
-    String label;
+    String label; //fallback for already created slots - to be removed after fixing data in db
+
+    LocalTime start;
+    LocalTime end;
 
     private boolean forAllRooms = false;
 
     @NotNull
     private int displayOrder;
+
+    public String getLabel() {
+        if (start == null || end == null) {
+            return label;
+        } else {
+            return start.format(HOUR_FORMAT) + " - " + end.format(HOUR_FORMAT);
+        }
+
+    }
 }
