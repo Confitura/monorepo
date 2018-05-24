@@ -4,6 +4,7 @@ import {TimeSlot} from '../../pages/agenda/shared/time-slot.model';
 
 @Component({
   templateUrl: './time-slot.component.html',
+  styleUrls: ['./time-slot.component.css'],
   selector: 'cf-time-slot'
 })
 export class TimeSlotComponent implements OnInit {

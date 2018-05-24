@@ -1,7 +1,14 @@
 <form (submit)="updateLabel()">
-  <label>
-    <input [(ngModel)]="timeSlot.label" name="label">
-  </label>
+
+  <mat-form-field class="time">
+    <input matInput [(ngModel)]="timeSlot.start" name="start" placeholder="start">
+  </mat-form-field>
+  <mat-form-field class="time">
+    <input matInput [(ngModel)]="timeSlot.end" name="end" placeholder="end">
+  </mat-form-field>
+  <p class="comment">
+    format HH:mm lub HH:mm:ss
+  </p>
   <button type="submit" class="btn btn-sm btn-success">save</button>
   <button type="button" class="btn btn-sm btn-danger" (click)="remove()">delete</button>
 </form>
