@@ -16,6 +16,7 @@ app.use((req, res, next) => {
 });
 require('./presentations')(app);
 require('./partners')(app);
+require('./speakers')(app);
 
 let person = function (type) {
   id += 1;

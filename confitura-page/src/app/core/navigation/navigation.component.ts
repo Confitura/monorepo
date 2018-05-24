@@ -15,6 +15,7 @@ export class NavigationComponent implements OnInit {
     {label: 'about us', url: '/about'},
     {label: 'partners', url: '/partners'},
     {label: 'presentations', url: '/presentations', show: () => this.currentUser.isAdmin()},
+    {label: 'speakers', url: '/speakers'},
     {label: 'profile', action: () => this.goToProfile(), show: () => this.loggedIn},
     {
       label: 'admin', show: () => this.currentUser.isPrivileged(),
