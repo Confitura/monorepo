@@ -24,11 +24,11 @@
 
 .presentation-list__presentation {
   padding: 20px;
+  display: block;
   @media all and (min-width: $size_small) {
     padding: 60px;
   }
   &--odd {
-    display: block;
     background: $beige;
   }
 }
