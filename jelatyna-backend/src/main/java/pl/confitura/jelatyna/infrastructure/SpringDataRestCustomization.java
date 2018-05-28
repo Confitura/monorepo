@@ -10,7 +10,7 @@ import pl.confitura.jelatyna.page.Page;
 import pl.confitura.jelatyna.partner.Partner;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.Tag;
-import pl.confitura.jelatyna.registration.Participant;
+import pl.confitura.jelatyna.registration.ParticipapationData;
 import pl.confitura.jelatyna.user.User;
 import pl.confitura.jelatyna.voting.Vote;
 
@@ -25,7 +25,7 @@ public class SpringDataRestCustomization extends RepositoryRestConfigurerAdapter
                         Tag.class,
                         Presentation.class,
                         Vote.class,
-                        Participant.class,
+                        ParticipapationData.class,
                         Page.class);
     }
 

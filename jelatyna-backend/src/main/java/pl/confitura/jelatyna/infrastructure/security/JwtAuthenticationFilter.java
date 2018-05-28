@@ -4,6 +4,7 @@ import static pl.confitura.jelatyna.infrastructure.Profiles.PRODUCTION;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.List;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -15,6 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.stereotype.Component;
@@ -60,7 +63,15 @@ public class JwtAuthenticationFilter extends AuthenticationFilter {
             JelatynaPrincipal principal = tokenService.toUser(authorization.replaceFirst("Bearer ", ""));
             SecurityContextHolder.getContext()
                     .setAuthentication(new PreAuthenticatedAuthenticationToken(principal, "",
-                            Collections.emptyList()));
+                            getAuthorities(principal)));
+        }
+    }
+
+    private List<GrantedAuthority> getAuthorities(JelatynaPrincipal principal) {
+        if (principal.isAdmin()) {
+            return Collections.singletonList(new SimpleGrantedAuthority(SecurityConfiguration.ADMIN));
+        } else {
+            return Collections.emptyList();
         }
     }
 }

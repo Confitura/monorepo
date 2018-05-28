@@ -17,7 +17,7 @@ import pl.confitura.jelatyna.registration.voucher.Voucher;
 @Table(uniqueConstraints = {
         @UniqueConstraint(name = "unique_voucher", columnNames = {"voucher_id"})
 })
-public class Participant {
+public class ParticipapationData {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
@@ -27,8 +27,6 @@ public class Participant {
     @OneToOne
     private Voucher voucher;
 
-    private String name;
-    private String email;
     private String city;
     private String gender;
     private String experience;
@@ -43,7 +41,7 @@ public class Participant {
     private LocalDateTime ticketSendDate;
     private LocalDateTime surveySendDate;
 
-    public boolean alreadyArrived() {
+    boolean alreadyArrived() {
         return this.arrivalDate != null;
     }
 
@@ -51,7 +49,7 @@ public class Participant {
         return this.ticketSendDate == null;
     }
 
-    public boolean surveyNotSentYet() {
+    boolean surveyNotSentYet() {
         return surveySendDate == null;
     }
 }

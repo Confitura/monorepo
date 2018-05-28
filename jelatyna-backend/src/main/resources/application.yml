@@ -17,7 +17,8 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-management:
-  context-path: /api/actuator
-  security:
-    roles: ADMIN
+
+management.endpoints.web.base-path: /api/actuator
+management.endpoints.web.exposure.include: "*"
+
+#management.endpoint.we

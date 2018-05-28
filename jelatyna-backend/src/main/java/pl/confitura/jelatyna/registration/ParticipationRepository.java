@@ -7,37 +7,35 @@ import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.security.access.prepost.PreAuthorize;
 import pl.confitura.jelatyna.registration.voucher.Voucher;
 
-import java.util.List;
-
 @RepositoryRestResource(path = "participants")
-public interface ParticipantRepository extends Repository<Participant, String> {
+public interface ParticipationRepository extends Repository<ParticipapationData, String> {
     @RestResource(exported = false)
-    Participant save(Participant participant);
+    ParticipapationData save(ParticipapationData participapationData);
 
     @PreAuthorize("@security.isAdmin()")
-    Iterable<Participant> findAll();
+    Iterable<ParticipapationData> findAll();
 
-    Participant findById(String id);
-
-    @RestResource(exported = false)
-    @Query("FROM Participant WHERE registrationDate IS NULL")
-    Iterable<Participant> findAllUnregistered();
+    ParticipapationData findById(String id);
 
     @RestResource(exported = false)
-    @Query("FROM Participant WHERE registrationDate IS NOT NULL")
-    Iterable<Participant> findAllRegistered();
+    @Query("FROM ParticipapationData WHERE registrationDate IS NULL")
+    Iterable<ParticipapationData> findAllUnregistered();
+
+    @RestResource(exported = false)
+    @Query("FROM ParticipapationData WHERE registrationDate IS NOT NULL")
+    Iterable<ParticipapationData> findAllRegistered();
 
     @RestResource(exported = false)
     Long count();
 
-    @Query("SELECT count(p.id) FROM Participant p WHERE registrationDate IS NOT NULL")
+    @Query("SELECT count(p.id) FROM ParticipapationData p WHERE registrationDate IS NOT NULL")
     @RestResource(exported = false)
     Long countRegistered();
 
-    @Query("SELECT count(p.id) FROM Participant p WHERE arrivalDate IS NOT NULL")
+    @Query("SELECT count(p.id) FROM ParticipapationData p WHERE arrivalDate IS NOT NULL")
     @RestResource(exported = false)
     Long countArrived();
 
     @RestResource(exported = false)
-    Participant findByVoucher(Voucher voucher);
+    ParticipapationData findByVoucher(Voucher voucher);
 }

@@ -52,10 +52,10 @@ public interface UserRepository extends Repository<User, String> {
     User findByEmail(String email);
 
     @Query("SELECT u from User u" +
-            " where u.participant.ticketSendDate is null" +
-            " and u.participant.voucher is not null")
+            " where u.participapationData.ticketSendDate is null" +
+            " and u.participapationData.voucher is not null")
     List<User> findUsersToSendTickets();
 
-    @Query("SELECT u from User u where u.participant.registrationDate is not null")
+    @Query("SELECT u from User u where u.participapationData.registrationDate is not null")
     List<User> findAllRegistered();
 }
