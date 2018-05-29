@@ -6,6 +6,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.security.access.prepost.PreAuthorize;
 
+import java.util.List;
+
 @RestResource(path = "users")
 
 public interface UserRepository extends Repository<User, String> {
@@ -48,4 +50,12 @@ public interface UserRepository extends Repository<User, String> {
 
     @RestResource(exported = false)
     User findByEmail(String email);
+
+    @Query("SELECT u from User u" +
+            " where u.participant.ticketSendDate is null" +
+            " and u.participant.voucher is not null")
+    List<User> findUsersToSendTickets();
+
+    @Query("SELECT u from User u where u.participant.registrationDate is not null")
+    List<User> findAllRegistered();
 }

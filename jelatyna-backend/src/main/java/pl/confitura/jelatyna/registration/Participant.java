@@ -2,25 +2,31 @@ package pl.confitura.jelatyna.registration;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.GenericGenerator;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
+import pl.confitura.jelatyna.registration.voucher.Voucher;
 
 @Entity
 @Data
 @Accessors(chain = true)
+@Table(uniqueConstraints = {
+        @UniqueConstraint(name = "unique_voucher", columnNames = {"voucher_id"})
+})
 public class Participant {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(columnDefinition = "varchar(100)")
     private String id;
+
+    @OneToOne
+    private Voucher voucher;
+
     private String name;
     private String email;
     private String city;
@@ -30,14 +36,12 @@ public class Participant {
     private String size;
     private String info;
     private String createdBy;
-    private String originalBuyer;
-    private LocalDateTime creationDate;
+
     private LocalDateTime registrationDate;
     private LocalDateTime arrivalDate;
     private String registeredBy;
     private LocalDateTime ticketSendDate;
     private LocalDateTime surveySendDate;
-    private boolean emailSent;
 
     public boolean alreadyArrived() {
         return this.arrivalDate != null;

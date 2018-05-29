@@ -1,5 +1,6 @@
 package pl.confitura.jelatyna.infrastructure.security;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
 import pl.confitura.jelatyna.user.User;
@@ -35,5 +36,13 @@ public class SecurityHelper {
                 .setId(user)
                 .setName(user);
         return authentication(createToken(jelatynaPrincipal));
+    }
+
+    public static void asAdmin() {
+        SecurityContextHolder.getContext().setAuthentication(ADMIN_TOKEN);
+    }
+
+    public static void cleanSecurity() {
+        SecurityContextHolder.clearContext();
     }
 }

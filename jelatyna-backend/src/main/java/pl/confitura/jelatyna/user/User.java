@@ -17,6 +17,7 @@ import lombok.experimental.Accessors;
 import pl.confitura.jelatyna.agenda.AgendaEntry;
 import pl.confitura.jelatyna.agenda.TimeSlot;
 import pl.confitura.jelatyna.presentation.Presentation;
+import pl.confitura.jelatyna.registration.Participant;
 
 @Entity
 @Data
@@ -50,6 +51,9 @@ public class User {
 
     @ManyToMany
     private Set<AgendaEntry> personalAgenda = new LinkedHashSet<>();
+
+    @OneToOne
+    private Participant participant;
 
     public void addToPersonalAgenda(AgendaEntry agendaEntry) {
         personalAgenda.add(agendaEntry);

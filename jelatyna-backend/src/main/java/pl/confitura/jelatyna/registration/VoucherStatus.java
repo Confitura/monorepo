@@ -1,6 +1,6 @@
 package pl.confitura.jelatyna.registration;
 
-public enum RegistrationStatus {
+public enum VoucherStatus {
     SUCCESS,
     ERROR
 }

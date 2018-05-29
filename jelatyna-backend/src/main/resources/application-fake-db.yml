@@ -4,3 +4,7 @@ spring:
     username: confitura
     password: confitura
 
+resources.path: /tmp
+resources.folder: /tmp
+jwt.key: /tmp
+mail.apiKey: 123
