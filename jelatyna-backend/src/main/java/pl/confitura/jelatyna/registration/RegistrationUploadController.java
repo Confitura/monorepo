@@ -7,12 +7,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import pl.confitura.jelatyna.infrastructure.security.JelatynaPrincipal;
 import pl.confitura.jelatyna.mail.MailSender;
 import pl.confitura.jelatyna.mail.MessageInfo;
 import pl.confitura.jelatyna.registration.voucher.Voucher;
@@ -40,29 +38,28 @@ public class RegistrationUploadController {
     @PostMapping("/participants/upload")
     @PreAuthorize("@security.isAdmin()")
     @Transactional
-    public ResponseEntity<List<GenerateVouchersResponse>> upload(@RequestParam MultipartFile file, @AuthenticationPrincipal JelatynaPrincipal principal)
+    public ResponseEntity<List<GenerateVouchersResponse>> upload(@RequestParam MultipartFile file)
             throws IOException {
         CSVReader reader = new CSVReader(new InputStreamReader(file.getInputStream()), ';');
         List<GenerateVouchersResponse> responses = stream(reader.spliterator(), false)
                 .map(GenerateVouchersRequest::build)
-                .map(registration -> sendVouchers(registration, principal))
+                .map(this::sendVouchers)
                 .collect(toList());
         return ResponseEntity.ok(responses);
     }
 
-    private GenerateVouchersResponse sendVouchers(GenerateVouchersRequest registerRequest, JelatynaPrincipal principal) {
-        String creatorName = principal.getName();
+    private GenerateVouchersResponse sendVouchers(GenerateVouchersRequest registerRequest) {
         long successCount = IntStream.range(0, registerRequest.count)
-                .mapToObj((it) -> sendVouchers(registerRequest.buyerEmail, creatorName))
+                .mapToObj((it) -> sendVouchers(registerRequest.buyerEmail))
                 .filter(SUCCESS::equals)
                 .count();
         return new GenerateVouchersResponse(registerRequest, (int) successCount);
 
     }
 
-    private VoucherStatus sendVouchers(String mail, String creatorName) {
+    private VoucherStatus sendVouchers(String mail) {
         try {
-            Voucher voucher = service.generateVoucher(mail, creatorName);
+            Voucher voucher = service.generateVoucher(mail);
             sender.send("pre-registration", new MessageInfo().setEmail(mail).setToken(voucher.getId()));
             voucher.setEmailSent(true);
             return SUCCESS;

@@ -22,7 +22,10 @@ interface VoucherRepository extends Repository<Voucher, String> {
     @RestResource(exported = false)
     boolean existsById(String token);
 
-    @Query("select t from Voucher t where t not in (select p.voucher from pl.confitura.jelatyna.registration.Participant p)")
+    @Query("SELECT v" +
+           " FROM Voucher v" +
+           " WHERE " +
+           " v NOT IN (SELECT p.voucher FROM pl.confitura.jelatyna.registration.ParticipationData p)")
     List<Voucher> findUnusedVouchers();
 
     Voucher findById(String id);

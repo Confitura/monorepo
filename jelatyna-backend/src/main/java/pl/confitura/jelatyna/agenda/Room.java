@@ -1,22 +1,20 @@
 package pl.confitura.jelatyna.agenda;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.GenericGenerator;
+import pl.confitura.jelatyna.infrastructure.db.AuditedEntity;
 
-import lombok.Data;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
+@EqualsAndHashCode(callSuper = false)
 @Table(name = "agenda_room")
 @Data
 @Accessors(chain = true)
-public class Room {
+public class Room extends AuditedEntity {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")

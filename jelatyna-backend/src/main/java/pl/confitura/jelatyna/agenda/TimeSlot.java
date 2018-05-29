@@ -7,19 +7,22 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.GenericGenerator;
 
 import lombok.Data;
+import pl.confitura.jelatyna.infrastructure.db.AuditedEntity;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
+@EqualsAndHashCode(callSuper = false)
 @Entity
 @Data
 @Table(name = "agenda_time_slot")
 @Accessors(chain = true)
-public class TimeSlot {
+public class TimeSlot extends AuditedEntity {
 
     private static final DateTimeFormatter HOUR_FORMAT = DateTimeFormatter.ofPattern("HH:mm");
 

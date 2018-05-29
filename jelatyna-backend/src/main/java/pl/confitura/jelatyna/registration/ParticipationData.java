@@ -3,21 +3,23 @@ package pl.confitura.jelatyna.registration;
 import java.time.LocalDateTime;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
+import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.GenericGenerator;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
+import pl.confitura.jelatyna.infrastructure.db.AuditedEntity;
 import pl.confitura.jelatyna.registration.voucher.Voucher;
 
 @Entity
 @Data
+@EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @Table(uniqueConstraints = {
         @UniqueConstraint(name = "unique_voucher", columnNames = {"voucher_id"})
 })
-public class Participant {
+public class ParticipationData extends AuditedEntity {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
@@ -27,23 +29,19 @@ public class Participant {
     @OneToOne
     private Voucher voucher;
 
-    private String name;
-    private String email;
     private String city;
     private String gender;
     private String experience;
     private String role;
     private String size;
     private String info;
-    private String createdBy;
 
-    private LocalDateTime registrationDate;
     private LocalDateTime arrivalDate;
     private String registeredBy;
     private LocalDateTime ticketSendDate;
     private LocalDateTime surveySendDate;
 
-    public boolean alreadyArrived() {
+    boolean alreadyArrived() {
         return this.arrivalDate != null;
     }
 
@@ -51,7 +49,7 @@ public class Participant {
         return this.ticketSendDate == null;
     }
 
-    public boolean surveyNotSentYet() {
+    boolean surveyNotSentYet() {
         return surveySendDate == null;
     }
 }

@@ -2,9 +2,8 @@ package pl.confitura.jelatyna.registration.voucher;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.confitura.jelatyna.registration.Participant;
-import pl.confitura.jelatyna.registration.ParticipantRepository;
-import pl.confitura.jelatyna.user.User;
+import pl.confitura.jelatyna.registration.ParticipationData;
+import pl.confitura.jelatyna.registration.ParticipationRepository;
 
 import java.util.List;
 
@@ -15,13 +14,10 @@ import static java.time.LocalDateTime.now;
 public class VoucherService {
 
     private final VoucherRepository voucherRepository;
-    private final ParticipantRepository participantRepository;
+    private final ParticipationRepository participationRepository;
 
-    public Voucher generateVoucher(String originalBuyer, String createdBy) {
-        return voucherRepository.save(new Voucher()
-                .setCreationDate(now()))
-                .setOriginalBuyer(originalBuyer)
-                .setCreatedBy(createdBy);
+    public Voucher generateVoucher(String originalBuyer) {
+        return voucherRepository.save(new Voucher().setOriginalBuyer(originalBuyer));
     }
 
     public boolean isValid(Voucher voucher) {
@@ -40,11 +36,11 @@ public class VoucherService {
         return voucherRepository.findById(id);
     }
 
-    public boolean canAssign(String participantId, Voucher voucher) {
+    public boolean canAssign(String participationDataId, Voucher voucher) {
         if(voucher == null){
             return true;
         }
-        Participant participant = participantRepository.findByVoucher(voucher);
-        return participant == null || participant.getId().equals(participantId);
+        ParticipationData owner = participationRepository.findByVoucher(voucher);
+        return owner == null || owner.getId().equals(participationDataId);
     }
 }

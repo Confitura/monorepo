@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import pl.confitura.jelatyna.BaseIntegrationTest;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
-import pl.confitura.jelatyna.registration.Participant;
-import pl.confitura.jelatyna.registration.ParticipantRepository;
+import pl.confitura.jelatyna.registration.ParticipationData;
+import pl.confitura.jelatyna.registration.ParticipationRepository;
 
 import java.util.List;
 
@@ -23,8 +23,8 @@ class VoucherServiceTest extends BaseIntegrationTest {
     private VoucherRepository voucherRepository;
 
 
-    String creatorName = "creator";
-    String mail = "test@example.com";
+    private String creatorName = "creator";
+    private String mail = "test@example.com";
 
     @BeforeEach
     void setup() {
@@ -34,7 +34,7 @@ class VoucherServiceTest extends BaseIntegrationTest {
     @Test
     void shouldGenerateVoucherAndStoreIt() {
         //when admin generates voucher
-        Voucher voucher = voucherService.generateVoucher(mail, creatorName);
+        Voucher voucher = voucherService.generateVoucher(mail);
 
         //then voucher is stored in db
         assertThat(voucher).isNotNull();
@@ -46,7 +46,7 @@ class VoucherServiceTest extends BaseIntegrationTest {
     @Test
     void generatedVoucherShouldBeValid() {
         //when admin generates voucher
-        Voucher voucher = voucherService.generateVoucher(mail, creatorName);
+        Voucher voucher = voucherService.generateVoucher(mail);
 
         //then voucher should be recognized as valid
         assertThat(voucherService.isValid(voucher)).isTrue();
@@ -79,9 +79,9 @@ class VoucherServiceTest extends BaseIntegrationTest {
     @Test
     void shouldFindUnusedTokens() {
         // given there is unused token
-        Voucher unused = voucherService.generateVoucher(mail, creatorName);
+        Voucher unused = voucherService.generateVoucher(mail);
         // and used token
-        Voucher used = voucherService.generateVoucher(mail, creatorName);
+        Voucher used = voucherService.generateVoucher(mail);
         createUserWithVoucher(used);
 
         // when finding unused tokens
@@ -95,9 +95,9 @@ class VoucherServiceTest extends BaseIntegrationTest {
     }
 
     @Autowired
-    ParticipantRepository participantRepository;
+    ParticipationRepository participationRepository;
 
     private void createUserWithVoucher(Voucher voucher) {
-        participantRepository.save(new Participant().setVoucher(voucher));
+        participationRepository.save(new ParticipationData().setVoucher(voucher));
     }
 }

@@ -22,7 +22,7 @@ class RegistrationControllerTest extends BaseIntegrationTest {
     RegistrationController registrationController;
 
     @Autowired
-    ParticipantRepository participantRepository;
+    ParticipationRepository participationRepository;
 
     @Autowired
     VoucherService voucherService;
@@ -41,8 +41,8 @@ class RegistrationControllerTest extends BaseIntegrationTest {
     }
 
     @Test
-    void only_logged_in_user_is_able_to_create_participant() throws Exception {
-        //when user tries to register as participant
+    void only_logged_in_user_is_able_to_create_participantion() throws Exception {
+        //when user tries to register as participationData
         mockMvc.perform(
                 post("/participants")
                         .content("{}")
@@ -51,8 +51,8 @@ class RegistrationControllerTest extends BaseIntegrationTest {
     }
 
     @Test
-    void user_is_able_to_create_participant() throws Exception {
-        //when user tries to register as participant
+    void user_is_able_to_create_participantion() throws Exception {
+        //when user tries to register as participationData
         mockMvc.perform(
                 post("/participants")
                         .with(SecurityHelper.user(user))
@@ -61,16 +61,16 @@ class RegistrationControllerTest extends BaseIntegrationTest {
                 .andExpect(status().is2xxSuccessful());
 
 
-        //then participant is registered and assigned to user
+        //then participationData is registered and assigned to user
         User byId = userRepository.findById(user.getId());
-        assertThat(byId.getParticipant()).isNotNull();
+        assertThat(byId.getParticipationData()).isNotNull();
     }
 
     @Test
-    void should_not_create_if_user_already_is_participant() throws Exception {
-        //when user tries to register as participant
-        Participant participant = participantRepository.save(new Participant());
-        user.setParticipant(participant);
+    void should_not_create_if_user_already_created_participantion() throws Exception {
+        //when user tries to register as participationData
+        ParticipationData participationData = participationRepository.save(new ParticipationData());
+        user.setParticipationData(participationData);
         userRepository.save(user);
 
         mockMvc.perform(
@@ -82,11 +82,11 @@ class RegistrationControllerTest extends BaseIntegrationTest {
     }
 
     @Test
-    void user_is_able_to_create_participant_with_voucher() throws Exception {
+    void user_is_able_to_create_participation_data_with_voucher() throws Exception {
         SecurityHelper.asAdmin();
-        Voucher voucher = voucherService.generateVoucher("buyer", "test");
+        Voucher voucher = voucherService.generateVoucher("buyer");
         SecurityHelper.cleanSecurity();
-        //when user tries to register as participant
+        //when user tries to register as participationData
         mockMvc.perform(
                 post("/participants")
                         .with(SecurityHelper.user(user))
@@ -97,10 +97,10 @@ class RegistrationControllerTest extends BaseIntegrationTest {
                         .contentType(HAL_JSON))
                 .andExpect(status().is2xxSuccessful());
 
-        //then participant is registered and assigned to user
+        //then participationData is registered and assigned to user
         User byId = userRepository.findById(user.getId());
-        assertThat(byId.getParticipant()).isNotNull();
-        assertThat(byId.getParticipant().getVoucher().getId())
+        assertThat(byId.getParticipationData()).isNotNull();
+        assertThat(byId.getParticipationData().getVoucher().getId())
                 .isEqualTo(voucher.getId());
     }
 
@@ -116,24 +116,24 @@ class RegistrationControllerTest extends BaseIntegrationTest {
                         .contentType(HAL_JSON))
                 .andExpect(status().is4xxClientError());
 
-        //then participant is not registered
+        //then participationData is not registered
         User byId = userRepository.findById(user.getId());
-        assertThat(byId.getParticipant()).isNull();
+        assertThat(byId.getParticipationData()).isNull();
     }
 
     @Test
-    void user_is_able_to_assign_token_to_participant() throws Exception {
-        //given user with participant
+    void user_is_able_to_assign_token_to_participation_data() throws Exception {
+        //given user with participationData
         SecurityHelper.asAdmin();
-        Participant participant = participantRepository.save(new Participant());
-        userRepository.save(user.setParticipant(participant));
+        ParticipationData participationData = participationRepository.save(new ParticipationData());
+        userRepository.save(user.setParticipationData(participationData));
 
-        Voucher voucher = voucherService.generateVoucher("", "");
+        Voucher voucher = voucherService.generateVoucher("");
         SecurityHelper.cleanSecurity();
 
         //when user assigns token
         mockMvc.perform(
-                put("/participants/" + participant.getId())
+                put("/participants/" + participationData.getId())
                         .with(SecurityHelper.user(user))
                         .content("{" +
                                 "\"voucher\" :  \"" + voucher.getId() + "\"" +
@@ -141,51 +141,51 @@ class RegistrationControllerTest extends BaseIntegrationTest {
                         .contentType(HAL_JSON))
                 .andExpect(status().is2xxSuccessful());
 
-        //then token is assigned to participant
-        Participant found = participantRepository.findById(participant.getId());
+        //then token is assigned to participationData
+        ParticipationData found = participationRepository.findById(participationData.getId());
         assertThat(found.getVoucher()).isNotNull();
         assertThat(found.getVoucher().getId()).isEqualTo(voucher.getId());
     }
 
     @Test
-    void user_cannot_assign_token_to_other_participant() throws Exception {
-        //given different user with participant
+    void user_cannot_assign_token_to_other_users_participation() throws Exception {
+        //given different user with participationData
         SecurityHelper.asAdmin();
-        Participant participant = participantRepository.save(new Participant());
-        User otherUser = userRepository.save(new User().setParticipant(participant));
-        Voucher voucher = voucherService.generateVoucher("", "");
+        ParticipationData participationData = participationRepository.save(new ParticipationData());
+        User otherUser = userRepository.save(new User().setParticipationData(participationData));
+        Voucher voucher = voucherService.generateVoucher("");
         SecurityHelper.cleanSecurity();
 
         //when user assigns token
         mockMvc.perform(
-                put("/participants/" + participant.getId())
+                put("/participants/" + participationData.getId())
                         .with(SecurityHelper.user(user))
                         .content("{" +
                                 "\"voucher\" :  \"" + voucher.getId() + "\"" +
                                 "}")
                         .contentType(HAL_JSON))
                 .andExpect(status().isForbidden());
-        //then token is assigned to participant
+        //then token is assigned to participationData
 
-        Participant found = participantRepository.findById(participant.getId());
+        ParticipationData found = participationRepository.findById(participationData.getId());
         assertThat(found.getVoucher()).isNull();
     }
 
     @Test
     void user_is_cannot_assign_token_already_used() throws Exception {
-        //given different user with participant
+        //given different user with participationData
         SecurityHelper.asAdmin();
-        Voucher voucher = voucherService.generateVoucher("", "");
-        Participant otherParticipant = participantRepository.save(new Participant().setVoucher(voucher));
-        User otherUser = userRepository.save(new User().setParticipant(otherParticipant));
+        Voucher voucher = voucherService.generateVoucher("");
+        ParticipationData otherParticipation = participationRepository.save(new ParticipationData().setVoucher(voucher));
+        User otherUser = userRepository.save(new User().setParticipationData(otherParticipation));
 
-        Participant participant = participantRepository.save(new Participant());
-        userRepository.save(user.setParticipant(participant));
+        ParticipationData participationData = participationRepository.save(new ParticipationData());
+        userRepository.save(user.setParticipationData(participationData));
         SecurityHelper.cleanSecurity();
 
         //when user assigns token
         mockMvc.perform(
-                put("/participants/" + participant.getId())
+                put("/participants/" + participationData.getId())
                         .with(SecurityHelper.user(user))
                         .content("{" +
                                 "\"voucher\" :  \"" + voucher.getId() + "\"" +
@@ -193,8 +193,8 @@ class RegistrationControllerTest extends BaseIntegrationTest {
                         .contentType(HAL_JSON))
                 .andExpect(status().isConflict());
 
-        //then token is assigned to participant
-        Participant found = participantRepository.findById(participant.getId());
+        //then token is assigned to participationData
+        ParticipationData found = participationRepository.findById(participationData.getId());
         assertThat(found.getVoucher()).isNull();
     }
 }
