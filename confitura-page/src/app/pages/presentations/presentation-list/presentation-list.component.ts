@@ -8,8 +8,10 @@ import {User} from '../../../core/user/user.model';
 import {VoteStatsServiceService} from '../../../admin/votes/vote-list/vote-stats.service';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/from';
+import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/operator/mergeMap';
 import {CurrentUser} from '../../../core/security/current-user.service';
+import {LikeService} from '../../../shared/presentation/like/like.service';
 
 @Component({
   templateUrl: './presentation-list.component.html',
@@ -33,7 +35,8 @@ export class PresentationListComponent implements OnInit {
               private userService: UserService,
               private route: ActivatedRoute,
               private voteStatsServiceService: VoteStatsServiceService,
-              private currentUser: CurrentUser) {
+              private currentUser: CurrentUser,
+              private likeService: LikeService) {
     this.doFilterByStatus = this.doFilterByStatus.bind(this);
     this.doFilterByText = this.doFilterByText.bind(this);
     this.doFilterBy = this.doFilterBy.bind(this);
@@ -111,8 +114,14 @@ export class PresentationListComponent implements OnInit {
   }
 
   private getStats() {
-    this.voteStatsServiceService.getAll()
-      .flatMap(it => Observable.from(it))
+      const $likes = this.likeService.getSummary();
+      const $voteStats = this.voteStatsServiceService.getAll()
+          .flatMap(it => Observable.from(it));
+
+      Observable.combineLatest($voteStats, $likes, (statistics, likes) => {
+          statistics.likes = likes[statistics.presentationId] || 0;
+          return statistics;
+      })
       .subscribe(statistics => {
           this.statistics[statistics.presentationId] = statistics;
        });

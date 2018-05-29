@@ -1,0 +1,11 @@
+<button mat-mini-fab title="like presentation" *ngIf="!like && !isLoading" (click)="doLike()">
+    <mat-icon aria-label="like presentation">favorite_border</mat-icon>
+</button>
+
+<button mat-mini-fab color="warn" title="unlike presentation" *ngIf="like && !isLoading" (click)="doUnlike()">
+    <mat-icon aria-label="unlike presentation">favorite</mat-icon>
+</button>
+
+<button mat-mini-fab color="warn" title="loading" *ngIf="isLoading">
+    <mat-icon aria-label="in progress">refresh</mat-icon>
+</button>

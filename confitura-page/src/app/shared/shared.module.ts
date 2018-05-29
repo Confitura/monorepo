@@ -20,6 +20,8 @@ import { PageHeaderComponent } from './page-header/page-header.component';
 import {BackButtonComponent} from './back-button/back-button.component';
 import {MatButtonModule, MatCardModule, MatChipsModule, MatIconModule, MatMenuModule, MatTooltipModule} from '@angular/material';
 import {PresentationComponent} from './presentation/presentation.component';
+import { LikeButtonComponent } from './presentation/like/like-button/like-button.component';
+import {LikeService} from './presentation/like/like.service';
 
 @NgModule({
   imports: [
@@ -46,7 +48,8 @@ import {PresentationComponent} from './presentation/presentation.component';
     MdPipe,
     PageHeaderComponent,
     BackButtonComponent,
-    PresentationComponent
+    PresentationComponent,
+    LikeButtonComponent
   ],
   exports: [
     CommonModule,
@@ -69,7 +72,7 @@ import {PresentationComponent} from './presentation/presentation.component';
     PresentationComponent,
     MatTooltipModule
   ],
-  providers: [PersonModalService]
+  providers: [PersonModalService, LikeService]
 })
 export class SharedModule {
 

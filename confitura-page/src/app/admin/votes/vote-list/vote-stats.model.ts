@@ -6,4 +6,5 @@ export class VoteStats {
     totalVotes: number;
     rateOfPositive: number;
     rateOfNegative: number;
+    likes: number;
 }

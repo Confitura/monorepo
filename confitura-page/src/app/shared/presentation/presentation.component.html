@@ -1,6 +1,9 @@
 <article class="presentation" [id]="presentation.id">
   <div class="presentation__title-container">
-    <div class="presentation__title">{{presentation.title}}</div>
+    <div class="presentation__title">
+      <cf-like-button [presentationId]="presentation.id"></cf-like-button>
+      {{presentation.title}}
+    </div>
     <div class="presentation__menu" *cfAdmin>
       <button mat-icon-button [matMenuTriggerFor]="menu">
         <mat-icon>more_vert</mat-icon>
@@ -20,6 +23,7 @@
       <mat-chip>all: {{voteStats.totalVotes}}</mat-chip>
       <mat-chip>+1: {{voteStats.positiveVotes}} ({{voteStats.rateOfPositive}}%)</mat-chip>
       <mat-chip>-1: {{voteStats.negativeVotes}} ({{voteStats.rateOfNegative}}%)</mat-chip>
+      <mat-chip>likes: {{voteStats.likes}}</mat-chip>
     </mat-chip-list>
   </div>
   <div class="presentation__speakers">
