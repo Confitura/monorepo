@@ -2,45 +2,52 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Like, LikeService} from '../like.service';
 
 @Component({
-    selector: 'cf-like-button',
-    templateUrl: './like-button.component.html',
-    styleUrls: ['./like-button.component.css']
+  selector: 'cf-like-button',
+  templateUrl: './like-button.component.html',
+  styleUrls: ['./like-button.component.css']
 })
 export class LikeButtonComponent implements OnInit {
 
-    @Input()
-    presentationId: string;
+  @Input()
+  presentationId: string;
 
-    like: Like = null;
+  like: Like = null;
 
-    isLoading = false;
+  isLoading = false;
 
-    constructor(private likeService: LikeService) {
+  constructor(private likeService: LikeService) {
+  }
+
+  ngOnInit() {
+    this.likeService.getLikes()
+      .subscribe(it => {
+        this.like = it.find(like => like.presentationId === this.presentationId);
+      });
+  }
+
+  toggleLike() {
+    if (this.like) {
+      this.doUnlike();
+    } else {
+      this.doLike();
     }
+  }
 
-    ngOnInit() {
-        this.likeService.getLikes()
-            .subscribe(it => {
-                this.like = it.find(like => like.presentationId === this.presentationId);
-            });
-    }
+  private doLike() {
+    this.isLoading = true;
+    return this.likeService.like(this.presentationId)
+      .subscribe(() => {
+        this.isLoading = false;
+        this.ngOnInit();
+      });
+  }
 
-    doLike() {
-        this.isLoading = true;
-        this.likeService.like(this.presentationId)
-            .subscribe(it => {
-                this.isLoading = false;
-                this.ngOnInit();
-            });
-    }
-
-    doUnlike() {
-        this.isLoading = true;
-        this.likeService.unlike(this.like.id)
-            .subscribe(it => {
-                this.isLoading = false;
-                this.ngOnInit();
-            });
-    }
+  private doUnlike() {
+    this.likeService.unlike(this.like.id)
+      .subscribe(() => {
+        this.isLoading = false;
+        this.like = null;
+      });
+  }
 
 }

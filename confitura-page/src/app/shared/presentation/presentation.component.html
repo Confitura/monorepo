@@ -1,7 +1,6 @@
 <article class="presentation" [id]="presentation.id">
   <div class="presentation__title-container">
     <div class="presentation__title">
-      <cf-like-button [presentationId]="presentation.id"></cf-like-button>
       {{presentation.title}}
     </div>
     <div class="presentation__menu" *cfAdmin>
@@ -63,5 +62,8 @@
       <h4 class="pt-3" *ngIf="shouldShowDescription(descriptionTypes.Both)">description:</h4>
       <div class="presentation__description">{{presentation.description}}</div>
     </div>
+  </div>
+  <div class="presentation__actions pt-4">
+    <cf-like-button [presentationId]="presentation.id"></cf-like-button>
   </div>
 </article>

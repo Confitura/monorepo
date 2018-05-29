@@ -5,7 +5,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AdminDirective} from './admin.directive';
 import {PhotoComponent} from './photo/photo.component';
 import {SocialLinksComponent} from './social-links/social-links.component';
-import {HttpClientModule} from '@angular/common/http';
 import {LazySrcDirective} from './lazy-src.directive';
 import {PageComponent} from './page/page.component';
 import {PersonModalComponent} from './person-modal/person-modal.component';
@@ -18,7 +17,15 @@ import { ResizeImgPipe } from './resize-img.pipe';
 import {MdPipe} from './md/md.pipe';
 import { PageHeaderComponent } from './page-header/page-header.component';
 import {BackButtonComponent} from './back-button/back-button.component';
-import {MatButtonModule, MatCardModule, MatChipsModule, MatIconModule, MatMenuModule, MatTooltipModule} from '@angular/material';
+import {
+  MatButtonModule,
+  MatCardModule,
+  MatChipsModule,
+  MatIconModule,
+  MatMenuModule,
+  MatProgressSpinnerModule,
+  MatTooltipModule
+} from '@angular/material';
 import {PresentationComponent} from './presentation/presentation.component';
 import { LikeButtonComponent } from './presentation/like/like-button/like-button.component';
 import {LikeService} from './presentation/like/like.service';
@@ -32,7 +39,9 @@ import {LikeService} from './presentation/like/like.service';
     MatButtonModule,
     MatChipsModule,
     MatMenuModule,
-    MatCardModule
+    MatCardModule,
+    MatTooltipModule,
+    MatProgressSpinnerModule
   ],
   declarations: [
     AdminDirective,
