@@ -9,7 +9,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
-import pl.confitura.jelatyna.registration.ParticipapationData;
+import pl.confitura.jelatyna.registration.ParticipationData;
 import pl.confitura.jelatyna.registration.ParticipationRepository;
 import pl.confitura.jelatyna.registration.voucher.Voucher;
 import pl.confitura.jelatyna.registration.voucher.VoucherService;
@@ -82,10 +82,10 @@ public class UserRepositoryTest {
 
     @Test
     void should_send_ticket_to_user_that_is_registered_and_have_not_received_ticket_yet() {
-        // given user registered as participapationData with proper voucher
-        Voucher voucher = voucherService.generateVoucher("", "");
-        ParticipapationData participapationData = participationRepository.save(new ParticipapationData().setVoucher(voucher));
-        User user = repository.save(new User().setParticipapationData(participapationData));
+        // given user registered as participationData with proper voucher
+        Voucher voucher = voucherService.generateVoucher("");
+        ParticipationData participationData = participationRepository.save(new ParticipationData().setVoucher(voucher));
+        User user = repository.save(new User().setParticipationData(participationData));
 
         // when admin gets users to send ticket to
         List<User> list = repository.findUsersToSendTickets();
@@ -98,11 +98,11 @@ public class UserRepositoryTest {
     @Test
     void should_not_send_ticket_to_user_that_have_registered_when_ticket_was_already_sent() {
 
-        // given user registered as participapationData with proper voucher
-        Voucher voucher = voucherService.generateVoucher("", "");
+        // given user registered as participationData with proper voucher
+        Voucher voucher = voucherService.generateVoucher("");
         //and user have received ticket
-        ParticipapationData participapationData = participationRepository.save(new ParticipapationData().setVoucher(voucher).setTicketSendDate(now()));
-        User user = repository.save(new User().setParticipapationData(participapationData));
+        ParticipationData participationData = participationRepository.save(new ParticipationData().setVoucher(voucher).setTicketSendDate(now()));
+        User user = repository.save(new User().setParticipationData(participationData));
 
         // when admin gets users to send ticket to
         List<User> list = repository.findUsersToSendTickets();
@@ -115,7 +115,7 @@ public class UserRepositoryTest {
     @Test
     void should_not_send_ticket_to_user_that_have_not_registered_as_participant() {
 
-        // given user not registered as participapationData
+        // given user not registered as participationData
         User user = repository.save(new User());
 
         // when admin gets users to send ticket to
@@ -128,9 +128,9 @@ public class UserRepositoryTest {
 
     @Test
     void should_not_send_ticket_to_user_that_have_registered_as_participant_and_does_not_own_voucher() {
-        // given user registered as participapationData without proper voucher
-        ParticipapationData participant = participationRepository.save(new ParticipapationData());
-        User user = repository.save(new User().setParticipapationData(participant));
+        // given user registered as participationData without proper voucher
+        ParticipationData participant = participationRepository.save(new ParticipationData());
+        User user = repository.save(new User().setParticipationData(participant));
 
         // when admin gets users to send ticket to
         List<User> list = repository.findUsersToSendTickets();
@@ -142,14 +142,13 @@ public class UserRepositoryTest {
 
 
     @Test
-    void admin_should_get_users_that_already_registered(){
-        ParticipapationData registered = participationRepository.save(new ParticipapationData().setRegistrationDate(now()));
-        User registeredUser = repository.save(new User().setParticipapationData(registered));
-        ParticipapationData notRegistered = participationRepository.save(new ParticipapationData());
-        User notRegisteredUser = repository.save(new User().setParticipapationData(notRegistered));
+    void admin_should_get_users_that_arrived_to_conference(){
+        ParticipationData registered = participationRepository.save(new ParticipationData().setArrivalDate(now()));
+        User registeredUser = repository.save(new User().setParticipationData(registered));
+        User notRegisteredUser = repository.save(new User());
 
         //when
-        List<User> allRegistered = repository.findAllRegistered();
+        List<User> allRegistered = repository.findAllPresentOnConference();
 
         //then
         assertThat(allRegistered)

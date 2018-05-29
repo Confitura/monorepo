@@ -59,26 +59,26 @@ public class RegistrationController {
     @PreAuthorize("@security.isAdmin()")
     @Transactional
     public ResponseEntity<Object> sendSurveys() {
-        doSendSurveyTo(userRepository.findAllRegistered());
+        doSendSurveyTo(userRepository.findAllPresentOnConference());
         return ResponseEntity.accepted().build();
     }
 
     @PostMapping("/participants")
     @Transactional
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<Object> save(@RequestBody ParticipapationData participapationData) {
+    public ResponseEntity<Object> save(@RequestBody ParticipationData participationData) {
         JelatynaPrincipal principal = SecurityContextUtil.getPrincipal();
         User user = userRepository.findById(principal.id);
-        if (user.getParticipapationData() != null) {
+        if (user.getParticipationData() != null) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
-        if (participapationData.getVoucher() != null) {
-            if (!voucherService.isValid(participapationData.getVoucher())) {
+        if (participationData.getVoucher() != null) {
+            if (!voucherService.isValid(participationData.getVoucher())) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             }
         }
-        ParticipapationData saved = repository.save(participapationData.setId(null));
-        user.setParticipapationData(saved);
+        ParticipationData saved = repository.save(participationData.setId(null));
+        user.setParticipationData(saved);
         return ResponseEntity.ok().build();
     }
 
@@ -86,10 +86,10 @@ public class RegistrationController {
     @PutMapping("/participants/{id}")
     @Transactional
     @PreAuthorize("@security.isUserAnOwnerOfParticipationData(#id)")
-    public ResponseEntity<Object> save(@RequestBody ParticipapationData participapationData, @PathVariable String id) {
-        if (voucherService.canAssign(id, participapationData.getVoucher())) {
+    public ResponseEntity<Object> save(@RequestBody ParticipationData participationData, @PathVariable String id) {
+        if (voucherService.canAssign(id, participationData.getVoucher())) {
             repository.findById(id)
-                    .setVoucher(participapationData.getVoucher());
+                    .setVoucher(participationData.getVoucher());
         } else {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
@@ -100,24 +100,24 @@ public class RegistrationController {
     @PreAuthorize("@security.isVolunteer()")
     @Transactional
     public ResponseEntity<Object> arrived(@PathVariable String id, @AuthenticationPrincipal Authentication authentication) {
-        ParticipapationData participapationData = repository.findById(id);
-        if (participapationData == null) {
+        ParticipationData participationData = repository.findById(id);
+        if (participationData == null) {
             return ResponseEntity.notFound().build();
         } else {
-            return arrived(participapationData, (JelatynaPrincipal) authentication.getPrincipal());
+            return arrived(participationData, (JelatynaPrincipal) authentication.getPrincipal());
         }
     }
 
-    private ResponseEntity<Object> arrived(ParticipapationData participapationData, JelatynaPrincipal principal) {
+    private ResponseEntity<Object> arrived(ParticipationData participationData, JelatynaPrincipal principal) {
         HttpStatus status = HttpStatus.OK;
-        if (participapationData.alreadyArrived()) {
+        if (participationData.alreadyArrived()) {
             status = HttpStatus.CONFLICT;
         } else {
-            participapationData
+            participationData
                     .setArrivalDate(LocalDateTime.now())
                     .setRegisteredBy(principal.getId());
         }
-        return ResponseEntity.status(status).body(participapationData);
+        return ResponseEntity.status(status).body(participationData);
     }
 
 
@@ -157,14 +157,14 @@ public class RegistrationController {
                 .setName(user.getName())
                 .setTicket(generator.generateFor(user.getId()));
         sender.send("registration-ticket", info);
-        repository.save(user.getParticipapationData().setTicketSendDate(LocalDateTime.now()));
+        repository.save(user.getParticipationData().setTicketSendDate(LocalDateTime.now()));
     }
 
     @Async
     void doSendSurveyTo(Iterable<User> users) {
         StreamSupport.stream(users.spliterator(), false)
-                .filter(it -> it.getParticipapationData().alreadyArrived())
-                .filter(it -> it.getParticipapationData().surveyNotSentYet())
+                .filter(it -> it.getParticipationData().alreadyArrived())
+                .filter(it -> it.getParticipationData().surveyNotSentYet())
                 .forEach(this::sendSurveyTo);
     }
 
@@ -184,6 +184,6 @@ public class RegistrationController {
                 .setEmail(user.getEmail())
                 .setName(user.getName());
         sender.send("survey", info);
-        repository.save(user.getParticipapationData().setSurveySendDate(LocalDateTime.now()));
+        repository.save(user.getParticipationData().setSurveySendDate(LocalDateTime.now()));
     }
 }

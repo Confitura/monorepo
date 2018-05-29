@@ -44,7 +44,7 @@ public class Security {
     public boolean isUserAnOwnerOfParticipationData(String participationId) {
         String userId = getUserId();
         User user = userRepository.findById(userId);
-        return user.getParticipapationData() != null && Objects.equals(user.getParticipapationData().getId(), participationId);
+        return user.getParticipationData() != null && Objects.equals(user.getParticipationData().getId(), participationId);
     }
     public String getUserId() {
         return getPrincipal().getId();

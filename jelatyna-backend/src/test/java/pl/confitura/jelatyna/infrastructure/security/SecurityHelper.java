@@ -10,7 +10,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 
 public class SecurityHelper {
 
-    private static final JelatynaPrincipal ADMIN = new JelatynaPrincipal()
+    public static final JelatynaPrincipal ADMIN = new JelatynaPrincipal()
             .setId("ADMIN")
             .setName("Admin Admiński")
             .setAdmin(true);
