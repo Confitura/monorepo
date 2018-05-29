@@ -1,9 +1,11 @@
 package pl.confitura.jelatyna.mail;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -60,5 +62,12 @@ public class MailSender {
         MandrillMessage.Recipient recipient = new MandrillMessage.Recipient();
         recipient.setEmail(emailAddress);
         return Lists.newArrayList(recipient);
+    }
+
+    List<String> getAvailableTemplates() throws IOException, MandrillApiError {
+        return Arrays.stream(api.templates().list())
+                .filter(it -> it.getPublishedAt() != null)
+                .map(MandrillTemplate::getName)
+                .collect(Collectors.toList());
     }
 }
