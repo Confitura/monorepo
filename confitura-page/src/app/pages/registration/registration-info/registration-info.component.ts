@@ -9,7 +9,6 @@ import {ActivatedRoute} from '@angular/router';
 export class RegistrationInfoComponent {
   name: string;
 
-
   constructor(route: ActivatedRoute) {
     this.name = route.snapshot.params['name'] || 'registration-info';
   }
