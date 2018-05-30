@@ -40,4 +40,4 @@ spring:
     password: {{db_pass}}
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
