@@ -74,7 +74,7 @@ public class RegistrationController {
         }
         if (participationData.getVoucher() != null) {
             if (!voucherService.isValid(participationData.getVoucher())) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("INVALID_VOUCHER");
             }
         }
         ParticipationData saved = repository.save(participationData.setId(null));
@@ -87,6 +87,11 @@ public class RegistrationController {
     @Transactional
     @PreAuthorize("@security.isUserAnOwnerOfParticipationData(#id)")
     public ResponseEntity<Object> save(@RequestBody ParticipationData participationData, @PathVariable String id) {
+        if (participationData.getVoucher() != null) {
+            if (!voucherService.isValid(participationData.getVoucher())) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("INVALID_VOUCHER");
+            }
+        }
         if (voucherService.canAssign(id, participationData.getVoucher())) {
             repository.findById(id)
                     .setVoucher(participationData.getVoucher());
