@@ -1,7 +1,7 @@
 <section class="pb50 bg-white" id="speaker-list">
   <cf-page-header>speakers</cf-page-header>
   <div class="row-1140 speakers pt-5 pb-5" *ngIf="list">
-    <cf-person [model]="speaker" *ngFor="let speaker of list | async" class="organizer"></cf-person>
+    <cf-person *ngFor="let speaker of list | async" [model]="speaker" class="organizer"></cf-person>
   </div>
   <cf-person-modal></cf-person-modal>
 </section>
