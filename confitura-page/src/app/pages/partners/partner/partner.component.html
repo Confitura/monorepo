@@ -1,5 +1,5 @@
-<section id="partners-confitura" class="beige">
-  <div class="row-fluid beige" id="partner">
+<section class="beige">
+  <div class="beige">
     <div class="partner-container" *ngIf="partner">
       <div class="partner__logo-container">
         <div *cfAdmin="" class="text-center">
@@ -9,7 +9,7 @@
           <a role="button" (click)="delete()">Delete</a>
         </div>
         <a [href]="partner.www" target="_blank" rel="noopener">
-          <img class="img-responsive partner__logo" [src]="partner.logo | resizeImg"/>
+          <img class="img-responsive partner__logo" [src]="partner.logo | resizeImg" [ngClass]="{'partner__logo--small': isSmall()}"/>
         </a>
       </div>
       <div class="beige partner__info-container">

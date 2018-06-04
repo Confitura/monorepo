@@ -30,6 +30,13 @@ module.exports = (app) => {
       _embedded: {partners}
     });
   });
+
+  app.get('/partners/:id', (req, res) => {
+    res.send(
+      partners[0]
+    );
+  });
+
   app.get('/partners/search/published', (req, res) => {
     res.send({
       _embedded: {partners}

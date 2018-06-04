@@ -4,7 +4,6 @@ import {ActivatedRoute} from '@angular/router';
 import {Partner} from '../shared/partner.model';
 import {FileUploader} from 'ng2-file-upload';
 import {CurrentUser} from '../../../core/security/current-user.service';
-import * as Marked from 'marked';
 import {Location} from '@angular/common';
 import {environment} from '../../../../environments/environment';
 import {switchMap} from 'rxjs/operators';
@@ -55,5 +54,9 @@ export class PartnerComponent {
   delete() {
     this.service.delete(this.partner)
       .subscribe(() => this.location.back());
+  }
+
+  isSmall() {
+    return this.partner.name.includes('Goldman');
   }
 }
