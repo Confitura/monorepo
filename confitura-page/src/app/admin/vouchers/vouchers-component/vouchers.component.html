@@ -1,0 +1,86 @@
+<section class="pt100 pb50 bg-white ">
+    <!--<div class="row-1140">-->
+    <h3>Vouchers</h3>
+
+    <div style="text-align: right; margin-bottom: 20px;">
+        <input type="file" ng2FileSelect [uploader]="uploader" multiple style="visibility: hidden" #uploaderInput>
+
+        <button class="btn btn-warning" (click)="sendReminder()">Send Reminder</button>
+        <button class="btn btn-default" (click)="upload(uploaderInput)">Load vouchers from file</button>
+
+    </div>
+
+    <div *ngIf="uploader.isUploading">
+        <mat-spinner></mat-spinner>
+    </div>
+
+    <div *ngIf="uploadResponse">
+        <table class="table table-bordered table-striped table-hover">
+            <tr>
+                <td colspan="3">
+                    UPLOADED
+                </td>
+            </tr>
+            <tr>
+                <th>buyer</th>
+                <th>created and sent email</th>
+                <th>requested</th>
+            </tr>
+            <tr *ngFor="let item of uploadResponse">
+                <td>{{item.buyerEmail}}</td>
+                <td>{{item.successCount}}</td>
+                <td>{{item.requestedCount}}</td>
+            </tr>
+        </table>
+    </div>
+
+
+    <div>
+
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        </mat-form-field>
+
+        <mat-table  [dataSource]="dataSource" matSort>
+
+            <ng-container matColumnDef="id">
+                <mat-header-cell  *matHeaderCellDef mat-sort-header> id</mat-header-cell>
+                <mat-cell  *matCellDef="let row"> {{row.id }}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="originalBuyer">
+                <mat-header-cell  *matHeaderCellDef mat-sort-header> originalBuyer</mat-header-cell>
+                <mat-cell  *matCellDef="let row"> {{row.originalBuyer }}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="emailSent">
+                <mat-header-cell  *matHeaderCellDef mat-sort-header> emailSent</mat-header-cell>
+                <mat-cell  *matCellDef="let row"> {{row.emailSent }}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="createdBy">
+                <mat-header-cell  *matHeaderCellDef mat-sort-header> createdBy</mat-header-cell>
+                <mat-cell  *matCellDef="let row"> {{row.createdBy }}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="createdDate">
+                <mat-header-cell  *matHeaderCellDef mat-sort-header> createdDate</mat-header-cell>
+                <mat-cell  *matCellDef="let row"> {{row.createdDate }}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="lastModifiedBy">
+                <mat-header-cell  *matHeaderCellDef mat-sort-header> lastModifiedBy</mat-header-cell>
+                <mat-cell  *matCellDef="let row"> {{row.lastModifiedBy }}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="lastModifiedDate">
+                <mat-header-cell  *matHeaderCellDef mat-sort-header> lastModifiedDate</mat-header-cell>
+                <mat-cell  *matCellDef="let row"> {{row.lastModifiedDate }}</mat-cell>
+            </ng-container>
+
+            <mat-header-row  *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row  *matRowDef="let row; columns: displayedColumns;">
+            </mat-row>
+        </mat-table>
+
+        <mat-paginator [pageSizeOptions]="[15, 25, 100]"></mat-paginator>
+    </div>
+
+
+    <!--</div>-->
+</section>
+

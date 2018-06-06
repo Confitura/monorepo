@@ -22,6 +22,7 @@ export class NavigationComponent implements OnInit {
       children: [
         {label: 'scanner', url: '/admin/scanner', show: () => this.currentUser.isPrivileged()},
         {label: 'participants', url: '/admin/participants', show: () => this.currentUser.isAdmin()},
+        {label: 'vouchers', url: '/admin/vouchers', show: () => this.currentUser.isAdmin()},
         {label: 'manage schedule', url: '/admin/agenda', show: () => this.currentUser.isAdmin()},
         {label: 'users', url: '/admin/users', show: () => this.currentUser.isAdmin()},
         {label: 'votes', url: '/admin/votes', show: () => this.currentUser.isAdmin()},

@@ -28,6 +28,7 @@ import {
   MatProgressSpinnerModule
 } from '@angular/material';
 import {VoteListComponent} from './votes/vote-list/vote-list.component';
+import { VouchersComponent } from './vouchers/vouchers-component/vouchers.component';
 import { MailService } from './users/mailing/mail.service';
 import { MailModalComponent } from './users/mailing/mail-modal/mail-modal.component';
 
@@ -63,6 +64,7 @@ import { MailModalComponent } from './users/mailing/mail-modal/mail-modal.compon
     PresentationPickerComponent,
     ScannerComponent,
     VoteListComponent,
+    VouchersComponent
     MailModalComponent
   ],
   providers: [

@@ -10,6 +10,7 @@ import {ScannerComponent} from './scanner/scanner.component';
 import {IsPrivilegedGuard} from './is-privileged-guard.service';
 import {ProfileViewComponent} from '../profile/profile-view/profile-view.component';
 import {VoteListComponent} from './votes/vote-list/vote-list.component';
+import {VouchersComponent} from './vouchers/vouchers-component/vouchers.component';
 
 const routes: Routes = [
 
@@ -29,7 +30,8 @@ const routes: Routes = [
       {path: 'partners/edit/:id', component: PartnerEditComponent, canActivate: [IsAdminGuard]},
       {path: 'agenda', component: AgendaComponent, canActivate: [IsAdminGuard]},
       {path: 'votes', component: VoteListComponent, canActivate: [IsAdminGuard]},
-      {path: 'participants', component: ParticipantListComponent, canActivate: [IsAdminGuard]}]
+      {path: 'participants', component: ParticipantListComponent, canActivate: [IsAdminGuard]},
+      {path: 'vouchers', component: VouchersComponent, canActivate: [IsAdminGuard]}]
   }
 ];
 

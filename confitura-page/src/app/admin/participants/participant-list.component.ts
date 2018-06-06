@@ -19,15 +19,6 @@ export class ParticipantListComponent implements OnInit {
   constructor(private service: ParticipantService,
               private user: CurrentUser,
               private confirmation: ConfirmationService) {
-    this.uploader = new FileUploader({
-      authToken: this.user.getToken(),
-      url: `${environment.API_URL}participants/upload`,
-      autoUpload: true,
-    });
-
-    this.uploader.onBeforeUploadItem = () => this.uploadResponse = null;
-    this.uploader.onSuccessItem = (item, response) => this.showResponse(response);
-    this.uploader.onCompleteAll = () => this.ngOnInit();
   }
 
   ngOnInit(): void {
@@ -37,15 +28,6 @@ export class ParticipantListComponent implements OnInit {
         this.list = list;
       });
 
-  }
-
-  upload() {
-    $('input[type=file]').click();
-  }
-
-  sendReminder() {
-    this.confirmation.show('you want to send reminder emails to all unregistered participants?')
-      .then(() => this.service.sendReminder().subscribe());
   }
 
   sendTickets() {

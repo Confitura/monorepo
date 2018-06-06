@@ -5,99 +5,51 @@
 
   <div class="row-1140 pt50">
     <div class="alert alert-danger" role="alert" *ngIf="error"><strong>Motyla Noga..</strong> {{error}}</div>
-    <form (ngSubmit)="save()" #registrationForm="ngForm" novalidate *ngIf="model">
-      <div class="form-group">
-        <label for="buyer">original buyer</label>
-        <input type="text" id="buyer" class="form-control" [value]="model.originalBuyer" disabled>
+    <form (ngSubmit)="save()" [formGroup]="registrationForm" *ngIf="registrationForm">
+      <mat-form-field class="full-width">
+        <input matInput placeholder="voucher" type="text" id="voucher2"
+             name="voucher" formControlName="voucher"
+             maxlength="255">
+        <mat-hint>Correct voucher must be provided to participate in confitura</mat-hint>
+      </mat-form-field>
 
-      </div>
-      <div class="form-group required">
-        <label for="name">full name</label>
-        <input type="text" id="name" class="form-control" [(ngModel)]="model.name" #name="ngModel" name="name" required
-               maxlength="255">
-        <div class="alert alert-danger" role="alert" *ngIf="name.errors?.required && (name.touched || submitted)">
+      <label>t-shirt cut*: </label>
+      <mat-radio-group formControlName="sex">
+        <mat-radio-button type="radio" name="sex" value="F" required> female</mat-radio-button>
+        <mat-radio-button type="radio" name="sex" value="M" required> male</mat-radio-button>
+        <mat-error *ngIf="sex.invalid && (sex.dirty || sex.touched || submitted)">
           This field is required
-        </div>
-      </div>
-      <div class="form-group required">
-        <label for="email">e-mail</label>
-        <input type="email" id="email" class="form-control" [(ngModel)]="model.email" #email="ngModel" name="email" required
-               maxlength="255" email>
-        <div class="alert alert-danger" role="alert" *ngIf="email.errors?.required && (email.touched || submitted)">
+        </mat-error>
+      </mat-radio-group>
+      <mat-form-field>
+        <mat-select name="size" id="size" formControlName="size" required placeholder="t-shirt size">
+          <mat-option></mat-option>
+          <mat-option value="S">S</mat-option>
+          <mat-option value="M">M</mat-option>
+          <mat-option value="L">L</mat-option>
+          <mat-option value="XL">XL</mat-option>
+          <mat-option value="XXL">XXL</mat-option>
+        </mat-select>
+        <mat-error *ngIf="size.invalid">
           This field is required
-        </div>
-        <div class="alert alert-danger" role="alert" *ngIf="email.errors?.email && (email.touched || submitted)">
-          This is not valid email
-        </div>
-      </div>
-      <div class="form-group required">
-        <label for="city">city</label>
-        <input type="text" id="city" class="form-control" [(ngModel)]="model.city" #city="ngModel" name="city" required
-               maxlength="255">
-        <div class="alert alert-danger" role="alert" *ngIf="city.errors?.required && (city.touched || submitted)">
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select name="mealOption" id="mealOption" formControlName="mealOption" required placeholder="meal option">
+          <mat-option></mat-option>
+          <mat-option value="meat">Meat</mat-option>
+          <mat-option value="vegetarian">Vegetarian</mat-option>
+          <mat-option value="vegan">Vegan</mat-option>
+        </mat-select>
+        <mat-hint>We can't promise all options will be available on conference.</mat-hint>
+        <mat-error *ngIf="mealOption.invalid">
           This field is required
-        </div>
-      </div>
-      <div class="form-group required">
-        <label>sex</label>
-        <label class="checkbox">
-          <input type="radio" name="sex" value="F" required [(ngModel)]="model.gender" #sex="ngModel"> female
-        </label>
-        <label class="checkbox">
-          <input type="radio" name="sex" value="M" required [(ngModel)]="model.gender" #sex="ngModel"> male
-        </label>
-        <div class="alert alert-danger" role="alert" *ngIf="sex.errors?.required && (sex.touched || submitted)">
-          This field is required
-        </div>
-      </div>
-      <div class="form-group required">
-        <label for="size">t-shirt size</label>
-        <select name="size" id="size" class="form-control" [(ngModel)]="model.size" #size="ngModel" required>
-          <option></option>
-          <option value="S">S</option>
-          <option value="M">M</option>
-          <option value="L">L</option>
-          <option value="XL">XL</option>
-          <option value="XXL">XXL</option>
-        </select>
-        <div class="alert alert-danger" role="alert" *ngIf="size.errors?.required && (size.touched || submitted)">
-          This field is required
-        </div>
-      </div>
-      <div class="form-group required">
-        <label for="experience">your experience</label>
-        <select name="experience" id="experience" class="form-control" [(ngModel)]="model.experience" #experience="ngModel"
-                required>
-          <option></option>
-          <option value="I am just learning">I am just learning</option>
-          <option value="Less than a year">Less than a year</option>
-          <option value="1-2 years">1-2 years</option>
-          <option value="2-4 years">2-4 years</option>
-          <option value="4-8 years">4-8 years</option>
-          <option value="Over 8 years">Over 8 years</option>
-        </select>
-        <div class="alert alert-danger" role="alert" *ngIf="experience.errors?.required && (experience.touched || submitted)">
-          This field is required
-        </div>
-      </div>
-      <div class="form-group required">
-        <label for="role">your role</label>
-        <select name="role" id="role" class="form-control" [(ngModel)]="model.role" #role="ngModel" required>
-          <option></option>
-          <option value="student">Student</option>
-          <option value="Developer">Developer</option>
-          <option value="Team Leader">Team Leader</option>
-          <option value="Project Leader">Project Leader</option>
-          <option value="Architect">Architect</option>
-          <option value="Tester">Tester</option>
-          <option value="Other">Other</option>
-        </select>
-        <div class="alert alert-danger" role="alert" *ngIf="role.errors?.required && (role.touched || submitted)">
-          This field is required
-        </div>
-      </div>
+        </mat-error>
+      </mat-form-field>
       <div class="text-right">
-        <button type="submit" class="btn btn-primary" [disabled]="registrationForm.submitted && !registrationForm.form.valid">Save
+        <button type="submit" class="btn btn-primary"
+            [disabled]="submitted && !registrationForm.valid">Save
         </button>
       </div>
     </form>

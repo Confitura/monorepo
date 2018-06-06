@@ -15,6 +15,9 @@ export class LoginComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private router: Router,
               private login: LoginService) {
+    if (this.route.snapshot.queryParams['returnUrl']) {
+      localStorage.setItem('returnUrl', this.route.snapshot.queryParams['returnUrl']);
+    }
   }
 
   ngOnInit(): void {
@@ -43,6 +46,10 @@ export class LoginComponent implements OnInit {
         this.user = user;
         if (user.isNew) {
           this.router.navigate([`/profile/${user.jti}/edit`]);
+        } else if (localStorage.getItem('returnUrl')) {
+          const returnUrl = localStorage.getItem('returnUrl');
+          localStorage.removeItem('returnUrl');
+          this.router.navigateByUrl(returnUrl);
         } else {
           this.router.navigate([`/profile/${user.jti}`]);
         }

@@ -13,6 +13,7 @@ import {
   MatTableModule
 } from '@angular/material';
 import { CospeakersComponent } from './cospeakers/cospeakers.component';
+import { ParticipationStatusComponent } from './participation-status/participation-status.component';
 
 
 @NgModule({
@@ -28,7 +29,14 @@ import { CospeakersComponent } from './cospeakers/cospeakers.component';
     MatIconModule,
     MatSnackBarModule
   ],
-  declarations: [ProfileEditComponent, ProfileViewComponent, PresentationEditComponent, SpeakerSelectComponent, CospeakersComponent],
+  declarations: [
+    ProfileEditComponent,
+    ProfileViewComponent,
+    PresentationEditComponent,
+    SpeakerSelectComponent,
+    CospeakersComponent,
+    ParticipationStatusComponent
+  ],
   providers: [ProfileCompleteGuard, IsAuthenticatedGuard]
 
 })
