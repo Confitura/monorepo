@@ -35,6 +35,7 @@ public class ParticipationData extends AuditedEntity {
     private String role;
     private String size;
     private String info;
+    private String mealOption;
 
     private LocalDateTime arrivalDate;
     private String registeredBy;
