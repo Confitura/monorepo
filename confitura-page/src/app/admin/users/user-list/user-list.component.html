@@ -13,6 +13,9 @@
       <button mat-raised-button routerLink="/profile/edit" [queryParams]="{back: true}" class="users-filter__add-user">Add
         User
       </button>
+      <button mat-raised-button class="users-filter__send-mail" (click)="sendMails()">
+        Send mail to found users
+      </button>
     </div>
     <mat-table [dataSource]="dataSource" matSort #table>
 

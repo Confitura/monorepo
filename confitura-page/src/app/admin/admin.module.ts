@@ -23,9 +23,13 @@ import {
   MatRadioModule,
   MatSortModule,
   MatTableModule,
+  MatDialogModule,
+  MatSelectModule,
   MatProgressSpinnerModule
 } from '@angular/material';
 import {VoteListComponent} from './votes/vote-list/vote-list.component';
+import { MailService } from './users/mailing/mail.service';
+import { MailModalComponent } from './users/mailing/mail-modal/mail-modal.component';
 
 @NgModule({
   imports: [
@@ -44,6 +48,8 @@ import {VoteListComponent} from './votes/vote-list/vote-list.component';
     MatDividerModule,
     MatPaginatorModule,
     MatSortModule,
+    MatDialogModule,
+    MatSelectModule,
     MatProgressSpinnerModule
   ],
   declarations: [
@@ -56,7 +62,14 @@ import {VoteListComponent} from './votes/vote-list/vote-list.component';
     AgendaEntryComponent,
     PresentationPickerComponent,
     ScannerComponent,
-    VoteListComponent
+    VoteListComponent,
+    MailModalComponent
+  ],
+  providers: [
+    MailService
+  ],
+  entryComponents: [
+    MailModalComponent
   ]
 })
 export class AdminModule {

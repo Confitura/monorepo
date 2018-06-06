@@ -2,7 +2,8 @@ import {Component, EventEmitter, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {User} from '../../../core/user/user.model';
 import {UserService} from '../../../core/user/user.service';
-import {MatPaginator, MatSort, MatTable, MatTableDataSource, PageEvent} from '@angular/material';
+import {MatDialog, MatPaginator, MatSort, MatTable, MatTableDataSource, PageEvent} from '@angular/material';
+import {MailModalComponent} from '../mailing/mail-modal/mail-modal.component';
 
 @Component({
   templateUrl: './user-list.component.html',
@@ -18,7 +19,8 @@ export class UserListComponent implements OnInit {
 
 
   constructor(private service: UserService,
-              private router: Router) {
+              private router: Router,
+              private dialog: MatDialog) {
     console.log('constructor');
   }
 
@@ -85,5 +87,9 @@ export class UserListComponent implements OnInit {
 
   doFilter() {
     this.dataSource.filter = 'changed';
+  }
+
+  sendMails() {
+    this.dialog.open(MailModalComponent, {data: {users: this.dataSource.filteredData}});
   }
 }

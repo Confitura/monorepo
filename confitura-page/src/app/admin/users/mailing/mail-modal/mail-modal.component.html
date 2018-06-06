@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>creating mail to {{users.length}} users</h1>
+<div mat-dialog-content>
+    <mat-form-field>
+        <mat-select placeholder="Template" [(ngModel)]="template">
+            <mat-option *ngFor="let t of templates" [value]="t">
+                {{ t }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">No Thanks</button>
+    <button mat-button (click)="send()">Send</button>
+</div>
+
