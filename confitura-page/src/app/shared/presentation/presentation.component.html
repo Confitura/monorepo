@@ -29,7 +29,7 @@
     <div class="presentation__speaker"
          *ngFor="let speaker of allSpeakersFor(presentation)"
          (click)="show(speaker)">
-      <img class="presentation__speaker-img" [cfLazySrc]="speaker.photo | resizeImg:40">
+      <img class="presentation__speaker-img" [src]="speaker.photo | resizeImg:40">
       <span>{{speaker.name}}</span>
     </div>
   </div>
