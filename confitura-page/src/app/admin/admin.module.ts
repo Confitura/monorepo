@@ -64,7 +64,7 @@ import { MailModalComponent } from './users/mailing/mail-modal/mail-modal.compon
     PresentationPickerComponent,
     ScannerComponent,
     VoteListComponent,
-    VouchersComponent
+    VouchersComponent,
     MailModalComponent
   ],
   providers: [
