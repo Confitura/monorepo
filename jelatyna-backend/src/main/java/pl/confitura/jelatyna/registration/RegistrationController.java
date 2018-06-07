@@ -79,6 +79,7 @@ public class RegistrationController {
         }
         ParticipationData saved = repository.save(participationData.setId(null));
         user.setParticipationData(saved);
+        userRepository.save(user);
         return ResponseEntity.ok().build();
     }
 
