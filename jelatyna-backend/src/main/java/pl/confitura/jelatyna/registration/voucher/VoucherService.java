@@ -7,8 +7,6 @@ import pl.confitura.jelatyna.registration.ParticipationRepository;
 
 import java.util.List;
 
-import static java.time.LocalDateTime.now;
-
 @Service
 @RequiredArgsConstructor
 public class VoucherService {
@@ -42,5 +40,9 @@ public class VoucherService {
         }
         ParticipationData owner = participationRepository.findByVoucher(voucher);
         return owner == null || owner.getId().equals(participationDataId);
+    }
+
+    public void save(Voucher voucher) {
+        voucherRepository.save(voucher);
     }
 }

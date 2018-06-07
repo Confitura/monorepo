@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import static java.time.LocalDateTime.now;
 import static java.util.stream.Collectors.toList;
@@ -40,28 +41,35 @@ public class RegistrationUploadController {
     @Transactional
     public ResponseEntity<List<GenerateVouchersResponse>> upload(@RequestParam MultipartFile file)
             throws IOException {
-        CSVReader reader = new CSVReader(new InputStreamReader(file.getInputStream()), ';');
-        List<GenerateVouchersResponse> responses = stream(reader.spliterator(), false)
-                .map(GenerateVouchersRequest::build)
+        List<GenerateVouchersResponse> responses =
+                parseFile(file)
                 .map(this::sendVouchers)
                 .collect(toList());
         return ResponseEntity.ok(responses);
     }
 
+    private Stream<GenerateVouchersRequest> parseFile(@RequestParam MultipartFile file) throws IOException {
+        CSVReader reader = new CSVReader(new InputStreamReader(file.getInputStream()), ';');
+        return stream(reader.spliterator(), false)
+                .map(GenerateVouchersRequest::build);
+    }
+
     private GenerateVouchersResponse sendVouchers(GenerateVouchersRequest registerRequest) {
         long successCount = IntStream.range(0, registerRequest.count)
-                .mapToObj((it) -> sendVouchers(registerRequest.buyerEmail))
+                .mapToObj(it -> registerRequest.buyerEmail)
+                .map(this::createVoucher)
+                .map(this::sendVoucher)
                 .filter(SUCCESS::equals)
                 .count();
         return new GenerateVouchersResponse(registerRequest, (int) successCount);
 
     }
 
-    private VoucherStatus sendVouchers(String mail) {
+    private VoucherStatus sendVoucher(Voucher voucher) {
         try {
-            Voucher voucher = service.generateVoucher(mail);
-            sender.send("pre-registration", new MessageInfo().setEmail(mail).setToken(voucher.getId()));
-            voucher.setEmailSent(true);
+            sender.send("pre-registration", new MessageInfo().setEmail(voucher.getOriginalBuyer()).setToken(voucher.getId()));
+            voucher.setTicketSendDate(now());
+            service.save(voucher);
             return SUCCESS;
         } catch (Exception ex) {
             log.error("Error on sending email", ex);
@@ -69,6 +77,9 @@ public class RegistrationUploadController {
         }
     }
 
+    private Voucher createVoucher(String mail) {
+        return service.generateVoucher(mail);
+    }
 
     @Data
     @AllArgsConstructor

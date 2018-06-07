@@ -58,4 +58,8 @@ public interface UserRepository extends Repository<User, String> {
 
     @Query("SELECT u FROM User u WHERE u.participationData.arrivalDate IS NOT NULL")
     List<User> findAllPresentOnConference();
+
+    @RestResource(exported = false)
+    @Query("SELECT u FROM User u WHERE u.participationData IS NOT NULL")
+    List<User> findParticipants();
 }

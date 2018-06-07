@@ -7,6 +7,7 @@ import org.hibernate.annotations.GenericGenerator;
 import pl.confitura.jelatyna.infrastructure.db.AuditedEntity;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -19,7 +20,12 @@ public class Voucher  extends AuditedEntity {
     private String id;
 
     private String originalBuyer;
-    private boolean emailSent;
+
+    private LocalDateTime ticketSendDate;
+
+    public boolean isEmailSent() {
+        return ticketSendDate != null;
+    }
 
     public Voucher() {
     }

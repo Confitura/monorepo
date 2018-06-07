@@ -11,14 +11,12 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 import pl.confitura.jelatyna.infrastructure.security.JelatynaPrincipal;
 import pl.confitura.jelatyna.infrastructure.security.SecurityContextUtil;
 import pl.confitura.jelatyna.mail.MailSender;
 import pl.confitura.jelatyna.mail.MessageInfo;
+import pl.confitura.jelatyna.registration.demographic.DemographicDataRepository;
 import pl.confitura.jelatyna.registration.voucher.Voucher;
 import pl.confitura.jelatyna.registration.voucher.VoucherService;
 import pl.confitura.jelatyna.user.User;
@@ -26,7 +24,10 @@ import pl.confitura.jelatyna.user.UserRepository;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.stream.StreamSupport;
+
+import static java.util.stream.Collectors.toList;
 
 @RepositoryRestController
 @Slf4j
@@ -38,6 +39,16 @@ public class RegistrationController {
     private ParticipationRepository repository;
     private VoucherService voucherService;
     private TicketGenerator generator;
+    private DemographicDataRepository demographicDataRepository;
+
+    @GetMapping("/participants")
+    ResponseEntity<Iterable<Participant>> getParticipants() {
+        List<Participant> list = userRepository.findParticipants().stream()
+                .map(Participant::new)
+                .collect(toList());
+        return ResponseEntity.ok(list);
+
+    }
 
     @PostMapping("/participants/reminder")
     @PreAuthorize("@security.isAdmin()")
@@ -66,21 +77,30 @@ public class RegistrationController {
     @PostMapping("/participants")
     @Transactional
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<Object> save(@RequestBody ParticipationData participationData) {
+    public ResponseEntity<Object> save(@RequestBody RegistrationForm registrationForm) {
         JelatynaPrincipal principal = SecurityContextUtil.getPrincipal();
         User user = userRepository.findById(principal.id);
         if (user.getParticipationData() != null) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
-        if (participationData.getVoucher() != null) {
-            if (!voucherService.isValid(participationData.getVoucher())) {
+        if (registrationForm.getVoucher() != null) {
+            if (!voucherService.isValid(registrationForm.getVoucher())) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("INVALID_VOUCHER");
             }
         }
-        ParticipationData saved = repository.save(participationData.setId(null));
+        saveParticipation(registrationForm, user);
+        saveDemographic(registrationForm);
+        return ResponseEntity.ok().build();
+    }
+
+    private void saveDemographic(RegistrationForm registrationForm) {
+        demographicDataRepository.save(registrationForm.createDemographicData());
+    }
+
+    private void saveParticipation(RegistrationForm registrationForm, User user) {
+        ParticipationData saved = repository.save(registrationForm.createParticipant());
         user.setParticipationData(saved);
         userRepository.save(user);
-        return ResponseEntity.ok().build();
     }
 
 

@@ -46,10 +46,6 @@ public class ParticipationData extends AuditedEntity {
         return this.arrivalDate != null;
     }
 
-    boolean ticketNotSentYet() {
-        return this.ticketSendDate == null;
-    }
-
     boolean surveyNotSentYet() {
         return surveySendDate == null;
     }
