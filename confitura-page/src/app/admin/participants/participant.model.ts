@@ -20,3 +20,4 @@ export class Participant {
     Object.assign(this, obj);
   }
 }
+

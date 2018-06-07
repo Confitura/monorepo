@@ -11,10 +11,7 @@ export class ParticipantService {
   }
 
   getAll(): Observable<Participant[]> {
-    return this.http.get<EmbeddedParticipants>('/participants')
-      .pipe(
-        map(response => response._embedded.participationDatas)
-      );
+    return this.http.get<Participant[]>('/participants');
   }
 
 

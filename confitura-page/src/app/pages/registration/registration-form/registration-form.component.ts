@@ -13,6 +13,7 @@ export class RegistrationFormComponent {
   error: string;
 
   registrationForm: FormGroup;
+  private id: string;
 
   constructor(private service: ParticipantService,
               private route: ActivatedRoute,
@@ -22,13 +23,16 @@ export class RegistrationFormComponent {
       voucher: [null],
       sex: [null, Validators.required],
       size: [null, Validators.required],
-      mealOption: [null, Validators.required]
+      mealOption: [null, Validators.required],
+      city: [null, Validators.required],
+      experience: [null, Validators.required],
+      role: [null, Validators.required]
     });
 
-    const id = this.route.snapshot.params['id'];
+    this.id = this.route.snapshot.params['id'];
     const voucher = this.route.snapshot.params['voucher'];
-    if (id) {
-      this.service.getOne(id)
+    if (this.id) {
+      this.service.getOne(this.id)
         .pipe(
           catchError(error => {
             this.error = 'Something went wrong or your token is incorrect.' +
@@ -41,7 +45,10 @@ export class RegistrationFormComponent {
             voucher: participant.voucher.id,
             sex: participant.gender,
             size: participant.size,
-            mealOption: participant.mealOption
+            mealOption: participant.mealOption,
+            city: null,
+            experience: null,
+            role: null
           });
         });
     } else {
@@ -54,10 +61,18 @@ export class RegistrationFormComponent {
     this.submitted = true;
     if (this.registrationForm.valid) {
 
-      const model = new Participant(this.registrationForm.value);
-      if (this.registrationForm.value.voucher) {
-        model.voucher = new Voucher({id: this.registrationForm.value.voucher});
-      }
+      const value = this.registrationForm.value;
+      const model = new Participant({
+        id: this.route.snapshot.params['id'],
+        gender: value.sex,
+        size: value.size,
+        mealOption: value.mealOption,
+        voucher: this.createVoucherObject(),
+        city: value.city,
+        experience: value.experience,
+        role: value.role
+      });
+
       this.service.save(model)
         .pipe(
           catchError(error => {
@@ -70,6 +85,14 @@ export class RegistrationFormComponent {
           })
         )
         .subscribe(() => this.router.navigate(['/registration/finish']));
+    }
+  }
+
+  private createVoucherObject() {
+    if (this.registrationForm.value.voucher) {
+      return new Voucher({id: this.registrationForm.value.voucher});
+    } else {
+      return null;
     }
   }
 
@@ -87,5 +110,17 @@ export class RegistrationFormComponent {
 
   get mealOption() {
     return this.registrationForm.get('mealOption');
+  }
+
+  get city() {
+    return this.registrationForm.get('city');
+  }
+
+  get experience() {
+    return this.registrationForm.get('experience');
+  }
+
+  get role() {
+    return this.registrationForm.get('role');
   }
 }
