@@ -1,24 +1,29 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component} from '@angular/core';
 import {Participant} from '../../../admin/participants/participant.model';
 import {ParticipantService} from '../../../admin/participants/participant.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Observable} from 'rxjs/Observable';
 import {catchError} from 'rxjs/operators';
 import {Voucher} from '../../../admin/vouchers/voucher.model';
+import {Location} from '@angular/common';
 
-@Component({templateUrl: './registration-form.component.html', styleUrls: ['./registration-form.component.css']})
+@Component({
+  templateUrl: './registration-form.component.html',
+  styleUrls: ['./registration-form.component.scss']
+})
 export class RegistrationFormComponent {
   submitted = false;
   error: string;
 
   registrationForm: FormGroup;
-  private id: string;
+  private readonly id: string;
 
   constructor(private service: ParticipantService,
               private route: ActivatedRoute,
               private router: Router,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder,
+              private location: Location) {
     this.registrationForm = formBuilder.group({
       voucher: [null],
       sex: [null, Validators.required],
@@ -122,5 +127,9 @@ export class RegistrationFormComponent {
 
   get role() {
     return this.registrationForm.get('role');
+  }
+
+  cancel() {
+    this.location.back();
   }
 }

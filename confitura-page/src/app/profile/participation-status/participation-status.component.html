@@ -1,10 +1,10 @@
 <div>
-    <div *ngIf="!data">You need to <a routerLink="/registration/form">register</a> po participate in conference</div>
-    <div *ngIf="!!data && !data.voucher">
-        You need to <a [routerLink]="['/registration/form',data.id]">add voucher</a> po
-        participate in conference
-    </div>
-    <div *ngIf="!!data && !!data.voucher">
-        Looks like all setup to go and enjoy confitura!
-    </div>
+  <div *ngIf="!data">You need to <a routerLink="/registration/form">register</a> to participate in Confitura</div>
+  <div *ngIf="!!data && !data.voucher">
+    You need to <a [routerLink]="['/registration/form',data.id]">add you voucher</a> to
+    participate in Confitura
+  </div>
+  <div *ngIf="!!data && !!data.voucher">
+    Your registration status looks good! See you at Confitura.
+  </div>
 </div>
