@@ -42,7 +42,15 @@ export class ProfileEditComponent implements OnInit {
     this.submitted = true;
     if (this.isValid()) {
       this.service.save(this.model)
-        .subscribe(response => this.router.navigate([`/profile/${this.model.id}`]));
+        .subscribe(response => {
+          if (localStorage.getItem('returnUrl')) {
+            const returnUrl = localStorage.getItem('returnUrl');
+            localStorage.removeItem('returnUrl');
+            this.router.navigateByUrl(returnUrl);
+          } else {
+            this.router.navigate([`/profile/${this.model.id}`]);
+          }
+        });
     }
   }
 
