@@ -7,7 +7,7 @@
     </div>
     <cf-person-view [model]="model" (changed)="reload()"></cf-person-view>
     <cf-participation-status [model]="model" ></cf-participation-status>
-    <table class="table table-bordered table-striped">
+    <table class="table table-bordered table-striped" *ngIf="presentations">
       <tr>
         <th>title</th>
         <th class="presentations__status-column">status</th>
