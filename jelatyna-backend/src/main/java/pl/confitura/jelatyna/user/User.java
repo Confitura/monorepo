@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.persistence.*;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.rest.core.config.Projection;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -46,6 +47,8 @@ public class User extends AuditedEntity {
     @Column(name = "social_id")
     private String socialId;
 
+    private Boolean privacyPolicyAccepted = false;
+
     @OneToMany(mappedBy = "speaker")
     @JsonIgnore
     private Set<Presentation> presentations;
@@ -55,6 +58,11 @@ public class User extends AuditedEntity {
 
     @OneToOne
     private ParticipationData participationData;
+
+    public boolean isSpeaker() {
+        return presentations != null
+                && !presentations.isEmpty();
+    }
 
     public void addToPersonalAgenda(AgendaEntry agendaEntry) {
         personalAgenda.add(agendaEntry);
@@ -103,6 +111,9 @@ public class User extends AuditedEntity {
         String getPhoto();
 
         boolean isAdmin();
+
+        @Value("#{target.isSpeaker()}")
+        boolean isSpeaker();
 
         Set<Presentation> getPresentations();
     }

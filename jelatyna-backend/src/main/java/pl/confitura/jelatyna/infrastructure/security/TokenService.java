@@ -30,6 +30,7 @@ public class TokenService {
                 .setClaims(new HashMap<String, Object>() {{
                     put("isAdmin", user.isAdmin());
                     put("isVolunteer", user.isVolunteer());
+                    put("isSpeaker", user.isSpeaker());
                     put("isNew", StringUtils.isEmpty(user.getEmail()));
                 }})
                 .setId(user.getId())

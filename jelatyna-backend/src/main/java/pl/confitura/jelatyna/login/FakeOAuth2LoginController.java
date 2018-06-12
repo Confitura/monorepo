@@ -24,10 +24,12 @@ import pl.confitura.jelatyna.user.User;
 public class FakeOAuth2LoginController {
 
     private TokenService tokenService;
+    private FakeDbConfig fakeDbConfig;
 
     @Autowired
-    public FakeOAuth2LoginController(TokenService tokenService) {
+    public FakeOAuth2LoginController(TokenService tokenService, FakeDbConfig fakeDbConfig) {
         this.tokenService = tokenService;
+        this.fakeDbConfig = fakeDbConfig;
     }
 
     @GetMapping()
@@ -45,7 +47,7 @@ public class FakeOAuth2LoginController {
             @PathVariable("provider") String provider,
             @RequestParam("code") String code) {
 
-        User user = FakeDbConfig.bySystem.get(provider);
+        User user = fakeDbConfig.getBySystem(provider);
         if (user == null) {
             user = new User()
                     .setId("dHdpdHRlci9tYXJnaWVsbQ==")

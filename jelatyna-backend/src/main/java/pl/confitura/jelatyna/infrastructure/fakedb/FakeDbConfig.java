@@ -31,7 +31,7 @@ public class FakeDbConfig {
     private static User FAKE_VOLUNTEER = createFakeVolunteer();
     private static User FAKE_SPEAKER = createFakeSpeaker();
 
-    public static Map<String, User> bySystem = mapBySystem(FAKE_ADMIN,
+    private static Map<String, User> bySystem = mapBySystem(FAKE_ADMIN,
             FAKE_VOLUNTEER,
             FAKE_SPEAKER);
 
@@ -46,6 +46,14 @@ public class FakeDbConfig {
             map.put(user.getOrigin(), user);
         }
         return map;
+    }
+
+    public User getBySystem(String provider) {
+        User user = bySystem.get(provider);
+        if(user!=null && user.getId() != null){
+            return userRepository.findById(user.getId());
+        }
+        return user;
     }
 
     @Bean(initMethod = "start", destroyMethod = "stop")
