@@ -19,7 +19,7 @@ export class ParticipantService {
     return this.http.get<Participant>(`/participants/${id}`);
   }
 
-  getByUser(id: string) {
+  getByUser(id: string): Observable<Participant> {
     return this.http.get<Participant>(`/users/${id}/participationData`);
   }
 

@@ -7,6 +7,7 @@ import {Observable} from 'rxjs/Observable';
 import {catchError} from 'rxjs/operators';
 import {Voucher} from '../../../admin/vouchers/voucher.model';
 import {Location} from '@angular/common';
+import {CurrentUser} from '../../../core/security/current-user.service';
 
 @Component({
   templateUrl: './registration-form.component.html',
@@ -23,7 +24,14 @@ export class RegistrationFormComponent {
               private route: ActivatedRoute,
               private router: Router,
               private formBuilder: FormBuilder,
-              private location: Location) {
+              private location: Location,
+              private user: CurrentUser) {
+
+    if (!this.route.snapshot.params.id) {
+      this.service.getByUser(user.get().jti).subscribe(it =>
+        this.router.navigate(['/registration/form/' + it.id, route.snapshot.params])
+      );
+    }
     this.registrationForm = formBuilder.group({
       voucher: [null],
       sex: [null, Validators.required],
@@ -47,7 +55,7 @@ export class RegistrationFormComponent {
         )
         .subscribe(participant => {
           this.registrationForm.setValue({
-            voucher: participant.voucher.id,
+            voucher: participant.voucher ? participant.voucher.id : voucher,
             sex: participant.gender,
             size: participant.size,
             mealOption: participant.mealOption,
