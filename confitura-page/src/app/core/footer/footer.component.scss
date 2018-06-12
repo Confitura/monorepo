@@ -35,7 +35,7 @@
     display: flex;
     flex-direction: column;
     color: $red;
-    padding-top: 40px;
+    padding-top: 20px;
     @media all and (min-width: $size_small) {
       flex-direction: row;
     }
@@ -43,8 +43,12 @@
 
   &__link {
     color: $red;
+    &--small {
+      font-size: 1rem;
+    }
   }
-  &__email {
+  &__privacy, &__email {
+    padding-bottom: 20px;
     @media all and (min-width: $size_small) {
       padding-right: 40px;
     }

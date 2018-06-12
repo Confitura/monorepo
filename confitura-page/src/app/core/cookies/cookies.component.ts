@@ -7,13 +7,13 @@ import {Cookie} from 'ng2-cookies/ng2-cookies';
   styleUrls: ['./cookies.component.scss'],
 })
 export class CookiesComponent {
-
+  private COOKIES_NAME = 'cookies-accepted-gdpr';
   isNotAccepted() {
-    return Cookie.get('cookies-accepted') !== 'true' || false;
+    return Cookie.get(this.COOKIES_NAME) !== 'true' || false;
   }
 
   accept() {
-    Cookie.set('cookies-accepted', 'true');
+    Cookie.set(this.COOKIES_NAME, 'true');
 
   }
 

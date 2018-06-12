@@ -25,6 +25,7 @@ import {
   MatTooltipModule
 } from '@angular/material';
 import {WorkshopsComponent} from './workshops/workshops.component';
+import {PrivacyPolicyComponent} from './privacy-policy/privacy-policy.component';
 
 @NgModule({
   imports: [
@@ -59,7 +60,8 @@ import {WorkshopsComponent} from './workshops/workshops.component';
     AgendaEntryModalComponent,
     AgendaEntryComponent,
     FaqComponent,
-    WorkshopsComponent
+    WorkshopsComponent,
+    PrivacyPolicyComponent
   ],
   providers: [NewsService, OrganizerService],
   exports: [HomeComponent, AboutComponent]

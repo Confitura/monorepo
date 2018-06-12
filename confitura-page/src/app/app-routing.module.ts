@@ -11,6 +11,7 @@ import {LoginComponent} from './pages/login/login.component';
 import {FaqComponent} from './pages/faq/faq.component';
 import {WorkshopsComponent} from './pages/workshops/workshops.component';
 import {IsActiveGuard} from './v4p/IsActiveGuard';
+import {PrivacyPolicyComponent} from './pages/privacy-policy/privacy-policy.component';
 
 
 const appRoutes: Routes = [
@@ -35,6 +36,7 @@ const appRoutes: Routes = [
   {path: 'login/:origin', component: LoginComponent},
   {path: 'faq', component: FaqComponent},
   {path: 'workshops', component: WorkshopsComponent},
+  {path: 'privacy', component: PrivacyPolicyComponent},
 ];
 
 @NgModule({

@@ -1,6 +1,7 @@
 <div class="cookies" *ngIf="isNotAccepted()">
   <strong>Our website uses cookies!</strong><br/>
-  confitura.pl uses cookies to improve user experience. We also show safe and secure advertising to support this site.By using our website
-  you consent to our cookies in accordance with our Cookie Policy.
-  <a class="cookies__agree" (click)="accept()">I agree</a>
+  confitura.pl uses cookies to improve user experience. By using our website
+  you consent to the use of the cookies in accordance with our Privacy Policy. <br/>
+  For more information go <a routerLink="/privacy" class="cookies__link ">here</a>
+  <a class="pt-2 cookies__link cookies__agree" (click)="accept()">I agree</a>
 </div>
