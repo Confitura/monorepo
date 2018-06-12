@@ -46,6 +46,10 @@ export class CurrentUser {
     return this.isAvailable() && this.get().isVolunteer;
   }
 
+  isSpeaker() {
+    return this.isAvailable() && this.get().isSpeaker;
+  }
+
   isPrivileged() {
     return this.isVolunteer() || this.isAdmin();
   }

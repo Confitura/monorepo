@@ -4,6 +4,7 @@ import {FormControl} from '@angular/forms';
 import {Location} from '@angular/common';
 import {User} from '../../core/user/user.model';
 import {UserService} from '../../core/user/user.service';
+import {CurrentUser} from '../../core/security/current-user.service';
 
 @Component({
   templateUrl: './profile-edit.component.html',
@@ -18,7 +19,8 @@ export class ProfileEditComponent implements OnInit {
   constructor(private service: UserService,
               private router: Router,
               private route: ActivatedRoute,
-              private location: Location) {
+              private location: Location,
+              public currentUser: CurrentUser) {
   }
 
   ngOnInit(): void {

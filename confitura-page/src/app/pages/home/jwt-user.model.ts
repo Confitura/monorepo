@@ -3,6 +3,7 @@ export class JwtUser {
   sub: string;
   isAdmin: boolean;
   isVolunteer: boolean;
+  isSpeaker: boolean;
   isNew: boolean;
 
 }

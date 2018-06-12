@@ -10,7 +10,7 @@ import {IsAuthenticatedGuard} from './shared/is-authenticated-guard.service';
 import {SpeakerSelectComponent} from './speaker-select/speaker.multiselect.component';
 import {
   MatButtonModule, MatChipsModule, MatFormFieldModule, MatIconModule, MatInputModule, MatListModule, MatRadioModule, MatSnackBarModule,
-  MatTableModule
+  MatTableModule, MatCheckboxModule
 } from '@angular/material';
 import { CospeakersComponent } from './cospeakers/cospeakers.component';
 import { ParticipationStatusComponent } from './participation-status/participation-status.component';
@@ -27,6 +27,7 @@ import { ParticipationStatusComponent } from './participation-status/participati
     MatChipsModule,
     MatListModule,
     MatIconModule,
+    MatCheckboxModule,
     MatSnackBarModule
   ],
   declarations: [

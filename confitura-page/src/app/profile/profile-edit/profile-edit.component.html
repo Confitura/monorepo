@@ -25,29 +25,44 @@
           e-mail is <strong>required</strong>
         </mat-error>
       </mat-form-field>
-      <mat-form-field>
-        <span matPrefix>@</span>
-        <input matInput placeholder="twitter handle" type="text"
-               name="twitter" [(ngModel)]="model.twitter" #twitter="ngModel"
-               maxlength="20">
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput placeholder="github user" type="text"
-               name="github" [(ngModel)]="model.github" #github="ngModel"
-               maxlength="100">
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput placeholder="www" type="url"
-               name="www" [(ngModel)]="model.www" #www="ngModel">
-      </mat-form-field>
-      <mat-form-field>
+
+      <ng-container *ngIf="currentUser.isSpeaker() || currentUser.isPrivileged()">
+
+        <mat-form-field>
+          <span matPrefix>@</span>
+          <input matInput placeholder="twitter handle" type="text"
+                 name="twitter" [(ngModel)]="model.twitter" #twitter="ngModel"
+                 maxlength="20">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="github user" type="text"
+                 name="github" [(ngModel)]="model.github" #github="ngModel"
+                 maxlength="100">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="www" type="url"
+                 name="www" [(ngModel)]="model.www" #www="ngModel">
+        </mat-form-field>
+        <mat-form-field>
         <textarea matInput matTextareaAutosize placeholder="Bio"
                   name="bio" [(ngModel)]="model.bio" #bio="ngModel"
                   required maxlength="2000"></textarea>
-        <mat-error *ngIf="bio.hasError('required')">
-          Please tell us something about yourself!
-        </mat-error>
-      </mat-form-field>
+          <mat-error *ngIf="bio.hasError('required')">
+            Please tell us something about yourself!
+          </mat-error>
+        </mat-form-field>
+
+      </ng-container>
+      <mat-checkbox [(ngModel)]="model.privacyPolicyAccepted"
+                    #privacyPolicyAccepted="ngModel"
+                    name="privacyPolicyAccepted" required>
+        I AGREE to <a routerLink="/privacy">privacy policy</a>.
+      </mat-checkbox>
+
+      <mat-error *ngIf="privacyPolicyAccepted.hasError('required')">
+        You need to accept our policy in order to participate.
+      </mat-error>
+
       <div>
         <button mat-raised-button type="submit"
                 [disabled]="profileForm.submitted && !profileForm.form.valid">Save

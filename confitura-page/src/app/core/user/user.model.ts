@@ -11,5 +11,7 @@ export class User {
   photo: string;
   admin: boolean;
   volunteer: boolean;
+  speaker: boolean;
+  privacyPolicyAccepted: boolean;
   presentations: Presentation[];
 }
