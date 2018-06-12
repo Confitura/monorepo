@@ -28,7 +28,7 @@ export class ProfileCompleteGuard implements CanDeactivate<ProfileEditComponent>
   private isValid(user: User): boolean {
     return user.name != null &&
       user.email != null &&
-      user.bio != null;
+      (!user.speaker || user.bio != null);
   }
 
 
