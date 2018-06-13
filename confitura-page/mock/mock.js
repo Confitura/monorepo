@@ -69,16 +69,7 @@ app.get('/users/:id', (req, res) => {
   });
 });
 
-app.get('/users/:id/presentations', (req, res) => {
-  res.send({
-    _embedded: {
-      presentations: [
-        {id: '1', title: 'Hello, World!'},
-        {id: '2', title: 'Second Presentation'},
-      ]
-    }
-  });
-});
+
 let cospeakers = [
   {id: id++, name: faker.name.findName(), email: faker.internet.email(), photo: faker.image.avatar()},
   {id: id++, name: faker.name.findName(), email: faker.internet.email(), photo: faker.image.avatar()}

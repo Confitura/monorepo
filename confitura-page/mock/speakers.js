@@ -9,4 +9,14 @@ module.exports = (app) => {
       _embedded: {speakers: speakers}
     });
   });
+  app.get('/users/:id/presentations', (req, res) => {
+    res.send({
+      _embedded: {
+        presentations: [
+          {id: '1', title: 'Hello, World!'},
+          {id: '2', title: 'Second Presentation'},
+        ]
+      }
+    });
+  });
 };
