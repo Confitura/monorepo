@@ -27,9 +27,9 @@ export class UserService {
   }
 
   getAllSpeakers(): Observable<User[]> {
-    return this.http.get<EmbeddedUsers>(`/users/search/speakers`)
+    return this.http.get<EmbeddedSpeakers>(`/users/search/speakers`)
       .pipe(
-        map(response => response._embedded.users)
+        map(response => response._embedded.speakers)
       );
 
   }
@@ -48,4 +48,8 @@ export class UserService {
 
 class EmbeddedUsers {
   _embedded: { users: User[] };
+}
+
+class EmbeddedSpeakers {
+  _embedded: { speakers: User[] };
 }
