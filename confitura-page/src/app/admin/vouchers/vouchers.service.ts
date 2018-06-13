@@ -17,6 +17,10 @@ export class VouchersService {
     return this.http.get<EmbeddedVouchers>('/vouchers')
       .pipe(map(response => response._embedded.vouchers));
   }
+
+  check(id: string) {
+    return this.http.get(`/vouchers/${id}/check`);
+  }
 }
 
 class EmbeddedVouchers {

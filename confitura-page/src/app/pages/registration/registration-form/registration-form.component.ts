@@ -4,14 +4,19 @@ import {ParticipantService} from '../../../admin/participants/participant.servic
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Observable} from 'rxjs/Observable';
-import {catchError} from 'rxjs/operators';
+import {catchError, map} from 'rxjs/operators';
 import {Voucher} from '../../../admin/vouchers/voucher.model';
 import {Location} from '@angular/common';
 import {CurrentUser} from '../../../core/security/current-user.service';
+import {VouchersService} from '../../../admin/vouchers/vouchers.service';
+import {ValidationErrors} from '@angular/forms/src/directives/validators';
+import {AbstractControl} from '@angular/forms/src/model';
+import 'rxjs-compat/add/observable/of';
 
 @Component({
   templateUrl: './registration-form.component.html',
-  styleUrls: ['./registration-form.component.scss']
+  styleUrls: ['./registration-form.component.scss'],
+  providers: [VouchersService]
 })
 export class RegistrationFormComponent {
   submitted = false;
@@ -21,19 +26,14 @@ export class RegistrationFormComponent {
   private readonly id: string;
 
   constructor(private service: ParticipantService,
+              private voucherService: VouchersService,
               private route: ActivatedRoute,
               private router: Router,
               private formBuilder: FormBuilder,
-              private location: Location,
-              private user: CurrentUser) {
+              private location: Location) {
 
-    if (!this.route.snapshot.params.id) {
-      this.service.getByUser(user.get().jti).subscribe(it =>
-        this.router.navigate(['/registration/form/' + it.id, route.snapshot.params])
-      );
-    }
     this.registrationForm = formBuilder.group({
-      voucher: [null],
+      voucher: [null, null, this.voucherValid.bind(this)],
       sex: [null, Validators.required],
       size: [null, Validators.required],
       mealOption: [null, Validators.required],
@@ -43,16 +43,9 @@ export class RegistrationFormComponent {
     });
 
     this.id = this.route.snapshot.params['id'];
-    const voucher = this.route.snapshot.params['voucher'];
+    const voucher = this.route.snapshot.params['voucher'] || '';
     if (this.id) {
       this.service.getOne(this.id)
-        .pipe(
-          catchError(error => {
-            this.error = 'Something went wrong or your token is incorrect.' +
-              ' Please try again or contact us at confitura@confitura.pl';
-            return Observable.throwError(error);
-          })
-        )
         .subscribe(participant => {
           this.registrationForm.setValue({
             voucher: participant.voucher ? participant.voucher.id : voucher,
@@ -139,5 +132,22 @@ export class RegistrationFormComponent {
 
   cancel() {
     this.location.back();
+  }
+
+  voucherValid(control: AbstractControl): Observable<ValidationErrors> {
+    if (!control.value) {
+      return Observable.of(null);
+    }
+    return this.voucherService.check(control.value)
+      .pipe(
+        map(() => null),
+        catchError(error => {
+          console.log(error);
+          if (error.error === 'TAKEN') {
+            return Observable.of({voucherTaken: true});
+          } else {
+            return Observable.of({voucherInvalid: true});
+          }
+        }));
   }
 }

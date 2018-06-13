@@ -8,7 +8,15 @@
         <input matInput placeholder="voucher" type="text" id="voucher2"
                name="voucher" formControlName="voucher"
                maxlength="255">
-        <mat-hint>Correct voucher must be provided to participate in confitura</mat-hint>
+        <mat-hint *ngIf="!voucher.value">
+          Correct voucher must be provided to participate in confitura
+        </mat-hint>
+        <mat-error *ngIf="voucher?.hasError('voucherInvalid')">
+          Provided voucher is invalid
+        </mat-error>
+        <mat-error *ngIf="voucher?.hasError('voucherTaken')">
+          Provided voucher is already used
+        </mat-error>
       </mat-form-field>
 
       <label>t-shirt cut *: </label>
