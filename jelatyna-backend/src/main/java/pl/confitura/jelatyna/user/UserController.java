@@ -30,6 +30,7 @@ import com.timgroup.jgravatar.GravatarRating;
 import pl.confitura.jelatyna.infrastructure.security.Security;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
+import pl.confitura.jelatyna.user.parsonalagenda.Speaker;
 
 @RepositoryRestController
 public class UserController {
@@ -94,7 +95,8 @@ public class UserController {
                     return users.stream();
                 })
                 .distinct()
-                .map(user -> new Resource<>(user))
+                .map(Speaker::new)
+                .map(speaker -> new Resource<>(speaker))
                 .collect(Collectors.toSet());
         return ResponseEntity.ok(new Resources<>(speakers));
     }
