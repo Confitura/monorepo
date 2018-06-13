@@ -1,5 +1,5 @@
 <div>
-  <div *ngIf="!data">You need to <a routerLink="/registration/form">register</a> to participate in Confitura</div>
+  <div *ngIf="!data">You need to <a routerLink="/registration/form">register your voucher</a> to participate in Confitura</div>
   <div *ngIf="!!data && !data.voucher">
     You need to <a [routerLink]="['/registration/form',data.id]">add you voucher</a> to
     participate in Confitura
