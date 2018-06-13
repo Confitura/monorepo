@@ -2,8 +2,12 @@ package pl.confitura.jelatyna.registration.voucher;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import pl.confitura.jelatyna.infrastructure.security.JelatynaPrincipal;
+import pl.confitura.jelatyna.infrastructure.security.SecurityContextUtil;
 import pl.confitura.jelatyna.registration.ParticipationData;
 import pl.confitura.jelatyna.registration.ParticipationRepository;
+import pl.confitura.jelatyna.user.User;
+import pl.confitura.jelatyna.user.UserRepository;
 
 import java.util.List;
 
@@ -13,12 +17,22 @@ public class VoucherService {
 
     private final VoucherRepository voucherRepository;
     private final ParticipationRepository participationRepository;
+    private final UserRepository userRepository;
 
     public Voucher generateVoucher(String originalBuyer) {
         return voucherRepository.save(new Voucher().setOriginalBuyer(originalBuyer));
     }
 
     public boolean isValid(Voucher voucher) {
+        if (voucher == null || voucher.getId() == null) {
+            return false;
+        } else {
+            return voucherRepository.existsById(voucher.getId());
+        }
+    }
+
+    public boolean isValid(String voucherId) {
+        Voucher voucher = voucherRepository.findById(voucherId);
         if (voucher == null || voucher.getId() == null) {
             return false;
         } else {
@@ -44,5 +58,18 @@ public class VoucherService {
 
     public void save(Voucher voucher) {
         voucherRepository.save(voucher);
+    }
+
+    public boolean canUseVoucher(String voucherId) {
+        JelatynaPrincipal principal = SecurityContextUtil.getPrincipal();
+        User user = userRepository.findById(principal.id);
+        Voucher voucher = voucherRepository.findById(voucherId);
+
+        if (user == null || user.getParticipationData() == null) {
+            return canAssign(null, voucher);
+        } else {
+            String participationDataId = user.getParticipationData().getId();
+            return canAssign(participationDataId, voucher);
+        }
     }
 }
