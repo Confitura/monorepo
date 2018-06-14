@@ -20,7 +20,7 @@ export class OrganizerService {
   private getAllFor(type: string): Observable<Person[]> {
     return this.http.get<EmbeddedUsers>(`/users/search/${type}`)
       .pipe(
-        map(result => result._embedded.users),
+        map(result => result._embedded.publicUsers),
         map((persons: Person[]) => persons)
       );
   }
