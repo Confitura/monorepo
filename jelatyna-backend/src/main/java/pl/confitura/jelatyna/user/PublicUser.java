@@ -1,10 +1,9 @@
-package pl.confitura.jelatyna.user.parsonalagenda;
+package pl.confitura.jelatyna.user;
 
 import lombok.Data;
-import pl.confitura.jelatyna.user.User;
 
 @Data
-public class Speaker {
+public class PublicUser {
     private String name;
     private String bio;
     private String twitter;
@@ -12,7 +11,7 @@ public class Speaker {
     private String www;
     private String photo;
 
-    public Speaker(User user) {
+    public PublicUser(User user) {
         this.name = user.getName();
         this.bio = user.getBio();
         this.twitter = user.getTwitter();

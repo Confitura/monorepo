@@ -30,7 +30,6 @@ import com.timgroup.jgravatar.GravatarRating;
 import pl.confitura.jelatyna.infrastructure.security.Security;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
-import pl.confitura.jelatyna.user.parsonalagenda.Speaker;
 
 @RepositoryRestController
 public class UserController {
@@ -53,6 +52,19 @@ public class UserController {
         setDefaultPhotoFor(current);
         setIdIfManuallyCreated(current);
         return ResponseEntity.ok(new Resource<>(repository.save(current)));
+    }
+
+    @GetMapping("/users/{id}")
+    @PreAuthorize("@security.isOwner(#id) || @security.isAdmin()")
+    public ResponseEntity<?> getById(@PathVariable String id) {
+        User user = repository.findById(id);
+        return ResponseEntity.ok(new Resource<>(user));
+    }
+
+    @GetMapping("/users/{id}/public")
+    public ResponseEntity<?> getPublicById(@PathVariable String id) {
+        User user = repository.findById(id);
+        return ResponseEntity.ok(new Resource<>(new PublicUser(user)));
     }
 
     private User updateUser(@RequestBody User user) {
@@ -106,7 +118,7 @@ public class UserController {
                     return users.stream();
                 })
                 .distinct()
-                .map(Speaker::new)
+                .map(PublicUser::new)
                 .map(speaker -> new Resource<>(speaker))
                 .collect(Collectors.toSet());
         return ResponseEntity.ok(new Resources<>(speakers));
