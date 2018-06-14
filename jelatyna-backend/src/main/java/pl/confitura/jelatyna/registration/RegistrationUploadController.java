@@ -38,7 +38,6 @@ public class RegistrationUploadController {
 
     @PostMapping("/participants/upload")
     @PreAuthorize("@security.isAdmin()")
-    @Transactional
     public ResponseEntity<List<GenerateVouchersResponse>> upload(@RequestParam MultipartFile file)
             throws IOException {
         List<GenerateVouchersResponse> responses =
@@ -65,7 +64,8 @@ public class RegistrationUploadController {
 
     }
 
-    private VoucherStatus sendVoucher(Voucher voucher) {
+    @Transactional
+    VoucherStatus sendVoucher(Voucher voucher) {
         try {
             sender.send("pre-registration", new MessageInfo().setEmail(voucher.getOriginalBuyer()).setToken(voucher.getId()));
             voucher.setTicketSendDate(now());
@@ -77,7 +77,8 @@ public class RegistrationUploadController {
         }
     }
 
-    private Voucher createVoucher(String mail) {
+    @Transactional
+    Voucher createVoucher(String mail) {
         return service.generateVoucher(mail);
     }
 
