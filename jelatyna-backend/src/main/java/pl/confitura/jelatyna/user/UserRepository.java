@@ -2,7 +2,6 @@ package pl.confitura.jelatyna.user;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
@@ -30,19 +29,10 @@ public interface UserRepository extends Repository<User, String> {
     @RestResource(exported = false)
     Collection<User> findAdmins();
 
-    @RestResource(path = "admins", rel = "admins")
-    default Collection<PublicUser> doFindAdmins() {
-        return findAdmins().stream().map(PublicUser::new).collect(Collectors.toSet());
-    }
-
     @Query("FROM User WHERE isVolunteer = true")
     @RestResource(exported = false)
     Collection<User> findVolunteers();
 
-    @RestResource(path = "volunteers", rel = "volunteers")
-    default Collection<PublicUser> doFindVolunteers() {
-        return findVolunteers().stream().map(PublicUser::new).collect(Collectors.toSet());
-    }
 
     @PreAuthorize("@security.isAdmin()")
     Iterable<User> findAll();

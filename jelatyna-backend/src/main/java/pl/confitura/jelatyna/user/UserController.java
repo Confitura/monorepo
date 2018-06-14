@@ -67,6 +67,18 @@ public class UserController {
         return ResponseEntity.ok(new Resource<>(new PublicUser(user)));
     }
 
+    @GetMapping("/users/search/admins")
+    public ResponseEntity<?> getAdmins() {
+        Set<PublicUser> admins = repository.findAdmins().stream().map(PublicUser::new).collect(Collectors.toSet());
+        return ResponseEntity.ok(new Resources<>(admins));
+    }
+
+    @GetMapping("/users/search/volunteers")
+    public ResponseEntity<?> getVolunteers() {
+        Set<PublicUser> volunteers = repository.findVolunteers().stream().map(PublicUser::new).collect(Collectors.toSet());
+        return ResponseEntity.ok(new Resources<>(volunteers));
+    }
+
     private User updateUser(@RequestBody User user) {
         if (isEmpty(user.getId())) {
             return user;
