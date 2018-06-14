@@ -49,9 +49,20 @@ public class UserController {
     @PostMapping("/users")
     @PreAuthorize("@security.isOwner(#user.id)")
     public ResponseEntity<?> save(@RequestBody User user) {
-        setDefaultPhotoFor(user);
-        setIdIfManuallyCreated(user);
-        return ResponseEntity.ok(new Resource<>(repository.save(user)));
+        User current = updateUser(user);
+        setDefaultPhotoFor(current);
+        setIdIfManuallyCreated(current);
+        return ResponseEntity.ok(new Resource<>(repository.save(current)));
+    }
+
+    private User updateUser(@RequestBody User user) {
+        if (isEmpty(user.getId())) {
+            return user;
+        } else {
+            User current = repository.findById(user.getId());
+            current.updateFields(user);
+            return current;
+        }
     }
 
     private void setIdIfManuallyCreated(@RequestBody User user) {

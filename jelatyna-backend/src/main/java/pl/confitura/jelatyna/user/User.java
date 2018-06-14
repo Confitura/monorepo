@@ -82,6 +82,18 @@ public class User extends AuditedEntity {
         personalAgenda.remove(entry);
     }
 
+    public void updateFields(User user) {
+        name = user.name;
+        email = user.email;
+        bio = user.bio;
+        username = user.username;
+        twitter = user.twitter;
+        github = user.github;
+        www = user.www;
+        photo = user.photo;
+        privacyPolicyAccepted = user.privacyPolicyAccepted;
+    }
+
 //    @ManyToMany(mappedBy = "cospeakers")
 //    @JsonIgnore
 //    private Set<Presentation> cospeaking;
