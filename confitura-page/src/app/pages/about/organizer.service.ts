@@ -28,5 +28,5 @@ export class OrganizerService {
 }
 
 class EmbeddedUsers {
-  _embedded: { users: Person[] };
+  _embedded: { publicUsers: Person[] };
 }
