@@ -56,6 +56,9 @@ export class RegistrationFormComponent {
             experience: null,
             role: null
           });
+          this.registrationForm.get('city').setValidators(null);
+          this.registrationForm.get('experience').setValidators(null);
+          this.registrationForm.get('role').setValidators(null);
         });
     } else {
       this.registrationForm.get('voucher').setValue(voucher);
