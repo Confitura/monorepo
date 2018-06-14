@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Participant} from '../../../admin/participants/participant.model';
 import {ParticipantService} from '../../../admin/participants/participant.service';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -12,13 +12,14 @@ import {VouchersService} from '../../../admin/vouchers/vouchers.service';
 import {ValidationErrors} from '@angular/forms/src/directives/validators';
 import {AbstractControl} from '@angular/forms/src/model';
 import 'rxjs-compat/add/observable/of';
+import {UserService} from '../../../core/user/user.service';
 
 @Component({
   templateUrl: './registration-form.component.html',
   styleUrls: ['./registration-form.component.scss'],
   providers: [VouchersService]
 })
-export class RegistrationFormComponent {
+export class RegistrationFormComponent implements OnInit {
   submitted = false;
   error: string;
 
@@ -30,6 +31,8 @@ export class RegistrationFormComponent {
               private route: ActivatedRoute,
               private router: Router,
               private formBuilder: FormBuilder,
+              private currentUser: CurrentUser,
+              private userService: UserService,
               private location: Location) {
 
     this.registrationForm = formBuilder.group({
@@ -152,5 +155,10 @@ export class RegistrationFormComponent {
             return Observable.of({voucherInvalid: true});
           }
         }));
+  }
+
+  ngOnInit(): void {
+    this.userService.getBy(this.currentUser.get().jti)
+      .subscribe(() => console.log('loaded'));
   }
 }
