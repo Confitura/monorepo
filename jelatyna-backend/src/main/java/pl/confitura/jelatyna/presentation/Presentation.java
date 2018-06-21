@@ -23,6 +23,10 @@ import pl.confitura.jelatyna.user.User;
 @EqualsAndHashCode(exclude = {"speaker", "ratings"})
 @Accessors(chain = true)
 public class Presentation {
+
+    public static final String STATUS_ACCEPTED = "accepted";
+    public static final String STATUS_REPORTED = "reported";
+
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
@@ -60,5 +64,17 @@ public class Presentation {
 
     boolean hasCospeaker(@PathVariable String email) {
         return getCospeakers().stream().anyMatch(it -> it.getEmail().equalsIgnoreCase(email));
+    }
+
+    public boolean isAccepted() {
+        return STATUS_ACCEPTED.equals(status);
+    }
+
+    public void setAccepted(boolean accepted) {
+        if (accepted) {
+            status = STATUS_ACCEPTED;
+        } else {
+            status = STATUS_REPORTED;
+        }
     }
 }

@@ -64,6 +64,11 @@ public class User extends AuditedEntity {
                 && !presentations.isEmpty();
     }
 
+    public boolean isParticipant() {
+        return participationData != null
+                && participationData.hasVoucher();
+    }
+
     public void addToPersonalAgenda(AgendaEntry agendaEntry) {
         personalAgenda.add(agendaEntry);
     }
@@ -92,6 +97,10 @@ public class User extends AuditedEntity {
         www = user.www;
         photo = user.photo;
         privacyPolicyAccepted = user.privacyPolicyAccepted;
+    }
+
+    public boolean hasAcceptedPresentation() {
+        return presentations.stream().anyMatch(Presentation::isAccepted);
     }
 
 //    @ManyToMany(mappedBy = "cospeakers")

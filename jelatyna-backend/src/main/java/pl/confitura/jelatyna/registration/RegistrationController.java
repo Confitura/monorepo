@@ -126,15 +126,18 @@ public class RegistrationController {
     @PreAuthorize("@security.isVolunteer()")
     @Transactional
     public ResponseEntity<Object> arrived(@PathVariable String id, @AuthenticationPrincipal Authentication authentication) {
-        ParticipationData participationData = repository.findById(id);
-        if (participationData == null) {
+        User user = userRepository.findById(id);
+        if (user == null) {
             return ResponseEntity.notFound().build();
+        } else if (!user.isParticipant()) {
+            return ResponseEntity.badRequest().body("USER NOT REGISTERED");
         } else {
-            return arrived(participationData, (JelatynaPrincipal) authentication.getPrincipal());
+            return arrived(user, (JelatynaPrincipal) authentication.getPrincipal());
         }
     }
 
-    private ResponseEntity<Object> arrived(ParticipationData participationData, JelatynaPrincipal principal) {
+    private ResponseEntity<Object> arrived(User user, JelatynaPrincipal principal) {
+        ParticipationData participationData = user.getParticipationData();
         HttpStatus status = HttpStatus.OK;
         if (participationData.alreadyArrived()) {
             status = HttpStatus.CONFLICT;
@@ -143,7 +146,7 @@ public class RegistrationController {
                     .setArrivalDate(LocalDateTime.now())
                     .setRegisteredBy(principal.getId());
         }
-        return ResponseEntity.status(status).body(participationData);
+        return ResponseEntity.status(status).body(new Participant(user));
     }
 
 

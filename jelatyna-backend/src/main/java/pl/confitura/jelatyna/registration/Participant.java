@@ -21,10 +21,22 @@ class Participant implements Serializable {
     private LocalDateTime ticketSendDate;
     private LocalDateTime surveySendDate;
 
+    private boolean isAdmin;
+    private boolean isVolunteer;
+    private boolean isSpeaker;
+    private boolean hasAcceptedPresentation;
+    private boolean isParticipant;
+
     public Participant(User user) {
         this.id = user.getId();
         this.name = user.getName();
         this.email = user.getEmail();
+        this.isAdmin = user.isAdmin();
+        this.isVolunteer = user.isVolunteer();
+        this.isSpeaker = user.isSpeaker();
+        this.hasAcceptedPresentation = user.hasAcceptedPresentation();
+        this.isParticipant = user.isParticipant();
+
         ParticipationData data = user.getParticipationData();
         if (data != null) {
             this.size = data.getSize();

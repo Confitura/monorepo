@@ -29,7 +29,7 @@ public class PresentationController {
     @PostMapping("/presentations/{presentationId}/accept")
     @Transactional
     public ResponseEntity<?> accept(@PathVariable String presentationId) {
-        this.repository.findById(presentationId).setStatus("accepted");
+        this.repository.findById(presentationId).setAccepted(true);
         return ResponseEntity.ok().build();
     }
 
@@ -37,7 +37,7 @@ public class PresentationController {
     @PostMapping("/presentations/{presentationId}/unaccept")
     @Transactional
     public ResponseEntity<?> unaccept(@PathVariable String presentationId) {
-        this.repository.findById(presentationId).setStatus("reported");
+        this.repository.findById(presentationId).setAccepted(false);
         return ResponseEntity.ok().build();
 
     }

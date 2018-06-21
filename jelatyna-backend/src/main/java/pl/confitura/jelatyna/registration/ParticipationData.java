@@ -49,4 +49,8 @@ public class ParticipationData extends AuditedEntity {
     boolean surveyNotSentYet() {
         return surveySendDate == null;
     }
+
+    public boolean hasVoucher() {
+        return voucher != null;
+    }
 }
