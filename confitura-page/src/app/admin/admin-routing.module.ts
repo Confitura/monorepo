@@ -11,6 +11,7 @@ import {IsPrivilegedGuard} from './is-privileged-guard.service';
 import {ProfileViewComponent} from '../profile/profile-view/profile-view.component';
 import {VoteListComponent} from './votes/vote-list/vote-list.component';
 import {VouchersComponent} from './vouchers/vouchers-component/vouchers.component';
+import {DashboardComponent} from './dashboard/dashboard.component';
 
 const routes: Routes = [
 
@@ -22,6 +23,7 @@ const routes: Routes = [
     path: '',
     canActivateChild: [IsPrivilegedGuard],
     children: [
+      {path: 'dashboard', component: DashboardComponent},
       {path: 'scanner', component: ScannerComponent},
       {path: 'scanner/:id', component: ScannerComponent},
       {path: 'users', component: UserListComponent, canActivate: [IsAdminGuard]},

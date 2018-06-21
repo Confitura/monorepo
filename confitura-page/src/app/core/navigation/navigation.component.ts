@@ -26,6 +26,7 @@ export class NavigationComponent implements OnInit {
         {label: 'manage schedule', url: '/admin/agenda', show: () => this.currentUser.isAdmin()},
         {label: 'users', url: '/admin/users', show: () => this.currentUser.isAdmin()},
         {label: 'votes', url: '/admin/votes', show: () => this.currentUser.isAdmin()},
+        {label: 'dashboard', url: '/admin/dashboard', show: () => this.currentUser.isAdmin()},
       ]
     },
     {label: 'workshops', url: '/workshops'},
