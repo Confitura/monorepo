@@ -4249,6 +4249,10 @@ ng2-file-upload@^1.2.1:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/ng2-file-upload/-/ng2-file-upload-1.3.0.tgz#d90f8f568f62383462175f8bdfa0096b131f277a"
 
+ng2-google-charts@^3.4.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/ng2-google-charts/-/ng2-google-charts-3.4.0.tgz#9e3770fbed673fea56e12b22983675c387e8d131"
+
 ng2-material-dropdown@0.10.0:
   version "0.10.0"
   resolved "https://registry.yarnpkg.com/ng2-material-dropdown/-/ng2-material-dropdown-0.10.0.tgz#c524937ac0e9ad833f5dcecd9c98f64aca0519cc"

@@ -26,7 +26,6 @@ import {
   MatTableModule,
   MatDialogModule,
   MatSelectModule,
-  MatCardModule,
   MatProgressSpinnerModule
 } from '@angular/material';
 import {VoteListComponent} from './votes/vote-list/vote-list.component';
