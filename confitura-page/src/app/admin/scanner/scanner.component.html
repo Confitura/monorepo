@@ -2,14 +2,33 @@
   <div class="row-1140">
     <div class="alert alert-danger text-center" role="alert" *ngIf="error">{{error}}</div>
     <div class="alert alert-success text-center" role="alert" *ngIf="!error  && model != null">All good!</div>
-    <dl *ngIf="model">
-      <dt>name</dt>
-      <dd>{{model.name}}</dd>
-      <dt>e-mail</dt>
-      <dd>{{model.email}}</dd>
-      <dt>t-shirt size</dt>
-      <dd>{{model.size}}</dd>
-    </dl>
+      <mat-card class="example-card"
+                *ngIf="model"
+                [class.speaker]="model.speaker && model.hasAcceptedPresentation"
+                [class.admin]="model.admin"
+                [class.volunteer]="model.volunteer"
+                [class.participant]="model.participant">
+
+          <mat-card-header>
+              <mat-card-title>
+                  <span *ngIf="model.speaker && model.hasAcceptedPresentation">Prelegent </span>
+                  <span *ngIf="model.admin">Admin </span>
+                  <span *ngIf="model.volunteer">Wolontariusz </span>
+                  <span *ngIf="model.participant">Uczestnik </span>
+              </mat-card-title>
+              <mat-card-subtitle>
+                  {{model.name}} {{model.email}}
+              </mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+              t-shirt
+
+              <div class="tshirt">
+              {model.gender, select, M {Męska} other {Damska}}
+              {{model.size}}
+              </div>
+          </mat-card-content>
+      </mat-card>
   </div>
   <a class="btn btn-lg btn-default btn-scan" href="zxing://scan/?ret=https://confitura.pl/admin/scanner/{CODE}&SCAN_FORMATS=QR_CODE">
     <span class="fa fa-qrcode fa-4x"></span>

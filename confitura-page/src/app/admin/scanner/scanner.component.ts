@@ -4,6 +4,7 @@ import {ParticipantService} from '../participants/participant.service';
 import {Participant} from '../participants/participant.model';
 import {Observable} from 'rxjs/Observable';
 import {catchError} from 'rxjs/operators';
+import {of} from 'rxjs/internal/observable/of';
 
 @Component({
   templateUrl: './scanner.component.html',
@@ -19,8 +20,11 @@ export class ScannerComponent {
       service.arrived(id)
         .pipe(
           catchError(error => {
+            if (error.status === 409) {
+              return of({status: 409, json: error.error});
+            }
             this.error = 'Invalid token!';
-            return Observable.throw(error);
+            return Observable.throwError(error);
           })
         )
         .subscribe((response: { status: number, json: Participant }) => {

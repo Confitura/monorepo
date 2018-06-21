@@ -25,6 +25,7 @@ import {
   MatTableModule,
   MatDialogModule,
   MatSelectModule,
+  MatCardModule,
   MatProgressSpinnerModule
 } from '@angular/material';
 import {VoteListComponent} from './votes/vote-list/vote-list.component';
@@ -51,6 +52,7 @@ import { MailModalComponent } from './users/mailing/mail-modal/mail-modal.compon
     MatSortModule,
     MatDialogModule,
     MatSelectModule,
+    MatCardModule,
     MatProgressSpinnerModule
   ],
   declarations: [

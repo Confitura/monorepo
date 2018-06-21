@@ -13,4 +13,28 @@
     right: 30px;
 
   }
+
+  mat-card {
+    padding: 5px;
+  }
+  mat-card.participant {
+    background-color: #00efec;
+  }
+  mat-card.speaker {
+    background-color: #5def00;
+  }
+  mat-card.volunteer {
+    background-color: #ff0040;
+  }
+  mat-card.admin {
+    background-color: #ff0040;
+  }
+
+  mat-card-content {
+    background-color: white;
+    padding: 5px;
+    .tshirt {
+      font-size: 3em;
+    }
+  }
 }

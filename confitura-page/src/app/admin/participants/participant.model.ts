@@ -15,6 +15,11 @@ export class Participant {
   registrationDate: string;
   ticketSendDate: string;
   mealOption: string;
+  admin: boolean;
+  volunteer: boolean;
+  speaker: boolean;
+  hasAcceptedPresentation: boolean;
+  participant: boolean;
 
   public constructor(obj: any = {}) {
     Object.assign(this, obj);
