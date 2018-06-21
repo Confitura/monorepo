@@ -65,13 +65,16 @@ public class FakeDbConfig {
 
     @PostConstruct
     public void createFakeUsers() {
-        userRepository.save(FAKE_ADMIN);
+        if (userRepository.findById(FAKE_ADMIN.getId()) == null) {
+            userRepository.save(FAKE_ADMIN);
+        }
         userRepository.save(FAKE_VOLUNTEER);
         userRepository.save(FAKE_SPEAKER);
 
     }
 
     private static User createFakeAdmin() {
+
         return new User()
                 .setId(FAKE_ADMIN_ID)
                 .setOrigin(GoogleService.SYSTEM)
