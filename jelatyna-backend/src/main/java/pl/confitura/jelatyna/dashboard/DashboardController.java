@@ -160,7 +160,7 @@ class DashboardController {
         List<Instant> fetch = query.select(participationData.createdDate)
                 .from(participationData)
                 .where(participationData.voucher.isNotNull())
-                .orderBy(participationData.arrivalDate.asc())
+                .orderBy(participationData.createdDate.asc())
                 .fetch();
 
         AtomicInteger atomicInteger = new AtomicInteger();
