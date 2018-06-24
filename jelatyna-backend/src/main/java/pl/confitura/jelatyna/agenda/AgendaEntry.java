@@ -16,6 +16,12 @@ import org.hibernate.annotations.GenericGenerator;
 
 import lombok.Data;
 import pl.confitura.jelatyna.presentation.Presentation;
+import pl.confitura.jelatyna.user.PublicUser;
+
+import java.util.Collections;
+import java.util.Set;
+
+import static java.util.stream.Collectors.toSet;
 
 @Entity
 @Table(
@@ -49,5 +55,23 @@ public class AgendaEntry {
 
     public int getTimeSlotOrder(){
         return timeSlot.getDisplayOrder();
+    }
+
+    public PublicUser getSpeaker() {
+        if (presentation == null) {
+            return null;
+        } else {
+            return new PublicUser(presentation.getSpeaker());
+        }
+    }
+
+    public Set<PublicUser> getCospeakers() {
+        if (presentation == null || presentation.getCospeakers().isEmpty()) {
+            return Collections.emptySet();
+        } else {
+            return presentation.getCospeakers().stream()
+                    .map(PublicUser::new)
+                    .collect(toSet());
+        }
     }
 }
