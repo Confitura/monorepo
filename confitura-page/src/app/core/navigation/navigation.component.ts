@@ -14,6 +14,7 @@ export class NavigationComponent implements OnInit {
   menu: MenuItem[] = [
     {label: 'about us', url: '/about'},
     {label: 'partners', url: '/partners'},
+    {label: 'schedule', url: '/schedule'},
     {label: 'presentations', url: '/presentations'},
     {label: 'speakers', url: '/speakers'},
     {label: 'profile', action: () => this.goToProfile(), show: () => this.loggedIn},
@@ -30,9 +31,9 @@ export class NavigationComponent implements OnInit {
       ]
     },
     {label: 'workshops', url: '/workshops'},
-    {label: 'speaker\'s zone', url: '/login', show: () => !this.loggedIn},
+    {label: 'my account', url: '/login', show: () => !this.loggedIn},
     {label: 'logout', action: () => this.logout(), show: () => this.loggedIn},
-    {label: 'FAQ', url: '/faq', clazz: 'pink'},
+    {label: 'FAQ', url: '/faq'},
     {label: 'Vote 4 Papers', url: '/v4p', clazz: 'pink', show: () => false},
   ];
 

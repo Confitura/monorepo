@@ -47,7 +47,7 @@
       font-size: 1rem;
     }
   }
-  &__privacy, &__email {
+  &__privacy, &__email, &__link-item {
     padding-bottom: 20px;
     @media all and (min-width: $size_small) {
       padding-right: 40px;

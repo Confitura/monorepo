@@ -33,7 +33,7 @@ import { VouchersComponent } from './vouchers/vouchers-component/vouchers.compon
 import { MailService } from './users/mailing/mail.service';
 import { MailModalComponent } from './users/mailing/mail-modal/mail-modal.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
-import { Ng2GoogleChartsModule } from 'ng2-google-charts';
+import {Ng2GoogleChartsModule} from 'ng2-google-charts';
 
 
 @NgModule({

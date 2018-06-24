@@ -17,7 +17,6 @@ export class AgendaEntryComponent implements OnInit {
   @Input() timeSlot: TimeSlot = null;
   @Input() room: Room = null;
   @Input() presentationPicker: PresentationPickerComponent;
-
   @Output() changed: EventEmitter<any> = new EventEmitter();
 
   presentation: Presentation;

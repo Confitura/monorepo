@@ -30,9 +30,7 @@ export class PresentationComponent implements OnInit {
   ngOnInit() {
   }
 
-  isAccepted(presentation: Presentation) {
-    return presentation.status === 'accepted';
-  }
+
 
   accept(presentation: Presentation) {
     this.service.accept(presentation)

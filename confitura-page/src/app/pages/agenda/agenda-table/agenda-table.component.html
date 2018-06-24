@@ -1,0 +1,40 @@
+<div class="agenda-table" *ngIf="selectedRooms.length > 0">
+  <div class="agenda-table__content agenda-table__content--empty"></div>
+  <div class="agenda-table__content agenda-table__content agenda-table__room-selector" *ngIf="selectedRooms.length == 1">
+    <mat-form-field>
+      <mat-select [(value)]="selectedRoom">
+        <mat-option *ngFor="let room of rooms" [value]="room">
+          {{ room.label }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <ng-container *ngIf="selectedRooms.length">
+    <div class="agenda-table__content agenda-table__content--room-name" *ngFor="let room of selectedRooms">
+      {{room.label}}
+    </div>
+  </ng-container>
+  <ng-container
+    *ngFor="let slot of slots; index as slotIndex;  odd as isOdd; even as isEven "
+    [class.row--white]="(slotIndex%2)==0"
+    [class.row--beige]="(slotIndex%2)!=0">
+    <div class="agenda-table__content agenda-table__time">{{getTime(slot.start) | date: 'HH:mm '}} - {{getTime(slot.end) |
+      date: 'HH:mm '}}
+    </div>
+
+    <div *ngIf="slot.forAllRooms; then singleSlot else perRoom; index"></div>
+    <ng-template #singleSlot>
+      <div class="agenda-table__content agenda-table__content--slot agenda-table__content--columns-{{selectedRooms.length}}">
+        <cf-agenda-entry-display class="agenda-table__entry" [entry]="agenda[slotIndex][0]"
+                                 *ngIf="agenda[slotIndex].length>0"></cf-agenda-entry-display>
+      </div>
+    </ng-template>
+    <ng-template #perRoom>
+      <div class="agenda-table__content agenda-table__content--slot"
+           *ngFor="let room of selectedRooms; index as roomIndex">
+        <cf-agenda-entry-display class="agenda-table__entry" [entry]="agenda[slotIndex][rooms.indexOf(room)]"></cf-agenda-entry-display>
+      </div>
+    </ng-template>
+  </ng-container>
+</div>
+

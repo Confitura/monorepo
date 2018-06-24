@@ -29,6 +29,7 @@ import {
 import {PresentationComponent} from './presentation/presentation.component';
 import { LikeButtonComponent } from './presentation/like/like-button/like-button.component';
 import {LikeService} from './presentation/like/like.service';
+import { PresentationMetadataComponent } from './presentation/presentation-metadata/presentation-metadata.component';
 
 @NgModule({
   imports: [
@@ -58,7 +59,8 @@ import {LikeService} from './presentation/like/like.service';
     PageHeaderComponent,
     BackButtonComponent,
     PresentationComponent,
-    LikeButtonComponent
+    LikeButtonComponent,
+    PresentationMetadataComponent
   ],
   exports: [
     CommonModule,
@@ -79,7 +81,8 @@ import {LikeService} from './presentation/like/like.service';
     PageHeaderComponent,
     BackButtonComponent,
     PresentationComponent,
-    MatTooltipModule
+    MatTooltipModule,
+    PresentationMetadataComponent
   ],
   providers: [PersonModalService, LikeService]
 })

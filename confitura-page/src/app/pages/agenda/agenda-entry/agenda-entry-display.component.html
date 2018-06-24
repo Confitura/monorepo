@@ -1,0 +1,20 @@
+<div *ngIf="entry.presentationId">
+  <div class="agenda-entry__title">
+    <span *ngIf="entry.presentation.language=='english'" class="small">[en]</span>
+    <a href="/presentations#{{entry.presentation.id}}">
+      {{entry.presentation.title}}
+    </a>
+  </div>
+
+  <div class="agenda-entry__speakers">
+    <span class=agenda-entry__speaker>{{entry.speaker.name}}</span>
+    <span class="agenda-entry__speaker" *ngFor="let speaker of entry.cospeakers">
+            {{speaker.name}}
+        </span>
+  </div>
+  <!--<cf-presentation-metadata [presentation]="entry.presentation"></cf-presentation-metadata>-->
+</div>
+<div *ngIf="entry.label">
+  <div class="agenda-title">{{entry.label}}</div>
+</div>
+

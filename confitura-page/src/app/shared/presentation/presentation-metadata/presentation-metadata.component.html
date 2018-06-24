@@ -1,0 +1,19 @@
+<div class="presentation__metadata">
+  <div class="presentation__language">
+    <mat-icon class="presentation__icon" matTooltip="language">language</mat-icon>
+    {{presentation.language}}
+  </div>
+  <div class="presentation__level">
+    <mat-icon class="presentation__icon" matTooltip="level">school</mat-icon>
+    {{presentation.level}}
+  </div>
+  <div class="presentation__tags" *ngIf="presentation.tags.length != 0">
+    <mat-icon class="presentation__icon" matTooltip="tags">local_offer</mat-icon>
+    <span *ngFor="let tag of  presentation.tags" class="presentation__tag"> {{tag.name}}</span>
+  </div>
+  <ng-container *cfAdmin>
+    <mat-chip-list *ngIf="isAccepted(presentation)">
+      <mat-chip color="primary" [selected]="true">accepted</mat-chip>
+    </mat-chip-list>
+  </ng-container>
+</div>

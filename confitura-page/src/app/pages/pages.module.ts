@@ -14,7 +14,7 @@ import {PartnerBannerComponent} from './partners/partner-banner/partner-banner.c
 import {PresentationListComponent} from './presentations/presentation-list/presentation-list.component';
 import {SpeakerListComponent} from './speakers/speaker-list.component';
 import {AgendaComponent} from './agenda/agenda.component';
-import {AgendaEntryComponent} from './agenda/agenda-entry/agenda-entry.component';
+import {AgendaEntryDisplayComponent} from './agenda/agenda-entry/agenda-entry-display.component';
 import {AgendaEntryModalComponent} from './agenda/entry-modal/entry-modal.component';
 import {LoginComponent} from './login/login.component';
 import {AgmCoreModule} from '@agm/core';
@@ -26,6 +26,8 @@ import {
 } from '@angular/material';
 import {WorkshopsComponent} from './workshops/workshops.component';
 import {PrivacyPolicyComponent} from './privacy-policy/privacy-policy.component';
+import { AgendaFilterComponent } from './agenda/agenda-filter/agenda-filter.component';
+import { AgendaTableComponent } from './agenda/agenda-table/agenda-table.component';
 
 @NgModule({
   imports: [
@@ -58,10 +60,12 @@ import {PrivacyPolicyComponent} from './privacy-policy/privacy-policy.component'
     SpeakerListComponent,
     AgendaComponent,
     AgendaEntryModalComponent,
-    AgendaEntryComponent,
+    AgendaEntryDisplayComponent,
     FaqComponent,
     WorkshopsComponent,
-    PrivacyPolicyComponent
+    PrivacyPolicyComponent,
+    AgendaFilterComponent,
+    AgendaTableComponent
   ],
   providers: [NewsService, OrganizerService],
   exports: [HomeComponent, AboutComponent]

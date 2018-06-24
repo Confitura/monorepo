@@ -9,7 +9,7 @@ import {AgendaEntry} from './shared/agenda.model';
 
 @Component({
   templateUrl: './agenda.component.html',
-  styleUrls: ['./agenda.scss']
+  styleUrls: ['./agenda.component.scss']
 })
 export class AgendaComponent implements OnInit, OnChanges {
 
@@ -31,7 +31,10 @@ export class AgendaComponent implements OnInit, OnChanges {
     'english': true
   };
 
-  constructor(private  service: AgendaService, private presentationService: PresentationService) {
+  constructor(
+    private  service: AgendaService,
+    private presentationService: PresentationService
+  ) {
   }
 
   selectTag(tag: Tag) {
@@ -95,9 +98,10 @@ export class AgendaComponent implements OnInit, OnChanges {
   }
 
   refresh() {
+    // console.log(this.refresh());
     this.service.getAgenda().subscribe((it: any) => {
       this.rooms = it.rooms;
-      this.slots = it.slots;
+        this.slots = it.slots;
       this.agenda = it.agenda;
 
       if (this.activeRooms == null) {
@@ -118,7 +122,8 @@ export class AgendaComponent implements OnInit, OnChanges {
   }
 
   isActive(room: Room) {
-    return this.activeRooms[room.id];
+    return true;
+    // return this.activeRooms[room.id];
   }
 
   private hasSelectedLang(entry: AgendaEntry) {

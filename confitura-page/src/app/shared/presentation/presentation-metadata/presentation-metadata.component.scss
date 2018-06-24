@@ -1,0 +1,28 @@
+.presentation {
+  &__metadata {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  &__tags {
+    flex-wrap: wrap;
+  }
+
+  &__language, &__level, &__tags {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+
+  &__tag:not(:last-child)::after {
+    content: ",";
+    padding-right: 5px;
+  }
+
+  &__icon {
+    margin-right: 5px;
+  }
+
+}

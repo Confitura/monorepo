@@ -11,7 +11,6 @@ import {map} from 'rxjs/operators';
 @Injectable()
 export class AgendaService {
 
-
   constructor(private http: HttpClient) {
   }
 
@@ -24,7 +23,6 @@ export class AgendaService {
         const roomIdToIndex = this.idToIndex(rooms);
         const slotIdToIndex = this.idToIndex(slots);
         const matrix = this.createEmptyMatrix(slots, slotIdToIndex, rooms);
-
         for (const entry of entries) {
           const slotIndex = slotIdToIndex[entry.timeSlotId];
           if (entry.roomId == null) {
