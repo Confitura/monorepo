@@ -1,6 +1,7 @@
 package pl.confitura.jelatyna.registration;
 
 import lombok.Data;
+import pl.confitura.jelatyna.registration.voucher.Voucher;
 import pl.confitura.jelatyna.user.User;
 
 import java.io.Serializable;
@@ -20,6 +21,7 @@ class Participant implements Serializable {
     private String registeredBy;
     private LocalDateTime ticketSendDate;
     private LocalDateTime surveySendDate;
+    private Voucher voucher;
 
     private boolean isAdmin;
     private boolean isVolunteer;
@@ -47,6 +49,7 @@ class Participant implements Serializable {
 
             if (data.getVoucher() != null) {
                 ticketSendDate = data.getVoucher().getTicketSendDate();
+                voucher = data.getVoucher();
             }
         }
     }
