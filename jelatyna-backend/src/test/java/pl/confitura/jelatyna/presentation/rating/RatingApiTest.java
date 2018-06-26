@@ -10,6 +10,7 @@ import pl.confitura.jelatyna.agenda.AgendaEntry;
 import pl.confitura.jelatyna.agenda.AgendaUtils;
 import pl.confitura.jelatyna.agenda.PresentationUtils;
 import pl.confitura.jelatyna.agenda.UserUtils;
+import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.user.User;
 
@@ -39,7 +40,9 @@ class RatingApiTest extends BaseIntegrationTest {
 
     @BeforeEach
     public void setUp() {
+        SecurityHelper.asAdmin();
         user = userUtils.createUser("user");
+        user = userUtils.markArrived(user);
         agenda = agendaUtils.createAgenda(
                 new String[]{"", "room1", "room2"},
                 new String[]{"09-12", "presentation1", "presentation2"},
@@ -47,6 +50,7 @@ class RatingApiTest extends BaseIntegrationTest {
         );
         presentation = agenda.get(0).getPresentation();
         rate = new Rate().setValue(RateValue.AWESOME);
+        SecurityHelper.cleanSecurity();
     }
 
 
@@ -153,7 +157,10 @@ class RatingApiTest extends BaseIntegrationTest {
     public void otherUserShouldBeAbleToRateSamePresentation() throws Exception {
         rate(presentation, user, rate);
 
+        SecurityHelper.asAdmin();
         User otherUser = userUtils.createUser("other user");
+        otherUser = userUtils.markArrived(otherUser);
+        SecurityHelper.cleanSecurity();
         Rate otherRate = new Rate().setValue(RateValue.GREAT);
 
         //when other user rates presentation

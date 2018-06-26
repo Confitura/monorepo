@@ -83,6 +83,7 @@ public class PresentationController {
     }
 
     @PostMapping("/presentations/{presentationId}/ratings")
+    @PreAuthorize("isAuthenticated()")
     @Transactional
     public ResponseEntity<?>  addRating(@PathVariable String presentationId, @RequestBody @Valid Rate rate){
         Rate createdRate = ratingService.rate(presentationId, rate);
@@ -92,8 +93,9 @@ public class PresentationController {
     }
 
     @PutMapping("/presentations/{presentationId}/ratings/{ratingId}")
+    @PreAuthorize("isAuthenticated()")
     @Transactional
-    public ResponseEntity<?>  updateRating(@PathVariable String ratingId, @RequestBody @Valid Rate rate){
+    public ResponseEntity<?> updateRating(@PathVariable("ratingId") String ratingId, @RequestBody @Valid Rate rate) {
         ratingService.updateRating(rate.setId(ratingId));
         return ResponseEntity
                 .status(HttpStatus.OK)

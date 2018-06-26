@@ -87,7 +87,7 @@ public class User extends AuditedEntity {
         personalAgenda.remove(entry);
     }
 
-    public void updateFields(User user) {
+    void updateFields(User user) {
         name = user.name;
         email = user.email;
         bio = user.bio;
@@ -101,6 +101,10 @@ public class User extends AuditedEntity {
 
     public boolean hasAcceptedPresentation() {
         return presentations.stream().anyMatch(Presentation::isAccepted);
+    }
+
+    public boolean hasArrived() {
+        return isParticipant() && getParticipationData().getArrivalDate() != null;
     }
 
 //    @ManyToMany(mappedBy = "cospeakers")

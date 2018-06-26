@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.rest.core.config.Projection;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.user.PublicUser;
-import pl.confitura.jelatyna.user.User;
 
 import java.util.Set;
 
