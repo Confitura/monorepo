@@ -59,9 +59,12 @@ export class RegistrationFormComponent implements OnInit {
             experience: null,
             role: null
           });
-          this.registrationForm.get('city').setValidators(null);
-          this.registrationForm.get('experience').setValidators(null);
-          this.registrationForm.get('role').setValidators(null);
+          this.registrationForm.get('sex').disable();
+          this.registrationForm.get('size').disable();
+          this.registrationForm.get('mealOption').disable();
+          this.registrationForm.get('city').disable();
+          this.registrationForm.get('experience').disable();
+          this.registrationForm.get('role').disable();
         });
     } else {
       this.registrationForm.get('voucher').setValue(voucher);

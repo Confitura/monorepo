@@ -19,6 +19,7 @@ export class VouchersComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   displayedColumns = [
+    'id',
     'originalBuyer',
     'emailSent',
     'createdBy',

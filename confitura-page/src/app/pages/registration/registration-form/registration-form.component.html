@@ -20,7 +20,7 @@
       </mat-form-field>
 
       <label>t-shirt cut *: </label>
-      <mat-radio-group formControlName="sex" class="registration__sex" [disabled]="!!id">
+      <mat-radio-group formControlName="sex" class="registration__sex" >
         <mat-radio-button type="radio" name="sex" value="F" required class="registration__sex-option"> female</mat-radio-button>
         <mat-radio-button type="radio" name="sex" value="M" required class="registration__sex-option"> male</mat-radio-button>
         <mat-error *ngIf="submitted && sex?.hasError('required')">
@@ -28,7 +28,7 @@
         </mat-error>
       </mat-radio-group>
       <mat-form-field>
-        <mat-select name="size" id="size" formControlName="size" required placeholder="t-shirt size" [disabled]="!!id">
+        <mat-select name="size" id="size" formControlName="size" required placeholder="t-shirt size" >
           <mat-option value="S">S</mat-option>
           <mat-option value="M">M</mat-option>
           <mat-option value="L">L</mat-option>
@@ -41,8 +41,7 @@
       </mat-form-field>
 
       <mat-form-field>
-        <mat-select name="mealOption" id="mealOption" formControlName="mealOption" required placeholder="meal option"
-                    [disabled]="!!id">
+        <mat-select name="mealOption" id="mealOption" formControlName="mealOption" required placeholder="meal option">
           <mat-option value="meat">Meat</mat-option>
           <mat-option value="vegetarian">Vegetarian</mat-option>
         </mat-select>
