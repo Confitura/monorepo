@@ -18,21 +18,27 @@ import {MdPipe} from './md/md.pipe';
 import { PageHeaderComponent } from './page-header/page-header.component';
 import {BackButtonComponent} from './back-button/back-button.component';
 import {
+  MatFormField,
+  MatSliderModule,
   MatButtonModule,
   MatCardModule,
   MatChipsModule,
   MatIconModule,
   MatMenuModule,
   MatProgressSpinnerModule,
-  MatTooltipModule
+  MatTooltipModule, MatFormFieldModule, MatInputModule
 } from '@angular/material';
 import {PresentationComponent} from './presentation/presentation.component';
 import { LikeButtonComponent } from './presentation/like/like-button/like-button.component';
 import {LikeService} from './presentation/like/like.service';
 import { PresentationMetadataComponent } from './presentation/presentation-metadata/presentation-metadata.component';
+import {RatePresentationComponent} from './presentation/rate-presentation/rate-presentation.component';
 
 @NgModule({
   imports: [
+    MatFormFieldModule,
+    MatInputModule,
+    MatSliderModule,
     CommonModule,
     FileUploadModule,
     FormsModule,
@@ -59,6 +65,7 @@ import { PresentationMetadataComponent } from './presentation/presentation-metad
     PageHeaderComponent,
     BackButtonComponent,
     PresentationComponent,
+    RatePresentationComponent,
     LikeButtonComponent,
     PresentationMetadataComponent
   ],
