@@ -12,6 +12,7 @@ import {FaqComponent} from './pages/faq/faq.component';
 import {WorkshopsComponent} from './pages/workshops/workshops.component';
 import {IsActiveGuard} from './v4p/IsActiveGuard';
 import {PrivacyPolicyComponent} from './pages/privacy-policy/privacy-policy.component';
+import {LiveStreamComponent} from './pages/live-stream/live-stream.component';
 
 
 const appRoutes: Routes = [
@@ -37,6 +38,7 @@ const appRoutes: Routes = [
   {path: 'faq', component: FaqComponent},
   {path: 'workshops', component: WorkshopsComponent},
   {path: 'privacy', component: PrivacyPolicyComponent},
+  {path: 'live', component: LiveStreamComponent},
 ];
 
 @NgModule({

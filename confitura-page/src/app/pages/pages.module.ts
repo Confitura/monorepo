@@ -28,6 +28,7 @@ import {WorkshopsComponent} from './workshops/workshops.component';
 import {PrivacyPolicyComponent} from './privacy-policy/privacy-policy.component';
 import { AgendaFilterComponent } from './agenda/agenda-filter/agenda-filter.component';
 import { AgendaTableComponent } from './agenda/agenda-table/agenda-table.component';
+import {LiveStreamComponent} from './live-stream/live-stream.component';
 
 @NgModule({
   imports: [
@@ -65,7 +66,8 @@ import { AgendaTableComponent } from './agenda/agenda-table/agenda-table.compone
     WorkshopsComponent,
     PrivacyPolicyComponent,
     AgendaFilterComponent,
-    AgendaTableComponent
+    AgendaTableComponent,
+    LiveStreamComponent
   ],
   providers: [NewsService, OrganizerService],
   exports: [HomeComponent, AboutComponent]
