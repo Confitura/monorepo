@@ -2,14 +2,9 @@ import {Component, Input, OnInit} from '@angular/core';
 import {RatingService} from './rating.service';
 import {Rate} from './rating.model';
 import {CurrentUser} from '../../../core/security/current-user.service';
+import {RatePresentationDialogComponent} from './rate-presentation-dialog/rate-presentation-dialog.component';
+import {MatDialog} from '@angular/material';
 
-const rates = [
-  {no: 1, name: 'TERRIBLE', description: 'Terrible'},
-  {no: 2, name: 'BAD', description: 'Bad'},
-  {no: 3, name: 'IT_WAS_FINE', description: 'It was fine'},
-  {no: 4, name: 'GREAT', description: 'Great'},
-  {no: 5, name: 'AWESOME', description: 'Awesome!!!'}
-];
 
 @Component({
   selector: 'cf-rate-presentation',
@@ -20,69 +15,71 @@ export class RatePresentationComponent implements OnInit {
 
   @Input()
   presentationId: string;
-
-  showCommentField = false;
-
   rate: Rate = new Rate();
-  numericValue = -1;
-  displayValue = '';
 
   error = '';
 
   authenticated: boolean;
 
-  formatter: (value: number | null) => string | number = value => rates[value].description;
+  formatter: (value: number | null) => string | number = value => this.service.getRateMetaByIndex(value).description;
 
-  constructor(private service: RatingService, currentUser: CurrentUser) {
+  constructor(private service: RatingService, currentUser: CurrentUser, public dialog: MatDialog) {
     this.authenticated = currentUser.isAvailable();
   }
 
   ngOnInit() {
     const rate = this.service.getRate(this.presentationId);
     if (rate) {
-      this.numericValue = this.getRateValueByName(rate.value).no;
-      this.displayValue = this.getRateValueByName(rate.value).description;
       this.rate = rate;
     }
   }
 
-  setValue(v) {
-    const rate = this.getByNo(v.value);
-    this.rate.value = rate.name;
+  updateRate(rate: Rate) {
+    this.rate = rate;
+    console.log(rate);
     this.service.save(this.rate, this.presentationId)
       .subscribe(() => {
-        this.displayValue = rate.description;
         this.showComment();
       }, err => {
-        if (err.status === 409) {
-          this.error = 'Sorry, but it looks like you already rated this presentation on different device';
-        } else if (err.status === 403) {
-          this.error = 'According to our system you haven\'t passed registration yet, so there is no way you have seen this presentation!';
-        } else {
-          this.error = 'Something funny happened. Can you try again later? Or just let as know. Error log should be in console';
-          console.log('promised error log in console', err);
-        }
+        this.handleError(err);
       });
-
   }
 
-  hideComment() {
-    this.showCommentField = false;
+  private handleError(err) {
+    if (err.status === 409) {
+      this.error = 'Sorry, but it looks like you already rated this presentation on different device';
+    } else if (err.status === 403) {
+      this.error = 'According to our system you haven\'t passed registration yet, so there is no way you have seen this presentation!';
+    } else {
+      this.error = 'Something funny happened. Can you try again later? Or just let as know. Error log should be in console';
+      console.log('promised error log in console', err);
+    }
   }
 
   showComment() {
-    this.showCommentField = true;
+    this.openDialog();
   }
 
-  addComment(c) {
-    this.service.addComment(c, this.presentationId).subscribe(() => this.hideComment());
+  openDialog(): void {
+    const dialogRef = this.dialog.open(RatePresentationDialogComponent, {
+      data: {
+        rate: this.rate,
+        presentationId: this.presentationId
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      if (result) {
+        this.rate = result;
+        this.service.save(this.rate, this.presentationId)
+          .subscribe(() => {
+          }, err => {
+            this.handleError(err);
+          });
+      }
+    });
   }
 
-  private getRateValueByName(value: string) {
-    return rates.find(it => it.name === value);
-  }
 
-  private getByNo(v) {
-    return rates.find(it => it.no === v);
-  }
 }

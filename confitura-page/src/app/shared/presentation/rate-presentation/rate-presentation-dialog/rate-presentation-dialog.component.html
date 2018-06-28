@@ -1,0 +1,13 @@
+<h2 mat-dialog-title>{{presentation?.title}}</h2>
+<mat-dialog-content>
+    <cf-rate-slider [(rate)]="rate"></cf-rate-slider>
+    <p></p>
+    <mat-form-field>
+                <textarea matInput placeholder="Leave a comment" cols="20" rows="10"
+                          [(ngModel)]="rate.comment"></textarea>
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="rate">SAVE</button>
+    <button mat-button mat-dialog-close>CANCEL</button>
+</mat-dialog-actions>

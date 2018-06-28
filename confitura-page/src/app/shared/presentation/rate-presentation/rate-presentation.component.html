@@ -1,28 +1,6 @@
-<div class="popup" *ngIf="authenticated">
-    <span *ngIf="!error">
-        <label>rate:</label>
-        <mat-slider min="1" max="5" step="1" tickInterval="1"
-                    (change)="setValue($event)" [ngModel]="numericValue">
-        </mat-slider>
-
-    </span>
+<div *ngIf="authenticated" class="popup">
+    <cf-rate-slider *ngIf="!error" [rate]="rate" (rateChanged)="updateRate($event)"></cf-rate-slider>
     <mat-error *ngIf="error">{{error}}</mat-error>
-
-
-    <span (click)="showComment()" *ngIf="displayValue">{{displayValue}}</span>
-
-    <mat-card class="popuptext" [class.show]="showCommentField">
-        <mat-card-content>
-            <mat-form-field>
-                <textarea matInput placeholder="Leave a comment" cols="20" rows="10"
-                          [(ngModel)]="rate.comment"></textarea>
-            </mat-form-field>
-        </mat-card-content>
-        <mat-card-actions>
-            <button mat-button (click)="addComment(rate.comment)">SAVE</button>
-            <button mat-button (click)="hideComment()">CANCEL</button>
-        </mat-card-actions>
-    </mat-card>
 </div>
 <span *ngIf="!authenticated">
     <a href="/login">Login</a> to rate presentation

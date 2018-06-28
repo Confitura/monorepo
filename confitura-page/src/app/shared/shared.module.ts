@@ -18,6 +18,7 @@ import {MdPipe} from './md/md.pipe';
 import { PageHeaderComponent } from './page-header/page-header.component';
 import {BackButtonComponent} from './back-button/back-button.component';
 import {
+  MatDialogModule,
   MatFormField,
   MatSliderModule,
   MatButtonModule,
@@ -33,9 +34,12 @@ import { LikeButtonComponent } from './presentation/like/like-button/like-button
 import {LikeService} from './presentation/like/like.service';
 import { PresentationMetadataComponent } from './presentation/presentation-metadata/presentation-metadata.component';
 import {RatePresentationComponent} from './presentation/rate-presentation/rate-presentation.component';
+import {RatePresentationDialogComponent} from './presentation/rate-presentation/rate-presentation-dialog/rate-presentation-dialog.component';
+import { RateSliderComponent } from './presentation/rate-presentation/rate-slider/rate-slider.component';
 
 @NgModule({
   imports: [
+    MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
     MatSliderModule,
@@ -67,7 +71,9 @@ import {RatePresentationComponent} from './presentation/rate-presentation/rate-p
     PresentationComponent,
     RatePresentationComponent,
     LikeButtonComponent,
-    PresentationMetadataComponent
+    PresentationMetadataComponent,
+    RatePresentationDialogComponent,
+    RateSliderComponent
   ],
   exports: [
     CommonModule,
@@ -91,7 +97,8 @@ import {RatePresentationComponent} from './presentation/rate-presentation/rate-p
     MatTooltipModule,
     PresentationMetadataComponent
   ],
-  providers: [PersonModalService, LikeService]
+  providers: [PersonModalService, LikeService],
+  entryComponents: [RatePresentationDialogComponent]
 })
 export class SharedModule {
 

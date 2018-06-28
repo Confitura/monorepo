@@ -69,4 +69,25 @@ export class RatingService {
   getRate(presentationId: string): Rate {
     return this.rates[presentationId];
   }
+
+  getRateMetaByName(value: string) {
+    return rates.find(it => it.name === value);
+  }
+
+  getRateMetaByIndex(index: number) {
+    return rates[index];
+  }
+
+  getRateMetaByNumericValue(v) {
+    return rates.find(it => it.no === v);
+  }
 }
+
+
+const rates = [
+  {no: 1, name: 'TERRIBLE', description: 'Terrible'},
+  {no: 2, name: 'BAD', description: 'Bad'},
+  {no: 3, name: 'IT_WAS_FINE', description: 'It was fine'},
+  {no: 4, name: 'GREAT', description: 'Great'},
+  {no: 5, name: 'AWESOME', description: 'Awesome!!!'}
+];
