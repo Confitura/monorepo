@@ -4,6 +4,14 @@ import {Rate} from './rating.model';
 import {tap} from 'rxjs/operators';
 import {Observable} from 'rxjs/Observable';
 
+const rates = [
+  {no: 1, name: 'TERRIBLE', description: 'Terrible'},
+  {no: 2, name: 'BAD', description: 'Bad'},
+  {no: 3, name: 'IT_WAS_FINE', description: 'It was fine'},
+  {no: 4, name: 'GREAT', description: 'Great'},
+  {no: 5, name: 'AWESOME', description: 'Awesome!!!'}
+];
+
 @Injectable({
   providedIn: 'root'
 })
@@ -84,10 +92,4 @@ export class RatingService {
 }
 
 
-const rates = [
-  {no: 1, name: 'TERRIBLE', description: 'Terrible'},
-  {no: 2, name: 'BAD', description: 'Bad'},
-  {no: 3, name: 'IT_WAS_FINE', description: 'It was fine'},
-  {no: 4, name: 'GREAT', description: 'Great'},
-  {no: 5, name: 'AWESOME', description: 'Awesome!!!'}
-];
+

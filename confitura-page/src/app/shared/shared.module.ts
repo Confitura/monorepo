@@ -13,29 +13,30 @@ import {PersonViewComponent} from './person-view/person-view.component';
 import {FileUploadModule} from 'ng2-file-upload';
 import {PersonModalService} from './person-modal/person-modal.service';
 import {AdminOrOwnerDirective} from './admin-or-owner.directive';
-import { ResizeImgPipe } from './resize-img.pipe';
+import {ResizeImgPipe} from './resize-img.pipe';
 import {MdPipe} from './md/md.pipe';
-import { PageHeaderComponent } from './page-header/page-header.component';
+import {PageHeaderComponent} from './page-header/page-header.component';
 import {BackButtonComponent} from './back-button/back-button.component';
 import {
-  MatDialogModule,
-  MatFormField,
-  MatSliderModule,
   MatButtonModule,
   MatCardModule,
   MatChipsModule,
+  MatDialogModule,
+  MatFormFieldModule,
   MatIconModule,
+  MatInputModule,
   MatMenuModule,
   MatProgressSpinnerModule,
-  MatTooltipModule, MatFormFieldModule, MatInputModule
+  MatSliderModule,
+  MatTooltipModule
 } from '@angular/material';
 import {PresentationComponent} from './presentation/presentation.component';
-import { LikeButtonComponent } from './presentation/like/like-button/like-button.component';
+import {LikeButtonComponent} from './presentation/like/like-button/like-button.component';
 import {LikeService} from './presentation/like/like.service';
-import { PresentationMetadataComponent } from './presentation/presentation-metadata/presentation-metadata.component';
+import {PresentationMetadataComponent} from './presentation/presentation-metadata/presentation-metadata.component';
 import {RatePresentationComponent} from './presentation/rate-presentation/rate-presentation.component';
 import {RatePresentationDialogComponent} from './presentation/rate-presentation/rate-presentation-dialog/rate-presentation-dialog.component';
-import { RateSliderComponent } from './presentation/rate-presentation/rate-slider/rate-slider.component';
+import {RateSliderComponent} from './presentation/rate-presentation/rate-slider/rate-slider.component';
 
 @NgModule({
   imports: [
