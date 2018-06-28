@@ -6,6 +6,9 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.security.core.parameters.P;
 import org.springframework.security.access.prepost.PreAuthorize;
+import pl.confitura.jelatyna.user.User;
+
+import java.util.List;
 
 @RepositoryRestResource(path = "presentations", excerptProjection = InlineTags.class)
 public interface PresentationRepository extends Repository<Presentation, String> {
@@ -35,4 +38,8 @@ public interface PresentationRepository extends Repository<Presentation, String>
     @Query("SELECT count(p.id) FROM Presentation p WHERE status ='accepted'")
     @RestResource(exported = false)
     Long countAccepted();
+
+    @Query("FROM Presentation p JOIN p.cospeakers co WHERE p.status ='accepted' and co = ?1")
+    @RestResource(exported = false)
+    List<Presentation> findAcceptedWithCoSpeaker(User user);
 }

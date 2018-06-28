@@ -16,6 +16,7 @@ import pl.confitura.jelatyna.infrastructure.security.JelatynaPrincipal;
 import pl.confitura.jelatyna.infrastructure.security.SecurityContextUtil;
 import pl.confitura.jelatyna.mail.MailSender;
 import pl.confitura.jelatyna.mail.MessageInfo;
+import pl.confitura.jelatyna.presentation.PresentationRepository;
 import pl.confitura.jelatyna.registration.demographic.DemographicDataRepository;
 import pl.confitura.jelatyna.registration.voucher.Voucher;
 import pl.confitura.jelatyna.registration.voucher.VoucherService;
@@ -40,6 +41,7 @@ public class RegistrationController {
     private VoucherService voucherService;
     private TicketGenerator generator;
     private DemographicDataRepository demographicDataRepository;
+    private PresentationRepository presentationRepository;
 
     @GetMapping("/participants")
     ResponseEntity<Iterable<Participant>> getParticipants() {
@@ -146,7 +148,13 @@ public class RegistrationController {
                     .setArrivalDate(LocalDateTime.now())
                     .setRegisteredBy(principal.getId());
         }
-        return ResponseEntity.status(status).body(new Participant(user));
+        Participant participant = new Participant(user);
+        if (!user.isSpeaker() || !user.hasAcceptedPresentation()) {
+            boolean isSpeaker = !presentationRepository.findAcceptedWithCoSpeaker(user).isEmpty();
+            participant.setSpeaker(isSpeaker);
+            participant.setHasAcceptedPresentation(isSpeaker);
+        }
+        return ResponseEntity.status(status).body(participant);
     }
 
 
