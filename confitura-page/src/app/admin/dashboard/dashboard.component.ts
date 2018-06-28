@@ -1,5 +1,8 @@
 import {Component} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs/Observable';
+import {timer} from 'rxjs/internal/observable/timer';
+import {Subscription} from 'rxjs/Subscription';
 
 
 @Component({
@@ -7,29 +10,6 @@ import {HttpClient} from '@angular/common/http';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent {
-
-  constructor(client: HttpClient) {
-    client.get<(string | number)[][]>('/dashboard/tshirts').subscribe(it => {
-      this.tShirtsChartData.dataTable = it;
-    });
-    client.get<(string | number)[][]>('/dashboard/meal').subscribe(it => {
-      this.foodChartData.dataTable = it;
-    });
-    client.get<(string | number)[][]>('/dashboard/vouchers').subscribe(it => {
-      this.vouchersChartData.dataTable = it;
-    });
-    client.get<(string | number)[][]>('/dashboard/registration').subscribe(it => {
-      this.usersChartData.dataTable = it;
-    });
-    client.get<(string | number)[][]>('/dashboard/arrivals').subscribe(it => {
-      // @ts-ignore
-      this.arrivalChartData.dataTable = it.map(row => [new Date(<string>row[0]), row[1]]);
-    });
-    client.get<(string | number)[][]>('/dashboard/registrations').subscribe(it => {
-      // @ts-ignore
-      this.registrationsChartData.dataTable = it.map(row => [new Date(<string>row[0]), row[1]]);
-    });
-  }
 
   tShirtsChartData = {
     chartType: 'ColumnChart',
@@ -109,5 +89,56 @@ export class DashboardComponent {
     ],
     options: {'title': 'registrations'},
   };
+
+  arrivalTimestamp: Date;
+
+  constructor(private client: HttpClient) {
+    this.loadTshirts();
+    this.loadMeals();
+    this.loadVouchers();
+    this.loadRegistrationStats();
+    this.loadArrivals();
+    this.loadRegistrations();
+  }
+
+  private loadRegistrations() {
+    this.client.get<(string | number)[][]>('/dashboard/registrations').subscribe(it => {
+      // @ts-ignore
+      this.registrationsChartData.dataTable = it.map(row => [new Date(<string>row[0]), row[1]]);
+    });
+  }
+
+  loadArrivals() {
+    this.client.get<(string | number)[][]>('/dashboard/arrivals').subscribe(it => {
+      // @ts-ignore
+      this.arrivalChartData.dataTable = it.map(row => [new Date(<string>row[0]), row[1]]);
+      this.arrivalTimestamp = new Date();
+    });
+  }
+
+  private loadRegistrationStats() {
+    this.client.get<(string | number)[][]>('/dashboard/registration').subscribe(it => {
+      this.usersChartData.dataTable = it;
+    });
+  }
+
+  private loadVouchers() {
+    this.client.get<(string | number)[][]>('/dashboard/vouchers').subscribe(it => {
+      this.vouchersChartData.dataTable = it;
+    });
+  }
+
+  private loadMeals() {
+    this.client.get<(string | number)[][]>('/dashboard/meal').subscribe(it => {
+      this.foodChartData.dataTable = it;
+    });
+  }
+
+  private loadTshirts() {
+    this.client.get<(string | number)[][]>('/dashboard/tshirts').subscribe(it => {
+      this.tShirtsChartData.dataTable = it;
+    });
+  }
+
 
 }
