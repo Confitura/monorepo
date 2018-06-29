@@ -15,7 +15,7 @@ export class AgendaTableComponent implements OnInit {
   @Input()
   agenda: AgendaEntry[][] = [];
   @Input()
-  personalAgenda: AgendaEntry[];
+  personalAgenda: AgendaEntry[] = [];
 
   @Output() favoriteChanged: EventEmitter<AgendaEntry> = new EventEmitter();
 
@@ -23,7 +23,11 @@ export class AgendaTableComponent implements OnInit {
   selectedRooms;
 
   inPersonalAgenda(entry: AgendaEntry) {
-    return !!this.personalAgenda.find(it => it.id === entry.id);
+    if (this.personalAgenda) {
+      return !!this.personalAgenda.find(it => it.id === entry.id);
+    } else {
+      return false;
+    }
   }
 
   constructor(
