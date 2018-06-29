@@ -6,4 +6,11 @@
   font-size: 0.8rem;
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
+}
+
+.agenda-entry__presentation {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }

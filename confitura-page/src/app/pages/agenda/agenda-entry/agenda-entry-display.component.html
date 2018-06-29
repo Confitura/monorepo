@@ -1,4 +1,4 @@
-<div *ngIf="entry.presentationId">
+<div *ngIf="entry.presentationId" class="agenda-entry__presentation">
   <div class="agenda-entry__title">
     <span *ngIf="entry.presentation.language=='english'" class="small">[en]</span>
     <a href="/presentations#{{entry.presentation.id}}">
