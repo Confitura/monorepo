@@ -52,6 +52,16 @@ function anEntry(timeSlot, room, presentation) {
   const timeSlotId = timeSlot.id;
   const roomId = room.id;
   const presentationId = presentation.id;
-  return {id: uuid(), timeSlotId, roomId, presentationId, presentation};
+  const speaker = presentation.speaker;
+  const cospeakers = presentation.cospeakers;
+  return {
+    id: uuid(),
+    timeSlotId,
+    roomId,
+    presentationId,
+    presentation,
+    speaker,
+    cospeakers
+  };
 }
 
