@@ -35,10 +35,10 @@
   </div>
   <cf-presentation-metadata [presentation]="presentation"></cf-presentation-metadata>
   <div class="pt-3">
-    <div *ngIf="shouldShowDescription(descriptionTypes.Short)">
-      <h4 class="pt-3" *ngIf="shouldShowDescription(descriptionTypes.Both)">short description:</h4>
-      <div class="presentation__description">{{presentation.shortDescription}}</div>
-    </div>
+    <!--<div *ngIf="shouldShowDescription(descriptionTypes.Short)">-->
+    <!--<h4 class="pt-3" *ngIf="shouldShowDescription(descriptionTypes.Both)">short description:</h4>-->
+    <!--<div class="presentation__description">{{presentation.shortDescription}}</div>-->
+    <!--</div>-->
     <div *ngIf="shouldShowDescription(descriptionTypes.Full)">
       <h4 class="pt-3" *ngIf="shouldShowDescription(descriptionTypes.Both)">description:</h4>
       <div class="presentation__description">{{presentation.description}}</div>
