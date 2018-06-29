@@ -12,6 +12,12 @@
             {{speaker.name}}
         </span>
   </div>
+
+  <div class="agenda-entry__actions" *ngIf="showActions">
+    <button mat-button (click)="addToPersonalAgenda()">
+      <mat-icon>favorite</mat-icon>
+    </button>
+  </div>
   <!--<cf-presentation-metadata [presentation]="entry.presentation"></cf-presentation-metadata>-->
 </div>
 <div *ngIf="entry.label">

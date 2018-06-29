@@ -2,4 +2,6 @@
             (change)="setValue($event)" [ngModel]="sliderValue">
 </mat-slider>
 
-<span *ngIf="meta && meta.description">{{meta.description}}</span>
+
+<span *ngIf="meta?.description">{{meta.description}}</span>
+

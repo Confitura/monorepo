@@ -1,5 +1,6 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {AgendaEntry} from '../shared/agenda.model';
+import {AgendaService} from '../shared/agenda.service';
 
 @Component({
   templateUrl: './agenda-entry-display.component.html',
@@ -8,5 +9,14 @@ import {AgendaEntry} from '../shared/agenda.model';
 })
 export class AgendaEntryDisplayComponent {
   @Input() entry: AgendaEntry;
+  @Output() favoriteChanged: EventEmitter<AgendaEntry> = new EventEmitter();
+  @Input() showActions = true;
 
+
+  constructor(private service: AgendaService) {
+  }
+
+  addToPersonalAgenda() {
+    this.service.addToPersonalAgenda(this.entry.id).subscribe(() => this.favoriteChanged.emit(this.entry));
+  }
 }

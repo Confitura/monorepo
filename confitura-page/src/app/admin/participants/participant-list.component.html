@@ -5,36 +5,60 @@
       <button class="btn btn-warning" (click)="sendTickets()">Send Tickets</button>
       <button class="btn btn-warning" (click)="sendSurveys()">Send Surveys</button>
     </div>
+  </div>
 
-    <table id="participants" class="table table-bordered table-striped table-hover" *ngIf="list">
-      <thead>
-      <tr>
-        <th>Name</th>
-        <th>Gender</th>
-        <th>Email</th>
-        <th>City</th>
-        <th>Experience</th>
-        <th>T-shirt</th>
-        <th>Buyer</th>
-        <th>Creation Date</th>
-        <th>Registration Date</th>
-        <th>Ticket Generation Date</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let participant of list ; let idx = index;">
-        <td>{{participant.name}}</td>
-        <td>{{participant.gender}}</td>
-        <td>{{participant.email}}</td>
-        <td>{{participant.city}}</td>
-        <td>{{participant.experience}}</td>
-        <td>{{participant.size}}</td>
-        <td>{{participant.originalBuyer}}</td>
-        <td>{{participant.creationDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-        <td>{{participant.registrationDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-        <td>{{participant.ticketSendDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-      </tr>
-      </tbody>
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+  </mat-form-field>
+
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort>
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Id</th>
+        <td mat-cell *matCellDef="let row"> {{row.id}}</td>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name</th>
+        <td mat-cell *matCellDef="let row"> {{row.name}}</td>
+      </ng-container>
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Email</th>
+        <td mat-cell *matCellDef="let row"> {{row.email}}</td>
+      </ng-container>
+      <ng-container matColumnDef="gender">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Gender</th>
+        <td mat-cell *matCellDef="let row"> {{row.gender}}</td>
+      </ng-container>
+      <ng-container matColumnDef="size">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Size</th>
+        <td mat-cell *matCellDef="let row"> {{row.size}}</td>
+      </ng-container>
+      <ng-container matColumnDef="arrivalDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> ArrivalDate</th>
+        <td mat-cell *matCellDef="let row"> {{row.arrivalDate}}</td>
+      </ng-container>
+      <ng-container matColumnDef="registeredBy">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> RegisteredBy</th>
+        <td mat-cell *matCellDef="let row"> {{row.registeredBy}}</td>
+      </ng-container>
+      <ng-container matColumnDef="ticketSendDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> TicketSendDate</th>
+        <td mat-cell *matCellDef="let row"> {{row.ticketSendDate}}</td>
+      </ng-container>
+      <ng-container matColumnDef="surveySendDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> SurveySendDate</th>
+        <td mat-cell *matCellDef="let row"> {{row.surveySendDate}}</td>
+      </ng-container>
+      <ng-container matColumnDef="voucher">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Voucher</th>
+        <td mat-cell *matCellDef="let row"> {{row.voucher.id}}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
     </table>
   </div>
   <cf-person-modal></cf-person-modal>

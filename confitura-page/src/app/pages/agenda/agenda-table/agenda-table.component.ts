@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {TimeSlot} from '../shared/time-slot.model';
 import {AgendaEntry} from '../shared/agenda.model';
 import {Room} from '../shared/room.model';
@@ -14,8 +14,17 @@ export class AgendaTableComponent implements OnInit {
   slots: TimeSlot[];
   @Input()
   agenda: AgendaEntry[][] = [];
+  @Input()
+  personalAgenda: AgendaEntry[];
+
+  @Output() favoriteChanged: EventEmitter<AgendaEntry> = new EventEmitter();
+
   _rooms: Room[] = [];
   selectedRooms;
+
+  inPersonalAgenda(entry: AgendaEntry) {
+    return !!this.personalAgenda.find(it => it.id === entry.id);
+  }
 
   constructor(
     private breakpointObserver: BreakpointObserver

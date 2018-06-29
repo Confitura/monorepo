@@ -13,6 +13,7 @@ import {WorkshopsComponent} from './pages/workshops/workshops.component';
 import {IsActiveGuard} from './v4p/IsActiveGuard';
 import {PrivacyPolicyComponent} from './pages/privacy-policy/privacy-policy.component';
 import {LiveStreamComponent} from './pages/live-stream/live-stream.component';
+import {PersonalAgendaComponent} from './pages/agenda/personal-agenda/personal-agenda.component';
 
 
 const appRoutes: Routes = [
@@ -31,6 +32,7 @@ const appRoutes: Routes = [
   {path: 'presentations', component: PresentationListComponent},
   {path: 'speakers', component: SpeakerListComponent},
   {path: 'schedule', component: AgendaComponent},
+  {path: 'schedule/personal', component: PersonalAgendaComponent},
   {path: 'partners', component: PartnersComponent},
   {path: 'partners/:id', component: PartnerComponent},
   {path: 'login', component: LoginComponent},

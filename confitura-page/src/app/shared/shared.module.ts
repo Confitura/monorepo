@@ -38,6 +38,7 @@ import {RatePresentationComponent} from './presentation/rate-presentation/rate-p
 import {RatePresentationDialogComponent} from './presentation/rate-presentation/rate-presentation-dialog/rate-presentation-dialog.component';
 import {RateSliderComponent} from './presentation/rate-presentation/rate-slider/rate-slider.component';
 
+
 @NgModule({
   imports: [
     MatDialogModule,
@@ -74,6 +75,7 @@ import {RateSliderComponent} from './presentation/rate-presentation/rate-slider/
     LikeButtonComponent,
     PresentationMetadataComponent,
     RatePresentationDialogComponent,
+    RatePresentationDialogDirective,
     RateSliderComponent
   ],
   exports: [
@@ -96,7 +98,9 @@ import {RateSliderComponent} from './presentation/rate-presentation/rate-slider/
     BackButtonComponent,
     PresentationComponent,
     MatTooltipModule,
-    PresentationMetadataComponent
+    PresentationMetadataComponent,
+    RatePresentationDialogDirective,
+    RatePresentationComponent
   ],
   providers: [PersonModalService, LikeService],
   entryComponents: [RatePresentationDialogComponent]

@@ -1,0 +1,27 @@
+<section class="bg-white">
+    <cf-page-header>your agenda</cf-page-header>
+    <div class="row-1140 pt-lg-5 pb-lg-5">
+        <div class="agenda-table">
+            <ng-container *ngFor="let entry of agenda">
+                <div class="agenda-table__content agenda-table__time">
+                    {{entry.timeSlotLabel}} <br/>
+                    <span *ngIf="entry.roomLabel">
+                        in room: {{entry.roomLabel}}
+                    </span>
+                </div>
+
+                <div class="agenda-table__content agenda-table__content--slot">
+                    <cf-agenda-entry-display class="agenda-table__entry"
+                                             [showActions]="false"
+                                             [entry]="entry"></cf-agenda-entry-display>
+
+                    <button mat-button
+                            *ngIf="entry.presentationId"
+                            cfRatePresentationDialog [presentationId]="entry.presentationId">
+                        rate
+                    </button>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</section>

@@ -20,6 +20,9 @@ export class Participant {
   speaker: boolean;
   hasAcceptedPresentation: boolean;
   participant: boolean;
+  arrivalDate: string;
+  registeredBy: string;
+  surveySendDate: string;
 
   public constructor(obj: any = {}) {
     Object.assign(this, obj);

@@ -1,10 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ParticipantService} from './participant.service';
 import {Participant} from './participant.model';
-import {FileUploader} from 'ng2-file-upload';
 import {CurrentUser} from '../../core/security/current-user.service';
 import {ConfirmationService} from '../../core/confirmation.service';
-import {environment} from '../../../environments/environment';
+import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 
 @Component({
   templateUrl: './participant-list.component.html'
@@ -13,8 +12,24 @@ export class ParticipantListComponent implements OnInit {
 
 
   list: Participant[];
-  uploader: FileUploader;
   uploadResponse;
+
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  dataSource: MatTableDataSource<Participant>;
+
+  displayedColumns = [
+    'name',
+    'email',
+    'gender',
+    'size',
+    'arrivalDate',
+    'registeredBy',
+    'ticketSendDate',
+    'surveySendDate',
+    'voucher'
+  ];
 
   constructor(private service: ParticipantService,
               private user: CurrentUser,
@@ -22,12 +37,24 @@ export class ParticipantListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.dataSource = new MatTableDataSource();
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
 
     this.service.getAll()
       .subscribe(list => {
         this.list = list;
+        this.dataSource.data = list;
       });
 
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   sendTickets() {

@@ -31,8 +31,11 @@
     </ng-template>
     <ng-template #perRoom>
       <div class="agenda-table__content agenda-table__content--slot"
+           [class.selected]="inPersonalAgenda(agenda[slotIndex][rooms.indexOf(room)])"
            *ngFor="let room of selectedRooms; index as roomIndex">
-        <cf-agenda-entry-display class="agenda-table__entry" [entry]="agenda[slotIndex][rooms.indexOf(room)]"></cf-agenda-entry-display>
+        <cf-agenda-entry-display class="agenda-table__entry"
+                                 (favoriteChanged)="favoriteChanged.emit($event)"
+                                 [entry]="agenda[slotIndex][rooms.indexOf(room)]"></cf-agenda-entry-display>
       </div>
     </ng-template>
   </ng-container>

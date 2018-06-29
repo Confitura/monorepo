@@ -30,6 +30,7 @@ export class AgendaComponent implements OnInit, OnChanges {
     'polish': true,
     'english': true
   };
+  personalAgenda: AgendaEntry[];
 
   constructor(
     private  service: AgendaService,
@@ -114,6 +115,11 @@ export class AgendaComponent implements OnInit, OnChanges {
       this.filter();
 
     });
+    this.refreshPersonalAgenda();
+  }
+
+  refreshPersonalAgenda() {
+    this.service.getPersonalAgenda().subscribe(it => this.personalAgenda = it);
   }
 
   selectRoom(room: Room) {
