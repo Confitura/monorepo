@@ -1,6 +1,9 @@
 <div *ngIf="authenticated" class="popup">
-    <cf-rate-slider *ngIf="!error" [rate]="rate" (rateChanged)="updateRate($event)"></cf-rate-slider>
-    <mat-error *ngIf="error">{{error}}</mat-error>
+  <button mat-raised-button
+          cfRatePresentationDialog [presentationId]="presentation.id">
+    Rate
+  </button>
+  <mat-error *ngIf="error">{{error}}</mat-error>
 </div>
 <span *ngIf="!authenticated">
     <a href="/login">Login</a> to rate presentation

@@ -15,10 +15,10 @@
                                              [showActions]="false"
                                              [entry]="entry"></cf-agenda-entry-display>
 
-                    <button mat-button
-                            *ngIf="entry.presentationId"
-                            cfRatePresentationDialog [presentationId]="entry.presentationId">
-                        rate
+                  <button mat-raised-button
+                          *ngIf="entry.presentationId"
+                          cfRatePresentationDialog [presentationId]="entry.presentationId">
+                    Rate
                     </button>
                 </div>
             </ng-container>
