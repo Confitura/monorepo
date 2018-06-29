@@ -1,8 +1,12 @@
 package pl.confitura.jelatyna.registration;
 
-import com.microtripit.mandrillapp.lutung.model.MandrillApiError;
-import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import static java.util.stream.Collectors.toList;
+
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.StreamSupport;
+
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +15,15 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import com.microtripit.mandrillapp.lutung.model.MandrillApiError;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import pl.confitura.jelatyna.infrastructure.security.JelatynaPrincipal;
 import pl.confitura.jelatyna.infrastructure.security.SecurityContextUtil;
 import pl.confitura.jelatyna.mail.MailSender;
@@ -22,13 +34,6 @@ import pl.confitura.jelatyna.registration.voucher.Voucher;
 import pl.confitura.jelatyna.registration.voucher.VoucherService;
 import pl.confitura.jelatyna.user.User;
 import pl.confitura.jelatyna.user.UserRepository;
-
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.StreamSupport;
-
-import static java.util.stream.Collectors.toList;
 
 @RepositoryRestController
 @Slf4j
@@ -44,9 +49,10 @@ public class RegistrationController {
     private PresentationRepository presentationRepository;
 
     @GetMapping("/participants")
-    ResponseEntity<Iterable<Participant>> getParticipants() {
+    @PreAuthorize("@security.isAdmin()")
+    ResponseEntity<Iterable<Participant>> getParticipants(@AuthenticationPrincipal Authentication authentication) {
         List<Participant> list = userRepository.findParticipants().stream()
-                .map(Participant::new)
+                .map(it -> new Participant(it, (JelatynaPrincipal) authentication.getPrincipal()))
                 .collect(toList());
         return ResponseEntity.ok(list);
 
@@ -105,7 +111,6 @@ public class RegistrationController {
         userRepository.save(user);
     }
 
-
     @PutMapping("/participants/{id}")
     @Transactional
     @PreAuthorize("@security.isUserAnOwnerOfParticipationData(#id)")
@@ -138,7 +143,7 @@ public class RegistrationController {
         }
     }
 
-    private ResponseEntity<Object> arrived(User user, JelatynaPrincipal principal) {
+    private ResponseEntity<Object> arrived(User user, JelatynaPrincipal registerer) {
         ParticipationData participationData = user.getParticipationData();
         HttpStatus status = HttpStatus.OK;
         if (participationData.alreadyArrived()) {
@@ -146,9 +151,9 @@ public class RegistrationController {
         } else {
             participationData
                     .setArrivalDate(LocalDateTime.now())
-                    .setRegisteredBy(principal.getId());
+                    .setRegisteredBy(registerer.getId());
         }
-        Participant participant = new Participant(user);
+        Participant participant = new Participant(user, registerer);
         if (!user.isSpeaker() || !user.hasAcceptedPresentation()) {
             boolean isSpeaker = !presentationRepository.findAcceptedWithCoSpeaker(user).isEmpty();
             participant.setSpeaker(isSpeaker);
@@ -156,7 +161,6 @@ public class RegistrationController {
         }
         return ResponseEntity.status(status).body(participant);
     }
-
 
     @Async
     void doSendRemindTo(Iterable<Voucher> vouchers) {
@@ -204,7 +208,6 @@ public class RegistrationController {
                 .filter(it -> it.getParticipationData().surveyNotSentYet())
                 .forEach(this::sendSurveyTo);
     }
-
 
     private void sendSurveyTo(User user) {
         try {

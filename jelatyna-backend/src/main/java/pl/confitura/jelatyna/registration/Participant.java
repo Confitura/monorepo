@@ -1,11 +1,12 @@
 package pl.confitura.jelatyna.registration;
 
-import lombok.Data;
-import pl.confitura.jelatyna.registration.voucher.Voucher;
-import pl.confitura.jelatyna.user.User;
-
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
+import lombok.Data;
+import pl.confitura.jelatyna.infrastructure.security.JelatynaPrincipal;
+import pl.confitura.jelatyna.registration.voucher.Voucher;
+import pl.confitura.jelatyna.user.User;
 
 @Data
 class Participant implements Serializable {
@@ -29,10 +30,12 @@ class Participant implements Serializable {
     private boolean hasAcceptedPresentation;
     private boolean isParticipant;
 
-    public Participant(User user) {
+    public Participant(User user, JelatynaPrincipal registerer) {
         this.id = user.getId();
-        this.name = user.getName();
-        this.email = user.getEmail();
+        if (registerer.isAdmin()) {
+            this.name = user.getName();
+            this.email = user.getEmail();
+        }
         this.isAdmin = user.isAdmin();
         this.isVolunteer = user.isVolunteer();
         this.isSpeaker = user.isSpeaker();
@@ -43,13 +46,13 @@ class Participant implements Serializable {
         if (data != null) {
             this.size = data.getSize();
             this.gender = data.getGender();
-            arrivalDate = data.getArrivalDate();
-            registeredBy = data.getRegisteredBy();
-            surveySendDate = data.getSurveySendDate();
+            this.arrivalDate = data.getArrivalDate();
+            this.registeredBy = data.getRegisteredBy();
+            this.surveySendDate = data.getSurveySendDate();
 
             if (data.getVoucher() != null) {
-                ticketSendDate = data.getVoucher().getTicketSendDate();
-                voucher = data.getVoucher();
+                this.ticketSendDate = data.getVoucher().getTicketSendDate();
+                this.voucher = data.getVoucher();
             }
         }
     }
