@@ -18,6 +18,7 @@ require('./partners')(app);
 require('./speakers')(app);
 require('./pages')(app);
 require('./agenda')(app);
+require('./participants')(app);
 
 let person = function (type) {
   id += 1;

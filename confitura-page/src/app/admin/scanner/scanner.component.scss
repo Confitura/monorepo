@@ -1,40 +1,37 @@
-#scanner {
+.scanner {
   height: 100vh;
   font-size: 2.7rem;
-  dl {
-    dt {
-      padding-top: 20px;
-      font-family: 'NeuzeitGro-Bol', Verdana, Tahoma, sans-serif;
-    }
-  }
-  .btn-scan {
+  &__scan-button {
     position: fixed;
-    bottom: 30px;
+    bottom: 100px;
     right: 30px;
 
   }
 
-  mat-card {
-    padding: 5px;
-  }
-  mat-card.participant {
-    background-color: #F20033;
-  }
-  mat-card.speaker {
-    background-color: #66D77B;
-  }
-  mat-card.volunteer {
-    background-color: #242424;
-  }
-  mat-card.admin {
-    background-color: #242424;
-  }
-
-  mat-card-content {
+  //&__participant {
+  //  background-color: #F20033;
+  //}
+  //&__speaker {
+  //  background-color: #66D77B;
+  //}
+  //&__volunteer {
+  //  background-color: #242424;
+  //}
+  //&__admin {
+  //  background-color: #242424;
+  //}
+  //&__card {
+  //  padding: 5px;
+  //}
+  &__card-content {
     background-color: white;
     padding: 5px;
-    .tshirt {
-      font-size: 3em;
-    }
+
+  }
+  &__tshirt {
+    font-size: 2.5rem;
+  }
+  &__participant-type {
+    padding-right: 5px;
   }
 }
