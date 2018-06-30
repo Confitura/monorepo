@@ -14,6 +14,7 @@ import {IsActiveGuard} from './v4p/IsActiveGuard';
 import {PrivacyPolicyComponent} from './pages/privacy-policy/privacy-policy.component';
 import {LiveStreamComponent} from './pages/live-stream/live-stream.component';
 import {PersonalAgendaComponent} from './pages/agenda/personal-agenda/personal-agenda.component';
+import {SpoinaComponent} from './pages/spoina/spoina.component';
 
 
 const appRoutes: Routes = [
@@ -38,6 +39,7 @@ const appRoutes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'login/:origin', component: LoginComponent},
   {path: 'faq', component: FaqComponent},
+  {path: 'spoina', component: SpoinaComponent},
   {path: 'workshops', component: WorkshopsComponent},
   {path: 'privacy', component: PrivacyPolicyComponent},
   {path: 'live', component: LiveStreamComponent},

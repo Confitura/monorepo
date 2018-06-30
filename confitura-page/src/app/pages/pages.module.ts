@@ -30,6 +30,7 @@ import { AgendaFilterComponent } from './agenda/agenda-filter/agenda-filter.comp
 import { AgendaTableComponent } from './agenda/agenda-table/agenda-table.component';
 import {LiveStreamComponent} from './live-stream/live-stream.component';
 import { PersonalAgendaComponent } from './agenda/personal-agenda/personal-agenda.component';
+import {SpoinaComponent} from './spoina/spoina.component';
 
 @NgModule({
   imports: [
@@ -64,6 +65,7 @@ import { PersonalAgendaComponent } from './agenda/personal-agenda/personal-agend
     AgendaEntryModalComponent,
     AgendaEntryDisplayComponent,
     FaqComponent,
+    SpoinaComponent,
     WorkshopsComponent,
     PrivacyPolicyComponent,
     AgendaFilterComponent,
