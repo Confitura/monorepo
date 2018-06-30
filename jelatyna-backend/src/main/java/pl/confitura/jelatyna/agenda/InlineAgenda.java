@@ -20,6 +20,9 @@ public interface InlineAgenda {
     @Value("#{target.room == null ? null : target.room.id}")
     String getRoomId();
 
+    @Value("#{target.room == null ? null : target.room.label}")
+    String getRoomLabel();
+
     @Value("#{target.label == null ? null : target.label}")
     String getLabel();
 
