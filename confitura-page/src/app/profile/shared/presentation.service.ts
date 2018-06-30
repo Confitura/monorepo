@@ -28,9 +28,9 @@ export class PresentationService {
 
   getAll(): Observable<Presentation[]> {
     let url = '/presentations';
-    // if (!this.user.isAdmin()) {
+    if (!this.user.isAdmin()) {
       url += '/search/accepted';
-    // }
+    }
     const params = new HttpParams().set('projection', 'inlineSpeaker');
     return this.http.get<EmbeddedPresentations>(url, {params})
       .pipe(map(response => response._embedded.presentations));
