@@ -21,7 +21,9 @@ export class RateSliderComponent implements OnInit {
   ngOnInit() {
     if (this.rate) {
       this.meta = this.service.getRateMetaByName(this.rate.value);
-      this.sliderValue = this.meta.no;
+      if (this.meta) {
+        this.sliderValue = this.meta.no;
+      }
     }
   }
 

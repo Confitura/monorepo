@@ -17,6 +17,9 @@
     <button mat-icon-button (click)="addToPersonalAgenda()" matTooltip="Add to my agenda">
       <mat-icon>favorite</mat-icon>
     </button>
+    <button mat-icon-button matTooltip="Rate presentation" cfRatePresentationDialog [presentationId]="entry.presentation.id">
+      <mat-icon>rate_review</mat-icon>
+    </button>
   </div>
   <!--<cf-presentation-metadata [presentation]="entry.presentation"></cf-presentation-metadata>-->
 </div>

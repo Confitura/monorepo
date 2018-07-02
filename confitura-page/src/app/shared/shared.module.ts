@@ -28,6 +28,7 @@ import {
   MatMenuModule,
   MatProgressSpinnerModule,
   MatSliderModule,
+  MatSnackBarModule,
   MatTooltipModule
 } from '@angular/material';
 import {PresentationComponent} from './presentation/presentation.component';
@@ -55,6 +56,7 @@ import {RatePresentationDialogDirective} from './presentation/rate-presentation/
     MatMenuModule,
     MatCardModule,
     MatTooltipModule,
+    MatSnackBarModule,
     MatProgressSpinnerModule
   ],
   declarations: [
