@@ -39,6 +39,7 @@ import {RatePresentationComponent} from './presentation/rate-presentation/rate-p
 import {RatePresentationDialogComponent} from './presentation/rate-presentation/rate-presentation-dialog/rate-presentation-dialog.component';
 import {RateSliderComponent} from './presentation/rate-presentation/rate-slider/rate-slider.component';
 import {RatePresentationDialogDirective} from './presentation/rate-presentation/rate-presentation-dialog/rate-presentation-dialog.directive';
+import {AuthenticatedDirective} from './authenticated.directive';
 
 
 @NgModule({
@@ -60,6 +61,7 @@ import {RatePresentationDialogDirective} from './presentation/rate-presentation/
     MatProgressSpinnerModule
   ],
   declarations: [
+    AuthenticatedDirective,
     AdminDirective,
     AdminOrOwnerDirective,
     PhotoComponent,
@@ -86,6 +88,7 @@ import {RatePresentationDialogDirective} from './presentation/rate-presentation/
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
+    AuthenticatedDirective,
     AdminDirective,
     AdminOrOwnerDirective,
     PhotoComponent,
