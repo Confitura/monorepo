@@ -55,7 +55,6 @@ public class RegistrationController {
                 .map(it -> new Participant(it, (JelatynaPrincipal) authentication.getPrincipal()))
                 .collect(toList());
         return ResponseEntity.ok(list);
-
     }
 
     @PostMapping("/participants/reminder")
