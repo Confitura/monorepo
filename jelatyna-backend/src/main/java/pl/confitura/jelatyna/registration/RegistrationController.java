@@ -78,7 +78,7 @@ public class RegistrationController {
 
     @PostMapping("/participants")
     @Transactional
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("@security.isAdmin()")
     public ResponseEntity<Object> save(@RequestBody RegistrationForm registrationForm) {
         JelatynaPrincipal principal = SecurityContextUtil.getPrincipal();
         User user = userRepository.findById(principal.id);
