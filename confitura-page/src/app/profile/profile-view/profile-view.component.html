@@ -13,19 +13,26 @@
         <th class="presentations__status-column">status</th>
         <th class="presentations__action-column"></th>
       </tr>
-      <tr *ngFor="let presentation of presentations | async" class="active">
-        <td>{{presentation.title}}</td>
-        <td class="presentations__status-column ">
-          <mat-chip-list>
-            <mat-chip>{{presentation.status || "reported"}}</mat-chip>
-          </mat-chip-list>
-        </td>
-        <td class="text-center">
-          <a class="btn" routerLink="/presentation/{{presentation.id}}">edit</a>
-          <a class="btn" routerLink="/presentation/{{presentation.id}}/cospeakers">co-speakers</a>
-          <button class="btn btn-danger" (click)="remove(presentation)">Delete</button>
-        </td>
-      </tr>
+      <ng-container *ngFor="let presentation of presentations | async">
+        <tr class="active">
+          <td>{{presentation.title}}</td>
+          <td class="presentations__status-column ">
+            <mat-chip-list>
+              <mat-chip>{{presentation.status || "reported"}}</mat-chip>
+            </mat-chip-list>
+          </td>
+          <td class="text-center">
+            <a class="btn" routerLink="/presentation/{{presentation.id}}">edit</a>
+            <a class="btn" routerLink="/presentation/{{presentation.id}}/cospeakers">co-speakers</a>
+            <button class="btn btn-danger" (click)="remove(presentation)">Delete</button>
+          </td>
+        </tr>
+        <tr *ngIf="presentation.status == 'accepted'">
+          <td colspan="3">
+            <cf-comments [presentationId]="presentation.id"></cf-comments>
+          </td>
+        </tr>
+      </ng-container>
     </table>
 
   </div>

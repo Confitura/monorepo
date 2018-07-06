@@ -10,10 +10,12 @@ import {IsAuthenticatedGuard} from './shared/is-authenticated-guard.service';
 import {SpeakerSelectComponent} from './speaker-select/speaker.multiselect.component';
 import {
   MatButtonModule, MatChipsModule, MatFormFieldModule, MatIconModule, MatInputModule, MatListModule, MatRadioModule, MatSnackBarModule,
-  MatTableModule, MatCheckboxModule
+  MatTableModule, MatCheckboxModule, MatCardModule
 } from '@angular/material';
 import { CospeakersComponent } from './cospeakers/cospeakers.component';
 import { ParticipationStatusComponent } from './participation-status/participation-status.component';
+import { CommentsComponent } from './profile-view/comments/comments.component';
+import {Ng2GoogleChartsModule} from 'ng2-google-charts';
 
 
 @NgModule({
@@ -21,6 +23,8 @@ import { ParticipationStatusComponent } from './participation-status/participati
     SharedModule,
     TagInputModule,
     MatFormFieldModule,
+    Ng2GoogleChartsModule,
+    MatCardModule,
     MatInputModule,
     MatButtonModule,
     MatRadioModule,
@@ -36,7 +40,8 @@ import { ParticipationStatusComponent } from './participation-status/participati
     PresentationEditComponent,
     SpeakerSelectComponent,
     CospeakersComponent,
-    ParticipationStatusComponent
+    ParticipationStatusComponent,
+    CommentsComponent
   ],
   providers: [ProfileCompleteGuard, IsAuthenticatedGuard]
 

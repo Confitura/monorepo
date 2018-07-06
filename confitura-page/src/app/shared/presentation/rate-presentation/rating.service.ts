@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Rate} from './rating.model';
-import {tap} from 'rxjs/operators';
+import {map, tap} from 'rxjs/operators';
 import {Observable} from 'rxjs/Observable';
 
 const rates = [
@@ -89,7 +89,13 @@ export class RatingService {
   getRateMetaByNumericValue(v) {
     return rates.find(it => it.no === v);
   }
+
+  getRates(presentationId: string) {
+    return this.client.get<EmbeddedRates>(`/presentations/${presentationId}/ratings`)
+      .pipe(map(it => it._embedded.rates));
+  }
 }
 
-
-
+class EmbeddedRates {
+  _embedded: { rates: Rate[] };
+}
