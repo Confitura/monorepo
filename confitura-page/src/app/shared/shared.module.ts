@@ -22,6 +22,7 @@ import {
   MatCardModule,
   MatChipsModule,
   MatDialogModule,
+  MatExpansionModule,
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
@@ -40,10 +41,13 @@ import {RatePresentationDialogComponent} from './presentation/rate-presentation/
 import {RateSliderComponent} from './presentation/rate-presentation/rate-slider/rate-slider.component';
 import {RatePresentationDialogDirective} from './presentation/rate-presentation/rate-presentation-dialog/rate-presentation-dialog.directive';
 import {AuthenticatedDirective} from './authenticated.directive';
+import {CommentsComponent} from './presentation/comments/comments.component';
+import {Ng2GoogleChartsModule} from 'ng2-google-charts';
 
 
 @NgModule({
   imports: [
+    Ng2GoogleChartsModule,
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
@@ -56,6 +60,7 @@ import {AuthenticatedDirective} from './authenticated.directive';
     MatChipsModule,
     MatMenuModule,
     MatCardModule,
+    MatExpansionModule,
     MatTooltipModule,
     MatSnackBarModule,
     MatProgressSpinnerModule
@@ -78,6 +83,7 @@ import {AuthenticatedDirective} from './authenticated.directive';
     PresentationComponent,
     RatePresentationComponent,
     LikeButtonComponent,
+    CommentsComponent,
     PresentationMetadataComponent,
     RatePresentationDialogComponent,
     RatePresentationDialogDirective,
@@ -103,6 +109,7 @@ import {AuthenticatedDirective} from './authenticated.directive';
     PageHeaderComponent,
     BackButtonComponent,
     PresentationComponent,
+    CommentsComponent,
     MatTooltipModule,
     PresentationMetadataComponent,
     RatePresentationDialogDirective,

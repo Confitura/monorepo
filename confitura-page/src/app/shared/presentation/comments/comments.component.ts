@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {PresentationService} from '../../shared/presentation.service';
-import {RatingService} from '../../../shared/presentation/rate-presentation/rating.service';
-import {Rate} from '../../../shared/presentation/rate-presentation/rating.model';
+import {RatingService} from '../rate-presentation/rating.service';
+import {Rate} from '../rate-presentation/rating.model';
 
 @Component({
   selector: 'cf-comments',
@@ -12,7 +11,7 @@ export class CommentsComponent implements OnInit {
 
   @Input() presentationId: string;
   rates: RateToDisplayModel[] = [];
-  private stats: { TERRIBLE: number; BAD: number; IT_WAS_FINE: number; GREAT: number; AWESOME: number; total: number; avg: number };
+  stats: { TERRIBLE: number; BAD: number; IT_WAS_FINE: number; GREAT: number; AWESOME: number; total: number; avg: number };
 
 
   chart = {

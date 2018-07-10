@@ -44,6 +44,9 @@
       <div class="presentation__description">{{presentation.description}}</div>
     </div>
   </div>
+  <div class="presentation__comments" *cfAdmin>
+    <cf-comments [presentationId]="presentation.id"></cf-comments>
+  </div>
   <div class="presentation__actions pt-4">
 
     <cf-rate-presentation [presentationId]="presentation.id"></cf-rate-presentation>
