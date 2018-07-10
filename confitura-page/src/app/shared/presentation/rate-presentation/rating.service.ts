@@ -90,7 +90,7 @@ export class RatingService {
     return rates.find(it => it.no === v);
   }
 
-  getRates(presentationId: string) {
+  getRates(presentationId: string): Observable<Rate[]> {
     return this.client.get<EmbeddedRates>(`/presentations/${presentationId}/ratings`)
       .pipe(map(it => it._embedded.rates));
   }
