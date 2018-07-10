@@ -11,7 +11,15 @@ export class CommentsComponent implements OnInit {
 
   @Input() presentationId: string;
   rates: RateToDisplayModel[] = [];
-  stats: { TERRIBLE: number; BAD: number; IT_WAS_FINE: number; GREAT: number; AWESOME: number; total: number; avg: number };
+  stats: {
+    TERRIBLE: number;
+    BAD: number;
+    IT_WAS_FINE: number;
+    GREAT: number;
+    AWESOME: number;
+    total: number;
+    avg: number
+  };
 
 
   chart = {
