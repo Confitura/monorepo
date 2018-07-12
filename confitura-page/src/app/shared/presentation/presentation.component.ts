@@ -30,8 +30,6 @@ export class PresentationComponent implements OnInit {
   ngOnInit() {
   }
 
-
-
   accept(presentation: Presentation) {
     this.service.accept(presentation)
       .subscribe(() => this.ngOnInit());
@@ -45,6 +43,10 @@ export class PresentationComponent implements OnInit {
   show(speaker: User) {
     this.userService.getBy(speaker.id)
       .subscribe(user => this.personModalService.showFor(user));
+  }
+
+  isAccepted() {
+    return this.presentation.status === 'accepted';
   }
 
   allSpeakersFor(presentation: Presentation): User[] {
