@@ -20,7 +20,7 @@ import {LikeService} from '../../../shared/presentation/like/like.service';
 })
 export class PresentationListComponent implements OnInit {
   private EMPTY_FILTER = {
-    status: '*',
+    status: 'a',
     language: '*',
     level: '*',
     text: ''
