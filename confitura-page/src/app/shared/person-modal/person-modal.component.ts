@@ -30,7 +30,7 @@ export class PersonModalComponent {
 
   addPresentation() {
     this.closeModal();
-    this.router.navigate([`/user/${this.model.id}/presentation`]);
+    this.router.navigate([`/profile/${this.model.id}/presentation`]);
   }
 
   private closeModal() {

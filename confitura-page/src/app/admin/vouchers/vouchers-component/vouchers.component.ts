@@ -6,7 +6,7 @@ import {FileUploader} from 'ng2-file-upload';
 import {environment} from '../../../../environments/environment';
 import {CurrentUser} from '../../../core/security/current-user.service';
 import {ParticipantService} from '../../participants/participant.service';
-import {ConfirmationService} from '../../../core/confirmation.service';
+import {ConfirmationService} from '../../../shared/confirmation/confirmation.service';
 
 @Component({
   selector: 'cf-vouchers',

@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {User} from '../../core/user/user.model';
 import {ParticipantService} from '../../admin/participants/participant.service';
 import {Participant} from '../../admin/participants/participant.model';
+import {flatMap} from 'rxjs/operators';
 
 @Component({
   selector: 'cf-participation-status',
@@ -19,7 +20,9 @@ export class ParticipationStatusComponent implements OnInit {
 
   ngOnInit() {
     this.service.getByUser(this.model.id)
-      .flatMap(it => this.service.addVoucher(it))
+      .pipe(
+        flatMap(it => this.service.addVoucher(it))
+      )
       .subscribe(it => this.data = it);
   }
 

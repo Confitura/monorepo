@@ -3,7 +3,7 @@ import {TimeSlot} from './shared/time-slot.model';
 import {Room} from './shared/room.model';
 import {AgendaService} from './shared/agenda.service';
 import {Tag} from '../../profile/shared/tag.model';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {PresentationService} from '../../profile/shared/presentation.service';
 import {AgendaEntry} from './shared/agenda.model';
 

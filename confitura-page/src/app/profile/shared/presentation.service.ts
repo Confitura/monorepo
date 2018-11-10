@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Presentation} from './presentation.model';
 import {Tag} from './tag.model';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {CurrentUser} from '../../core/security/current-user.service';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {map} from 'rxjs/operators';

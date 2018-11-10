@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Person} from './person.model';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 

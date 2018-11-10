@@ -4,7 +4,6 @@ import {LoginService} from './security/login.service';
 import {CurrentUser} from './security/current-user.service';
 import {RouterModule} from '@angular/router';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {ConfirmationService} from './confirmation.service';
 import {BaseUrlInterceptor} from '../shared/base-url-interceptor.service';
 import {AgendaService} from '../pages/agenda/shared/agenda.service';
 import {PresentationService} from '../profile/shared/presentation.service';
@@ -44,7 +43,6 @@ import {IsActiveGuard} from '../v4p/IsActiveGuard';
   providers: [
     LoginService,
     CurrentUser,
-    ConfirmationService,
     UserService,
     PresentationService,
     PartnerService,

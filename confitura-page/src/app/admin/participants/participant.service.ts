@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import {Observable, of} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 import {Participant} from './participant.model';
 import {HttpClient, HttpResponse} from '@angular/common/http';
@@ -26,9 +26,9 @@ export class ParticipantService {
   addVoucher(p: Participant) {
     return this.http.get<Voucher>(`/participants/${p.id}/voucher`).pipe(
       catchError(error => {
-        return Observable.from([null]);
+        return of([null]);
       }),
-      map(it => {
+      map((it: Voucher) => {
         p.voucher = it;
         return p;
       }));

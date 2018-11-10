@@ -28,6 +28,10 @@ const appRoutes: Routes = [
     loadChildren: 'app/v4p/v4p.module#V4pModule',
     canActivate: [IsActiveGuard],
   },
+  {
+    path: 'profile',
+    loadChildren: './profile/profile.module#ProfileModule'
+  },
   {path: '', component: HomeComponent},
   {path: 'about', component: AboutComponent},
   {path: 'presentations', component: PresentationListComponent},

@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ParticipantService} from '../participants/participant.service';
 import {Participant} from '../participants/participant.model';
-import {Observable} from 'rxjs/Observable';
+import {throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 import {of} from 'rxjs/internal/observable/of';
 
@@ -24,7 +24,7 @@ export class ScannerComponent {
               return of({status: 409, json: error.error});
             }
             this.error = 'Invalid token!';
-            return Observable.throwError(error);
+            return throwError(error);
           })
         )
         .subscribe((response: { status: number, json: Participant }) => {

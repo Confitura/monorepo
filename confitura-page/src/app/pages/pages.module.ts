@@ -20,16 +20,12 @@ import {LoginComponent} from './login/login.component';
 import {AgmCoreModule} from '@agm/core';
 import {FaqComponent} from './faq/faq.component';
 import {TagInputModule} from 'ngx-chips';
-import {
-  MatButtonModule, MatChipsModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatRadioModule, MatSelectModule,
-  MatTooltipModule
-} from '@angular/material';
 import {WorkshopsComponent} from './workshops/workshops.component';
 import {PrivacyPolicyComponent} from './privacy-policy/privacy-policy.component';
-import { AgendaFilterComponent } from './agenda/agenda-filter/agenda-filter.component';
-import { AgendaTableComponent } from './agenda/agenda-table/agenda-table.component';
+import {AgendaFilterComponent} from './agenda/agenda-filter/agenda-filter.component';
+import {AgendaTableComponent} from './agenda/agenda-table/agenda-table.component';
 import {LiveStreamComponent} from './live-stream/live-stream.component';
-import { PersonalAgendaComponent } from './agenda/personal-agenda/personal-agenda.component';
+import {PersonalAgendaComponent} from './agenda/personal-agenda/personal-agenda.component';
 import {SpoinaComponent} from './spoina/spoina.component';
 
 @NgModule({
@@ -38,15 +34,6 @@ import {SpoinaComponent} from './spoina/spoina.component';
     RouterModule,
     FileUploadModule,
     TagInputModule,
-    MatIconModule,
-    MatTooltipModule,
-    MatChipsModule,
-    MatButtonModule,
-    MatMenuModule,
-    MatRadioModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyA6nOtsqyZJRfMwy6kmaK2_MgX51TtmViA'
     })],

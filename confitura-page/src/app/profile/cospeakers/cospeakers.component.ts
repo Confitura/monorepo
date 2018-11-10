@@ -1,10 +1,10 @@
+import {throwError as observableThrowError, Observable} from 'rxjs';
 import {Component, OnInit} from '@angular/core';
-import {ConfirmationService} from '../../core/confirmation.service';
+import {ConfirmationService} from '../../shared/confirmation/confirmation.service';
 import {PresentationService} from '../shared/presentation.service';
 import {ActivatedRoute} from '@angular/router';
 import {User} from '../../core/user/user.model';
 import {catchError} from 'rxjs/operators';
-import {Observable} from 'rxjs/Observable';
 import {MatSnackBar} from '@angular/material';
 import {FormControl, Validators} from '@angular/forms';
 import {Location} from '@angular/common';
@@ -54,7 +54,7 @@ export class CospeakersComponent implements OnInit {
             message = error.error;
           }
           this.validator({speaker: {value: message}});
-          return Observable.throw(error);
+          return observableThrowError(error);
         }))
       .subscribe(user => {
         this.list = [...this.list, user];

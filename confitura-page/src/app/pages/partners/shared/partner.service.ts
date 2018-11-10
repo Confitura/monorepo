@@ -1,5 +1,5 @@
 import {Partner} from './partner.model';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
 import {CurrentUser} from '../../../core/security/current-user.service';

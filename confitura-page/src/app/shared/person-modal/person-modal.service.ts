@@ -1,7 +1,9 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {User} from '../../core/user/user.model';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class PersonModalService {
   changed: EventEmitter<User> = new EventEmitter<User>();
 

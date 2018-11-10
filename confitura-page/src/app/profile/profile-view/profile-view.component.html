@@ -3,7 +3,8 @@
     <div class="action-buttons pb-2">
       <cf-back-button></cf-back-button>
       <a class="action-buttons__edit" mat-button routerLink="/profile/{{model.id}}/edit">Edit profile</a>
-      <a *cfAdmin class="action-buttons__add" mat-button routerLink="/user/{{model.id}}/presentation" color="primary">Add presentation</a>
+      <a *cfAdmin class="action-buttons__add" mat-button routerLink="/profile/{{model.id}}/presentation" color="primary">Add
+        presentation</a>
     </div>
     <cf-person-view [model]="model" (changed)="reload()"></cf-person-view>
     <cf-participation-status [model]="model" ></cf-participation-status>
@@ -22,8 +23,8 @@
             </mat-chip-list>
           </td>
           <td class="text-center">
-            <a class="btn" routerLink="/presentation/{{presentation.id}}">edit</a>
-            <a class="btn" routerLink="/presentation/{{presentation.id}}/cospeakers">co-speakers</a>
+            <a class="btn" routerLink="/profile/presentation/{{presentation.id}}">edit</a>
+            <a class="btn" routerLink="/profile/presentation/{{presentation.id}}/cospeakers">co-speakers</a>
             <button class="btn btn-danger" (click)="remove(presentation)">Delete</button>
           </td>
         </tr>

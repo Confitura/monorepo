@@ -1,10 +1,9 @@
+import {throwError as observableThrowError, Observable} from 'rxjs';
 import {Component, Input, OnInit} from '@angular/core';
 import {Page} from './page.model';
 import {PageService} from './page.service';
 import * as SimpleMDE from 'simplemde';
-import {Observable} from 'rxjs/Observable';
 import {catchError} from 'rxjs/operators';
-import 'rxjs/add/observable/throw';
 
 
 @Component({
@@ -31,7 +30,7 @@ export class PageComponent implements OnInit {
       .pipe(
         catchError(error => {
           this.page = {id: this.title, content: ''};
-          return Observable.throw(error);
+          return observableThrowError(error);
         })
       )
       .subscribe(page => this.page = page);

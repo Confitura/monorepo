@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {ParticipantService} from './participant.service';
 import {Participant} from './participant.model';
 import {CurrentUser} from '../../core/security/current-user.service';
-import {ConfirmationService} from '../../core/confirmation.service';
+import {ConfirmationService} from '../../shared/confirmation/confirmation.service';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 
 @Component({

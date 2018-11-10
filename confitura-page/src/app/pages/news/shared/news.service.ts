@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {News} from './news.model';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 

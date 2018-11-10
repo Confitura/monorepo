@@ -1,8 +1,7 @@
 import {Component} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs/Observable';
+import {Observable, Subscription} from 'rxjs';
 import {timer} from 'rxjs/internal/observable/timer';
-import {Subscription} from 'rxjs/Subscription';
 
 
 @Component({

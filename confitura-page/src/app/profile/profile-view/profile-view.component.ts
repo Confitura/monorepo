@@ -1,12 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {Presentation} from '../shared/presentation.model';
 import {PresentationService} from '../shared/presentation.service';
 import {ActivatedRoute, Params} from '@angular/router';
-import {ConfirmationService} from '../../core/confirmation.service';
+import {ConfirmationService} from '../../shared/confirmation/confirmation.service';
 import {User} from '../../core/user/user.model';
 import {UserService} from '../../core/user/user.service';
-import {Location} from '@angular/common';
 
 @Component({
   templateUrl: './profile-view.component.html',
@@ -45,8 +44,11 @@ export class ProfileViewComponent implements OnInit {
 
   remove(presentation: Presentation) {
     this.confirmation.show('you want to delete this presentation?')
-      .then(() => this.presentationService.remove(presentation)
-        .subscribe(() => this.reload()));
+      .then(() => {
+        this.presentationService
+          .remove(presentation)
+          .subscribe(() => this.reload());
+      });
   }
 
 }

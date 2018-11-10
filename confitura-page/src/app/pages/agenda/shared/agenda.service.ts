@@ -1,10 +1,10 @@
+import {zip, Observable, empty} from 'rxjs';
 import {Injectable} from '@angular/core';
 import {Room} from './room.model';
 import {TimeSlot} from './time-slot.model';
 import {AgendaEntry} from './agenda.model';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/observable/zip';
+
 import {map} from 'rxjs/operators';
 import {CurrentUser} from '../../../core/security/current-user.service';
 
@@ -16,7 +16,7 @@ export class AgendaService {
   }
 
   getAgenda() {
-    return Observable.zip(
+    return zip(
       this.getRooms(),
       this.getTimeSlots(),
       this.getAll(),
@@ -52,7 +52,7 @@ export class AgendaService {
       return this.http.get<EmbeddedAgendaEntries>(`/users/${this.user.get().jti}/personalAgenda`)
         .pipe(map(it => it._embedded.agendaEntries));
     } else {
-      return Observable.empty();
+      return empty();
     }
 
   }

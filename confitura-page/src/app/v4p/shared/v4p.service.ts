@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {Vote} from './vote.model';
 import {Presentation} from '../../profile/shared/presentation.model';

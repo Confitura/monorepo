@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {OrganizerService} from './organizer.service';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {Person} from './person.model';
 import {PersonModalService} from '../../shared/person-modal/person-modal.service';
 import {User} from '../../core/user/user.model';

@@ -11,27 +11,10 @@ import {RoomComponent} from './agenda/room.component';
 import {AgendaEntryComponent} from './agenda/agenda-entry.component';
 import {PresentationPickerComponent} from './agenda/presentaion-picker/presentaion-picker.component';
 import {ScannerComponent} from './scanner/scanner.component';
-import {
-  MatCardModule,
-  MatButtonModule,
-  MatChipsModule,
-  MatDividerModule,
-  MatFormFieldModule,
-  MatIconModule,
-  MatInputModule,
-  MatMenuModule,
-  MatPaginatorModule,
-  MatRadioModule,
-  MatSortModule,
-  MatTableModule,
-  MatDialogModule,
-  MatSelectModule,
-  MatProgressSpinnerModule
-} from '@angular/material';
 import {VoteListComponent} from './votes/vote-list/vote-list.component';
-import { VouchersComponent } from './vouchers/vouchers-component/vouchers.component';
-import { MailService } from './users/mailing/mail.service';
-import { MailModalComponent } from './users/mailing/mail-modal/mail-modal.component';
+import {VouchersComponent} from './vouchers/vouchers-component/vouchers.component';
+import {MailService} from './users/mailing/mail.service';
+import {MailModalComponent} from './users/mailing/mail-modal/mail-modal.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {Ng2GoogleChartsModule} from 'ng2-google-charts';
 
@@ -42,23 +25,6 @@ import {Ng2GoogleChartsModule} from 'ng2-google-charts';
     AdminRoutingModule,
     SharedModule,
     FileUploadModule,
-    MatCardModule,
-    MatTableModule,
-    MatChipsModule,
-    MatRadioModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatButtonModule,
-    MatMenuModule,
-    MatIconModule,
-    MatDividerModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatDialogModule,
-    MatSelectModule,
-    MatCardModule,
-    MatProgressSpinnerModule
   ],
   declarations: [
     PartnerEditComponent,

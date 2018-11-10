@@ -5,7 +5,6 @@ import {VotingComponent} from './voting/voting.component';
 import {V4pService} from './shared/v4p.service';
 import {V4pStartComponent} from './start/v4p-start.component';
 import {V4pEndComponent} from './end/v4p-end.component';
-import {MatButtonModule, MatIconModule} from '@angular/material';
 
 import {HotkeyModule} from 'angular2-hotkeys';
 
@@ -13,9 +12,7 @@ import {HotkeyModule} from 'angular2-hotkeys';
   imports: [
     SharedModule,
     V4pRoutingModule,
-    MatIconModule,
-    MatButtonModule,
-    HotkeyModule,
+    HotkeyModule.forRoot()
   ],
   declarations: [
     VotingComponent,

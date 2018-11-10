@@ -1,13 +1,15 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import * as jsSHA from 'jssha';
 
 
 const TOKEN_NAME = 'like-token';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class LikeService {
 
     private cache: Like[];

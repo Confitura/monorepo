@@ -3,7 +3,7 @@ import {Participant} from '../../../admin/participants/participant.model';
 import {ParticipantService} from '../../../admin/participants/participant.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Observable} from 'rxjs/Observable';
+import {Observable, of, throwError} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 import {Voucher} from '../../../admin/vouchers/voucher.model';
 import {Location} from '@angular/common';
@@ -11,7 +11,6 @@ import {CurrentUser} from '../../../core/security/current-user.service';
 import {VouchersService} from '../../../admin/vouchers/vouchers.service';
 import {ValidationErrors} from '@angular/forms/src/directives/validators';
 import {AbstractControl} from '@angular/forms/src/model';
-import 'rxjs-compat/add/observable/of';
 import {UserService} from '../../../core/user/user.service';
 
 @Component({
@@ -96,7 +95,7 @@ export class RegistrationFormComponent implements OnInit {
             } else {
               this.error = 'Something went wrong. Please try again or contact us at confitura@confitura.pl';
             }
-            return Observable.throwError(error);
+            return throwError(error);
           })
         )
         .subscribe(() => this.router.navigate(['/registration/finish']));
@@ -145,17 +144,17 @@ export class RegistrationFormComponent implements OnInit {
 
   voucherValid(control: AbstractControl): Observable<ValidationErrors> {
     if (!control.value) {
-      return Observable.of(null);
+      return of(null);
     }
     return this.voucherService.check(control.value)
       .pipe(
         map(() => null),
         catchError(error => {
-          console.log(error);
+          console.error(error);
           if (error.error === 'TAKEN') {
-            return Observable.of({voucherTaken: true});
+            return of({voucherTaken: true, voucherInvalid: true});
           } else {
-            return Observable.of({voucherInvalid: true});
+            return of({voucherTaken: false, voucherInvalid: true});
           }
         }));
   }

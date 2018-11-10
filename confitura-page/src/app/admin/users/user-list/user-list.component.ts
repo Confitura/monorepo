@@ -62,7 +62,7 @@ export class UserListComponent implements OnInit {
   }
 
   addPresentationTo(user: User) {
-    this.router.navigate([`/user/${user.id}/presentation`], {queryParams: {back: true}});
+    this.router.navigate([`/profile/${user.id}/presentation`], {queryParams: {back: true}});
   }
 
   markAsVolunteer(user: User) {

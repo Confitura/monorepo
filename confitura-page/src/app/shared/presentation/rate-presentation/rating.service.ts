@@ -1,8 +1,8 @@
+import {empty as observableEmpty, Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Rate} from './rating.model';
 import {map, tap} from 'rxjs/operators';
-import {Observable} from 'rxjs/Observable';
 
 const rates = [
   {no: 1, name: 'TERRIBLE', description: 'Terrible'},
@@ -70,7 +70,7 @@ export class RatingService {
     if (rate) {
       return this.save(new Rate({value: rate.value, comment: comment}), presentationId);
     } else {
-      return Observable.empty();
+      return observableEmpty();
     }
   }
 

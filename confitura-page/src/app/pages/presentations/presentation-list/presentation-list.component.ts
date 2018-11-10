@@ -1,3 +1,6 @@
+import {combineLatest, from} from 'rxjs';
+
+import {map, mergeMap} from 'rxjs/operators';
 import {Component, OnInit} from '@angular/core';
 import {PresentationService} from '../../../profile/shared/presentation.service';
 import {DescriptionType, Presentation} from '../../../profile/shared/presentation.model';
@@ -6,10 +9,8 @@ import {PersonModalService} from '../../../shared/person-modal/person-modal.serv
 import {UserService} from '../../../core/user/user.service';
 import {User} from '../../../core/user/user.model';
 import {VoteStatsServiceService} from '../../../admin/votes/vote-list/vote-stats.service';
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/observable/from';
-import 'rxjs/add/observable/combineLatest';
-import 'rxjs/add/operator/mergeMap';
+
+
 import {CurrentUser} from '../../../core/security/current-user.service';
 import {LikeService} from '../../../shared/presentation/like/like.service';
 
@@ -51,7 +52,6 @@ export class PresentationListComponent implements OnInit {
         setTimeout(() => this.scrollToSelectedPresentation(), 500);
       });
   }
-
 
 
   clear() {
@@ -114,16 +114,17 @@ export class PresentationListComponent implements OnInit {
   }
 
   private getStats() {
-      const $likes = this.likeService.getSummary();
-      const $voteStats = this.voteStatsServiceService.getAll()
-          .flatMap(it => Observable.from(it));
-
-      Observable.combineLatest($voteStats, $likes, (statistics, likes) => {
-          statistics.likes = likes[statistics.presentationId] || 0;
-          return statistics;
-      })
+    const $likes = this.likeService.getSummary();
+    const $voteStats = this.voteStatsServiceService.getAll()
+      .pipe(
+        mergeMap(it => from(it)));
+    combineLatest($voteStats, $likes)
+      .pipe(map(([statistics, likes]) => {
+        statistics.likes = likes[statistics.presentationId] || 0;
+        return statistics;
+      }))
       .subscribe(statistics => {
-          this.statistics[statistics.presentationId] = statistics;
-       });
+        this.statistics[statistics.presentationId] = statistics;
+      });
   }
 }
