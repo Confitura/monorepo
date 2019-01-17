@@ -74,7 +74,9 @@
 </script>
 
 <style scoped lang="scss">
+    @import "../assets/fonts";
     .timer {
+
         margin-top: 50px;
         color: #ee1f46;
         display: flex;
@@ -83,11 +85,12 @@
     .timer-part {
         display: flex;
         flex-direction: column;
+        align-items: center;
     }
 
     .timer-value {
+        font-family: $font-bold;
         font-size: 3rem;
-        font-weight: bold;
     }
 
     .timer-part-separator:after {
