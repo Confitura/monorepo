@@ -9,15 +9,13 @@
     </div>
 </template>
 <script lang="ts">
-  export default {
-    name: "TheIllustration"
-  };
+export default {
+  name: 'TheIllustration',
+};
 </script>
 <style scoped lang="scss">
-    $levitate-speed: 5s;
-    $levitate-offset: -5%;
-
-
+    $levitate-speed: 3s;
+    $levitate-offset: -4%;
 
     .illustration {
         width: 48vw;
@@ -29,7 +27,7 @@
 
     .astronaut {
         left: 17%;
-        top: 22%;
+        top: 21.5%;
         position: absolute;
         filter: drop-shadow(10px 10px 0 rgba(0, 0, 0, .5));
         width: 54%;

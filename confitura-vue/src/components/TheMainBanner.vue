@@ -1,49 +1,48 @@
 <template>
-    <div class="banner">
-        <!--<div class="twinkling"></div>-->
+    <section class="banner">
+        <div class="twinkling"></div>
         <div class="container">
-
-
             <div class="info">
                 <div class="slogan">
                     It is not a rocket science!
                 </div>
                 <TheTimer/>
                 <div class="time-and-place">
-                    30.06.2019, Warsaw Expo XXI
+                    29.06.2019, Warsaw Expo XXI
                 </div>
             </div>
             <TheIllustration/>
         </div>
-    </div>
+    </section>
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from "vue-property-decorator";
-  import TheTimer from "@/components/TheTimer.vue";
-  import TheIllustration from "@/components/TheIllustration.vue";
+import { Component, Vue } from 'vue-property-decorator';
+import TheTimer from '@/components/TheTimer.vue';
+import TheIllustration from '@/components/TheIllustration.vue';
 
-  @Component({
-    components: { TheIllustration, TheTimer }
-  })
-  export default class TheMainBanner extends Vue {
-  }
+@Component({
+  components: { TheIllustration, TheTimer },
+})
+export default class TheMainBanner extends Vue {
+}
 </script>
 
 <style scoped lang="scss">
     @import "../assets/fonts";
 
     .banner {
-        height: 100vh;
+        height: calc(100vh - 50px);
+        scroll-snap-align: start;
         background: #000000 url(../assets/stars.png);
         overflow: hidden;
         padding-top: 50px;
     }
 
     .twinkling {
-        // background:transparent url(http://www.script-tutorials.com/demos/360/images/twinkling.png) repeat top center;
+         background:transparent url(http://www.script-tutorials.com/demos/360/images/twinkling.png) repeat top center;
         z-index: 1;
-        // animation:move-twink-back 800s linear infinite;
+         animation:move-twink-back 800s linear infinite;
         position: absolute;
         top: 0;
         left: 0;
@@ -54,10 +53,10 @@
         display: block;
     }
 
-    //@keyframes move-twink-back {
-    //   from {background-position:0 0;}
-    //   to {background-position:-10000px 5000px;}
-    // }
+    @keyframes move-twink-back {
+       from {background-position:0 0;}
+       to {background-position:-10000px 5000px;}
+     }
 
     .container {
         max-width: 1400px;
@@ -80,15 +79,12 @@
         font-family: $font-bold;
         color: #ffffff;
         font-size: 2rem;
-
-
     }
 
     .time-and-place {
         color: #ffffff;
         font-size: 1.5rem;
         margin-top: 4.5rem;
-
     }
 
 

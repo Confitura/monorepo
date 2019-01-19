@@ -5,7 +5,11 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "build:prod": "yarn build --prod",
+    "build:full" : "yarn lint && yarn build:prod",
+    "lint": "vue-cli-service lint",
+    "deploy": "yarn build:full && yarn deploy:only",
+    "deploy:only": "ansible-playbook deployment/confitura-page.yml"
   },
   "dependencies": {
     "dayjs": "^1.7.8",

@@ -23,54 +23,54 @@
 </template>
 
 <script lang="ts">
-    import {Component, Vue} from "vue-property-decorator";
-    import dayjs from "dayjs";
+import {Component, Vue} from 'vue-property-decorator';
+import dayjs from 'dayjs';
 
-    @Component({
-        filters: {
-            pad(value: number) {
-                return `${value}`.length == 1 ? `0${value}` : value;
-            }
-        }
-    })
-    export default class TheTimer extends Vue {
-        private handle: number = 0;
-        start = dayjs("2019-06-30T09:00");
-        now: dayjs.Dayjs = dayjs();
-        days = 0;
-        hours = 0;
-        minutes = 0;
-        seconds = 0;
+@Component({
+    filters: {
+        pad(value: number) {
+            return `${value}`.length === 1 ? `0${value}` : value;
+        },
+    },
+})
+export default class TheTimer extends Vue {
+    public start = dayjs('2019-06-29T09:00');
+    public now: dayjs.Dayjs = dayjs();
+    public days = 0;
+    public hours = 0;
+    public minutes = 0;
+    public seconds = 0;
+    private handle: number = 0;
 
-        mounted() {
+    public mounted() {
+        this.recalculate();
+        this.handle = setInterval(() => {
             this.recalculate();
-            this.handle = setInterval(() => {
-                this.recalculate();
-            }, 1000);
-        }
-
-        beforeDestroy() {
-            clearInterval(this.handle);
-        }
-
-        private recalculate() {
-            this.now = dayjs();
-            this.days = this.start.diff(this.now, "day");
-            this.hours = this.start
-                .subtract(this.days, "day")
-                .diff(this.now, "hour");
-            this.minutes = this.start
-                .subtract(this.days, "day")
-                .subtract(this.hours, "hour")
-                .diff(this.now, "minute");
-            this.seconds = this.start
-                .subtract(this.days, "day")
-                .subtract(this.hours, "hour")
-                .subtract(this.minutes, "minute")
-                .diff(this.now, "second");
-        }
-
+        }, 1000);
     }
+
+    public beforeDestroy() {
+        clearInterval(this.handle);
+    }
+
+    private recalculate() {
+        this.now = dayjs();
+        this.days = this.start.diff(this.now, 'day');
+        this.hours = this.start
+            .subtract(this.days, 'day')
+            .diff(this.now, 'hour');
+        this.minutes = this.start
+            .subtract(this.days, 'day')
+            .subtract(this.hours, 'hour')
+            .diff(this.now, 'minute');
+        this.seconds = this.start
+            .subtract(this.days, 'day')
+            .subtract(this.hours, 'hour')
+            .subtract(this.minutes, 'minute')
+            .diff(this.now, 'second');
+    }
+
+}
 </script>
 
 <style scoped lang="scss">

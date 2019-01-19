@@ -14,35 +14,35 @@
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue } from 'vue-property-decorator';
 
-  @Component
-  export default class TheHeader extends Vue {
-    public items = ["home", "about us", "numbers", "partners", 'contact'];
-    public theme: string = "";
+@Component
+export default class TheHeader extends Vue {
+  public items = ['home', 'about us', 'numbers', 'partners', 'contact'];
+  public theme: string = '';
 
-    mounted() {
-      this.setTheme("transparent");
-      window.addEventListener("scroll", this.handleScroll);
-    }
+  public mounted() {
+    this.setTheme('transparent');
+    window.addEventListener('scroll', this.handleScroll);
+  }
 
-    beforeDestroy() {
-      window.removeEventListener("scroll", this.handleScroll);
-    }
+  public beforeDestroy() {
+    window.removeEventListener('scroll', this.handleScroll);
+  }
 
-    handleScroll() {
-      let scroll = window.scrollY;
-      if (scroll > 20) {
-        this.setTheme("black");
-      } else {
-        this.setTheme("transparent");
-      }
-    }
-
-    private setTheme(theme: "black" | "transparent") {
-      this.theme = `header--${theme}`;
+  public handleScroll() {
+    const scroll = window.scrollY;
+    if (scroll > 20) {
+      this.setTheme('black');
+    } else {
+      this.setTheme('transparent');
     }
   }
+
+  private setTheme(theme: 'black' | 'transparent') {
+    this.theme = `header--${theme}`;
+  }
+}
 </script>
 
 <style scoped lang="scss">
@@ -72,7 +72,6 @@
 
         &__logo {
             width: 210px;
-            height: 100%;
             justify-self: flex-start;
         }
 
