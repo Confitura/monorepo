@@ -17,15 +17,15 @@
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from "vue-property-decorator";
-  import TheTimer from "@/components/TheTimer.vue";
-  import TheIllustration from "@/components/TheIllustration.vue";
+import { Component, Vue } from 'vue-property-decorator';
+import TheTimer from '@/components/TheTimer.vue';
+import TheIllustration from '@/components/TheIllustration.vue';
 
-  @Component({
-    components: { TheIllustration, TheTimer }
-  })
-  export default class TheMainBanner extends Vue {
-  }
+@Component({
+  components: { TheIllustration, TheTimer },
+})
+export default class TheMainBanner extends Vue {
+}
 </script>
 
 <style scoped lang="scss">
