@@ -20,6 +20,10 @@
         src: url('assets/fonts/30E5AC_1_0.woff2') format('woff2'), url('assets/fonts/30E5AC_1_0.woff') format('woff'), url('assets/fonts/30E5AC_1_0.ttf') format('truetype');
     }
 
+    /*html {*/
+        /*margin-right: calc(100vw - 100% );*/
+    /*}*/
+
     #app {
         font-family: 'NeuzeitGro-Reg', Arial, sans-serif;
         -webkit-font-smoothing: antialiased;

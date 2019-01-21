@@ -2,7 +2,7 @@
     <div class="home__container">
         <TheSocialLinks/>
         <TheMainBanner/>
-        <!--<TheAbout/>-->
+        <TheAbout/>
         <!--<TheAbout/>-->
         <!--<TheAbout/>-->
         <!--<TheAbout/>-->
@@ -12,20 +12,20 @@
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from "vue-property-decorator";
-  import TheMainBanner from "@/components/TheMainBanner.vue";
-  import TheAbout from "@/components/TheAbout.vue";
-  import TheSocialLinks from "@/components/TheSocialLinks.vue";
+import { Component, Vue } from 'vue-property-decorator';
+import TheMainBanner from '@/components/TheMainBanner.vue';
+import TheAbout from '@/components/TheAbout.vue';
+import TheSocialLinks from '@/components/TheSocialLinks.vue';
 
-  @Component({
-    components: {
-      TheSocialLinks,
-      TheAbout,
-      TheMainBanner
-    }
-  })
-  export default class Home extends Vue {
-  }
+@Component({
+  components: {
+    TheSocialLinks,
+    TheAbout,
+    TheMainBanner,
+  },
+})
+export default class Home extends Vue {
+}
 </script>
 
 <style  lang="scss">

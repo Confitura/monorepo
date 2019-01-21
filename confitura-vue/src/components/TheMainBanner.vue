@@ -17,15 +17,15 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import TheTimer from '@/components/TheTimer.vue';
-import TheIllustration from '@/components/TheIllustration.vue';
+  import { Component, Vue } from "vue-property-decorator";
+  import TheTimer from "@/components/TheTimer.vue";
+  import TheIllustration from "@/components/TheIllustration.vue";
 
-@Component({
-  components: { TheIllustration, TheTimer },
-})
-export default class TheMainBanner extends Vue {
-}
+  @Component({
+    components: { TheIllustration, TheTimer }
+  })
+  export default class TheMainBanner extends Vue {
+  }
 </script>
 
 <style scoped lang="scss">
@@ -40,9 +40,9 @@ export default class TheMainBanner extends Vue {
     }
 
     .twinkling {
-         background:transparent url(http://www.script-tutorials.com/demos/360/images/twinkling.png) repeat top center;
+        background: transparent url(http://www.script-tutorials.com/demos/360/images/twinkling.png) repeat top center;
         z-index: 1;
-         animation:move-twink-back 800s linear infinite;
+        /*animation:move-twink-back 800s linear infinite;*/
         position: absolute;
         top: 0;
         left: 0;
@@ -54,9 +54,13 @@ export default class TheMainBanner extends Vue {
     }
 
     @keyframes move-twink-back {
-       from {background-position:0 0;}
-       to {background-position:-10000px 5000px;}
-     }
+        from {
+            background-position: 0 0;
+        }
+        to {
+            background-position: -10000px 5000px;
+        }
+    }
 
     .container {
         max-width: 1400px;
