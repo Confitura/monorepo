@@ -1,5 +1,5 @@
 <template>
-    <section class="about-us">
+    <section class="about-us" id="about-us">
         <!--<div class="about-us__container">-->
         <h2 class="header">about us</h2>
         <div class="main-info">We are a group of highly-skilled, passionate Java developers, architects and affiliates organising the

@@ -6,8 +6,8 @@
                 alt="confitura logo"
         />
             <span class="header__separator"></span>
-            <div class="menu-item" v-for="item in items" :key="item">
-                <a class="menu-link" href="">{{ item }}</a>
+            <div class="menu-item" v-for="item in items" :key="item.label">
+                <a class="menu-link" :href="item.url">{{ item.label }}</a>
             </div>
         </div>
     </div>
@@ -18,7 +18,12 @@ import { Component, Vue } from 'vue-property-decorator';
 
 @Component
 export default class TheHeader extends Vue {
-  public items = ['home', 'about us', 'numbers', 'partners', 'contact'];
+  public items = [
+    { label:'home', url: '/'},
+    { label:'about us', url: '/#about-us'},
+    { label:'numbers', url: '/#numbers'},
+    { label:'partners', url: '/#about-us'},
+    { label:'contact', url: '/#about-us'}];
   public theme: string = '';
 
   public mounted() {
