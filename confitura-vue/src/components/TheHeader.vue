@@ -22,8 +22,8 @@ export default class TheHeader extends Vue {
     { label: 'home', url: '/'},
     { label: 'about us', url: '/#about-us'},
     { label: 'numbers', url: '/#numbers'},
-    { label: 'partners', url: '/#about-us'},
-    { label: 'contact', url: '/#about-us'}];
+    { label: 'partners', url: '/#partners'},
+    { label: 'contact', url: '/#contact'}];
   public theme: string = '';
 
   public mounted() {

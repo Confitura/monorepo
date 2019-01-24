@@ -70,6 +70,7 @@
     }
 
     .numbers-container {
+        box-sizing: border-box;
         height: 100%;
         max-width: 1440px;
         width: 100%;

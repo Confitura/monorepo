@@ -4,6 +4,8 @@
         <TheMainBanner/>
         <TheAbout/>
         <TheNumbers/>
+        <ThePartners/>
+        <TheContact/>
     </div>
 </template>
 
@@ -13,9 +15,13 @@ import TheMainBanner from '@/components/TheMainBanner.vue';
 import TheAbout from '@/components/TheAbout.vue';
 import TheSocialLinks from '@/components/TheSocialLinks.vue';
 import TheNumbers from '@/components/TheNumbers.vue';
+import ThePartners from '@/components/ThePartners.vue';
+import TheContact from '@/components/TheContact.vue';
 
 @Component({
   components: {
+    TheContact,
+    ThePartners,
     TheNumbers,
     TheSocialLinks,
     TheAbout,
