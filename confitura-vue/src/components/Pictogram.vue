@@ -8,19 +8,19 @@
     </div>
 </template>
 <script lang="ts">
-  import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue } from 'vue-property-decorator';
 
-  @Component
-  export default class Pictogram extends Vue {
-    @Prop(String)
-    public src!: string;
-    @Prop(String)
-    public value!: string;
-    @Prop(String)
-    public unit!: string;
+@Component
+export default class Pictogram extends Vue {
+  @Prop(String)
+  public src!: string;
+  @Prop(String)
+  public value!: string;
+  @Prop(String)
+  public unit!: string;
 
 
-  }
+}
 </script>
 <style scoped lang="scss">
     @import "../assets/colors";

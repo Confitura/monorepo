@@ -8,22 +8,22 @@
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from "vue-property-decorator";
-  import TheMainBanner from "@/components/TheMainBanner.vue";
-  import TheAbout from "@/components/TheAbout.vue";
-  import TheSocialLinks from "@/components/TheSocialLinks.vue";
-  import TheNumbers from "@/components/TheNumbers.vue";
+import { Component, Vue } from 'vue-property-decorator';
+import TheMainBanner from '@/components/TheMainBanner.vue';
+import TheAbout from '@/components/TheAbout.vue';
+import TheSocialLinks from '@/components/TheSocialLinks.vue';
+import TheNumbers from '@/components/TheNumbers.vue';
 
-  @Component({
-    components: {
-      TheNumbers,
-      TheSocialLinks,
-      TheAbout,
-      TheMainBanner
-    }
-  })
-  export default class Home extends Vue {
-  }
+@Component({
+  components: {
+    TheNumbers,
+    TheSocialLinks,
+    TheAbout,
+    TheMainBanner,
+  },
+})
+export default class Home extends Vue {
+}
 </script>
 
 <style lang="scss">

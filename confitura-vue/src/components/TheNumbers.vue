@@ -2,7 +2,10 @@
     <section class="numbers" id="numbers">
         <div class="numbers-container">
             <div class="info">
-                <h1 class="header"><div>confitura'18</div><div>in numbers</div></h1>
+                <h1 class="header">
+                    <div>confitura'18</div>
+                    <div>in numbers</div>
+                </h1>
                 <div class="subinfo">
                     Tutaj jakiś krótki tekst o tym jak kształtowała się confitura na przestrzeni lat i czym jest dla organizatorów,
                     partnerów i
@@ -45,11 +48,11 @@
 </template>
 
 <script>
-  import Pictogram from "./Pictogram";
+  import Pictogram from './Pictogram';
 
   export default {
-    name: "TheNumbers",
-    components: { Pictogram }
+    name: 'TheNumbers',
+    components: { Pictogram },
   };
 </script>
 
@@ -69,6 +72,7 @@
     .numbers-container {
         height: 100%;
         max-width: 1440px;
+        width: 100%;
         display: grid;
         align-content: center;
         grid-template-columns: 2fr 1fr 1fr 1fr;

@@ -21,7 +21,7 @@
     }
 
     /*html {*/
-        /*margin-right: calc(100vw - 100% );*/
+    /*margin-right: calc(100vw - 100% );*/
     /*}*/
 
     #app {
@@ -33,11 +33,11 @@
     }
 </style>
 <script>
-  import { Component, Vue } from "vue-property-decorator";
-  import TheHeader from "@/components/TheHeader.vue";
+  import { Component, Vue } from 'vue-property-decorator';
+  import TheHeader from '@/components/TheHeader.vue';
 
   @Component({
-    components: { TheHeader }
+    components: { TheHeader },
   })
   export default class App extends Vue {
   }

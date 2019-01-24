@@ -19,11 +19,11 @@ import { Component, Vue } from 'vue-property-decorator';
 @Component
 export default class TheHeader extends Vue {
   public items = [
-    { label:'home', url: '/'},
-    { label:'about us', url: '/#about-us'},
-    { label:'numbers', url: '/#numbers'},
-    { label:'partners', url: '/#about-us'},
-    { label:'contact', url: '/#about-us'}];
+    { label: 'home', url: '/'},
+    { label: 'about us', url: '/#about-us'},
+    { label: 'numbers', url: '/#numbers'},
+    { label: 'partners', url: '/#about-us'},
+    { label: 'contact', url: '/#about-us'}];
   public theme: string = '';
 
   public mounted() {
