@@ -1,5 +1,5 @@
 <template>
-    <div class="header" :class="theme">
+    <nav class="header" :class="theme">
         <div class="header-container"><img
                 class="header__logo"
                 src="../assets/logo_white.svg"
@@ -10,44 +10,44 @@
                 <a class="menu-link" :href="item.url">{{ item.label }}</a>
             </div>
         </div>
-    </div>
+    </nav>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+  import { Component, Vue } from 'vue-property-decorator';
 
-@Component
-export default class TheHeader extends Vue {
-  public items = [
-    { label: 'home', url: '/'},
-    { label: 'about us', url: '/#about-us'},
-    { label: 'numbers', url: '/#numbers'},
-    { label: 'partners', url: '/#partners'},
-    { label: 'contact', url: '/#contact'}];
-  public theme: string = '';
+  @Component
+  export default class TheHeader extends Vue {
+    public items = [
+      { label: 'home', url: '/' },
+      { label: 'about us', url: '/#about-us' },
+      { label: 'numbers', url: '/#numbers' },
+      { label: 'partners', url: '/#partners' },
+      { label: 'contact', url: '/#contact' }];
+    public theme: string = '';
 
-  public mounted() {
-    this.setTheme('transparent');
-    window.addEventListener('scroll', this.handleScroll);
-  }
-
-  public beforeDestroy() {
-    window.removeEventListener('scroll', this.handleScroll);
-  }
-
-  public handleScroll() {
-    const scroll = window.scrollY;
-    if (scroll > 20) {
-      this.setTheme('black');
-    } else {
+    public mounted() {
       this.setTheme('transparent');
+      window.addEventListener('scroll', this.handleScroll);
+    }
+
+    public beforeDestroy() {
+      window.removeEventListener('scroll', this.handleScroll);
+    }
+
+    public handleScroll() {
+      const scroll = window.scrollY;
+      if (scroll > 20) {
+        this.setTheme('black');
+      } else {
+        this.setTheme('transparent');
+      }
+    }
+
+    private setTheme(theme: 'black' | 'transparent') {
+      this.theme = `header--${theme}`;
     }
   }
-
-  private setTheme(theme: 'black' | 'transparent') {
-    this.theme = `header--${theme}`;
-  }
-}
 </script>
 
 <style scoped lang="scss">
@@ -59,7 +59,6 @@ export default class TheHeader extends Vue {
         width: 100%;
         z-index: 1000;
         box-sizing: border-box;
-        
 
         &--black {
             background-color: #000000;

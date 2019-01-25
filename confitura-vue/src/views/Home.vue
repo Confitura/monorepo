@@ -1,11 +1,11 @@
 <template>
     <div class="home__container">
         <TheSocialLinks/>
-        <TheMainBanner/>
-        <TheAbout/>
-        <TheNumbers/>
-        <ThePartners/>
-        <TheContact/>
+        <TheMainBanner id="home"/>
+        <TheAbout id="about-us"/>
+        <TheNumbers id="numbers"/>
+        <ThePartners id="partners"/>
+        <TheContact id="contact"/>
     </div>
 </template>
 

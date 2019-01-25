@@ -29,6 +29,7 @@ export default class Pictogram extends Vue {
     .pictogram {
         display: flex;
         flex-direction: column;
+        align-items: center;
 
         &__icon-container {
             flex-grow: 1;

@@ -1,5 +1,5 @@
 <template>
-    <section class="numbers" id="numbers">
+    <Box class="numbers">
         <div class="numbers-container">
             <div class="info">
                 <h1 class="header">
@@ -44,15 +44,16 @@
                     unit="participants"
             />
         </div>
-    </section>
+    </Box>
 </template>
 
 <script>
   import Pictogram from './Pictogram';
+  import Box from './Box';
 
   export default {
     name: 'TheNumbers',
-    components: { Pictogram },
+    components: { Box, Pictogram },
   };
 </script>
 
@@ -60,27 +61,15 @@
     @import "../assets/colors";
     @import "../assets/fonts";
 
-    .numbers {
-        min-height: 100vh;
-        width: 100%;
-        background-color: $brand;
-        color: white;
-        display: flex;
-        flex-direction: column;
+    .numbers{
+        background-color: $brand !important;
     }
-
-    .numbers-container {
-        box-sizing: border-box;
-        height: 100%;
-        max-width: 1440px;
-        width: 100%;
+    .numbers-container{
         display: grid;
         align-content: center;
         grid-template-columns: 2fr 1fr 1fr 1fr;
         grid-row-gap: 3rem;
-        margin: auto;
-        padding-left: 30px;
-        padding-right: 30px;
+        color: #ffffff;
     }
 
     .info {

@@ -1,34 +1,33 @@
 <template>
-    <section class="contact" id="contact">
-        <div class="contact-container">
-            <h1 class="header">stay connected</h1>
-            <div class="contact__info">
-                <div class="contact__mail">
-                    <a class="contact__link" href="mailto:confitura@confitura.pl">confitura@confitura.pl</a>
-                </div>
-                <div class="contact__twit">
-                    <Twit/>
-                </div>
-                <div class="contact__twit">
-                    <Twit/>
-                </div>
-                <div class="contact__twit">
-                    <Twit/>
-                </div>
-                <div class="contact__twit">
-                    <Twit/>
-                </div>
+    <Box class="contact">
+        <h1 class="header">stay connected</h1>
+        <div class="contact__info">
+            <div class="contact__mail">
+                <a class="contact__link" href="mailto:confitura@confitura.pl">confitura@confitura.pl</a>
+            </div>
+            <div class="contact__twit">
+                <Twit/>
+            </div>
+            <div class="contact__twit">
+                <Twit/>
+            </div>
+            <div class="contact__twit">
+                <Twit/>
+            </div>
+            <div class="contact__twit">
+                <Twit/>
             </div>
         </div>
-    </section>
+    </Box>
 </template>
 
 <script>
   import Twit from './Twit';
+  import Box from './Box';
 
   export default {
     name: 'TheContact',
-    components: { Twit },
+    components: { Box, Twit },
   };
 </script>
 
@@ -38,20 +37,6 @@
 
     .contact {
         background-color: #000000;
-        width: 100%;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        text-align: left;
-    }
-
-    .contact-container {
-        max-width: 1440px;
-        width: 100%;
-        padding-left: 140px;
-        padding-right: 140px;
-        box-sizing: border-box;
     }
 
     .header {
@@ -66,6 +51,7 @@
         grid-row-gap: 50px;
         grid-column-gap: 30px;
     }
+
     .contact__mail {
         grid-row: 1/ -3;
     }
