@@ -1,5 +1,5 @@
 <template>
-    <Box class="contact">
+    <Box class="contact" color="black">
         <h1 class="header">stay connected</h1>
         <div class="contact__info">
             <div class="contact__mail">
@@ -47,9 +47,11 @@
 
     .contact__info {
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
         grid-row-gap: 50px;
+         @media all and (min-width: 1000px) {
+        grid-template-columns: 1fr 1fr 1fr;
         grid-column-gap: 30px;
+    }
     }
 
     .contact__mail {

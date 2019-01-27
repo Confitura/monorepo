@@ -1,5 +1,5 @@
 <template>
-    <Box>
+    <Box color="white">
         <div class="about-us">
             <h2 class="header">about us</h2>
             <div class="main-info">We are a group of highly-skilled, passionate Java developers, architects and affiliates organising the
@@ -35,11 +35,20 @@
 
     .about-us {
         display: grid;
-        grid-column-gap: 8rem;
-        grid-row-gap: 52px;
-        align-content: center;
-        grid-template-columns: 1fr 1fr;
-        grid-template-areas: "h  h" "mi ai";
+        grid-row-gap: 1rem;
+        grid-template-areas:
+                "h "
+                "mi"
+                "ai";
+        @media all and (min-width: 1000px) {
+            grid-column-gap: 8rem;
+            grid-row-gap: 52px;
+            align-content: center;
+            grid-template-columns: 1fr 1fr;
+            grid-template-areas:
+                    "h  h"
+                    "mi ai";
+        }
     }
 
 

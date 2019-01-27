@@ -3,9 +3,9 @@
         <TheSocialLinks/>
         <TheMainBanner id="home"/>
         <TheAbout id="about-us"/>
-        <TheNumbers id="numbers"/>
+        <TheNumbers id="numbers" />
         <ThePartners id="partners"/>
-        <TheContact id="contact"/>
+        <TheContact id="contact" />
     </div>
 </template>
 

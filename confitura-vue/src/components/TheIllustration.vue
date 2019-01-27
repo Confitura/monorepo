@@ -18,8 +18,13 @@ export default {
     $levitate-offset: -4%;
 
     .illustration {
-        width: 48vw;
-        height: 48vw;
+        width: 100vw;
+        height: 100vw;
+        @media all and (min-width: 1000px) {
+            width: 48vw;
+            height: 48vw;
+        }
+
         position: relative;
         float: right;
         z-index: 20;

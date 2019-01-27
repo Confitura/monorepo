@@ -1,5 +1,5 @@
 <template>
-    <Box class="partners">
+    <Box class="partners" color="white">
         <h1 class="header">our partners</h1>
     </Box>
 </template>

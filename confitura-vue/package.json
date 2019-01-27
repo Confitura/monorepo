@@ -5,14 +5,15 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "build:prod": "yarn build --prod",
-    "build:full" : "yarn lint && yarn build:prod",
+    "build:prod": "yarn build --prod --modern",
+    "build:full": "yarn lint && yarn build:prod",
     "lint": "vue-cli-service lint",
     "deploy": "yarn build:full && yarn deploy:only",
     "deploy:only": "ansible-playbook deployment/confitura-page.yml"
   },
   "dependencies": {
     "dayjs": "^1.7.8",
+    "intersection-observer": "^0.5.1",
     "normalize.css": "^8.0.1",
     "vue": "^2.5.17",
     "vue-class-component": "^6.0.0",

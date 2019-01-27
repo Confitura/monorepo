@@ -17,15 +17,43 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import TheTimer from '@/components/TheTimer.vue';
-import TheIllustration from '@/components/TheIllustration.vue';
+  import { Component, Vue } from 'vue-property-decorator';
+  import TheTimer from '@/components/TheTimer.vue';
+  import TheIllustration from '@/components/TheIllustration.vue';
+  import { CHANGE_HEADER_THEME } from '@/types';
 
-@Component({
-  components: { TheIllustration, TheTimer },
-})
-export default class TheMainBanner extends Vue {
-}
+  @Component({
+    components: { TheIllustration, TheTimer },
+  })
+  export default class TheMainBanner extends Vue {
+    private threshold: number[] = [];
+
+    constructor() {
+      super();
+      for (let i = 0; i <= 1; i += 0.01) {
+        this.threshold.push(i);
+      }
+    }
+
+    public mounted(): void {
+      const options = {
+        threshold: this.threshold,
+      };
+
+      const callback: IntersectionObserverCallback = (entries) => {
+        const entry = entries[0];
+        if (entry.isIntersecting) {
+          if (entry.boundingClientRect.top < -100) {
+            this.$store.commit(CHANGE_HEADER_THEME, { color: 'white' });
+          } else {
+            this.$store.commit(CHANGE_HEADER_THEME, { color: 'default' });
+          }
+        }
+      };
+      const observer = new IntersectionObserver(callback, options);
+      observer.observe(this.$el);
+    }
+  }
 </script>
 
 <style scoped lang="scss">
@@ -36,13 +64,16 @@ export default class TheMainBanner extends Vue {
         scroll-snap-align: start;
         background: #000000 url(../assets/stars.png);
         overflow: hidden;
-        padding-top: 50px;
+        padding-top: 150px;
+        @media all and (min-width: 1000px) {
+            padding-top: 50px;
+        }
     }
 
     .twinkling {
-        background: transparent url(http://www.script-tutorials.com/demos/360/images/twinkling.png) repeat top center;
+        background: transparent url(../assets/stars-mask.png) repeat top center;
         z-index: 1;
-        /*animation:move-twink-back 800s linear infinite;*/
+        animation: move-twink-back 700s linear infinite;
         position: absolute;
         top: 0;
         left: 0;
@@ -66,10 +97,14 @@ export default class TheMainBanner extends Vue {
         max-width: 1400px;
         margin: auto;
         display: flex;
+        flex-direction: column;
         justify-content: space-between;
         height: 100%;
         align-items: center;
         z-index: 20;
+        @media all and (min-width: 1000px) {
+            flex-direction: row;
+        }
     }
 
 

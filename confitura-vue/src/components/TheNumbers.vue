@@ -1,5 +1,5 @@
 <template>
-    <Box class="numbers">
+    <Box class="numbers" color="red">
         <div class="numbers-container">
             <div class="info">
                 <h1 class="header">
@@ -67,9 +67,13 @@
     .numbers-container{
         display: grid;
         align-content: center;
-        grid-template-columns: 2fr 1fr 1fr 1fr;
-        grid-row-gap: 3rem;
         color: #ffffff;
+        grid-row-gap: 2rem;
+        @media all and (min-width: 1000px) {
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            grid-row-gap: 3rem;
+        }
+
     }
 
     .info {
