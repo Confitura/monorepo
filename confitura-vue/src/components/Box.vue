@@ -7,7 +7,6 @@
 </template>
 
 <script lang="ts">
-  const HEADER_HEIGHT = 73;
   import { Component, Prop, Vue } from 'vue-property-decorator';
   import { CHANGE_HEADER_THEME } from '@/types';
 
@@ -19,7 +18,7 @@
 
     constructor() {
       super();
-      for (let i = 0; i <= 1; i += 0.05) {
+      for (let i = 0; i <= 1; i += 0.01) {
         this.threshold.push(i);
       }
     }
@@ -31,8 +30,9 @@
 
       const callback: IntersectionObserverCallback = (entries) => {
         const entry = entries[0];
+        const height = this.$store.state.headerHeight;
         if (entry.isIntersecting) {
-          if (entry.boundingClientRect.top <= HEADER_HEIGHT && entry.boundingClientRect.bottom > HEADER_HEIGHT) {
+          if (entry.boundingClientRect.top <= height && entry.boundingClientRect.bottom > height) {
             this.$store.commit(CHANGE_HEADER_THEME, { color: this.color });
           }
         }

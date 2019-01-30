@@ -74,11 +74,11 @@ export default class TheTimer extends Vue {
 </script>
 
 <style scoped lang="scss">
+    @import "../assets/media";
     @import "../assets/fonts";
+    @import "../assets/colors";
     .timer {
-
-        margin-top: 50px;
-        color: #ee1f46;
+        color: $brand;
         display: flex;
     }
 

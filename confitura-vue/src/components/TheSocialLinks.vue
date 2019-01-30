@@ -54,26 +54,27 @@ export default class TheSocialLinks extends Vue {
 
   public handleScroll() {
     const scroll = window.scrollY;
-    if (scroll > 20) {
-      this.withBackground = true;
-    } else {
-      this.withBackground = false;
-    }
+    this.withBackground = scroll > 20;
   }
 }
 </script>
 
 <style scoped lang="scss">
     @import "../assets/colors";
+    @import "../assets/media";
+
 
     .social-links-container {
-        position: fixed;
-        right: 0;
-        height: 100vh;
-        display: flex;
-        align-items: center;
-        z-index: 10000;
 
+        display: none;
+        @include md(){
+            display: flex;
+            position: fixed;
+            right: 0;
+            height: 100vh;
+            align-items: center;
+            z-index: 10000;
+        }
     }
 
     .social-links {

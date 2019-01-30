@@ -32,13 +32,30 @@
         color: #2c3e50;
     }
 </style>
-<script>
+<script lang="ts">
   import { Component, Vue } from 'vue-property-decorator';
   import TheHeader from '@/components/TheHeader.vue';
+  import { WINDOW_RESIZED } from './types';
 
   @Component({
     components: { TheHeader },
   })
   export default class App extends Vue {
+
+
+    public mounted() {
+      this.resizedCallback();
+      window.addEventListener('resize', this.resizedCallback);
+    }
+
+    public śbeforeDestroy() {
+      window.removeEventListener('resize', this.resizedCallback);
+
+    }
+
+    private resizedCallback = () => {
+      const width = window.innerWidth;
+      this.$store.commit(WINDOW_RESIZED, { width });
+    }
   }
 </script>

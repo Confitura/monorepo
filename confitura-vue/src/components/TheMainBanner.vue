@@ -1,6 +1,6 @@
 <template>
     <section class="banner">
-        <div class="twinkling"></div>
+        <!--<div class="twinkling"></div>-->
         <div class="container">
             <div class="info">
                 <div class="slogan">
@@ -8,7 +8,9 @@
                 </div>
                 <TheTimer/>
                 <div class="time-and-place">
-                    29.06.2019, Warsaw Expo XXI
+                    <div>29.06.2019,&nbsp;</div>
+                    <div>Warsaw Expo XXI</div>
+                    <!--<img class="pin" src="../assets/pin.svg" alt="pin">-->
                 </div>
             </div>
             <TheIllustration/>
@@ -58,14 +60,19 @@
 
 <style scoped lang="scss">
     @import "../assets/fonts";
+    @import "../assets/sizes";
+    @import "../assets/media";
+
 
     .banner {
         height: calc(100vh - 50px);
         scroll-snap-align: start;
         background: #000000 url(../assets/stars.png);
         overflow: hidden;
-        padding-top: 150px;
-        @media all and (min-width: 1000px) {
+        padding-top: 200px;
+        padding-left: $standard-padding;
+        padding-right: $standard-padding;
+        @include md() {
             padding-top: 50px;
         }
     }
@@ -94,7 +101,7 @@
     }
 
     .container {
-        max-width: 1400px;
+        max-width: 1440px;
         margin: auto;
         display: flex;
         flex-direction: column;
@@ -102,16 +109,20 @@
         height: 100%;
         align-items: center;
         z-index: 20;
-        @media all and (min-width: 1000px) {
+        @include md() {
             flex-direction: row;
         }
     }
 
-
     .info {
-        margin-left: 50px;
         z-index: 20;
         text-align: left;
+        display: grid;
+        grid-row-gap: 2rem;
+        @include md() {
+            margin-left: 50px;
+            grid-row-gap: 4rem;
+        }
     }
 
     .slogan {
@@ -122,9 +133,12 @@
 
     .time-and-place {
         color: #ffffff;
-        font-size: 1.5rem;
-        margin-top: 4.5rem;
+        display: flex;
+        flex-direction: column;
+        font-size: 1.7rem;
+        @include md() {
+            flex-direction: row;
+            font-size: 1.5rem;
+        }
     }
-
-
 </style>
