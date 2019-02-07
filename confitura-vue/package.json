@@ -9,19 +9,21 @@
     "build:full": "yarn lint && yarn build:prod",
     "lint": "vue-cli-service lint",
     "deploy": "yarn build:full && yarn deploy:only",
-    "deploy:only": "ansible-playbook deployment/confitura-page.yml"
+    "deploy:only": "ansible-playbook deployment/confitura-page.yml",
+    "storybook": "start-storybook -p 9001 -c .storybook"
   },
   "dependencies": {
     "dayjs": "^1.7.8",
     "intersection-observer": "^0.5.1",
     "normalize.css": "^8.0.1",
-    "vue": "^2.5.17",
+    "vue": "^2.6.0",
     "vue-class-component": "^6.0.0",
     "vue-property-decorator": "^7.0.0",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
+    "@storybook/vue": "^4.1.11",
     "@vue/cli-plugin-babel": "^3.2.0",
     "@vue/cli-plugin-typescript": "^3.2.0",
     "@vue/cli-service": "^3.2.0",

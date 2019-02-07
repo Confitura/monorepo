@@ -1,144 +1,173 @@
 <template>
-    <section class="banner">
-        <!--<div class="twinkling"></div>-->
-        <div class="container">
-            <div class="info">
-                <div class="slogan">
-                    It is not a rocket science!
-                </div>
-                <TheTimer/>
-                <div class="time-and-place">
-                    <div>29.06.2019,&nbsp;</div>
-                    <div>Warsaw Expo XXI</div>
-                    <!--<img class="pin" src="../assets/pin.svg" alt="pin">-->
-                </div>
-            </div>
-            <TheIllustration/>
+  <section class="banner">
+    <!-- <div class="twinkling"></div> -->
+    <div class="container">
+      <div class="info">
+        <div class="slogan">
+          <div>It is not rocket science!</div>
         </div>
-    </section>
+
+        <TheTimer/>
+        <div class="time-and-place">
+          <div>29.06.2019,&nbsp;</div>
+          <div class="place">
+            Warsaw Expo XXI
+            <a
+              class="place__link"
+              href="https://www.google.com/maps/place/Warszawskie+Centrum+EXPO+XXI/@52.224893,20.9599152,17z/data=!3m1!4b1!4m5!3m4!1s0x471ecb60b93336e5:0xf7d1cb012bb9954d!8m2!3d52.224893!4d20.962104"
+              target="_blank"
+              rel="noopener"
+            >
+              <i class="fas fa-map-marker-alt"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <TheIllustration/>
+    </div>
+  </section>
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
-  import TheTimer from '@/components/TheTimer.vue';
-  import TheIllustration from '@/components/TheIllustration.vue';
-  import { CHANGE_HEADER_THEME } from '@/types';
+import { Component, Vue } from 'vue-property-decorator';
+import TheTimer from '@/components/TheTimer.vue';
+import TheIllustration from '@/components/TheIllustration.vue';
+import { CHANGE_HEADER_THEME } from '@/types';
 
-  @Component({
-    components: { TheIllustration, TheTimer },
-  })
-  export default class TheMainBanner extends Vue {
-    private threshold: number[] = [];
+@Component({
+  components: { TheIllustration, TheTimer },
+})
+export default class TheMainBanner extends Vue {
+  private threshold: number[] = [];
 
-    constructor() {
-      super();
-      for (let i = 0; i <= 1; i += 0.01) {
-        this.threshold.push(i);
-      }
-    }
-
-    public mounted(): void {
-      const options = {
-        threshold: this.threshold,
-      };
-
-      const callback: IntersectionObserverCallback = (entries) => {
-        const entry = entries[0];
-        if (entry.isIntersecting) {
-          if (entry.boundingClientRect.top < -100) {
-            this.$store.commit(CHANGE_HEADER_THEME, { color: 'white' });
-          } else {
-            this.$store.commit(CHANGE_HEADER_THEME, { color: 'default' });
-          }
-        }
-      };
-      const observer = new IntersectionObserver(callback, options);
-      observer.observe(this.$el);
+  constructor() {
+    super();
+    for (let i = 0; i <= 1; i += 0.01) {
+      this.threshold.push(i);
     }
   }
+
+  public mounted(): void {
+    const options = {
+      threshold: this.threshold,
+    };
+
+    const callback: IntersectionObserverCallback = (entries) => {
+      const entry = entries[0];
+      if (entry.isIntersecting) {
+        if (entry.boundingClientRect.top < -100) {
+          this.$store.commit(CHANGE_HEADER_THEME, { color: 'white' });
+        } else {
+          this.$store.commit(CHANGE_HEADER_THEME, { color: 'default' });
+        }
+      }
+    };
+    const observer = new IntersectionObserver(callback, options);
+    observer.observe(this.$el);
+  }
+}
 </script>
 
 <style scoped lang="scss">
-    @import "../assets/fonts";
-    @import "../assets/sizes";
-    @import "../assets/media";
+@import '../assets/fonts';
+@import '../assets/sizes';
+@import '../assets/media';
 
+.banner {
+  box-sizing: border-box;
+  min-height: calc(100vh - 20vh);
 
-    .banner {
-        height: calc(100vh - 50px);
-        scroll-snap-align: start;
-        background: #000000 url(../assets/stars.png);
-        overflow: hidden;
-        padding-top: 200px;
-        padding-left: $standard-padding;
-        padding-right: $standard-padding;
-        @include md() {
-            padding-top: 50px;
-        }
-    }
+  background: #000000 url(../assets/stars.png);
+  overflow: hidden;
+  padding-top: 20vh;
+  padding-left: $standard-padding;
+  padding-right: $standard-padding;
+  @include md() {
+    height: 100vh;
+  }
+}
 
-    .twinkling {
-        background: transparent url(../assets/stars-mask.png) repeat top center;
-        z-index: 1;
-        animation: move-twink-back 700s linear infinite;
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        width: 100%;
-        height: 100%;
-        display: block;
-    }
+.twinkling {
+  background: transparent url(../assets/stars-mask.png) repeat top center;
+  z-index: 1;
+  animation: move-twink-back 700s linear infinite;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  transform: rotateZ(360deg);
+}
 
-    @keyframes move-twink-back {
-        from {
-            background-position: 0 0;
-        }
-        to {
-            background-position: -10000px 5000px;
-        }
-    }
+@keyframes move-twink-back {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: -10000px 5000px;
+  }
+}
 
-    .container {
-        max-width: 1440px;
-        margin: auto;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        height: 100%;
-        align-items: center;
-        z-index: 20;
-        @include md() {
-            flex-direction: row;
-        }
-    }
+.container {
+  max-width: 1440px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  align-items: center;
+  z-index: 20;
+  position: relative;
+  @include md() {
+    flex-direction: row;
+  }
+}
 
-    .info {
-        z-index: 20;
-        text-align: left;
-        display: grid;
-        grid-row-gap: 2rem;
-        @include md() {
-            margin-left: 50px;
-            grid-row-gap: 4rem;
-        }
-    }
+.info {
+  z-index: 20;
+  text-align: left;
+  display: grid;
+  grid-row-gap: 2rem;
+  @include md() {
+    margin-left: 50px;
+    grid-row-gap: 4rem;
+  }
+}
 
-    .slogan {
-        font-family: $font-bold;
-        color: #ffffff;
-        font-size: 2rem;
-    }
+.slogan {
+  font-family: $font-bold;
+  color: #ffffff;
+  font-size: 2rem;
+  @include xxl(){
+      font-size: 3.75rem;
+  }
+}
+.sub-slogan {
+  font-family: $font-bold;
+  color: #ffffff;
+  font-size: 1.3rem;
+  padding-top: 1rem;
+}
 
-    .time-and-place {
-        color: #ffffff;
-        display: flex;
-        flex-direction: column;
-        font-size: 1.7rem;
-        @include md() {
-            flex-direction: row;
-            font-size: 1.5rem;
-        }
-    }
+.time-and-place {
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  font-size: 1.7rem;
+  @include md() {
+    flex-direction: row;
+    font-size: 1.5rem;
+  }
+}
+.place {
+  display: flex;
+  white-space: nowrap;
+}
+.place__link {
+  margin-left: 10px;
+  color: #ffffff;
+}
 </style>

@@ -3,11 +3,7 @@
         <div class="about-us">
             <h2 class="header">about us</h2>
             <div class="main-info">We are a group of highly-skilled, passionate Java developers, architects and affiliates organising the
-                Confitura Java
-                conference for the Polish Java community.
-                It is the place where Polish and International leaders of the Java community share their Java knowledge and experience
-                during
-                sessions and breaks.
+Confitura is one of the biggest and oldest programming conferences in Poland. Organized by a group of highly-skilled, passionate Java developers, architects, and affiliates gathers Polish and International leaders of the community to share their knowledge and experience both, during sessions and breaks. Low attending fee makes Confitura accessible for everyone, what's more money from sales goes straight to charity organizations.
             </div>
             <div class="additional-info">Our main goal is to promote Java technologies within
                 the Polish Java community
@@ -32,15 +28,16 @@
 <style scoped lang="scss">
     @import "../assets/colors";
     @import "../assets/fonts";
+    @import "../assets/media";
 
     .about-us {
         display: grid;
-        grid-row-gap: 1rem;
+        grid-row-gap: 2rem;
         grid-template-areas:
                 "h "
                 "mi"
                 "ai";
-        @media all and (min-width: 1000px) {
+        @include lg(){
             grid-column-gap: 8rem;
             grid-row-gap: 52px;
             align-content: center;

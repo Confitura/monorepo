@@ -80,6 +80,7 @@ export default class TheTimer extends Vue {
     .timer {
         color: $brand;
         display: flex;
+        align-self: center;
     }
 
     .timer-part {

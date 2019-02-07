@@ -7,6 +7,14 @@ const storeOptions: StoreOptions<RootState> = {
   state: {
     headerTheme: 'default',
     headerHeight: 73,
+    windowWidth: 0,
+  },
+  getters: {
+    isSm: (state) => state.windowWidth >= 576,
+    isMd: (state) => state.windowWidth >= 768,
+    isLg: (state) => state.windowWidth >= 992,
+    isXl: (state) => state.windowWidth >= 1200,
+
   },
   mutations: {
     [CHANGE_HEADER_THEME](store, theme: { color: string }) {
@@ -14,6 +22,7 @@ const storeOptions: StoreOptions<RootState> = {
     },
 
     [WINDOW_RESIZED](store, size: { width: number }) {
+      store.windowWidth = size.width;
       if (size.width >= 992) {
         store.headerHeight = 73;
       } else {

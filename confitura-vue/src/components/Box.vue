@@ -49,7 +49,6 @@
     .box {
         min-height: 100vh;
         width: 100%;
-        scroll-snap-align: start;
         display: flex;
         flex-direction: column;
 
@@ -57,7 +56,7 @@
             max-width: 1440px;
             width: 100%;
             margin: auto;
-            padding: $standard-padding;
+            padding: $standard-padding $standard-padding $standard-padding*3 $standard-padding;
             box-sizing: border-box;
             text-align: left;
         }

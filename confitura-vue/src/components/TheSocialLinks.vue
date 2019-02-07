@@ -73,7 +73,7 @@ export default class TheSocialLinks extends Vue {
             right: 0;
             height: 100vh;
             align-items: center;
-            z-index: 10000;
+            z-index: 500;
         }
     }
 

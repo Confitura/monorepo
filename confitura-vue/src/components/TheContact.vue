@@ -34,6 +34,7 @@
 <style scoped lang="scss">
     @import "../assets/colors";
     @import "../assets/fonts";
+    @import "../assets/media";
 
     .contact {
         background-color: #000000;
@@ -47,11 +48,11 @@
 
     .contact__info {
         display: grid;
-        grid-row-gap: 50px;
-         @media all and (min-width: 1000px) {
-        grid-template-columns: 1fr 1fr 1fr;
-        grid-column-gap: 30px;
-    }
+        grid-row-gap: 3rem;
+        @include lg() {
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-column-gap: 2rem;
+        }
     }
 
     .contact__mail {

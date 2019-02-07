@@ -9,25 +9,43 @@
     </div>
 </template>
 <script lang="ts">
-export default {
-  name: 'TheIllustration',
-};
+  export default {
+    name: 'TheIllustration',
+  };
 </script>
 <style scoped lang="scss">
+    @import "../assets/media";
+
     $levitate-speed: 3s;
     $levitate-offset: -4%;
 
     .illustration {
-        width: 100vw;
-        height: 100vw;
-        @media all and (min-width: 1000px) {
-            width: 48vw;
-            height: 48vw;
+        width: 90vw;
+        height: 90vw;
+        position: relative;
+        z-index: 1;
+
+        @include md() {
+            width: 55vw;
+            height: 55vw;
+            right: 0;
+            position: absolute;
+;
+        }
+        @include lg() {
+            width: 50vw;
+            height: 50vw;
+            right: 0;
+            position: absolute;
         }
 
-        position: relative;
-        float: right;
-        z-index: 20;
+        @include xxl() {
+            width: 40vw;
+            height: 40vw;
+            max-width: 900px;
+            max-height: 900px;
+        }
+        
     }
 
     .astronaut {
