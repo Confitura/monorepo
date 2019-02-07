@@ -6,6 +6,8 @@ twitter:
   api-key: {{twitter_key}}
   api-secret: {{twitter_secret}}
   callback: {{twitter_callback}}
+  access-token: {{twitter_access_token}}
+  access-token-secret: {{twitter_access_token_secret}}
 app.oauth.oauth2:
   facebook:
     api-key: {{facebook_key}}

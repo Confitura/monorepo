@@ -9,6 +9,8 @@ twitter:
   api-key: KEY
   api-secret: SECRET
   callback: http://localhost:8080/login
+  access-token: TOKEN
+  access-token-secret: TOKEN_SECRET
 spring:
   datasource:
     url: jdbc:mysql://localhost:33061/confitura?useLegacyDatetimeCode=false&serverTimezone=Europe/Warsaw&useUnicode=yes&characterEncoding=UTF-8
