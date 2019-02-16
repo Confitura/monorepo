@@ -4,6 +4,9 @@ import Home from './views/Home.vue';
 import VueScrollTo from 'vue-scrollto';
 
 Vue.use(Router);
+Vue.use(VueScrollTo, {
+  container: '.home__container',
+});
 
 export default new Router({
   mode: 'history',
@@ -17,7 +20,7 @@ export default new Router({
   ],
   scrollBehavior(to, from, savedPosition) {
     if (to.hash) {
-      VueScrollTo.scrollTo(to.hash, 500);
+      return VueScrollTo.scrollTo(to.hash, 500);
     }
   },
 });

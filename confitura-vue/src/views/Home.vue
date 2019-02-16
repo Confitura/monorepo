@@ -1,12 +1,12 @@
 <template>
-    <div class="home__container">
-        <TheSocialLinks class="standard"/>
-        <TheMainBanner id="home"/>
-        <TheAbout id="about-us"/>
-        <TheNumbers id="numbers" />
-        <ThePartners id="partners"/>
-        <TheContact id="contact" />
-    </div>
+  <div class="home__container">
+    <TheSocialLinks class="standard"/>
+    <TheMainBanner id="home"/>
+    <TheAbout id="about-us"/>
+    <TheNumbers id="numbers"/>
+    <ThePartners id="partners"/>
+    <TheContact id="contact"/>
+  </div>
 </template>
 
 <script lang="ts">
@@ -28,33 +28,18 @@ import TheContact from '@/components/TheContact.vue';
     TheMainBanner,
   },
 })
-export default class Home extends Vue {
-}
+export default class Home extends Vue {}
 </script>
 
 <style lang="scss" >
-.home__container{
-    	max-height: 100vh;
-	overflow-y: scroll;
-	scroll-snap-type: y proximity;
+.home__container {
+  max-height: 100vh;
+  overflow-y: scroll;
+  scroll-snap-type: y proximity;
 
   & > section {
-scroll-snap-align: start;
-min-height: 100vh;
+    scroll-snap-align: start;
+    min-height: 100vh;
+  }
 }
-}
-
-
-    /*body {*/
-    /*scroll-snap-type: y proximity;*/
-    /*}*/
-    // section {
-        /*border-bottom: 1px solid white;*/
-        /*padding: 1rem;*/
-        /*height: 100vh;*/
-        /*scroll-snap-align: start;*/
-        /*text-align: center;*/
-        /*position: relative;*/
-    // }
-
 </style>
