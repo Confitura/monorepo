@@ -55,11 +55,11 @@ export default class TheMainBanner extends Vue {
     });
 
     const { twinkling } = this.$refs;
-    // timeline.to(twinkling, 100, {
-    //   'background-position': '-1000px 500px',
-    //   'force3D': true,
-    //   'autoRound': false,
-    // });
+    timeline.to(twinkling, 100, {
+      'background-position': '-1000px 500px',
+      'force3D': true,
+      'autoRound': false,
+    });
     const options = {
       threshold: this.threshold,
     };
