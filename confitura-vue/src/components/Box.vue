@@ -46,6 +46,7 @@
 
 <style scoped lang="scss">
     @import "../assets/sizes";
+    @import "../assets/media";
     .box {
         min-height: 100vh;
         width: 100%;
@@ -56,9 +57,12 @@
             max-width: 1440px;
             width: 100%;
             margin: auto;
-            padding: $standard-padding $standard-padding $standard-padding*3 $standard-padding;
+            padding: $standard-padding*3 $standard-padding $standard-padding*3 $standard-padding;
             box-sizing: border-box;
             text-align: left;
+            @include lg(){
+              padding-top: $standard-padding;
+            }
         }
     }
 </style>

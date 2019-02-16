@@ -3,7 +3,7 @@
   become: yes
   become_user: root
   vars:
-    - folder: /var/www/next.confitura.pl
+    - folder: /var/www/2019.confitura.pl
     - archive: /tmp/confitura_page.tar.gz
 
   tasks:

@@ -1,6 +1,6 @@
 <template>
   <section class="banner">
-    <!-- <div class="twinkling"></div> -->
+    <div class="twinkling" ref="twinkling"></div>
     <div class="container">
       <div class="info">
         <div class="slogan">
@@ -33,6 +33,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import TheTimer from '@/components/TheTimer.vue';
 import TheIllustration from '@/components/TheIllustration.vue';
 import { CHANGE_HEADER_THEME } from '@/types';
+import { TimelineMax, Linear } from 'gsap';
 
 @Component({
   components: { TheIllustration, TheTimer },
@@ -48,6 +49,16 @@ export default class TheMainBanner extends Vue {
   }
 
   public mounted(): void {
+    const timeline = new TimelineMax({
+      repeat: -1,
+    });
+
+    const { twinkling } = this.$refs;
+    timeline.to(twinkling, 100, {
+      'background-position': '-1000px 500px',
+      'force3D': true,
+      'autoRound': false,
+    });
     const options = {
       threshold: this.threshold,
     };
@@ -82,15 +93,15 @@ export default class TheMainBanner extends Vue {
   padding-top: 20vh;
   padding-left: $standard-padding;
   padding-right: $standard-padding;
+  position: relative;
   @include md() {
     height: 100vh;
   }
 }
 
 .twinkling {
-  background: transparent url(../assets/stars-mask.png) repeat top center;
+  background: transparent  url(../assets/stars-mask.png) repeat top center;
   z-index: 1;
-  animation: move-twink-back 700s linear infinite;
   position: absolute;
   top: 0;
   left: 0;
@@ -102,15 +113,6 @@ export default class TheMainBanner extends Vue {
   transform: rotateZ(360deg);
 }
 
-@keyframes move-twink-back {
-  from {
-    background-position: 0 0;
-  }
-  to {
-    background-position: -10000px 5000px;
-  }
-}
-
 .container {
   max-width: 1440px;
   margin: auto;
@@ -120,9 +122,11 @@ export default class TheMainBanner extends Vue {
   height: 100%;
   align-items: center;
   z-index: 20;
+  min-height: 80vh;
   position: relative;
   @include md() {
     flex-direction: row;
+    min-height: unset;
   }
 }
 
@@ -141,8 +145,8 @@ export default class TheMainBanner extends Vue {
   font-family: $font-bold;
   color: #ffffff;
   font-size: 2rem;
-  @include xxl(){
-      font-size: 3.75rem;
+  @include xxl() {
+    font-size: 3.75rem;
   }
 }
 .sub-slogan {

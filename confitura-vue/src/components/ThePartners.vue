@@ -1,7 +1,7 @@
 <template>
   <Box class="partners" color="white">
     <h1 class="header">our partners</h1>
-    <p class="info">If you want to become a partner of Confitura 2019, constact us:</p>
+    <p class="info">If you want to become a partner of Confitura 2019, contact us:</p>
     <p class="info">
       <a class="contact-link" href="mailto:confitura@confitura.pl">confitura@confitura.pl</a>
     </p>

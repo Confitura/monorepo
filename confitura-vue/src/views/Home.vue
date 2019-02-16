@@ -1,6 +1,6 @@
 <template>
     <div class="home__container">
-        <TheSocialLinks/>
+        <TheSocialLinks class="standard"/>
         <TheMainBanner id="home"/>
         <TheAbout id="about-us"/>
         <TheNumbers id="numbers" />
@@ -32,18 +32,29 @@ export default class Home extends Vue {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" >
+.home__container{
+    	max-height: 100vh;
+	overflow-y: scroll;
+	scroll-snap-type: y proximity;
+
+  & > section {
+scroll-snap-align: start;
+min-height: 100vh;
+}
+}
+
 
     /*body {*/
     /*scroll-snap-type: y proximity;*/
     /*}*/
-    section {
+    // section {
         /*border-bottom: 1px solid white;*/
         /*padding: 1rem;*/
         /*height: 100vh;*/
         /*scroll-snap-align: start;*/
         /*text-align: center;*/
         /*position: relative;*/
-    }
+    // }
 
 </style>

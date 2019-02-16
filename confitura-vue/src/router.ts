@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
+import VueScrollTo from 'vue-scrollto';
 
 Vue.use(Router);
 
@@ -16,10 +17,7 @@ export default new Router({
   ],
   scrollBehavior(to, from, savedPosition) {
     if (to.hash) {
-      return {
-        selector: to.hash
-        , offset: { x: 0, y: 10 },
-      };
+      VueScrollTo.scrollTo(to.hash, 500);
     }
   },
 });
