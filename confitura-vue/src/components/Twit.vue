@@ -70,6 +70,9 @@ export interface TwitItem {
     display: flex;
     flex-direction: row;
     align-items: center;
+    align-content: center; 
+    flex-wrap: wrap;
+
   }
 
   &__message {
@@ -83,9 +86,13 @@ export interface TwitItem {
     color: $brand;
   }
 
-  &__handle,
+  &__handle {
+     padding-left: 5px;
+    //  flex-grow: 1;
+  }
   &__date {
-    padding-left: 5px;
+    // flex-basis: 100%;
+    // flex-grow: 1;
   }
 }
 </style>

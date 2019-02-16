@@ -1,5 +1,6 @@
 module.exports = {
-  transpileDependencies: [
-    'intersection-observer'
-  ]
+  devServer: {
+    proxy: 'https://2019.confitura.pl',
+    
+}
 }
