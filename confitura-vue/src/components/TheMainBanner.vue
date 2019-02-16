@@ -25,6 +25,7 @@
       </div>
       <TheIllustration/>
     </div>
+    <img class="rocket-icon" src="../assets/rocket.svg">
   </section>
 </template>
 
@@ -54,17 +55,17 @@ export default class TheMainBanner extends Vue {
     });
 
     const { twinkling } = this.$refs;
-    timeline.to(twinkling, 100, {
-      'background-position': '-1000px 500px',
-      'force3D': true,
-      'autoRound': false,
-    });
+    // timeline.to(twinkling, 100, {
+    //   'background-position': '-1000px 500px',
+    //   'force3D': true,
+    //   'autoRound': false,
+    // });
     const options = {
       threshold: this.threshold,
     };
 
     const callback: IntersectionObserverCallback = (entries) => {
-      const entry = entries[0];
+      const [entry] = entries;
       if (entry.isIntersecting) {
         if (entry.boundingClientRect.top < -100) {
           this.$store.commit(CHANGE_HEADER_THEME, { color: 'white' });
@@ -100,7 +101,7 @@ export default class TheMainBanner extends Vue {
 }
 
 .twinkling {
-  background: transparent  url(../assets/stars-mask.png) repeat top center;
+  background: transparent url(../assets/stars-mask.png) repeat top center;
   z-index: 1;
   position: absolute;
   top: 0;
@@ -173,5 +174,28 @@ export default class TheMainBanner extends Vue {
 .place__link {
   margin-left: 10px;
   color: #ffffff;
+}
+.rocket-icon {
+  display: none;
+  @include md() {
+    display: inline;
+    position: relative;
+    bottom: 5rem;
+    z-index: 2;
+    animation: rocket-jump 2s 3;
+    animation-delay: 5s;
+
+    @keyframes rocket-jump {
+      0% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+      100% {
+        transform: translateY(0px);
+      }
+    }
+  }
 }
 </style>
