@@ -1,9 +1,7 @@
 <template>
     <div class="faq">
-        <header class="page-header">
-            <div class="page-title">frequently asked questions</div>
-        </header>
-        <Box class="content">
+        <PageHeader/>
+        <Box class="content" color="white">
             <p class="foreword">Everything has started in 2007, when the group of passionate Java developers decided to
                 create a programming event for the community. Today we're running the conference for more than 1800
                 attendees. 35 talks in 5 parallel sessions give an opportunity to learn new thin</p>
@@ -33,9 +31,10 @@
 <script lang="ts">
     import { Component, Vue } from "vue-property-decorator";
     import Box from "@/components/Box.vue";
+    import PageHeader from '@/views/PageHeader.vue';
 
     @Component({
-        components: {Box},
+        components: {PageHeader, Box},
     })
     export default class Faq extends Vue {
 
@@ -50,23 +49,6 @@
     @import "../assets/colors";
     @import "../assets/sizes";
     @import "../assets/fonts";
-
-    .page-header {
-        background-color: #000000;
-        box-sizing: border-box;
-        background-image: url('../assets/stars.png');
-        height: 480px;
-        width: 100%;
-        display: flex;
-        padding: $standard-padding;
-        align-items: center;
-
-        .page-title {
-            color: $brand;
-            font-size: 2rem;
-            font-family: $font-bold;
-        }
-    }
 
     .content {
 
