@@ -9,7 +9,7 @@
 
         <TheTimer/>
         <div class="time-and-place">
-          <div>29.06.2019,&nbsp;</div>
+          <div>{{date}},&nbsp;</div>
           <div class="place">
             Warsaw Expo XXI
             <a
@@ -34,12 +34,14 @@ import { Component, Vue } from 'vue-property-decorator';
 import TheTimer from '@/components/TheTimer.vue';
 import TheIllustration from '@/components/TheIllustration.vue';
 import { CHANGE_HEADER_THEME } from '@/types';
-import { TimelineMax, Linear } from 'gsap';
+import { TimelineMax } from 'gsap';
+import dayjs from 'dayjs';
 
 @Component({
   components: { TheIllustration, TheTimer },
 })
 export default class TheMainBanner extends Vue {
+  public date: string = dayjs(this.$store.state.date).format('DD.MM.YYYY');
   private threshold: number[] = [];
 
   constructor() {

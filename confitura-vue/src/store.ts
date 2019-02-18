@@ -8,6 +8,7 @@ const storeOptions: StoreOptions<RootState> = {
     headerTheme: 'default',
     headerHeight: 73,
     windowWidth: 0,
+    date: '2019-06-29T09:00',
   },
   getters: {
     isSm: (state) => state.windowWidth >= 576,

@@ -34,7 +34,7 @@ import dayjs from 'dayjs';
     },
 })
 export default class TheTimer extends Vue {
-    public start = dayjs('2019-06-29T09:00');
+    public start: dayjs.Dayjs;
     public now: dayjs.Dayjs = dayjs();
     public days = 0;
     public hours = 0;
@@ -43,6 +43,7 @@ export default class TheTimer extends Vue {
     private handle: number = 0;
 
     public mounted() {
+        this.start = dayjs(this.$store.state.date);
         this.recalculate();
         this.handle = setInterval(() => {
             this.recalculate();
