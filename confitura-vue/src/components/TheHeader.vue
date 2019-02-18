@@ -39,6 +39,7 @@ export default class TheHeader extends Vue {
     { label: 'numbers', url: '/#numbers' },
     { label: 'partners', url: '/#partners' },
     { label: 'contact', url: '/#contact' },
+    { label: 'faq', url: '/faq' },
   ];
   public showMenu = false;
 
@@ -118,14 +119,15 @@ $small-menu-padding: 10px;
 
   &--black,
   &--red {
-      &, &.menu {
-    background-color: #ffffff;
-    padding-top: $small-menu-padding;
-    padding-bottom: $small-menu-padding;
-    .header__logo {
-      background-image: url('../assets/logo_black.svg');
-    }
+    &,
+    &.menu {
+      background-color: #ffffff;
+      padding-top: $small-menu-padding;
+      padding-bottom: $small-menu-padding;
+      .header__logo {
+        background-image: url('../assets/logo_black.svg');
       }
+    }
   }
 
   &--white {

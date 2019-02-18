@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
+import Faq from './views/Faq.vue';
 import VueScrollTo from 'vue-scrollto';
 
 Vue.use(Router);
@@ -16,6 +17,11 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Home,
+    },
+    {
+      path: '/faq',
+      name: 'faq',
+      component: Faq,
     },
   ],
   scrollBehavior(to, from, savedPosition) {
