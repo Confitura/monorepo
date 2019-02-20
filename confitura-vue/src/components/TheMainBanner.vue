@@ -113,11 +113,10 @@ export default class TheMainBanner extends Vue {
   width: 100%;
   height: 100%;
   display: block;
-  transform: rotateZ(360deg);
 }
 
 .container {
-  max-width: 1440px;
+  max-width: $max-width;
   margin: auto;
   display: flex;
   flex-direction: column;
