@@ -12,9 +12,9 @@
     </article>
 </template>
 <script lang="ts">
-    import dayjs from "dayjs";
-    import linkifyHtml from "linkifyjs/html";
-    import { Component, Prop, Vue } from "vue-property-decorator";
+    import dayjs from 'dayjs';
+    import linkifyHtml from 'linkifyjs/html';
+    import { Component, Prop, Vue } from 'vue-property-decorator';
 
     @Component({})
     export default class Twit extends Vue {
@@ -22,13 +22,13 @@
         public model!: TwitItem;
 
         get dateTime() {
-            return dayjs.unix(this.model.time).format("DD MMM YY, hh:mm");
+            return dayjs.unix(this.model.time).format('DD MMM YY, hh:mm');
         }
 
         get message() {
             return linkifyHtml(this.model.text, {
-                defaultProtocol: "https",
-                className: "twit__link",
+                defaultProtocol: 'https',
+                className: 'twit__link',
             });
         }
     }
