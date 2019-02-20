@@ -1,6 +1,6 @@
 <template>
     <header class="page-header">
-        <div class="page-title">frequently asked questions</div>
+        <h1 class="page-title">frequently asked questions</h1>
     </header>
 </template>
 <script lang="ts">
@@ -59,6 +59,7 @@
             color: $brand;
             font-size: 3rem;
             font-family: $font-bold;
+            font-weight: normal;
             text-transform: capitalize;
             max-width: 400px;
         }
