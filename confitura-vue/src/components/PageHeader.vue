@@ -51,12 +51,16 @@
         height: 480px;
         width: 100%;
         display: flex;
-        padding: $standard-padding;
+        padding: $standard-padding $standard-padding $standard-padding 80px;
+
         align-items: center;
         .page-title {
+            text-align: left;
             color: $brand;
-            font-size: 2rem;
+            font-size: 3rem;
             font-family: $font-bold;
+            text-transform: capitalize;
+            max-width: 400px;
         }
     }
 </style>

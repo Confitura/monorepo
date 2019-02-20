@@ -1,6 +1,6 @@
 module.exports = {
-  devServer: {
-    proxy: 'https://2019.confitura.pl',
-    
-}
-}
+    devServer: {
+        proxy: 'http://localhost:8081',
+
+    }
+};

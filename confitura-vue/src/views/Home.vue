@@ -1,6 +1,5 @@
 <template>
   <div class="home__container">
-    <TheSocialLinks class="standard"/>
     <TheMainBanner id="home"/>
     <TheAbout id="about-us"/>
     <TheNumbers id="numbers"/>
