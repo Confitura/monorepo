@@ -14,7 +14,6 @@
     "mock": "http-server ./mock"
   },
   "dependencies": {
-    "@types/showdown": "^1.9.2",
     "axios": "^0.18.0",
     "dayjs": "^1.7.8",
     "gsap": "^2.0.2",
@@ -32,6 +31,7 @@
   "devDependencies": {
     "@storybook/vue": "^4.1.11",
     "@types/gsap": "^1.20.1",
+    "@types/showdown": "^1.9.2",
     "@vue/cli-plugin-babel": "^3.2.0",
     "@vue/cli-plugin-typescript": "^3.2.0",
     "@vue/cli-service": "^3.2.0",
