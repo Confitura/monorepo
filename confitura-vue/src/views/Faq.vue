@@ -7,6 +7,7 @@
                 attendees. 35 talks in 5 parallel sessions give an opportunity to learn new thin</p>
             <section class="questions" v-html="questions"></section>
         </Box>
+        <TheContact id="contact"/>
     </div>
 </template>
 
@@ -14,11 +15,12 @@
   import { Component, Vue } from 'vue-property-decorator';
   import Box from '@/components/Box.vue';
   import PageHeader from '@/components/PageHeader.vue';
+  import TheContact from '@/components/TheContact';
   import showdown from 'showdown';
   import axios from 'axios';
 
   @Component({
-    components: { PageHeader, Box },
+    components: { PageHeader, Box, TheContact },
   })
   export default class Faq extends Vue {
     public questions = '';
@@ -47,7 +49,7 @@
         .foreword {
             text-align: left;
             color: #000000;
-            font-size: 1.5rem;
+            font-size: 1.75rem;
             @include md() {
                 width: 50%;
             }
@@ -62,6 +64,10 @@
     @import "../assets/media";
     @import "../assets/fonts";
 
+    .faq {
+        overflow: hidden;
+    }
+
     .questions {
         display: grid;
         text-align: left;
@@ -71,29 +77,39 @@
         }
 
         h2 {
-            font-size: 3.2rem;
+            font-size: 3rem;
             color: $brand;
-            margin: 0;
             @include md() {
                 grid-column: 1 / 2;
+            }
+
+            &, + h4 {
+                margin-top: 4rem;
+                margin-bottom: 1rem;
             }
         }
 
         h4 {
-            font-size: 1.5rem;
-            font-family: $font-bold;
-            margin: 0;
+            font-size: 1.75rem;
+            font-weight: bold;
             align-self: center;
+            margin: 0 0 1rem;
             @include md() {
                 grid-column: 2 / 3;
             }
         }
 
         p, ul {
-            font-size: 1.5rem;
+            font-size: 1.75rem;
+            margin: 0;
             @include md() {
                 grid-column: 2 / 3;
             }
+
+            + h4 {
+                margin-top: 2em;
+            }
         }
+
     }
 </style>

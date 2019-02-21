@@ -51,7 +51,6 @@
     }
 
     public navigateTo(path: string) {
-      event.preventDefault();
       this.showMenu = false;
       this.$router.push({ path });
     }

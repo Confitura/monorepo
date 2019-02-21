@@ -3,6 +3,7 @@
     <TheHeader/>
     <TheSocialLinks class="standard"/>
     <router-view></router-view>
+    <TheContact id="contact"/>
   </div>
 </template>
 
