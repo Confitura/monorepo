@@ -25,7 +25,7 @@
         components: {},
     })
     export default class TheSocialLinks extends Vue {
-        public withBackground = false;
+        public withBackground = true;
         public links = [
             {
                 label: 'twitter',
@@ -48,19 +48,6 @@
                 url: 'mailto:confitura@confitura.pl',
             },
         ];
-
-        public mounted() {
-            window.addEventListener('scroll', this.handleScroll);
-        }
-
-        public beforeDestroy() {
-            window.removeEventListener('scroll', this.handleScroll);
-        }
-
-        public handleScroll() {
-            const scroll = window.scrollY;
-            this.withBackground = scroll > 20;
-        }
     }
 </script>
 
