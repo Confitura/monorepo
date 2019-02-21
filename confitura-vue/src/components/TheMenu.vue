@@ -20,7 +20,7 @@
       { label: 'numbers', url: '/#numbers' },
       { label: 'partners', url: '/#partners' },
       { label: 'contact', url: '/#contact' },
-      { label: 'faq', url: '/faq' },
+      // { label: 'faq', url: '/faq' },
     ];
 
     public navigateTo(link: string, $event: Event) {

@@ -11,30 +11,30 @@
 </template>
 
 <script lang="ts">
-    import { Component, Vue } from 'vue-property-decorator';
-    import Box from '@/components/Box.vue';
-    import PageHeader from '@/components/PageHeader.vue';
-    import showdown from 'showdown';
-    import axios from 'axios';
+  import { Component, Vue } from 'vue-property-decorator';
+  import Box from '@/components/Box.vue';
+  import PageHeader from '@/components/PageHeader.vue';
+  import showdown from 'showdown';
+  import axios from 'axios';
 
-    @Component({
-        components: {PageHeader, Box},
-    })
-    export default class Faq extends Vue {
-        public questions = '';
-        private converter = new showdown.Converter();
+  @Component({
+    components: { PageHeader, Box },
+  })
+  export default class Faq extends Vue {
+    public questions = '';
+    private converter = new showdown.Converter();
 
-        private mounted() {
-            axios.get<Page>('/faq.txt')
-                .then((response) => response.data.content)
-                .then((content: string) => this.questions = this.converter.makeHtml(content));
+    private mounted() {
+      axios.get<Page>('/api/pages/faq')
+        .then((response) => response.data.content)
+        .then((content: string) => this.questions = this.converter.makeHtml(content));
 
-        }
     }
+  }
 
-    interface Page {
-        content: string;
-    }
+  interface Page {
+    content: string;
+  }
 </script>
 
 <style lang="scss" scoped>
