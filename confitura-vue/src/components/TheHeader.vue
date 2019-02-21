@@ -7,64 +7,64 @@
                 </a>
                 <span class="header__separator"></span>
                 <a class="header__mobile-button" @click="toggleMenu($event)" href="#">menu</a>
-                <TheMenu v-if="$store.getters.isMd" :linkClicked="(link) =>navigateTo(link)"/>
+                <TheMenu v-if="$store.getters.isMd" @linkClicked="navigateTo"/>
             </div>
         </nav>
         <transition name="menu-fade">
-            <TheMenu :class="theme" v-if="showMenu && !$store.getters.isMd"/>
+            <TheMenu :class="theme" v-if="showMenu && !$store.getters.isMd" @linkClicked="navigateTo"/>
         </transition>
     </div>
 </template>
 
 <script lang="ts">
-    import { Component, Vue } from 'vue-property-decorator';
-    import { CHANGE_HEADER_THEME } from '@/types';
-    import TheMenu from '@/components/TheMenu.vue';
+  import { Component, Vue } from 'vue-property-decorator';
+  import { CHANGE_HEADER_THEME } from '@/types';
+  import TheMenu from '@/components/TheMenu.vue';
 
-    @Component({
-        components: {TheMenu},
-    })
-    export default class TheHeader extends Vue {
-        public items = [
-            {label: 'home', url: '/#home'},
-            {label: 'about us', url: '/#about-us'},
-            {label: 'numbers', url: '/#numbers'},
-            {label: 'partners', url: '/#partners'},
-            {label: 'contact', url: '/#contact'},
-            {label: 'faq', url: '/faq'},
-        ];
-        public showMenu = false;
+  @Component({
+    components: { TheMenu },
+  })
+  export default class TheHeader extends Vue {
+    public items = [
+      { label: 'home', url: '/#home' },
+      { label: 'about us', url: '/#about-us' },
+      { label: 'numbers', url: '/#numbers' },
+      { label: 'partners', url: '/#partners' },
+      { label: 'contact', url: '/#contact' },
+      { label: 'faq', url: '/faq' },
+    ];
+    public showMenu = false;
 
-        public mounted() {
-            window.addEventListener('scroll', this.handleScroll);
-        }
-
-        public beforeDestroy() {
-            window.removeEventListener('scroll', this.handleScroll);
-        }
-
-        public handleScroll() {
-            const scroll = window.scrollY;
-            if (scroll < 20) {
-                this.$store.commit(CHANGE_HEADER_THEME, {color: 'default'});
-            }
-        }
-
-        public navigateTo(path: string) {
-            event.preventDefault();
-            this.showMenu = false;
-            this.$router.push({path});
-        }
-
-        public toggleMenu($event: Event) {
-            $event.preventDefault();
-            this.showMenu = !this.showMenu;
-        }
-
-        get theme() {
-            return `header--${this.$store.state.headerTheme}`;
-        }
+    public mounted() {
+      window.addEventListener('scroll', this.handleScroll);
     }
+
+    public beforeDestroy() {
+      window.removeEventListener('scroll', this.handleScroll);
+    }
+
+    public handleScroll() {
+      const scroll = window.scrollY;
+      if (scroll < 20) {
+        this.$store.commit(CHANGE_HEADER_THEME, { color: 'default' });
+      }
+    }
+
+    public navigateTo(path: string) {
+      event.preventDefault();
+      this.showMenu = false;
+      this.$router.push({ path });
+    }
+
+    public toggleMenu($event: Event) {
+      $event.preventDefault();
+      this.showMenu = !this.showMenu;
+    }
+
+    get theme() {
+      return `header--${this.$store.state.headerTheme}`;
+    }
+  }
 </script>
 
 <style scoped lang="scss">

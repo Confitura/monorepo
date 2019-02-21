@@ -7,30 +7,27 @@
 </template>
 
 <script lang="ts">
-    import { Component, Emit, Prop, Vue } from 'vue-property-decorator';
-    import { CHANGE_HEADER_THEME } from '@/types';
+  import { Component, Prop, Vue } from 'vue-property-decorator';
 
-    @Component({
-        components: {},
-    })
-    export default class TheMenu extends Vue {
-        @Prop
-        public linkClicked: (string) => void;
+  @Component({
+    components: {},
+  })
+  export default class TheMenu extends Vue {
 
-        public items = [
-            {label: 'home', url: '/#home'},
-            {label: 'about us', url: '/#about-us'},
-            {label: 'numbers', url: '/#numbers'},
-            {label: 'partners', url: '/#partners'},
-            {label: 'contact', url: '/#contact'},
-            {label: 'faq', url: '/faq'},
-        ];
+    public items = [
+      { label: 'home', url: '/#home' },
+      { label: 'about us', url: '/#about-us' },
+      { label: 'numbers', url: '/#numbers' },
+      { label: 'partners', url: '/#partners' },
+      { label: 'contact', url: '/#contact' },
+      { label: 'faq', url: '/faq' },
+    ];
 
-        public navigateTo(link: string, $event: Event){
-            $event.preventDefault();
-            this.linkClicked(link);
-        }
+    public navigateTo(link: string, $event: Event) {
+      $event.preventDefault();
+      this.$emit('linkClicked', link);
     }
+  }
 </script>
 
 <style scoped lang="scss">
@@ -41,6 +38,10 @@
         flex-basis: 170px;
         align-self: flex-end;
         height: 100%;
+
+        &.header--default {
+            background-color: #000000;
+        }
         @include md() {
             flex-basis: unset;
             justify-content: right;
