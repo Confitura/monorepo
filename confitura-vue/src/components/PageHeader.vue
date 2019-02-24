@@ -65,7 +65,7 @@
         max-width: $max-width;
         margin: auto;
         @include md() {
-            height: 480px;
+            height: 400px;
             padding: $standard-padding $standard-padding $standard-padding 80px;
 
         }
@@ -83,12 +83,16 @@
         .page-image {
             position: absolute;
             bottom: -280px;
-            left: 200px;
+            right: -500px;
+            @include sm() {
+                right: -400px;
+            }
 
             @include md() {
                 position: relative;
-                bottom: -120px;
+                bottom: -90px;
                 left: 0;
+                width: 600px;
             }
         }
     }

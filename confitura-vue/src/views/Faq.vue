@@ -15,7 +15,7 @@
   import { Component, Vue } from 'vue-property-decorator';
   import Box from '@/components/Box.vue';
   import PageHeader from '@/components/PageHeader.vue';
-  import TheContact from '@/components/TheContact';
+  import TheContact from '@/components/TheContact.vue';
   import showdown from 'showdown';
   import axios from 'axios';
 
@@ -45,11 +45,15 @@
     @import "../assets/media";
     @import "../assets/fonts";
 
+    .faq {
+        overflow: hidden;
+    }
+
     .content {
         .foreword {
             text-align: left;
             color: #000000;
-            font-size: 1.75rem;
+            font-size: 1.5rem;
             @include md() {
                 width: 50%;
             }
@@ -64,9 +68,6 @@
     @import "../assets/media";
     @import "../assets/fonts";
 
-    .faq {
-        overflow: hidden;
-    }
 
     .questions {
         display: grid;
@@ -77,20 +78,21 @@
         }
 
         h2 {
-            font-size: 3rem;
+            font-size: 2.2rem;
             color: $brand;
             @include md() {
                 grid-column: 1 / 2;
+                &, + h4 {
+                    margin-top: 4rem;
+                    margin-bottom: 1rem;
+                }
             }
 
-            &, + h4 {
-                margin-top: 4rem;
-                margin-bottom: 1rem;
-            }
+
         }
 
         h4 {
-            font-size: 1.75rem;
+            font-size: 1.5rem;
             font-weight: bold;
             align-self: center;
             margin: 0 0 1rem;
@@ -100,7 +102,7 @@
         }
 
         p, ul {
-            font-size: 1.75rem;
+            font-size: 1.5rem;
             margin: 0;
             @include md() {
                 grid-column: 2 / 3;

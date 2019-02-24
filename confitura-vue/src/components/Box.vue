@@ -57,9 +57,9 @@
             max-width: 1440px;
             width: 100%;
             margin: auto;
-            padding: $standard-padding*3 $standard-padding $standard-padding*3 $standard-padding;
             box-sizing: border-box;
             text-align: left;
+            @include padding();
             @include lg(){
               padding-top: $standard-padding;
             }
