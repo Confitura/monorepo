@@ -2,9 +2,11 @@
     <div class="faq">
         <PageHeader/>
         <Box class="content" color="white">
-            <p class="foreword">Everything has started in 2007, when the group of passionate Java developers decided to
-                create a programming event for the community. Today we're running the conference for more than 1800
-                attendees. 35 talks in 5 parallel sessions give an opportunity to learn new thin</p>
+            <p class="foreword">Here we have gathered the most common questions we are getting from the community.
+                If you have not found an answer to the question that you have, please
+                <a class="foreword__link"
+                   href="mailto:confitura@confitura.pl?subject=FAQ">contact us</a>.
+                We will update the list for the benefit of all.</p>
             <section class="questions" v-html="questions"></section>
         </Box>
         <TheContact id="contact"/>
@@ -57,6 +59,9 @@
             @include md() {
                 width: 50%;
             }
+            &__link {
+                color: $brand;
+            }
         }
 
 
@@ -67,7 +72,6 @@
     @import "../assets/sizes";
     @import "../assets/media";
     @import "../assets/fonts";
-
 
     .questions {
         display: grid;
@@ -82,7 +86,7 @@
             color: $brand;
             @include md() {
                 grid-column: 1 / 2;
-                &, + h4 {
+                &, + h3 {
                     margin-top: 4rem;
                     margin-bottom: 1rem;
                 }
@@ -91,7 +95,7 @@
 
         }
 
-        h4 {
+        h3 {
             font-size: 1.5rem;
             font-weight: bold;
             align-self: center;
@@ -108,7 +112,7 @@
                 grid-column: 2 / 3;
             }
 
-            + h4 {
+            + h3 {
                 margin-top: 2em;
             }
         }
