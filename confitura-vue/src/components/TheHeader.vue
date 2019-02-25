@@ -83,14 +83,18 @@
     }
 
     .header {
-        padding-right: 15px;
-        padding-left: 15px;
+        padding-right: 1rem;
+        padding-left: 1rem;
 
         box-sizing: border-box;
         transition: all 0.5s linear;
         color: $brand;
 
         @include md() {
+            padding-right: $standard-padding / 2;
+            padding-left: $standard-padding / 2;
+        }
+        @include lg() {
             padding-right: $standard-padding;
             padding-left: $standard-padding;
         }
