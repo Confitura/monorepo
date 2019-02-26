@@ -11,7 +11,7 @@
         >Everything has started in 2007, when the group of passionate Java developers decided to create a programming event for the community. Today we're running the conference for more than 1800 attendees. 35 talks in 5 parallel sessions give an opportunity to learn new things to everyone! Our live streams and recordings of talks gain enormous popularity on the web. That's why organizing this event gives satisfaction to more than 30 people from Confitura's team. That eagers us to organize another Confitura, this year it will be the 13th.</div>
       </div>
       <Pictogram :src="require('../assets/speakers.svg')" value="38" unit="speakers"/>
-      <Pictogram :src="require('../assets/sessions.svg')" value="5" unit="sessions"/>
+      <Pictogram :src="require('../assets/sessions.svg')" value="5" unit="tracks"/>
       <Pictogram :src="require('../assets/presentations.svg')" value="35" unit="presentations"/>
       <Pictogram :src="require('../assets/views.svg')" value="693k" unit="youtube channel views"/>
       <Pictogram :src="require('../assets/videos.svg')" value="241" unit="youtube videos"/>
