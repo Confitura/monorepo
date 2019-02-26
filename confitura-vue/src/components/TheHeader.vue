@@ -7,11 +7,11 @@
                 </a>
                 <span class="header__separator"></span>
                 <a class="header__mobile-button" @click="toggleMenu($event)" href="#">menu</a>
-                <TheMenu v-if="$store.getters.isMd" @linkClicked="navigateTo"/>
+                <TheMenu v-if="$store.getters.isMd"/>
             </div>
         </nav>
         <transition name="menu-fade">
-            <TheMenu :class="theme" v-if="showMenu && !$store.getters.isMd" @linkClicked="navigateTo"/>
+            <TheMenu :class="theme" v-if="showMenu && !$store.getters.isMd" @linkClicked="hideMenu"/>
         </transition>
     </div>
 </template>
@@ -25,14 +25,6 @@
     components: { TheMenu },
   })
   export default class TheHeader extends Vue {
-    public items = [
-      { label: 'home', url: '/#home' },
-      { label: 'about us', url: '/#about-us' },
-      { label: 'numbers', url: '/#numbers' },
-      { label: 'partners', url: '/#partners' },
-      { label: 'contact', url: '/#contact' },
-      { label: 'faq', url: '/faq' },
-    ];
     public showMenu = false;
 
     public mounted() {
@@ -50,9 +42,8 @@
       }
     }
 
-    public navigateTo(path: string) {
+    public hideMenu() {
       this.showMenu = false;
-      this.$router.push({ path });
     }
 
     public toggleMenu($event: Event) {

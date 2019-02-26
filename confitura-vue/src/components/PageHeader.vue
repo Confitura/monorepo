@@ -49,11 +49,13 @@
     @import "../assets/sizes";
     @import "../assets/fonts";
     @import "../assets/media";
+
     .page-header__container {
         width: 100%;
         background-color: #000000;
         background-image: url('../assets/stars.png');
     }
+
     .page-header {
         box-sizing: border-box;
         display: flex;

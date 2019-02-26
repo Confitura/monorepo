@@ -1,13 +1,13 @@
 <template>
     <div class="menu">
         <div class="menu-item" v-for="item in items" :key="item.label">
-            <a class="menu-link" @click="navigateTo(item.url, $event)" href="#">{{ item.label }}</a>
+            <router-link :to="item.url" class="menu-link" @click.native="click()">{{ item.label }}</router-link>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-  import { Component, Prop, Vue } from 'vue-property-decorator';
+  import { Component, Vue } from 'vue-property-decorator';
 
   @Component({
     components: {},
@@ -23,9 +23,8 @@
       { label: 'FAQ', url: '/faq' },
     ];
 
-    public navigateTo(link: string, $event: Event) {
-      $event.preventDefault();
-      this.$emit('linkClicked', link);
+    public click() {
+      this.$emit('linkClicked');
     }
   }
 </script>
@@ -42,6 +41,7 @@
         &.header--default {
             background-color: #000000;
         }
+
         @include md() {
             flex-basis: unset;
             justify-content: right;
@@ -51,10 +51,12 @@
 
     .menu-item {
         margin: 2rem;
+
         @include md() {
             margin: 0.5rem;
             display: unset;
         }
+
     }
 
     .menu-link {
@@ -62,8 +64,14 @@
         color: $brand;
         font-size: 1.4rem;
 
-        &:hover {
-            text-decoration: underline;
+        &:hover, &.router-link-active {
+            color: #ffffff;
+            border-bottom: 2px #ffffff solid;
+
+            .header--red &, .header--black & {
+                color: #000000;
+                border-bottom: 2px #000000 solid;
+            }
         }
     }
 </style>

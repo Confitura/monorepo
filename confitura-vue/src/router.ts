@@ -17,6 +17,13 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Home,
+      beforeEnter: (to, from, next) => {
+        if (to.hash) {
+          next();
+        } else {
+          next('/#home');
+        }
+      },
     },
     {
       path: '/faq',
