@@ -89,16 +89,16 @@ export default class TheMainBanner extends Vue {
 
 .banner {
   box-sizing: border-box;
-  min-height: calc(100vh - 20vh);
-
+  min-height: calc(100vh - 15vh);
+  padding-top: 15vh;
   background: #000000 url(../assets/stars.png);
   overflow: hidden;
-  padding-top: 20vh;
   padding-left: $standard-padding;
   padding-right: $standard-padding;
   position: relative;
   @include md() {
     height: 100vh;
+    padding-top: 0;
   }
 }
 
