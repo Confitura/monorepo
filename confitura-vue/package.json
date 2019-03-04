@@ -8,9 +8,10 @@
     "build:prod": "yarn build --prod --modern",
     "build:full": "yarn lint && yarn build:prod",
     "lint": "vue-cli-service lint",
-    "deploy": "yarn build:full && yarn deploy:only",
+    "deploy": "yarn deploy:public --extra-vars 'edition=next'",
+    "deploy:public": "yarn build:full && yarn deploy:only",
     "deploy:only": "ansible-playbook deployment/confitura-page.yml",
-    "storybook": "start-storybook -p 9001 -c .storybook",
+    "sb": "start-storybook -p 9001 -c .storybook",
     "mock": "http-server ./mock"
   },
   "dependencies": {
@@ -21,7 +22,7 @@
     "linkifyjs": "^2.1.8",
     "normalize.css": "^8.0.1",
     "showdown": "^1.9.0",
-    "vue": "^2.6.0",
+    "vue": "^2.6.8",
     "vue-class-component": "^7.0.1",
     "vue-property-decorator": "^7.0.0",
     "vue-router": "^3.0.1",
@@ -29,17 +30,21 @@
     "vuex": "^3.0.1"
   },
   "devDependencies": {
-    "@storybook/vue": "^4.1.11",
+    "@babel/core": "^7.3.4",
+    "@storybook/vue": "^5.0.0-rc.10",
     "@types/gsap": "^1.20.1",
     "@types/showdown": "^1.9.2",
     "@vue/cli-plugin-babel": "^3.2.0",
     "@vue/cli-plugin-typescript": "^3.2.0",
     "@vue/cli-service": "^3.2.0",
+    "babel-loader": "^8.0.5",
+    "babel-preset-vue": "^2.0.2",
     "http-server": "^0.11.1",
     "node-sass": "^4.9.0",
     "prettier": "^1.15.3",
     "sass-loader": "^7.0.1",
     "typescript": "^3.0.0",
-    "vue-template-compiler": "^2.5.17"
+    "vue-loader": "^15.7.0",
+    "vue-template-compiler": "^2.6.8"
   }
 }

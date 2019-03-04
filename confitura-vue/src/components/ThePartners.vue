@@ -1,20 +1,22 @@
 <template>
     <Box class="partners" color="white">
         <h1 class="header">our partners</h1>
-        <p class="info">If you want to become a partner of Confitura 2019, contact us:</p>
-        <p class="info">
-            <a class="contact-link" href="mailto:confitura@confitura.pl">confitura@confitura.pl</a>
-        </p>
+        <div class="partners-grid">
+            <a href="https://softwareplant.com" class="link" rel="noopener" target="_blank">
+                <img src="../assets/partners/softwareplant.png" alt="softwareplant" class="logo">
+            </a>
+            <span class="type">Platinum</span>
+        </div>
     </Box>
 </template>
 
 <script>
-    import Box from './Box';
+  import Box from './Box';
 
-    export default {
-        name: 'ThePartners',
-        components: {Box},
-    };
+  export default {
+    name: 'ThePartners',
+    components: { Box },
+  };
 </script>
 
 <style scoped lang="scss">
@@ -34,13 +36,27 @@
             font-size: 1.75rem;
         }
 
-        .contact-link {
-            color: #000000;
-            text-decoration: none;
+        &-grid {
+            display: grid;
+            width: 100%;
+            justify-items: center;
 
-            &:hover {
-                text-decoration: underline;
-            }
         }
+
+        .type {
+            font-size: 1.5rem;
+            color: $brand;
+            padding-top: 4rem;
+        }
+
+        .logo {
+            width: 90%;
+        }
+
+        .link {
+            text-align: center;
+        }
+
+
     }
 </style>
