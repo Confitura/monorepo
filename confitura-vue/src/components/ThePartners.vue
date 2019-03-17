@@ -3,7 +3,7 @@
         <h1 class="header">our partners</h1>
         <div class="partners-grid">
             <a href="https://softwareplant.com" class="link" rel="noopener" target="_blank">
-                <img src="../assets/partners/softwareplant.png" alt="softwareplant" class="logo">
+                <img src="../assets/partners/softwareplant.svg" alt="softwareplant" class="logo">
             </a>
             <span class="type">Platinum</span>
         </div>
