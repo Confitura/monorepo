@@ -1,0 +1,23 @@
+@import '~normalize.css';
+
+@font-face {
+  font-family: 'NeuzeitGro-Bol';
+  src: url('assets/fonts/30E5AC_0_0.eot');
+  src: url('assets/fonts/30E5AC_0_0.woff2') format('woff2'),
+  url('assets/fonts/30E5AC_0_0.woff') format('woff'),
+  url('assets/fonts/30E5AC_0_0.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'NeuzeitGro-Reg';
+  src: url('assets/fonts/30E5AC_1_0.eot');
+  src: url('assets/fonts/30E5AC_1_0.woff2') format('woff2'),
+  url('assets/fonts/30E5AC_1_0.woff') format('woff'),
+  url('assets/fonts/30E5AC_1_0.ttf') format('truetype');
+}
+
+body {
+  font-family: 'NeuzeitGro-Reg', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
