@@ -5,6 +5,7 @@ import Faq from './views/Faq.vue';
 import VueScrollTo from 'vue-scrollto';
 import Partners from '@/views/Partners.vue';
 import PartnerPage from '@/views/PartnerPage.vue';
+import Login from '@/views/Login.vue';
 
 Vue.use(Router);
 Vue.use(VueScrollTo, {
@@ -41,6 +42,11 @@ export default new Router({
       path: '/partners/:id',
       name: 'partner',
       component: PartnerPage,
+    },
+    {
+      path: '/login/:service?',
+      name: 'login',
+      component: Login,
     },
   ],
   scrollBehavior(to, from, savedPosition) {
