@@ -1,19 +1,24 @@
 <template>
     <header class="page-header__container">
         <div class="page-header">
-            <h1 class="page-title">frequently asked questions</h1>
-            <img class="page-image" src="../assets/planety_faq.svg" alt="planets">
+            <h1 class="page-title">{{title}}</h1>
+            <slot>
+                <img class="page-image" src="../assets/planety_faq.svg" alt="planets">
+            </slot>
         </div>
     </header>
 </template>
 <script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
+  import { Component, Prop, Vue } from 'vue-property-decorator';
   import { CHANGE_HEADER_THEME } from '@/types';
 
   @Component({
     components: {},
   })
   export default class PageHeader extends Vue {
+    @Prop(String)
+    public title = 'frequently asked questions';
+
     private threshold: number[] = [];
 
     constructor() {

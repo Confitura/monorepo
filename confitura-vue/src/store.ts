@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex, { StoreOptions } from 'vuex';
-import { CHANGE_HEADER_THEME, RootState, WINDOW_RESIZED } from '@/types';
+import { CHANGE_HEADER_THEME, LOAD_PARTNERS, Partner, RootState, WINDOW_RESIZED } from '@/types';
 
 Vue.use(Vuex);
 const storeOptions: StoreOptions<RootState> = {
@@ -9,12 +9,15 @@ const storeOptions: StoreOptions<RootState> = {
     headerHeight: 73,
     windowWidth: 0,
     date: '2019-06-29T09:00',
+    partners: [],
   },
   getters: {
     isSm: (state) => state.windowWidth >= 576,
     isMd: (state) => state.windowWidth >= 768,
     isLg: (state) => state.windowWidth >= 992,
     isXl: (state) => state.windowWidth >= 1200,
+    platinum: (state): Partner[] => state.partners.filter((partner) => partner.type === 'platinum'),
+    silver: (state): Partner[] => state.partners.filter((partner) => partner.type === 'silver'),
 
   },
   mutations: {
@@ -31,7 +34,28 @@ const storeOptions: StoreOptions<RootState> = {
       }
     },
   },
-  actions: {},
+  actions: {
+    [LOAD_PARTNERS]({ state }) {
+      state.partners = [
+        {
+          id: '1',
+          description: '',
+          name: 'SoftwarePlant',
+          www: 'https://softwareplant.com/',
+          type: 'platinum',
+          logo: require('./assets/partners/softwareplant.svg'),
+        },{
+          id: '2',
+          description: '',
+          name: '7n',
+          www: 'https://7n.com/',
+          type: 'silver',
+          logo: require('./assets/partners/7N.png'),
+        },
+      ];
+
+    },
+  },
 };
 export default new Vuex.Store(storeOptions);
 

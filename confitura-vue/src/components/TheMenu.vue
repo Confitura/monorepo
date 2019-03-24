@@ -18,7 +18,7 @@
       { label: 'home', url: '/#home' },
       { label: 'about us', url: '/#about-us' },
       { label: 'numbers', url: '/#numbers' },
-      { label: 'partners', url: '/#partners' },
+      { label: 'partners', url: '/partners' },
       { label: 'contact', url: '/#contact' },
       { label: 'FAQ', url: '/faq' },
     ];
