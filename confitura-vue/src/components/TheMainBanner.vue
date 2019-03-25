@@ -25,7 +25,7 @@
       </div>
       <TheIllustration/>
     </div>
-    <img class="rocket-icon" src="../assets/rocket.svg">
+      <img  class="rocket-icon" src="../assets/rocket.svg">
   </section>
 </template>
 
@@ -57,11 +57,11 @@ export default class TheMainBanner extends Vue {
     });
 
     const { twinkling } = this.$refs;
-    timeline.to(twinkling, 100, {
-      'background-position': '-1000px 500px',
-      'force3D': true,
-      'autoRound': false,
-    });
+    // timeline.to(twinkling, 100, {
+    //   'background-position': '-1000px 500px',
+    //   'force3D': true,
+    //   'autoRound': false,
+    // });
     const options = {
       threshold: this.threshold,
     };
@@ -179,12 +179,13 @@ export default class TheMainBanner extends Vue {
 .rocket-icon {
   display: none;
   @include md() {
-    display: inline;
+    display: block;
     position: relative;
     bottom: 5rem;
     z-index: 2;
     animation: rocket-jump 2s 3;
     animation-delay: 5s;
+    margin: auto;
 
     @keyframes rocket-jump {
       0% {
