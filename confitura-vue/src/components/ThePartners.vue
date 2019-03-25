@@ -3,16 +3,16 @@
         <h1 class="header">our partners</h1>
         <div class="partners-grid">
             <div class="platinum">
-                <a href="https://softwareplant.com" class="link" rel="noopener" target="_blank">
-                    <img src="../assets/partners/softwareplant.svg" alt="softwareplant" class="logo__img--platinum">
+                <a v-for="item in platinum" :href="item.www" class="link" rel="noopener" target="_blank">
+                    <img :src="item.logo" :alt="item.name" class="logo__img--platinum">
                 </a>
                 <span class="type--platinum">Platinum</span>
             </div>
             <div class="other-types">
                 <div class="logos">
-                    <div class="logo--silver">
-                        <a href="https://www.7n.com/" class="link" rel="noopener" target="_blank">
-                            <img src="../assets/partners/7N.png" alt="7N" class="logo__img">
+                    <div class="logo--silver" v-for="item in silver">
+                        <a :href="item.www" class="link" rel="noopener" target="_blank">
+                            <img :src="item.logo" :alt="item.name" class="logo__img">
                         </a>
                     </div>
                 </div>
@@ -26,13 +26,31 @@
     </Box>
 </template>
 
-<script>
-  import Box from './Box';
+<script lang="ts">
+  import { Component, Vue } from 'vue-property-decorator';
+  import Box from '@/components/Box.vue';
+  import PageHeader from '@/components/PageHeader.vue';
+  import TheContact from '@/components/TheContact.vue';
+  import { LOAD_PARTNERS, Partner } from '@/types';
 
-  export default {
-    name: 'ThePartners',
-    components: { Box },
-  };
+  @Component({
+    components: { PageHeader, Box, TheContact },
+  })
+  export default class ThePartners extends Vue {
+    public platinum: Partner[] = [];
+    public silver: Partner[] = [];
+
+    protected mounted() {
+      this.$store.dispatch(LOAD_PARTNERS)
+        .then(() => {
+          this.platinum = this.$store.getters.platinum;
+          this.silver = this.$store.getters.silver;
+
+        });
+
+    }
+
+  }
 </script>
 
 <style scoped lang="scss">
@@ -69,7 +87,7 @@
             font-size: 2rem;
             color: $brand;
             padding-top: 3rem;
-            @include md(){
+            @include md() {
                 font-size: 1.5rem;
             }
         }
@@ -83,7 +101,6 @@
         }
 
 
-
         .logo--silver {
             margin: auto;
         }
@@ -92,7 +109,7 @@
             flex-grow: 1;
             display: flex;
             flex-direction: column-reverse;
-            @include md(){
+            @include md() {
                 flex-direction: column;
             }
         }

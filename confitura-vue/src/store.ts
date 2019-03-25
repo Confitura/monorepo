@@ -44,13 +44,20 @@ const storeOptions: StoreOptions<RootState> = {
           www: 'https://softwareplant.com/',
           type: 'platinum',
           logo: require('./assets/partners/softwareplant.svg'),
-        },{
+        }, {
           id: '2',
           description: '',
           name: '7n',
           www: 'https://7n.com/',
           type: 'silver',
-          logo: require('./assets/partners/7N.png'),
+          logo: require('./assets/partners/7N.svg'),
+        },{
+          id: '3',
+          description: '',
+          name: 'Volvo Group',
+          www: 'https://www.volvogroup.pl/kariera',
+          type: 'silver',
+          logo: require('./assets/partners/volvo.svg'),
         },
       ];
 

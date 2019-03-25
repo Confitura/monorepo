@@ -7,7 +7,8 @@
             <article v-for="(items, type) in partners ">
                 <h2 class="type-header">{{type}} <br class="type-header__breaker"/>partners</h2>
                 <div class="logos">
-                    <a :href="partner.www" v-for="partner in items" target="_blank" rel="noopener" class="logo-link">
+                    <a :href="partner.www" v-for="partner in items"
+                       target="_blank" rel="noopener" class="logo-link" :class="`logo-link--${partner.type}`">
                         <img :src="partner.logo" :alt="partner.name" :class="'logo--'+partner.type">
                     </a>
                 </div>
@@ -28,8 +29,6 @@
     components: { PageHeader, Box, TheContact },
   })
   export default class Partners extends Vue {
-    public platinum: Partner[] = [];
-    public silver: Partner[] = [];
     public partners: { [key: string]: Partner[] } = {};
 
     private mounted() {
@@ -38,7 +37,6 @@
           this.partners = {
             platinum: this.$store.getters.platinum,
             silver: this.$store.getters.silver,
-
           };
         });
     }
@@ -70,7 +68,7 @@
         left: 0;
         transform: rotate(-10deg);
         position: absolute;
-        @include md(){
+        @include sm(){
             width: 500px;
             top: 0;
             position: unset;
@@ -84,7 +82,7 @@
         margin-bottom: 3rem;
         font-weight: bold;
         &__breaker {
-            @include md(){
+            @include sm(){
                 display: none;
             }
         }
@@ -97,11 +95,15 @@
     .logos {
         display: flex;
         margin-bottom: 6rem;
+        align-items: center;
     }
 
     .logo-link {
         margin-left: 2rem;
         margin-right: 2rem;
+        &--platinum {
+            text-align: center;
+        }
     }
     .logo--platinum {
         width: 80%;
