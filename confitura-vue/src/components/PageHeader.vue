@@ -1,7 +1,10 @@
-<template>
+<template xmlns:slot="http://www.w3.org/1999/xhtml">
     <header class="page-header__container">
         <div class="page-header">
-            <h1 class="page-title">{{title}}</h1>
+            <h1 class="page-title">
+                <template v-if="title">{{title}}</template>
+                <slot name="title"></slot>
+            </h1>
             <slot>
                 <img class="page-image" src="../assets/planety_faq.svg" alt="planets">
             </slot>
@@ -17,7 +20,7 @@
   })
   export default class PageHeader extends Vue {
     @Prop(String)
-    public title = 'frequently asked questions';
+    public title?:string;
 
     private threshold: number[] = [];
 
@@ -67,7 +70,7 @@
         align-items: center;
         justify-content: space-between;
         height: 300px;
-        padding: $standard-padding;
+        padding: 2rem;
         position: relative;
         max-width: $max-width;
         margin: auto;
@@ -80,11 +83,13 @@
         .page-title {
             text-align: left;
             color: #ffffff;
-            font-size: 2.3rem;
+            font-size: 1.8rem;
             font-family: $font-bold;
             font-weight: bold;
-            text-transform: capitalize;
             max-width: 400px;
+            @include md(){
+                font-size: 2.3rem;
+            }
         }
 
         .page-image {

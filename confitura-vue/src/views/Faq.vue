@@ -1,6 +1,6 @@
 <template>
     <div class="faq">
-        <PageHeader/>
+        <PageHeader title="Frequently Asked Questions"/>
         <Box class="content" color="white">
             <p class="foreword">Here we have gathered the most common questions we are getting from the community.
                 If you have not found an answer to the question that you have, please

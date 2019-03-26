@@ -1,5 +1,5 @@
 <template>
-    <section class="box">
+    <section class="box" :class="{'box--full': full}">
         <div class="box__container">
             <slot/>
         </div>
@@ -14,6 +14,8 @@
   export default class Box extends Vue {
     @Prop()
     public color?: string;
+    @Prop()
+    public full: boolean = true;
     private threshold: number[] = [];
 
     constructor() {
@@ -47,11 +49,16 @@
 <style scoped lang="scss">
     @import "../assets/sizes";
     @import "../assets/media";
+
     .box {
-        min-height: 100vh;
+
         width: 100%;
         display: flex;
         flex-direction: column;
+
+        &--full {
+            min-height: 100vh;
+        }
 
         &__container {
             max-width: 1440px;
@@ -60,8 +67,8 @@
             box-sizing: border-box;
             text-align: left;
             @include padding();
-            @include lg(){
-              padding-top: $standard-padding;
+            @include lg() {
+                padding-top: $standard-padding;
             }
         }
     }

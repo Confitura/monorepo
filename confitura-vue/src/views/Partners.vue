@@ -7,10 +7,9 @@
             <article v-for="(items, type) in partners ">
                 <h2 class="type-header">{{type}} <br class="type-header__breaker"/>partners</h2>
                 <div class="logos">
-                    <a :href="partner.www" v-for="partner in items"
-                       target="_blank" rel="noopener" class="logo-link" :class="`logo-link--${partner.type}`">
+                    <router-link v-for="partner in items":to="`/partners/${partner.id}`" class="logo-link" :class="`logo-link--${partner.type}`">
                         <img :src="partner.logo" :alt="partner.name" :class="'logo--'+partner.type">
-                    </a>
+                    </router-link>
                 </div>
             </article>
         </Box>
@@ -65,10 +64,10 @@
     .header-img {
         width: 500px;
         top: 50px;
-        left: 0;
+        left: 60px;
         transform: rotate(-10deg);
         position: absolute;
-        @include sm(){
+        @include sm() {
             width: 500px;
             top: 0;
             position: unset;
@@ -81,8 +80,9 @@
         color: $brand;
         margin-bottom: 3rem;
         font-weight: bold;
+
         &__breaker {
-            @include sm(){
+            @include sm() {
                 display: none;
             }
         }
@@ -101,13 +101,15 @@
     .logo-link {
         margin-left: 2rem;
         margin-right: 2rem;
+
         &--platinum {
             text-align: center;
         }
     }
+
     .logo--platinum {
         width: 80%;
-        @include md(){
+        @include md() {
             width: unset;
         }
     }

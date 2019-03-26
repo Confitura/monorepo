@@ -9,6 +9,7 @@ export interface RootState {
 export const CHANGE_HEADER_THEME = 'CHANGE_HEADER_THEME';
 export const WINDOW_RESIZED = 'WINDOW_RESIZED';
 export const LOAD_PARTNERS = 'LOAD_PARTNERS';
+export const LOAD_PARTNER_BY_ID = 'LOAD_PARTNER_BY_ID';
 
 export interface Partner {
   id: string;
@@ -16,5 +17,5 @@ export interface Partner {
   description: string;
   logo: string;
   www: string;
-  type: 'platinum' | 'gold' | 'silver' | 'bronze';
+  type: '' | 'platinum' | 'gold' | 'silver' | 'bronze';
 }
