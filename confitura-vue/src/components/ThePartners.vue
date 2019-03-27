@@ -98,11 +98,12 @@
             padding-bottom: 3rem;
             padding-top: 3rem;
             grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            justify-items: center;
+            align-items: center;
         }
 
 
         .logo--silver {
-            margin: auto;
         }
 
         .other-types {

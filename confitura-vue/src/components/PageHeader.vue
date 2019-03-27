@@ -12,45 +12,45 @@
     </header>
 </template>
 <script lang="ts">
-  import { Component, Prop, Vue } from 'vue-property-decorator';
-  import { CHANGE_HEADER_THEME } from '@/types';
+import { Component, Prop, Vue } from 'vue-property-decorator';
+import { CHANGE_HEADER_THEME } from '@/types';
 
-  @Component({
-    components: {},
-  })
-  export default class PageHeader extends Vue {
-    @Prop(String)
-    public title?:string;
+@Component({
+  components: {},
+})
+export default class PageHeader extends Vue {
+  @Prop(String)
+  public title?: string;
 
-    private threshold: number[] = [];
+  private threshold: number[] = [];
 
-    constructor() {
-      super();
-      for (let i = 0; i <= 1; i += 0.01) {
-        this.threshold.push(i);
-      }
+  constructor() {
+    super();
+    for (let i = 0; i <= 1; i += 0.01) {
+      this.threshold.push(i);
     }
-
-    public mounted(): void {
-      const options = {
-        threshold: this.threshold,
-      };
-
-      const callback: IntersectionObserverCallback = (entries) => {
-        const [entry] = entries;
-        if (entry.isIntersecting) {
-          if (entry.boundingClientRect.top < -100) {
-            this.$store.commit(CHANGE_HEADER_THEME, { color: 'white' });
-          } else {
-            this.$store.commit(CHANGE_HEADER_THEME, { color: 'default' });
-          }
-        }
-      };
-      const observer = new IntersectionObserver(callback, options);
-      observer.observe(this.$el);
-    }
-
   }
+
+  public mounted(): void {
+    const options = {
+      threshold: this.threshold,
+    };
+
+    const callback: IntersectionObserverCallback = (entries) => {
+      const [entry] = entries;
+      if (entry.isIntersecting) {
+        if (entry.boundingClientRect.top < -100) {
+          this.$store.commit(CHANGE_HEADER_THEME, { color: 'white' });
+        } else {
+          this.$store.commit(CHANGE_HEADER_THEME, { color: 'default' });
+        }
+      }
+    };
+    const observer = new IntersectionObserver(callback, options);
+    observer.observe(this.$el);
+  }
+
+}
 </script>
 <style lang="scss" scoped>
     @import "../assets/colors";

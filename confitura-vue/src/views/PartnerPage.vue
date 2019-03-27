@@ -25,33 +25,32 @@
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
-  import Box from '@/components/Box.vue';
-  import PageHeader from '@/components/PageHeader.vue';
-  import TheContact from '@/components/TheContact.vue';
-  import { LOAD_PARTNER_BY_ID, Partner } from '@/types';
-  import showdown from 'showdown';
+import { Component, Vue } from 'vue-property-decorator';
+import Box from '@/components/Box.vue';
+import PageHeader from '@/components/PageHeader.vue';
+import TheContact from '@/components/TheContact.vue';
+import { LOAD_PARTNER_BY_ID, Partner } from '@/types';
+import showdown from 'showdown';
 
 
-  @Component({
-    components: { PageHeader, Box, TheContact },
-  })
-  export default class PartnerPage extends Vue {
-    public partner: Partner = { name: '', description: '', id: '', logo: '', type: '', www: '' };
-    private converter = new showdown.Converter();
+@Component({
+  components: { PageHeader, Box, TheContact },
+})
+export default class PartnerPage extends Vue {
+  public partner: Partner = { name: '', description: '', id: '', logo: '', type: '', www: '' };
+  private converter = new showdown.Converter();
 
-    private mounted() {
-      this.$store.dispatch(LOAD_PARTNER_BY_ID, this.$route.params['id'])
-        .then((partner) => {
-          this.partner = partner;
-        });
-    }
-
-    public get description() {
-      return this.converter.makeHtml(this.partner.description);
-    }
+  private mounted() {
+    this.$store.dispatch(LOAD_PARTNER_BY_ID, this.$route.params.id)
+      .then((partner) => {
+        this.partner = partner;
+      });
   }
 
+  public get description() {
+    return this.converter.makeHtml(this.partner.description);
+  }
+}
 </script>
 
 
@@ -130,7 +129,8 @@
         }
 
         &__description {
-            font-size: 1.75rem;
+            font-size: 1.5rem;
+            line-height: 2rem;
         }
 
     }
