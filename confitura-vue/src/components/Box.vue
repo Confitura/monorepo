@@ -14,8 +14,8 @@
   export default class Box extends Vue {
     @Prop()
     public color?: string;
-    @Prop()
-    public full: boolean = true;
+    @Prop({ default: true })
+    public full: boolean;
     private threshold: number[] = [];
 
     constructor() {
