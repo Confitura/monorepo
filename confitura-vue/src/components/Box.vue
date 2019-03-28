@@ -15,7 +15,7 @@
     @Prop()
     public color?: string;
     @Prop({ default: true })
-    public full: boolean;
+    public full!: boolean;
     private threshold: number[] = [];
 
     constructor() {
