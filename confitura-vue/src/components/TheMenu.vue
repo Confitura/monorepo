@@ -1,31 +1,45 @@
 <template>
     <div class="menu">
-        <div class="menu-item" v-for="item in items" :key="item.label">
-            <router-link :to="item.url" class="menu-link" @click.native="click()">{{ item.label }}</router-link>
+        <div class="menu-item" v-for="item in items" :key="item.label" v-if="isVisible(item)">
+            <router-link v-if="item.url" :to="item.url" class="menu-link" @click.native="click()">{{ item.label }}</router-link>
+            <span v-else class="menu-link" @click="item.action()">{{ item.label }}</span>
         </div>
     </div>
 </template>
 
 <script lang="ts">
   import { Component, Vue } from 'vue-property-decorator';
+  import { LOGOUT } from '@/types';
 
   @Component({
     components: {},
   })
   export default class TheMenu extends Vue {
 
-    public items = [
+    public items: MenuItem[] = [
       { label: 'home', url: '/#home' },
       { label: 'about us', url: '/#about-us' },
       { label: 'numbers', url: '/#numbers' },
       { label: 'partners', url: '/partners' },
       { label: 'contact', url: '/#contact' },
       { label: 'FAQ', url: '/faq' },
+      { label: 'logout', action: () => this.$store.dispatch(LOGOUT), visible: this.$store.getters.isLogin },
     ];
+
+    public isVisible(item: MenuItem): boolean {
+      return item.visible == undefined || item.visible;
+    }
 
     public click() {
       this.$emit('linkClicked');
     }
+  }
+
+  interface MenuItem {
+    label: string;
+    url?: string;
+    action?: () => void;
+    visible?: boolean;
   }
 </script>
 

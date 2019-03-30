@@ -13,9 +13,8 @@ export const WINDOW_RESIZED = 'WINDOW_RESIZED';
 export const LOAD_PARTNERS = 'LOAD_PARTNERS';
 export const LOAD_PARTNER_BY_ID = 'LOAD_PARTNER_BY_ID';
 export const TOKEN = 'TOKEN';
-export const USER_FROM_TOKEN = 'USER_FROM_TOKEN';
-
 export const LOGIN = 'LOGIN';
+export const LOGOUT = 'LOGOUT';
 
 export interface User {
   sub: string;
