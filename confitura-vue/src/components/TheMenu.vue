@@ -1,5 +1,5 @@
 <template>
-    <div class="menu">
+    <div class="menu" :key="isLogin">
         <div class="menu-item" v-for="item in items" :key="item.label" v-if="isVisible(item)">
             <router-link v-if="item.url" :to="item.url" class="menu-link" @click.native="click()">{{ item.label }}</router-link>
             <span v-else class="menu-link" @click="item.action()">{{ item.label }}</span>
@@ -23,15 +23,26 @@
       { label: 'partners', url: '/partners' },
       { label: 'contact', url: '/#contact' },
       { label: 'FAQ', url: '/faq' },
-      { label: 'logout', action: () => this.$store.dispatch(LOGOUT), visible: this.$store.getters.isLogin },
+      { label: 'logout', action: () => this.logout(), visible: () => this.isLogin },
     ];
 
     public isVisible(item: MenuItem): boolean {
-      return item.visible == undefined || item.visible;
+      return item.visible === undefined || item.visible();
     }
 
     public click() {
       this.$emit('linkClicked');
+    }
+
+    public get isLogin() {
+      return this.$store.getters.isLogin;
+    }
+
+    public logout() {
+      this.$store.dispatch(LOGOUT)
+        .then(() => {
+          this.$router.push('/');
+        });
     }
   }
 
@@ -39,7 +50,7 @@
     label: string;
     url?: string;
     action?: () => void;
-    visible?: boolean;
+    visible?: () => boolean;
   }
 </script>
 
@@ -77,6 +88,7 @@
         text-decoration: none;
         color: $brand;
         font-size: 1.4rem;
+        cursor: pointer;
 
         &:hover, &.router-link-active {
             color: #ffffff;
