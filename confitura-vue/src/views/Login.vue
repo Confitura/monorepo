@@ -34,18 +34,14 @@
     }
 
     protected mounted() {
-      const service = this.$route.params['service'];
+      const { service } = this.$route.params;
       if (service) {
-        const params = {
-          'code': this.$route.query['code'],
-          'oauth_token': this.$route.query['oauth_token'],
-          'oauth_verifier': this.$route.query['oauth_verifier'],
-        };
+        const { code, oauth_token, oauth_verifier } = this.$route.query;
+        const params = { code, oauth_token, oauth_verifier };
         this.$store.dispatch(LOGIN, { service, params });
       }
     }
   }
-
 </script>
 
 <style lang="scss" scoped>
