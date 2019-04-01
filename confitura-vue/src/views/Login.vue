@@ -66,6 +66,7 @@
         display: grid;
         grid-gap: 1rem;
         grid-template-columns: 1fr;
+        justify-items: center;
 
         @include md() {
             grid-template-columns: 1fr 1fr;
@@ -77,6 +78,7 @@
         font-size: 1.5rem;
         display: flex;
         flex-direction: column;
+        max-width: 350px;
     }
 
     .login__icon {
