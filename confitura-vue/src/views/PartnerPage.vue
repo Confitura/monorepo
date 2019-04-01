@@ -25,15 +25,15 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import Box from '@/components/Box.vue';
-import PageHeader from '@/components/PageHeader.vue';
-import TheContact from '@/components/TheContact.vue';
-import { LOAD_PARTNER_BY_ID, Partner } from '@/types';
-import showdown from 'showdown';
+  import {Component, Vue} from 'vue-property-decorator';
+  import Box from '@/components/Box.vue';
+  import PageHeader from '@/components/PageHeader.vue';
+  import TheContact from '@/components/TheContact.vue';
+  import {LOAD_PARTNER_BY_ID, Partner} from '@/types';
+  import showdown from 'showdown';
 
 
-@Component({
+  @Component({
   components: { PageHeader, Box, TheContact },
 })
 export default class PartnerPage extends Vue {
