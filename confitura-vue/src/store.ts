@@ -5,15 +5,15 @@ import {
   LOAD_PARTNER_BY_ID,
   LOAD_PARTNERS,
   LOGIN,
+  LOGOUT,
   Partner,
   RootState,
   TOKEN,
   User,
-  USER_FROM_TOKEN,
   WINDOW_RESIZED,
 } from '@/types';
+import {userModule} from '@/store.user-profile';
 import axios from 'axios';
-import {userModule} from "@/store.user-profile";
 
 Vue.use(Vuex);
 const storeOptions: StoreOptions<RootState> = {
@@ -30,12 +30,19 @@ const storeOptions: StoreOptions<RootState> = {
     isMd: (state) => state.windowWidth >= 768,
     isLg: (state) => state.windowWidth >= 992,
     isXl: (state) => state.windowWidth >= 1200,
-    platinum: (state): Partner[] => state.partners.filter((partner) => partner.type === 'platinum'),
-    silver: (state): Partner[] => state.partners.filter((partner) => partner.type === 'silver'),
+    platinum: ({ partners }): Partner[] => partners.filter((partner) => partner.type === 'platinum'),
+    silver: ({ partners }): Partner[] => partners.filter((partner) => partner.type === 'silver'),
+    isLogin: (state, getters) => {
+      return getters.user !== null;
+    },
     user: ({ token }): User | null => {
       if (token) {
-        const body = token.split('.')[1];
-        return JSON.parse(atob(body)) as User;
+        try {
+          const body = token.split('.')[1];
+          return JSON.parse(atob(body)) as User;
+        } catch (error) {
+          return null;
+        }
       } else {
         return null;
       }
@@ -57,22 +64,19 @@ const storeOptions: StoreOptions<RootState> = {
     },
     [TOKEN](store, payload: { token: string }) {
       store.token = payload.token;
-    },
-    [USER_FROM_TOKEN](store, payload: { token: string }) {
-      localStorage.setItem('token', payload.token);
-      const body = payload.token.split('.')[1];
-      store.user = JSON.parse(atob(body)) as User;
+      localStorage.setItem(TOKEN, payload.token);
     },
   },
   actions: {
     [LOGIN]({ commit }, payload: { service: string, params: { [key: string]: any } }) {
       axios.get(`/api/login/${payload.service}/callback`, { params: payload.params })
         .then(({ data }) => {
-          const token = data;
-          commit(USER_FROM_TOKEN, { token });
-          commit(TOKEN, { token });
+          commit(TOKEN, { token: data });
         });
 
+    },
+    [LOGOUT]({ commit }) {
+      commit(TOKEN, { token: null });
     },
     [LOAD_PARTNERS]({ state }) {
       // tslint:disable
@@ -164,7 +168,8 @@ At Dynatrace Gdansk Lab, we design, create and develop a best-in-class product t
         .then(() => state.partners.find((partner) => partner.id.toLowerCase() === id.toLowerCase()));
     },
   },
-  modules: {userProfile: userModule}
+  modules: {userProfile: userModule},
 };
+
 export default new Vuex.Store(storeOptions);
 

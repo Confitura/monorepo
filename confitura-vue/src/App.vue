@@ -14,7 +14,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import TheHeader from '@/components/TheHeader.vue';
 import TheSocialLinks from '@/components/TheSocialLinks.vue';
-import { WINDOW_RESIZED } from './types';
+import { TOKEN, WINDOW_RESIZED } from './types';
 
 @Component({
   components: { TheHeader, TheSocialLinks },
@@ -23,9 +23,10 @@ export default class App extends Vue {
   public mounted() {
     this.resizedCallback();
     window.addEventListener('resize', this.resizedCallback);
+    this.$store.commit(TOKEN, { token: localStorage.getItem(TOKEN) });
   }
 
-  public śbeforeDestroy() {
+  public beforeDestroy() {
     window.removeEventListener('resize', this.resizedCallback);
   }
 

@@ -1,31 +1,56 @@
 <template>
-    <div class="menu">
-        <div class="menu-item" v-for="item in items" :key="item.label">
-            <router-link :to="item.url" class="menu-link" @click.native="click()">{{ item.label }}</router-link>
+    <div class="menu" :key="isLogin">
+        <div class="menu-item" v-for="item in items" :key="item.label" v-if="isVisible(item)">
+            <router-link v-if="item.url" :to="item.url" class="menu-link" @click.native="click()">{{ item.label }}</router-link>
+            <span v-else class="menu-link" @click="item.action()">{{ item.label }}</span>
         </div>
     </div>
 </template>
 
 <script lang="ts">
   import { Component, Vue } from 'vue-property-decorator';
+  import { LOGOUT } from '@/types';
 
   @Component({
     components: {},
   })
   export default class TheMenu extends Vue {
 
-    public items = [
+    public items: MenuItem[] = [
       { label: 'home', url: '/#home' },
       { label: 'about us', url: '/#about-us' },
       { label: 'numbers', url: '/#numbers' },
       { label: 'partners', url: '/partners' },
       { label: 'contact', url: '/#contact' },
       { label: 'FAQ', url: '/faq' },
+      { label: 'logout', action: () => this.logout(), visible: () => this.isLogin },
     ];
+
+    public isVisible(item: MenuItem): boolean {
+      return item.visible === undefined || item.visible();
+    }
 
     public click() {
       this.$emit('linkClicked');
     }
+
+    public get isLogin() {
+      return this.$store.getters.isLogin;
+    }
+
+    public logout() {
+      this.$store.dispatch(LOGOUT)
+        .then(() => {
+          this.$router.push('/');
+        });
+    }
+  }
+
+  interface MenuItem {
+    label: string;
+    url?: string;
+    action?: () => void;
+    visible?: () => boolean;
   }
 </script>
 
@@ -63,6 +88,7 @@
         text-decoration: none;
         color: $brand;
         font-size: 1.4rem;
+        cursor: pointer;
 
         &:hover, &.router-link-active {
             color: #ffffff;
