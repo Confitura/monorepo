@@ -4,8 +4,7 @@ export interface RootState {
   windowWidth: number;
   date: string;
   partners: Partner[];
-  token: string;
-  user?: User;
+  token: string | null;
 }
 
 export const CHANGE_HEADER_THEME = 'CHANGE_HEADER_THEME';

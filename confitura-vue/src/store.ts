@@ -12,7 +12,8 @@ import {
   User,
   WINDOW_RESIZED,
 } from '@/types';
-import {userModule} from "@/store.user-profile";
+import {userModule} from '@/store.user-profile';
+import axios from 'axios';
 
 Vue.use(Vuex);
 const storeOptions: StoreOptions<RootState> = {
@@ -167,7 +168,7 @@ At Dynatrace Gdansk Lab, we design, create and develop a best-in-class product t
         .then(() => state.partners.find((partner) => partner.id.toLowerCase() === id.toLowerCase()));
     },
   },
-  modules: {userProfile: userModule}
+  modules: {userProfile: userModule},
 };
 
 export default new Vuex.Store(storeOptions);
