@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import Vuex, { StoreOptions } from 'vuex';
+import Vuex, {StoreOptions} from 'vuex';
 import {
   CHANGE_HEADER_THEME,
   LOAD_PARTNER_BY_ID,
@@ -12,7 +12,7 @@ import {
   User,
   WINDOW_RESIZED,
 } from '@/types';
-import axios from 'axios';
+import {userModule} from "@/store.user-profile";
 
 Vue.use(Vuex);
 const storeOptions: StoreOptions<RootState> = {
@@ -22,7 +22,7 @@ const storeOptions: StoreOptions<RootState> = {
     windowWidth: 0,
     date: '2019-06-29T09:00',
     partners: [],
-    token: '',
+    token: localStorage.getItem('token'),
   },
   getters: {
     isSm: (state) => state.windowWidth >= 576,
@@ -77,7 +77,6 @@ const storeOptions: StoreOptions<RootState> = {
     [LOGOUT]({ commit }) {
       commit(TOKEN, { token: null });
     },
-
     [LOAD_PARTNERS]({ state }) {
       // tslint:disable
       state.partners = [
@@ -168,6 +167,7 @@ At Dynatrace Gdansk Lab, we design, create and develop a best-in-class product t
         .then(() => state.partners.find((partner) => partner.id.toLowerCase() === id.toLowerCase()));
     },
   },
+  modules: {userProfile: userModule}
 };
 
 export default new Vuex.Store(storeOptions);

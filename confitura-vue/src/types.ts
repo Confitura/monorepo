@@ -18,6 +18,7 @@ export const LOGOUT = 'LOGOUT';
 
 export interface User {
   sub: string;
+  jti: string;
   isVolunteer: boolean;
   isAdmin: boolean;
   isNew: boolean;
@@ -31,4 +32,20 @@ export interface Partner {
   logo: string;
   www: string;
   type: '' | 'platinum' | 'gold' | 'silver' | 'bronze';
+}
+
+export interface UserProfile {
+  id: string;
+  name: string;
+  twitter: string;
+  github: string;
+  www: string;
+  email: string;
+  bio: string;
+  photo: string;
+  admin: boolean;
+  volunteer: boolean;
+  speaker: boolean;
+  privacyPolicyAccepted: boolean;
+  // presentations: Presentation[];
 }

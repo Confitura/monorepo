@@ -70,7 +70,6 @@
 
         @include md() {
             grid-template-columns: 1fr 1fr;
-
         }
     }
 
