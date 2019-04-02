@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import Vuex, {StoreOptions} from 'vuex';
+import Vuex, { StoreOptions } from 'vuex';
 import {
   CHANGE_HEADER_THEME,
   LOAD_PARTNER_BY_ID,
@@ -12,7 +12,7 @@ import {
   User,
   WINDOW_RESIZED,
 } from '@/types';
-import {userModule} from '@/store.user-profile';
+import { userModule } from '@/store.user-profile';
 import axios from 'axios';
 
 Vue.use(Vuex);
@@ -23,7 +23,7 @@ const storeOptions: StoreOptions<RootState> = {
     windowWidth: 0,
     date: '2019-06-29T09:00',
     partners: [],
-    token: localStorage.getItem('token'),
+    token: localStorage.getItem(TOKEN),
   },
   getters: {
     isSm: (state) => state.windowWidth >= 576,

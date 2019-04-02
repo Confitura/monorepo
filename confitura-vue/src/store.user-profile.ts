@@ -15,7 +15,7 @@ export const userModule: Module<StoreUserProfile, RootState> = {
   },
   actions: {
     [LOAD_CURRENT_PROFILE](store) {
-      return axios.get('/api/users/' + store.getters.user.jti, {
+      return axios.get('/api/users/' + store.rootGetters.user.jti, {
         headers: { Authorization: `Bearer ${store.rootState.token}` },
       }).then((data) => store.commit(UPDATE_CURRENT_PROFILE, { profile: data.data }));
     },
