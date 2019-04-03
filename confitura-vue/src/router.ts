@@ -8,13 +8,14 @@ import PartnerPage from '@/views/PartnerPage.vue';
 import Login from '@/views/Login.vue';
 import RegisterPage from '@/views/profile/RegisterPage.vue';
 import ProfilePage from '@/views/profile/ProfilePage.vue';
+import store from './store';
 
 Vue.use(Router);
 Vue.use(VueScrollTo, {
   container: '.home__container',
 });
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -66,4 +67,15 @@ export default new Router({
       return VueScrollTo.scrollTo(to.hash, 500);
     }
   },
+
 });
+router.beforeEach((to, from, next) => {
+  const isSessionActive = store.getters.isLogin;
+  const accessingProtectedResource = ['/register', '/profile'].includes(to.path);
+  if (accessingProtectedResource && !isSessionActive) {
+    next('login');
+  } else {
+    next();
+  }
+});
+export default router;

@@ -20,37 +20,36 @@
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
-  import Box from '@/components/Box.vue';
-  import TheContact from '@/components/TheContact.vue';
-  import { LOGIN } from '@/types';
+import { Component, Vue } from 'vue-property-decorator';
+import Box from '@/components/Box.vue';
+import TheContact from '@/components/TheContact.vue';
+import { LOGIN } from '@/types';
 
-  @Component({
-    components: { Box, TheContact },
-  })
-  export default class Login extends Vue {
-    public options = ['Sign in', 'Sign up'];
-    public services = [
-      { name: 'twitter' },
-      { name: 'facebook' },
-      { name: 'google' },
-      { name: 'github' },
-    ];
+@Component({
+  components: { Box, TheContact },
+})
+export default class Login extends Vue {
+  public options = ['Sign in', 'Sign up'];
+  public services = [
+    { name: 'twitter' },
+    { name: 'facebook' },
+    { name: 'google' },
+    { name: 'github' },
+  ];
 
-    public loginLinkTo(service: string) {
-      return `/api/login/${service}`;
-    }
+  public loginLinkTo(service: string) {
+    return `/api/login/${service}`;
+  }
 
-    protected mounted() {
-      const { service } = this.$route.params;
-      if (service) {
-        const { code, oauth_token, oauth_verifier } = this.$route.query;
-        const params = { code, oauth_token, oauth_verifier };
-        this.$store.dispatch(LOGIN, { service, params })
-          .then(() => this.$router.push('/'));
-      }
+  protected mounted() {
+    const { service } = this.$route.params;
+    if (service) {
+      const { code, oauth_token, oauth_verifier } = this.$route.query;
+      const params = { code, oauth_token, oauth_verifier };
+      this.$store.dispatch(LOGIN, { service, params });
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>

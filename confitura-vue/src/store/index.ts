@@ -1,29 +1,22 @@
 import Vue from 'vue';
 import Vuex, { StoreOptions } from 'vuex';
-import {
-  CHANGE_HEADER_THEME,
-  LOAD_PARTNER_BY_ID,
-  LOAD_PARTNERS,
-  LOGIN,
-  LOGOUT,
-  Partner,
-  RootState,
-  TOKEN,
-  User,
-  WINDOW_RESIZED,
-} from '@/types';
-import { userModule } from '@/store.user-profile';
-import axios from 'axios';
+import { CHANGE_HEADER_THEME, LOAD_PARTNER_BY_ID, LOAD_PARTNERS, Partner, RootState, WINDOW_RESIZED } from '@/types';
+import { userModule } from './store.user-profile';
+import { authenticationModule } from './authentication';
 
 Vue.use(Vuex);
 const storeOptions: StoreOptions<RootState> = {
+  modules: {
+    userProfile: userModule,
+    authentication: authenticationModule,
+  },
   state: {
     headerTheme: 'default',
     headerHeight: 73,
     windowWidth: 0,
     date: '2019-06-29T09:00',
     partners: [],
-    token: localStorage.getItem(TOKEN),
+    authentication: { token: null },
   },
   getters: {
     isSm: (state) => state.windowWidth >= 576,
@@ -32,22 +25,6 @@ const storeOptions: StoreOptions<RootState> = {
     isXl: (state) => state.windowWidth >= 1200,
     platinum: ({ partners }): Partner[] => partners.filter((partner) => partner.type === 'platinum'),
     silver: ({ partners }): Partner[] => partners.filter((partner) => partner.type === 'silver'),
-    isLogin: (state, getters) => {
-      return getters.user !== null;
-    },
-    user: ({ token }): User | null => {
-      if (token) {
-        try {
-          const body = token.split('.')[1];
-          return JSON.parse(atob(body)) as User;
-        } catch (error) {
-          return null;
-        }
-      } else {
-        return null;
-      }
-    },
-
   },
   mutations: {
     [CHANGE_HEADER_THEME](store, theme: { color: string }) {
@@ -62,22 +39,9 @@ const storeOptions: StoreOptions<RootState> = {
         store.headerHeight = 60;
       }
     },
-    [TOKEN](store, payload: { token: string }) {
-      store.token = payload.token;
-      localStorage.setItem(TOKEN, payload.token);
-    },
+
   },
   actions: {
-    [LOGIN]({ commit }, payload: { service: string, params: { [key: string]: any } }) {
-      axios.get(`/api/login/${payload.service}/callback`, { params: payload.params })
-        .then(({ data }) => {
-          commit(TOKEN, { token: data });
-        });
-
-    },
-    [LOGOUT]({ commit }) {
-      commit(TOKEN, { token: null });
-    },
     [LOAD_PARTNERS]({ state }) {
       // tslint:disable
       state.partners = [
@@ -106,7 +70,7 @@ const storeOptions: StoreOptions<RootState> = {
           name: 'SoftwarePlant',
           www: 'https://softwareplant.com/',
           type: 'platinum',
-          logo: require('./assets/partners/softwareplant.svg'),
+          logo: require('../assets/partners/softwareplant.svg'),
         }, {
           id: '7n',
           description: `[7N](https://www.7n.com/) to duńska firma konsultingowa, zajmująca się
@@ -122,7 +86,7 @@ const storeOptions: StoreOptions<RootState> = {
           name: '7n',
           www: 'https://7n.com/',
           type: 'silver',
-          logo: require('./assets/partners/7N.svg'),
+          logo: require('../assets/partners/7N.svg'),
         }, {
           id: 'volvo',
           description: `Volvo Group IT we Wrocławiu jest jednym z dwóch (obok Bangalore w Indiach)
@@ -136,7 +100,7 @@ const storeOptions: StoreOptions<RootState> = {
           name: 'Volvo Group',
           www: 'https://www.volvogroup.pl/kariera',
           type: 'silver',
-          logo: require('./assets/partners/volvo.svg'),
+          logo: require('../assets/partners/volvo.svg'),
         }, {
           id: 'dynatrace',
           description: `**WHO WE ARE?**
@@ -158,7 +122,7 @@ At Dynatrace Gdansk Lab, we design, create and develop a best-in-class product t
           name: 'Dynatrace',
           www: 'https://jobs.dynatrace.pl/',
           type: 'silver',
-          logo: require('./assets/partners/dynatrace.svg'),
+          logo: require('../assets/partners/dynatrace.svg'),
         },
       ];
     },
@@ -168,7 +132,6 @@ At Dynatrace Gdansk Lab, we design, create and develop a best-in-class product t
         .then(() => state.partners.find((partner) => partner.id.toLowerCase() === id.toLowerCase()));
     },
   },
-  modules: {userProfile: userModule},
 };
 
 export default new Vuex.Store(storeOptions);

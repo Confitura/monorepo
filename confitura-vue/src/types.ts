@@ -1,10 +1,12 @@
+import { AuthenticationState } from '@/store/authentication';
+
 export interface RootState {
   headerTheme: string;
   headerHeight: number;
   windowWidth: number;
   date: string;
   partners: Partner[];
-  token: string | null;
+  authentication?: AuthenticationState;
 }
 
 export const CHANGE_HEADER_THEME = 'CHANGE_HEADER_THEME';

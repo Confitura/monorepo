@@ -14,10 +14,13 @@ export const userModule: Module<StoreUserProfile, RootState> = {
     },
   },
   actions: {
-    [LOAD_CURRENT_PROFILE](store) {
-      return axios.get('/api/users/' + store.rootGetters.user.jti, {
-        headers: { Authorization: `Bearer ${store.rootState.token}` },
-      }).then((data) => store.commit(UPDATE_CURRENT_PROFILE, { profile: data.data }));
+    [LOAD_CURRENT_PROFILE]({ commit, rootState, rootGetters }) {
+      if (rootState.authentication) {
+        return axios.get('/api/users/' + rootGetters.user.jti, {
+          headers: { Authorization: `Bearer ${rootState.authentication.token}` },
+        })
+          .then((data) => commit(UPDATE_CURRENT_PROFILE, { profile: data.data }));
+      }
     },
   },
 };

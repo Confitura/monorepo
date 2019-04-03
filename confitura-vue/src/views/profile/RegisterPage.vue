@@ -71,12 +71,11 @@
 
 <script lang="ts">
   import { Component, Vue } from 'vue-property-decorator';
-  import { LOAD_CURRENT_PROFILE } from '@/store.user-profile';
+  import { LOAD_CURRENT_PROFILE } from '@/store/store.user-profile';
   import Box from '@/components/Box.vue';
   import TheContact from '@/components/TheContact.vue';
   import { UserProfile } from '@/types';
   import M from 'materialize-css';
-
   import axios from 'axios';
 
   @Component({
