@@ -48,3 +48,20 @@ export interface UserProfile {
   privacyPolicyAccepted?: boolean;
   // presentations: Presentation[];
 }
+
+export interface EmbeddedPresentations {
+  _embedded: { presentations: Presentation[] };
+}
+
+export interface Presentation {
+  id: string;
+  title: string;
+  language: string;
+  level: string;
+  speaker: User;
+  cospeakers: User[];
+  tags: string;
+  shortDescription: string;
+  description: string;
+  status: string;
+}
