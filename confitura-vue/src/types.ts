@@ -33,6 +33,7 @@ export interface Partner {
   logo: string;
   www: string;
   type: '' | 'platinum' | 'gold' | 'silver' | 'bronze';
+  orientation?: 'horizontal' | 'vertical' | 'box';
 }
 
 export interface UserProfile {

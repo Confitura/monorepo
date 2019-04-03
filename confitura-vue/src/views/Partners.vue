@@ -7,8 +7,14 @@
             <article v-for="(items, type) in partners ">
                 <h2 class="type-header">{{type}} <br class="type-header__breaker"/>partners</h2>
                 <div class="logos">
-                    <router-link v-for="partner in items":to="`/partners/${partner.id}`" class="logo-link" :class="`logo-link--${partner.type}`">
-                        <img :src="partner.logo" :alt="partner.name" :class="'logo--'+partner.type">
+
+                    <router-link v-for="partner in items"
+                                 :key="partner.id"
+                                 :to="`/partners/${partner.id}`"
+                                 class="logo-link"
+                                 :class="`logo-link--${partner.type}`">
+                        <img :src="partner.logo" :alt="partner.name"
+                             :class="{['logo--'+partner.type]: true, ['logo--'+partner.orientation]: partner.orientation }">
                     </router-link>
                 </div>
             </article>
@@ -41,9 +47,6 @@
     }
   }
 
-  interface Page {
-    content: string;
-  }
 </script>
 
 
@@ -116,6 +119,11 @@
 
     .logo--silver {
         width: 100px;
+    }
+
+    .logo--horizontal {
+        width: 200px;
+
     }
 
 

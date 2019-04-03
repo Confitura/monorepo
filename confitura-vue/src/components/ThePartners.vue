@@ -10,7 +10,10 @@
             </div>
             <div class="other-types">
                 <div class="logos">
-                    <div class="logo--silver" v-for="item in silver">
+                    <div v-for="item in silver"
+                         :key="item.id"
+                         :class="{[`logo--${item.orientation}`]: item.orientation}"
+                         class="logo--silver">
                         <a :href="item.www" class="link" rel="noopener" target="_blank">
                             <img :src="item.logo" :alt="item.name" class="logo__img">
                         </a>
@@ -94,16 +97,25 @@
 
         .logos {
             display: grid;
-            grid-gap: 1rem;
+            grid-row-gap: 3rem;
+            grid-column-gap: 1rem;
             padding-bottom: 3rem;
             padding-top: 3rem;
             grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
             justify-items: center;
             align-items: center;
+            justify-content: space-evenly;
         }
 
 
         .logo--silver {
+        }
+
+        .logo--horizontal {
+            grid-column-end: span 2;
+            .logo__img {
+                width: 200px;
+            }
         }
 
         .other-types {
@@ -118,6 +130,7 @@
         .logo__img {
             width: 100px;
         }
+
 
         .logo__img--platinum {
             width: 300px;

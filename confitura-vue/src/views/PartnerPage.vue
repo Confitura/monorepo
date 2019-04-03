@@ -13,7 +13,10 @@
             <article class="partner">
                 <div class="partner__logo-container">
                     <a :href="partner.www" target="_blank" rel="noopener">
-                        <img class="partner__logo" :src="partner.logo" :alt="partner.name">
+                        <img class="partner__logo"
+                             :class="{[`partner__logo--${partner.orientation}`]: partner.orientation }"
+                             :src="partner.logo"
+                             :alt="partner.name">
                     </a>
                 </div>
                 <div class="partner__description" v-html="description"></div>
@@ -41,6 +44,7 @@ export default class PartnerPage extends Vue {
   private converter = new showdown.Converter();
 
   private mounted() {
+    window.scrollTo(0,0);
     this.$store.dispatch(LOAD_PARTNER_BY_ID, this.$route.params.id)
       .then((partner) => {
         this.partner = partner;
@@ -126,6 +130,12 @@ export default class PartnerPage extends Vue {
             height: auto;
             max-width: 500px;
             max-height: 200px;
+        }
+
+        &__logo--horizontal {
+            width: auto;
+            height: auto;
+            max-width: 300px;
         }
 
         &__description {

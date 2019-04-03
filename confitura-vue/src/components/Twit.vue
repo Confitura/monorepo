@@ -87,7 +87,8 @@
         }
 
         &__handle {
-            padding-left: 5px;
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
         }
 
     }

@@ -123,6 +123,16 @@ At Dynatrace Gdansk Lab, we design, create and develop a best-in-class product t
           www: 'https://jobs.dynatrace.pl/',
           type: 'silver',
           logo: require('../assets/partners/dynatrace.svg'),
+        },{
+          id: 'eworkgroup',
+          description: `Ework Group jest wiodącą siecią niezależnych konsultantów i liderem na rynku skandynawskim. Działamy w sektorach IT, telekomunikacji, nowych technologii oraz rozwoju biznesu. Współpracujemy z ponad 9000 konsultantów świadczących usługi dla ponad 170 klientów. 
+
+Akcje Ework są notowane na giełdzie NASDAQ OMX w Sztokholmie. W Polsce istniejemy od 2015 roku przekształcając oblicze rodzimej branży IT.`,
+          name: 'Ework group',
+          www: 'https://www.eworkgroup.com/pl',
+          type: 'silver',
+          logo: require('../assets/partners/ework_group.svg'),
+          orientation: 'horizontal',
         },
       ];
     },
