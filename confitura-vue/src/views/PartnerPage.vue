@@ -28,7 +28,7 @@
 </template>
 
 <script lang="ts">
-  import {Component, Vue} from 'vue-property-decorator';
+import {Component, Vue} from 'vue-property-decorator';
   import Box from '@/components/Box.vue';
   import PageHeader from '@/components/PageHeader.vue';
   import TheContact from '@/components/TheContact.vue';
@@ -44,7 +44,7 @@ export default class PartnerPage extends Vue {
   private converter = new showdown.Converter();
 
   private mounted() {
-    window.scrollTo(0,0);
+    window.scrollTo(0, 0);
     this.$store.dispatch(LOAD_PARTNER_BY_ID, this.$route.params.id)
       .then((partner) => {
         this.partner = partner;
