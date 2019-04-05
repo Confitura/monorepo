@@ -1,52 +1,52 @@
 <template>
-    <article class="twit">
-        <div class="twit__avatar">
-            <img class="twit__img" :src="model.avatar" alt="twitter_avatar">
+    <article class="tweet">
+        <div class="tweet__avatar">
+            <img class="tweet__img" :src="model.avatar" alt="twitter_avatar">
         </div>
-        <div class="twit__metadata">
-            <span class="twit__username">{{model.name}}</span>
-            <span class="twit__handle">@{{model.twitterHandle}}</span>
-            <span class="twit__date">{{dateTime}}</span>
+        <div class="tweet__metadata">
+            <span class="tweet__username">{{model.name}}</span>
+            <span class="tweet__handle">@{{model.twitterHandle}}</span>
+            <span class="tweet__date">{{dateTime}}</span>
         </div>
-        <div class="twit__message" v-html="message"></div>
+        <div class="tweet__message" v-html="message"></div>
     </article>
 </template>
 <script lang="ts">
-    import dayjs from 'dayjs';
-    import linkifyHtml from 'linkifyjs/html';
-    import { Component, Prop, Vue } from 'vue-property-decorator';
+  import dayjs from 'dayjs';
+  import linkifyHtml from 'linkifyjs/html';
+  import { Component, Prop, Vue } from 'vue-property-decorator';
 
-    @Component({})
-    export default class Twit extends Vue {
-        @Prop()
-        public model!: TwitItem;
+  @Component({})
+  export default class Tweet extends Vue {
+    @Prop()
+    public model!: TweetItem;
 
-        get dateTime() {
-            return dayjs.unix(this.model.time).format('DD MMM YY, hh:mm');
-        }
-
-        get message() {
-            return linkifyHtml(this.model.text, {
-                defaultProtocol: 'https',
-                className: 'twit__link',
-            });
-        }
+    get dateTime() {
+      return dayjs.unix(this.model.time).format('DD MMM YY, hh:mm');
     }
 
-    export interface TwitItem {
-        name: string;
-        twitterHandle: string;
-        avatar: string;
-        text: string;
-        time: number;
+    get message() {
+      return linkifyHtml(this.model.text, {
+        defaultProtocol: 'https',
+        className: 'tweet__link',
+      });
     }
+  }
+
+  export interface TweetItem {
+    name: string;
+    twitterHandle: string;
+    avatar: string;
+    text: string;
+    time: number;
+  }
 </script>
 <style scoped lang="scss">
     @import '../assets/colors';
     @import '../assets/fonts';
     @import '../assets/media';
 
-    .twit {
+    .tweet {
         display: grid;
         grid-template-columns: auto 1fr;
         grid-column-gap: 1rem;
@@ -96,7 +96,7 @@
 <style lang="scss">
     @import '../assets/colors';
 
-    .twit__link {
+    .tweet__link {
         color: $brand;
         text-decoration: none;
     }

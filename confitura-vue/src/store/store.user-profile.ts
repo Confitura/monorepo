@@ -16,15 +16,12 @@ export const userModule: Module<StoreUserProfile, RootState> = {
   actions: {
     [LOAD_CURRENT_PROFILE]({ commit, rootState, rootGetters }) {
       if (rootState.authentication) {
-        return axios.get('/api/users/' + rootGetters.user.jti, {
-          headers: { Authorization: `Bearer ${rootState.authentication.token}` },
-        })
+        return axios.get('/api/users/' + rootGetters.user.jti)
           .then((data) => commit(UPDATE_CURRENT_PROFILE, { profile: data.data }));
       }
     },
   },
 };
-
 
 interface StoreUserProfile {
   currentProfile: UserProfile | null;

@@ -39,10 +39,7 @@
     }
 
     public logout() {
-      this.$store.dispatch(LOGOUT)
-        .then(() => {
-          this.$router.push('/');
-        });
+      this.$store.dispatch(LOGOUT);
     }
   }
 

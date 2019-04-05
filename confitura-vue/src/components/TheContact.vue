@@ -6,8 +6,8 @@
         <a class="contact__link" href="mailto:confitura@confitura.pl">confitura@confitura.pl</a>
         <TheSocialLinks class="mobile"/>
       </div>
-      <div class="contact__twit" v-for="twit in tweets" :key="twit.time">
-        <Twit :model="twit"/>
+      <div class="contact__tweet" v-for="tweet in tweets" :key="tweet.time">
+        <Tweet :model="tweet"/>
       </div>
     </div>
   </Box>
@@ -16,22 +16,22 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import Box from './Box.vue';
-import Twit, {TwitItem} from './Twit.vue';
+import Tweet, {TweetItem} from './Tweet.vue';
 import TheSocialLinks from './TheSocialLinks.vue';
 import axios from 'axios';
 
 @Component({
-  components: { Box, Twit, TheSocialLinks },
+  components: { Box, Tweet, TheSocialLinks },
 })
 export default class TheContact extends Vue {
-  public tweets: TwitItem[] = [];
+  public tweets: TweetItem[] = [];
 
   protected mounted() {
     axios
       .get('/api/api/tweets')
-      .then((response: { data: TwitItem[] }) => response.data)
-      .then((tweets: TwitItem[]) => tweets.slice(0, 4))
-      .then((tweets: TwitItem[]) => (this.tweets = tweets));
+      .then((response: { data: TweetItem[] }) => response.data)
+      .then((tweets: TweetItem[]) => tweets.slice(0, 4))
+      .then((tweets: TweetItem[]) => (this.tweets = tweets));
   }
 }
 

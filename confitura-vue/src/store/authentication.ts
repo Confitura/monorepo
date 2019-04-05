@@ -50,6 +50,7 @@ export const authenticationModule: Module<AuthenticationState, RootState> = {
 
     [LOGOUT]({ commit }) {
       commit(TOKEN, { token: null });
+      router.push('/');
     },
   },
 };

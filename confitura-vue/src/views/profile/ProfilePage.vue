@@ -1,14 +1,23 @@
 <template>
     <div class="profile">
+        <PageHeader></PageHeader>
         <Box class="content" color="white">
             <div class="back-office" v-if="profile">
                 <div class="row">
 
                     <div class="col s12 m6 l4">
                         <div class="card">
-                            <div class="card-image">
-                                <img :src="profile.photo" alt="profile picture">
-                                <a class="btn-floating halfway-fab waves-effect waves-light red"><i
+                            <div class="card-image" :key="photoKey">
+                                <div class="photo-container">
+                                    <img :src="profile.photo" alt="profile picture" class="photo-container__img">
+                                    <div class="upload-container">
+                                        <button class="btn waves-effect waves-light upload-button" @click="showUploadDialog()">Upload new
+                                            photo
+                                        </button>
+                                        <input class="upload-input" type="file" ref="file" v-on:change="uploadPhoto()" required>
+                                    </div>
+                                </div>
+                                <a class="btn-floating halfway-fab waves-effect waves-light edit-profile-button"><i
                                         @click="editProfile()" class="material-icons">edit</i></a>
                             </div>
                             <div class="card-content">
@@ -78,39 +87,128 @@
 </template>
 
 <script lang="ts">
-import {Component, Vue} from 'vue-property-decorator';
-import {LOAD_CURRENT_PROFILE} from '@/store/store.user-profile';
-import Box from '@/components/Box.vue';
-import TheContact from '@/components/TheContact.vue';
-import { UserProfile, EmbeddedPresentations, Presentation } from '@/types';
-import axios from 'axios';
+  import { Component, Vue } from 'vue-property-decorator';
+  import { LOAD_CURRENT_PROFILE } from '@/store/store.user-profile';
+  import Box from '@/components/Box.vue';
+  import TheContact from '@/components/TheContact.vue';
+  import { EmbeddedPresentations, Presentation, UserProfile } from '@/types';
+  import axios, { AxiosError } from 'axios';
+  import PageHeader from '@/components/PageHeader.vue';
+  import Toasted from 'vue-toasted';
 
+  Vue.use(Toasted);
 
-@Component({
-  components: {Box, TheContact},
-})
-export default class ProfilePage extends Vue {
-  public profile: UserProfile | null = null;
-  public presentations: Presentation[] = [];
+  @Component({
+    components: { PageHeader, Box, TheContact },
+  })
+  export default class ProfilePage extends Vue {
+    public $refs!: Vue['$refs'] & {
+      file: {
+        click: () => void,
+        files: File[],
+      },
+    };
+    public profile: UserProfile | null = null;
+    public presentations: Presentation[] = [];
+    public photoKey = 0;
 
-  public mounted() {
-    this.$store.dispatch(LOAD_CURRENT_PROFILE)
-      .then(() => {
-        this.profile = this.$store.state.userProfile.currentProfile;
-      })
-      .then(() => axios.get<EmbeddedPresentations>(`/api/users/${this.profile!.id}/presentations`))
-      .then((response) => this.presentations = response.data._embedded.presentations);
+    public mounted() {
+      this.$store.dispatch(LOAD_CURRENT_PROFILE)
+        .then(() => {
+          this.profile = this.$store.state.userProfile.currentProfile;
+        })
+        .then(() => axios.get<EmbeddedPresentations>(`/api/users/${this.profile!.id}/presentations`))
+        .then((response) => this.presentations = response.data._embedded.presentations);
+    }
+
+    public editProfile() {
+      this.$router.push('/register');
+    }
+
+    public showUploadDialog() {
+      this.$refs.file.click();
+    }
+
+    public uploadPhoto() {
+      const { files } = this.$refs.file;
+      const photo = files[0];
+      if (photo !== null) {
+        const formData = new FormData();
+        formData.append('file', photo);
+        return axios
+          .post(`/api/resources/${this.profile!.id}`, formData)
+          .then(() => this.photoKey += 1)
+          .catch((error: AxiosError) => {
+            let message = 'Ups... Something went wrong...';
+            if (error.response!.status === 413) {
+              message = 'Uploaded photo is too large!';
+            }
+            this.$toasted.error(message, { duration: 3000, className: 'error', fullWidth: true });
+          });
+      } else {
+        throw new Error('Something went wrong');
+      }
+    }
+
   }
-
-  public editProfile() {
-    this.$router.push('/register');
-  }
-
-}
 </script>
 
 <style lang="scss" scoped>
+    @import "../../assets/colors";
+
+    .edit-profile-button {
+        background-color: $brand;
+    }
+
+    .photo-container {
+        display: flex;
+        width: 400px;
+        height: 400px;
+        overflow: hidden;
+        margin: auto;
+
+        &__img {
+            width: 100%;
+            object-fit: cover;
+            height: 100%;
+        }
+    }
+
+    .upload-button {
+        opacity: 0;
+
+        &, &:hover, &:focus {
+            background-color: $brand;
+        }
+    }
+
+    .upload-input {
+        display: none;
+    }
+
+
+    .upload-container {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &:hover .upload-button {
+            opacity: 0.7;
+        }
+    }
+
     .about-icon {
         margin-right: 1em;
     }
+</style>
+<style lang="scss">
+    .toasted.error {
+        font-size: 1rem;
+    }
+
 </style>

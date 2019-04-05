@@ -28,33 +28,34 @@
 </template>
 
 <script lang="ts">
-import {Component, Vue} from 'vue-property-decorator';
+  import { Component, Vue } from 'vue-property-decorator';
   import Box from '@/components/Box.vue';
   import PageHeader from '@/components/PageHeader.vue';
   import TheContact from '@/components/TheContact.vue';
-  import {LOAD_PARTNER_BY_ID, Partner} from '@/types';
+  import { LOAD_PARTNER_BY_ID, Partner } from '@/types';
   import showdown from 'showdown';
 
 
   @Component({
-  components: { PageHeader, Box, TheContact },
-})
-export default class PartnerPage extends Vue {
-  public partner: Partner = { name: '', description: '', id: '', logo: '', type: '', www: '' };
-  private converter = new showdown.Converter();
+    components: { PageHeader, Box, TheContact },
+  })
+  export default class PartnerPage extends Vue {
+    public partner: Partner = { name: '', description: '', id: '', logo: '', type: '', www: '' };
+    private converter = new showdown.Converter();
 
-  private mounted() {
-    window.scrollTo(0, 0);
-    this.$store.dispatch(LOAD_PARTNER_BY_ID, this.$route.params.id)
-      .then((partner) => {
-        this.partner = partner;
-      });
-  }
+    private mounted() {
+      window.scrollTo(0, 0);
+      const { id } = this.$route.params;
+      this.$store.dispatch(LOAD_PARTNER_BY_ID, id)
+        .then((partner) => {
+          this.partner = partner;
+        });
+    }
 
-  public get description() {
-    return this.converter.makeHtml(this.partner.description);
+    public get description() {
+      return this.converter.makeHtml(this.partner.description);
+    }
   }
-}
 </script>
 
 

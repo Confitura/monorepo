@@ -3,6 +3,7 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import 'intersection-observer/intersection-observer';
+import '@/interceptors';
 
 Vue.config.productionTip = false;
 

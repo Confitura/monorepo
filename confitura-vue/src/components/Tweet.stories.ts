@@ -15,7 +15,7 @@ storiesOf('MyButton', module)
         };
       },
 
-      template: `<Twit :model="item"></Twit>`,
+      template: `<Tweet :model="item"></Tweet>`,
     }),
     {
       backgrounds: [{

@@ -3,10 +3,10 @@ import { configure } from '@storybook/vue';
 import Vue from 'vue';
 import Vuex from 'vuex'; // Vue plugins
 
-import Twit from '../src/components/Twit.vue';
+import Tweet from '../src/components/Tweet.vue';
 import '../src/styles.scss';
 Vue.use(Vuex);
-Vue.component('Twit', Twit);
+Vue.component('Tweet', Tweet);
 
 
 function loadStories() {
