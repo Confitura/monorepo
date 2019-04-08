@@ -1,56 +1,58 @@
 <template xmlns:slot="http://www.w3.org/1999/xhtml">
     <header class="page-header__container">
-        <div class="page-header">
+        <div class="page-header" :class="{'page-header--small': small}">
             <h1 class="page-title">
                 <template v-if="title">{{title}}</template>
                 <slot name="title"></slot>
             </h1>
-            <slot>
+            <slot v-if="!small">
                 <img class="page-image" src="../assets/planety_faq.svg" alt="planets">
             </slot>
         </div>
     </header>
 </template>
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
-import { CHANGE_HEADER_THEME } from '@/types';
+  import { Component, Prop, Vue } from 'vue-property-decorator';
+  import { CHANGE_HEADER_THEME } from '@/types';
 
-@Component({
-  components: {},
-})
-export default class PageHeader extends Vue {
-  @Prop(String)
-  public title?: string;
+  @Component({
+    components: {},
+  })
+  export default class PageHeader extends Vue {
+    @Prop(String)
+    public title?: string;
+    @Prop({ type: Boolean, default: false })
+    public small?: boolean;
 
-  private threshold: number[] = [];
+    private threshold: number[] = [];
 
-  constructor() {
-    super();
-    for (let i = 0; i <= 1; i += 0.01) {
-      this.threshold.push(i);
-    }
-  }
-
-  public mounted(): void {
-    const options = {
-      threshold: this.threshold,
-    };
-
-    const callback: IntersectionObserverCallback = (entries) => {
-      const [entry] = entries;
-      if (entry.isIntersecting) {
-        if (entry.boundingClientRect.top < -100) {
-          this.$store.commit(CHANGE_HEADER_THEME, { color: 'white' });
-        } else {
-          this.$store.commit(CHANGE_HEADER_THEME, { color: 'default' });
-        }
+    constructor() {
+      super();
+      for (let i = 0; i <= 1; i += 0.01) {
+        this.threshold.push(i);
       }
-    };
-    const observer = new IntersectionObserver(callback, options);
-    observer.observe(this.$el);
-  }
+    }
 
-}
+    public mounted(): void {
+      const options = {
+        threshold: this.threshold,
+      };
+
+      const callback: IntersectionObserverCallback = (entries) => {
+        const [entry] = entries;
+        if (entry.isIntersecting) {
+          if (entry.boundingClientRect.top < -100) {
+            this.$store.commit(CHANGE_HEADER_THEME, { color: 'white' });
+          } else {
+            this.$store.commit(CHANGE_HEADER_THEME, { color: 'default' });
+          }
+        }
+      };
+      const observer = new IntersectionObserver(callback, options);
+      observer.observe(this.$el);
+    }
+
+  }
 </script>
 <style lang="scss" scoped>
     @import "../assets/colors";
@@ -62,6 +64,13 @@ export default class PageHeader extends Vue {
         width: 100%;
         background-color: #000000;
         background-image: url('../assets/stars.png');
+    }
+
+    .page-header.page-header--small {
+        height: 150px;
+        @include md() {
+            height: 250px;
+        }
     }
 
     .page-header {
@@ -87,7 +96,7 @@ export default class PageHeader extends Vue {
             font-family: $font-bold;
             font-weight: bold;
             max-width: 400px;
-            @include md(){
+            @include md() {
                 font-size: 2.3rem;
             }
         }

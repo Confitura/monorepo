@@ -7,8 +7,9 @@ import Partners from '@/views/Partners.vue';
 import PartnerPage from '@/views/PartnerPage.vue';
 import Login from '@/views/Login.vue';
 import RegisterPage from '@/views/profile/RegisterPage.vue';
-import ProfilePage from '@/views/profile/ProfilePage.vue';
 import store from './store';
+import ProfilePage from '@/views/profile/ProfilePage.vue';
+import PresentationForm from '@/views/profile/PresentationForm.vue';
 
 Vue.use(Router);
 Vue.use(VueScrollTo, {
@@ -61,6 +62,11 @@ const router = new Router({
       name: 'profile',
       component: ProfilePage,
     },
+    {
+      path: '/presentation/:id?',
+      name: 'presentation',
+      component: PresentationForm,
+    },
   ],
   scrollBehavior(to, from, savedPosition) {
     if (to.hash) {
@@ -71,10 +77,9 @@ const router = new Router({
 });
 router.beforeEach((to, from, next) => {
   const isSessionActive = store.getters.isLogin;
-  const accessingProtectedResource = ['/register', '/profile'].includes(to.path);
+  const accessingProtectedResource = ['/register', '/profile', '/presentation'].includes(to.path);
   if (accessingProtectedResource && !isSessionActive) {
-    // next('login');
-    next();
+    next('login');
   } else {
     next();
   }

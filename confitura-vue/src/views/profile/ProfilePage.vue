@@ -1,6 +1,6 @@
 <template>
     <div class="profile">
-        <PageHeader></PageHeader>
+        <PageHeader :small="true" title="My Profile"></PageHeader>
         <Box class="content" color="white">
             <div class="back-office" v-if="profile">
                 <div class="row">
@@ -17,8 +17,6 @@
                                         <input class="upload-input" type="file" ref="file" v-on:change="uploadPhoto()" required>
                                     </div>
                                 </div>
-                                <a class="btn-floating halfway-fab waves-effect waves-light edit-profile-button"><i
-                                        @click="editProfile()" class="material-icons">edit</i></a>
                             </div>
                             <div class="card-content">
                                     <span class="card-title">
@@ -34,7 +32,8 @@
 
                             </div>
                             <div class="card-action">
-                                <a href="#">New presentation</a>
+                                <router-link to="register">Edit profile</router-link>
+                                <router-link to="presentation">Add presentation</router-link>
                             </div>
                             <div class="card-content">
                                 {{profile.bio}}
@@ -57,24 +56,24 @@
                     </div>
 
                     <div class="col s12 m6 l8">
-                        <div class="card" v-for="pres in presentations">
+                        <div class="card" v-for="presentation in presentations">
                             <div class="card-content">
                                 <span class="card-title">
-                                    {{pres.title}}
-                                    <span class="small">({{pres.language}}, {{pres.level}})</span>
+                                    {{presentation.title}}
+                                    <span class="small">({{presentation.language}}, {{presentation.level}})</span>
                                       <span :data-badge-caption="tag.name" class="new badge"
-                                            v-for="tag in pres.tags"></span>
+                                            v-for="tag in presentation.tags"></span>
                                 </span>
+                                <label>Full description</label>
+                                <div class="description">{{presentation.description}}</div>
 
-
-                                full description:
-                                <blockquote>{{pres.description}}</blockquote>
-                                short description:
-                                <blockquote>{{pres.shortDescription}}</blockquote>
+                                <label>Short description</label>
+                                <div class="description">{{presentation.shortDescription}}</div>
 
                             </div>
                             <div class="card-action">
-                                <a href="#">edit</a>
+                                <router-link :to="{name: 'presentation', params:{id:presentation.id}}">edit</router-link>
+                                <a href="#" @click="remove(presentation, $event)">delete</a>
                             </div>
                         </div>
 
@@ -91,7 +90,7 @@
   import { LOAD_CURRENT_PROFILE } from '@/store/store.user-profile';
   import Box from '@/components/Box.vue';
   import TheContact from '@/components/TheContact.vue';
-  import { EmbeddedPresentations, Presentation, UserProfile } from '@/types';
+  import { EmbeddedPresentations, Presentation, REMOVE_PRESENTATION, UserProfile } from '@/types';
   import axios, { AxiosError } from 'axios';
   import PageHeader from '@/components/PageHeader.vue';
   import Toasted from 'vue-toasted';
@@ -121,9 +120,6 @@
         .then((response) => this.presentations = response.data._embedded.presentations);
     }
 
-    public editProfile() {
-      this.$router.push('/register');
-    }
 
     public showUploadDialog() {
       this.$refs.file.click();
@@ -150,6 +146,12 @@
       }
     }
 
+    public remove(presentation: Presentation, event: Event) {
+      event.preventDefault();
+      this.$store.dispatch(REMOVE_PRESENTATION, presentation.id)
+        .then(() => this.$delete(this.presentations, this.presentations.indexOf(presentation)));
+    }
+
   }
 </script>
 
@@ -162,8 +164,8 @@
 
     .photo-container {
         display: flex;
-        width: 400px;
-        height: 400px;
+        width: 250px;
+        height: 250px;
         overflow: hidden;
         margin: auto;
 
@@ -171,6 +173,7 @@
             width: 100%;
             object-fit: cover;
             height: 100%;
+            padding: 0.5rem;
         }
     }
 
@@ -204,6 +207,10 @@
 
     .about-icon {
         margin-right: 1em;
+    }
+    .description{
+margin-bottom: 1rem;
+        padding-left: 1rem;
     }
 </style>
 <style lang="scss">

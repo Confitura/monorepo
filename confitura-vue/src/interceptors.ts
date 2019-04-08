@@ -3,7 +3,9 @@ import store from '@/store';
 import { LOGOUT } from '@/types';
 
 axios.interceptors.request.use((config) => {
-  config.headers.Authorization = `Bearer ${store!.state!.authentication!.token}`;
+  if (store!.state!.authentication!.token && store!.state!.authentication!.token !== 'null') {
+    config.headers.Authorization = `Bearer ${store!.state!.authentication!.token}`;
+  }
   return config;
 }, (error) => {
   return Promise.reject(error);

@@ -15,7 +15,7 @@
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="email" type="email" class=""
+                                <input id="email" type="email"
                                        v-model="profile.email" required>
                                 <label for="email">E-mail</label>
                                 <span class="errors" v-for="error in errors.email">{{error}}</span>
@@ -29,6 +29,27 @@
                                 </textarea>
                                 <label for="Bio">Bio</label>
                                 <span class="errors" v-for="error in errors.bio">{{error}}</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input id="twitter" type="text"
+                                       v-model="profile.twitter">
+                                <label for="twitter">twitter</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input id="github" type="text"
+                                       v-model="profile.github">
+                                <label for="github">github</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input id="www" type="text"
+                                       v-model="profile.www">
+                                <label for="www">www</label>
                             </div>
                         </div>
 
@@ -82,9 +103,8 @@
       bio: Element,
     };
     public profile: UserProfile | null = {};
-    public photo: File | null = null;
     public errors: RegisterErrors = {};
-    public activeUser!: User;
+    public activeUser: User | null = null;
     // tslint:disable
     private emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -119,27 +139,24 @@
     }
 
     private validate() {
-      this.errors = {};
+      const errors: RegisterErrors = {};
       let valid = true;
       if (this.profile === null) {
         return;
       }
-      if (this.profile.email && !this.validEmail(this.profile.email)) {
-        this.errors.email = ['invalid email'];
-        valid = false;
-      }
-      if (!this.photo) {
-        this.errors.photo = ['Photo is required'];
+      if (!this.profile.email || !this.validEmail(this.profile.email)) {
+        errors.email = ['invalid email'];
         valid = false;
       }
       if (!this.profile.name) {
-        this.errors.name = ['Name is required'];
+        errors.name = ['Name is required'];
         valid = false;
       }
       if (!this.profile.privacyPolicyAccepted) {
-        this.errors.privacyPolicyAccepted = ['Agreeing to our policy is required'];
+        errors.privacyPolicyAccepted = ['Agreeing to our policy is required'];
         valid = false;
       }
+      this.errors = errors;
       return valid;
     }
 
@@ -156,7 +173,6 @@
   interface RegisterErrors {
     bio?: string[];
     email?: string[];
-    photo?: string[];
     name?: string[];
     privacyPolicyAccepted?: string[];
     form?: string[];

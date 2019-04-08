@@ -1,8 +1,18 @@
 import Vue from 'vue';
 import Vuex, { StoreOptions } from 'vuex';
-import { CHANGE_HEADER_THEME, LOAD_PARTNER_BY_ID, LOAD_PARTNERS, Partner, RootState, WINDOW_RESIZED } from '@/types';
+import {
+  CHANGE_HEADER_THEME,
+  LOAD_PARTNER_BY_ID,
+  LOAD_PARTNERS,
+  Partner,
+  REMOVE_PRESENTATION,
+  RootState,
+  WINDOW_RESIZED,
+} from '@/types';
 import { userModule } from './store.user-profile';
 import { authenticationModule } from './authentication';
+import axios from 'axios';
+
 
 Vue.use(Vuex);
 const storeOptions: StoreOptions<RootState> = {
@@ -42,6 +52,9 @@ const storeOptions: StoreOptions<RootState> = {
 
   },
   actions: {
+    [REMOVE_PRESENTATION]({}, id: string) {
+      return axios.delete(`/api/presentations/${id}`);
+    },
     [LOAD_PARTNERS]({ state }) {
       // tslint:disable
       state.partners = [
@@ -123,7 +136,7 @@ At Dynatrace Gdansk Lab, we design, create and develop a best-in-class product t
           www: 'https://jobs.dynatrace.pl/',
           type: 'silver',
           logo: require('../assets/partners/dynatrace.svg'),
-        },{
+        }, {
           id: 'eworkgroup',
           description: `Ework Group jest wiodącą siecią niezależnych konsultantów i liderem na rynku skandynawskim. Działamy w sektorach IT, telekomunikacji, nowych technologii oraz rozwoju biznesu. Współpracujemy z ponad 9000 konsultantów świadczących usługi dla ponad 170 klientów. 
 

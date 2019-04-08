@@ -16,6 +16,7 @@ export const LOAD_PARTNER_BY_ID = 'LOAD_PARTNER_BY_ID';
 export const TOKEN = 'TOKEN';
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
+export const REMOVE_PRESENTATION = 'REMOVE_PRESENTATION';
 
 export interface User {
   sub: string;
@@ -56,15 +57,24 @@ export interface EmbeddedPresentations {
   _embedded: { presentations: Presentation[] };
 }
 
+export interface EmbeddedTags {
+  _embedded: { tags: Tag[] };
+}
+
 export interface Presentation {
-  id: string;
+  id?: string;
   title: string;
   language: string;
   level: string;
-  speaker: User;
-  cospeakers: User[];
-  tags: string;
+  speaker?: User;
+  cospeakers?: User[];
+  tags: Tag[];
   shortDescription: string;
   description: string;
-  status: string;
+  status?: string;
+}
+
+export interface Tag {
+  id: string;
+  name: string;
 }
