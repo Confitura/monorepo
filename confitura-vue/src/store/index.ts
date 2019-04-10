@@ -146,6 +146,14 @@ Akcje Ework są notowane na giełdzie NASDAQ OMX w Sztokholmie. W Polsce istniej
           type: 'silver',
           logo: require('../assets/partners/ework_group.svg'),
           orientation: 'horizontal',
+        }, {
+          id: 'nfj',
+          description: `[No Fluff Jobs](https://nofluffjobs.com/) to najpopularniejszy portal z ogłoszeniami IT w Polsce. U nas każde ogłoszenie jest aktualne, zawiera widełki płacowe, a także wszystkie szczegóły na temat danego stanowiska, przedstawione w prosty i czytelny sposób. Już od 3 lat zmieniamy standardy rekrutacji IT w naszym kraju, przekonując pracodawców do transparentności i uczciwości wobec potencjalnych pracowników.`,
+          name: 'No Fluff Jobs',
+          www: 'https://www.nofluffjobs.com ',
+          type: 'silver',
+          logo: require('../assets/partners/nfj.svg'),
+          orientation: 'horizontal',
         },
       ];
     },
