@@ -10,6 +10,7 @@ import RegisterPage from '@/views/profile/RegisterPage.vue';
 import store from './store';
 import ProfilePage from '@/views/profile/ProfilePage.vue';
 import PresentationForm from '@/views/profile/PresentationForm.vue';
+import PrivacyPolicy from '@/views/PrivacyPolicy.vue';
 
 Vue.use(Router);
 Vue.use(VueScrollTo, {
@@ -66,6 +67,11 @@ const router = new Router({
       path: '/presentation/:id?',
       name: 'presentation',
       component: PresentationForm,
+    },
+    {
+      path: '/privacy-policy',
+      name: 'privacy-policy',
+      component: PrivacyPolicy,
     },
   ],
   scrollBehavior(to, from, savedPosition) {
