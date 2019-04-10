@@ -66,8 +66,7 @@ export interface Presentation {
   title: string;
   language: string;
   level: string;
-  speaker?: User;
-  cospeakers?: User[];
+  speakers?: UserProfile[];
   tags: Tag[];
   shortDescription: string;
   description: string;

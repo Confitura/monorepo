@@ -1,6 +1,7 @@
 <template>
     <div class="login">
-        <Box class="content" color="white">
+        <PageHeader :small="true" title="Call 4 Papers"></PageHeader>
+        <Box class="content" color="white" :full="false">
             <div class="login-container">
                 <div v-for="option in options" class="login-with">
                     <h2 class="option-header">{{option}}</h2>
@@ -24,9 +25,10 @@ import { Component, Vue } from 'vue-property-decorator';
 import Box from '@/components/Box.vue';
 import TheContact from '@/components/TheContact.vue';
 import { LOGIN } from '@/types';
+import PageHeader from '@/components/PageHeader.vue';
 
 @Component({
-  components: { Box, TheContact },
+  components: { Box, TheContact, PageHeader },
 })
 export default class Login extends Vue {
   public options = ['Sign in', 'Sign up'];
