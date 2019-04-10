@@ -58,6 +58,8 @@ public class Presentation {
 
     private String status;
 
+    private boolean workshop = false;
+
     boolean isOwnedBy(String email) {
         return speaker.getEmail().equalsIgnoreCase(email);
     }
