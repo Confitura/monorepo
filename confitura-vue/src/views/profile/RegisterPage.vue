@@ -1,5 +1,6 @@
 <template>
     <div class="profile">
+        <PageHeader title="My Profile" :small="true"></PageHeader>
         <Box class="content " color="white" :full="false">
 
             <div class="back-office" v-if="profile && activeUser">
@@ -58,7 +59,7 @@
                                 <label>
                                     <input type="checkbox" v-model="profile.privacyPolicyAccepted"
                                            id="privacyPolicyAccepted" required>
-                                    <span>I accept the privacy policy</span>
+                                    <span>I accept the <router-link to="privacy-policy">privacy policy</router-link></span>
                                 </label>
                                 <div class="errors" v-for="error in errors.privacyPolicyAccepted">{{error}}</div>
 
@@ -71,7 +72,8 @@
                         <div>
                             <button class="btn waves-effect waves-light button button--save" type="submit" name="action">Save
                             </button>
-                            <button v-if="activeUser.isNew" class="btn waves-effect waves-light button button--cancel" type="button" name="action">Cancel
+                            <button v-if="activeUser.isNew" class="btn waves-effect waves-light button button--cancel" type="button"
+                                    name="action">Cancel
                             </button>
                         </div>
                     </form>
@@ -91,9 +93,10 @@
   import { User, UserProfile } from '@/types';
   import M from 'materialize-css';
   import axios from 'axios';
+  import PageHeader from '@/components/PageHeader.vue';
 
   @Component({
-    components: { Box, TheContact },
+    components: { PageHeader, Box, TheContact },
   })
   export default class RegisterPage extends Vue {
     public $refs!: Vue['$refs'] & {
@@ -116,7 +119,7 @@
       this.$store.dispatch(LOAD_CURRENT_PROFILE)
         .then(() => {
           this.profile = this.$store.state.userProfile.currentProfile;
-          M.textareaAutoResize(this.$refs.bio);
+          setTimeout(() => M.textareaAutoResize(this.$refs.bio));
         });
     }
 

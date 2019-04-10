@@ -20,6 +20,7 @@
   import TheContact from '@/components/TheContact.vue';
   import showdown from 'showdown';
   import axios from 'axios';
+  import { Page } from '@/types';
 
   @Component({
     components: { PageHeader, Box, TheContact },
@@ -36,9 +37,6 @@
     }
   }
 
-  interface Page {
-    content: string;
-  }
 </script>
 
 <style lang="scss" scoped>

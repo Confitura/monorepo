@@ -4,6 +4,7 @@
     <div class="contact__info">
       <div class="contact__mail">
         <a class="contact__link" href="mailto:confitura@confitura.pl">confitura@confitura.pl</a>
+        <router-link to="privacy-policy" class="contact__privacy">Privacy policy</router-link>
         <TheSocialLinks class="mobile"/>
       </div>
       <div class="contact__tweet" v-for="tweet in tweets" :key="tweet.time">
@@ -64,10 +65,21 @@ export default class TheContact extends Vue {
 
 .contact__mail {
   grid-row: 1/ -3;
+  display: flex;
+  flex-direction: column;
 }
 
 .contact__link {
   font-size: 1.75rem;
+  color: #ffffff;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+.contact__privacy {
+  margin-top: 2rem;
   color: #ffffff;
   text-decoration: none;
 
