@@ -45,7 +45,7 @@ public class PresentationController {
     @PreAuthorize("@security.presentationOwnedByUser(#presentationId) || @security.isAdmin()")
     @GetMapping("/presentations/{presentationId}/cospeakers")
     public ResponseEntity<Resources<User>> getCospeakers(@PathVariable String presentationId) {
-        Set<User> cospeakers = this.repository.findById(presentationId).getCospeakers();
+        Set<User> cospeakers = this.repository.findById(presentationId).getSpeakers();
         return ResponseEntity.ok(new Resources<>(cospeakers));
     }
 
@@ -53,7 +53,10 @@ public class PresentationController {
     @DeleteMapping("/presentations/{presentationId}/cospeakers/{email:.+}")
     public ResponseEntity<?> removeCospeaker(@PathVariable String presentationId, @PathVariable String email) {
         Presentation presentation = this.repository.findById(presentationId);
-        presentation.setCospeakers(removeCospeakerByEmail(email, presentation.getCospeakers()));
+        if (presentation.getSpeakers().size() == 1) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Presentation needs at least one speaker!");
+        }
+        presentation.setSpeakers(removeCospeakerByEmail(email, presentation.getSpeakers()));
         repository.save(presentation);
         return ResponseEntity.ok().build();
     }
@@ -74,11 +77,11 @@ public class PresentationController {
         if (presentation.hasCospeaker(email)) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("This speaker is already added to this presentation");
         }
-        presentation.getCospeakers().add(user);
+        presentation.getSpeakers().add(user);
         return ResponseEntity.ok(user);
     }
 
-    private Set<User> removeCospeakerByEmail(@PathVariable String email, Set<User> cospeakers) {
+    private Set<User> removeCospeakerByEmail(String email, Set<User> cospeakers) {
         return cospeakers.stream().filter(it -> !it.getEmail().equalsIgnoreCase(email)).collect(Collectors.toSet());
     }
 

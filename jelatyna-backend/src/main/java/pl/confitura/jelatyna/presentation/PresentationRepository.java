@@ -39,7 +39,7 @@ public interface PresentationRepository extends Repository<Presentation, String>
     @RestResource(exported = false)
     Long countAccepted();
 
-    @Query("FROM Presentation p JOIN p.cospeakers co WHERE p.status ='accepted' and co = ?1")
+    @Query("FROM Presentation p JOIN p.speakers co WHERE p.status ='accepted' and co = ?1")
     @RestResource(exported = false)
     List<Presentation> findAcceptedWithCoSpeaker(User user);
 }

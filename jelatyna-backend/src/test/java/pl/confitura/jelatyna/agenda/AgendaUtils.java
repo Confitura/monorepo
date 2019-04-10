@@ -36,7 +36,7 @@ public class AgendaUtils {
                 .stream(iterableAgenda.spliterator(), false)
                 .peek(it->it.getPresentation().getTitle())
                 .peek(it->it.getPresentation().getTags().size())
-                .peek(it->it.getPresentation().getCospeakers().size())
+                .peek(it->it.getPresentation().getSpeakers().size())
                 .distinct()
                 .collect(Collectors.toList());
 

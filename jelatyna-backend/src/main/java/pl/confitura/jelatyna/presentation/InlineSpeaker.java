@@ -23,9 +23,7 @@ interface InlineSpeaker {
 
     Set<Tag> getTags();
 
-    User getSpeaker();
-
-    List<User> getCospeakers();
+    Set<User> getSpeakers();
 
     String getStatus();
 

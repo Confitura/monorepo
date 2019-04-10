@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:h2:~/jelatyna
+    url: jdbc:h2:mem:jelatyna
     username: confitura
     password: confitura
 

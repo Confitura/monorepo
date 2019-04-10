@@ -31,10 +31,7 @@ public interface InlineAgenda {
 
     Presentation getPresentation();
 
-    @Value("#{target.getSpeaker()}")
-    PublicUser getSpeaker();
-
-    @Value("#{target.getCospeakers()}")
-    Set<PublicUser> getCospeakers();
+    @Value("#{target.getSpeakers()}")
+    Set<PublicUser> getSpeaker();
 
 }

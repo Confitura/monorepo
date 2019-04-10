@@ -3,6 +3,7 @@ package pl.confitura.jelatyna.infrastructure.security;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
 import pl.confitura.jelatyna.user.User;
 import pl.confitura.jelatyna.user.UserRepository;
@@ -29,8 +30,9 @@ public class Security {
     }
 
     public boolean presentationOwnedByUser(String presentationId) {
-        String ownerId = presentationRepository.findById(presentationId).getSpeaker().getId();
-        return ownerId.equals(getUserId());
+        Presentation presentation = presentationRepository.findById(presentationId);
+        return presentation.getSpeakers().stream()
+                .anyMatch(owner -> owner.getId().equals(getUserId()));
     }
 
     public boolean isAdmin() {

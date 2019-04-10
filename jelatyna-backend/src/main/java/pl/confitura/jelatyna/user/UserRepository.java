@@ -2,6 +2,7 @@ package pl.confitura.jelatyna.user;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
@@ -46,10 +47,10 @@ public interface UserRepository extends Repository<User, String> {
     Iterable<User> find(@Param("query") String query);
 
     @RestResource(exported = false)
-    @Query("Select p.speaker, co FROM Presentation p  " +
-            "LEFT JOIN p.cospeakers co " +
+    @Query("Select co FROM Presentation p  " +
+            "LEFT JOIN p.speakers co " +
             "WHERE p.status ='accepted'")
-    Iterable<Object[]> findAllAccepted();
+    Set<User> findAllAccepted();
 
     @RestResource(exported = false)
     User findByEmail(String email);

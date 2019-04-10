@@ -57,19 +57,12 @@ public class AgendaEntry {
         return timeSlot.getDisplayOrder();
     }
 
-    public PublicUser getSpeaker() {
-        if (presentation == null) {
-            return null;
-        } else {
-            return new PublicUser(presentation.getSpeaker());
-        }
-    }
 
-    public Set<PublicUser> getCospeakers() {
-        if (presentation == null || presentation.getCospeakers().isEmpty()) {
+    public Set<PublicUser> getSpeakers() {
+        if (presentation == null || presentation.getSpeakers().isEmpty()) {
             return Collections.emptySet();
         } else {
-            return presentation.getCospeakers().stream()
+            return presentation.getSpeakers().stream()
                     .map(PublicUser::new)
                     .collect(toSet());
         }

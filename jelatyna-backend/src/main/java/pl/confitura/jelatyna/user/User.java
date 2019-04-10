@@ -49,7 +49,7 @@ public class User extends AuditedEntity {
 
     private Boolean privacyPolicyAccepted = false;
 
-    @OneToMany(mappedBy = "speaker")
+    @ManyToMany(mappedBy = "speakers")
     @JsonIgnore
     private Set<Presentation> presentations;
 
@@ -106,10 +106,6 @@ public class User extends AuditedEntity {
     public boolean hasArrived() {
         return isParticipant() && getParticipationData().getArrivalDate() != null;
     }
-
-//    @ManyToMany(mappedBy = "cospeakers")
-//    @JsonIgnore
-//    private Set<Presentation> cospeaking;
 
     interface Edit {
 

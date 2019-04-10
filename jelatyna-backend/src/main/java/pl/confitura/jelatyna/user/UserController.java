@@ -122,16 +122,7 @@ public class UserController {
 
     @GetMapping("/users/search/speakers")
     public ResponseEntity<?> getSpeakers() {
-        Set<Resource<?>> speakers = Streams.stream(repository.findAllAccepted())
-                .flatMap(row -> {
-                    Set<User> users = Sets.newHashSet((User) row[0]);
-                    if (row[1] != null) {
-                        users.add((User) row[1]);
-                    }
-                    return users.stream();
-                })
-                .distinct()
-                .map(PublicUser::new)
+        Set<Resource<?>> speakers = repository.findAllAccepted().stream()
                 .map(speaker -> new Resource<>(speaker))
                 .collect(Collectors.toSet());
         return ResponseEntity.ok(new Resources<>(speakers));

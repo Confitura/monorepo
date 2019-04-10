@@ -1,26 +1,23 @@
 package pl.confitura.jelatyna.presentation;
 
-import java.util.HashSet;
-import java.util.Set;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import lombok.experimental.Accessors;
+import org.hibernate.annotations.GenericGenerator;
+import pl.confitura.jelatyna.presentation.rating.Rate;
+import pl.confitura.jelatyna.user.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-
-import lombok.experimental.Accessors;
-import org.hibernate.annotations.GenericGenerator;
-import org.springframework.web.bind.annotation.PathVariable;
-
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-import pl.confitura.jelatyna.presentation.rating.Rate;
-import pl.confitura.jelatyna.user.User;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
-@ToString(exclude = {"speaker", "ratings"})
-@EqualsAndHashCode(exclude = {"speaker", "ratings"})
+@ToString(exclude = {"speakers", "ratings"})
+@EqualsAndHashCode(exclude = {"speakers", "ratings"})
 @Accessors(chain = true)
 public class Presentation {
 
@@ -46,12 +43,10 @@ public class Presentation {
     private String language;
     @ManyToMany
     private Set<Tag> tags = new HashSet<>();
-    @ManyToOne(optional = false)
-    @NotNull
-    private User speaker;
+
     @ManyToMany
     @NotNull
-    private Set<User> cospeakers = new HashSet<>();
+    private Set<User> speakers = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY)
     private Set<Rate> ratings = new HashSet<>();
@@ -61,11 +56,11 @@ public class Presentation {
     private boolean workshop = false;
 
     boolean isOwnedBy(String email) {
-        return speaker.getEmail().equalsIgnoreCase(email);
+        return speakers.stream().anyMatch(it -> it.getEmail().equalsIgnoreCase(email));
     }
 
-    boolean hasCospeaker(@PathVariable String email) {
-        return getCospeakers().stream().anyMatch(it -> it.getEmail().equalsIgnoreCase(email));
+    boolean hasCospeaker(String email) {
+        return speakers.stream().anyMatch(it -> it.getEmail().equalsIgnoreCase(email));
     }
 
     public boolean isAccepted() {
@@ -82,5 +77,10 @@ public class Presentation {
 
     public boolean isNew() {
         return id == null;
+    }
+
+    public Presentation setSpeaker(User speaker) {
+        speakers.add(speaker);
+        return this;
     }
 }
