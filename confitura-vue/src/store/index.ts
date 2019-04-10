@@ -35,6 +35,7 @@ const storeOptions: StoreOptions<RootState> = {
     isXl: (state) => state.windowWidth >= 1200,
     platinum: ({ partners }): Partner[] => partners.filter((partner) => partner.type === 'platinum'),
     silver: ({ partners }): Partner[] => partners.filter((partner) => partner.type === 'silver'),
+    gold: ({ partners }): Partner[] => partners.filter((partner) => partner.type === 'gold'),
   },
   mutations: {
     [CHANGE_HEADER_THEME](store, theme: { color: string }) {

@@ -123,7 +123,6 @@
         .logos {
             display: flex;
             flex-wrap: wrap;
-            /*flex-direction: column;*/
             /*grid-row-gap: 3rem;*/
             /*grid-column-gap: 1rem;*/
             padding-bottom: 3rem;
