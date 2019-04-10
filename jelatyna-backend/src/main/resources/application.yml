@@ -24,3 +24,6 @@ management.endpoints.web.base-path: /api/actuator
 management.endpoints.web.exposure.include: "*"
 
 #management.endpoint.we
+conference.c4p:
+  start: "2019-01-01T00:00:00.0+02:00[Europe/Warsaw]"
+  end: "2019-01-01T00:00:00.0+02:00[Europe/Warsaw]"

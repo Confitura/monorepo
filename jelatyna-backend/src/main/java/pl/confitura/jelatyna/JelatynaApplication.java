@@ -29,7 +29,8 @@ import pl.confitura.jelatyna.presentation.TagRepository;
 @EnableConfigurationProperties(
         {
                 TwitterConfigurationProperties.class,
-                MailConfigurationProperties.class
+                MailConfigurationProperties.class,
+                ConferenceConfigurationProperties.class
         }
 )
 public class JelatynaApplication {

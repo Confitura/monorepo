@@ -79,4 +79,8 @@ public class Presentation {
             status = STATUS_REPORTED;
         }
     }
+
+    public boolean isNew() {
+        return id == null;
+    }
 }

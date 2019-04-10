@@ -2,6 +2,9 @@ server:
   port: {{port}}
   servlet:
     context-path: /api
+conference.c4p:
+  start: "2019-01-01T00:00:00.0+02:00[Europe/Warsaw]"
+  end: "2019-01-01T00:00:00.0+02:00[Europe/Warsaw]"
 twitter:
   api-key: {{twitter_key}}
   api-secret: {{twitter_secret}}

@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
@@ -27,23 +27,20 @@ import com.google.common.collect.Streams;
 import com.timgroup.jgravatar.Gravatar;
 import com.timgroup.jgravatar.GravatarDefaultImage;
 import com.timgroup.jgravatar.GravatarRating;
+import pl.confitura.jelatyna.ConferenceConfigurationProperties;
 import pl.confitura.jelatyna.infrastructure.security.Security;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
 
+@RequiredArgsConstructor
 @RepositoryRestController
 public class UserController {
 
-    private UserRepository repository;
-    private PresentationRepository presentationRepository;
-    private Security security;
+    private final UserRepository repository;
+    private final PresentationRepository presentationRepository;
+    private final Security security;
+    private final ConferenceConfigurationProperties conferenceConfiguration;
 
-    @Autowired
-    public UserController(UserRepository repository, PresentationRepository presentationRepository, Security security) {
-        this.repository = repository;
-        this.presentationRepository = presentationRepository;
-        this.security = security;
-    }
 
     @PostMapping("/users")
     @PreAuthorize("@security.isOwner(#user.id)")
@@ -109,7 +106,7 @@ public class UserController {
     @PreAuthorize("@security.isOwner(#userId)")
     public ResponseEntity<?> addPresentationToUser(@Valid @RequestBody Presentation presentation,
             @PathVariable String userId) {
-        if (isEmpty(presentation.getId()) && !security.isAdmin()) {
+        if (presentation.isNew() && !canCreatePresentation()) {
             return ResponseEntity.status(UNAUTHORIZED).build();
         }
         User speaker = repository.findById(userId);
@@ -117,6 +114,10 @@ public class UserController {
         retainStatus(presentation);
         Presentation saved = presentationRepository.save(presentation);
         return ResponseEntity.ok(new Resource<>(saved));
+    }
+
+    private boolean canCreatePresentation() {
+        return conferenceConfiguration.getC4p().isEnabled() || security.isAdmin();
     }
 
     @GetMapping("/users/search/speakers")
@@ -137,7 +138,7 @@ public class UserController {
     }
 
     private void retainStatus(Presentation presentation) {
-        if (!isEmpty(presentation.getId())) {
+        if (!presentation.isNew()) {
             Presentation saved = presentationRepository.findById(presentation.getId());
             presentation.setStatus(saved.getStatus());
         }
