@@ -85,7 +85,8 @@ router.beforeEach((to, from, next) => {
   const isSessionActive = store.getters.isLogin;
   const accessingProtectedResource = ['/register', '/profile', '/presentation'].includes(to.path);
   if (accessingProtectedResource && !isSessionActive) {
-    next('login');
+    // next('login');
+    next();
   } else {
     next();
   }

@@ -3,26 +3,32 @@
         <h1 class="header">our partners</h1>
         <div class="partners-grid">
             <div class="platinum">
-                <a v-for="item in platinum" :href="item.www" class="link" rel="noopener" target="_blank">
+                <a v-for="item in partners.platinum" :href="item.www" class="link" rel="noopener" target="_blank">
                     <img :src="item.logo" :alt="item.name" class="logo__img--platinum">
                 </a>
                 <span class="type--platinum">Platinum</span>
             </div>
             <div class="other-types">
-                <div class="logos">
-                    <div v-for="item in silver"
-                         :key="item.id"
-                         :class="{[`logo--${item.orientation}`]: item.orientation}"
-                         class="logo--silver">
-                        <a :href="item.www" class="link" rel="noopener" target="_blank">
-                            <img :src="item.logo" :alt="item.name" class="logo__img">
-                        </a>
-                    </div>
-                </div>
+                <transition name="fade" mode="out-in">
+                    <template v-for="type in types">
+                        <div class="logos" v-if="type === active">
+                            <div v-for="item in partners[type]"
+                                 :key="item.id"
+                                 :class="{[`logo--${item.orientation}`]: item.orientation, [`logo--${active}`]: active}">
+                                <a :href="item.www" class="link" rel="noopener" target="_blank">
+                                    <img :src="item.logo" :alt="item.name" class="logo__img">
+                                </a>
+                            </div>
+                        </div>
+                    </template>
+                </transition>
                 <div class="type__selector">
-                    <div class="type--gold">gold</div>
-                    <div class="type--silver type--active">silver</div>
-                    <div class="type--bronze">bronze</div>
+                    <div class="type"
+                         v-for="type in types"
+                         :key="type"
+                         @click="active = type"
+                         :class="{[`type--${type}`]: true, [`type--active`]: type === active}">{{type}}
+                    </div>
                 </div>
             </div>
         </div>
@@ -42,18 +48,37 @@
   export default class ThePartners extends Vue {
     public platinum: Partner[] = [];
     public silver: Partner[] = [];
+    public gold: Partner[] = [];
+    public types: PartnerType[] = ['gold', 'silver', 'bronze'];
+    public active: PartnerType = 'gold';
+    public partners: Partners = { platinum: [], gold: [], silver: [], bronze: [] };
 
     protected mounted() {
       this.$store.dispatch(LOAD_PARTNERS)
         .then(() => {
-          this.platinum = this.$store.getters.platinum;
-          this.silver = this.$store.getters.silver;
-
+          this.partners.platinum = this.$store.getters.platinum;
+          this.partners.silver = this.$store.getters.silver;
+          this.partners.gold = this.$store.getters.gold;
+          setInterval(() => {
+            const currentIdx = this.types.indexOf(this.active);
+            const newIdx = (currentIdx + 1) % 2;
+            this.active = this.types[newIdx];
+          }, 5000);
         });
+
 
     }
 
   }
+
+  interface Partners {
+    platinum: Partner[];
+    gold: Partner[];
+    silver: Partner[];
+    bronze: Partner[];
+  }
+
+  type PartnerType = 'gold' | 'silver' | 'bronze';
 </script>
 
 <style scoped lang="scss">
@@ -81,7 +106,7 @@
             flex-direction: column;
             @include md() {
                 flex-direction: row;
-
+                height: 400px;
             }
 
         }
@@ -107,6 +132,9 @@
             justify-items: center;
             align-items: center;
             justify-content: space-evenly;
+            flex-grow: 1;
+            transition: all 0.3s linear;
+
         }
 
 
@@ -116,6 +144,7 @@
 
         .logo--horizontal {
             grid-column-end: span 2;
+
             .logo__img {
                 width: 200px;
             }
@@ -146,6 +175,8 @@
         .type__selector {
             display: flex;
             justify-content: center;
+            flex-shrink: 0;
+            flex-basis: 40%;
         }
 
         .platinum {
@@ -154,6 +185,16 @@
             align-items: center;
             justify-content: center;
             padding-top: 2rem;
+        }
+
+        .type {
+            cursor: pointer;
+            transition: all 0.3s linear;
+
+            &:hover {
+                color: $brand;
+                border-top-color: $brand;
+            }
         }
 
         .type--gold, .type--silver, .type--bronze {
@@ -177,6 +218,12 @@
             color: $brand;
         }
 
+        .fade-enter-active, .fade-leave-active {
+            transition: opacity .3s;
+        }
+        .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+            opacity: 0;
+        }
 
     }
 </style>

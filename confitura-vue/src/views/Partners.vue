@@ -41,6 +41,7 @@
         .then(() => {
           this.partners = {
             platinum: this.$store.getters.platinum,
+            gold: this.$store.getters.gold,
             silver: this.$store.getters.silver,
           };
         });
@@ -119,12 +120,18 @@
 
     .logo--silver {
         width: 100px;
+        &.logo--horizontal {
+            width: 200px;
+        }
+    }
+    .logo--gold {
+        width: 150px;
+        &.logo--horizontal {
+            width: 300px;
+        }
     }
 
-    .logo--horizontal {
-        width: 200px;
 
-    }
 
 
 </style>

@@ -154,6 +154,16 @@ Akcje Ework są notowane na giełdzie NASDAQ OMX w Sztokholmie. W Polsce istniej
           type: 'silver',
           logo: require('../assets/partners/nfj.svg'),
           orientation: 'horizontal',
+        },{
+          id: 'viacom',
+          description: `As a part of leading global entertainment company Viacom.tech offers challenging projects for iconic brands like MTV, Nickelodeon, Nick Jr, COMEDY CENTRAL, and Paramount Channel. Focusing on Viacom’s global engineering organization, the Warsaw Software Development Center plays a crucial role in the creation of highly efficient, advanced systems which are implemented by millions of users around the world. Our excellence center in Warsaw builds scalable and efficient systems, serving high volume traffic. We are an Agile and growing team of software engineers who use modern development and deployment technologies (Java 11, Kotlin, Swift, TypeScript, Docker, Kubernetes, clouds).
+ 
+Viacom.Tech is pioneering a new era of data in entertainment with opportunities in mobile application development, artificial intelligence, and data science. Want to become an architect of change and join a team of innovative thought leaders who aim to transform the entertainment industry with technological expertise? Here you can check out our current job openings and learn more about the company: https://viacom.tech/`,
+          name: 'Viacom.Tech',
+          www: 'https://viacom.tech/',
+          type: 'gold',
+          logo: require('../assets/partners/viacom.svg'),
+          orientation: 'horizontal',
         },
       ];
     },
