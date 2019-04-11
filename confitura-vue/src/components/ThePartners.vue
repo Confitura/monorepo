@@ -11,7 +11,7 @@
             <div class="other-types">
                 <transition name="fade" mode="out-in">
                     <template v-for="type in types">
-                        <div class="logos" v-if="type === active">
+                        <div class="logos" v-if="type === active" :key="type">
                             <div v-for="item in partners[type]"
                                  :key="item.id"
                                  :class="{[`logo--${item.orientation}`]: item.orientation, [`logo--${active}`]: active}">
@@ -123,22 +123,20 @@
         .logos {
             display: flex;
             flex-wrap: wrap;
-            /*grid-row-gap: 3rem;*/
-            /*grid-column-gap: 1rem;*/
-            padding-bottom: 3rem;
-            padding-top: 3rem;
-            /*grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));*/
+            padding-bottom: 1.5rem;
+            padding-top: 1.5rem;
             justify-items: center;
             align-items: center;
-            justify-content: space-evenly;
+            justify-content: center;
             flex-grow: 1;
             transition: all 0.3s linear;
-
+            max-width: 1000px;
         }
 
 
         .logo--silver, .logo--gold {
-            margin: 0.5rem;
+            margin-left: 3rem;
+            margin-right: 3rem;
         }
 
         .logo--horizontal {
@@ -153,8 +151,10 @@
             flex-grow: 1;
             display: flex;
             flex-direction: column-reverse;
+
             @include md() {
                 flex-direction: column;
+
             }
         }
 
@@ -175,7 +175,7 @@
             display: flex;
             justify-content: center;
             flex-shrink: 0;
-            flex-basis: 40%;
+            /*flex-basis: 40%;*/
         }
 
         .platinum {
@@ -218,9 +218,11 @@
         }
 
         .fade-enter-active, .fade-leave-active {
-            transition: opacity .3s;
+            transition: opacity .5s;
         }
-        .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+
+        .fade-enter, .fade-leave-to
+        {
             opacity: 0;
         }
 

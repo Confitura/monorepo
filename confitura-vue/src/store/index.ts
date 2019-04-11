@@ -165,6 +165,24 @@ Viacom.Tech is pioneering a new era of data in entertainment with opportunities 
           type: 'gold',
           logo: require('../assets/partners/viacom.svg'),
           orientation: 'horizontal',
+        },{
+          id: 'bosch',
+          description: `W Warszawskich oddziale Robert Bosch Sp. z. o.o. zatrudnionych jest prawie 300 specjalistów IT. Zajmują się oni konsultacjami, projektowaniem, zarządzaniem i rozwojem oprogramowania. Około połowa z nich to testerzy lub programiści języków .Net, Java, JS, J2EE, ABAP i baz danych Oracle. W wyniku ich pracy powstaje oprogramowanie, które wspiera Bosch Group na całym świecie w zakresie logistyki, IT Security, produkcji oraz e-commerce.
+
+Dołącz do nas jeśli:
+
+* Zależy ci na jakości Twojego kodu
+* Cenisz sobie samodzielność i autonomię w działaniu
+* Chcesz mieć wpływ na projekt, w którym uczestniczysz
+* Znasz angielski i chcesz pracować w wielokulturowym środowisku
+
+
+Zobacz, jak się u nas pracuje: [https://www.youtube.com/watch?v=A2YWrsEDLIg](https://www.youtube.com/watch?v=A2YWrsEDLIg)`,
+          name: 'Bosch',
+          www: 'https://www.bosch-career.pl/IT',
+          type: 'silver',
+          logo: require('../assets/partners/bosch.svg'),
+          orientation: 'horizontal',
         },
       ];
     },
