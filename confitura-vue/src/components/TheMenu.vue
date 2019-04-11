@@ -23,7 +23,9 @@
       { label: 'partners', url: '/partners' },
       { label: 'contact', url: '/#contact' },
       { label: 'FAQ', url: '/faq' },
+      { label: 'my profile', url: '/profile', visible: () => this.isLogin },
       { label: 'logout', action: () => this.logout(), visible: () => this.isLogin },
+      { label: 'C4P', url: '/login', visible: () => !this.isLogin },
     ];
 
     public isVisible(item: MenuItem): boolean {
@@ -64,7 +66,7 @@
             background-color: #000000;
         }
 
-        @include md() {
+        @include lg() {
             flex-basis: unset;
             justify-content: right;
             display: unset;
@@ -74,7 +76,7 @@
     .menu-item {
         margin: 2rem;
 
-        @include md() {
+        @include lg() {
             margin: 0.5rem;
             display: unset;
         }

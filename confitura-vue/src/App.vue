@@ -8,7 +8,6 @@
 
 <style lang="scss">
     @import 'styles';
-
 </style>
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';

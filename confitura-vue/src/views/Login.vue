@@ -2,6 +2,11 @@
     <div class="login">
         <PageHeader :small="true" title="Call 4 Papers"></PageHeader>
         <Box class="content" color="white" :full="false">
+            <p class="login__info">
+                To register your presentation with our Call 4 Papers process you need to create a profile. Your presentation will be presented to all V4P participants as is - so make sure that it is as polished as possible.
+                <br/>
+                C4P will be closed on May 11, 2019. If you have any questions - please make sure to check our <router-link to="faq" class="link--red">FAQ</router-link>.
+            </p>
             <div class="login-container">
                 <div v-for="option in options" class="login-with">
                     <h2 class="option-header">{{option}}</h2>
@@ -63,6 +68,9 @@ export default class Login extends Vue {
     .option-header{
     }
 
+    .login__info {
+        font-size: 1.5rem;
+    }
     .login-container {
         display: grid;
         grid-gap: 1rem;

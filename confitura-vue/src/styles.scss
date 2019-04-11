@@ -3,6 +3,7 @@
 }
 
 @import '~normalize.css';
+@import "assets/colors";
 
 @font-face {
   font-family: 'NeuzeitGro-Bol';
@@ -24,4 +25,13 @@ body {
   font-family: 'NeuzeitGro-Reg', Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.link--red {
+  color: $brand;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }

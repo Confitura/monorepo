@@ -7,11 +7,11 @@
                 </a>
                 <span class="header__separator"></span>
                 <a class="header__mobile-button" @click="toggleMenu($event)" href="#">menu</a>
-                <TheMenu v-if="$store.getters.isMd"/>
+                <TheMenu v-if="mobileBreakpoint"/>
             </div>
         </nav>
         <transition name="menu-fade">
-            <TheMenu :class="theme" v-if="showMenu && !$store.getters.isMd" @linkClicked="hideMenu"/>
+            <TheMenu :class="theme" v-if="showMenu && !mobileBreakpoint" @linkClicked="hideMenu"/>
         </transition>
     </div>
 </template>
@@ -53,6 +53,10 @@
 
     get theme() {
       return `header--${this.$store.state.headerTheme}`;
+    }
+
+    get mobileBreakpoint(){
+      return this.$store.getters.isLg;
     }
   }
 </script>
@@ -151,7 +155,7 @@
             font-size: 1.5rem;
             text-decoration: none;
             color: $brand;
-            @include md() {
+            @include lg() {
                 display: none;
             }
         }
