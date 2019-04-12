@@ -4,7 +4,13 @@ import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.beans.factory.annotation.Value;
@@ -56,8 +62,8 @@ public class User extends AuditedEntity {
     @ManyToMany
     private Set<AgendaEntry> personalAgenda = new LinkedHashSet<>();
 
-    @OneToOne
-    private ParticipationData participationData;
+    @OneToOne(fetch = FetchType.LAZY)
+    private ParticipationData participationData = null;
 
     public boolean isSpeaker() {
         return presentations != null
