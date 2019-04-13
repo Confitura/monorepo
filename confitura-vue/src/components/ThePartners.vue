@@ -26,7 +26,9 @@
                     <div class="type"
                          v-for="type in types"
                          :key="type"
-                         @click="active = type"
+                         @click="activate(type)"
+                         @mouseenter="pauseIfActive(type)"
+                         @mouseleave="start()"
                          :class="{[`type--${type}`]: true, [`type--active`]: type === active}">{{type}}
                     </div>
                 </div>
@@ -50,8 +52,25 @@
     public silver: Partner[] = [];
     public gold: Partner[] = [];
     public types: PartnerType[] = ['gold', 'silver', 'bronze'];
-    public active: PartnerType = 'gold';
     public partners: Partners = { platinum: [], gold: [], silver: [], bronze: [] };
+    public active: PartnerType = 'gold';
+    private pause = false;
+
+    public pauseIfActive(type: string) {
+      if (this.active === type) {
+        this.pause = true;
+      }
+    }
+
+    public start() {
+      this.pause = false;
+    }
+
+    public activate(type: PartnerType) {
+      this.active = type;
+      this.pause = true;
+    }
+
 
     protected mounted() {
       this.$store.dispatch(LOAD_PARTNERS)
@@ -60,13 +79,13 @@
           this.partners.silver = this.$store.getters.silver;
           this.partners.gold = this.$store.getters.gold;
           setInterval(() => {
-            const currentIdx = this.types.indexOf(this.active);
-            const newIdx = (currentIdx + 1) % 2;
-            this.active = this.types[newIdx];
+            if (!this.pause) {
+              const currentIdx = this.types.indexOf(this.active);
+              const newIdx = (currentIdx + 1) % 2;
+              this.active = this.types[newIdx];
+            }
           }, 5000);
         });
-
-
     }
 
   }
@@ -151,6 +170,8 @@
             flex-grow: 1;
             display: flex;
             flex-direction: column-reverse;
+            overflow: hidden;
+
 
             @include md() {
                 flex-direction: column;
@@ -175,7 +196,6 @@
             display: flex;
             justify-content: center;
             flex-shrink: 0;
-            /*flex-basis: 40%;*/
         }
 
         .platinum {
@@ -218,11 +238,14 @@
         }
 
         .fade-enter-active, .fade-leave-active {
-            transition: opacity .5s;
+            transition: all .5s;
         }
 
-        .fade-enter, .fade-leave-to
-        {
+        .fade-enter {
+            opacity: 0;
+        }
+
+        .fade-leave-to {
             opacity: 0;
         }
 

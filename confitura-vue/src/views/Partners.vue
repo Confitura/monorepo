@@ -98,6 +98,7 @@
 
     .logos {
         display: flex;
+        flex-wrap: wrap;
         margin-bottom: 6rem;
         align-items: center;
     }

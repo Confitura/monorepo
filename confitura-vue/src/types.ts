@@ -1,11 +1,12 @@
 import { AuthenticationState } from '@/store/authentication';
+import { PartnersState } from '@/store/partners';
 
 export interface RootState {
   headerTheme: string;
   headerHeight: number;
   windowWidth: number;
   date: string;
-  partners: Partner[];
+  partners?: PartnersState;
   authentication?: AuthenticationState;
 }
 
