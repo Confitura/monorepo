@@ -153,7 +153,17 @@ I bądź na bieżąco [https://www.facebook.com/allegro.tech](https://www.facebo
           type: 'silver',
           logo: require('../assets/partners/allegro.svg'),
           orientation: 'horizontal',
+        },{
+          id: 'applause',
+          name: 'Applause',
+          description: `Applause is the worldwide leader in crowdtesting and digital quality. Software is at the heart of how all brands engage users, and digital experiences must work flawlessly everywhere. With highly-vetted testers available on-demand around the globe, Applause provides brands with a full suite of testing and feedback capabilities. This approach drastically improves testing coverage, eliminates the limitations of offshoring and traditional QA labs, and speeds time-to-market for websites, mobile apps, IoT, and in-store experiences.  
+Thousands of leading companies — including Ford, Fox, Google, and Dow Jones — rely on Applause as a best practice to deliver high-quality digital experiences that customers love.`,
+          www: 'https://www.applause.com/join-our-team',
+          type: 'silver',
+          logo: require('../assets/partners/applause.svg'),
+          orientation: 'horizontal',
         },
+
       ];
     },
     // tslint:enable
