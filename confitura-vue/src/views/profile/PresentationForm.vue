@@ -8,7 +8,9 @@
                     <form class="col s12">
                         <div class="row">
                             <div class="input-field col s12">
-                                <input class="validate" id="title" type="text" v-model="presentation.title">
+                                <input class="validate" id="title" type="text"
+                                       maxlength="255"
+                                       v-model="presentation.title">
                                 <label for="title">Title</label>
                             </div>
                             <div class="errors" v-for="error in errors.title">{{error}}</div>
@@ -31,13 +33,18 @@
                                 <div class="input-field">
                                     <textarea class="materialize-textarea" id="shortDescription"
                                               ref="shortDescription"
+                                              data-length="300"
+                                              maxlength="300"
                                               v-model="presentation.shortDescription"></textarea>
                                     <label for="shortDescription">Short description</label>
+                                    <span class="helper-text" data-error="wrong" data-success="right">Will be used in V4P process</span>
                                 </div>
                                 <div class="errors" v-for="error in errors.shortDescription">{{error}}</div>
                                 <div class="input-field">
                                     <textarea class="materialize-textarea" id="description"
                                               ref="description"
+                                              data-length="1000"
+                                              maxlength="1000"
                                               v-model="presentation.description"></textarea>
                                     <label for="description">Full description</label>
                                 </div>
@@ -132,10 +139,13 @@
 
     public mounted() {
       this.userId = this.$store.getters.user.jti;
-      this.setupTagsAutocomplete();
-      M.textareaAutoResize(this.$refs.description);
-      M.textareaAutoResize(this.$refs.shortDescription);
-
+      setTimeout(() => {
+        this.setupTagsAutocomplete();
+        M.textareaAutoResize(this.$refs.description);
+        M.textareaAutoResize(this.$refs.shortDescription);
+        M.CharacterCounter.init(this.$refs.shortDescription);
+        M.CharacterCounter.init(this.$refs.description);
+      });
       const { id } = this.$route.params;
       if (id) {
         axios.get<Presentation>(`/api/presentations/${id}`)
