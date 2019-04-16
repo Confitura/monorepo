@@ -14,6 +14,7 @@
                         <div class="logos" v-if="type === active" :key="type">
                             <div v-for="item in partners[type]"
                                  :key="item.id"
+                                 class="logo"
                                  :class="{[`logo--${item.orientation}`]: item.orientation, [`logo--${active}`]: active}">
                                 <a :href="item.www" class="link" rel="noopener" target="_blank">
                                     <img :src="item.logo" :alt="item.name" class="logo__img">
@@ -125,7 +126,7 @@
             flex-direction: column;
             @include md() {
                 flex-direction: row;
-                height: 400px;
+                min-height: 600px;
             }
 
         }
@@ -151,20 +152,22 @@
             transition: all 0.3s linear;
             max-width: 1000px;
         }
+        .logo {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            &.logo--horizontal {
+                margin-top: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
 
+        }
 
         .logo--silver, .logo--gold {
             margin-left: 3rem;
             margin-right: 3rem;
         }
 
-        .logo--horizontal {
-            grid-column-end: span 2;
 
-            .logo__img {
-                width: 200px;
-            }
-        }
 
         .other-types {
             flex-grow: 1;
@@ -183,10 +186,26 @@
             width: 100px;
         }
 
+        .logo__img--gold {
+            width: 200px;
+        }
 
         .logo__img--platinum {
             width: 300px;
         }
+
+        .logo--horizontal {
+            grid-column-end: span 2;
+
+            .logo__img {
+                width: 200px;
+            }
+
+            &.logo--gold .logo__img {
+                width: 250px;
+            }
+        }
+
 
         .link {
             text-align: center;

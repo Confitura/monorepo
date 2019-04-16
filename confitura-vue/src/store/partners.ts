@@ -7,8 +7,8 @@ export const partnersModule: Module<PartnersState, RootState> = {
   },
   getters: {
     platinum: ({ partners }): Partner[] => partners.filter((partner) => partner.type === 'platinum'),
-    silver: ({ partners }): Partner[] => partners.filter((partner) => partner.type === 'silver'),
-    gold: ({ partners }): Partner[] => partners.filter((partner) => partner.type === 'gold'),
+    silver: ({ partners }): Partner[] => shuffle(partners.filter((partner) => partner.type === 'silver')),
+    gold: ({ partners }): Partner[] => shuffle(partners.filter((partner) => partner.type === 'gold')),
   },
   actions: {
     [LOAD_PARTNERS]({ state }) {
@@ -138,7 +138,7 @@ Zobacz, jak się u nas pracuje: [https://www.youtube.com/watch?v=A2YWrsEDLIg](ht
           type: 'silver',
           logo: require('../assets/partners/bosch.svg'),
           orientation: 'horizontal',
-        },{
+        }, {
           id: 'allegro',
           name: 'Allegro Tech',
           description: `W [Allegro](https://allegro.tech/) tworzymy i utrzymujemy aplikacje, które dzięki swojej skalowalności i niezawodności zyskały sobie rzeszę wiernych użytkowników w całej Europie Środkowo-Wschodniej. Zadanie nie należy do najłatwiejszych, w pracy napotykamy na szereg wyzwań zarówno w obszarze samej architektury i designu, jak i w procesie doboru technologii, zapewnienia jakości kodu, usprawnienia funkcjonalności oraz w późniejszej fazie wdrożenia i utrzymania produktu.  
@@ -153,7 +153,7 @@ I bądź na bieżąco [https://www.facebook.com/allegro.tech](https://www.facebo
           type: 'silver',
           logo: require('../assets/partners/allegro.svg'),
           orientation: 'horizontal',
-        },{
+        }, {
           id: 'applause',
           name: 'Applause',
           description: `Applause is the worldwide leader in crowdtesting and digital quality. Software is at the heart of how all brands engage users, and digital experiences must work flawlessly everywhere. With highly-vetted testers available on-demand around the globe, Applause provides brands with a full suite of testing and feedback capabilities. This approach drastically improves testing coverage, eliminates the limitations of offshoring and traditional QA labs, and speeds time-to-market for websites, mobile apps, IoT, and in-store experiences.  
@@ -173,6 +173,11 @@ Thousands of leading companies — including Ford, Fox, Google, and Dow Jones �
     },
   },
 };
+
+function shuffle<T>(array: T[]): T[] {
+  return array.sort(() => 0.5 - Math.random());
+
+}
 
 export interface PartnersState {
   partners: Partner[];
