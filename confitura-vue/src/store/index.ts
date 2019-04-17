@@ -5,6 +5,7 @@ import { userModule } from './store.user-profile';
 import { authenticationModule } from './authentication';
 import axios from 'axios';
 import { partnersModule } from '@/store/partners';
+import { adminModule } from '@/store/admin';
 
 
 Vue.use(Vuex);
@@ -13,6 +14,7 @@ const storeOptions: StoreOptions<RootState> = {
     userProfile: userModule,
     authentication: authenticationModule,
     partners: partnersModule,
+    admin: adminModule,
   },
   state: {
     headerTheme: 'default',

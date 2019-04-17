@@ -38,6 +38,10 @@ export interface Partner {
   orientation?: 'horizontal' | 'vertical' | 'box';
 }
 
+export interface EmbeddedUserProfiles {
+  _embedded: { users: UserProfile[] };
+}
+
 export interface UserProfile {
   id?: string;
   name?: string;

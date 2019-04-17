@@ -11,6 +11,8 @@ import store from './store';
 import ProfilePage from '@/views/profile/ProfilePage.vue';
 import PresentationForm from '@/views/profile/PresentationForm.vue';
 import PrivacyPolicy from '@/views/PrivacyPolicy.vue';
+import Admin from '@/views/admin/Admin.vue';
+import Users from '@/views/admin/Users.vue';
 
 Vue.use(Router);
 Vue.use(VueScrollTo, {
@@ -72,6 +74,14 @@ const router = new Router({
       path: '/privacy-policy',
       name: 'privacy-policy',
       component: PrivacyPolicy,
+    },
+    {
+      path: '/admin',
+      name: 'admin',
+      component: Admin,
+      children: [
+        { path: 'users', component: Users },
+      ],
     },
   ],
   scrollBehavior(to, from, savedPosition) {
