@@ -163,8 +163,8 @@
         }
 
         .logo--silver, .logo--gold {
-            margin-left: 3rem;
-            margin-right: 3rem;
+            margin-left: 2rem;
+            margin-right: 2rem;
         }
 
 
@@ -183,11 +183,11 @@
         }
 
         .logo__img {
-            width: 100px;
+            width: 80px;
         }
 
         .logo__img--gold {
-            width: 200px;
+            width: 160px;
         }
 
         .logo__img--platinum {
@@ -198,11 +198,11 @@
             grid-column-end: span 2;
 
             .logo__img {
-                width: 200px;
+                width: 160px;
             }
 
             &.logo--gold .logo__img {
-                width: 250px;
+                width: 230px;
             }
         }
 

@@ -162,6 +162,14 @@ Thousands of leading companies — including Ford, Fox, Google, and Dow Jones �
           type: 'silver',
           logo: require('../assets/partners/applause.svg'),
           orientation: 'horizontal',
+        },{
+          id: 'nordea',
+          name: 'Nordea',
+          description: `Nordea w Polsce jest częścią największej skandynawskiej instytucji finansowej. Funkcjonuje jako centrum operacyjne w Łodzi oraz IT w Trójmieście i Warszawie. IT w Polsce dostarcza kompleksowe rozwiązania w zakresie utrzymania i rozwoju platform i systemów informatycznych oraz uczestniczy we wdrożeniu jednego z największych systemów bankowych na świecie. Nordea planuje wzrost zatrudnienia. Poszukuje absolwentów studiów wyższych i ekspertów o ugruntowanej wiedzy informatycznej.`,
+          www: 'https://www.nordea.pl',
+          type: 'silver',
+          logo: require('../assets/partners/nordea.svg'),
+          orientation: 'horizontal',
         },
 
       ];
