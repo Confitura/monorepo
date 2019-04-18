@@ -104,8 +104,8 @@
     }
 
     .logo-link {
-        margin-left: 2rem;
-        margin-right: 2rem;
+        margin: 1.5rem 2rem;
+
 
         &--platinum {
             text-align: center;
