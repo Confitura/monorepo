@@ -175,7 +175,7 @@ Thousands of leading companies — including Ford, Fox, Google, and Dow Jones �
           name: 'Britenet',
           description: `Britenet to software house realizujący projekty dla międzynarodowych klientów. Firma działa na rynku od 13 lat, zatrudnia obecnie ponad 500 pracowników i ma biura w Warszawie, Poznaniu, Lublinie, Kielcach oraz Białymstoku.  
 Rozwój zawodowy idzie w parze z dobrą atmosferą, o czym świadczy tytuł Najlepsze Miejsce Pracy IT w Polsce zdobyty przez firmę aż cztery razy w badaniach Computerworld - TNS.`,
-          www: 'https://britenet.com.p',
+          www: 'https://britenet.com.pl',
           type: 'silver',
           logo: require('../assets/partners/britenet.svg'),
           orientation: 'horizontal',
