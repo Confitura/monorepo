@@ -5,7 +5,8 @@
             <p class="login__info">
                 To register your presentation with our Call 4 Papers process you need to create a profile. Your presentation will be presented to all V4P participants as is - so make sure that it is as polished as possible.
                 <br/>
-                C4P will be closed on May 11, 2019. If you have any questions - please make sure to check our <router-link to="faq" class="link--red">FAQ</router-link>.
+                This year you can also submit a workshop session. Workshop day will be hosted a day after Confitura, i.e. June 30. Each workshop last 4h. <br/>
+                C4P will be closed on May 11, 2019. If you have any questions about presentations or workshops - please make sure to check our <router-link to="faq" class="link--red">FAQ</router-link>.
             </p>
             <div class="login-container">
                 <div v-for="option in options" class="login-with">
