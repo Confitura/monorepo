@@ -25,7 +25,7 @@ export const authenticationModule: Module<AuthenticationState, RootState> = {
       return getters.user !== null;
     },
     isAdmin: (state, getters) => {
-      let user: User | null = getters.user;
+      const user: User | null = getters.user;
       return user != null && user.isAdmin;
     },
   },
