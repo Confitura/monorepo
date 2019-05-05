@@ -56,7 +56,7 @@ const router = new Router({
       component: Login,
     },
     {
-      path: '/register',
+      path: '/register/:id?',
       name: 'register',
       component: RegisterPage,
     },
@@ -66,7 +66,12 @@ const router = new Router({
       component: ProfilePage,
     },
     {
-      path: '/presentation/:id?',
+      path: '/profile/byId/:id',
+      name: 'profileById',
+      component: ProfilePage,
+    },
+    {
+      path: '/profile/:userId/presentation/:id?',
       name: 'presentation',
       component: PresentationForm,
     },

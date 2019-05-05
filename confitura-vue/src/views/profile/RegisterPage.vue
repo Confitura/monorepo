@@ -87,7 +87,7 @@
 
 <script lang="ts">
   import { Component, Vue } from 'vue-property-decorator';
-  import { LOAD_CURRENT_PROFILE } from '@/store/store.user-profile';
+  import { LOAD_PROFILE_BY_ID } from '@/store/store.user-profile';
   import Box from '@/components/Box.vue';
   import TheContact from '@/components/TheContact.vue';
   import { User, UserProfile } from '@/types';
@@ -116,11 +116,16 @@
     public mounted() {
       M.AutoInit();
       this.activeUser = this.$store.getters.user;
-      this.$store.dispatch(LOAD_CURRENT_PROFILE)
+      this.loadProfile()
         .then(() => {
           this.profile = this.$store.state.userProfile.currentProfile;
           setTimeout(() => M.textareaAutoResize(this.$refs.bio));
         });
+    }
+
+    private loadProfile() {
+      const userId = this.$route.params.id || this.$store.getters.user.jti;
+      return this.$store.dispatch(LOAD_PROFILE_BY_ID, { id: userId });
     }
 
     public updated() {
@@ -132,7 +137,14 @@
       if (this.validate()) {
         axios
           .post<any>('/api/users', this.profile)
-          .then(() => this.$router.push('/profile'))
+          .then((it) => {
+            if (this.profile && this.profile.id) {
+              this.$router.push('/profile/byId/' + this.profile.id);
+            } else {
+              this.$router.push('/profile');
+            }
+            return it;
+          })
           .catch((error: any) => this.uploadFailed(error));
       }
     }

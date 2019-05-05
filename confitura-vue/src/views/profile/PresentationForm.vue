@@ -138,7 +138,8 @@
     private userId!: string;
 
     public mounted() {
-      this.userId = this.$store.getters.user.jti;
+      const { id, userId } = this.$route.params;
+      this.userId = userId || this.$store.getters.user.jti;
       setTimeout(() => {
         this.setupTagsAutocomplete();
         M.textareaAutoResize(this.$refs.description);
@@ -146,7 +147,6 @@
         M.CharacterCounter.init(this.$refs.shortDescription);
         M.CharacterCounter.init(this.$refs.description);
       });
-      const { id } = this.$route.params;
       if (id) {
         axios.get<Presentation>(`/api/presentations/${id}`)
           .then((response) => this.presentation = response.data)
