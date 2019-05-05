@@ -159,15 +159,20 @@ export default class ProfilePage extends Vue {
   public email = '';
 
   public mounted() {
+    this.reloadData();
+  }
+
+  private reloadData() {
     const userId = this.$route.params.id || this.$store.getters.user.jti;
     this.$store.dispatch(LOAD_PROFILE_BY_ID, { id: userId });
     this.$store.dispatch(LOAD_PROFILE_PRESENTATIONS_BY_ID, { id: userId });
   }
 
   public addSpeakerToPresentation() {
+    const userId = this.$route.params.id || this.$store.getters.user.jti;
     axios.post(`/api/presentations/${this.selectedPresentation!.id}/cospeakers/${this.email}`)
       .then((it) => {
-        this.$store.dispatch(LOAD_CURRENT_PROFILE_PRESENTATIONS);
+        this.reloadData();
         this.$toasted.success('speaker added', { duration: 3000 });
         this.closeModal();
       }, (error: AxiosError) => {
@@ -189,7 +194,7 @@ export default class ProfilePage extends Vue {
         'You will no longer be able to change it.')) {
       axios.delete(`/api/presentations/${pres.id}/cospeakers/${speaker.email}`)
         .then((it) => {
-          this.$store.dispatch(LOAD_CURRENT_PROFILE_PRESENTATIONS);
+          this.reloadData();
         });
     }
   }
