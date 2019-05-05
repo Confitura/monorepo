@@ -52,6 +52,7 @@ const router = new Router({
     },
     {
       path: '/login/:service?',
+      alias: '/c4p/:service?',
       name: 'login',
       component: Login,
     },

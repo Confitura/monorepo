@@ -170,6 +170,25 @@ Thousands of leading companies — including Ford, Fox, Google, and Dow Jones �
           type: 'silver',
           logo: require('../assets/partners/nordea.svg'),
           orientation: 'horizontal',
+        },{
+          id: 'britenet',
+          name: 'Britenet',
+          description: `Britenet to software house realizujący projekty dla międzynarodowych klientów. Firma działa na rynku od 13 lat, zatrudnia obecnie ponad 500 pracowników i ma biura w Warszawie, Poznaniu, Lublinie, Kielcach oraz Białymstoku.  
+Rozwój zawodowy idzie w parze z dobrą atmosferą, o czym świadczy tytuł Najlepsze Miejsce Pracy IT w Polsce zdobyty przez firmę aż cztery razy w badaniach Computerworld - TNS.`,
+          www: 'https://britenet.com.pl',
+          type: 'silver',
+          logo: require('../assets/partners/britenet.svg'),
+          orientation: 'horizontal',
+        },{
+          id: 'kmd',
+          name: 'KMD',
+          description: `For more than 40 years, KMD has played a key role in digitizing the Danish state, helping make Denmark’s public sector one of the best run, most efficient and highly digitized in the world. KMD is a leading supplier of mission-critical software, solutions and IT services primarily to Denmark’s public sector, but with a growing footprint in the private sector both domestically and in Sweden and Norway. We have a broad portfolio of products and services, based predominantly on our own software solutions.
+
+We’ve been rapidly growing and we have more than 420 IT and business specialists in our Warsaw office. They translate complex processes and legislation into simple and effective IT solutions. KMD Poland is the largest foreign affiliated branch at KMD Group. Our mission is to provide new technologies and solutions as well as to maintain and develop our systems. We help Scandinavian business and public sector make another major leap in their digital evolution.`,
+          www: 'http://careers.kmdpoland.pl',
+          type: 'silver',
+          logo: require('../assets/partners/kmd.svg'),
+          orientation: 'horizontal',
         },
 
       ];

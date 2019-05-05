@@ -185,6 +185,7 @@
           }
           const autocompleteElement = document.querySelectorAll('.autocomplete');
           M.Autocomplete.init(autocompleteElement, {
+            minLength: 0,
             data: autocompleteData,
             onAutocomplete: (arg) => {
               this.tagInput = '';

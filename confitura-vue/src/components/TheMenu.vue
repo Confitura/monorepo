@@ -25,7 +25,7 @@
       { label: 'FAQ', url: '/faq' },
       { label: 'my profile', url: '/profile', visible: () => this.isLogin },
       { label: 'logout', action: () => this.logout(), visible: () => this.isLogin },
-      { label: 'C4P', url: '/login', visible: () => !this.isLogin },
+      { label: 'C4P', url: '/c4p', visible: () => !this.isLogin },
       { label: 'ADMIN', url: '/admin', visible: () => this.isAdmin },
     ];
 
