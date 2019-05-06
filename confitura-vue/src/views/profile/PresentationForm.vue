@@ -46,7 +46,7 @@
                                               data-length="1000"
                                               maxlength="1000"
                                               v-model="presentation.description"></textarea>
-                                    <label for="description">Full description</label>
+                                    <label for="description">Description</label>
                                 </div>
                                 <div class="errors" v-for="error in errors.description">{{error}}</div>
                             </div>
