@@ -139,19 +139,21 @@
 
     public mounted() {
       this.userId = this.$store.getters.user.jti;
-      setTimeout(() => {
-        this.setupTagsAutocomplete();
-        M.textareaAutoResize(this.$refs.description);
-        M.textareaAutoResize(this.$refs.shortDescription);
-        M.CharacterCounter.init(this.$refs.shortDescription);
-        M.CharacterCounter.init(this.$refs.description);
-      });
       const { id } = this.$route.params;
       if (id) {
         axios.get<Presentation>(`/api/presentations/${id}`)
           .then((response) => this.presentation = response.data)
           .then((_) => axios.get<EmbeddedTags>(`/api/presentations/${id}/tags`))
-          .then((tagsResponse) => Vue.set(this.presentation, 'tags', tagsResponse.data._embedded.tags));
+          .then((tagsResponse) => Vue.set(this.presentation, 'tags', tagsResponse.data._embedded.tags))
+          .then(() =>
+            setTimeout(() => {
+              this.setupTagsAutocomplete();
+              M.textareaAutoResize(this.$refs.description);
+              M.textareaAutoResize(this.$refs.shortDescription);
+              M.CharacterCounter.init(this.$refs.shortDescription);
+              M.CharacterCounter.init(this.$refs.description);
+            }),
+          );
       }
     }
 

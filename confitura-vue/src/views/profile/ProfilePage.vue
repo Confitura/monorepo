@@ -75,17 +75,23 @@
                         </div>
                         <div class="card" v-for="presentation in presentations">
                             <div class="card-content">
-                                <span class="card-title">
-                                    {{presentation.title}}
-                                    <span class="small">({{presentation.language}}, {{presentation.level}})</span>
-                                      <span :data-badge-caption="tag.name" class="new badge"
-                                            v-for="tag in presentation.tags"></span>
-                                </span>
-                                <label>Full description</label>
-                                <div class="description">{{presentation.description}}</div>
+                                <div class="card-title">
+                                    <div>
+                                        {{presentation.title}}
+                                        <span class="small">({{presentation.language}}, {{presentation.level}})</span>
+                                    </div>
+                                    <div class="tags">
+                                <span :data-badge-caption="tag.name" class="new badge"
+                                      v-for="tag in presentation.tags"></span>
+                                    </div>
+                                </div>
+
 
                                 <label>Short description</label>
                                 <div class="description">{{presentation.shortDescription}}</div>
+
+                                <label>Description</label>
+                                <div class="description">{{presentation.description}}</div>
 
                                 <div v-if="presentation.speakers.length > 1">
                                     Speakers:
@@ -119,123 +125,124 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import { LOAD_CURRENT_PROFILE, LOAD_CURRENT_PROFILE_PRESENTATIONS } from '@/store/store.user-profile';
-import Box from '@/components/Box.vue';
-import TheContact from '@/components/TheContact.vue';
-import { EmbeddedPresentations, Presentation, REMOVE_PRESENTATION, UserProfile } from '@/types';
-import axios, { AxiosError } from 'axios';
-import PageHeader from '@/components/PageHeader.vue';
-import Toasted from 'vue-toasted';
-import M from 'materialize-css';
+  import { Component, Vue } from 'vue-property-decorator';
+  import { LOAD_CURRENT_PROFILE, LOAD_CURRENT_PROFILE_PRESENTATIONS } from '@/store/store.user-profile';
+  import Box from '@/components/Box.vue';
+  import TheContact from '@/components/TheContact.vue';
+  import { Presentation, REMOVE_PRESENTATION, UserProfile } from '@/types';
+  import axios, { AxiosError } from 'axios';
+  import PageHeader from '@/components/PageHeader.vue';
+  import Toasted from 'vue-toasted';
+  import M from 'materialize-css';
 
-Vue.use(Toasted);
+  Vue.use(Toasted);
 
-@Component({
-  components: { PageHeader, Box, TheContact },
-})
-export default class ProfilePage extends Vue {
+  @Component({
+    components: { PageHeader, Box, TheContact },
+  })
+  export default class ProfilePage extends Vue {
 
-  get profile() {
-    return this.$store.state.userProfile.currentProfile;
-  }
+    get profile() {
+      return this.$store.state.userProfile.currentProfile;
+    }
 
-  get presentations() {
-    return this.$store.state.userProfile.currentProfilePresentations;
-  }
-  public $refs!: Vue['$refs'] & {
-    file: {
-      click: () => void,
-      files: File[],
-    },
-  };
+    get presentations() {
+      return this.$store.state.userProfile.currentProfilePresentations;
+    }
 
-  public photoKey = 0;
-  public selectedPresentation: Presentation | null = null;
-  public email = '';
+    public $refs!: Vue['$refs'] & {
+      file: {
+        click: () => void,
+        files: File[],
+      },
+    };
 
-  public mounted() {
-    this.$store.dispatch(LOAD_CURRENT_PROFILE);
-    this.$store.dispatch(LOAD_CURRENT_PROFILE_PRESENTATIONS);
-  }
+    public photoKey = 0;
+    public selectedPresentation: Presentation | null = null;
+    public email = '';
 
-  public addSpeakerToPresentation() {
-    axios.post(`/api/presentations/${this.selectedPresentation!.id}/cospeakers/${this.email}`)
-      .then((it) => {
-        this.$store.dispatch(LOAD_CURRENT_PROFILE_PRESENTATIONS);
-        this.$toasted.success('speaker added', { duration: 3000 });
-        this.closeModal();
-      }, (error: AxiosError) => {
-        let message = 'Something went wrong';
-        if (error.response!.status === 404) {
-          message = 'User not found';
-        } else if (error.response!.status === 409) {
-          message = 'Unable to add this user: conflict';
-        }
-        this.$toasted.error(message, { duration: 3000, className: 'error', fullWidth: true });
-      });
-  }
+    public mounted() {
+      this.$store.dispatch(LOAD_CURRENT_PROFILE);
+      this.$store.dispatch(LOAD_CURRENT_PROFILE_PRESENTATIONS);
+    }
 
-  public deleteSpeaker(pres: Presentation, speaker: UserProfile, event: Event) {
-    event.preventDefault();
-    if ((this.profile!.email !== speaker.email)
-      || confirm('' +
-        'Are you sure you want to remove yourself from presentation? ' +
-        'You will no longer be able to change it.')) {
-      axios.delete(`/api/presentations/${pres.id}/cospeakers/${speaker.email}`)
+    public addSpeakerToPresentation() {
+      axios.post(`/api/presentations/${this.selectedPresentation!.id}/cospeakers/${this.email}`)
         .then((it) => {
           this.$store.dispatch(LOAD_CURRENT_PROFILE_PRESENTATIONS);
-        });
-    }
-  }
-
-  public openModal(pres: Presentation) {
-    this.selectedPresentation = pres;
-    const elems = document.querySelector('.modal');
-    M.Modal.init(elems!);
-  }
-
-  public editProfile() {
-    this.$router.push('/register');
-  }
-
-  public showUploadDialog() {
-    this.$refs.file.click();
-  }
-
-  public uploadPhoto() {
-    const { files } = this.$refs.file;
-    const photo = files[0];
-    if (photo !== null) {
-      const formData = new FormData();
-      formData.append('file', photo);
-      return axios
-        .post(`/api/resources/${this.profile!.id}`, formData)
-        .then(() => this.photoKey += 1)
-        .catch((error: AxiosError) => {
-          let message = 'Ups... Something went wrong...';
-          if (error.response!.status === 413) {
-            message = 'Uploaded photo is too large!';
+          this.$toasted.success('speaker added', { duration: 3000 });
+          this.closeModal();
+        }, (error: AxiosError) => {
+          let message = 'Something went wrong';
+          if (error.response!.status === 404) {
+            message = 'User not found';
+          } else if (error.response!.status === 409) {
+            message = 'Unable to add this user: conflict';
           }
           this.$toasted.error(message, { duration: 3000, className: 'error', fullWidth: true });
         });
-    } else {
-      throw new Error('Something went wrong');
     }
-  }
 
-  public remove(presentation: Presentation, event: Event) {
-    event.preventDefault();
-    this.$store.dispatch(REMOVE_PRESENTATION, presentation.id)
-      .then(() => this.$delete(this.presentations, this.presentations.indexOf(presentation)));
-  }
+    public deleteSpeaker(pres: Presentation, speaker: UserProfile, event: Event) {
+      event.preventDefault();
+      if ((this.profile!.email !== speaker.email)
+        || confirm('' +
+          'Are you sure you want to remove yourself from presentation? ' +
+          'You will no longer be able to change it.')) {
+        axios.delete(`/api/presentations/${pres.id}/cospeakers/${speaker.email}`)
+          .then((it) => {
+            this.$store.dispatch(LOAD_CURRENT_PROFILE_PRESENTATIONS);
+          });
+      }
+    }
 
-  private closeModal() {
-    const elem = document.querySelector('.modal');
-    M.Modal.getInstance(elem!).close();
-  }
+    public openModal(pres: Presentation) {
+      this.selectedPresentation = pres;
+      const elems = document.querySelector('.modal');
+      M.Modal.init(elems!);
+    }
 
-}
+    public editProfile() {
+      this.$router.push('/register');
+    }
+
+    public showUploadDialog() {
+      this.$refs.file.click();
+    }
+
+    public uploadPhoto() {
+      const { files } = this.$refs.file;
+      const photo = files[0];
+      if (photo !== null) {
+        const formData = new FormData();
+        formData.append('file', photo);
+        return axios
+          .post(`/api/resources/${this.profile!.id}`, formData)
+          .then(() => this.photoKey += 1)
+          .catch((error: AxiosError) => {
+            let message = 'Ups... Something went wrong...';
+            if (error.response!.status === 413) {
+              message = 'Uploaded photo is too large!';
+            }
+            this.$toasted.error(message, { duration: 3000, className: 'error', fullWidth: true });
+          });
+      } else {
+        throw new Error('Something went wrong');
+      }
+    }
+
+    public remove(presentation: Presentation, event: Event) {
+      event.preventDefault();
+      this.$store.dispatch(REMOVE_PRESENTATION, presentation.id)
+        .then(() => this.$delete(this.presentations, this.presentations.indexOf(presentation)));
+    }
+
+    private closeModal() {
+      const elem = document.querySelector('.modal');
+      M.Modal.getInstance(elem!).close();
+    }
+
+  }
 </script>
 
 <style lang="scss" scoped>
@@ -291,9 +298,15 @@ export default class ProfilePage extends Vue {
     .about-icon {
         margin-right: 1em;
     }
-    .description{
-margin-bottom: 1rem;
+
+    .description {
+        margin-bottom: 1rem;
         padding-left: 1rem;
+        white-space: pre-line;
+    }
+
+    .tags {
+        display: flex;
     }
 </style>
 <style lang="scss">
