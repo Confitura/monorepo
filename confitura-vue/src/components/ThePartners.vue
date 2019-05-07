@@ -183,7 +183,7 @@
         }
 
         .logo__img {
-            width: 80px;
+            width: 65px;
         }
 
         .logo__img--gold {
@@ -198,7 +198,7 @@
             grid-column-end: span 2;
 
             .logo__img {
-                width: 160px;
+                width: 130px;
             }
 
             &.logo--gold .logo__img {

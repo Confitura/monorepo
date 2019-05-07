@@ -189,6 +189,19 @@ We’ve been rapidly growing and we have more than 420 IT and business specialis
           type: 'silver',
           logo: require('../assets/partners/kmd.svg'),
           orientation: 'horizontal',
+        },{
+          id: 'j-labs',
+          name: 'j-labs',
+          description: `We are polish software company founded by engineers for engineers in 2008 with all the best business practices and values.  
+We provide complete development teams, individual engineers and outsourcing of whole project in agile models in the field of software development.  
+Over 250 engineers work in our branches in Krakow and Warsaw. We support companies in the various sectors - such as banking, aviation, telco, as well as niches like machine learning, woodwork, and IoT.  
+Our activities based on technology, content, and reliability have been recognized by the Forbes Diamond 2017, and the distinction in the Business Gazelle 2018 ranking.
+ 
+Join us:  https://www.j-labs.pl/open-positions/`,
+          www: 'https://www.j-labs.pl',
+          type: 'silver',
+          logo: require('../assets/partners/jlabs.svg'),
+          orientation: 'horizontal',
         },
 
       ];
