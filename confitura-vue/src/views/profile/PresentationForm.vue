@@ -46,7 +46,7 @@
                                               data-length="1000"
                                               maxlength="1000"
                                               v-model="presentation.description"></textarea>
-                                    <label for="description">Full description</label>
+                                    <label for="description">Description</label>
                                 </div>
                                 <div class="errors" v-for="error in errors.description">{{error}}</div>
                             </div>
@@ -140,18 +140,20 @@
     public mounted() {
       const { id, userId } = this.$route.params;
       this.userId = userId || this.$store.getters.user.jti;
-      setTimeout(() => {
-        this.setupTagsAutocomplete();
-        M.textareaAutoResize(this.$refs.description);
-        M.textareaAutoResize(this.$refs.shortDescription);
-        M.CharacterCounter.init(this.$refs.shortDescription);
-        M.CharacterCounter.init(this.$refs.description);
-      });
       if (id) {
         axios.get<Presentation>(`/api/presentations/${id}`)
           .then((response) => this.presentation = response.data)
           .then((_) => axios.get<EmbeddedTags>(`/api/presentations/${id}/tags`))
-          .then((tagsResponse) => Vue.set(this.presentation, 'tags', tagsResponse.data._embedded.tags));
+          .then((tagsResponse) => Vue.set(this.presentation, 'tags', tagsResponse.data._embedded.tags))
+          .then(() =>
+            setTimeout(() => {
+              this.setupTagsAutocomplete();
+              M.textareaAutoResize(this.$refs.description);
+              M.textareaAutoResize(this.$refs.shortDescription);
+              M.CharacterCounter.init(this.$refs.shortDescription);
+              M.CharacterCounter.init(this.$refs.description);
+            }),
+          );
       }
     }
 
