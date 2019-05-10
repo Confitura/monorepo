@@ -202,6 +202,42 @@ Join us:  [https://www.j-labs.pl/open-positions/](https://www.j-labs.pl/open-pos
           type: 'silver',
           logo: require('../assets/partners/jlabs.svg'),
           orientation: 'horizontal',
+        },{
+          id: 'decerto',
+          name: 'decerto',
+          description: `#### W skrócie o nas:
+
+Decerto to polska firma informatyczna, specjalizująca się w budowie i wdrażaniu systemów dla biznesu. Na wysoką pozycję wśród dostawców IT składa się 12 letnie doświadczenie we współpracy z wiodącymi firmami na rynkach ubezpieczeniowym, finansowym i medialnym oraz wysoko wykwalifikowana kadra. 
+Posiadamy autorskie rozwiązania oraz tworzymy systemy dostosowane do indywidualnych potrzeb Klientów. Preferujemy długą i stabilną współpracę opartą na spełnianiu oczekiwań, zaufaniu i odpowiedniej kulturze pracy.
+
+#### Kultura  pracy:
+
+Największy nacisk kładziemy na odpowiednie kwalifikacje swoich współpracowników oraz ich satysfakcję z pracy. Poprzez pracę z najlepszymi oraz pozytywną atmosferę stwarzamy warunki do kreatywnej pracy i osiągania sukcesów.
+Nasz zespół liczy ok. 140 osób. Stawiamy na przyjazną atmosferę, wzajemny szacunek i pomoc. Cechuje nas nastawienie na cel, aktywne szukanie rozwiązań i elastyczne podejście do zagadnień.
+Praca to znacząca część naszego życia, dlatego dbamy o to, by w firmie wszyscy czuli się komfortowo. Lubimy też spotkać się po godzinach pracy ☺
+
+#### Nasza oferta:
+
+- Możliwość wyboru przydziału projektowego – różnorodne projekty, różne lokalizacje
+- Wewnętrzne szkolenia oraz TechFlashe
+- Dodatkowy, roczny budżet na rozwój
+- Dofinansowanie certyfikatów
+- Dowolny model współpracy
+- Pakiet benefitów 
+- Wyjazdy i spotkania integracyjne
+
+Stawiamy na wzajemną uczciwość, otwartość i zaufanie. Jesteśmy elastyczni wobec potrzeb naszych współpracowników i tego samego oczekujemy. 
+
+Poznaj nas i dołącz do zespołu: 
+
+[www.decerto.pl/kariera](http://www.decerto.pl/kariera)  
+[www.facebook.com/FirmaDecerto](https://www.facebook.com/FirmaDecerto )  
+[www.instagram.com/firmadecerto/](http://www.instagram.com/firmadecerto/)
+`,
+          www: 'https://decerto.pl/kariera.html',
+          type: 'silver',
+          logo: require('../assets/partners/decerto.svg'),
+          orientation: 'horizontal',
         },
 
       ];
