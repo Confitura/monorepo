@@ -2,8 +2,8 @@ import { Module } from 'vuex';
 import axios from 'axios';
 import { RootState, UserProfile, Presentation, EmbeddedPresentations } from '@/types';
 
-export const LOAD_CURRENT_PROFILE = 'LOAD_CURRENT_PROFILE';
-export const LOAD_CURRENT_PROFILE_PRESENTATIONS = 'LOAD_CURRENT_PROFILE_PRESENTATIONS';
+export const LOAD_PROFILE_BY_ID = 'LOAD_PROFILE_BY_ID';
+export const LOAD_PROFILE_PRESENTATIONS_BY_ID = 'LOAD_PROFILE_PRESENTATIONS_BY_ID';
 const UPDATE_CURRENT_PROFILE = 'UPDATE_CURRENT_PROFILE';
 const UPDATE_CURRENT_PROFILE_PRESENTATIONS = 'UPDATE_CURRENT_PROFILE_PRESENTATIONS';
 export const userModule: Module<StoreUserProfile, RootState> = {
@@ -20,16 +20,16 @@ export const userModule: Module<StoreUserProfile, RootState> = {
     },
   },
   actions: {
-    [LOAD_CURRENT_PROFILE]({ commit, rootState, rootGetters }) {
+    [LOAD_PROFILE_BY_ID]({ commit, rootState, rootGetters }, params: { id: string }) {
       if (rootState.authentication) {
-        return axios.get('/api/users/' + rootGetters.user.jti)
+        return axios.get('/api/users/' + params.id)
           .then((data) => commit(UPDATE_CURRENT_PROFILE, { profile: data.data }));
       }
     },
-    [LOAD_CURRENT_PROFILE_PRESENTATIONS]({ commit, rootState, rootGetters }) {
+    [LOAD_PROFILE_PRESENTATIONS_BY_ID]({ commit, rootState, rootGetters }, params: { id: string }) {
       if (rootState.authentication) {
 
-        return axios.get<EmbeddedPresentations>(`/api/users/${rootGetters.user.jti}/presentations`, {
+        return axios.get<EmbeddedPresentations>(`/api/users/${params.id}/presentations`, {
           params: { projection: 'inlineSpeaker' },
         })
           .then((data) => commit(UPDATE_CURRENT_PROFILE_PRESENTATIONS, {

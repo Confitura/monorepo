@@ -138,8 +138,8 @@
     private userId!: string;
 
     public mounted() {
-      this.userId = this.$store.getters.user.jti;
-      const { id } = this.$route.params;
+      const { id, userId } = this.$route.params;
+      this.userId = userId || this.$store.getters.user.jti;
       if (id) {
         axios.get<Presentation>(`/api/presentations/${id}`)
           .then((response) => this.presentation = response.data)

@@ -32,8 +32,12 @@
 
                             </div>
                             <div class="card-action">
-                                <router-link to="register">Edit profile</router-link>
-                                <router-link to="presentation">Add presentation</router-link>
+                                <router-link :to="{name:'register', params:{id: profile.id}}">
+                                    Edit profile
+                                </router-link>
+                                <router-link :to="{name:'presentation', params:{userId: profile.id}}">
+                                    Add presentation
+                                </router-link>
                             </div>
                             <div class="card-content">
                                 {{profile.bio}}
@@ -126,10 +130,10 @@
 
 <script lang="ts">
   import { Component, Vue } from 'vue-property-decorator';
-  import { LOAD_CURRENT_PROFILE, LOAD_CURRENT_PROFILE_PRESENTATIONS } from '@/store/store.user-profile';
+  import { LOAD_PROFILE_BY_ID, LOAD_PROFILE_PRESENTATIONS_BY_ID } from '@/store/store.user-profile';
   import Box from '@/components/Box.vue';
   import TheContact from '@/components/TheContact.vue';
-  import { Presentation, REMOVE_PRESENTATION, UserProfile } from '@/types';
+  import { EmbeddedPresentations, Presentation, REMOVE_PRESENTATION, UserProfile } from '@/types';
   import axios, { AxiosError } from 'axios';
   import PageHeader from '@/components/PageHeader.vue';
   import Toasted from 'vue-toasted';
@@ -162,14 +166,16 @@
     public email = '';
 
     public mounted() {
-      this.$store.dispatch(LOAD_CURRENT_PROFILE);
-      this.$store.dispatch(LOAD_CURRENT_PROFILE_PRESENTATIONS);
+      this.reloadData();
     }
 
+
+
     public addSpeakerToPresentation() {
+      const userId = this.$route.params.id || this.$store.getters.user.jti;
       axios.post(`/api/presentations/${this.selectedPresentation!.id}/cospeakers/${this.email}`)
         .then((it) => {
-          this.$store.dispatch(LOAD_CURRENT_PROFILE_PRESENTATIONS);
+          this.reloadData();
           this.$toasted.success('speaker added', { duration: 3000 });
           this.closeModal();
         }, (error: AxiosError) => {
@@ -191,7 +197,7 @@
           'You will no longer be able to change it.')) {
         axios.delete(`/api/presentations/${pres.id}/cospeakers/${speaker.email}`)
           .then((it) => {
-            this.$store.dispatch(LOAD_CURRENT_PROFILE_PRESENTATIONS);
+            this.reloadData();
           });
       }
     }
@@ -240,6 +246,12 @@
     private closeModal() {
       const elem = document.querySelector('.modal');
       M.Modal.getInstance(elem!).close();
+    }
+
+    private reloadData() {
+      const userId = this.$route.params.id || this.$store.getters.user.jti;
+      this.$store.dispatch(LOAD_PROFILE_BY_ID, { id: userId });
+      this.$store.dispatch(LOAD_PROFILE_PRESENTATIONS_BY_ID, { id: userId });
     }
 
   }

@@ -86,100 +86,112 @@
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
-  import { LOAD_CURRENT_PROFILE } from '@/store/store.user-profile';
-  import Box from '@/components/Box.vue';
-  import TheContact from '@/components/TheContact.vue';
-  import { User, UserProfile } from '@/types';
-  import M from 'materialize-css';
-  import axios from 'axios';
-  import PageHeader from '@/components/PageHeader.vue';
+import { Component, Vue } from 'vue-property-decorator';
+import { LOAD_PROFILE_BY_ID } from '@/store/store.user-profile';
+import Box from '@/components/Box.vue';
+import TheContact from '@/components/TheContact.vue';
+import { User, UserProfile } from '@/types';
+import M from 'materialize-css';
+import axios from 'axios';
+import PageHeader from '@/components/PageHeader.vue';
 
-  @Component({
-    components: { PageHeader, Box, TheContact },
-  })
-  export default class RegisterPage extends Vue {
-    public $refs!: Vue['$refs'] & {
-      file: {
-        files: File[],
-      },
-      bio: Element,
+@Component({
+  components: { PageHeader, Box, TheContact },
+})
+export default class RegisterPage extends Vue {
+  public $refs!: Vue['$refs'] & {
+    file: {
+      files: File[],
+    },
+    bio: Element,
+  };
+  public profile: UserProfile | null = {};
+  public errors: RegisterErrors = {};
+  public activeUser: User | null = null;
+  // tslint:disable
+  private emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+  // tslint:enable
+
+  public mounted() {
+    M.AutoInit();
+    this.activeUser = this.$store.getters.user;
+    this.loadProfile()
+      .then(() => {
+        this.profile = this.$store.state.userProfile.currentProfile;
+        setTimeout(() => M.textareaAutoResize(this.$refs.bio));
+      });
+  }
+
+  public updated() {
+    M.updateTextFields();
+  }
+
+  public save(event: Event) {
+    event.preventDefault();
+    if (this.validate()) {
+      axios
+        .post<any>('/api/users', this.profile)
+        .then((it) => {
+          if (this.profile && this.profile.id) {
+            this.$router.push('/profile/byId/' + this.profile.id);
+          } else {
+            this.$router.push('/profile');
+          }
+          return it;
+        })
+        .catch((error: any) => this.uploadFailed(error));
+    }
+  }
+
+  public validEmail(email: string) {
+    return this.emailPattern.test(email);
+  }
+
+  private loadProfile() {
+    const userId = this.$route.params.id || this.$store.getters.user.jti;
+    return this.$store.dispatch(LOAD_PROFILE_BY_ID, { id: userId });
+  }
+
+  private validate() {
+    const errors: RegisterErrors = {};
+    let valid = true;
+    if (this.profile === null) {
+      return;
+    }
+    if (!this.profile.email || !this.validEmail(this.profile.email)) {
+      errors.email = ['invalid email'];
+      valid = false;
+    }
+    if (!this.profile.name) {
+      errors.name = ['Name is required'];
+      valid = false;
+    }
+    if (!this.profile.privacyPolicyAccepted) {
+      errors.privacyPolicyAccepted = ['Agreeing to our policy is required'];
+      valid = false;
+    }
+    this.errors = errors;
+    return valid;
+  }
+
+  private uploadFailed(error: any) {
+    this.errors = {
+      form: [
+        'Submit failed',
+        error.response.data.message,
+      ],
     };
-    public profile: UserProfile | null = {};
-    public errors: RegisterErrors = {};
-    public activeUser: User | null = null;
-    // tslint:disable
-    private emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-    // tslint:enable
-
-    public mounted() {
-      M.AutoInit();
-      this.activeUser = this.$store.getters.user;
-      this.$store.dispatch(LOAD_CURRENT_PROFILE)
-        .then(() => {
-          this.profile = this.$store.state.userProfile.currentProfile;
-          setTimeout(() => M.textareaAutoResize(this.$refs.bio));
-        });
-    }
-
-    public updated() {
-      M.updateTextFields();
-    }
-
-    public save(event: Event) {
-      event.preventDefault();
-      if (this.validate()) {
-        axios
-          .post<any>('/api/users', this.profile)
-          .then(() => this.$router.push('/profile'))
-          .catch((error: any) => this.uploadFailed(error));
-      }
-    }
-
-    public validEmail(email: string) {
-      return this.emailPattern.test(email);
-    }
-
-    private validate() {
-      const errors: RegisterErrors = {};
-      let valid = true;
-      if (this.profile === null) {
-        return;
-      }
-      if (!this.profile.email || !this.validEmail(this.profile.email)) {
-        errors.email = ['invalid email'];
-        valid = false;
-      }
-      if (!this.profile.name) {
-        errors.name = ['Name is required'];
-        valid = false;
-      }
-      if (!this.profile.privacyPolicyAccepted) {
-        errors.privacyPolicyAccepted = ['Agreeing to our policy is required'];
-        valid = false;
-      }
-      this.errors = errors;
-      return valid;
-    }
-
-    private uploadFailed(error: any) {
-      this.errors = {
-        form: [
-          'Submit failed',
-          error.response.data.message,
-        ],
-      };
-    }
   }
+}
 
-  interface RegisterErrors {
-    bio?: string[];
-    email?: string[];
-    name?: string[];
-    privacyPolicyAccepted?: string[];
-    form?: string[];
-  }
+interface RegisterErrors {
+  bio?: string[];
+  email?: string[];
+  name?: string[];
+  privacyPolicyAccepted?: string[];
+  form?: string[];
+}
 </script>
 
 <style lang="scss" scoped>
