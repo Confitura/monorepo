@@ -13,7 +13,7 @@ import PresentationForm from '@/views/profile/PresentationForm.vue';
 import PrivacyPolicy from '@/views/PrivacyPolicy.vue';
 import Admin from '@/views/admin/Admin.vue';
 import Users from '@/views/admin/Users.vue';
-import Presentations from "@/views/admin/Presentations.vue";
+import Presentations from '@/views/admin/Presentations.vue';
 
 Vue.use(Router);
 Vue.use(VueScrollTo, {
@@ -63,13 +63,8 @@ const router = new Router({
       component: RegisterPage,
     },
     {
-      path: '/profile',
+      path: '/profile/:id?',
       name: 'profile',
-      component: ProfilePage,
-    },
-    {
-      path: '/profile/byId/:id',
-      name: 'profileById',
       component: ProfilePage,
     },
     {

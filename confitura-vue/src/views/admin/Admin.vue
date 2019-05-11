@@ -1,19 +1,26 @@
 <template>
-    <div class="faq">
-        <PageHeader title="Administration"/>
+    <div class="admin">
+        <PageHeader title="Administration" :small="true"/>
         <Box :small="true" class="content back-office" color="white">
             <div class="row">
-                <div class="col m3 s12">
-                    <div class="collection">
-                        <router-link class="collection-item" to="/admin/users">Users<span class="badge">{{userCount}}</span>
-                        </router-link>
-                        <router-link class="collection-item" to="/admin/presentations">Presentations<span class="badge">{{presentationCount}}</span>
-                        </router-link>
+                <div>
+                    <div class="admin__menu">
+                        <div class="admin__menu-item">
+                            <router-link to="/admin/users">Users
+                            </router-link>
+                            <span class=" new badge">{{userCount}}</span>
+                        </div>
+                        <div class="admin__menu-item">
+                            <router-link to="/admin/presentations">Presentations
+                            </router-link>
+                            <span class="new badge">{{presentationCount}}</span>
+                        </div>
                     </div>
                 </div>
-                <div class="col m9 s12">
-                    <router-view></router-view>
-                </div>
+
+            </div>
+            <div>
+                <router-view></router-view>
             </div>
         </Box>
         <TheContact id="contact"/>
@@ -48,3 +55,17 @@ export default class Admin extends Vue {
 
 }
 </script>
+
+<style scoped lang="scss">
+    .admin{
+        &__menu {
+            display: flex;
+        }
+        &__menu-item {
+            display: flex;
+            align-items: center;
+            margin-right: 1rem;
+        }
+    }
+
+</style>

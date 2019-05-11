@@ -6,24 +6,18 @@
             <tr>
                 <th>id</th>
                 <th>name</th>
-                <th>twitter</th>
-                <th>github</th>
-                <th>www</th>
                 <th>email</th>
                 <th>admin</th>
                 <th>volunteer</th>
                 <th>speaker</th>
-                <th>privacyPolicyAccepted</th>
+                <th>Privacy Accepted</th>
             </tr>
             </thead>
             <tr v-for="user of users">
                 <td>
-                    <router-link :to="{name: 'profileById', params:{id:user.id}}">{{user.id}}</router-link>
+                    <router-link :to="{name: 'profile', params:{id:user.id}}">{{user.id}}</router-link>
                 </td>
                 <td>{{user.name}}</td>
-                <td>{{user.twitter}}</td>
-                <td>{{user.github}}</td>
-                <td>{{user.www}}</td>
                 <td>{{user.email}}</td>
                 <td>{{user.admin}}</td>
                 <td>{{user.volunteer}}</td>
@@ -39,7 +33,7 @@
   import { Component, Vue } from 'vue-property-decorator';
 
   @Component({
-    components: {  },
+    components: {},
   })
   export default class Users extends Vue {
 

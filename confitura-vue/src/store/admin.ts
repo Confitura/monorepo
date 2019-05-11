@@ -1,5 +1,5 @@
 import { Module } from 'vuex';
-import { RootState, UserProfile, EmbeddedUserProfiles, Presentation, EmbeddedPresentations } from '@/types';
+import { EmbeddedPresentations, EmbeddedUserProfiles, Presentation, RootState, UserProfile } from '@/types';
 import axios from 'axios';
 
 export const LOAD_USERS = 'LOAD_USERS';
@@ -10,7 +10,7 @@ const SET_PRESENTATIONS = 'SET_PRESENTATIONS ';
 export const adminModule: Module<AdminState, RootState> = {
   state: {
     users: [],
-    presentations: []
+    presentations: [],
   },
   getters: {
     userCount: ({ users }) => users.length,
@@ -25,13 +25,13 @@ export const adminModule: Module<AdminState, RootState> = {
     },
   },
   actions: {
-    [LOAD_USERS]({ commit, rootState, rootGetters }) {
+    [LOAD_USERS]({ commit }) {
       return axios.get<EmbeddedUserProfiles>('/api/users')
         .then((it) => {
           commit(SET_USERS, { users: it.data._embedded.users });
         });
     },
-    [LOAD_ALL_PRESENTATIONS]({ commit, rootState, rootGetters }) {
+    [LOAD_ALL_PRESENTATIONS]({ commit}) {
       return axios.get<EmbeddedPresentations>('/api/presentations', { params: { projection: 'inlineSpeaker' } })
         .then((it) => {
           commit(SET_PRESENTATIONS, { presentations: it.data._embedded.presentations });

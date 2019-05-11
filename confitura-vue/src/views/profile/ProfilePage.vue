@@ -169,11 +169,7 @@
       this.reloadData();
     }
 
-    private reloadData() {
-      const userId = this.$route.params.id || this.$store.getters.user.jti;
-      this.$store.dispatch(LOAD_PROFILE_BY_ID, { id: userId });
-      this.$store.dispatch(LOAD_PROFILE_PRESENTATIONS_BY_ID, { id: userId });
-    }
+
 
     public addSpeakerToPresentation() {
       const userId = this.$route.params.id || this.$store.getters.user.jti;
@@ -250,6 +246,12 @@
     private closeModal() {
       const elem = document.querySelector('.modal');
       M.Modal.getInstance(elem!).close();
+    }
+
+    private reloadData() {
+      const userId = this.$route.params.id || this.$store.getters.user.jti;
+      this.$store.dispatch(LOAD_PROFILE_BY_ID, { id: userId });
+      this.$store.dispatch(LOAD_PROFILE_PRESENTATIONS_BY_ID, { id: userId });
     }
 
   }
