@@ -152,9 +152,11 @@
             transition: all 0.3s linear;
             max-width: 1000px;
         }
+
         .logo {
             margin-top: 1rem;
             margin-bottom: 1rem;
+
             &.logo--horizontal {
                 margin-top: 1.5rem;
                 margin-bottom: 1.5rem;
@@ -166,7 +168,6 @@
             margin-left: 2rem;
             margin-right: 2rem;
         }
-
 
 
         .other-types {
@@ -186,8 +187,8 @@
             width: 65px;
         }
 
-        .logo__img--gold {
-            width: 160px;
+        .logo--gold .logo__img {
+            width: 130px;
         }
 
         .logo__img--platinum {

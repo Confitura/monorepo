@@ -238,6 +238,16 @@ Poznaj nas i dołącz do zespołu:
           type: 'silver',
           logo: require('../assets/partners/decerto.svg'),
           orientation: 'horizontal',
+        },{
+          id: 'roche',
+          name: 'roche',
+          description: `Founded in Switzerland in 1896, [Roche](https://it.roche.pl/) has helped millions of patients around the world with innovative pharmaceuticals and diagnostics. We have been at the forefront of cancer research and treatment for over 50 years. We invest around 9 billion Swiss francs in R&D every year because innovation is our lifeblood. We need advanced IT solutions to perform research, development, production and distribution of new medicines. 
+
+Roche Global IT Solution Centre is based in Poland, in two locations: Warsaw and Poznan, and uses the cutting-edge technologies to improve healthcare. We are more than 500 people who create solutions that help doctors, patients and scientist around the world.`,
+          www: 'https://it.roche.pl',
+          type: 'gold',
+          logo: require('../assets/partners/roche.svg'),
+
         },
 
       ];

@@ -131,6 +131,7 @@
             height: auto;
             max-width: 500px;
             max-height: 200px;
+            min-width: 190px;
         }
 
         &__logo--horizontal {
