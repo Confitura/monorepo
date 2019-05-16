@@ -22,6 +22,7 @@
       { label: 'numbers', url: '/#numbers' },
       { label: 'partners', url: '/partners' },
       { label: 'contact', url: '/#contact' },
+      { label: 'workshop day', url: '/workshops' },
       { label: 'FAQ', url: '/faq' },
       { label: 'my profile', url: '/profile', visible: () => this.isLogin },
       { label: 'logout', action: () => this.logout(), visible: () => this.isLogin },
