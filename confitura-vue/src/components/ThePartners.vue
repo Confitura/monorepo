@@ -4,7 +4,7 @@
         <div class="partners-grid">
             <div class="platinum">
                 <a v-for="item in partners.platinum" :href="item.www" class="link" rel="noopener" target="_blank">
-                    <img :src="item.logo" :alt="item.name" class="logo__img--platinum">
+                    <img :src="item.logo" :alt="item.name" class="logo__img--platinum" :class="item.id">
                 </a>
                 <span class="type--platinum">Platinum</span>
             </div>
@@ -176,7 +176,6 @@
             flex-direction: column-reverse;
             overflow: hidden;
 
-
             @include md() {
                 flex-direction: column;
 
@@ -193,7 +192,12 @@
 
         .logo__img--platinum {
             width: 300px;
+            &.ey{
+                padding: 4rem 0;
+                box-sizing: border-box;
+            }
         }
+
 
         .logo--horizontal {
             grid-column-end: span 2;

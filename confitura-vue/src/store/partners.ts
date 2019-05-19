@@ -6,7 +6,7 @@ export const partnersModule: Module<PartnersState, RootState> = {
     partners: [],
   },
   getters: {
-    platinum: ({ partners }): Partner[] => partners.filter((partner) => partner.type === 'platinum'),
+    platinum: ({ partners }): Partner[] => shuffle(partners.filter((partner) => partner.type === 'platinum')),
     silver: ({ partners }): Partner[] => shuffle(partners.filter((partner) => partner.type === 'silver')),
     gold: ({ partners }): Partner[] => shuffle(partners.filter((partner) => partner.type === 'gold')),
   },
@@ -40,6 +40,13 @@ export const partnersModule: Module<PartnersState, RootState> = {
           www: 'https://softwareplant.com/',
           type: 'platinum',
           logo: require('../assets/partners/softwareplant.svg'),
+        }, {
+          id: 'ey',
+          description: `EY Global Delivery Services (GDS) is a network of EY competence centers located in five countries: India, China, Poland, Argentina, and the Philippines. [EY GDS Poland](www.workatgds.pl) provides high quality and value-added support to our customers who are EY firms and other companies, working to agreed principles of exceptional client service. The technology departments of EY GDS Poland include teams working for external clients from around the world, as well as specialists who create and develop internal EY apps.`,
+          name: 'EY',
+          www: 'https://workatgds.pl/pl/',
+          type: 'platinum',
+          logo: require('../assets/partners/ey.svg'),
         }, {
           id: '7n',
           description: `[7N](https://www.7n.com/) to duńska firma konsultingowa, zajmująca się
@@ -162,7 +169,7 @@ Thousands of leading companies — including Ford, Fox, Google, and Dow Jones �
           type: 'silver',
           logo: require('../assets/partners/applause.svg'),
           orientation: 'horizontal',
-        },{
+        }, {
           id: 'nordea',
           name: 'Nordea',
           description: `Nordea w Polsce jest częścią największej skandynawskiej instytucji finansowej. Funkcjonuje jako centrum operacyjne w Łodzi oraz IT w Trójmieście i Warszawie. IT w Polsce dostarcza kompleksowe rozwiązania w zakresie utrzymania i rozwoju platform i systemów informatycznych oraz uczestniczy we wdrożeniu jednego z największych systemów bankowych na świecie. Nordea planuje wzrost zatrudnienia. Poszukuje absolwentów studiów wyższych i ekspertów o ugruntowanej wiedzy informatycznej.`,
@@ -170,7 +177,7 @@ Thousands of leading companies — including Ford, Fox, Google, and Dow Jones �
           type: 'silver',
           logo: require('../assets/partners/nordea.svg'),
           orientation: 'horizontal',
-        },{
+        }, {
           id: 'britenet',
           name: 'Britenet',
           description: `Britenet to software house realizujący projekty dla międzynarodowych klientów. Firma działa na rynku od 13 lat, zatrudnia obecnie ponad 500 pracowników i ma biura w Warszawie, Poznaniu, Lublinie, Kielcach oraz Białymstoku.  
@@ -179,7 +186,7 @@ Rozwój zawodowy idzie w parze z dobrą atmosferą, o czym świadczy tytuł Najl
           type: 'silver',
           logo: require('../assets/partners/britenet.svg'),
           orientation: 'horizontal',
-        },{
+        }, {
           id: 'kmd',
           name: 'KMD',
           description: `For more than 40 years, KMD has played a key role in digitizing the Danish state, helping make Denmark’s public sector one of the best run, most efficient and highly digitized in the world. KMD is a leading supplier of mission-critical software, solutions and IT services primarily to Denmark’s public sector, but with a growing footprint in the private sector both domestically and in Sweden and Norway. We have a broad portfolio of products and services, based predominantly on our own software solutions.
@@ -189,7 +196,7 @@ We’ve been rapidly growing and we have more than 420 IT and business specialis
           type: 'silver',
           logo: require('../assets/partners/kmd.svg'),
           orientation: 'horizontal',
-        },{
+        }, {
           id: 'j-labs',
           name: 'j-labs',
           description: `We are polish software company founded by engineers for engineers in 2008 with all the best business practices and values.  
@@ -202,7 +209,7 @@ Join us:  [https://www.j-labs.pl/open-positions/](https://www.j-labs.pl/open-pos
           type: 'silver',
           logo: require('../assets/partners/jlabs.svg'),
           orientation: 'horizontal',
-        },{
+        }, {
           id: 'decerto',
           name: 'decerto',
           description: `#### W skrócie o nas:
@@ -238,7 +245,7 @@ Poznaj nas i dołącz do zespołu:
           type: 'silver',
           logo: require('../assets/partners/decerto.svg'),
           orientation: 'horizontal',
-        },{
+        }, {
           id: 'roche',
           name: 'roche',
           description: `Founded in Switzerland in 1896, [Roche](https://it.roche.pl/) has helped millions of patients around the world with innovative pharmaceuticals and diagnostics. We have been at the forefront of cancer research and treatment for over 50 years. We invest around 9 billion Swiss francs in R&D every year because innovation is our lifeblood. We need advanced IT solutions to perform research, development, production and distribution of new medicines. 

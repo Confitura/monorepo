@@ -14,7 +14,7 @@
                                  class="logo-link"
                                  :class="`logo-link--${partner.type}`">
                         <img :src="partner.logo" :alt="partner.name"
-                             :class="{['logo--'+partner.type]: true, ['logo--'+partner.orientation]: partner.orientation }">
+                             :class="{['logo--'+partner.type]: true, ['logo--'+partner.orientation]: partner.orientation, [partner.id]: true }">
                     </router-link>
                 </div>
             </article>
@@ -98,9 +98,14 @@
 
     .logos {
         display: flex;
-        flex-wrap: wrap;
+
         margin-bottom: 6rem;
         align-items: center;
+        flex-direction: column;
+        @include md(){
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
     }
 
     .logo-link {
@@ -114,25 +119,28 @@
 
     .logo--platinum {
         width: 80%;
+
+
         @include md() {
-            width: unset;
+            width: 300px;
         }
     }
 
     .logo--silver {
         width: 100px;
+
         &.logo--horizontal {
             width: 200px;
         }
     }
+
     .logo--gold {
         width: 150px;
+
         &.logo--horizontal {
             width: 300px;
         }
     }
-
-
 
 
 </style>
