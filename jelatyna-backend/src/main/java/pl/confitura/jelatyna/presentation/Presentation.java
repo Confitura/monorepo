@@ -1,5 +1,8 @@
 package pl.confitura.jelatyna.presentation;
 
+import static java.util.stream.Collectors.toSet;
+
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,12 +23,13 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 import pl.confitura.jelatyna.presentation.rating.Rate;
+import pl.confitura.jelatyna.user.PublicUser;
 import pl.confitura.jelatyna.user.User;
 
 @Entity
 @Data
-@ToString(exclude = {"speakers", "ratings"})
-@EqualsAndHashCode(exclude = {"speakers", "ratings"})
+@ToString(exclude = { "speakers", "ratings" })
+@EqualsAndHashCode(exclude = { "speakers", "ratings" })
 @Accessors(chain = true)
 public class Presentation {
 
@@ -90,5 +94,15 @@ public class Presentation {
     public Presentation setSpeaker(User speaker) {
         speakers.add(speaker);
         return this;
+    }
+
+    public Set<PublicUser> getPublicSpeakers() {
+        if (getSpeakers().isEmpty()) {
+            return Collections.emptySet();
+        } else {
+            return getSpeakers().stream()
+                    .map(PublicUser::new)
+                    .collect(toSet());
+        }
     }
 }
