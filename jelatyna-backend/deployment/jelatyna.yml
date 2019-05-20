@@ -46,6 +46,7 @@
       tags:
         - restart
         - stop
+        - config
 
     - name: copy new jar file
       copy:
@@ -57,6 +58,8 @@
       template:
         src: templates/application.yml
         dest: "{{app}}/application.yml"
+      tags:
+        - config
 
     - name: start app
       shell: nohup java -jar jelatyna.jar &
@@ -64,3 +67,4 @@
         chdir: "{{app}}"
       tags:
         - restart
+        - config

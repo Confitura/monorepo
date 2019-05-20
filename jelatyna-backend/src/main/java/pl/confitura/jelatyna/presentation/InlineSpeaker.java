@@ -1,11 +1,10 @@
 package pl.confitura.jelatyna.presentation;
 
-import java.util.List;
 import java.util.Set;
 
 import org.springframework.data.rest.core.config.Projection;
 
-import pl.confitura.jelatyna.user.User;
+import pl.confitura.jelatyna.user.PublicUser;
 
 @Projection(name = "inlineSpeaker", types = { Presentation.class })
 interface InlineSpeaker {
@@ -23,8 +22,10 @@ interface InlineSpeaker {
 
     Set<Tag> getTags();
 
-    Set<User> getSpeakers();
+    Set<PublicUser> getSpeakers();
 
     String getStatus();
+
+    boolean isWorkshop();
 
 }
