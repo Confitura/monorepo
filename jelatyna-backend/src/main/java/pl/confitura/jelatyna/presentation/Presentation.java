@@ -18,6 +18,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -28,8 +29,8 @@ import pl.confitura.jelatyna.user.User;
 
 @Entity
 @Data
-@ToString(exclude = { "speakers", "ratings" })
-@EqualsAndHashCode(exclude = { "speakers", "ratings" })
+@ToString(exclude = { "speakers", "ratings", "publicSpeakers" })
+@EqualsAndHashCode(exclude = { "speakers", "ratings", "publicSpeakers" })
 @Accessors(chain = true)
 public class Presentation {
 
@@ -96,6 +97,7 @@ public class Presentation {
         return this;
     }
 
+    @JsonIgnore
     public Set<PublicUser> getPublicSpeakers() {
         if (getSpeakers().isEmpty()) {
             return Collections.emptySet();
