@@ -1,8 +1,10 @@
 package pl.confitura.jelatyna.user;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class PublicUser {
     private String name;
     private String bio;
