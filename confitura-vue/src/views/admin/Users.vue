@@ -15,7 +15,7 @@
             </thead>
             <tr v-for="user of users">
                 <td>
-                    <router-link :to="{name: 'profile', params:{id:user.id}}">{{user.id}}</router-link>
+                    <router-link :to="{name: 'profile', params: {id: user.id} }">{{user.id}}</router-link>
                 </td>
                 <td>{{user.name}}</td>
                 <td>{{user.email}}</td>

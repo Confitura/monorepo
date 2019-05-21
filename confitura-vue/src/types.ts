@@ -86,3 +86,9 @@ export interface Tag {
 export interface Page {
   content: string;
 }
+
+export interface Vote {
+  rate: number;
+  id: string;
+  order: number;
+}

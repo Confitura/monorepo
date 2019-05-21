@@ -5,7 +5,9 @@ import store from './store';
 import 'intersection-observer/intersection-observer';
 import '@/interceptors';
 import * as VueGoogleMaps from 'vue2-google-maps';
+import VueHotkey from 'v-hotkey';
 
+Vue.use(VueHotkey);
 Vue.use(VueGoogleMaps, {
   load: {
     key: 'AIzaSyA6nOtsqyZJRfMwy6kmaK2_MgX51TtmViA',

@@ -32,7 +32,11 @@ export const authenticationModule: Module<AuthenticationState, RootState> = {
   mutations: {
     [TOKEN](store, payload: { token: string }) {
       store.token = payload.token;
-      localStorage.setItem(TOKEN, payload.token);
+      if (payload.token == null) {
+        localStorage.removeItem(TOKEN);
+      } else {
+        localStorage.setItem(TOKEN, payload.token);
+      }
     },
   },
   actions: {
