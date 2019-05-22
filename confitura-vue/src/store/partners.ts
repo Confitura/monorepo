@@ -288,6 +288,43 @@ For growth, fun & building stuff that works, join Evojam!`,
           orientation: 'horizontal',
           logo: require('../assets/partners/evojam.svg'),
 
+        },{
+          id: 'nbc',
+          name: 'nbc',
+          description: `Robimy projekty. Budujemy zespoły.  
+Tworzenie oprogramowania i ciągłe szukanie innowacyjnych rozwiązań to coś co nas nakręca i motywuje do działania.   
+Pomagamy klientom z branży finansów, bankowości, mediów i nowych technologii poprzez m.in. rozbudowę zespołów deweloperskich, utrzymanie oprogramowania czy też rozwój systemów.
+
+Co nas cechuje?  
+* pracujemy z grupą najlepszych programistów, projektantów i specjalistów IT w Polsce. 
+* dbamy o to by szybko i rzetelnie dobierać osoby odpowiedzialne za projekt IT 
+* łączymy pasję z profesjonalizmem. 
+* w doborze i selekcji pracowników kierujemy się doświadczeniem. Aż 40 % naszego zespołu stanowią eksperci, kolejne 45% to wysoko wykwalifikowani specjaliści. 
+* realizujemy innowacyjne i różnorodne projekty. Uwzględniając wszystkie preferencje oferujemy elastyczną formę zatrudnienia i wybór świadczeń. Prace zdalną w naszym biurze lub bezpośrednio u klienta.
+
+Do współpracy zapraszamy:   
+* programistów, 
+* analityków, 
+* administratorów, 
+* projektantów, 
+* kierowników projektów, 
+* konsultantów, 
+* testerów oraz IT managerów
+
+Satysfakcja ludzi, z którymi pracujemy, jest dla nas kluczowa. Dlatego indywidualnie podchodzimy zarówno do swoich partnerów biznesowych, jak i do naszych pracowników. Chcemy zrozumieć Twoje cele oraz plany i pomóc Ci w ich osiągnięciu.   
+Jesteśmy w całości samofinansującą się polską firmą, która wszystkie swoje działania opiera na konkretnych wartościach przyświecających nam od początku istnienia. Dzięki konsekwencji i niesamowitemu zespołowi zdobyliśmy uznanie w wielu prestiżowych rankingach, takich jak: Gazele Biznesu, ComputerWorld Top200 i IT@Bank.   
+Adresy naszych biur:
+* Wrocław - siedziba główna NBC - ul. Grabiszyńska 251a. 
+* Warszawa - Chmielna Business Center, ul. Chmielna 132/ 134. 
+* Gdańsk - Tryton Business House, ul. Jana z Kolna 11
+* Kraków - ul. Basztowa 3/16. 
+* Katowice - ul. Zabrska 16/3 
+
+Zapraszamy na naszą stronę: [www.nbc.com.pl](https://www.nbc.com.pl)`,
+          www: 'https://www.nbc.com.pl',
+          type: 'silver',
+          logo: require('../assets/partners/nbc.svg'),
+
         },
 
       ];
