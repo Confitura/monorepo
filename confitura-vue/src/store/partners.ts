@@ -355,6 +355,25 @@ nagroda honorowa w kategorii „Banki innowacyjne” w rankingu 50. największyc
           orientation: 'horizontal',
           logo: require('../assets/partners/alior.svg'),
 
+        },{
+          id: 'coi',
+          name: 'Centralny Ośrodek Informatyki',
+          description: `Są tacy, dla których przy tworzeniu usług cyfrowych najważniejszy jest człowiek. Jest miejsce, gdzie dzięki technologii rozproszone instytucje łączą się w proste usługi przyjazne dla obywateli – tak wygląda kod do cyfryzacji. W Centralnym Ośrodku Informatyki realizujemy projekty dla Ministerstwa Cyfryzacji.  
+Jesteśmy unikalnym w skali państwa zespołem liczącym ponad 500 specjalistów.  
+Zatrudniamy ekspertów IT  
+Zarządzamy Systemem Rejestrów Państwowych  
+Projektujemy e-usługi  
+Prowadzimy projekty  
+Dzielimy się wiedzą  
+ 
+Mamy swoje biura w  Warszawie, Lublinie, Katowicach, Łodzi, Rzeszowie, Poznaniu, Bydgoszczy i Gorzowie Wielkopolskim.  
+\\#cyfryzacjatofrajda  
+My już jesteśmy częścią cyfryzacji, a Ty? Przetestuj [coi.gov.pl](https://www.coi.gov.pl/).`,
+          www: 'https://www.coi.gov.pl/',
+          type: 'silver',
+          orientation: 'horizontal',
+          logo: require('../assets/partners/coi.svg'),
+
         },
 
       ];
