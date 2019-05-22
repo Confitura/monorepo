@@ -255,6 +255,25 @@ Roche Global IT Solution Centre is based in Poland, in two locations: Warsaw and
           type: 'gold',
           logo: require('../assets/partners/roche.svg'),
 
+        }, {
+          id: '4finance',
+          name: '4finance',
+          description: `
+We are one of Europe’s largest digital consumer lending groups. We get money to people when they need it – quickly, conveniently and responsibly.  
+We use cutting edge technology and data to offer fast and convenient loans to customers across 16 countries.  
+
+Since we were established in 2008, we have provided more than 15,000,000 Single Payment, Line of Credit and Instalment Loans totalling over EUR 6.0 billion.
+
+4finance IT is part of 4finance Group. We focus on bringing the right mix of technologies to deliver a great service for our customers, making sure our customers receive a simple and fast service. Our IT teams work across Europe to develop global products and support local initiatives with skill and insight.
+ 
+[http://www.4financeit.com/](http://www.4financeit.com/)  
+[https://www.4finance.com](https://www.4finance.com)  
+[https://www.4finance.com/jobs](https://www.4finance.com/jobs)  `,
+          www: 'http://www.4financeit.com/',
+          type: 'silver',
+          orientation: 'horizontal',
+          logo: require('../assets/partners/4finance.svg'),
+
         },
 
       ];
