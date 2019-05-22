@@ -266,13 +266,27 @@ Since we were established in 2008, we have provided more than 15,000,000 Single 
 
 4finance IT is part of 4finance Group. We focus on bringing the right mix of technologies to deliver a great service for our customers, making sure our customers receive a simple and fast service. Our IT teams work across Europe to develop global products and support local initiatives with skill and insight.
  
-[http://www.4financeit.com/](http://www.4financeit.com/)  
+[https://www.4financeit.com/](https://www.4financeit.com/)  
 [https://www.4finance.com](https://www.4finance.com)  
 [https://www.4finance.com/jobs](https://www.4finance.com/jobs)  `,
-          www: 'http://www.4financeit.com/',
+          www: 'https://www.4financeit.com/',
           type: 'silver',
           orientation: 'horizontal',
           logo: require('../assets/partners/4finance.svg'),
+
+        }, {
+          id: 'evojam',
+          name: 'evojam',
+          description: `Evojam is an unique blend of flexibility & quality. Strong technology with lightweight approach. Small team who can deliver difficult projects.  
+Our motto is KEEP GROWING. That's why Evojam's core values are learning and doing good quality work. This means we use every opportunity to learn, and we know how important teamwork is in growing and learning.  
+We build applications that work, that scale, that can be maintained over a longer time. We use Scrum and modern tech-stack: Scala, Java8+, NodeJS, Angular, TypeScript, React, MongoDB and plenty more.  
+Our primary customers are startups in the scaling phase from around the globe.
+
+For growth, fun & building stuff that works, join Evojam!`,
+          www: 'https://www.evojam.com',
+          type: 'silver',
+          orientation: 'horizontal',
+          logo: require('../assets/partners/evojam.svg'),
 
         },
 
