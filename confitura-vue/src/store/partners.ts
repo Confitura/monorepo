@@ -325,6 +325,36 @@ Zapraszamy na naszą stronę: [www.nbc.com.pl](https://www.nbc.com.pl)`,
           type: 'silver',
           logo: require('../assets/partners/nbc.svg'),
 
+        }, {
+          id: 'alior',
+          name: 'Alior Bank',
+          description: `[Alior Bank](https://www.aliorbank.pl/dodatkowe-informacje/kariera/praca-w-it.html) jest jednym z najdynamiczniej rozwijających się banków uniwersalnych, świadczącym pełen zakres usług skierowanych do klientów detalicznych i biznesowych.  
+Bank systematycznie umacnia pozycję rynkową, skutecznie łącząc zasady tradycyjnej bankowości z innowacyjnymi rozwiązaniami i produktami. O najwyższą jakość produktów i usług Banku dba ponad 8000 pracowników. W 2017r. została ogłoszona strategia banku na lata 2017-2020 pod hasłem "Cyfrowy buntownik", co oznacza technologiczną transformację każdego obszaru działania banku. W ramach przyjętej strategii są już realizowane projekty w obszarze:
+
+automatyzacji  
+robotyzacji  
+blockchain  
+chmura  
+PSD2/API  
+sztuczna inteligencja DRONN  
+biometria  
+Alior Bank jest jedną z najbardziej rozpoznawalnych marek na polskim rynku bankowym. Ikoną Banku, która łączy świat tradycyjnej bankowości i nowatorskich rozwiązań jest postać Bankiera w meloniku. Dodatkowo podkreśla to hasło „WYŻSZA KULTURA. BANK NOWOŚCI.”.
+
+Dzięki bliskiej współpracy pomiędzy działami, szybkości działania, skracaniu dystansu między szeregowymi pracownikami a zarządem, mamy poczucie, że pracujemy w wyjątkowej firmie. To miejsce dla ludzi, którzy mają pomysły i odwagę biznesową, by wyznaczać nowe standardy bankowości.
+
+Od 2014 r. akcje Alior Banku wchodzą w skład indeksu WIG20 skupiającego największe i najbardziej płynne spółki notowane na Giełdzie Papierów Wartościowych w Warszawie.
+
+Alior Bank jest wielokrotnym laureatem prestiżowych nagród oraz zwycięzcą rankingów o zasięgu międzynarodowym. Ważniejsze osiągnięcia z 2018 roku:
+
+ 1\\. miejsce w rankingu „Przyjazny Bank Newsweeka 2018” w kategorii „Bankowość internetowa”,  
+1\\. miejsce w kategorii „New Digital Venture” w konkursie The Heart Corporate Innovation Awards 2018 za partnerstwo Alior Banku i cyfrowej platformy pośrednictwa finansowego online Bancovo,
+tytuł Lidera Informatyki 2018 w 22. edycji konkursu organizowanego przez magazyn „Computerworld”. Głównymi kryteriami wyboru jest biznesowa wartość projektów dostarczanych przez IT oraz ich innowacyjność,
+nagroda honorowa w kategorii „Banki innowacyjne” w rankingu 50. największych banków w Polsce 2018 roku.`,
+          www: 'https://www.aliorbank.pl/dodatkowe-informacje/kariera/praca-w-it.html',
+          type: 'silver',
+          orientation: 'horizontal',
+          logo: require('../assets/partners/alior.svg'),
+
         },
 
       ];
