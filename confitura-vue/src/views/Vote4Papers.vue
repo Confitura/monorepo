@@ -363,6 +363,7 @@
         width: 100vw;
         align-self: center;
         padding-top: 0.5rem;
+        border-top: 1px #4a4a4a solid;
         @include md() {
             padding-top: 0;
             background: transparent;
@@ -375,6 +376,7 @@
                     ".    vote    ."
                     "prev counter next";
             /*@formatter:on*/
+            border-top: none;
         }
     }
 
