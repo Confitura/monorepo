@@ -385,6 +385,18 @@ Our focus on quality, self-improvement and a true engineering approach results i
           orientation: 'horizontal',
           logo: require('../assets/partners/sml.svg'),
 
+        },{
+          id: 'netcompany',
+          name: 'netcompany',
+          description: `Netcompany has gone from being a small start-up in 2000 to more than 2000 skilled IT consultants and developers located in offices in Poland, Denmark, Norway, the United Kingdom and Vietnam. Over 240 of our employees is located at our office in Warsaw. Currently we’re conducting over 160 various projects for the biggest private companies as well as for public sector entities from Denmark, Norway and United Kingdom – world’s leaders of information and communication technologies usage. At Netcompany we rely on one another and we develop quickly. We are team players
+ 
+IT people leading IT people  
+That is the core of Netcompany's decentralized management model. From top to bottom, our organization consists of IT professionals with extensive expertise. We understand that our employees are the key to maintaining our position as the most skilled and fastest growing IT consulting firm. That is why we have created a business model where we constantly focus on developing our employees to becoming the best in the industry. Currently we are looking for talented Java Developers for our Polish office that will help us achieve our goals and continuous growth. You can become a part of exciting projects working closely together with your Polish, Danish and Norwegian colleagues.`,
+          www: 'https://www.netcompany.com/pl',
+          type: 'silver',
+          orientation: 'horizontal',
+          logo: require('../assets/partners/netcompany.svg'),
+
         },
 
       ];
