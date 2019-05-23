@@ -509,6 +509,7 @@
         &__description {
             font-size: 1.2rem;
             line-height: 1.5rem;
+            white-space: pre-wrap;
         }
     }
 
