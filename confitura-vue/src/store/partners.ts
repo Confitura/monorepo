@@ -290,7 +290,7 @@ For growth, fun & building stuff that works, join Evojam!`,
 
         },{
           id: 'nbc',
-          name: 'nbc',
+          name: 'NBC',
           description: `Robimy projekty. Budujemy zespoły.  
 Tworzenie oprogramowania i ciągłe szukanie innowacyjnych rozwiązań to coś co nas nakręca i motywuje do działania.   
 Pomagamy klientom z branży finansów, bankowości, mediów i nowych technologii poprzez m.in. rozbudowę zespołów deweloperskich, utrzymanie oprogramowania czy też rozwój systemów.
@@ -373,6 +373,17 @@ My już jesteśmy częścią cyfryzacji, a Ty? Przetestuj [coi.gov.pl](https://w
           type: 'silver',
           orientation: 'horizontal',
           logo: require('../assets/partners/coi.svg'),
+
+        },{
+          id: 'sml',
+          name: 'SoftwareMill',
+          description: `SoftwareMill is a consulting & custom software development company, delivering services remotely, worldwide for 10 years. Being experts in Scala (Akka, Play, Spark), Java, Kotlin we specialize in distributed, big data systems, blockchain, machine learning, IoT, and data analytics. 
+
+Our focus on quality, self-improvement and a true engineering approach results in systems that do their job, bring value to clients, help them scale and grow.`,
+          www: 'https://softwaremill.com/',
+          type: 'silver',
+          orientation: 'horizontal',
+          logo: require('../assets/partners/sml.svg'),
 
         },
 
