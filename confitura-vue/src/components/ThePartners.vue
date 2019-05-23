@@ -17,7 +17,7 @@
                                  class="logo"
                                  :class="{[`logo--${item.orientation}`]: item.orientation, [`logo--${active}`]: active}">
                                 <a :href="item.www" class="link" rel="noopener" target="_blank">
-                                    <img :src="item.logo" :alt="item.name" class="logo__img">
+                                    <img :src="item.logo" :alt="item.name" class="logo__img" :title="item.name">
                                 </a>
                             </div>
                         </div>
@@ -29,7 +29,7 @@
                          :key="type"
                          @click="activate(type)"
                          @mouseenter="pauseIfActive(type)"
-                         @mouseleave="start()"
+                         @mouseleave="startCarousel()"
                          :class="{[`type--${type}`]: true, [`type--active`]: type === active}">{{type}}
                     </div>
                 </div>
@@ -52,25 +52,33 @@
     public platinum: Partner[] = [];
     public silver: Partner[] = [];
     public gold: Partner[] = [];
-    public types: PartnerType[] = ['gold', 'silver', 'bronze'];
+    public types: PartnerType[] = ['gold', 'silver'];
     public partners: Partners = { platinum: [], gold: [], silver: [], bronze: [] };
     public active: PartnerType = 'gold';
-    private pause = false;
+    private intervalId: number = 0;
 
     public pauseIfActive(type: string) {
       if (this.active === type) {
-        this.pause = true;
+        this.stopCarousel();
       }
     }
 
-    public start() {
-      this.pause = false;
-    }
 
     public activate(type: PartnerType) {
       this.active = type;
-      this.pause = true;
+      this.stopCarousel();
     }
+
+    public startCarousel() {
+      if (this.intervalId === 0) {
+        this.intervalId = setInterval(() => {
+          const currentIdx = this.types.indexOf(this.active);
+          const newIdx = (currentIdx + 1) % 2;
+          this.active = this.types[newIdx];
+        }, 5000);
+      }
+    }
+
 
 
     protected mounted() {
@@ -79,14 +87,13 @@
           this.partners.platinum = this.$store.getters.platinum;
           this.partners.silver = this.$store.getters.silver;
           this.partners.gold = this.$store.getters.gold;
-          setInterval(() => {
-            if (!this.pause) {
-              const currentIdx = this.types.indexOf(this.active);
-              const newIdx = (currentIdx + 1) % 2;
-              this.active = this.types[newIdx];
-            }
-          }, 5000);
+          this.startCarousel();
         });
+    }
+
+    private stopCarousel() {
+      clearInterval(this.intervalId);
+      this.intervalId = 0;
     }
 
   }
@@ -154,19 +161,19 @@
         }
 
         .logo {
-            margin-top: 1rem;
-            margin-bottom: 1rem;
+            margin-top: 1.2rem;
+            margin-bottom: 1.2rem;
 
             &.logo--horizontal {
-                margin-top: 1.5rem;
-                margin-bottom: 1.5rem;
+                margin-top: 1.2rem;
+                margin-bottom: 1.2rem;
             }
 
         }
 
         .logo--silver, .logo--gold {
-            margin-left: 2rem;
-            margin-right: 2rem;
+            margin-left: 1.2rem;
+            margin-right: 1.2rem;
         }
 
 
@@ -192,8 +199,9 @@
 
         .logo__img--platinum {
             width: 300px;
-            &.ey{
-                padding: 4rem 0;
+
+            &.ey {
+                padding: 0 0 4rem 0;
                 box-sizing: border-box;
             }
         }
