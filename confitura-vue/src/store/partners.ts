@@ -393,7 +393,7 @@ Our focus on quality, self-improvement and a true engineering approach results i
 IT people leading IT people  
 That is the core of Netcompany's decentralized management model. From top to bottom, our organization consists of IT professionals with extensive expertise. We understand that our employees are the key to maintaining our position as the most skilled and fastest growing IT consulting firm. That is why we have created a business model where we constantly focus on developing our employees to becoming the best in the industry. Currently we are looking for talented Java Developers for our Polish office that will help us achieve our goals and continuous growth. You can become a part of exciting projects working closely together with your Polish, Danish and Norwegian colleagues.`,
           www: 'https://www.netcompany.com/pl',
-          type: 'silver',
+          type: 'gold',
           orientation: 'horizontal',
           logo: require('../assets/partners/netcompany.svg'),
 

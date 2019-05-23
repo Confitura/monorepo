@@ -482,7 +482,7 @@
             margin-right: 1rem;
         }
 
-        &__language, &__level {
+        &__language, &__level, &__workshop {
             margin-right: 1rem;
         }
 
