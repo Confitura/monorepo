@@ -12,8 +12,11 @@ import pl.confitura.jelatyna.user.User;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
+import static org.apache.commons.lang3.StringUtils.isBlank;
+
 public abstract class AbstractOAuth20Service {
 
+    private final OAuthConfiguration.OAuthProviderProperties properties;
     protected OAuth20Service auth20Service;
     private OAuthUserService oauthUserService;
     protected ObjectMapper mapper;
@@ -24,14 +27,23 @@ public abstract class AbstractOAuth20Service {
             OAuthConfiguration.OAuthProviderProperties properties,
             ObjectMapper mapper) {
         this.oauthUserService = oauthUserService;
+        this.properties = properties;
         this.auth20Service = createService(properties);
         this.mapper = mapper;
     }
 
     protected abstract OAuth20Service createService(OAuthConfiguration.OAuthProviderProperties properties);
 
-    String getAuthorizationUrl() {
-        return auth20Service.getAuthorizationUrl();
+    protected OAuth20Service createService(String callback) {
+        if (isBlank(callback)) {
+            return auth20Service;
+        } else {
+            return createService(properties.withCallback(callback));
+        }
+    }
+
+    String getAuthorizationUrl(String callback) {
+        return createService(callback).getAuthorizationUrl();
     }
 
     User getUserFor(String code) {

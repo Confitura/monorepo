@@ -3,6 +3,7 @@ package pl.confitura.jelatyna.registration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import pl.confitura.jelatyna.BaseIntegrationTest;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
 import pl.confitura.jelatyna.registration.voucher.Voucher;
@@ -82,6 +83,7 @@ class RegistrationControllerTest extends BaseIntegrationTest {
     }
 
     @Test
+    @Transactional
     void user_is_able_to_create_participation_data_with_voucher() throws Exception {
         SecurityHelper.asAdmin();
         Voucher voucher = voucherService.generateVoucher("buyer");
