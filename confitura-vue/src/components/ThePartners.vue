@@ -151,7 +151,7 @@
         .type--platinum {
             font-size: 2rem;
             color: $brand;
-            padding-top: 3rem;
+            padding-top: 1rem;
             @include md() {
                 font-size: 1.5rem;
             }
@@ -160,7 +160,7 @@
         .type--path {
             font-size: 2rem;
             color: $brand;
-            padding-top: 1rem;
+            padding-top: 2rem;
             @include md() {
                 font-size: 1.5rem;
             }
@@ -219,8 +219,8 @@
         .logo__img--platinum {
             width: 250px;
 
-            &.ey {
-                padding: 0 0 4rem 0;
+            &.ey, &.softwareplant {
+                padding: 0 0 3rem 0;
                 box-sizing: border-box;
             }
         }
