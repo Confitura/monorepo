@@ -34,7 +34,7 @@ export interface Partner {
   description: string;
   logo: string;
   www: string;
-  type: '' | 'platinum' | 'gold' | 'silver' | 'bronze';
+  type: '' | 'platinum' | 'path' | 'gold' | 'silver' | 'bronze';
   orientation?: 'horizontal' | 'vertical' | 'box';
 }
 

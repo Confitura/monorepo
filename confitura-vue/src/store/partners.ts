@@ -7,6 +7,7 @@ export const partnersModule: Module<PartnersState, RootState> = {
   },
   getters: {
     platinum: ({ partners }): Partner[] => shuffle(partners.filter((partner) => partner.type === 'platinum')),
+    path: ({ partners }): Partner[] => shuffle(partners.filter((partner) => partner.type === 'path')),
     silver: ({ partners }): Partner[] => shuffle(partners.filter((partner) => partner.type === 'silver')),
     gold: ({ partners }): Partner[] => shuffle(partners.filter((partner) => partner.type === 'gold')),
   },
@@ -40,6 +41,7 @@ export const partnersModule: Module<PartnersState, RootState> = {
           www: 'https://softwareplant.com/',
           type: 'platinum',
           logo: require('../assets/partners/softwareplant.svg'),
+          orientation: 'horizontal',
         }, {
           id: 'ey',
           description: `EY Global Delivery Services (GDS) is a network of EY competence centers located in five countries: India, China, Poland, Argentina, and the Philippines. [EY GDS Poland](www.workatgds.pl) provides high quality and value-added support to our customers who are EY firms and other companies, working to agreed principles of exceptional client service. The technology departments of EY GDS Poland include teams working for external clients from around the world, as well as specialists who create and develop internal EY apps.`,
@@ -47,6 +49,7 @@ export const partnersModule: Module<PartnersState, RootState> = {
           www: 'https://workatgds.pl/pl/',
           type: 'platinum',
           logo: require('../assets/partners/ey.svg'),
+          orientation: 'horizontal',
         }, {
           id: '7n',
           description: `[7N](https://www.7n.com/) to duńska firma konsultingowa, zajmująca się
@@ -396,6 +399,19 @@ That is the core of Netcompany's decentralized management model. From top to bot
           type: 'gold',
           orientation: 'horizontal',
           logo: require('../assets/partners/netcompany.svg'),
+
+        },{
+          id: 'sages',
+          name: 'Sages',
+          description: `Sages sp. z o.o. jest firmą szkoleniową i doradczą działającą od 10 lat w branży IT. Misją firmy jest wspieranie procesu projektowania, wytwarzania i wdrażania oprogramowania w przedsiębiorstwach i instytucjach publicznych, aby zminimalizować koszty, czas i ryzyko, związane z tymi przedsięwzięciami. Naszym celem jest łączenie wiedzy pochodzącej ze środowisk akademickich i doświadczenia ekspertów z obszaru praktycznych zastosowań w biznesie, aby budować kompetencje kadr w Polsce, a w szczególności przyczynić się do wzrostu efektywności i innowacyjności krajowej branży IT. 
+
+Specjalizuje się w prowadzeniu szkoleń i kursów technologicznych, których cechą wspólną jest warsztatowa formuła zajęć koncentrująca się na przekazaniu praktycznych umiejętności uczestnikom. Współpracuje także z uczelniami wyższymi wspierając realizację zaawansowanych przedmiotów programistycznych, a także prowadząc studia podyplomowe (Politechnika Warszawska, Akademia Leona Koźmińskiego w Warszawie). Ponadto jest stałym organizatorem eventów branżowych dla profesjonalistów IT w ramach inicjatywy Stacja IT. 
+
+Podczas tegorocznej edycji Confitury firma Sages jest oficjalnym opiekunem ścieżki Big Data & AI.`,
+          www: 'http://www.sages.com.pl',
+          type: 'path',
+          orientation: 'horizontal',
+          logo: require('../assets/partners/sages.svg'),
 
         },
 

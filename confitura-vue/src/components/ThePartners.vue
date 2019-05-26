@@ -2,11 +2,19 @@
     <Box class="partners" color="white">
         <h1 class="header">our partners</h1>
         <div class="partners-grid">
-            <div class="platinum">
-                <a v-for="item in partners.platinum" :href="item.www" class="link" rel="noopener" target="_blank">
-                    <img :src="item.logo" :alt="item.name" class="logo__img--platinum" :class="item.id">
-                </a>
-                <span class="type--platinum">Platinum</span>
+            <div class="partners-main">
+                <div class="platinum">
+                    <a v-for="item in partners.platinum" :href="item.www" class="link" rel="noopener" target="_blank">
+                        <img :src="item.logo" :alt="item.name" class="logo__img--platinum" :class="item.id">
+                    </a>
+                    <span class="type--platinum">Platinum</span>
+                </div>
+                <div class="path">
+                    <a v-for="item in partners.path" :href="item.www" class="link" rel="noopener" target="_blank">
+                        <img :src="item.logo" :alt="item.name" class="logo__img--platinum" :class="item.id">
+                    </a>
+                    <span class="type--path">Path</span>
+                </div>
             </div>
             <div class="other-types">
                 <transition name="fade" mode="out-in">
@@ -50,10 +58,11 @@
   })
   export default class ThePartners extends Vue {
     public platinum: Partner[] = [];
-    public silver: Partner[] = [];
+    public path: Partner[] = [];
     public gold: Partner[] = [];
+    public silver: Partner[] = [];
     public types: PartnerType[] = ['gold', 'silver'];
-    public partners: Partners = { platinum: [], gold: [], silver: [], bronze: [] };
+    public partners: Partners = { platinum: [], path: [], gold: [], silver: [], bronze: [] };
     public active: PartnerType = 'gold';
     private intervalId: number = 0;
 
@@ -80,11 +89,11 @@
     }
 
 
-
     protected mounted() {
       this.$store.dispatch(LOAD_PARTNERS)
         .then(() => {
           this.partners.platinum = this.$store.getters.platinum;
+          this.partners.path = this.$store.getters.path;
           this.partners.silver = this.$store.getters.silver;
           this.partners.gold = this.$store.getters.gold;
           this.startCarousel();
@@ -100,6 +109,7 @@
 
   interface Partners {
     platinum: Partner[];
+    path: Partner[];
     gold: Partner[];
     silver: Partner[];
     bronze: Partner[];
@@ -142,6 +152,15 @@
             font-size: 2rem;
             color: $brand;
             padding-top: 3rem;
+            @include md() {
+                font-size: 1.5rem;
+            }
+        }
+
+        .type--path {
+            font-size: 2rem;
+            color: $brand;
+            padding-top: 1rem;
             @include md() {
                 font-size: 1.5rem;
             }
@@ -198,7 +217,7 @@
         }
 
         .logo__img--platinum {
-            width: 300px;
+            width: 250px;
 
             &.ey {
                 padding: 0 0 4rem 0;
@@ -230,7 +249,7 @@
             flex-shrink: 0;
         }
 
-        .platinum {
+        .platinum, .path {
             display: flex;
             flex-direction: column;
             align-items: center;

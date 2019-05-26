@@ -118,7 +118,7 @@
         }
 
         &__logo-container {
-            padding: 1rem;
+            padding: 1.5rem 1rem 1rem;
             text-align: center;
 
         }
@@ -133,8 +133,7 @@
         }
 
         &__logo--horizontal {
-            width: auto;
-            height: auto;
+            min-width: 250px;
             max-width: 300px;
         }
 

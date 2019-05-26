@@ -36,11 +36,12 @@
   export default class Partners extends Vue {
     public partners: { [key: string]: Partner[] } = {};
 
-    private mounted() {
+    public mounted() {
       this.$store.dispatch(LOAD_PARTNERS)
         .then(() => {
           this.partners = {
             platinum: this.$store.getters.platinum,
+            path: this.$store.getters.path,
             gold: this.$store.getters.gold,
             silver: this.$store.getters.silver,
           };
@@ -98,11 +99,10 @@
 
     .logos {
         display: flex;
-
         margin-bottom: 6rem;
         align-items: center;
         flex-direction: column;
-        @include md(){
+        @include md() {
             flex-direction: row;
             flex-wrap: wrap;
         }
@@ -112,12 +112,12 @@
         margin: 1.5rem 2rem;
 
 
-        &--platinum {
+        &--platinum, &--path {
             text-align: center;
         }
     }
 
-    .logo--platinum {
+    .logo--platinum, .logo--path{
         width: 80%;
 
 
