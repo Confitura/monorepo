@@ -33,7 +33,7 @@
   import PageHeader from '@/components/PageHeader.vue';
   import TheContact from '@/components/TheContact.vue';
   import { LOAD_PARTNER_BY_ID, Partner } from '@/types';
-  import showdown from 'showdown';
+  import marked from 'marked';
 
 
   @Component({
@@ -41,19 +41,16 @@
   })
   export default class PartnerPage extends Vue {
     public partner: Partner = { name: '', description: '', id: '', logo: '', type: '', www: '' };
-    private converter = new showdown.Converter();
 
-    private mounted() {
+    public mounted() {
       window.scrollTo(0, 0);
       const { id } = this.$route.params;
       this.$store.dispatch(LOAD_PARTNER_BY_ID, id)
-        .then((partner) => {
-          this.partner = partner;
-        });
+        .then((partner) => this.partner = partner);
     }
 
     public get description() {
-      return this.converter.makeHtml(this.partner.description);
+      return marked(this.partner.description);
     }
   }
 </script>

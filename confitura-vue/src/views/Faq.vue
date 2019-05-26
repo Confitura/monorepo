@@ -7,7 +7,7 @@
                 <a class="foreword__link"
                    href="mailto:confitura@confitura.pl?subject=FAQ">contact us</a>.
                 We will update the list for the benefit of all.</p>
-            <section class="questions" v-html="questions"></section>
+            <PageFragment class="questions" name="faq"/>
         </Box>
         <TheContact id="contact"/>
     </div>
@@ -18,23 +18,13 @@
   import Box from '@/components/Box.vue';
   import PageHeader from '@/components/PageHeader.vue';
   import TheContact from '@/components/TheContact.vue';
-  import showdown from 'showdown';
-  import axios from 'axios';
-  import { Page } from '@/types';
+  import PageFragment from '@/components/PageFragment.vue';
 
   @Component({
-    components: { PageHeader, Box, TheContact },
+    components: { PageHeader, Box, TheContact, PageFragment },
   })
   export default class Faq extends Vue {
-    public questions = '';
-    private converter = new showdown.Converter();
 
-    private mounted() {
-      axios.get<Page>('/api/pages/faq')
-        .then((response) => response.data.content)
-        .then((content: string) => this.questions = this.converter.makeHtml(content));
-
-    }
   }
 
 </script>
@@ -57,6 +47,7 @@
             @include md() {
                 width: 50%;
             }
+
             &__link {
                 color: $brand;
             }
@@ -71,7 +62,7 @@
     @import "../assets/media";
     @import "../assets/fonts";
 
-    .questions {
+    .questions section {
         display: grid;
         text-align: left;
         grid-template-columns: 1fr;

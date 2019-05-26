@@ -26,7 +26,7 @@ export const authenticationModule: Module<AuthenticationState, RootState> = {
     },
     isAdmin: (state, getters) => {
       const user: User | null = getters.user;
-      return user != null && user.isAdmin;
+      return user !== null && user.isAdmin;
     },
   },
   mutations: {
