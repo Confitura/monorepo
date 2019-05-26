@@ -28,7 +28,6 @@
       { label: 'logout', action: () => this.logout(), visible: () => this.isLogin },
       { label: 'login', url: '/login', visible: () => !this.isLogin },
       { label: 'ADMIN', url: '/admin', visible: () => this.isAdmin },
-      { label: 'V4P', url: '/v4p' },
     ];
 
     public isVisible(item: MenuItem): boolean {
