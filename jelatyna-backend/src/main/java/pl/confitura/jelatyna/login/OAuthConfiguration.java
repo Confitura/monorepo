@@ -1,9 +1,7 @@
 package pl.confitura.jelatyna.login;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -76,15 +74,11 @@ public class OAuthConfiguration {
     }
 
 
-    @Data @NoArgsConstructor @AllArgsConstructor
+    @Data
     public static class OAuthProviderProperties {
         private String apiKey;
         private String apiSecret;
         private String callback;
-
-        public OAuthProviderProperties withCallback(String callback) {
-            return new OAuthProviderProperties(this.apiKey, this.apiSecret, callback);
-        }
     }
 
 }

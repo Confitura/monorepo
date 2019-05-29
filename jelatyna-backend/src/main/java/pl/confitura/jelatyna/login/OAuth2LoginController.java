@@ -1,6 +1,5 @@
 package pl.confitura.jelatyna.login;
 
-import static org.apache.commons.lang3.StringUtils.isBlank;
 import static org.springframework.http.HttpStatus.PERMANENT_REDIRECT;
 import static pl.confitura.jelatyna.infrastructure.Profiles.FAKE_SECURITY;
 
@@ -18,8 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import pl.confitura.jelatyna.infrastructure.security.TokenService;
 import pl.confitura.jelatyna.user.User;
-
-import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/login/{provider}")
@@ -40,24 +37,13 @@ public class OAuth2LoginController {
 
     @GetMapping()
     public ResponseEntity<Object> redirectToLogin(
-            @PathVariable("provider") String provider,
-            HttpServletRequest request
+            @PathVariable("provider") String provider
     ) {
         AbstractOAuth20Service service = services.get(provider);
-        String callback = buildCallback(request, provider);
         return ResponseEntity
                 .status(PERMANENT_REDIRECT)
-                .header("Location", service.getAuthorizationUrl(callback))
+                .header("Location", service.getAuthorizationUrl())
                 .build();
-    }
-
-    private String buildCallback(HttpServletRequest request, String provider) {
-        String referer = request.getHeader("referer");
-        if (isBlank(referer)) {
-            return null;
-        } else {
-            return referer + "/" + provider;
-        }
     }
 
     @GetMapping("/callback")
