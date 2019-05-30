@@ -7,12 +7,12 @@ import {DescriptionType, Presentation} from '../../../profile/shared/presentatio
 import {ActivatedRoute} from '@angular/router';
 import {PersonModalService} from '../../../shared/person-modal/person-modal.service';
 import {UserService} from '../../../core/user/user.service';
-import {User} from '../../../core/user/user.model';
 import {VoteStatsServiceService} from '../../../admin/votes/vote-list/vote-stats.service';
 
 
 import {CurrentUser} from '../../../core/security/current-user.service';
 import {LikeService} from '../../../shared/presentation/like/like.service';
+import * as _ from 'lodash';
 
 @Component({
   templateUrl: './presentation-list.component.html',
@@ -68,11 +68,12 @@ export class PresentationListComponent implements OnInit {
   }
 
   doFilterByText(presentation) {
-    return [
+    return _.flatten([
       presentation.title,
       presentation.description,
-      ...this.allSpeakersFor(presentation).map(it => it.name)
-    ]
+      presentation.speakers.map(it => it.name)
+    ])
+      .filter(it => it)
       .map(it => it.toLowerCase())
       .some(it => it.includes(this.filter.text.toLowerCase()));
   }
@@ -97,10 +98,6 @@ export class PresentationListComponent implements OnInit {
 
   getDescriptionType() {
     return this.currentUser.isAdmin() ? DescriptionType.Both : DescriptionType.Full;
-  }
-
-  private allSpeakersFor(presentation: Presentation): User[] {
-    return [presentation.speaker, ...presentation.cospeakers];
   }
 
   private scrollToSelectedPresentation() {

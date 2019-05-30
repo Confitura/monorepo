@@ -24,14 +24,16 @@ export class CurrentUser {
 
   get(): JwtUser {
     if (this.isAvailable()) {
-      return JSON.parse(localStorage.getItem('user')) as JwtUser;
+      const token = this.getToken();
+      const user = Base64.decode(token.split('.')[1]);
+      return JSON.parse(user) as JwtUser;
     } else {
       return new JwtUser();
     }
   }
 
   getToken() {
-    return localStorage.getItem('token');
+    return localStorage.getItem('TOKEN');
   }
 
   isAvailable() {

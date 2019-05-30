@@ -50,7 +50,7 @@ export class PresentationComponent implements OnInit {
   }
 
   allSpeakersFor(presentation: Presentation): User[] {
-    return [presentation.speaker, ...presentation.cospeakers];
+    return presentation.speakers;
   }
 
   shouldShowDescription(type: DescriptionType) {

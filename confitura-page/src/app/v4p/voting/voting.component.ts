@@ -96,9 +96,8 @@ export class VotingComponent implements OnDestroy {
   }
 
   bio() {
-    this.show(this.presentation.speaker);
+    this.show(this.presentation.speakers[0]);
   }
-
 
   up() {
     const rate = this.currentVote().rate;
