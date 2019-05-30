@@ -80,9 +80,10 @@
                         <div class="card" v-for="presentation in presentations">
                             <div class="card-content">
                                 <div class="card-title">
-                                    <div>
-                                        {{presentation.title}}
-                                        <span class="small">({{presentation.language}}, {{presentation.level}})</span>
+                                    <div class="presentation__title">
+                                        <span class="new badge blue presentation__status" data-badge-caption="Accepted"></span>
+                                        <div>{{presentation.title}}
+                                            <span class="small">({{presentation.language}}, {{presentation.level}})</span></div>
                                     </div>
                                     <div class="tags">
                                 <span :data-badge-caption="tag.name" class="new badge"
@@ -110,6 +111,9 @@
                                         </li>
                                     </ul>
                                 </div>
+                                <div v-if="presentation.status === 'accepted'">
+
+                                </div>
                             </div>
                             <div class="card-action">
                                 <router-link :to="{name: 'presentation', params:{id:presentation.id}}">edit</router-link>
@@ -133,7 +137,7 @@
   import { LOAD_PROFILE_BY_ID, LOAD_PROFILE_PRESENTATIONS_BY_ID } from '@/store/store.user-profile';
   import Box from '@/components/Box.vue';
   import TheContact from '@/components/TheContact.vue';
-  import { EmbeddedPresentations, Presentation, REMOVE_PRESENTATION, UserProfile } from '@/types';
+  import { Presentation, REMOVE_PRESENTATION, UserProfile } from '@/types';
   import axios, { AxiosError } from 'axios';
   import PageHeader from '@/components/PageHeader.vue';
   import Toasted from 'vue-toasted';
@@ -168,7 +172,6 @@
     public mounted() {
       this.reloadData();
     }
-
 
 
     public addSpeakerToPresentation() {
@@ -319,6 +322,19 @@
 
     .tags {
         display: flex;
+    }
+
+    .presentation {
+        &__title {
+            display: flex;
+            align-items: center;
+            flex-direction: row;
+        }
+
+        &__status {
+            margin-right: 1rem;
+            margin-left: 0;
+        }
     }
 </style>
 <style lang="scss">

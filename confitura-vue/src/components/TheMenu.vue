@@ -24,10 +24,11 @@
       { label: 'contact', url: '/#contact' },
       { label: 'workshop day', url: '/workshops' },
       { label: 'FAQ', url: '/faq' },
+      { label: 'TICKETS', url: '/tickets' },
       { label: 'my profile', url: '/profile', visible: () => this.isLogin },
+      { label: 'ADMIN', url: '/admin', visible: () => this.isAdmin },
       { label: 'logout', action: () => this.logout(), visible: () => this.isLogin },
       { label: 'login', url: '/login', visible: () => !this.isLogin },
-      { label: 'ADMIN', url: '/admin', visible: () => this.isAdmin },
     ];
 
     public isVisible(item: MenuItem): boolean {
