@@ -81,7 +81,7 @@
                             <div class="card-content">
                                 <div class="card-title">
                                     <div class="presentation__title">
-                                        <span class="new badge blue presentation__status" data-badge-caption="Accepted"></span>
+                                        <span v-if="presentation.status == 'accepted'"class="new badge blue presentation__status" data-badge-caption="Accepted"></span>
                                         <div>{{presentation.title}}
                                             <span class="small">({{presentation.language}}, {{presentation.level}})</span></div>
                                     </div>
