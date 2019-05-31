@@ -413,6 +413,21 @@ Podczas tegorocznej edycji Confitury firma Sages jest oficjalnym opiekunem ście
           orientation: 'horizontal',
           logo: require('../assets/partners/sages.svg'),
 
+        },{
+          id: 'circleK',
+          name: 'Circle K',
+          description: `You´ve probably already met us. Maybe you´ve stopped by for a coffee, fueled up your car or grabbed something to eat on the go. Then you know what Circle K is all about. Making everyday life easier for people all over the world.
+
+We´ve grown into a successful global company with over 15.000 stores in 24 countries, serving more than 6 million customers each day. In all, we have more than 120.000 people working at our stores and support offices.
+
+In Circle K Business Centre, in Warszawa, which is part of our SSC structures, we provide IT services for Circle K in Europe, US and Canada. We have different functions here: Service Desk, Infrastructure, Network Operations, Development but what we have in common is the fact that no matter what we do, we understand the world we live in. We can see how fast it changes and how fascinating this can be. Curiosity and openness drives us towards new ideas, innovations, new technologies.
+
+Circle K is growing a team full of passionate, open-minded people with creative energy to handle our custom built products in the digital area.`,
+          www: 'https://circlekeurope.com/',
+          type: 'silver',
+          orientation: 'horizontal',
+          logo: require('../assets/partners/circleK.svg'),
+
         },
 
       ];
