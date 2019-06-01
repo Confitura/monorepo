@@ -1,15 +1,16 @@
 package pl.confitura.jelatyna.user;
 
+import static com.timgroup.jgravatar.GravatarDefaultImage.BLANK;
+import static com.timgroup.jgravatar.GravatarRating.GENERAL_AUDIENCES;
+import static java.util.stream.Collectors.toSet;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static org.springframework.util.StringUtils.isEmpty;
 
 import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
@@ -22,11 +23,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.google.common.collect.Sets;
-import com.google.common.collect.Streams;
 import com.timgroup.jgravatar.Gravatar;
-import com.timgroup.jgravatar.GravatarDefaultImage;
-import com.timgroup.jgravatar.GravatarRating;
+import lombok.RequiredArgsConstructor;
 import pl.confitura.jelatyna.ConferenceConfigurationProperties;
 import pl.confitura.jelatyna.infrastructure.security.Security;
 import pl.confitura.jelatyna.presentation.Presentation;
@@ -40,7 +38,6 @@ public class UserController {
     private final PresentationRepository presentationRepository;
     private final Security security;
     private final ConferenceConfigurationProperties conferenceConfiguration;
-
 
     @PostMapping("/users")
     @PreAuthorize("@security.isOwner(#user.id)")
@@ -66,30 +63,14 @@ public class UserController {
 
     @GetMapping("/users/search/admins")
     public ResponseEntity<?> getAdmins() {
-        Set<PublicUser> admins = repository.findAdmins().stream().map(PublicUser::new).collect(Collectors.toSet());
+        Set<PublicUser> admins = repository.findAdmins().stream().map(PublicUser::new).collect(toSet());
         return ResponseEntity.ok(new Resources<>(admins));
     }
 
     @GetMapping("/users/search/volunteers")
     public ResponseEntity<?> getVolunteers() {
-        Set<PublicUser> volunteers = repository.findVolunteers().stream().map(PublicUser::new).collect(Collectors.toSet());
+        Set<PublicUser> volunteers = repository.findVolunteers().stream().map(PublicUser::new).collect(toSet());
         return ResponseEntity.ok(new Resources<>(volunteers));
-    }
-
-    private User updateUser(@RequestBody User user) {
-        if (isEmpty(user.getId())) {
-            return user;
-        } else {
-            User current = repository.findById(user.getId());
-            current.updateFields(user);
-            return current;
-        }
-    }
-
-    private void setIdIfManuallyCreated(@RequestBody User user) {
-        if (StringUtils.isEmpty(user.getId())) {
-            user.setId(UUID.randomUUID().toString());
-        }
     }
 
     @PostMapping("/users/{userId}/volunteer/{isVolunteer}")
@@ -116,15 +97,12 @@ public class UserController {
         return ResponseEntity.ok(new Resource<>(saved));
     }
 
-    private boolean canCreatePresentation() {
-        return conferenceConfiguration.getC4p().isEnabled() || security.isAdmin();
-    }
-
     @GetMapping("/users/search/speakers")
     public ResponseEntity<?> getSpeakers() {
         Set<Resource<?>> speakers = repository.findAllAccepted().stream()
+                .map(PublicUser::new)
                 .map(speaker -> new Resource<>(speaker))
-                .collect(Collectors.toSet());
+                .collect(toSet());
         return ResponseEntity.ok(new Resources<>(speakers));
     }
 
@@ -137,9 +115,29 @@ public class UserController {
 
     private void setDefaultPhotoFor(@RequestBody User user) {
         if (isEmpty(user.getPhoto())) {
-            Gravatar gravatar = new Gravatar(300, GravatarRating.GENERAL_AUDIENCES, GravatarDefaultImage.BLANK);
+            Gravatar gravatar = new Gravatar(300, GENERAL_AUDIENCES, BLANK);
             String url = gravatar.getUrl(user.getEmail());
             user.setPhoto(url.replace("http:", "https:"));
+        }
+    }
+
+    private boolean canCreatePresentation() {
+        return conferenceConfiguration.getC4p().isEnabled() || security.isAdmin();
+    }
+
+    private User updateUser(@RequestBody User user) {
+        if (isEmpty(user.getId())) {
+            return user;
+        } else {
+            User current = repository.findById(user.getId());
+            current.updateFields(user);
+            return current;
+        }
+    }
+
+    private void setIdIfManuallyCreated(@RequestBody User user) {
+        if (StringUtils.isEmpty(user.getId())) {
+            user.setId(UUID.randomUUID().toString());
         }
     }
 }
