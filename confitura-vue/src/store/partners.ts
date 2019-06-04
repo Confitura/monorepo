@@ -428,6 +428,31 @@ Circle K is growing a team full of passionate, open-minded people with creative 
           orientation: 'horizontal',
           logo: require('../assets/partners/circleK.svg'),
 
+        },{
+          id: 'spartez',
+          name: 'Spartez',
+          description: `We at Spartez, are known for our experts, our partnership with Atlassian and our world-class products. We are growing exponentially and looking for talented, experienced and passionate professionals to join our team.
+
+If you are someone or you know someone who loves to take on challenges, work independently and make an impact, then read on!
+
+Spartez is a Gold Solution Partner of Atlassian. Our world-class products include Agile Cards for Jira, Agile Poker for Jira, Canned Responses Pro for Jira, Asset Tracker for Jira and TFS4JIRA amongst others. We are a truly international team with over 170 employees from over 11 countries who live and work mostly out of Gdansk. We believe that happy Spartans means happy customers and thus offer some of the best employee benefits and facilities in the region. We have some of the brightest minds working for us, an awesome office and a very low attrition rate. Like we said, once you are a Spartan, you never want to be anything else.
+
+Our company is deeply rooted in a few important values and principles - just a few, simple and meaningful rules: 
+
+\\# Don't Fuck The Customer
+
+\\# Be The Change You Seek
+
+\\# Open Company - No Bullshit
+
+\\# Great Place to Work
+
+\\# Simplicity`,
+          www: 'https://spartez.com/',
+          type: 'silver',
+          orientation: 'horizontal',
+          logo: require('../assets/partners/spartez.svg'),
+
         },
 
       ];
