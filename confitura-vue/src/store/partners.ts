@@ -453,6 +453,19 @@ Our company is deeply rooted in a few important values and principles - just a f
           orientation: 'horizontal',
           logo: require('../assets/partners/spartez.svg'),
 
+        },{
+          id: 'goldman-sachs',
+          name: 'Goldman Sachs',
+          description: `Working together, we see the potential in the world to create more. To turn big ideas into realities. To challenge ourselves to look ahead and make things possible. From automated trading to managing data, risk analysis to safeguarding information and promoting environmental responsibility, our commitment to best-in-class technology empowers everything we do.
+ 
+The Goldman Sachs Group, Inc. is a leading global investment banking, securities and investment management firm that provides a wide range of financial services to a substantial and diversified client base that includes corporations, financial institutions, governments and individuals. Founded in 1869, the firm is headquartered in New York and maintains offices in all major financial centers around the world.
+ 
+Make things possible at [goldmansachs.com/careers](https://www.goldmansachs.com/careers/)`,
+          www: 'https://www.goldmansachs.com/careers/',
+          type: 'gold',
+          orientation: 'horizontal',
+          logo: require('../assets/partners/gs.svg'),
+
         },
 
       ];

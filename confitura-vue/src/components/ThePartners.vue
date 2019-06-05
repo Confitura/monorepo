@@ -177,6 +177,9 @@
             flex-grow: 1;
             transition: all 0.3s linear;
             max-width: 1000px;
+            @include md() {
+                margin-left: 2rem;
+            }
         }
 
         .logo {
@@ -186,13 +189,21 @@
             &.logo--horizontal {
                 margin-top: 1.2rem;
                 margin-bottom: 1.2rem;
+
+                &.logo--gold {
+                    margin: 2.5rem;
+                }
             }
 
         }
 
-        .logo--silver, .logo--gold {
+        .logo--silver {
             margin-left: 1.2rem;
             margin-right: 1.2rem;
+        }
+
+        .logo--gold {
+            margin: 2.5rem;
         }
 
 
