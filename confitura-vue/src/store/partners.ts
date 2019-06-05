@@ -454,6 +454,25 @@ Our company is deeply rooted in a few important values and principles - just a f
           logo: require('../assets/partners/spartez.svg'),
 
         },{
+          id: 'touk',
+          name: 'Touk',
+          description: `Since 2002 we have been developing custom software. We offer creative solutions to customers' problems, implementing the riskiest projects. We outstrip the competition through the better use of technology and deep understanding of customers' needs.
+
+TouK is built by developers and for developers. We are professional, versatile and agile. If you start your professional journey at TouK, you are on a fast track to becoming very good at your job.
+
+Our recent projects include stream processing for marketing and fraud detection, content delivery network for vod operators, financial applications for top-ups and payments, GDPR support for large entities.
+
+We are looking for experienced developers and CS students.
+
+[https://touk.pl](https://touk.pl)
+
+[https://touk.pl/blog](https://touk.pl/blog)`,
+          www: 'https://touk.pl',
+          type: 'silver',
+          orientation: 'horizontal',
+          logo: require('../assets/partners/touk.svg'),
+
+        },{
           id: 'goldman-sachs',
           name: 'Goldman Sachs',
           description: `Working together, we see the potential in the world to create more. To turn big ideas into realities. To challenge ourselves to look ahead and make things possible. From automated trading to managing data, risk analysis to safeguarding information and promoting environmental responsibility, our commitment to best-in-class technology empowers everything we do.
@@ -465,7 +484,6 @@ Make things possible at [goldmansachs.com/careers](https://www.goldmansachs.com/
           type: 'gold',
           orientation: 'horizontal',
           logo: require('../assets/partners/gs.svg'),
-
         },
 
       ];
