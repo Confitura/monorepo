@@ -484,6 +484,16 @@ Make things possible at [goldmansachs.com/careers](https://www.goldmansachs.com/
           type: 'gold',
           orientation: 'horizontal',
           logo: require('../assets/partners/gs.svg'),
+        },{
+          id: 'rtb-house',
+          name: 'RTB House',
+          description: `[RTB House](https://www.rtbhouse.com/) is a global company that provides state-of-the-art retargeting technology for top brands worldwide. Its proprietary ad buying engine is the first and only in the world to be powered entirely by deep learning algorithms, enabling advertisers to generate outstanding results and reach their short, mid and long-term goals.
+
+Founded in 2012, RTB House serves over a thousand campaigns across EMEA, APAC and the Americas regions with main locations in New York, London, Tokyo, Singapore, São Paulo, Moscow, Istanbul, Dubai and Warsaw.`,
+          www: 'https://www.rtbhouse.com/',
+          type: 'gold',
+          orientation: 'horizontal',
+          logo: require('../assets/partners/rtb.svg'),
         },
 
       ];
