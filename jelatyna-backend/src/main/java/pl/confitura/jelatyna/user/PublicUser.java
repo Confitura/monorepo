@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class PublicUser {
+    private String id;
     private String name;
     private String bio;
     private String twitter;
@@ -14,6 +15,7 @@ public class PublicUser {
     private String photo;
 
     public PublicUser(User user) {
+        this.id = user.getId();
         this.name = user.getName();
         this.bio = user.getBio();
         this.twitter = user.getTwitter();
