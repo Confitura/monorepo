@@ -511,7 +511,6 @@ IT Kontrakt, w ramach inwestycji Oaktree Capital Management i Cornerstone Partne
           type: 'gold',
           logo: require('../assets/partners/fis.svg'),
           orientation: 'horizontal',
-
         },
 
       ];
