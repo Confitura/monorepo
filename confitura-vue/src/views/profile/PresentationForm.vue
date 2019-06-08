@@ -130,6 +130,7 @@
       tags: [],
       shortDescription: '',
       description: '',
+      workshop: false,
     };
     public tagInput = '';
     public errors: PresentationErrors = {};

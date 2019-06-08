@@ -70,6 +70,7 @@
     .image {
         width: 100%;
         height: 100%;
+        object-fit: cover;
         filter: blur(0);
         transition: 0.2s filter linear;
         will-change: filter;

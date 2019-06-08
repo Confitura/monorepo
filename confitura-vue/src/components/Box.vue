@@ -60,6 +60,12 @@
             min-height: 100vh;
         }
 
+        &.no-padding {
+            & .box__container {
+                padding: 0;
+            }
+        }
+
         &__container {
             max-width: 1440px;
             width: 100%;

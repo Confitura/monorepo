@@ -1,7 +1,7 @@
 <template>
     <div class="partners">
-        <PageHeader title="Partners" class="header">
-            <img src="../assets/astronaut.svg" class="header-img">
+        <PageHeader title="Partners" type="peace">
+
         </PageHeader>
         <Box class="content" color="white">
             <article v-for="(items, type) in partners ">
@@ -60,24 +60,6 @@
 
     .partners {
         overflow: hidden;
-    }
-
-    .header {
-        overflow: hidden;
-    }
-
-    .header-img {
-        width: 500px;
-        top: 50px;
-        left: 60px;
-        transform: rotate(-10deg);
-        position: absolute;
-        @include sm() {
-            width: 500px;
-            top: 0;
-            position: unset;
-            margin-top: 470px;
-        }
     }
 
     .type-header {

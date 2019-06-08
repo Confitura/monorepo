@@ -18,10 +18,21 @@ $screen-xxl-min: 1920px;
     @content;
   }
 }
+@mixin sm-only {
+  @media (max-width: #{$screen-md-min - 1px}) {
+    @content;
+  }
+}
 
 // Medium devices
 @mixin md {
   @media (min-width: #{$screen-md-min}) {
+    @content;
+  }
+}
+
+@mixin md-to-xl {
+  @media (min-width: #{$screen-md-min}) and (max-width: #{$screen-xl-min - 1px}) {
     @content;
   }
 }

@@ -19,9 +19,11 @@
     public items: MenuItem[] = [
       { label: 'home', url: '/#home' },
       { label: 'about us', url: '/#about-us' },
-      { label: 'numbers', url: '/#numbers' },
+      // { label: 'numbers', url: '/#numbers' },
       { label: 'partners', url: '/partners' },
-      { label: 'contact', url: '/#contact' },
+      // { label: 'contact', url: '/#contact' },
+      { label: 'presentations', url: '/presentations' },
+      { label: 'speakers', url: '/speakers' },
       { label: 'workshop day', url: '/workshops' },
       { label: 'FAQ', url: '/faq' },
       { label: 'TICKETS', url: '/tickets' },
@@ -84,7 +86,7 @@
         margin: 2rem;
 
         @include lg() {
-            margin: 0.5rem;
+            margin: 0.4rem;
             display: unset;
         }
 
@@ -93,9 +95,12 @@
     .menu-link {
         text-decoration: none;
         color: $brand;
-        font-size: 1.4rem;
+        font-size: 1.1rem;
         cursor: pointer;
+        @include xl() {
+            font-size: 1.4rem;
 
+        }
         &:hover, &.router-link-active {
             color: #ffffff;
             border-bottom: 2px #ffffff solid;

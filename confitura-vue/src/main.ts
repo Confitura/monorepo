@@ -16,6 +16,17 @@ Vue.use(VueGoogleMaps, {
 
 
 Vue.config.productionTip = false;
+Vue.filter('firstName', (value: string): string => {
+  const name = value || '';
+  const idx = name.indexOf(' ');
+  return name.substring(0, idx);
+});
+
+Vue.filter('lastName', (value: string): string => {
+  const name = value || '';
+  const idx = name.indexOf(' ');
+  return name.substring(idx);
+});
 
 new Vue({
   router,
