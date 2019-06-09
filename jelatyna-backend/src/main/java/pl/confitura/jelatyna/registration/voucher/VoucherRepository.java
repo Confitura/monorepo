@@ -16,6 +16,7 @@ interface VoucherRepository extends Repository<Voucher, String> {
     @PreAuthorize("@security.isAdmin()")
     Voucher save(Voucher token);
 
+    @RestResource(exported = false)
     @PreAuthorize("@security.isAdmin()")
     List<Voucher> findAll();
 
