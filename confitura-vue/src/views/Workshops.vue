@@ -1,8 +1,6 @@
 <template>
     <div class="workshops">
-        <PageHeader title="Workshops" class="header">
-            <img src="../assets/small_planet.svg" class="header__planet">
-            <img src="../assets/astronaut_comp.svg" class="header-img">
+        <PageHeader title="Workshops" class="header" type="coder">
         </PageHeader>
         <Box class="content" color="white">
             <div class="workshops__info">
@@ -20,9 +18,112 @@
                     <p>The number of seats is limited to 30 per workshop. Registration is required. Workshop fee includes the entrance to
                         Confitura conference.</p>
 
-                    <p>If you have any questions please check our <router-link class="link--red" to="faq">FAQ</router-link> (for both trainers and trainees). If you did not find answer to your question there then please contact Maria from Sages: <a  class="link--red" href="mailto:m.nowakowska@sages.com.pl">m.nowakowska@sages.com.pl</a> </p>
+                    <p>If you have any questions please check our
+                        <router-link class="link--red" to="faq">FAQ</router-link>
+                        (for both trainers and trainees). If you did not find answer to your question there then please contact Maria from
+                        Sages: <a class="link--red" href="mailto:m.nowakowska@sages.com.pl">m.nowakowska@sages.com.pl</a></p>
                 </div>
 
+            </div>
+            <div class="workshops__scheduleContainer">
+                <div class="workshops__schedule">
+                    <div class="workshops__track">
+                        <div class="workshops__trackTitle">Java Track</div>
+                        <div class="workshops__workshop">
+                            <h3 class="workshop__title">Architecture mini-workshop for busy developers</h3>
+                            <div class="workshop__speaker">Jakub Nabrdalik</div>
+                            <div class="workshop__signup">
+                                <a
+                                        href="https://evenea.pl/event/confituraarchitecture/"
+                                        class="workshop__signupLink"
+                                        target="_blank"
+                                        rel="noopener">More info & Sign up</a>
+                            </div>
+                        </div>
+                        <div class="workshops__workshop">
+                            <h3 class="workshop__title">Jigsaw. Modules in (new) Java </h3>
+                            <div class="workshop__speaker">Piotr Przybył</div>
+                            <div class="workshop__signup">
+                                <a
+                                        href="https://evenea.pl/event/confiturajigsaw/"
+                                        class="workshop__signupLink"
+                                        target="_blank"
+                                        rel="noopener">More info & Sign up</a>
+                            </div>
+                        </div>
+                        <div class="workshops__workshop">
+                            <h3 class="workshop__title">Pragmatic TDD</h3>
+                            <div class="workshop__speaker">Michał Wojtyna</div>
+                            <div class="workshop__signup">
+                                <a
+                                        href="https://evenea.pl/event/confiturapragmatictdd/"
+                                        class="workshop__signupLink"
+                                        target="_blank"
+                                        rel="noopener">More info & Sign up</a>
+                            </div>
+                        </div>
+                        <div class="workshops__workshop">
+                            <h3 class="workshop__title">Spring Reactor</h3>
+                            <div class="workshop__speaker">Tomasz Łabuz</div>
+                            <div class="workshop__signup">
+                                <a
+                                        href="https://evenea.pl/event/confituraspringreactor/"
+                                        class="workshop__signupLink"
+                                        target="_blank"
+                                        rel="noopener">More info & Sign up</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="workshops__track">
+                        <div class="workshops__trackTitle">Big Data Track</div>
+                        <div class="workshops__workshop">
+                            <h3 class="workshop__title">Introduction to Machine Learning with Scikit-learn - your first pipeline</h3>
+                            <div class="workshop__speaker">Waldemar Kołodziejczyk</div>
+                            <div class="workshop__signup">
+                                <a
+                                        href="https://evenea.pl/event/confituraintroml/"
+                                        class="workshop__signupLink"
+                                        target="_blank"
+                                        rel="noopener">More info & Sign up</a>
+                            </div>
+                        </div>
+                        <div class="workshops__workshop">
+                            <h3 class="workshop__title">Natural language processing, support 100+ languages using polyglot</h3>
+                            <div class="workshop__speaker">Paweł Konior</div>
+                            <div class="workshop__signup">
+                                <a
+                                        href="https://evenea.pl/event/confituranlp/"
+                                        class="workshop__signupLink"
+                                        target="_blank"
+                                        rel="noopener">More info & Sign up</a>
+                            </div>
+                        </div>
+                        <div class="workshops__workshop">
+                            <h3 class="workshop__title">Machine Learning in Apache Spark</h3>
+                            <div class="workshop__speaker">Patryk Pilarski</div>
+                            <div class="workshop__signup">
+                                <a
+                                        href="https://evenea.pl/event/confituraapachespark/"
+                                        class="workshop__signupLink"
+                                        target="_blank"
+                                        rel="noopener">More info & Sign up</a>
+                            </div>
+                        </div>
+                        <div class="workshops__workshop">
+                            <h3 class="workshop__title">Autoencoder based generative models</h3>
+                            <div class="workshop__speaker">Przemysław Spurek</div>
+                            <div class="workshop__description"></div>
+                            <div class="workshop__signup">
+                                <a
+                                        href="https://evenea.pl/event/confituragenerativemodels/"
+                                        class="workshop__signupLink"
+                                        target="_blank"
+                                        rel="noopener">More info & Sign up</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
             <div class="workshops__venue">
                 <div class="workshops__venue-title">
@@ -288,9 +389,9 @@
         }
 
         &__short-info, &__venue-title {
-            margin-bottom: 1rem;
             flex-basis: 35%;
             flex-shrink: 0;
+            margin-bottom: 1rem;
             color: $brand;
             font-size: 2rem;
             font-weight: bold;
@@ -309,6 +410,66 @@
             height: 100vh;
             margin-left: calc((100% - 100vw) / 2);
             margin-bottom: -$standard-padding;
+        }
+
+
+    }
+
+    .workshops__schedule {
+        display: flex;
+        flex-direction: column;
+
+
+        @include md(){
+        flex-direction: row;
+
+        }
+        .workshops__track {
+            flex-basis: 50%;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 0;
+            @include md(){
+                margin-bottom: 3rem;
+            }
+        }
+
+        .workshops__trackTitle {
+            margin-bottom: 1rem;
+            color: $brand;
+            font-size: 2rem;
+            font-weight: bold;
+            border-bottom: 1px solid #979797;
+            padding-bottom: 2rem;
+        }
+
+        .workshops__workshop {
+            &:not(:last-child) {
+                border-bottom: 1px solid #979797;
+            }
+            padding-bottom: 2rem;
+            min-height: 270px;
+            padding-right: 1rem;
+            padding-left: 1rem;
+        }
+
+        .workshop__title {
+            font-weight: bold;
+            font-size: 1.7rem;
+        }
+
+        .workshop__speaker {
+            font-size: 1.5rem;
+        }
+
+        .workshop__signup {
+            margin-top: 2rem;
+        }
+
+        .workshop__signupLink {
+            color: $brand;
+            font-size: 1.2rem;
+            font-weight: bold;
         }
     }
 
