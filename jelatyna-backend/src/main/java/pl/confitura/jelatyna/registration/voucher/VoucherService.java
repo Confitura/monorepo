@@ -2,11 +2,8 @@ package pl.confitura.jelatyna.registration.voucher;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.confitura.jelatyna.infrastructure.security.JelatynaPrincipal;
-import pl.confitura.jelatyna.infrastructure.security.SecurityContextUtil;
 import pl.confitura.jelatyna.registration.ParticipationData;
 import pl.confitura.jelatyna.registration.ParticipationRepository;
-import pl.confitura.jelatyna.user.User;
 import pl.confitura.jelatyna.user.UserRepository;
 
 import java.util.List;
@@ -20,7 +17,14 @@ public class VoucherService {
     private final UserRepository userRepository;
 
     public Voucher generateVoucher(String originalBuyer) {
-        return voucherRepository.save(new Voucher().setOriginalBuyer(originalBuyer));
+        return generateVoucher(originalBuyer, Voucher.VoucherType.PARTICIPANT, null);
+    }
+
+    Voucher generateVoucher(String originalBuyer, Voucher.VoucherType type, String comment) {
+        return voucherRepository.save(new Voucher()
+                .setOriginalBuyer(originalBuyer)
+                .setComment(comment)
+                .setType(type));
     }
 
     public boolean isValid(Voucher voucher) {
@@ -67,5 +71,9 @@ public class VoucherService {
     public boolean canUseVoucher(String voucherId) {
         Voucher v = voucherRepository.findById(voucherId);
         return participationRepository.findByVoucher(v) == null;
+    }
+
+    public List<Voucher> findAll() {
+        return voucherRepository.findAll();
     }
 }

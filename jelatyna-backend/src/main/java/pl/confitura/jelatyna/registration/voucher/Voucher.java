@@ -20,6 +20,7 @@ public class Voucher  extends AuditedEntity {
     private String id;
 
     private String originalBuyer;
+    private String comment;
 
     private LocalDateTime ticketSendDate;
 
