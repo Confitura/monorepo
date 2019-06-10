@@ -5,31 +5,26 @@ import lombok.Data;
 
 @Data
 class RegistrationStat {
-    private int withVoucher = 0;
-    private int withoutVoucher = 0;
+    private int registered = 0;
     private int notRegistered = 0;
 
     RegistrationStat(Tuple tuple) {
         Object[] array = tuple.toArray();
-        if (array[2] != null) {
-            withVoucher++;
-        } else if (array[1] != null) {
-            withoutVoucher++;
+        if (array[0] != null) {
+            registered++;
         } else {
             notRegistered++;
         }
     }
 
-    public RegistrationStat(int withVoucher, int withoutVoucher, int notRegistered) {
-        this.withVoucher = withVoucher;
-        this.withoutVoucher = withoutVoucher;
+    public RegistrationStat(int registered, int notRegistered) {
+        this.registered = registered;
         this.notRegistered = notRegistered;
     }
 
     public RegistrationStat add(RegistrationStat that) {
         return new RegistrationStat(
-                this.withVoucher + that.withVoucher,
-                this.withoutVoucher + that.withoutVoucher,
+                this.registered + that.registered,
                 this.notRegistered + that.notRegistered
         );
     }

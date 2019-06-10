@@ -24,36 +24,31 @@ class Participant implements Serializable {
     private LocalDateTime surveySendDate;
     private Voucher voucher;
 
-    private boolean isAdmin;
-    private boolean isVolunteer;
     private boolean isSpeaker;
+    private boolean isSponsor;
     private boolean hasAcceptedPresentation;
     private boolean isParticipant;
 
-    public Participant(User user, JelatynaPrincipal registerer) {
-        this.id = user.getId();
+    public Participant(ParticipationData data, JelatynaPrincipal registerer) {
+        this.id = data.getId();
         if (registerer.isAdmin()) {
-            this.name = user.getName();
-            this.email = user.getEmail();
+            this.name = data.getFullName();
+            this.email = data.getEmail();
         }
-        this.isAdmin = user.isAdmin();
-        this.isVolunteer = user.isVolunteer();
-        this.isSpeaker = user.isSpeaker();
-        this.hasAcceptedPresentation = user.hasAcceptedPresentation();
-        this.isParticipant = user.isParticipant();
+        this.isSpeaker = data.getVoucher().getType() == Voucher.VoucherType.SPEAKER;
+        this.isSponsor = data.getVoucher().getType() == Voucher.VoucherType.SPONSOR;
+        this.hasAcceptedPresentation = true;
+        this.isParticipant = true;
 
-        ParticipationData data = user.getParticipationData();
-        if (data != null) {
-            this.size = data.getSize();
-            this.gender = data.getGender();
-            this.arrivalDate = data.getArrivalDate();
-            this.registeredBy = data.getRegisteredBy();
-            this.surveySendDate = data.getSurveySendDate();
+        this.size = data.getSize();
+        this.gender = data.getGender();
+        this.arrivalDate = data.getArrivalDate();
+        this.registeredBy = data.getRegisteredBy();
+        this.surveySendDate = data.getSurveySendDate();
 
-            if (data.getVoucher() != null) {
-                this.ticketSendDate = data.getVoucher().getTicketSendDate();
-                this.voucher = data.getVoucher();
-            }
+        if (data.getVoucher() != null) {
+            this.ticketSendDate = data.getVoucher().getTicketSendDate();
+            this.voucher = data.getVoucher();
         }
     }
 }

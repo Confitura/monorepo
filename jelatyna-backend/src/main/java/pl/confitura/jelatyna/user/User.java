@@ -71,8 +71,7 @@ public class User extends AuditedEntity {
     }
 
     public boolean isParticipant() {
-        return participationData != null
-                && participationData.hasVoucher();
+        return participationData != null;
     }
 
     public void addToPersonalAgenda(AgendaEntry agendaEntry) {

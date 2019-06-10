@@ -7,23 +7,26 @@ import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.security.access.prepost.PreAuthorize;
 import pl.confitura.jelatyna.registration.voucher.Voucher;
 
+import java.util.Collection;
+import java.util.List;
+
 @RepositoryRestResource(path = "participants")
 public interface ParticipationRepository extends Repository<ParticipationData, String> {
     @RestResource(exported = false)
     ParticipationData save(ParticipationData participationData);
 
     @PreAuthorize("@security.isAdmin()")
-    Iterable<ParticipationData> findAll();
+    Collection<ParticipationData> findAll();
 
     ParticipationData findById(String id);
 
     @RestResource(exported = false)
     @Query("FROM ParticipationData WHERE registrationDate IS NULL")
-    Iterable<ParticipationData> findAllUnregistered();
+    Collection<ParticipationData> findAllUnregistered();
 
     @RestResource(exported = false)
     @Query("FROM ParticipationData WHERE registrationDate IS NOT NULL")
-    Iterable<ParticipationData> findAllRegistered();
+    Collection<ParticipationData> findAllRegistered();
 
     @RestResource(exported = false)
     Long count();
@@ -40,4 +43,13 @@ public interface ParticipationRepository extends Repository<ParticipationData, S
     @RestResource(exported = false)
     ParticipationData findByVoucher(Voucher voucher);
 
+
+    @Query("SELECT u FROM ParticipationData u" +
+            " WHERE u.ticketSendDate IS NULL")
+    @PreAuthorize("@security.isAdmin()")
+    List<ParticipationData> findUsersToSendTickets();
+
+    @Query("SELECT u FROM ParticipationData u WHERE u.arrivalDate IS NOT NULL")
+    @PreAuthorize("@security.isAdmin()")
+    List<ParticipationData> findAllPresentOnConference();
 }

@@ -43,11 +43,6 @@ public class Security {
         return getPrincipal().isVolunteer() || isAdmin();
     }
 
-    public boolean isUserAnOwnerOfParticipationData(String participationId) {
-        String userId = getUserId();
-        User user = userRepository.findById(userId);
-        return user.getParticipationData() != null && Objects.equals(user.getParticipationData().getId(), participationId);
-    }
     public String getUserId() {
         return getPrincipal().getId();
     }

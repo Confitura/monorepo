@@ -2,17 +2,14 @@ package pl.confitura.jelatyna.dashboard;
 
 import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQuery;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.confitura.jelatyna.registration.ParticipationData;
 import pl.confitura.jelatyna.registration.QParticipationData;
+import pl.confitura.jelatyna.registration.demographic.QDemographicData;
 import pl.confitura.jelatyna.registration.voucher.QVoucher;
-import pl.confitura.jelatyna.user.QUser;
 
 import javax.persistence.EntityManager;
 import java.time.Instant;
@@ -21,7 +18,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.reducing;
@@ -63,12 +59,11 @@ class DashboardController {
     @GetMapping("meal")
     public Object getMealStats() {
         JPAQuery<?> query = new JPAQuery<Void>(entityManager);
-        QParticipationData participationData = QParticipationData.participationData;
+        QDemographicData demographicData = QDemographicData.demographicData;
 
-        List<Tuple> tuples = query.select(participationData.mealOption, participationData.mealOption.count())
-                .from(participationData)
-                .groupBy(participationData.mealOption)
-                .where(participationData.voucher.isNotNull())
+        List<Tuple> tuples = query.select(demographicData.mealOption, demographicData.mealOption.count())
+                .from(demographicData)
+                .groupBy(demographicData.mealOption)
                 .fetch();
 
 
@@ -105,14 +100,12 @@ class DashboardController {
     public Object getRegistrationStats() {
 
         JPAQuery<?> query = new JPAQuery<Void>(entityManager);
-        QUser user = QUser.user;
         QParticipationData participationData = QParticipationData.participationData;
         QVoucher voucher = QVoucher.voucher;
 
-        List<Tuple> tuples = query.select(user.id, participationData.id, voucher.id)
-                .from(user)
-                .leftJoin(user.participationData, participationData)
-                .leftJoin(participationData.voucher, voucher)
+        List<Tuple> tuples = query.select(participationData.id, voucher.id)
+                .from(participationData)
+                .rightJoin(participationData.voucher, voucher)
                 .fetch();
 
         Optional<RegistrationStat> stat = tuples.stream()
@@ -123,8 +116,7 @@ class DashboardController {
             RegistrationStat voucherStat = stat.get();
             return new Object[]{
                     new Object[]{"option", "count"},
-                    new Object[]{"with voucher", voucherStat.getWithVoucher()},
-                    new Object[]{"without voucher", voucherStat.getWithoutVoucher()},
+                    new Object[]{"registered", voucherStat.getRegistered()},
                     new Object[]{"not registered", voucherStat.getNotRegistered()}
             };
         }
