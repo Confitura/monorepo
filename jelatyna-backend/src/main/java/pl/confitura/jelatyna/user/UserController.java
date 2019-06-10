@@ -29,6 +29,8 @@ import pl.confitura.jelatyna.ConferenceConfigurationProperties;
 import pl.confitura.jelatyna.infrastructure.security.Security;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
+import pl.confitura.jelatyna.registration.ParticipationData;
+import pl.confitura.jelatyna.registration.ParticipationRepository;
 
 @RequiredArgsConstructor
 @RepositoryRestController
@@ -38,6 +40,7 @@ public class UserController {
     private final PresentationRepository presentationRepository;
     private final Security security;
     private final ConferenceConfigurationProperties conferenceConfiguration;
+    private final ParticipationRepository participationRepository;
 
     @PostMapping("/users")
     @PreAuthorize("@security.isOwner(#user.id)")
@@ -45,6 +48,17 @@ public class UserController {
         User current = updateUser(user);
         setDefaultPhotoFor(current);
         setIdIfManuallyCreated(current);
+        return ResponseEntity.ok(new Resource<>(repository.save(current)));
+    }
+
+    @PostMapping("/users/{userId}/participationData")
+    @PreAuthorize("@security.isOwner(#userId)")
+    public ResponseEntity<?> assignParticipationData(
+            @PathVariable String userId,
+            @RequestBody ParticipationData participationData) {
+        User current = repository.findById(userId);
+        current.setParticipationData(participationRepository.findById(participationData.getId()));
+        current.setParticipationData(participationRepository.findById(participationData.getId()));
         return ResponseEntity.ok(new Resource<>(repository.save(current)));
     }
 
