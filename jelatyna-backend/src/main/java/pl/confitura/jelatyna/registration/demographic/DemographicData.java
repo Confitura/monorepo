@@ -20,5 +20,6 @@ public class DemographicData {
     private String city;
     private String experience;
     private String role;
+    private String mealOption;
 
 }

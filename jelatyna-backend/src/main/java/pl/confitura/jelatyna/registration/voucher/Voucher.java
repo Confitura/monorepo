@@ -24,6 +24,9 @@ public class Voucher  extends AuditedEntity {
 
     private LocalDateTime ticketSendDate;
 
+    @Enumerated(EnumType.STRING)
+    private VoucherType type;
+
     public boolean isEmailSent() {
         return ticketSendDate != null;
     }
@@ -34,4 +37,11 @@ public class Voucher  extends AuditedEntity {
     public Voucher(String id) {
         this.id = id;
     }
+
+    public enum VoucherType {
+        PARTICIPANT, SPEAKER, SPONSOR
+    }
+
 }
+
+

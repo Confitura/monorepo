@@ -9,6 +9,7 @@ import java.util.stream.StreamSupport;
 
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -28,12 +29,11 @@ import pl.confitura.jelatyna.infrastructure.security.JelatynaPrincipal;
 import pl.confitura.jelatyna.infrastructure.security.SecurityContextUtil;
 import pl.confitura.jelatyna.mail.MailSender;
 import pl.confitura.jelatyna.mail.MessageInfo;
-import pl.confitura.jelatyna.presentation.PresentationRepository;
 import pl.confitura.jelatyna.registration.demographic.DemographicDataRepository;
 import pl.confitura.jelatyna.registration.voucher.Voucher;
 import pl.confitura.jelatyna.registration.voucher.VoucherService;
-import pl.confitura.jelatyna.user.User;
-import pl.confitura.jelatyna.user.UserRepository;
+
+import javax.servlet.http.HttpServletResponse;
 
 @RepositoryRestController
 @Slf4j
@@ -41,17 +41,15 @@ import pl.confitura.jelatyna.user.UserRepository;
 public class RegistrationController {
 
     private MailSender sender;
-    private UserRepository userRepository;
     private ParticipationRepository repository;
     private VoucherService voucherService;
     private TicketGenerator generator;
     private DemographicDataRepository demographicDataRepository;
-    private PresentationRepository presentationRepository;
 
     @GetMapping("/participants")
     @PreAuthorize("@security.isAdmin()")
     ResponseEntity<Iterable<Participant>> getParticipants(@AuthenticationPrincipal Authentication authentication) {
-        List<Participant> list = userRepository.findParticipants().stream()
+        List<Participant> list = repository.findAll().stream()
                 .map(it -> new Participant(it, (JelatynaPrincipal) authentication.getPrincipal()))
                 .collect(toList());
         return ResponseEntity.ok(list);
@@ -69,7 +67,7 @@ public class RegistrationController {
     @PreAuthorize("@security.isAdmin()")
     @Transactional
     public ResponseEntity<Object> sendTickets() {
-        doSendTicketTo(userRepository.findUsersToSendTickets());
+        doSendTicketTo(repository.findUsersToSendTickets());
         return ResponseEntity.accepted().build();
     }
 
@@ -77,42 +75,58 @@ public class RegistrationController {
     @PreAuthorize("@security.isAdmin()")
     @Transactional
     public ResponseEntity<Object> sendSurveys() {
-        doSendSurveyTo(userRepository.findAllPresentOnConference());
+        doSendSurveyTo(repository.findAllPresentOnConference());
         return ResponseEntity.accepted().build();
     }
 
     @PostMapping("/participants")
     @Transactional
-    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Object> save(@RequestBody RegistrationForm registrationForm) {
         JelatynaPrincipal principal = SecurityContextUtil.getPrincipal();
-        User user = userRepository.findById(principal.id);
-        if (user.getParticipationData() != null) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
-        }
-        if (registrationForm.getVoucher() != null) {
-            if (!voucherService.isValid(registrationForm.getVoucher())) {
+        Voucher voucher = registrationForm.getVoucher();
+        if (voucher != null) {
+            if (!voucherService.isValid(voucher)) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("INVALID_VOUCHER");
+            } else if (voucherService.isUsed(voucher)) {
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("VOUCHER_USED");
             }
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("MISSING_VOUCHER");
         }
-        saveParticipation(registrationForm, user);
-        saveDemographic(registrationForm);
-        return ResponseEntity.ok().build();
+        ParticipationData participation = saveParticipation(registrationForm);
+        saveStatistics(registrationForm);
+        return ResponseEntity.ok(participation);
     }
 
-    private void saveDemographic(RegistrationForm registrationForm) {
+    private void saveStatistics(RegistrationForm registrationForm) {
         demographicDataRepository.save(registrationForm.createDemographicData());
     }
 
-    private void saveParticipation(RegistrationForm registrationForm, User user) {
-        ParticipationData saved = repository.save(registrationForm.createParticipant());
-        user.setParticipationData(saved);
-        userRepository.save(user);
+    private ParticipationData saveParticipation(RegistrationForm registrationForm) {
+        return repository.save(registrationForm.createParticipant());
+    }
+
+    @GetMapping("/participants/{id}")
+    @Transactional
+    public ResponseEntity<Object> findOne(@PathVariable String id) {
+        ParticipationData data = repository.findById(id);
+        if (data == null) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(data);
+        }
+    }
+
+    @GetMapping("/participants/{id}/ticket")
+    @Transactional
+    public void getQrCode(@PathVariable String id, HttpServletResponse response) throws IOException {
+        byte[] ticket = generator.generateFor(id);
+        response.setContentType(MediaType.IMAGE_PNG.toString());
+        response.getOutputStream().write(ticket);
     }
 
     @PutMapping("/participants/{id}")
     @Transactional
-    @PreAuthorize("@security.isUserAnOwnerOfParticipationData(#id)")
     public ResponseEntity<Object> save(@RequestBody ParticipationData participationData, @PathVariable String id) {
         if (participationData.getVoucher() != null) {
             if (!voucherService.isValid(participationData.getVoucher())) {
@@ -131,19 +145,18 @@ public class RegistrationController {
     @PostMapping("/participants/{id}/arrived")
     @PreAuthorize("@security.isVolunteer()")
     @Transactional
-    public ResponseEntity<Object> arrived(@PathVariable String id, @AuthenticationPrincipal Authentication authentication) {
-        User user = userRepository.findById(id);
+    public ResponseEntity<Object> arrived(
+            @PathVariable String id,
+            @AuthenticationPrincipal Authentication authentication) {
+        ParticipationData user = repository.findById(id);
         if (user == null) {
             return ResponseEntity.notFound().build();
-        } else if (!user.isParticipant()) {
-            return ResponseEntity.badRequest().body("USER NOT REGISTERED");
         } else {
             return arrived(user, (JelatynaPrincipal) authentication.getPrincipal());
         }
     }
 
-    private ResponseEntity<Object> arrived(User user, JelatynaPrincipal registerer) {
-        ParticipationData participationData = user.getParticipationData();
+    private ResponseEntity<Object> arrived(ParticipationData participationData, JelatynaPrincipal registerer) {
         HttpStatus status = HttpStatus.OK;
         if (participationData.alreadyArrived()) {
             status = HttpStatus.CONFLICT;
@@ -152,12 +165,7 @@ public class RegistrationController {
                     .setArrivalDate(LocalDateTime.now())
                     .setRegisteredBy(registerer.getId());
         }
-        Participant participant = new Participant(user, registerer);
-        if (!user.isSpeaker() || !user.hasAcceptedPresentation()) {
-            boolean isSpeaker = !presentationRepository.findAcceptedWithCoSpeaker(user).isEmpty();
-            participant.setSpeaker(isSpeaker);
-            participant.setHasAcceptedPresentation(isSpeaker);
-        }
+        Participant participant = new Participant(participationData, registerer);
         return ResponseEntity.status(status).body(participant);
     }
 
@@ -177,11 +185,11 @@ public class RegistrationController {
     }
 
     @Async
-    void doSendTicketTo(Iterable<User> users) {
+    void doSendTicketTo(Iterable<ParticipationData> users) {
         users.forEach(this::sendTicketTo);
     }
 
-    private void sendTicketTo(User user) {
+    private void sendTicketTo(ParticipationData user) {
         try {
             doSendTicketTo(user);
         } catch (Exception e) {
@@ -191,24 +199,24 @@ public class RegistrationController {
     }
 
     @Transactional
-    void doSendTicketTo(User user) throws IOException, MandrillApiError {
+    void doSendTicketTo(ParticipationData user) throws IOException, MandrillApiError {
         MessageInfo info = new MessageInfo()
                 .setEmail(user.getEmail())
-                .setName(user.getName())
+                .setName(user.getFullName())
                 .setTicket(generator.generateFor(user.getId()));
         sender.send("registration-ticket", info);
-        repository.save(user.getParticipationData().setTicketSendDate(LocalDateTime.now()));
+        repository.save(user.setTicketSendDate(LocalDateTime.now()));
     }
 
     @Async
-    void doSendSurveyTo(Iterable<User> users) {
+    void doSendSurveyTo(Iterable<ParticipationData> users) {
         StreamSupport.stream(users.spliterator(), false)
-                .filter(it -> it.getParticipationData().alreadyArrived())
-                .filter(it -> it.getParticipationData().surveyNotSentYet())
+                .filter(ParticipationData::alreadyArrived)
+                .filter(ParticipationData::surveyNotSentYet)
                 .forEach(this::sendSurveyTo);
     }
 
-    private void sendSurveyTo(User user) {
+    private void sendSurveyTo(ParticipationData user) {
         try {
             doSendSurvey(user);
         } catch (Exception e) {
@@ -218,11 +226,11 @@ public class RegistrationController {
     }
 
     @Transactional
-    void doSendSurvey(User user) throws IOException, MandrillApiError {
+    void doSendSurvey(ParticipationData user) throws IOException, MandrillApiError {
         MessageInfo info = new MessageInfo()
                 .setEmail(user.getEmail())
-                .setName(user.getName());
+                .setName(user.getFullName());
         sender.send("survey", info);
-        repository.save(user.getParticipationData().setSurveySendDate(LocalDateTime.now()));
+        repository.save(user.setSurveySendDate(LocalDateTime.now()));
     }
 }

@@ -55,17 +55,4 @@ public interface UserRepository extends Repository<User, String> {
     @RestResource(exported = false)
     User findByEmail(String email);
 
-    @Query("SELECT u FROM User u" +
-            " WHERE u.participationData.ticketSendDate IS NULL" +
-            " AND u.participationData.voucher IS NOT NULL")
-    @PreAuthorize("@security.isAdmin()")
-    List<User> findUsersToSendTickets();
-
-    @Query("SELECT u FROM User u WHERE u.participationData.arrivalDate IS NOT NULL")
-    @PreAuthorize("@security.isAdmin()")
-    List<User> findAllPresentOnConference();
-
-    @RestResource(exported = false)
-    @Query("SELECT u FROM User u WHERE u.participationData IS NOT NULL")
-    List<User> findParticipants();
 }

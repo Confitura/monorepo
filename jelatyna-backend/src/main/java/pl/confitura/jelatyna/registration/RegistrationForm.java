@@ -7,6 +7,12 @@ import pl.confitura.jelatyna.registration.voucher.Voucher;
 @Data
 class RegistrationForm {
     private Voucher voucher;
+
+    private String lastName;
+    private String firstName;
+    private String email;
+    private boolean privacyPolicyAccepted;
+
     private String size;
     private String gender;
     private String mealOption;
@@ -18,15 +24,18 @@ class RegistrationForm {
     public ParticipationData createParticipant() {
         return new ParticipationData()
                 .setVoucher(voucher)
+                .setLastName(lastName)
+                .setFirstName(firstName)
+                .setEmail(email)
+                .setPrivacyPolicyAccepted(privacyPolicyAccepted)
                 .setSize(size)
-                .setGender(gender)
-                .setMealOption(mealOption);
+                .setGender(gender);
     }
 
     public DemographicData createDemographicData() {
         return new DemographicData()
                 .setCity(city)
-                .setRole(role)
+                .setMealOption(mealOption).setRole(role)
                 .setExperience(experience);
     }
 }

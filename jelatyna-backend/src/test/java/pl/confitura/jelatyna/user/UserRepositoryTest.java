@@ -85,14 +85,13 @@ public class UserRepositoryTest {
         // given user registered as participationData with proper voucher
         Voucher voucher = voucherService.generateVoucher("");
         ParticipationData participationData = participationRepository.save(new ParticipationData().setVoucher(voucher));
-        User user = repository.save(new User().setParticipationData(participationData));
 
         // when admin gets users to send ticket to
-        List<User> list = repository.findUsersToSendTickets();
+        List<ParticipationData> list = participationRepository.findUsersToSendTickets();
 
         //then user is in list
 
-        assertThat(list).contains(user);
+        assertThat(list).contains(participationData);
     }
 
     @Test
@@ -102,57 +101,28 @@ public class UserRepositoryTest {
         Voucher voucher = voucherService.generateVoucher("");
         //and user have received ticket
         ParticipationData participationData = participationRepository.save(new ParticipationData().setVoucher(voucher).setTicketSendDate(now()));
-        User user = repository.save(new User().setParticipationData(participationData));
 
-        // when admin gets users to send ticket to
-        List<User> list = repository.findUsersToSendTickets();
+        // when admin gets to to send ticket to
+        List<ParticipationData> list = participationRepository.findUsersToSendTickets();
 
         //then user is not in list
-        assertThat(list).doesNotContain(user);
+        assertThat(list).doesNotContain(participationData);
 
     }
 
     @Test
-    void should_not_send_ticket_to_user_that_have_not_registered_as_participant() {
+    void admin_should_get_users_that_arrived_to_conference() {
+        Voucher voucher1 = voucherService.generateVoucher("");
+        Voucher voucher2 = voucherService.generateVoucher("");
 
-        // given user not registered as participationData
-        User user = repository.save(new User());
-
-        // when admin gets users to send ticket to
-        List<User> list = repository.findUsersToSendTickets();
-
-        //then user is not in list
-        assertThat(list).doesNotContain(user);
-
-    }
-
-    @Test
-    void should_not_send_ticket_to_user_that_have_registered_as_participant_and_does_not_own_voucher() {
-        // given user registered as participationData without proper voucher
-        ParticipationData participant = participationRepository.save(new ParticipationData());
-        User user = repository.save(new User().setParticipationData(participant));
-
-        // when admin gets users to send ticket to
-        List<User> list = repository.findUsersToSendTickets();
-
-        //then user is not in list
-        assertThat(list).doesNotContain(user);
-
-    }
-
-
-    @Test
-    void admin_should_get_users_that_arrived_to_conference(){
-        ParticipationData registered = participationRepository.save(new ParticipationData().setArrivalDate(now()));
-        User registeredUser = repository.save(new User().setParticipationData(registered));
-        User notRegisteredUser = repository.save(new User());
+        ParticipationData registered = participationRepository.save(new ParticipationData().setVoucher(voucher1).setArrivalDate(now()));
+        ParticipationData notRegistered = participationRepository.save(new ParticipationData().setVoucher(voucher2));
 
         //when
-        List<User> allRegistered = repository.findAllPresentOnConference();
+        List<ParticipationData> allRegistered = participationRepository.findAllPresentOnConference();
 
         //then
         assertThat(allRegistered)
-                .contains(registeredUser)
-                .doesNotContain(notRegisteredUser);
+                .containsExactly(registered);
     }
 }

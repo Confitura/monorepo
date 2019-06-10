@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -19,6 +20,7 @@ import pl.confitura.jelatyna.registration.voucher.Voucher;
 @Table(uniqueConstraints = {
         @UniqueConstraint(name = "unique_voucher", columnNames = {"voucher_id"})
 })
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class ParticipationData extends AuditedEntity {
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -26,16 +28,17 @@ public class ParticipationData extends AuditedEntity {
     @Column(columnDefinition = "varchar(100)")
     private String id;
 
-    @OneToOne
+    @OneToOne(optional = false)
     private Voucher voucher;
 
-    private String city;
+    private String lastName;
+    private String firstName;
+    private String email;
+    private boolean privacyPolicyAccepted;
+
     private String gender;
-    private String experience;
-    private String role;
     private String size;
     private String info;
-    private String mealOption;
 
     private LocalDateTime arrivalDate;
     private String registeredBy;
@@ -50,7 +53,7 @@ public class ParticipationData extends AuditedEntity {
         return surveySendDate == null;
     }
 
-    public boolean hasVoucher() {
-        return voucher != null;
+    public String getFullName() {
+        return lastName + " " + firstName;
     }
 }
