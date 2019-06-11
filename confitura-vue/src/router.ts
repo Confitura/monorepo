@@ -17,6 +17,8 @@ import Presentations from '@/views/admin/Presentations.vue';
 import Workshops from '@/views/Workshops.vue';
 import Vote4Papers from '@/views/Vote4Papers.vue';
 import RegistrationInfoPage from '@/views/RegistrationInfoPage.vue';
+import ParticipatePage from '@/views/participant/ParticipatePage.vue';
+import ParticipantPage from '@/views/participant/ParticipantPage.vue';
 import Speakers from '@/views/Speakers.vue';
 import Speaker from '@/views/Speaker.vue';
 import AcceptedPresentations from '@/views/AcceptedPresentations.vue';
@@ -106,6 +108,16 @@ const router = new Router({
       path: '/tickets',
       name: 'tickets',
       component: RegistrationInfoPage,
+    },
+    {
+      path: '/participate',
+      name: 'participate',
+      component: ParticipatePage,
+    },
+    {
+      path: '/participant/:id',
+      name: 'participant',
+      component: ParticipantPage,
     },
     {
       path: '/speakers',

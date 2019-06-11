@@ -35,9 +35,14 @@
                                 <router-link :to="{name:'register', params:{id: profile.id}}">
                                     Edit profile
                                 </router-link>
-                                <router-link :to="{name:'presentation', params:{userId: profile.id}}">
-                                    Add presentation
+                                <router-link :to="{name:'participant', params:{id: participation.id}}"
+                                             v-if="participation">
+                                    Show ticket
                                 </router-link>
+                                <a @click="addParticipation" href="#"
+                                   v-if="!participation && participationId">
+                                    Connect your ticket
+                                </a>
                             </div>
                             <div class="card-content">
                                 {{profile.bio}}
@@ -133,45 +138,66 @@
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
-  import { LOAD_PROFILE_BY_ID, LOAD_PROFILE_PRESENTATIONS_BY_ID } from '@/store/store.user-profile';
-  import Box from '@/components/Box.vue';
-  import TheContact from '@/components/TheContact.vue';
-  import { Presentation, REMOVE_PRESENTATION, UserProfile } from '@/types';
-  import axios, { AxiosError } from 'axios';
-  import PageHeader from '@/components/PageHeader.vue';
-  import Toasted from 'vue-toasted';
-  import M from 'materialize-css';
+import { Component, Vue } from 'vue-property-decorator';
+import {
+  LOAD_PROFILE_BY_ID,
+  LOAD_PROFILE_PRESENTATIONS_BY_ID,
+  LOAD_PROFILE_PARTICIPATION_BY_ID,
+} from '@/store/store.user-profile';
+import Box from '@/components/Box.vue';
+import TheContact from '@/components/TheContact.vue';
+import { Presentation, REMOVE_PRESENTATION, UserProfile, PARTICIPATION_ID } from '@/types';
+import axios, { AxiosError } from 'axios';
+import PageHeader from '@/components/PageHeader.vue';
+import Toasted from 'vue-toasted';
+import M from 'materialize-css';
 
-  Vue.use(Toasted);
+Vue.use(Toasted);
 
-  @Component({
-    components: { PageHeader, Box, TheContact },
-  })
-  export default class ProfilePage extends Vue {
+@Component({
+  components: { PageHeader, Box, TheContact },
+})
+export default class ProfilePage extends Vue {
 
-    get profile() {
-      return this.$store.state.userProfile.currentProfile;
-    }
+  get profile() {
+    return this.$store.state.userProfile.currentProfile;
+  }
 
-    get presentations() {
-      return this.$store.state.userProfile.currentProfilePresentations;
-    }
+  get presentations() {
+    return this.$store.state.userProfile.currentProfilePresentations;
+  }
 
-    public $refs!: Vue['$refs'] & {
-      file: {
-        click: () => void,
-        files: File[],
-      },
-    };
+  get participation() {
+    return this.$store.state.userProfile.participation;
+  }
 
-    public photoKey = 0;
-    public selectedPresentation: Presentation | null = null;
-    public email = '';
+  get participationId() {
+    return localStorage.getItem(PARTICIPATION_ID);
+  }
 
-    public mounted() {
-      this.reloadData();
-    }
+  public $refs!: Vue['$refs'] & {
+    file: {
+      click: () => void,
+      files: File[],
+    },
+  };
+
+  public photoKey = 0;
+  public selectedPresentation: Presentation | null = null;
+  public email = '';
+
+  public addParticipation(event: Event) {
+    event.preventDefault();
+    const userId = this.profile!.id;
+    axios.get('/api/participants/' + this.participationId)
+      .then((it) => axios.post(`/api/users/${userId}/participationData`, it.data))
+      .then(() => this.$store.dispatch(LOAD_PROFILE_PARTICIPATION_BY_ID, { id: userId }));
+
+  }
+
+  public mounted() {
+    this.reloadData();
+  }
 
 
     public addSpeakerToPresentation() {
@@ -192,72 +218,73 @@
         });
     }
 
-    public deleteSpeaker(pres: Presentation, speaker: UserProfile, event: Event) {
-      event.preventDefault();
-      if ((this.profile!.email !== speaker.email)
-        || confirm('' +
-          'Are you sure you want to remove yourself from presentation? ' +
-          'You will no longer be able to change it.')) {
-        axios.delete(`/api/presentations/${pres.id}/cospeakers/${speaker.email}`)
-          .then((it) => {
-            this.reloadData();
-          });
-      }
+  public deleteSpeaker(pres: Presentation, speaker: UserProfile, event: Event) {
+    event.preventDefault();
+    if ((this.profile!.email !== speaker.email)
+      || confirm('' +
+        'Are you sure you want to remove yourself from presentation? ' +
+        'You will no longer be able to change it.')) {
+      axios.delete(`/api/presentations/${pres.id}/cospeakers/${speaker.email}`)
+        .then((it) => {
+          this.reloadData();
+        });
     }
-
-    public openModal(pres: Presentation) {
-      this.selectedPresentation = pres;
-      const elems = document.querySelector('.modal');
-      M.Modal.init(elems!);
-    }
-
-    public editProfile() {
-      this.$router.push('/register');
-    }
-
-    public showUploadDialog() {
-      this.$refs.file.click();
-    }
-
-    public uploadPhoto() {
-      const { files } = this.$refs.file;
-      const photo = files[0];
-      if (photo !== null) {
-        const formData = new FormData();
-        formData.append('file', photo);
-        return axios
-          .post(`/api/resources/${this.profile!.id}`, formData)
-          .then(() => this.photoKey += 1)
-          .catch((error: AxiosError) => {
-            let message = 'Ups... Something went wrong...';
-            if (error.response!.status === 413) {
-              message = 'Uploaded photo is too large!';
-            }
-            this.$toasted.error(message, { duration: 3000, className: 'error', fullWidth: true });
-          });
-      } else {
-        throw new Error('Something went wrong');
-      }
-    }
-
-    public remove(presentation: Presentation, event: Event) {
-      event.preventDefault();
-      this.$store.dispatch(REMOVE_PRESENTATION, presentation.id)
-        .then(() => this.$delete(this.presentations, this.presentations.indexOf(presentation)));
-    }
-
-    private closeModal() {
-      const elem = document.querySelector('.modal');
-      M.Modal.getInstance(elem!).close();
-    }
-
-    private reloadData() {
-      const userId = this.$route.params.id || this.$store.getters.user.jti;
-      this.$store.dispatch(LOAD_PROFILE_BY_ID, { id: userId });
-      this.$store.dispatch(LOAD_PROFILE_PRESENTATIONS_BY_ID, { id: userId });
-    }
-
   }
+
+  public openModal(pres: Presentation) {
+    this.selectedPresentation = pres;
+    const elems = document.querySelector('.modal');
+    M.Modal.init(elems!);
+  }
+
+  public editProfile() {
+    this.$router.push('/register');
+  }
+
+  public showUploadDialog() {
+    this.$refs.file.click();
+  }
+
+  public uploadPhoto() {
+    const { files } = this.$refs.file;
+    const photo = files[0];
+    if (photo !== null) {
+      const formData = new FormData();
+      formData.append('file', photo);
+      return axios
+        .post(`/api/resources/${this.profile!.id}`, formData)
+        .then(() => this.photoKey += 1)
+        .catch((error: AxiosError) => {
+          let message = 'Ups... Something went wrong...';
+          if (error.response!.status === 413) {
+            message = 'Uploaded photo is too large!';
+          }
+          this.$toasted.error(message, { duration: 3000, className: 'error', fullWidth: true });
+        });
+    } else {
+      throw new Error('Something went wrong');
+    }
+  }
+
+  public remove(presentation: Presentation, event: Event) {
+    event.preventDefault();
+    this.$store.dispatch(REMOVE_PRESENTATION, presentation.id)
+      .then(() => this.$delete(this.presentations, this.presentations.indexOf(presentation)));
+  }
+
+  private closeModal() {
+    const elem = document.querySelector('.modal');
+    M.Modal.getInstance(elem!).close();
+  }
+
+  private reloadData() {
+    const userId = this.$route.params.id || this.$store.getters.user.jti;
+    this.$store.dispatch(LOAD_PROFILE_BY_ID, { id: userId });
+    this.$store.dispatch(LOAD_PROFILE_PRESENTATIONS_BY_ID, { id: userId });
+    this.$store.dispatch(LOAD_PROFILE_PARTICIPATION_BY_ID, { id: userId });
+  }
+
+}
 </script>
 
 <style lang="scss" scoped>

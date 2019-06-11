@@ -21,7 +21,7 @@
   url('assets/fonts/30E5AC_1_0.ttf') format('truetype');
 }
 
-body {
+body div#app {
   font-family: 'NeuzeitGro-Reg', Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -35,3 +35,16 @@ body {
     text-decoration: underline;
   }
 }
+
+.md-body-1, body {
+  line-height:  1.15 !important;
+}
+
+@import "~vue-material/dist/theme/engine"; // Import the theme engine
+
+@include md-register-theme("default", (
+        primary: $brand, // The primary color of your brand
+        accent: $brand // The secondary color of your brand
+));
+
+@import "~vue-material/dist/theme/all"; // Apply the theme

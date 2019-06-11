@@ -80,34 +80,36 @@
             justify-content: right;
             display: unset;
         }
-    }
 
-    .menu-item {
-        margin: 2rem;
 
-        @include lg() {
-            margin: 0.4rem;
-            display: unset;
-        }
+        .menu-item {
+            margin: 2rem;
 
-    }
-
-    .menu-link {
-        text-decoration: none;
-        color: $brand;
-        font-size: 1.1rem;
-        cursor: pointer;
-        @include xl() {
-            font-size: 1.4rem;
+            @include lg() {
+                margin: 0.4rem;
+                display: unset;
+            }
 
         }
-        &:hover, &.router-link-active {
-            color: #ffffff;
-            border-bottom: 2px #ffffff solid;
 
-            .header--red &, .header--black & {
-                color: #000000;
-                border-bottom: 2px #000000 solid;
+        & .menu-link {
+            text-decoration: none;
+            color: $brand;
+            font-size: 1.1rem;
+            cursor: pointer;
+            @include xl() {
+                font-size: 1.4rem;
+
+            }
+
+            &:hover, &.router-link-active {
+                color: #ffffff;
+                border-bottom: 2px #ffffff solid;
+
+                .header--red &, .header--black & {
+                    color: #000000;
+                    border-bottom: 2px #000000 solid;
+                }
             }
         }
     }

@@ -6,6 +6,7 @@ import 'intersection-observer/intersection-observer';
 import '@/interceptors';
 import * as VueGoogleMaps from 'vue2-google-maps';
 import VueHotkey from 'v-hotkey';
+import VeeValidate from 'vee-validate';
 
 Vue.use(VueHotkey);
 Vue.use(VueGoogleMaps, {
@@ -13,7 +14,7 @@ Vue.use(VueGoogleMaps, {
     key: 'AIzaSyA6nOtsqyZJRfMwy6kmaK2_MgX51TtmViA',
   },
 });
-
+Vue.use(VeeValidate);
 
 Vue.config.productionTip = false;
 Vue.filter('firstName', (value: string): string => {

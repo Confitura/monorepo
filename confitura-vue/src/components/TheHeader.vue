@@ -17,48 +17,48 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import { CHANGE_HEADER_THEME } from '@/types';
-import TheMenu from '@/components/TheMenu.vue';
+  import { Component, Vue } from 'vue-property-decorator';
+  import { CHANGE_HEADER_THEME } from '@/types';
+  import TheMenu from '@/components/TheMenu.vue';
 
-@Component({
-  components: { TheMenu },
-})
-export default class TheHeader extends Vue {
-  public showMenu = false;
+  @Component({
+    components: { TheMenu },
+  })
+  export default class TheHeader extends Vue {
+    public showMenu = false;
 
-  public mounted() {
-    window.addEventListener('scroll', this.handleScroll);
-  }
+    public mounted() {
+      window.addEventListener('scroll', this.handleScroll);
+    }
 
-  public beforeDestroy() {
-    window.removeEventListener('scroll', this.handleScroll);
-  }
+    public beforeDestroy() {
+      window.removeEventListener('scroll', this.handleScroll);
+    }
 
-  public handleScroll() {
-    const scroll = window.scrollY;
-    if (scroll < 20) {
-      this.$store.commit(CHANGE_HEADER_THEME, { color: 'default' });
+    public handleScroll() {
+      const scroll = window.scrollY;
+      if (scroll < 20) {
+        this.$store.commit(CHANGE_HEADER_THEME, { color: 'default' });
+      }
+    }
+
+    public hideMenu() {
+      this.showMenu = false;
+    }
+
+    public toggleMenu($event: Event) {
+      $event.preventDefault();
+      this.showMenu = !this.showMenu;
+    }
+
+    get theme() {
+      return `header--${this.$store.state.headerTheme}`;
+    }
+
+    get mobileBreakpoint() {
+      return this.$store.getters.isLg;
     }
   }
-
-  public hideMenu() {
-    this.showMenu = false;
-  }
-
-  public toggleMenu($event: Event) {
-    $event.preventDefault();
-    this.showMenu = !this.showMenu;
-  }
-
-  get theme() {
-    return `header--${this.$store.state.headerTheme}`;
-  }
-
-  get mobileBreakpoint() {
-    return this.$store.getters.isLg;
-  }
-}
 </script>
 
 <style scoped lang="scss">
@@ -150,13 +150,15 @@ export default class TheHeader extends Vue {
             flex-grow: 1;
         }
 
-        &__mobile-button {
-            cursor: pointer;
-            font-size: 1.5rem;
-            text-decoration: none;
-            color: $brand;
-            @include lg() {
-                display: none;
+        & &__mobile-button {
+            &, :hover {
+                cursor: pointer;
+                font-size: 1.5rem;
+                text-decoration: none;
+                color: $brand;
+                @include lg() {
+                    display: none;
+                }
             }
         }
     }

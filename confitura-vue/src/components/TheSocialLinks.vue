@@ -19,36 +19,36 @@
 </template>
 
 <script lang="ts">
-    import { Component, Vue } from 'vue-property-decorator';
+  import { Component, Vue } from 'vue-property-decorator';
 
-    @Component({
-        components: {},
-    })
-    export default class TheSocialLinks extends Vue {
-        public withBackground = true;
-        public links = [
-            {
-                label: 'twitter',
-                icon: 'fab fa-twitter-square',
-                url: 'https://twitter.com/confiturapl',
-            },
-            {
-                label: 'facebook',
-                icon: 'fab fa-facebook-square',
-                url: 'https://www.facebook.com/Confitura',
-            },
-            {
-                label: 'youtube',
-                icon: 'fab fa-youtube-square',
-                url: 'https://www.youtube.com/confiturapl',
-            },
-            {
-                label: 'email us',
-                icon: 'fas fa-envelope-square',
-                url: 'mailto:confitura@confitura.pl',
-            },
-        ];
-    }
+  @Component({
+    components: {},
+  })
+  export default class TheSocialLinks extends Vue {
+    public withBackground = true;
+    public links = [
+      {
+        label: 'twitter',
+        icon: 'fab fa-twitter-square',
+        url: 'https://twitter.com/confiturapl',
+      },
+      {
+        label: 'facebook',
+        icon: 'fab fa-facebook-square',
+        url: 'https://www.facebook.com/Confitura',
+      },
+      {
+        label: 'youtube',
+        icon: 'fab fa-youtube-square',
+        url: 'https://www.youtube.com/confiturapl',
+      },
+      {
+        label: 'email us',
+        icon: 'fas fa-envelope-square',
+        url: 'mailto:confitura@confitura.pl',
+      },
+    ];
+  }
 </script>
 
 <style scoped lang="scss">
@@ -73,63 +73,64 @@
                 z-index: 500;
             }
         }
-    }
 
-    .social-links {
-        display: grid;
-        grid-template-columns: repeat(3, auto);
-        transition: background-color 300ms linear;
-        justify-content: start;
-        white-space: nowrap;
-        @include md() {
+        .social-links {
             display: grid;
-            justify-items: end;
-            grid-template-columns: 1fr;
-        }
-    }
-
-    .link {
-        display: flex;
-        text-decoration: none;
-        font-size: 2.5rem;
-        color: #ffffff;
-        overflow: hidden;
-        padding-right: 2rem;
-        padding-top: 2rem;
-        @include md() {
-            width: 1.5rem;
-            transition: all 0.4s linear;
-            font-size: 1.2rem;
-            padding: 0.5rem;
+            grid-template-columns: repeat(3, auto);
+            transition: background-color 300ms linear;
+            justify-content: start;
+            white-space: nowrap;
+            @include md() {
+                display: grid;
+                justify-items: end;
+                grid-template-columns: 1fr;
+            }
         }
 
-        &--black {
-            background-color: #000000;
-        }
+        .link {
+            display: flex;
+            text-decoration: none;
+            font-size: 2.5rem;
+            color: #ffffff;
+            overflow: hidden;
+            padding-right: 2rem;
+            padding-top: 2rem;
+            box-sizing: content-box;
+            @include md() {
+                width: 1.5rem;
+                transition: all 0.4s linear;
+                font-size: 1.2rem;
+                padding: 0.5rem;
+            }
 
-        &:hover {
-            color: $brand;
-            background-color: #000000;
-            padding-right: 6rem;
+            &--black {
+                background-color: #000000;
+            }
+
+            &:hover {
+                color: $brand;
+                background-color: #000000;
+                padding-right: 6rem;
+
+                .icon__label {
+                    display: block;
+                }
+            }
 
             .icon__label {
-                display: block;
+                padding-left: 1rem;
+                color: #ffffff;
+                display: none;
+                @include md() {
+                    display: block;
+                }
             }
-        }
 
-        .icon__label {
-            padding-left: 1rem;
-            color: #ffffff;
-            display: none;
-            @include md() {
-                display: block;
-            }
-        }
-
-        .icon-email {
-            display: none;
-            @include md() {
-                display: unset;
+            .icon-email {
+                display: none;
+                @include md() {
+                    display: unset;
+                }
             }
         }
     }

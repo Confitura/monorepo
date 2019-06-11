@@ -9935,6 +9935,11 @@ vary@~1.1.2:
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=
 
+vee-validate@^2.2.10:
+  version "2.2.10"
+  resolved "https://registry.yarnpkg.com/vee-validate/-/vee-validate-2.2.10.tgz#c209b6fbcf3dd57f1c2a70d988bb8ff360b9a7a9"
+  integrity sha512-I48yS0Fvd7E7zCZpBgyyXlN2yUICyAIH6lHsyphTQ8gg/8BaTrgQOAdznSsB85qdS+tOJpJa/adwgk9Nyw3mSA==
+
 vendors@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/vendors/-/vendors-1.0.2.tgz#7fcb5eef9f5623b156bcea89ec37d63676f21801"
@@ -9981,6 +9986,11 @@ vue-loader@^15.6.4, vue-loader@^15.7.0:
     loader-utils "^1.1.0"
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
+
+vue-material@^1.0.0-beta-11:
+  version "1.0.0-beta-11"
+  resolved "https://registry.yarnpkg.com/vue-material/-/vue-material-1.0.0-beta-11.tgz#11baf0cdb22a35d35859c619099d6c3cb3cc2cc3"
+  integrity sha512-1+dIVkQafMIA/zNONb7OwGaTjAxaWk/JhUA2/FInQvbArxf1ToKB+yIdeSfzopQ1KICnBTAmk9E0Vdr5p4MWNA==
 
 vue-property-decorator@^7.0.0:
   version "7.3.0"

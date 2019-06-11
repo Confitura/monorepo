@@ -18,6 +18,7 @@ export const TOKEN = 'TOKEN';
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const REMOVE_PRESENTATION = 'REMOVE_PRESENTATION';
+export const PARTICIPATION_ID = 'participationId';
 
 export interface User {
   sub: string;
@@ -55,6 +56,7 @@ export interface UserProfile {
   volunteer?: boolean;
   speaker?: boolean;
   privacyPolicyAccepted?: boolean;
+  participationDataId?: string | null;
   // presentations: Presentation[];
 }
 
@@ -92,4 +94,42 @@ export interface Vote {
   rate: number;
   id: string;
   order: number;
+}
+
+export interface Participant {
+  id?: string;
+  lastName?: string;
+  firstName?: string;
+  email?: string;
+  voucher?: string;
+  privacyPolicyAccepted?: boolean;
+  // t-hsirt:
+  gender?: string;
+  size?: string;
+
+  isAdmin?: boolean;
+  isVolunteer?: boolean;
+  isSpeaker?: boolean;
+  hasAcceptedPresentation?: boolean;
+  isParticipant?: boolean;
+}
+
+export interface RegistrationForm {
+  voucher: Voucher;
+
+  lastName?: string;
+  firstName?: string;
+  email?: string;
+  privacyPolicyAccepted?: boolean;
+
+  size?: string;
+  gender?: string;
+  mealOption?: string;
+  city?: string;
+  experience?: string;
+  role?: string;
+}
+
+export interface Voucher {
+  id?: string;
 }
