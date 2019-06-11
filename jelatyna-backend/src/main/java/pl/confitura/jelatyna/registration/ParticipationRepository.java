@@ -1,14 +1,15 @@
 package pl.confitura.jelatyna.registration;
 
+import java.util.Collection;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.security.access.prepost.PreAuthorize;
-import pl.confitura.jelatyna.registration.voucher.Voucher;
 
-import java.util.Collection;
-import java.util.List;
+import pl.confitura.jelatyna.registration.voucher.Voucher;
 
 @RepositoryRestResource(path = "participants")
 public interface ParticipationRepository extends Repository<ParticipationData, String> {
@@ -18,6 +19,7 @@ public interface ParticipationRepository extends Repository<ParticipationData, S
     @PreAuthorize("@security.isAdmin()")
     Collection<ParticipationData> findAll();
 
+    @RestResource(exported = false)
     ParticipationData findById(String id);
 
     @RestResource(exported = false)

@@ -7,6 +7,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.StreamSupport;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -32,8 +34,6 @@ import pl.confitura.jelatyna.mail.MessageInfo;
 import pl.confitura.jelatyna.registration.demographic.DemographicDataRepository;
 import pl.confitura.jelatyna.registration.voucher.Voucher;
 import pl.confitura.jelatyna.registration.voucher.VoucherService;
-
-import javax.servlet.http.HttpServletResponse;
 
 @RepositoryRestController
 @Slf4j
@@ -114,7 +114,7 @@ public class RegistrationController {
         if (data == null) {
             return ResponseEntity.notFound().build();
         } else {
-            return ResponseEntity.ok(data);
+            return ResponseEntity.ok(new ParticipationDataPublic(data));
         }
     }
 
