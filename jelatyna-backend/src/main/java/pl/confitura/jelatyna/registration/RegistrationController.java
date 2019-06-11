@@ -94,6 +94,7 @@ public class RegistrationController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("MISSING_VOUCHER");
         }
         ParticipationData participation = saveParticipation(registrationForm);
+        sendTicketTo(participation);
         saveStatistics(registrationForm);
         return ResponseEntity.ok(participation);
     }
