@@ -202,6 +202,7 @@ public class RegistrationController {
     @Transactional
     void doSendTicketTo(ParticipationData user) throws IOException, MandrillApiError {
         MessageInfo info = new MessageInfo()
+                .setToken(user.getId())
                 .setEmail(user.getEmail())
                 .setName(user.getFullName())
                 .setTicket(generator.generateFor(user.getId()));
