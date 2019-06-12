@@ -1,5 +1,12 @@
 import { Module } from 'vuex';
-import { EmbeddedPresentations, EmbeddedUserProfiles, Presentation, RootState, UserProfile } from '@/types';
+import {
+  EmbeddedPresentations,
+  EmbeddedUserProfiles,
+  Presentation,
+  RootState,
+  UserProfile,
+  Voucher,
+} from '@/types';
 import axios from 'axios';
 
 export const LOAD_USERS = 'LOAD_USERS';
@@ -7,10 +14,12 @@ export const LOAD_SPEAKERS = 'LOAD_SPEAKERS';
 export const LOAD_SPEAKER = 'LOAD_SPEAKER';
 export const LOAD_ALL_PRESENTATIONS = 'LOAD_ALL_PRESENTATIONS';
 export const LOAD_ACCEPTED_PRESENTATIONS = 'LOAD_ACCEPTED_PRESENTATIONS';
+export const LOAD_VOUCHERS = 'LOAD_VOUCHERS';
 const SET_USERS = 'SET_USERS';
 const SET_SPEAKERS = 'SET_SPEAKERS';
 const SET_SPEAKER = 'SET_SPEAKER';
 const SET_PRESENTATIONS = 'SET_PRESENTATIONS ';
+const SET_VOUCHERS = 'SET_VOUCHERS';
 
 export const adminModule: Module<AdminState, RootState> = {
   state: {
@@ -18,14 +27,19 @@ export const adminModule: Module<AdminState, RootState> = {
     speakers: [],
     speaker: null,
     presentations: [],
+    vouchers: [],
   },
   getters: {
     userCount: ({ users }) => users.length,
     presentationCount: ({ presentations }) => presentations.length,
+    vouchersCount: ({ vouchers }) => vouchers.length,
   },
   mutations: {
     [SET_USERS](store, payload: { users: UserProfile[] }) {
       store.users = payload.users;
+    },
+    [SET_VOUCHERS](store, payload: { vouchers: Voucher[] }) {
+      store.vouchers = payload.vouchers;
     },
     [SET_SPEAKERS](store, payload: { speakers: UserProfile[] }) {
       store.speakers = payload.speakers;
@@ -42,6 +56,12 @@ export const adminModule: Module<AdminState, RootState> = {
       return axios.get<EmbeddedUserProfiles>('/api/users')
         .then((it) => {
           commit(SET_USERS, { users: it.data._embedded.users });
+        });
+    },
+    [LOAD_VOUCHERS]({ commit }) {
+      return axios.get<Voucher[]>('/api/vouchers')
+        .then((it) => {
+          commit(SET_VOUCHERS, { vouchers: it.data });
         });
     },
     [LOAD_SPEAKERS]({ commit }) {
@@ -79,4 +99,5 @@ export interface AdminState {
   speakers: UserProfile[];
   presentations: Presentation[];
   speaker: UserProfile | null;
+  vouchers: Voucher[];
 }

@@ -15,6 +15,11 @@
                             </router-link>
                             <span class="new badge">{{presentationCount}}</span>
                         </div>
+                        <div class="admin__menu-item">
+                            <router-link to="/admin/vouchers">Vouchers
+                            </router-link>
+                            <span class=" new badge">{{voucherCount}}</span>
+                        </div>
                     </div>
                 </div>
 
@@ -33,7 +38,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import Box from '@/components/Box.vue';
 import PageHeader from '@/components/PageHeader.vue';
 import TheContact from '@/components/TheContact.vue';
-import { LOAD_USERS, LOAD_ALL_PRESENTATIONS } from '@/store/admin';
+import { LOAD_USERS, LOAD_ALL_PRESENTATIONS, LOAD_VOUCHERS } from '@/store/admin';
 
 @Component({
   components: { PageHeader, Box, TheContact },
@@ -43,6 +48,7 @@ export default class Admin extends Vue {
   public mounted() {
     this.$store.dispatch(LOAD_USERS);
     this.$store.dispatch(LOAD_ALL_PRESENTATIONS);
+    this.$store.dispatch(LOAD_VOUCHERS);
   }
 
   get userCount() {
@@ -52,6 +58,12 @@ export default class Admin extends Vue {
   get presentationCount() {
     return this.$store.getters.presentationCount;
   }
+
+  get voucherCount() {
+    return this.$store.getters.vouchersCount;
+  }
+
+
 
 }
 </script>
@@ -68,4 +80,11 @@ export default class Admin extends Vue {
         }
     }
 
+    .back-office span.badge.new:after {
+        content: "";
+    }
+
+    .back-office span.badge {
+        min-width: 2rem;
+    }
 </style>

@@ -96,6 +96,7 @@ export interface Vote {
   order: number;
 }
 
+
 export interface Participant {
   id?: string;
   lastName?: string;
@@ -131,5 +132,13 @@ export interface RegistrationForm {
 }
 
 export interface Voucher {
-  id?: string;
+  id: string;
+  originalBuyer?: string;
+  comment?: string;
+  emailSent?: boolean;
+  type?: string;
+  createdBy?: string;
+  createdDate?: string;
+  lastModifiedBy?: string;
+  lastModifiedDate?: string;
 }
