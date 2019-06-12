@@ -2,7 +2,7 @@
     <div class="speaker">
         <PageHeader title="Speakers" type="coder">
         </PageHeader>
-        <Box class="content" color="white">
+        <Box class="content" color="white" :full="false">
             <div v-if="speaker" class="speaker__container">
                 <div class="speaker__left">
                     <img :src="speaker.photo" class="speaker__photo">

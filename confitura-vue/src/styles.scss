@@ -25,6 +25,10 @@ body div#app {
   font-family: 'NeuzeitGro-Reg', Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  img {
+    max-width: unset;
+  }
 }
 
 .link--red {
@@ -37,7 +41,7 @@ body div#app {
 }
 
 .md-body-1, body {
-  line-height:  1.15 !important;
+  line-height: 1.15 !important;
 }
 
 @import "~vue-material/dist/theme/engine"; // Import the theme engine
