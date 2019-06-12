@@ -32,7 +32,7 @@
                         Before contacting us, please make sure that our e-mail did not end up in spam, or any other folder. <br/>
                         Please also make sure that the e-mail address that you have registered ({{participant.email}}) is the correct one.
                     </p>
-                    <p>Other than that... see you on <strong>Saturday, June 26th 2019</strong>!!</p>
+                    <p>Other than that... see you on <strong>Saturday, June 29, 2019</strong>!!</p>
 
 
                 </div>
