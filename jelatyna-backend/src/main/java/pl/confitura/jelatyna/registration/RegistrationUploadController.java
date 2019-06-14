@@ -1,20 +1,9 @@
 package pl.confitura.jelatyna.registration;
 
-import com.opencsv.CSVReader;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.rest.webmvc.RepositoryRestController;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-import pl.confitura.jelatyna.mail.MailSender;
-import pl.confitura.jelatyna.mail.MessageInfo;
-import pl.confitura.jelatyna.registration.voucher.Voucher;
-import pl.confitura.jelatyna.registration.voucher.VoucherService;
+import static java.time.LocalDateTime.now;
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.StreamSupport.stream;
+import static pl.confitura.jelatyna.registration.VoucherStatus.*;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -23,11 +12,22 @@ import java.util.List;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import static java.time.LocalDateTime.now;
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.StreamSupport.stream;
-import static pl.confitura.jelatyna.registration.VoucherStatus.ERROR;
-import static pl.confitura.jelatyna.registration.VoucherStatus.SUCCESS;
+import org.springframework.data.rest.webmvc.RepositoryRestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.opencsv.CSVReader;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
+import pl.confitura.jelatyna.mail.MailSender;
+import pl.confitura.jelatyna.mail.MessageInfo;
+import pl.confitura.jelatyna.registration.voucher.Voucher;
+import pl.confitura.jelatyna.registration.voucher.VoucherService;
 
 @RepositoryRestController
 @Slf4j
@@ -56,7 +56,7 @@ public class RegistrationUploadController {
 
     private GenerateVouchersResponse sendVouchers(GenerateVouchersRequest registerRequest) {
         long successCount = IntStream.range(0, registerRequest.count)
-                .mapToObj(it -> registerRequest.buyerEmail)
+                .mapToObj(it -> registerRequest)
                 .map(this::createVoucher)
                 .map(this::sendVoucher)
                 .filter(SUCCESS::equals)
@@ -78,9 +78,10 @@ public class RegistrationUploadController {
         }
     }
 
+
     @Transactional
-    Voucher createVoucher(String mail) {
-        return service.generateVoucher(mail);
+    Voucher createVoucher(GenerateVouchersRequest request) {
+        return service.generateVoucher(request.getBuyerEmail(), request.getType(), request.getComment());
     }
 
     @Data
