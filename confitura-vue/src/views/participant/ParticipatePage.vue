@@ -72,6 +72,12 @@
                             </div>
                         </div>
                         <div class="row">
+                            <strong>Sizes: </strong>
+                            <a href="https://share.adler.info/files//label/110---product_size.pdf">male</a>,
+                            <a href="https://share.adler.info/files//label/122---product_size.pdf">female</a>
+
+                        </div>
+                        <div class="row">
                             <h2 class="participate__title">Tell us more about you</h2>
                             <div class="participate__statisticsInfo">This data will be used for statistics only, and will not be associated
                                 with your
