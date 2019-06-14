@@ -514,7 +514,7 @@ IT Kontrakt, w ramach inwestycji Oaktree Capital Management i Cornerstone Partne
         },{
           id: 'sollers',
           name: 'Sollers Consulting',
-          description: `Sollers Consulting is an international business advisory and software implementation specialist supporting the financial industry in business transformations. Sollers Consulting Teams have supported over 70 financial groups in enhancing their digital capabilities. Among the companies partnering with Sollers Consulting are Allianz, Axa, LV, BNP Paribas Cardif, Basler, Generali, Zurich, Santander Consumer Bank, ING and many more. 
+          description: `Sollers Consulting is an international business advisory and software implementation specialist supporting the financial industry in business transformations. Sollers Consulting Teams have supported over 70 financial groups in enhancing their digital capabilities. Among the companies partnering with Sollers Consulting are Allianz, Axa, LV=, BNP Paribas Cardif, Basler, Generali, Zurich, Santander Consumer Bank, ING and many more. 
 
 Sollers Consulting specialises in IT systems, helping insurers, banks and leasing companies to transform and adapt to new technologies. The company offers RIFE, a digital platform designed for the needs of the insurance industry. Sollers Consulting cooperates with more than 15 technology providers such as Guidewire Software, Tia Technology, Fadata, Oracle, AWS or Microsoft. 
 
