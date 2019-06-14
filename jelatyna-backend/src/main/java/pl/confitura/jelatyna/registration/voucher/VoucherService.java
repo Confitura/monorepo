@@ -1,12 +1,13 @@
 package pl.confitura.jelatyna.registration.voucher;
 
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
+
+import lombok.RequiredArgsConstructor;
 import pl.confitura.jelatyna.registration.ParticipationData;
 import pl.confitura.jelatyna.registration.ParticipationRepository;
 import pl.confitura.jelatyna.user.UserRepository;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -20,7 +21,7 @@ public class VoucherService {
         return generateVoucher(originalBuyer, Voucher.VoucherType.PARTICIPANT, null);
     }
 
-    Voucher generateVoucher(String originalBuyer, Voucher.VoucherType type, String comment) {
+    public Voucher generateVoucher(String originalBuyer, Voucher.VoucherType type, String comment) {
         return voucherRepository.save(new Voucher()
                 .setOriginalBuyer(originalBuyer)
                 .setComment(comment)
