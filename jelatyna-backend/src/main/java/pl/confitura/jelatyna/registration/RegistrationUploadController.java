@@ -18,6 +18,7 @@ import pl.confitura.jelatyna.registration.voucher.VoucherService;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -85,19 +86,46 @@ public class RegistrationUploadController {
     @Data
     @AllArgsConstructor
     static class GenerateVouchersRequest {
-        private static final GenerateVouchersRequest ERR = new GenerateVouchersRequest("ERROR", -1);
+        private static final GenerateVouchersRequest ERR = new GenerateVouchersRequest("ERROR", -1, null, null);
 
         final String buyerEmail;
         final int count;
+        final Voucher.VoucherType type;
+        final String comment;
 
         static GenerateVouchersRequest build(String[] row) {
             try {
                 String buyerEmail = row[0];
                 int count = Integer.parseInt(row[1]);
-                return new GenerateVouchersRequest(buyerEmail, count);
+                Voucher.VoucherType type = getVoucherType(row);
+                String comment = getComment(row);
+                return new GenerateVouchersRequest(buyerEmail, count, type, comment);
             } catch (Exception ex) {
                 log.warn("unable to parse line for registration", ex);
                 return ERR;
+            }
+        }
+
+        private static String getComment(String[] row) {
+            if (row.length > 3) {
+                return row[3];
+            }
+            return null;
+        }
+
+        private static Voucher.VoucherType getVoucherType(String[] row) throws UnableToParseVoucher {
+            if (row.length > 2) {
+                return extractType(row[2]);
+            }
+            return Voucher.VoucherType.PARTICIPANT;
+        }
+
+        private static Voucher.VoucherType extractType(String s) throws UnableToParseVoucher {
+            try {
+                return Voucher.VoucherType.valueOf(s);
+            } catch (Exception ex) {
+                throw new UnableToParseVoucher("unable to parse as voucher type: " + s + ", " +
+                        "available options: " + Arrays.toString(Voucher.VoucherType.values()), ex);
             }
         }
     }
@@ -107,11 +135,21 @@ public class RegistrationUploadController {
         String buyerEmail;
         int successCount;
         int requestedCount;
+        Voucher.VoucherType type;
+        String comment;
 
         GenerateVouchersResponse(GenerateVouchersRequest registerRequest, int successCount) {
             buyerEmail = registerRequest.buyerEmail;
             this.successCount = successCount;
             requestedCount = registerRequest.count;
+            type = registerRequest.type;
+            comment = registerRequest.comment;
+        }
+    }
+
+    static class UnableToParseVoucher extends Exception {
+        UnableToParseVoucher(String s, Throwable throwable) {
+            super(s, throwable);
         }
     }
 
