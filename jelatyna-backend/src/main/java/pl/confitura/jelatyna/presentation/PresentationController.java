@@ -1,21 +1,28 @@
 package pl.confitura.jelatyna.presentation;
 
-import lombok.AllArgsConstructor;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import javax.validation.Valid;
+
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import lombok.AllArgsConstructor;
 import pl.confitura.jelatyna.presentation.rating.Rate;
 import pl.confitura.jelatyna.presentation.rating.RatingService;
 import pl.confitura.jelatyna.user.User;
 import pl.confitura.jelatyna.user.UserRepository;
-
-import javax.validation.Valid;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @RepositoryRestController
 @AllArgsConstructor
@@ -50,13 +57,13 @@ public class PresentationController {
     }
 
     @PreAuthorize("@security.presentationOwnedByUser(#presentationId) || @security.isAdmin()")
-    @DeleteMapping("/presentations/{presentationId}/cospeakers/{email:.+}")
-    public ResponseEntity<?> removeCospeaker(@PathVariable String presentationId, @PathVariable String email) {
+    @DeleteMapping("/presentations/{presentationId}/cospeakers/{id:.+}")
+    public ResponseEntity<?> removeCospeaker(@PathVariable String presentationId, @PathVariable String id) {
         Presentation presentation = this.repository.findById(presentationId);
         if (presentation.getSpeakers().size() == 1) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Presentation needs at least one speaker!");
         }
-        presentation.setSpeakers(removeCospeakerByEmail(email, presentation.getSpeakers()));
+        presentation.setSpeakers(removeCospeakerById(id, presentation.getSpeakers()));
         repository.save(presentation);
         return ResponseEntity.ok().build();
     }
@@ -83,6 +90,10 @@ public class PresentationController {
 
     private Set<User> removeCospeakerByEmail(String email, Set<User> cospeakers) {
         return cospeakers.stream().filter(it -> !it.getEmail().equalsIgnoreCase(email)).collect(Collectors.toSet());
+    }
+
+    private Set<User> removeCospeakerById(String id, Set<User> cospeakers) {
+        return cospeakers.stream().filter(it -> !it.getId().equalsIgnoreCase(id)).collect(Collectors.toSet());
     }
 
     @PostMapping("/presentations/{presentationId}/ratings")
