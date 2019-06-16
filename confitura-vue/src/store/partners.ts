@@ -540,7 +540,6 @@ More information about career in Sollers Consulting at: [https://career.sollers.
 
 function shuffle<T>(array: T[]): T[] {
   return array.sort(() => 0.5 - Math.random());
-
 }
 
 export interface PartnersState {

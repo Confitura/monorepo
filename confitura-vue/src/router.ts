@@ -23,6 +23,7 @@ import Speakers from '@/views/Speakers.vue';
 import Speaker from '@/views/Speaker.vue';
 import AcceptedPresentations from '@/views/AcceptedPresentations.vue';
 import Vouchers from '@/views/admin/Vouchers.vue';
+import About from '@/views/About.vue';
 
 Vue.use(Router);
 Vue.use(VueScrollTo, {
@@ -125,14 +126,21 @@ const router = new Router({
       path: '/speakers',
       name: 'speakers',
       component: Speakers,
-    }, {
+    },
+    {
       path: '/speakers/:id',
       name: 'speaker',
       component: Speaker,
-    }, {
+    },
+    {
       path: '/presentations',
       name: 'presentations',
       component: AcceptedPresentations,
+    },
+    {
+      path: '/about',
+      name: 'about',
+      component: About,
     },
   ],
   scrollBehavior(to, from, savedPosition) {
