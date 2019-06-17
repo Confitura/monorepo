@@ -1,12 +1,9 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <div class="partners">
-        <PageHeader class="header">
+        <PageHeader class="header" type="peace">
             <template v-slot:title>
                 <span class="header__partner-type">{{partner.type}} partner</span>
                 {{partner.name}}
-            </template>
-            <template v-slot:default>
-                <img src="../assets/astronaut.svg" class="header-img" alt="astronaut">
             </template>
         </PageHeader>
         <Box class="content" color="white" :full="false">

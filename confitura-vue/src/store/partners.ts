@@ -526,6 +526,14 @@ More information about career in Sollers Consulting at: [https://career.sollers.
           type: 'silver',
           logo: require('../assets/partners/sollers.svg'),
           orientation: 'horizontal',
+        },{
+          id: 'alten',
+          name: 'Alten',
+          description: `Jesteśmy częścią międzynarodowej grupy ALTEN, skupiającej na całym świecie ponad 33 700 wybitnych specjalistów w dziedzinach inżynierii oraz technologii informatycznych. Realizujemy najbardziej innowacyjne projekty technologiczne dla naszych Partnerów biznesowych.  
+          Nasz zespół to profesjonaliści, którzy dzięki zaangażowaniu i znajomości potrzeb rynku sprawiają, że grupa ALTEN wciąż jest światowym liderem usług konsultingu inżynieryjno-technologicznego.`,
+          www: 'www.altenpolska.pl',
+          type: 'silver',
+          logo: require('../assets/partners/alten.svg'),
         },
 
       ];
