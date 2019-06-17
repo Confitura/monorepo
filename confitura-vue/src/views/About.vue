@@ -69,7 +69,7 @@
         .then((users) => this.committee = users);
 
       this.fetch('volunteers')
-        .then((users) => users.filter(user => {
+        .then((users) => users.filter((user) => {
           const photo = user.photo;
           return photo && !photo.includes('blank');
         }))
