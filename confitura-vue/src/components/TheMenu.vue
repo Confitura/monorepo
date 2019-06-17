@@ -18,7 +18,7 @@
 
     public items: MenuItem[] = [
       { label: 'home', url: '/#home' },
-      { label: 'about us', url: '/#about-us' },
+      { label: 'about us', url: '/about' },
       // { label: 'numbers', url: '/#numbers' },
       { label: 'partners', url: '/partners' },
       // { label: 'contact', url: '/#contact' },

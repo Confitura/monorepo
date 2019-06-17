@@ -69,6 +69,10 @@
         .then((users) => this.committee = users);
 
       this.fetch('volunteers')
+        .then((users) => users.filter(user => {
+          const photo = user.photo;
+          return photo && !photo.includes('blank');
+        }))
         .then((users) => this.volunteers = users);
     }
 
@@ -134,7 +138,7 @@
         font-size: 2rem;
         margin: 2rem;
         padding: 0;
-        @include md(){
+        @include md() {
             font-size: 3rem;
 
         }
@@ -223,10 +227,7 @@
     .bcc {
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-areas:
-                "bcc-header"
-                "bcc-logo"
-                "bcc-info";
+        grid-template-areas: "bcc-header" "bcc-logo" "bcc-info";
         @include md() {
             grid-column-gap: 2rem;
             grid-template-columns: 2fr 1fr;
