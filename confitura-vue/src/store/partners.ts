@@ -604,6 +604,16 @@ Groupon zmienia to, w jaki sposób tradycyjne niewielkie biznesy mogą zdobywać
           type: 'silver',
           logo: require('../assets/partners/groupon.svg'),
           orientation: 'horizontal',
+        },{
+          id: 'prodata',
+          name: 'ProData Consult',
+          description: `We are one of the largest international consulting company in Northern Europe with offices in Denmark, Sweden, Norway, Germany, the Netherlands and Poland. We work with the best specialists vastly experienced  in IT sector. We carry out challenging projects across a number of industries – accept military. Our relationship with Consultants is built on an open and honest communication.
+ 
+We act within the Scandinavian business culture focused on achieving goals while maintaining the balance between private and professional life. We offer attractive hourly rates and transparent pricing and professional stability (long term cooperation).`,
+          www: 'https://www.itconsultants.pl/',
+          type: 'silver',
+          logo: require('../assets/partners/prodata.png'),
+          orientation: 'horizontal',
         },
 
 
