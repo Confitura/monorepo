@@ -594,6 +594,16 @@ Jesteśmy dumni nie tylko z tego, co robimy, ale również z tego kim jesteśmy 
           type: 'gold',
           logo: require('../assets/partners/atena.svg'),
           orientation: 'horizontal',
+        },{
+          id: 'groupon',
+          name: 'GROUPON',
+          description: `Groupon (NASDAQ: GRPN) jest globalnym liderem w dziedzinie handlu lokalnego i miejscem od którego warto zacząć, jeśli chcesz dokonać niemal dowolnego zakupu, w dowolnym czasie, gdziekolwiek jesteś. Dzięki wykorzystaniu globalnych kontaktów firmy i skali jej działalności, Groupon oferuje konsumentom ogromny wybór najlepszych okazji z całego świata. Klienci odnajdują to, co najlepsze ma do zaoferowania ich miasto, w sieci lub w telefonie komórkowym poprzez lokalne oferty Groupon, mogą wyjechać na wakacje poprzez Groupon Getaways i wybierać spośród oferty pieczołowicie dobranego sprzętu elektronicznego, ubrań, artykułów gospodarstwa domowego i wielu innych produktów poprzez Groupon Goods.
+
+Groupon zmienia to, w jaki sposób tradycyjne niewielkie biznesy mogą zdobywać, utrzymywać i nawiązywać kontakt z klientami, dostarczając swoim kontrahentom wybór produktów i usług, w tym niestandardowe kampanie marketingowe, które pomagają biznesom w rozwoju oraz w prowadzeniu skutecznej działalności. Naszym celem jest połączenie lokalnych przedsiębiorców i zwiększającej się siły nabywczej konsumentów, napędzając biznes lokalnym kupcom poprzez cenę oraz pokazanie ich ofert.`,
+          www: 'https://people.groupon.com/poland',
+          type: 'silver',
+          logo: require('../assets/partners/groupon.svg'),
+          orientation: 'horizontal',
         },
 
 
