@@ -67,6 +67,9 @@
             flex-direction: row;
         }
     }
+    .speaker__left {
+        flex-shrink: 0;
+    }
     .speaker__right {
         @include md(){
             margin-left: 3rem;
