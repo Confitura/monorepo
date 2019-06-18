@@ -534,6 +534,40 @@ More information about career in Sollers Consulting at: [https://career.sollers.
           www: 'www.altenpolska.pl',
           type: 'silver',
           logo: require('../assets/partners/alten.svg'),
+        },{
+          id: 'isolutions',
+          name: 'Isolutions',
+          description: `Jesteśmy firmą, dla której punktem odniesienia w budowaniu pozycji rynkowej są ludzie. W praktyce oznacza to nacisk na partnerskie relacje, zaufanie, odpowiedzialność i leżący w centrum naszego DNA rozwój. Dzięki takiemu podejściu możemy oferować naszym Klientom wysokiej jakości usługi realizowane przez zgrane, zmotywowane i czerpiące przyjemność ze swojej pracy zespoły. 
+
+W pracy stawiamy na nowe technologie, dobre praktyki, konstruktywny feedback, zwinne metodyki pracy i sprawną komunikację, co pozwala nam efektywnie wspierać naszych Klientów w realizacji wielu wyzwań, które pojawiają się wraz ze zmieniającym się rynkiem.
+
+Do każdego pracownika podchodzimy indywidualnie, dbając o autonomię i poczucie wpływu: 
+
+Mamy w pełni elastyczny czas pracy oraz możliwość pracy zdalnej zgodnie z potrzebami.
+
+Inwestujemy w rozwój – rozwijamy własny Startup Processor oraz zespół R&D, dzięki czemu rozwijamy własne produkty i oferujemy m.in. rozwiązania typu Proof of Concept, czy Minimum Viable Product.
+
+Dzięki naszemu autorskiemu rozwiązaniu - Forum Projektów – nasi programiści mają ogromny wpływ na to, w którym projekcie zostaną zaalokowani.
+
+Dzięki naszemu autorskiemu rozwiązaniu – Teamtoolbox na bieżąco śledzimy poziom zadowolenia z pracy w naszej firmie, ze współpracy z naszymi klientami oraz z realizacji zadań, dzięki czemu sprawnie reagujemy na potrzeby naszych pracowników.
+
+Mamy dedykowany zespół, który dba o komfort naszych ludzi od pierwszego dnia pracy, bez względu na to, czy pracują w siedzibie firmy, czy w siedzibach naszych Klientów.
+
+Dzielimy się wiedzą, na zewnętrznych meetupach i wewnętrznych szkoleniach. Mamy też budżet rozwojowy pozwalający rozwijać kompetencje zgodnie z zainteresowaniami i potrzebami projektowymi.
+
+Mamy płaską strukturę. Każdy zespół organizuje się zgodnie ze swoją specyfiką i potrzebami projektowymi.
+
+Nie prowadzimy ocen rocznych, dbamy o przekazywanie feedbacku w trybie ciągłym.
+
+Nie uzależniamy awansów od stażu pracy, ale od kompetencji. Awansować w Isolution można w każdej chwili, po spełnieniu ustalonych z liderem warunków, indywidualnie dopasowanych do każdej osoby. 
+
+Cenimy sobie ponadto transparentność, wzajemne docenienie, współpracę, ale także wspólną, dobrą zabawę.
+
+Jesteśmy dumni nie tylko z tego, co robimy, ale również z tego kim jesteśmy i jaką kulturę budujemy, co przekłada się również na atmosferę pracy oraz ambitne cele, które przy takim zespole możemy sobie stawiać.`,
+          www: 'https://isolution.pl/en/',
+          type: 'silver',
+          logo: require('../assets/partners/is.png'),
+          orientation: 'horizontal'
         },
 
       ];
