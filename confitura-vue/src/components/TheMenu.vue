@@ -71,8 +71,15 @@
         align-self: flex-end;
         height: 100%;
 
-        &.header--default {
+        &.header--default,
+        &.header--white,
+        &.header--red,
+        &.header--black {
+
             background-color: #000000;
+            @include lg() {
+                background-color: transparent;
+            }
         }
 
         @include lg() {

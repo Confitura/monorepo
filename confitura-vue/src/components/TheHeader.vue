@@ -7,7 +7,7 @@
                 </a>
                 <span class="header__separator"></span>
                 <a class="header__mobile-button" @click="toggleMenu($event)" href="#">menu</a>
-                <TheMenu v-if="mobileBreakpoint"/>
+                <TheMenu :class="theme" v-if="mobileBreakpoint"/>
             </div>
         </nav>
         <transition name="menu-fade">
@@ -94,7 +94,7 @@
             padding-left: $standard-padding;
         }
 
-        &--default {
+        &#{&}--default {
             background-color: transparent;
             padding-top: $small-menu-padding;
             padding-bottom: $small-menu-padding;
@@ -105,8 +105,8 @@
             }
         }
 
-        &--black,
-        &--red {
+        &#{&}--black,
+        &#{&}--red {
 
             background-color: #ffffff;
             padding-top: $small-menu-padding;
@@ -118,7 +118,7 @@
 
         }
 
-        &--white {
+        &#{&}--white {
             background-color: #000000;
             padding-top: $small-menu-padding;
             padding-bottom: $small-menu-padding;
