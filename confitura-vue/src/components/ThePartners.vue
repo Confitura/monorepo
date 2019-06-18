@@ -131,6 +131,7 @@
             color: $brand;
             font-family: $font-bold;
             font-size: 3rem;
+            margin: 0;
         }
 
         .info {
@@ -144,7 +145,7 @@
             flex-direction: column;
             @include md() {
                 flex-direction: row;
-                min-height: 600px;
+                min-height: 750px;
             }
 
         }
@@ -199,12 +200,12 @@
         }
 
         .logo--silver {
-            margin-left: 1.2rem;
-            margin-right: 1.2rem;
+            margin-left: 1.1rem;
+            margin-right: 1.1rem;
         }
 
         .logo--gold {
-            margin: 2.5rem;
+            margin: 2rem;
         }
 
 
@@ -286,7 +287,7 @@
             max-width: 230px;
             width: 33%;
             text-align: center;
-            padding-top: 2rem;
+            padding-top: 1.5rem;
             border-bottom: #EAEAEA solid 8px;
 
             @include md() {

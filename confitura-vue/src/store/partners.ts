@@ -586,6 +586,14 @@ Jesteśmy dumni nie tylko z tego, co robimy, ale również z tego kim jesteśmy 
           type: 'silver',
           logo: require('../assets/partners/ppl.svg'),
           orientation: 'horizontal',
+        },{
+          id: 'atena',
+          name: 'Atena',
+          description: `Atena IT & Financial Services Inc. designs, implements and integrates comprehensive IT systems for businesses. We specialise in developing products for the insurance market. For years, Atena has been the leading supplier of systems for this industry. We develop custom turnkey solutions for back office, front office, middleware, and business intelligence.`,
+          www: 'https://www.atena.pl',
+          type: 'gold',
+          logo: require('../assets/partners/atena.svg'),
+          orientation: 'horizontal',
         },
 
 
