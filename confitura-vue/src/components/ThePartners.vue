@@ -61,7 +61,7 @@
     public path: Partner[] = [];
     public gold: Partner[] = [];
     public silver: Partner[] = [];
-    public types: PartnerType[] = ['gold', 'silver'];
+    public types: PartnerType[] = ['gold', 'silver', 'bronze'];
     public partners: Partners = { platinum: [], path: [], gold: [], silver: [], bronze: [] };
     public active: PartnerType = 'gold';
     private intervalId: number = 0;
@@ -82,7 +82,7 @@
       if (this.intervalId === 0) {
         this.intervalId = setInterval(() => {
           const currentIdx = this.types.indexOf(this.active);
-          const newIdx = (currentIdx + 1) % 2;
+          const newIdx = (currentIdx + 1) % this.types.length;
           this.active = this.types[newIdx];
         }, 5000);
       }
@@ -94,8 +94,9 @@
         .then(() => {
           this.partners.platinum = this.$store.getters.platinum;
           this.partners.path = this.$store.getters.path;
-          this.partners.silver = this.$store.getters.silver;
           this.partners.gold = this.$store.getters.gold;
+          this.partners.silver = this.$store.getters.silver;
+          this.partners.bronze = this.$store.getters.bronze;
           this.startCarousel();
         });
     }

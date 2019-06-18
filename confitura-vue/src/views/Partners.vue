@@ -44,6 +44,7 @@
             path: this.$store.getters.path,
             gold: this.$store.getters.gold,
             silver: this.$store.getters.silver,
+            bronze: this.$store.getters.bronze,
           };
         });
     }

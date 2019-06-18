@@ -10,6 +10,7 @@ export const partnersModule: Module<PartnersState, RootState> = {
     path: ({ partners }): Partner[] => shuffle(partners.filter((partner) => partner.type === 'path')),
     silver: ({ partners }): Partner[] => shuffle(partners.filter((partner) => partner.type === 'silver')),
     gold: ({ partners }): Partner[] => shuffle(partners.filter((partner) => partner.type === 'gold')),
+    bronze: ({ partners }): Partner[] => shuffle(partners.filter((partner) => partner.type === 'bronze')),
   },
   actions: {
     [LOAD_PARTNERS]({ state }) {
@@ -531,7 +532,7 @@ More information about career in Sollers Consulting at: [https://career.sollers.
           name: 'Alten',
           description: `Jesteśmy częścią międzynarodowej grupy ALTEN, skupiającej na całym świecie ponad 33 700 wybitnych specjalistów w dziedzinach inżynierii oraz technologii informatycznych. Realizujemy najbardziej innowacyjne projekty technologiczne dla naszych Partnerów biznesowych.  
           Nasz zespół to profesjonaliści, którzy dzięki zaangażowaniu i znajomości potrzeb rynku sprawiają, że grupa ALTEN wciąż jest światowym liderem usług konsultingu inżynieryjno-technologicznego.`,
-          www: 'www.altenpolska.pl',
+          www: 'https://www.altenpolska.pl',
           type: 'silver',
           logo: require('../assets/partners/alten.svg'),
         },{
@@ -568,7 +569,17 @@ Jesteśmy dumni nie tylko z tego, co robimy, ale również z tego kim jesteśmy 
           type: 'silver',
           logo: require('../assets/partners/is.png'),
           orientation: 'horizontal'
+        },{
+          id: 'pentacomp',
+          name: 'Pentacomp',
+          description: `Historia Pentacomp Systemy Informatyczne S.A. zaczęła się 24 lata temu od pięciu komputerów, właścicieli których połączyła wspólna pasja – programowanie i marzenie o rzeczach większych, niż te, które można osiągnąć w pojedynkę. Obecnie, Pentacomp to ponad 250 „zwinnych" specjalistów. To oni wprowadzają cyfrową rewolucję w administracji oraz pomagają skutecznie, szybko i innowacyjnie rozwijać biznes prywatnych przedsiębiorstw.
+`,
+          www: 'https://www.pentacomp.pl/',
+          type: 'bronze',
+          logo: require('../assets/partners/pentacomp.svg'),
+          orientation: 'horizontal',
         },
+
 
       ];
     },
