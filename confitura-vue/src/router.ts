@@ -25,6 +25,7 @@ import AcceptedPresentations from '@/views/AcceptedPresentations.vue';
 import Vouchers from '@/views/admin/Vouchers.vue';
 import About from '@/views/About.vue';
 import Agenda from '@/views/Agenda.vue';
+import Venue from '@/views/Venue.vue';
 
 Vue.use(Router);
 Vue.use(VueScrollTo, {
@@ -147,6 +148,11 @@ const router = new Router({
       path: '/schedule',
       name: 'schedule',
       component: Agenda,
+    },
+    {
+      path: '/venue',
+      name: 'venue',
+      component: Venue,
     },
   ],
   scrollBehavior(to, from, savedPosition) {
