@@ -2,10 +2,7 @@
     <div class="venue__page">
         <PageHeader title="Venue" type="coder"/>
         <Box color="white">
-            <div class="venue__info">
-                <h2 class="venue__header">Expo XXI</h2>
-                <PageFragment name="venue-page" class="venue__infoContent"/>
-            </div>
+            <PageFragment class="questions" name="venue-page"/>
             <GmapMap
                     :center="center"
                     :zoom="16"

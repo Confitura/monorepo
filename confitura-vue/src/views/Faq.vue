@@ -106,5 +106,11 @@
             }
         }
 
+        h2 + {
+            p, ul {
+                margin-top: 2em;
+            }
+        }
+
     }
 </style>
