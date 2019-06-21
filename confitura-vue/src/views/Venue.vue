@@ -1,22 +1,21 @@
 <template>
     <div class="venue__page">
         <PageHeader title="Venue" type="coder"/>
-        <Box color="white">
+        <Box color="white" :full="false">
             <PageFragment class="questions" name="venue-page"/>
+        </Box>
+        <Box color="white">
             <GmapMap
                     :center="center"
                     :zoom="16"
                     :options="mapOptions"
-                    class="venue__map"
-            >
+                    class="venue__map">
                 <GmapMarker
                         :position="center"
                         :clickable="true"
                         :draggable="false"
-                        :icon="require('../assets/marker.svg')"
-                />
+                        :icon="require('../assets/marker.svg')"/>
             </GmapMap>
-
         </Box>
         <TheContact id="contact"/>
     </div>
