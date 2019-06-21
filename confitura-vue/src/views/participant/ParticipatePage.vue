@@ -10,7 +10,7 @@
                     <span v-else>But we dont know what... don't worry, it's not you - it's us. Try one more time (or maybe even 3) - if it doesn't help then contact us!</span>
                 </p>
             </div>
-            <div>
+            <div v-else>
                 <h4 class="participate__info">All fields required</h4>
                 <h2 class="participate__title">Personal information</h2>
                 <div class="row">
