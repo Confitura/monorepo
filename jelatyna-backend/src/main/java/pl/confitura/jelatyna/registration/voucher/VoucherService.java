@@ -49,12 +49,12 @@ public class VoucherService {
         return voucherRepository.findUnusedVouchers();
     }
 
-    public Voucher findById(String id){
+    public Voucher findById(String id) {
         return voucherRepository.findById(id);
     }
 
     public boolean canAssign(String participationDataId, Voucher voucher) {
-        if(voucher == null){
+        if (voucher == null) {
             return true;
         }
         ParticipationData owner = participationRepository.findByVoucher(voucher);
@@ -69,9 +69,13 @@ public class VoucherService {
         return participationRepository.findByVoucher(voucher) != null;
     }
 
-    public boolean canUseVoucher(String voucherId) {
-        Voucher v = voucherRepository.findById(voucherId);
-        return participationRepository.findByVoucher(v) == null;
+    boolean canUseVoucher(String voucherId) {
+        return getParticipationDataFor(voucherId) == null;
+    }
+
+    ParticipationData getParticipationDataFor(String voucherId) {
+        Voucher voucher = voucherRepository.findById(voucherId);
+        return participationRepository.findByVoucher(voucher);
     }
 
     public List<Voucher> findAll() {
