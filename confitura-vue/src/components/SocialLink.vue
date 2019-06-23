@@ -1,5 +1,5 @@
 <template>
-    <a :href="url" v-if="id" target="_blank" rel="noopener" class="link">
+    <a :href="url" v-if="id" target="_blank" rel="noopener" class="link" :class="`link--${theme}`">
         <i :class="icon"></i>
     </a>
 </template>
@@ -16,6 +16,9 @@
 
     @Prop({ required: true })
     public id!: string;
+
+    @Prop({ required: false, default: 'black' })
+    public theme?: string;
 
     public social = {
       twitter: {
@@ -50,9 +53,16 @@
     @import "../assets/colors";
 
     .link {
-        color: #000000;
+        &#{&}--black {
+            color: #000000;
+        }
 
-        &:hover {
+        &#{&}--white {
+            color: #ffffff;
+        }
+
+
+        &#{&}:hover {
             color: $brand;
         }
     }

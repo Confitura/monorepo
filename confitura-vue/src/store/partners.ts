@@ -10,6 +10,7 @@ export const partnersModule: Module<PartnersState, RootState> = {
     path: ({ partners }): Partner[] => shuffle(partners.filter((partner) => partner.type === 'path')),
     silver: ({ partners }): Partner[] => shuffle(partners.filter((partner) => partner.type === 'silver')),
     gold: ({ partners }): Partner[] => shuffle(partners.filter((partner) => partner.type === 'gold')),
+    bronze: ({ partners }): Partner[] => shuffle(partners.filter((partner) => partner.type === 'bronze')),
   },
   actions: {
     [LOAD_PARTNERS]({ state }) {
@@ -526,7 +527,95 @@ More information about career in Sollers Consulting at: [https://career.sollers.
           type: 'silver',
           logo: require('../assets/partners/sollers.svg'),
           orientation: 'horizontal',
+        },{
+          id: 'alten',
+          name: 'Alten',
+          description: `Jesteśmy częścią międzynarodowej grupy ALTEN, skupiającej na całym świecie ponad 33 700 wybitnych specjalistów w dziedzinach inżynierii oraz technologii informatycznych. Realizujemy najbardziej innowacyjne projekty technologiczne dla naszych Partnerów biznesowych.  
+          Nasz zespół to profesjonaliści, którzy dzięki zaangażowaniu i znajomości potrzeb rynku sprawiają, że grupa ALTEN wciąż jest światowym liderem usług konsultingu inżynieryjno-technologicznego.`,
+          www: 'https://www.altenpolska.pl',
+          type: 'silver',
+          logo: require('../assets/partners/alten.svg'),
+        },{
+          id: 'isolutions',
+          name: 'Isolutions',
+          description: `Jesteśmy firmą, dla której punktem odniesienia w budowaniu pozycji rynkowej są ludzie. W praktyce oznacza to nacisk na partnerskie relacje, zaufanie, odpowiedzialność i leżący w centrum naszego DNA rozwój. Dzięki takiemu podejściu możemy oferować naszym Klientom wysokiej jakości usługi realizowane przez zgrane, zmotywowane i czerpiące przyjemność ze swojej pracy zespoły. 
+
+W pracy stawiamy na nowe technologie, dobre praktyki, konstruktywny feedback, zwinne metodyki pracy i sprawną komunikację, co pozwala nam efektywnie wspierać naszych Klientów w realizacji wielu wyzwań, które pojawiają się wraz ze zmieniającym się rynkiem.
+
+Do każdego pracownika podchodzimy indywidualnie, dbając o autonomię i poczucie wpływu: 
+
+Mamy w pełni elastyczny czas pracy oraz możliwość pracy zdalnej zgodnie z potrzebami.
+
+Inwestujemy w rozwój – rozwijamy własny Startup Processor oraz zespół R&D, dzięki czemu rozwijamy własne produkty i oferujemy m.in. rozwiązania typu Proof of Concept, czy Minimum Viable Product.
+
+Dzięki naszemu autorskiemu rozwiązaniu - Forum Projektów – nasi programiści mają ogromny wpływ na to, w którym projekcie zostaną zaalokowani.
+
+Dzięki naszemu autorskiemu rozwiązaniu – Teamtoolbox na bieżąco śledzimy poziom zadowolenia z pracy w naszej firmie, ze współpracy z naszymi klientami oraz z realizacji zadań, dzięki czemu sprawnie reagujemy na potrzeby naszych pracowników.
+
+Mamy dedykowany zespół, który dba o komfort naszych ludzi od pierwszego dnia pracy, bez względu na to, czy pracują w siedzibie firmy, czy w siedzibach naszych Klientów.
+
+Dzielimy się wiedzą, na zewnętrznych meetupach i wewnętrznych szkoleniach. Mamy też budżet rozwojowy pozwalający rozwijać kompetencje zgodnie z zainteresowaniami i potrzebami projektowymi.
+
+Mamy płaską strukturę. Każdy zespół organizuje się zgodnie ze swoją specyfiką i potrzebami projektowymi.
+
+Nie prowadzimy ocen rocznych, dbamy o przekazywanie feedbacku w trybie ciągłym.
+
+Nie uzależniamy awansów od stażu pracy, ale od kompetencji. Awansować w Isolution można w każdej chwili, po spełnieniu ustalonych z liderem warunków, indywidualnie dopasowanych do każdej osoby. 
+
+Cenimy sobie ponadto transparentność, wzajemne docenienie, współpracę, ale także wspólną, dobrą zabawę.
+
+Jesteśmy dumni nie tylko z tego, co robimy, ale również z tego kim jesteśmy i jaką kulturę budujemy, co przekłada się również na atmosferę pracy oraz ambitne cele, które przy takim zespole możemy sobie stawiać.`,
+          www: 'https://isolution.pl/en/',
+          type: 'silver',
+          logo: require('../assets/partners/is.png'),
+          orientation: 'horizontal'
+        },{
+          id: 'pentacomp',
+          name: 'Pentacomp',
+          description: `Historia Pentacomp Systemy Informatyczne S.A. zaczęła się 24 lata temu od pięciu komputerów, właścicieli których połączyła wspólna pasja – programowanie i marzenie o rzeczach większych, niż te, które można osiągnąć w pojedynkę. Obecnie, Pentacomp to ponad 250 „zwinnych" specjalistów. To oni wprowadzają cyfrową rewolucję w administracji oraz pomagają skutecznie, szybko i innowacyjnie rozwijać biznes prywatnych przedsiębiorstw.
+`,
+          www: 'https://www.pentacomp.pl/',
+          type: 'bronze',
+          logo: require('../assets/partners/pentacomp.svg'),
+          orientation: 'horizontal',
+        },{
+          id: 'ppl',
+          name: 'Porty Lotnicze',
+          description: `*Polish Airports* State Enterprise (PPL) is one of the top aviation infrastructure companies in Poland, taking active part in the shaping and development of this strategic branch of the industry. PPL resources include Warsaw Chopin Airport (EPWA) – the biggest Polish airport and one of the biggest airports in Central and Eastern Europe.`,
+          www: 'https://www.polish-airports.com/',
+          type: 'silver',
+          logo: require('../assets/partners/ppl.svg'),
+          orientation: 'horizontal',
+        },{
+          id: 'atena',
+          name: 'Atena',
+          description: `Atena IT & Financial Services Inc. designs, implements and integrates comprehensive IT systems for businesses. We specialise in developing products for the insurance market. For years, Atena has been the leading supplier of systems for this industry. We develop custom turnkey solutions for back office, front office, middleware, and business intelligence.`,
+          www: 'https://www.atena.pl',
+          type: 'gold',
+          logo: require('../assets/partners/atena.svg'),
+          orientation: 'horizontal',
+        },{
+          id: 'groupon',
+          name: 'GROUPON',
+          description: `Groupon (NASDAQ: GRPN) jest globalnym liderem w dziedzinie handlu lokalnego i miejscem od którego warto zacząć, jeśli chcesz dokonać niemal dowolnego zakupu, w dowolnym czasie, gdziekolwiek jesteś. Dzięki wykorzystaniu globalnych kontaktów firmy i skali jej działalności, Groupon oferuje konsumentom ogromny wybór najlepszych okazji z całego świata. Klienci odnajdują to, co najlepsze ma do zaoferowania ich miasto, w sieci lub w telefonie komórkowym poprzez lokalne oferty Groupon, mogą wyjechać na wakacje poprzez Groupon Getaways i wybierać spośród oferty pieczołowicie dobranego sprzętu elektronicznego, ubrań, artykułów gospodarstwa domowego i wielu innych produktów poprzez Groupon Goods.
+
+Groupon zmienia to, w jaki sposób tradycyjne niewielkie biznesy mogą zdobywać, utrzymywać i nawiązywać kontakt z klientami, dostarczając swoim kontrahentom wybór produktów i usług, w tym niestandardowe kampanie marketingowe, które pomagają biznesom w rozwoju oraz w prowadzeniu skutecznej działalności. Naszym celem jest połączenie lokalnych przedsiębiorców i zwiększającej się siły nabywczej konsumentów, napędzając biznes lokalnym kupcom poprzez cenę oraz pokazanie ich ofert.`,
+          www: 'https://people.groupon.com/poland',
+          type: 'silver',
+          logo: require('../assets/partners/groupon.svg'),
+          orientation: 'horizontal',
+        },{
+          id: 'prodata',
+          name: 'ProData Consult',
+          description: `We are one of the largest international consulting company in Northern Europe with offices in Denmark, Sweden, Norway, Germany, the Netherlands and Poland. We work with the best specialists vastly experienced  in IT sector. We carry out challenging projects across a number of industries – accept military. Our relationship with Consultants is built on an open and honest communication.
+ 
+We act within the Scandinavian business culture focused on achieving goals while maintaining the balance between private and professional life. We offer attractive hourly rates and transparent pricing and professional stability (long term cooperation).`,
+          www: 'https://www.itconsultants.pl/',
+          type: 'silver',
+          logo: require('../assets/partners/prodata.png'),
+          orientation: 'horizontal',
         },
+
 
       ];
     },
@@ -540,7 +629,6 @@ More information about career in Sollers Consulting at: [https://career.sollers.
 
 function shuffle<T>(array: T[]): T[] {
   return array.sort(() => 0.5 - Math.random());
-
 }
 
 export interface PartnersState {

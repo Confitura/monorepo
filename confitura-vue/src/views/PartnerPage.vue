@@ -1,12 +1,9 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <div class="partners">
-        <PageHeader class="header">
+        <PageHeader class="header" type="peace">
             <template v-slot:title>
                 <span class="header__partner-type">{{partner.type}} partner</span>
                 {{partner.name}}
-            </template>
-            <template v-slot:default>
-                <img src="../assets/astronaut.svg" class="header-img" alt="astronaut">
             </template>
         </PageHeader>
         <Box class="content" color="white" :full="false">
@@ -117,27 +114,29 @@
             grid-template-columns: 1fr 2fr;
         }
 
-        &__logo-container {
+        & &__logo-container {
             padding: 1.5rem 1rem 1rem;
             text-align: center;
 
+
+            .partner__logo {
+                width: auto;
+                height: auto;
+                max-width: 500px;
+                max-height: 200px;
+                min-width: 190px;
+                object-fit: contain;
+            }
+
+            .partner__logo--horizontal {
+                min-width: 250px;
+                max-width: 300px;
+            }
+
+
         }
 
-        &__logo {
-            width: auto;
-            height: auto;
-            max-width: 500px;
-            max-height: 200px;
-            min-width: 190px;
-            object-fit: contain;
-        }
-
-        &__logo--horizontal {
-            min-width: 250px;
-            max-width: 300px;
-        }
-
-        &__description {
+        & &__description {
             font-size: 1.5rem;
             line-height: 2rem;
         }

@@ -23,6 +23,9 @@ import Speakers from '@/views/Speakers.vue';
 import Speaker from '@/views/Speaker.vue';
 import AcceptedPresentations from '@/views/AcceptedPresentations.vue';
 import Vouchers from '@/views/admin/Vouchers.vue';
+import About from '@/views/About.vue';
+import Agenda from '@/views/Agenda.vue';
+import Venue from '@/views/Venue.vue';
 import Scanner from '@/views/admin/Scanner.vue';
 
 Vue.use(Router);
@@ -126,18 +129,36 @@ const router = new Router({
       path: '/speakers',
       name: 'speakers',
       component: Speakers,
-    }, {
+    },
+    {
       path: '/speakers/:id',
       name: 'speaker',
       component: Speaker,
-    }, {
+    },
+    {
       path: '/presentations',
       name: 'presentations',
       component: AcceptedPresentations,
-    }, {
+    },
+    {
       path: '/scanner/:id?',
       name: 'scanner',
       component: Scanner,
+    },
+    {
+      path: '/about',
+      name: 'about',
+      component: About,
+    },
+    {
+      path: '/schedule',
+      name: 'schedule',
+      component: Agenda,
+    },
+    {
+      path: '/venue',
+      name: 'venue',
+      component: Venue,
     },
   ],
   scrollBehavior(to, from, savedPosition) {

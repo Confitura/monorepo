@@ -18,15 +18,14 @@
 
     public items: MenuItem[] = [
       { label: 'home', url: '/#home' },
-      { label: 'about us', url: '/#about-us' },
-      // { label: 'numbers', url: '/#numbers' },
+      { label: 'about us', url: '/about' },
+      { label: 'venue', url: '/venue' },
       { label: 'partners', url: '/partners' },
-      // { label: 'contact', url: '/#contact' },
+      { label: 'schedule', url: '/schedule' },
       { label: 'presentations', url: '/presentations' },
       { label: 'speakers', url: '/speakers' },
       { label: 'workshop day', url: '/workshops' },
       { label: 'FAQ', url: '/faq' },
-      { label: 'TICKETS', url: '/tickets' },
       { label: 'my profile', url: '/profile', visible: () => this.isLogin },
       { label: 'ADMIN', url: '/admin', visible: () => this.isAdmin },
       { label: 'scanner', url: '/scanner', visible: () => this.isVolunteer },
@@ -76,8 +75,15 @@
         align-self: flex-end;
         height: 100%;
 
-        &.header--default {
+        &.header--default,
+        &.header--white,
+        &.header--red,
+        &.header--black {
+
             background-color: #000000;
+            @include lg() {
+                background-color: transparent;
+            }
         }
 
         @include lg() {
@@ -102,9 +108,9 @@
             color: $brand;
             font-size: 1.1rem;
             cursor: pointer;
-            @include xl() {
-                font-size: 1.4rem;
 
+            @include xl() {
+                font-size: 1.3rem;
             }
 
             &:hover, &.router-link-active {

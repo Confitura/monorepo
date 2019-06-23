@@ -5,12 +5,18 @@
             <div v-if="!form">
                 <h2 class="error__header">Ups.... something is wrong...</h2>
                 <p class="error__message">
-                    <span v-if="loadError === 'INVALID'">We cannot find this voucher. Please make sure that the URL is correct.</span>
-                    <span v-else-if="loadError === 'TAKEN'">Looks like this voucher is already registered. We cannot tell you by whom (GDPR and stuff...) so please make sure if you are using correct link</span>
-                    <span v-else>But we dont know what... don't worry, it's not you - it's us. Try one more time (or maybe even 3) - if it doesn't help then contact us!</span>
+                    <span v-if="loadError.reason === 'INVALID'">
+                        We cannot find this voucher. Please make sure that the URL is correct.
+                    </span>
+                    <span v-else-if="loadError.reason === 'TAKEN'">
+                        Looks like this voucher is already registered. We cannot tell you by whom (GDPR and stuff...), but we can give you a hint that registered email is something like: <strong>{{loadError.additionalInfo}}</strong>.
+                    </span>
+                    <span v-else>
+                        But we dont know what... don't worry, it's not you - it's us. Try one more time (or maybe even 3) - if it doesn't help then contact us!
+                    </span>
                 </p>
             </div>
-            <div>
+            <div v-else>
                 <h4 class="participate__info">All fields required</h4>
                 <h2 class="participate__title">Personal information</h2>
                 <div class="row">
@@ -70,6 +76,11 @@
 
                                 </md-field>
                             </div>
+                        </div>
+                        <div class="row">
+                            <strong>Sizes: </strong>
+                            <a href="https://share.adler.info/files//label/110---product_size.pdf">male</a>,
+                            <a href="https://share.adler.info/files//label/122---product_size.pdf">female</a>
                         </div>
                         <div class="row">
                             <h2 class="participate__title">Tell us more about you</h2>
@@ -158,7 +169,7 @@
   import { Component, Vue } from 'vue-property-decorator';
   import Box from '@/components/Box.vue';
   import TheContact from '@/components/TheContact.vue';
-  import axios from 'axios';
+  import axios, { AxiosError } from 'axios';
   import PageHeader from '@/components/PageHeader.vue';
   import { Participant, RegistrationForm } from '@/types';
   import { MdButton, MdCheckbox, MdField, MdList, MdMenu, MdRadio } from 'vue-material/dist/components';
@@ -175,7 +186,7 @@
   })
   export default class ParticipatePage extends Vue {
     public form: RegistrationForm | null = null;
-    public loadError: string = '';
+    public loadError: ResponseError | null = null;
     public savingInProgress = false;
 
     public mounted() {
@@ -183,8 +194,12 @@
       axios.get(`/api/vouchers/${voucher}/check`)
         .then(() => {
           this.form = { voucher: { id: voucher as string } };
-        }, (reason) => {
-          this.loadError = reason.response.data;
+        })
+        .catch((error: AxiosError) => {
+          if (error.response) {
+            this.loadError = error.response.data;
+
+          }
         });
     }
 
@@ -202,6 +217,11 @@
           .finally(() => this.savingInProgress = false);
       }
     }
+  }
+
+  interface ResponseError {
+    reason: string;
+    additionalInfo: string;
   }
 </script>
 
