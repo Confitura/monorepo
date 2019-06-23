@@ -2,7 +2,7 @@
     <div class="agendaPage">
         <PageHeader title="Schedule" type="peace"/>
 
-        <Box color="white">
+        <Box color="white" class="min-padding">
             <div class="agenda">
                 <div class="agendaItem--empty"></div>
                 <div v-for="room in rooms" class="agendaItem__room">
@@ -27,6 +27,7 @@
                         <AgendaItem
                                 v-else
                                 :entry="getEntryFor(room, slot)"
+                                @select="(presentation) => selectPresentation(presentation)"
                                 class="agendaItem__entry"></AgendaItem>
                     </template>
                 </template>
@@ -35,6 +36,7 @@
         </Box>
 
         <TheContact id="contact"/>
+        <PresentationModal :presentationId="selectedPresentationId" @close="modalClosed()"></PresentationModal>
     </div>
 </template>
 
@@ -49,9 +51,10 @@
   import UsersGrid from '@/views/UsersGrid.vue';
   import { Presentation } from '@/types';
   import AgendaItem from '@/components/AgendaItem.vue';
+  import PresentationModal from '@/components/PresentationModal.vue';
 
   @Component({
-    components: { AgendaItem, UsersGrid, SocialLink, PageHeader, Box, TheContact, PageFragment },
+    components: { AgendaItem, UsersGrid, SocialLink, PageHeader, Box, TheContact, PageFragment, PresentationModal },
     filters: {
       name: (room: string) => {
         if (room.includes(' ')) {
@@ -71,6 +74,7 @@
     public rooms: Room[] = [];
     public slots: TimeSlot[] = [];
     public agenda: AgendaEntry[] = [];
+    public selectedPresentationId: string | null = null;
 
     public mounted(): void {
       axios.get<EmbeddedRooms>(`/api/rooms`)
@@ -97,6 +101,16 @@
     public hasSingleEntryFor(slot: TimeSlot): boolean {
       const entry = this.agenda.find((it) => it.timeSlotId === slot.id);
       return entry !== undefined && entry.roomId === null;
+    }
+
+    public selectPresentation(presentation: Presentation) {
+      if (presentation && presentation.id) {
+        this.selectedPresentationId = presentation.id;
+      }
+    }
+
+    public modalClosed() {
+      this.selectedPresentationId = null;
     }
 
     private sortByOrder = (a: WithOrder, b: WithOrder) => a.displayOrder - b.displayOrder;
@@ -152,7 +166,7 @@
     .agenda {
         display: grid;
         grid-template-columns: 60px 1fr;
-        @include md() {
+        @include lg() {
             grid-template-columns: 120px 1fr 1fr 1fr 1fr 1fr;
             margin-bottom: 5rem;
         }
@@ -160,7 +174,7 @@
 
     .agendaItem__room, .agendaItem--empty {
         display: none;
-        @include md() {
+        @include lg() {
             font-size: 1.5rem;
             line-height: 1.7rem;
             font-weight: bold;
@@ -176,7 +190,7 @@
     }
 
     .agendaItem__room {
-        @include md() {
+        @include lg() {
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
@@ -201,7 +215,7 @@
         padding-top: .7rem;
         padding-bottom: .7rem;
         grid-row: auto / span 5;
-        @include md() {
+        @include lg() {
             grid-row: unset;
             padding-top: 1.5rem;
             padding-bottom: 1.5rem;
@@ -210,14 +224,12 @@
 
     .agendaItem__slot--all {
         grid-row: auto / span 1;
-        @include md() {
+        @include lg() {
             grid-row: unset;
         }
     }
 
     .agendaItem__entry {
-        /*font-size: 1.2rem;*/
-        /*line-height: 1.4rem;*/
         justify-self: stretch;
         align-self: stretch;
         border-bottom: 2px solid #000000;

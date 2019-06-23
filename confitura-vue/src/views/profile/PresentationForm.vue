@@ -1,4 +1,4 @@
-<template>
+    <template>
     <div class="profile">
         <PageHeader :small="true" title="Presentation"></PageHeader>
         <Box class="content" color="white">

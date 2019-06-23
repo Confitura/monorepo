@@ -65,6 +65,11 @@
                 padding: 0;
             }
         }
+        &.min-padding {
+            & .box__container {
+                padding: 1rem;
+            }
+        }
 
         &__container {
             max-width: 1440px;

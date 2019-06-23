@@ -1,11 +1,15 @@
 <template>
-    <div class="agendaItem">
+    <div class="agendaItem" :class="{'agendaItem--withPresentation': entry.presentationId}">
         <div v-if="entry.roomLabel" class="agendaItem__room">{{entry.roomLabel}}</div>
-        <div v-if="entry.presentationId">
+        <div v-if="entry.presentationId" @click="select(entry.presentation)">
             <div class="agendaItem__title">{{entry.presentation.title}}</div>
             <div class="agendaItem__speakers">
                 <span class="agendaItem__speaker" v-for="speaker in entry.speaker">{{speaker.name}}</span>
             </div>
+            <PresentationMetadata
+                    :presentation="entry.presentation"
+                    :showTags="false"
+                    class="agendaItem__metadata"></PresentationMetadata>
         </div>
         <div v-else class="agendaItem__label">
             {{entry.label}}
@@ -14,15 +18,23 @@
 </template>
 
 <script lang="ts">
-  import { Component, Prop, Vue } from 'vue-property-decorator';
+  import { Component, Emit, Prop, Vue } from 'vue-property-decorator';
   import { AgendaEntry } from '@/views/Agenda.vue';
+  import PresentationMetadata from '@/components/PresentationMetadata.vue';
+  import PresentationModal from '@/components/PresentationModal.vue';
+  import { Presentation } from '@/types';
 
-  @Component({})
+  @Component({
+    components: { PresentationModal, PresentationMetadata },
+  })
   export default class AgendaItem extends Vue {
     @Prop({ required: true })
     public entry!: AgendaEntry;
 
-
+    @Emit()
+    public select(presentation: Presentation) {
+      return presentation;
+    }
   }
 </script>
 
@@ -36,6 +48,14 @@
         padding: .7rem;
         display: flex;
         flex-direction: column;
+
+        &--withPresentation {
+            cursor: pointer;
+
+            &:hover {
+                background-color: #DFDFDF;
+            }
+        }
 
         @include md() {
             padding: 1.5rem;
@@ -74,5 +94,11 @@
         &:not(:last-child):after {
             content: ', ';
         }
+    }
+
+    .agendaItem__metadata {
+        font-size: 1rem;
+        line-height: 1.2rem;
+        margin-top: 0.3rem;
     }
 </style>

@@ -3,22 +3,12 @@
         <PageHeader title="Presentations" type="coder"/>
         <Box
                 v-for="(presentation, $index) in presentations"
+                :key="presentation.id"
                 class="presentation"
                 :class="{'presentation--odd': odd($index)}"
                 color="white"
-                :full="false"
-        >
-            <div class="presentation__header" :class="{'presentation__header--odd': odd($index)}"
-            >
-                <h2 class="presentation__title">{{presentation.title}}</h2>
-                <div class="presentation__infoGroup">
-                    <PresentationSpeakers :speakers="presentation.speakers"></PresentationSpeakers>
-                    <PresentationMetadata :presentation="presentation"></PresentationMetadata>
-                </div>
-            </div>
-            <div class="presentation__description">
-                {{presentation.description}}
-            </div>
+                :full="false">
+            <PresentationBox :presentation="presentation" :class="{'presentationBox--odd': odd($index)}"></PresentationBox>
         </Box>
 
         <TheContact id="contact"/>
@@ -33,9 +23,10 @@
   import { LOAD_ACCEPTED_PRESENTATIONS } from '@/store/admin';
   import PresentationSpeakers from '@/components/PresentationSpeakers.vue';
   import PresentationMetadata from '@/components/PresentationMetadata.vue';
+  import PresentationBox from '@/components/PresentationBox.vue';
 
   @Component({
-    components: { PresentationMetadata, PresentationSpeakers, PageHeader, Box, TheContact },
+    components: { PresentationBox, PresentationMetadata, PresentationSpeakers, PageHeader, Box, TheContact },
   })
   export default class AcceptedPresentations extends Vue {
     public mounted() {

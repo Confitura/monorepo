@@ -12,7 +12,7 @@
             <i class="presentationMetadata__icon fas fa-hammer" title="workshop"></i>
             <div class="presentationMetadata__workshop">workshop</div>
         </div>
-        <div class="presentationMetadata__group">
+        <div class="presentationMetadata__group" v-if="showTags">
             <template v-if="hasTags">
                 <i class="presentationMetadata__icon  fas fa-tags" title="tags"></i>
                 <div class="presentationMetadata__tags">
@@ -33,9 +33,13 @@
     @Prop({ required: true })
     public presentation!: Presentation;
 
+    @Prop({ required: false, default: true })
+    public showTags!: boolean;
+
     get hasTags(): boolean | null {
       return this.presentation && this.presentation.tags.length > 0;
     }
+
     get language(): string {
       let language = 'polish';
       if (this.presentation && this.presentation.language === 'en') {
@@ -59,7 +63,7 @@
         flex-wrap: wrap;
         font-size: 1.5rem;
         margin-bottom: 2rem;
-        @include md(){
+        @include md() {
             flex-direction: row;
         }
 
