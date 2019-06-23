@@ -102,7 +102,7 @@ export interface Participant {
   lastName?: string;
   firstName?: string;
   email?: string;
-  voucher?: string;
+  voucher?: Voucher;
   privacyPolicyAccepted?: boolean;
   // t-hsirt:
   gender?: string;

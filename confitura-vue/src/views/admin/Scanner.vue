@@ -1,0 +1,140 @@
+<template>
+    <div class="scanner">
+        <Box :full="false" :small="true" class="content back-office" color="white">
+            <div class="row">
+                <div class="col m6 s12">
+                    <div class="input-field">
+                        <input id="id" type="text"
+                               placeholder="enter code using keyboard code scanner"
+                               v-model="inputValue" v-on:change="inputChanged(inputValue)">
+                        <label for="id"></label>
+                    </div>
+                </div>
+                <div class="col m6 s12">
+                    or
+                    <button @click="openScanner()"
+                            class="btn btn-large">
+                        Scan (requires app)<i class="fas fa-qrcode"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-panel red error" v-if="error">{{error}}</div>
+            <div v-if="participant">
+                <div class="card">
+                    <div class="card-content ">
+                        <span class="card-title">{{participant.voucher.type}}</span>
+                        <p class="subtitle">{{participant.name}} {{participant.email}}</p>
+                        <div> t-shirt
+                            <div class="scanner__tshirt">
+                                <span v-if="participant.gender === 'M'">Męska</span>
+                                <span v-else>Damska</span>
+                                {{participant.size}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                </div>
+            </div>
+        </Box>
+    </div>
+</template>
+
+
+<script lang="ts">
+import { Component, Vue, Watch } from 'vue-property-decorator';
+import Box from '@/components/Box.vue';
+import PageHeader from '@/components/PageHeader.vue';
+import TheContact from '@/components/TheContact.vue';
+import axios from 'axios';
+import { Participant } from '@/types';
+
+@Component({
+  components: { PageHeader, Box, TheContact },
+})
+export default class Scanner extends Vue {
+  public inputValue: string = '';
+  public participant: Participant | null = null;
+  public error: string | null = null;
+
+  get id() {
+    const { id } = this.$route.params;
+    return id;
+  }
+
+  public openScanner() {
+    window.location.href = 'zxing://scan/?ret=http://192.168.0.94:8080/scanner/{CODE}&SCAN_FORMATS=QR_CODE';
+  }
+
+  public mounted() {
+    this.scan(this.id);
+
+  }
+
+  public inputChanged(event: any) {
+    this.$router.push({
+      name: 'scanner',
+      params: { id: event },
+    });
+  }
+
+  @Watch('id')
+  public onPropertyChanged(value: string, oldValue: string) {
+    this.scan(value);
+  }
+
+  public scan(id: string) {
+    if (id) {
+      this.participant = null;
+      this.error = null;
+      this.inputValue = '';
+      axios.post<Participant>(`/api/participants/${id}/arrived`, {})
+        .then(
+          (value) => {
+            this.participant = value.data;
+          },
+          (reason) => {
+            if (reason.response.status === 409) {
+              this.error = 'Już zarejestrowany!';
+              this.participant = reason.response.data;
+            } else {
+              this.error = 'Niepoprawny token';
+            }
+          });
+    }
+  }
+
+}
+</script>
+
+<style scoped lang="scss">
+    .scanner {
+    }
+
+    .back-office {
+        padding-top: 100px;
+    }
+
+    .back-office span.badge.new:after {
+        content: "";
+    }
+
+    .back-office span.badge {
+        min-width: 2rem;
+    }
+
+    .card-content {
+        .subtitle {
+            font-weight: bold;
+            font-size: 1.5em;
+        }
+
+        .scanner__tshirt {
+            font-size: 2.5rem;
+        }
+    }
+
+    .error {
+        font-size: 2.5rem;
+    }
+</style>

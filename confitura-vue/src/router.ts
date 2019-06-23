@@ -23,6 +23,7 @@ import Speakers from '@/views/Speakers.vue';
 import Speaker from '@/views/Speaker.vue';
 import AcceptedPresentations from '@/views/AcceptedPresentations.vue';
 import Vouchers from '@/views/admin/Vouchers.vue';
+import Scanner from '@/views/admin/Scanner.vue';
 
 Vue.use(Router);
 Vue.use(VueScrollTo, {
@@ -133,6 +134,10 @@ const router = new Router({
       path: '/presentations',
       name: 'presentations',
       component: AcceptedPresentations,
+    }, {
+      path: '/scanner/:id?',
+      name: 'scanner',
+      component: Scanner,
     },
   ],
   scrollBehavior(to, from, savedPosition) {
