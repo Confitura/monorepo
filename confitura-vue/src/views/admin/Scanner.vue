@@ -63,7 +63,7 @@ export default class Scanner extends Vue {
   }
 
   public openScanner() {
-    window.location.href = 'zxing://scan/?ret=http://192.168.0.94:8080/scanner/{CODE}&SCAN_FORMATS=QR_CODE';
+    window.location.href = 'zxing://scan/?ret=https://2019.confitura.pl/scanner/{CODE}&SCAN_FORMATS=QR_CODE';
   }
 
   public mounted() {
