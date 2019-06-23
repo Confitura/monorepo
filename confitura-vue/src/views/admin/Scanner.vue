@@ -22,7 +22,11 @@
             <div v-if="participant">
                 <div class="card">
                     <div class="card-content ">
-                        <span class="card-title">{{participant.voucher.type}}</span>
+                        <span class="card-title">
+                            {{participant.voucher.type}}
+                            <small>{{participant.voucher.comment}}</small>
+                        </span>
+
                         <p class="subtitle">{{participant.name}} {{participant.email}}</p>
                         <div> t-shirt
                             <div class="scanner__tshirt">
@@ -42,69 +46,69 @@
 
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator';
-import Box from '@/components/Box.vue';
-import PageHeader from '@/components/PageHeader.vue';
-import TheContact from '@/components/TheContact.vue';
-import axios from 'axios';
-import { Participant } from '@/types';
+  import { Component, Vue, Watch } from 'vue-property-decorator';
+  import Box from '@/components/Box.vue';
+  import PageHeader from '@/components/PageHeader.vue';
+  import TheContact from '@/components/TheContact.vue';
+  import axios from 'axios';
+  import { Participant } from '@/types';
 
-@Component({
-  components: { PageHeader, Box, TheContact },
-})
-export default class Scanner extends Vue {
-  public inputValue: string = '';
-  public participant: Participant | null = null;
-  public error: string | null = null;
+  @Component({
+    components: { PageHeader, Box, TheContact },
+  })
+  export default class Scanner extends Vue {
+    public inputValue: string = '';
+    public participant: Participant | null = null;
+    public error: string | null = null;
 
-  get id() {
-    const { id } = this.$route.params;
-    return id;
-  }
-
-  public openScanner() {
-    window.location.href = 'zxing://scan/?ret=https://2019.confitura.pl/scanner/{CODE}&SCAN_FORMATS=QR_CODE';
-  }
-
-  public mounted() {
-    this.scan(this.id);
-
-  }
-
-  public inputChanged(event: any) {
-    this.$router.push({
-      name: 'scanner',
-      params: { id: event },
-    });
-  }
-
-  @Watch('id')
-  public onPropertyChanged(value: string, oldValue: string) {
-    this.scan(value);
-  }
-
-  public scan(id: string) {
-    if (id) {
-      this.participant = null;
-      this.error = null;
-      this.inputValue = '';
-      axios.post<Participant>(`/api/participants/${id}/arrived`, {})
-        .then(
-          (value) => {
-            this.participant = value.data;
-          },
-          (reason) => {
-            if (reason.response.status === 409) {
-              this.error = 'Już zarejestrowany!';
-              this.participant = reason.response.data;
-            } else {
-              this.error = 'Niepoprawny token';
-            }
-          });
+    get id() {
+      const { id } = this.$route.params;
+      return id;
     }
-  }
 
-}
+    public openScanner() {
+      window.location.href = 'zxing://scan/?ret=https://2019.confitura.pl/scanner/{CODE}&SCAN_FORMATS=QR_CODE';
+    }
+
+    public mounted() {
+      this.scan(this.id);
+
+    }
+
+    public inputChanged(event: any) {
+      this.$router.push({
+        name: 'scanner',
+        params: { id: event },
+      });
+    }
+
+    @Watch('id')
+    public onPropertyChanged(value: string, oldValue: string) {
+      this.scan(value);
+    }
+
+    public scan(id: string) {
+      if (id) {
+        this.participant = null;
+        this.error = null;
+        this.inputValue = '';
+        axios.post<Participant>(`/api/participants/${id}/arrived`, {})
+          .then(
+            (value) => {
+              this.participant = value.data;
+            },
+            (reason) => {
+              if (reason.response.status === 409) {
+                this.error = 'Już zarejestrowany!';
+                this.participant = reason.response.data;
+              } else {
+                this.error = 'Niepoprawny token';
+              }
+            });
+      }
+    }
+
+  }
 </script>
 
 <style scoped lang="scss">
