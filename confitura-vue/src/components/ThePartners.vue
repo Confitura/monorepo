@@ -79,13 +79,13 @@
     }
 
     public startCarousel() {
-      if (this.intervalId === 0) {
-        this.intervalId = setInterval(() => {
-          const currentIdx = this.types.indexOf(this.active);
-          const newIdx = (currentIdx + 1) % this.types.length;
-          this.active = this.types[newIdx];
-        }, 5000);
-      }
+      // if (this.intervalId === 0) {
+      //   this.intervalId = setInterval(() => {
+      //     const currentIdx = this.types.indexOf(this.active);
+      //     const newIdx = (currentIdx + 1) % this.types.length;
+      //     this.active = this.types[newIdx];
+      //   }, 5000);
+      // }
     }
 
 
@@ -145,7 +145,7 @@
             flex-direction: column;
             @include md() {
                 flex-direction: row;
-                min-height: 750px;
+                min-height: 600px;
             }
 
         }
@@ -171,8 +171,8 @@
         .logos {
             display: flex;
             flex-wrap: wrap;
-            padding-bottom: 1.5rem;
-            padding-top: 1.5rem;
+            padding-bottom: 1rem;
+            padding-top: 1rem;
             justify-items: center;
             align-items: center;
             justify-content: center;
@@ -185,15 +185,15 @@
         }
 
         .logo {
-            margin-top: 1.2rem;
-            margin-bottom: 1.2rem;
+            margin-top: 1.1rem;
+            margin-bottom: 1.1rem;
 
             &.logo--horizontal {
-                margin-top: 1.2rem;
-                margin-bottom: 1.2rem;
+                margin-top: 1.1rem;
+                margin-bottom: 1.1rem;
 
                 &.logo--gold {
-                    margin: 2.5rem;
+                    margin: 1.5rem;
                 }
             }
 
@@ -205,7 +205,7 @@
         }
 
         .logo--gold {
-            margin: 2rem;
+            margin: 1.5rem;
         }
 
 
@@ -243,7 +243,7 @@
             grid-column-end: span 2;
 
             .logo__img {
-                width: 130px;
+                width: 100px;
             }
 
             &.logo--gold .logo__img {

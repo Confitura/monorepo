@@ -614,6 +614,15 @@ We act within the Scandinavian business culture focused on achieving goals while
           type: 'silver',
           logo: require('../assets/partners/prodata.png'),
           orientation: 'horizontal',
+        },{
+          id: 'cgi',
+          name: 'CGI',
+          description: `Firma CGI jest wiodącą na rynku polskim firmą konsultingową w branży IT. Efektem ponad dwudziestoletniej działalności jest nawiązanie silnych relacji z naszymi klientami - czołowymi polskimi firmami z sektora telekomunikacyjnego, mediów, usług finansowych, produkcji, handlu, dystrybucji oraz przedsiębiorstw użyteczności publicznej. Polscy specjaliści w CGI łączą znajomość polskiego rynku oraz międzynarodowe doświadczenie. Dzięki temu jesteśmy w stanie dostarczać usługi end-to-end z zakresu doradztwa, integracji systemów, jak i rozwiązań specyficznych dla danego sektora.
+
+Nasze główne doświadczenie na rynku polskim obejmuje strategie IT, dopasowanie IT do biznesu, zarządzanie procesami biznesowymi i aplikacjami, zarządzanie zmianą organizacji, architekturę IT, prowadzenie biura projektów oraz zarządzanie kosztami IT. Posiadamy bogate doświadczenie w rozwiązaniach biznesowych end-to-end dla danych sektorów.`,
+          www: 'https://www.cgi.com',
+          type: 'silver',
+          logo: require('../assets/partners/cgi.svg'),
         },
 
 
