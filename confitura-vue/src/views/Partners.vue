@@ -105,23 +105,31 @@
 
 
         @include md() {
-            width: 300px;
+            width: 250px;
         }
     }
 
     .logo--silver {
-        width: 100px;
+        width: 80px;
 
         &.logo--horizontal {
-            width: 200px;
+            width: 160px;
+        }
+    }
+
+    .logo--bronze {
+        width: 60px;
+
+        &.logo--horizontal {
+            width: 120px;
         }
     }
 
     .logo--gold {
-        width: 150px;
+        width: 110px;
 
         &.logo--horizontal {
-            width: 300px;
+            width: 220px;
         }
     }
 
