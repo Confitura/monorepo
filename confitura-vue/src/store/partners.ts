@@ -120,7 +120,6 @@ Akcje Ework są notowane na giełdzie NASDAQ OMX w Sztokholmie. W Polsce istniej
           www: 'https://www.nofluffjobs.com ',
           type: 'silver',
           logo: require('../assets/partners/nfj.svg'),
-          orientation: 'horizontal',
         }, {
           id: 'viacom',
           description: `As a part of leading global entertainment company Viacom.tech offers challenging projects for iconic brands like MTV, Nickelodeon, Nick Jr, COMEDY CENTRAL, and Paramount Channel. Focusing on Viacom’s global engineering organization, the Warsaw Software Development Center plays a crucial role in the creation of highly efficient, advanced systems which are implemented by millions of users around the world. Our excellence center in Warsaw builds scalable and efficient systems, serving high volume traffic. We are an Agile and growing team of software engineers who use modern development and deployment technologies (Java 11, Kotlin, Swift, TypeScript, Docker, Kubernetes, clouds).
@@ -565,7 +564,7 @@ Nie uzależniamy awansów od stażu pracy, ale od kompetencji. Awansować w Isol
 Cenimy sobie ponadto transparentność, wzajemne docenienie, współpracę, ale także wspólną, dobrą zabawę.
 
 Jesteśmy dumni nie tylko z tego, co robimy, ale również z tego kim jesteśmy i jaką kulturę budujemy, co przekłada się również na atmosferę pracy oraz ambitne cele, które przy takim zespole możemy sobie stawiać.`,
-          www: 'https://isolution.pl/en/',
+          www: 'https://isolution.pl/kariera/',
           type: 'silver',
           logo: require('../assets/partners/is.png'),
           orientation: 'horizontal'
