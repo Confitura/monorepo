@@ -579,8 +579,8 @@ Jesteśmy dumni nie tylko z tego, co robimy, ale również z tego kim jesteśmy 
           orientation: 'horizontal',
         },{
           id: 'ppl',
-          name: 'Porty Lotnicze',
-          description: `*Polish Airports* State Enterprise (PPL) is one of the top aviation infrastructure companies in Poland, taking active part in the shaping and development of this strategic branch of the industry. PPL resources include Warsaw Chopin Airport (EPWA) – the biggest Polish airport and one of the biggest airports in Central and Eastern Europe.`,
+          name: `'Polish Airports' State Enterprise`,
+          description: `'Polish Airports' State Enterprise (PPL) is one of the top aviation infrastructure companies in Poland, taking active part in the shaping and development of this strategic branch of the industry. PPL resources include Warsaw Chopin Airport (EPWA) – the biggest Polish airport and one of the biggest airports in Central and Eastern Europe.`,
           www: 'https://www.polish-airports.com/',
           type: 'silver',
           logo: require('../assets/partners/ppl.svg'),
@@ -622,6 +622,20 @@ Nasze główne doświadczenie na rynku polskim obejmuje strategie IT, dopasowani
           www: 'https://www.cgi.com',
           type: 'silver',
           logo: require('../assets/partners/cgi.svg'),
+        },{
+          id: 'luxoft',
+          name: 'CGI',
+          description: `Luxoft, a DXC Technology Company, is a digital strategy and software engineering firm providing bespoke technology solutions that drive business change for customers globally. As part of DXC Technology (NYSE: DXC), Luxoft enables business transformation, enhances customer experiences, and boosts operational efficiency through its strategy, consulting, and engineering services.
+
+Luxoft combines a unique blend of engineering excellence and deep industry expertise to serve clients globally, specializing in automotive, financial services, travel and hospitality, healthcare, life sciences, media and telecommunications.
+
+We offer a full stack of digital expertise including edge computing, server-less computing, AI and Machine Learning, plus we leverage both open source and native cloud platforms and APIs (mainly Big Data, Information Security, Cloud, DevOps, Mobile, Blockchain and IoT). We work using various agile methodologies (Kanban, Scrum, Waterfall) and our experienced project teams design, implement, maintain, and develop our clients’ digital assets.
+
+We have a relaxed corporate culture that’s highlighted by the best employees this side of Jupiter who always make fun a priority. But don’t get us wrong, it’s not all fun and games. We take our work and coding seriously and our ever-expanding global reach offers you a whole new world of opportunities that help you to \\#GoFarwithLuxoft. `,
+          www: 'https://career.luxoft.com/',
+          type: 'silver',
+          logo: require('../assets/partners/luxoft.svg'),
+          orientation: 'horizontal',
         },
 
 
