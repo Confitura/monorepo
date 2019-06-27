@@ -6,7 +6,7 @@
                     <div class="input-field">
                         <input id="id" type="text"
                                placeholder="enter code using keyboard code scanner"
-                               v-model="inputValue" v-on:change="inputChanged(inputValue)">
+                               v-model="inputValue">
                         <label for="id"></label>
                     </div>
                 </div>
@@ -75,7 +75,8 @@
 
     }
 
-    public inputChanged(event: any) {
+    @Watch('inputValue')
+    public inputChanged(event: string) {
       this.$router.push({
         name: 'scanner',
         params: { id: event },
@@ -83,7 +84,7 @@
     }
 
     @Watch('id')
-    public onPropertyChanged(value: string, oldValue: string) {
+    public idChanged(value: string) {
       this.scan(value);
     }
 
@@ -96,8 +97,8 @@
           .then(
             (value) => {
               this.participant = value.data;
-            },
-            (reason) => {
+            })
+          .catch((reason) => {
               if (reason.response.status === 409) {
                 this.error = 'Już zarejestrowany!';
                 this.participant = reason.response.data;
@@ -130,7 +131,7 @@
     .card-content {
         .subtitle {
             font-weight: bold;
-            font-size: 1.5em;
+            font-size: 1.5rem;
         }
 
         .scanner__tshirt {
