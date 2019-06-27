@@ -28,6 +28,10 @@ export const authenticationModule: Module<AuthenticationState, RootState> = {
       const user: User | null = getters.user;
       return user !== null && user.isAdmin;
     },
+    isVolunteer: (state, getters) => {
+      const user: User | null = getters.user;
+      return user !== null && user.isVolunteer;
+    },
   },
   mutations: {
     [TOKEN](store, payload: { token: string }) {

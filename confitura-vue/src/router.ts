@@ -26,6 +26,7 @@ import Vouchers from '@/views/admin/Vouchers.vue';
 import About from '@/views/About.vue';
 import Agenda from '@/views/Agenda.vue';
 import Venue from '@/views/Venue.vue';
+import Scanner from '@/views/admin/Scanner.vue';
 
 Vue.use(Router);
 Vue.use(VueScrollTo, {
@@ -138,6 +139,11 @@ const router = new Router({
       path: '/presentations',
       name: 'presentations',
       component: AcceptedPresentations,
+    },
+    {
+      path: '/scanner/:id?',
+      name: 'scanner',
+      component: Scanner,
     },
     {
       path: '/about',

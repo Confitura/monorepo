@@ -28,6 +28,7 @@
       { label: 'FAQ', url: '/faq' },
       { label: 'my profile', url: '/profile', visible: () => this.isLogin },
       { label: 'ADMIN', url: '/admin', visible: () => this.isAdmin },
+      { label: 'scanner', url: '/scanner', visible: () => this.isVolunteer },
       { label: 'logout', action: () => this.logout(), visible: () => this.isLogin },
       { label: 'login', url: '/login', visible: () => !this.isLogin },
     ];
@@ -46,6 +47,10 @@
 
     public get isAdmin() {
       return this.$store.getters.isAdmin;
+    }
+
+    public get isVolunteer() {
+      return this.$store.getters.isVolunteer || this.isAdmin;
     }
 
     public logout() {
