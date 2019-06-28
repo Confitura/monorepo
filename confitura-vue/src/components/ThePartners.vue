@@ -79,13 +79,13 @@
     }
 
     public startCarousel() {
-      // if (this.intervalId === 0) {
-      //   this.intervalId = setInterval(() => {
-      //     const currentIdx = this.types.indexOf(this.active);
-      //     const newIdx = (currentIdx + 1) % this.types.length;
-      //     this.active = this.types[newIdx];
-      //   }, 5000);
-      // }
+      if (this.intervalId === 0) {
+        this.intervalId = setInterval(() => {
+          const currentIdx = this.types.indexOf(this.active);
+          const newIdx = (currentIdx + 1) % this.types.length;
+          this.active = this.types[newIdx];
+        }, 5000);
+      }
     }
 
 
