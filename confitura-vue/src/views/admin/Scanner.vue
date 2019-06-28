@@ -14,7 +14,7 @@
                         <p class="subtitle">{{participant.name}} {{participant.email}}</p>
                         <div> t-shirt
                             <div class="scanner__tshirt">
-                                <span v-if="participant.gender === 'M'">Męska</span>
+                                <span v-if="participant.gender === 'm'">Męska</span>
                                 <span v-else>Damska</span>
                                 {{participant.size}}
                             </div>
