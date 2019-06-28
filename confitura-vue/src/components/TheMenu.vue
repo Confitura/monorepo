@@ -17,6 +17,7 @@
   export default class TheMenu extends Vue {
 
     public items: MenuItem[] = [
+      { label: 'scanner', url: '/scanner', visible: () => this.isVolunteer },
       { label: 'home', url: '/#home' },
       { label: 'about us', url: '/about' },
       { label: 'venue', url: '/venue' },
@@ -28,7 +29,6 @@
       { label: 'FAQ', url: '/faq' },
       { label: 'my profile', url: '/profile', visible: () => this.isLogin },
       { label: 'ADMIN', url: '/admin', visible: () => this.isAdmin },
-      { label: 'scanner', url: '/scanner', visible: () => this.isVolunteer },
       { label: 'logout', action: () => this.logout(), visible: () => this.isLogin },
       { label: 'login', url: '/login', visible: () => !this.isLogin },
     ];

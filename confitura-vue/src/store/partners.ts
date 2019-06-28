@@ -1,7 +1,7 @@
 import { Module } from 'vuex';
 import { LOAD_PARTNER_BY_ID, LOAD_PARTNERS, Partner, RootState } from '@/types';
 
-function filterBy(partners: Partner[], type: string){
+function filterBy(partners: Partner[], type: string) {
   return shuffle(partners.filter((partner) => partner.type === type));
 }
 
