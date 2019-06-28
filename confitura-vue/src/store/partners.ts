@@ -1,16 +1,22 @@
 import { Module } from 'vuex';
 import { LOAD_PARTNER_BY_ID, LOAD_PARTNERS, Partner, RootState } from '@/types';
 
+function filterBy(partners: Partner[], type: string){
+  return shuffle(partners.filter((partner) => partner.type === type));
+}
+
 export const partnersModule: Module<PartnersState, RootState> = {
   state: {
     partners: [],
   },
   getters: {
-    platinum: ({ partners }): Partner[] => shuffle(partners.filter((partner) => partner.type === 'platinum')),
-    path: ({ partners }): Partner[] => shuffle(partners.filter((partner) => partner.type === 'path')),
-    silver: ({ partners }): Partner[] => shuffle(partners.filter((partner) => partner.type === 'silver')),
-    gold: ({ partners }): Partner[] => shuffle(partners.filter((partner) => partner.type === 'gold')),
-    bronze: ({ partners }): Partner[] => shuffle(partners.filter((partner) => partner.type === 'bronze')),
+    platinum: ({ partners }): Partner[] => filterBy(partners, 'platinum'),
+    path: ({ partners }): Partner[] => filterBy(partners, 'gold'),
+    silver: ({ partners }): Partner[] => filterBy(partners, 'silver'),
+    gold: ({ partners }): Partner[] => filterBy(partners, 'gold'),
+    bronze: ({ partners }): Partner[] => filterBy(partners, 'bronze'),
+    media: ({ partners }): Partner[] => filterBy(partners, 'media'),
+    tech: ({ partners }): Partner[] => filterBy(partners, 'tech'),
   },
   actions: {
     [LOAD_PARTNERS]({ state }) {
@@ -291,7 +297,7 @@ For growth, fun & building stuff that works, join Evojam!`,
           orientation: 'horizontal',
           logo: require('../assets/partners/evojam.svg'),
 
-        },{
+        }, {
           id: 'nbc',
           name: 'NBC',
           description: `Robimy projekty. Budujemy zespoły.  
@@ -358,7 +364,7 @@ nagroda honorowa w kategorii „Banki innowacyjne” w rankingu 50. największyc
           orientation: 'horizontal',
           logo: require('../assets/partners/alior.svg'),
 
-        },{
+        }, {
           id: 'coi',
           name: 'Centralny Ośrodek Informatyki',
           description: `Są tacy, dla których przy tworzeniu usług cyfrowych najważniejszy jest człowiek. Jest miejsce, gdzie dzięki technologii rozproszone instytucje łączą się w proste usługi przyjazne dla obywateli – tak wygląda kod do cyfryzacji. W Centralnym Ośrodku Informatyki realizujemy projekty dla Ministerstwa Cyfryzacji.  
@@ -377,7 +383,7 @@ My już jesteśmy częścią cyfryzacji, a Ty? Przetestuj [coi.gov.pl](https://w
           orientation: 'horizontal',
           logo: require('../assets/partners/coi.svg'),
 
-        },{
+        }, {
           id: 'sml',
           name: 'SoftwareMill',
           description: `SoftwareMill is a consulting & custom software development company, delivering services remotely, worldwide for 10 years. Being experts in Scala (Akka, Play, Spark), Java, Kotlin we specialize in distributed, big data systems, blockchain, machine learning, IoT, and data analytics. 
@@ -388,7 +394,7 @@ Our focus on quality, self-improvement and a true engineering approach results i
           orientation: 'horizontal',
           logo: require('../assets/partners/sml.svg'),
 
-        },{
+        }, {
           id: 'netcompany',
           name: 'netcompany',
           description: `Netcompany has gone from being a small start-up in 2000 to more than 2000 skilled IT consultants and developers located in offices in Poland, Denmark, Norway, the United Kingdom and Vietnam. Over 240 of our employees is located at our office in Warsaw. Currently we’re conducting over 160 various projects for the biggest private companies as well as for public sector entities from Denmark, Norway and United Kingdom – world’s leaders of information and communication technologies usage. At Netcompany we rely on one another and we develop quickly. We are team players
@@ -400,7 +406,7 @@ That is the core of Netcompany's decentralized management model. From top to bot
           orientation: 'horizontal',
           logo: require('../assets/partners/netcompany.svg'),
 
-        },{
+        }, {
           id: 'sages',
           name: 'Sages',
           description: `Sages sp. z o.o. jest firmą szkoleniową i doradczą działającą od 10 lat w branży IT. Misją firmy jest wspieranie procesu projektowania, wytwarzania i wdrażania oprogramowania w przedsiębiorstwach i instytucjach publicznych, aby zminimalizować koszty, czas i ryzyko, związane z tymi przedsięwzięciami. Naszym celem jest łączenie wiedzy pochodzącej ze środowisk akademickich i doświadczenia ekspertów z obszaru praktycznych zastosowań w biznesie, aby budować kompetencje kadr w Polsce, a w szczególności przyczynić się do wzrostu efektywności i innowacyjności krajowej branży IT. 
@@ -413,7 +419,7 @@ Podczas tegorocznej edycji Confitury firma Sages jest oficjalnym opiekunem ście
           orientation: 'horizontal',
           logo: require('../assets/partners/sages.svg'),
 
-        },{
+        }, {
           id: 'circleK',
           name: 'Circle K',
           description: `You´ve probably already met us. Maybe you´ve stopped by for a coffee, fueled up your car or grabbed something to eat on the go. Then you know what Circle K is all about. Making everyday life easier for people all over the world.
@@ -428,7 +434,7 @@ Circle K is growing a team full of passionate, open-minded people with creative 
           orientation: 'horizontal',
           logo: require('../assets/partners/circleK.svg'),
 
-        },{
+        }, {
           id: 'spartez',
           name: 'Spartez',
           description: `We at Spartez, are known for our experts, our partnership with Atlassian and our world-class products. We are growing exponentially and looking for talented, experienced and passionate professionals to join our team.
@@ -453,7 +459,7 @@ Our company is deeply rooted in a few important values and principles - just a f
           orientation: 'horizontal',
           logo: require('../assets/partners/spartez.svg'),
 
-        },{
+        }, {
           id: 'touk',
           name: 'Touk',
           description: `Since 2002 we have been developing custom software. We offer creative solutions to customers' problems, implementing the riskiest projects. We outstrip the competition through the better use of technology and deep understanding of customers' needs.
@@ -472,7 +478,7 @@ We are looking for experienced developers and CS students.
           orientation: 'horizontal',
           logo: require('../assets/partners/touk.svg'),
 
-        },{
+        }, {
           id: 'goldman-sachs',
           name: 'Goldman Sachs',
           description: `Working together, we see the potential in the world to create more. To turn big ideas into realities. To challenge ourselves to look ahead and make things possible. From automated trading to managing data, risk analysis to safeguarding information and promoting environmental responsibility, our commitment to best-in-class technology empowers everything we do.
@@ -484,7 +490,7 @@ Make things possible at [goldmansachs.com/careers](https://www.goldmansachs.com/
           type: 'gold',
           orientation: 'horizontal',
           logo: require('../assets/partners/gs.svg'),
-        },{
+        }, {
           id: 'rtb-house',
           name: 'RTB House',
           description: `[RTB House](https://www.rtbhouse.com/) is a global company that provides state-of-the-art retargeting technology for top brands worldwide. Its proprietary ad buying engine is the first and only in the world to be powered entirely by deep learning algorithms, enabling advertisers to generate outstanding results and reach their short, mid and long-term goals.
@@ -494,7 +500,7 @@ Founded in 2012, RTB House serves over a thousand campaigns across EMEA, APAC an
           type: 'gold',
           orientation: 'horizontal',
           logo: require('../assets/partners/rtb.svg'),
-        },{
+        }, {
           id: 'it-kontrakt',
           name: 'IT Kontrakt',
           description: `IT Kontrakt powstał w 2004 jako jedna z pierwszych w Polsce spółek wdrażających rozwiązania i usługi IT dla biznesu oraz kompleksowe wsparcie w budowaniu systemów informatycznych. Firma jest liderem w obszarze Managed Services, Nearshore/Offshore, Information Technology Outsourcing. Posiada siedem oddziałów w Polsce, a także oddział w Kuala Lumpur w Malezji, biuro handlowe w USA oraz własne Software Delivery Centers w pięciu lokalizacjach. Do portfolio klientów należą firmy głównie z branż: farmacja, automotive, finanse, IT i telekomunikacja.
@@ -503,7 +509,7 @@ IT Kontrakt, w ramach inwestycji Oaktree Capital Management i Cornerstone Partne
           www: 'https://www.itkontrakt.com/',
           type: 'silver',
           logo: require('../assets/partners/it-kontrakt.svg'),
-        },{
+        }, {
           id: 'fis',
           name: 'FIS',
           description: `FIS is the world’s largest provider of banking and payments technology solutions and a global leader in consulting and outsourcing solutions. With a long history deeply rooted in the financial services sector, FIS serves more than 14,000 institutions in over 130 countries. Headquartered in Jacksonville, Fla., FIS employs more than 55,000 people worldwide and holds leadership positions in payment processing and banking solutions, providing software, services and outsourcing of the technology that drives financial institutions. In October 2014 FIS completed acquisition of Brussels-based Clear2Pay. The transaction brings new corporate payment solutions and services, inclusive of high-value and cross-currency corporate payments, payments managed services, and payments processing utilities that will further bolster FIS’ payments portfolio across all geographies. Clear2Pay is now an FIS company.`,
@@ -511,7 +517,7 @@ IT Kontrakt, w ramach inwestycji Oaktree Capital Management i Cornerstone Partne
           type: 'gold',
           logo: require('../assets/partners/fis.svg'),
           orientation: 'horizontal',
-        },{
+        }, {
           id: 'sollers',
           name: 'Sollers Consulting',
           description: `Sollers Consulting is an international business advisory and software implementation specialist supporting the financial industry in business transformations. Sollers Consulting Teams have supported over 70 financial groups in enhancing their digital capabilities. Among the companies partnering with Sollers Consulting are Allianz, Axa, LV=, BNP Paribas Cardif, Basler, Generali, Zurich, Santander Consumer Bank, ING and many more. 
@@ -526,7 +532,7 @@ More information about career in Sollers Consulting at: [https://career.sollers.
           type: 'silver',
           logo: require('../assets/partners/sollers.svg'),
           orientation: 'horizontal',
-        },{
+        }, {
           id: 'alten',
           name: 'Alten',
           description: `Jesteśmy częścią międzynarodowej grupy ALTEN, skupiającej na całym świecie ponad 33 700 wybitnych specjalistów w dziedzinach inżynierii oraz technologii informatycznych. Realizujemy najbardziej innowacyjne projekty technologiczne dla naszych Partnerów biznesowych.  
@@ -534,7 +540,7 @@ More information about career in Sollers Consulting at: [https://career.sollers.
           www: 'https://www.altenpolska.pl',
           type: 'silver',
           logo: require('../assets/partners/alten.svg'),
-        },{
+        }, {
           id: 'isolutions',
           name: 'Isolutions',
           description: `Jesteśmy firmą, dla której punktem odniesienia w budowaniu pozycji rynkowej są ludzie. W praktyce oznacza to nacisk na partnerskie relacje, zaufanie, odpowiedzialność i leżący w centrum naszego DNA rozwój. Dzięki takiemu podejściu możemy oferować naszym Klientom wysokiej jakości usługi realizowane przez zgrane, zmotywowane i czerpiące przyjemność ze swojej pracy zespoły. 
@@ -567,8 +573,8 @@ Jesteśmy dumni nie tylko z tego, co robimy, ale również z tego kim jesteśmy 
           www: 'https://isolution.pl/kariera/',
           type: 'silver',
           logo: require('../assets/partners/is.png'),
-          orientation: 'horizontal'
-        },{
+          orientation: 'horizontal',
+        }, {
           id: 'pentacomp',
           name: 'Pentacomp',
           description: `Historia Pentacomp Systemy Informatyczne S.A. zaczęła się 24 lata temu od pięciu komputerów, właścicieli których połączyła wspólna pasja – programowanie i marzenie o rzeczach większych, niż te, które można osiągnąć w pojedynkę. Obecnie, Pentacomp to ponad 250 „zwinnych" specjalistów. To oni wprowadzają cyfrową rewolucję w administracji oraz pomagają skutecznie, szybko i innowacyjnie rozwijać biznes prywatnych przedsiębiorstw.
@@ -577,7 +583,7 @@ Jesteśmy dumni nie tylko z tego, co robimy, ale również z tego kim jesteśmy 
           type: 'bronze',
           logo: require('../assets/partners/pentacomp.svg'),
           orientation: 'horizontal',
-        },{
+        }, {
           id: 'ppl',
           name: `'Polish Airports' State Enterprise`,
           description: `'Polish Airports' State Enterprise (PPL) is one of the top aviation infrastructure companies in Poland, taking active part in the shaping and development of this strategic branch of the industry. PPL resources include Warsaw Chopin Airport (EPWA) – the biggest Polish airport and one of the biggest airports in Central and Eastern Europe.`,
@@ -585,7 +591,7 @@ Jesteśmy dumni nie tylko z tego, co robimy, ale również z tego kim jesteśmy 
           type: 'silver',
           logo: require('../assets/partners/ppl.svg'),
           orientation: 'horizontal',
-        },{
+        }, {
           id: 'atena',
           name: 'Atena',
           description: `Atena IT & Financial Services Inc. designs, implements and integrates comprehensive IT systems for businesses. We specialise in developing products for the insurance market. For years, Atena has been the leading supplier of systems for this industry. We develop custom turnkey solutions for back office, front office, middleware, and business intelligence.`,
@@ -593,7 +599,7 @@ Jesteśmy dumni nie tylko z tego, co robimy, ale również z tego kim jesteśmy 
           type: 'gold',
           logo: require('../assets/partners/atena.svg'),
           orientation: 'horizontal',
-        },{
+        }, {
           id: 'groupon',
           name: 'GROUPON',
           description: `Groupon (NASDAQ: GRPN) jest globalnym liderem w dziedzinie handlu lokalnego i miejscem od którego warto zacząć, jeśli chcesz dokonać niemal dowolnego zakupu, w dowolnym czasie, gdziekolwiek jesteś. Dzięki wykorzystaniu globalnych kontaktów firmy i skali jej działalności, Groupon oferuje konsumentom ogromny wybór najlepszych okazji z całego świata. Klienci odnajdują to, co najlepsze ma do zaoferowania ich miasto, w sieci lub w telefonie komórkowym poprzez lokalne oferty Groupon, mogą wyjechać na wakacje poprzez Groupon Getaways i wybierać spośród oferty pieczołowicie dobranego sprzętu elektronicznego, ubrań, artykułów gospodarstwa domowego i wielu innych produktów poprzez Groupon Goods.
@@ -603,7 +609,7 @@ Groupon zmienia to, w jaki sposób tradycyjne niewielkie biznesy mogą zdobywać
           type: 'silver',
           logo: require('../assets/partners/groupon.svg'),
           orientation: 'horizontal',
-        },{
+        }, {
           id: 'prodata',
           name: 'ProData Consult',
           description: `We are one of the largest international consulting company in Northern Europe with offices in Denmark, Sweden, Norway, Germany, the Netherlands and Poland. We work with the best specialists vastly experienced  in IT sector. We carry out challenging projects across a number of industries – accept military. Our relationship with Consultants is built on an open and honest communication.
@@ -613,7 +619,7 @@ We act within the Scandinavian business culture focused on achieving goals while
           type: 'silver',
           logo: require('../assets/partners/prodata.png'),
           orientation: 'horizontal',
-        },{
+        }, {
           id: 'cgi',
           name: 'CGI',
           description: `Firma CGI jest wiodącą na rynku polskim firmą konsultingową w branży IT. Efektem ponad dwudziestoletniej działalności jest nawiązanie silnych relacji z naszymi klientami - czołowymi polskimi firmami z sektora telekomunikacyjnego, mediów, usług finansowych, produkcji, handlu, dystrybucji oraz przedsiębiorstw użyteczności publicznej. Polscy specjaliści w CGI łączą znajomość polskiego rynku oraz międzynarodowe doświadczenie. Dzięki temu jesteśmy w stanie dostarczać usługi end-to-end z zakresu doradztwa, integracji systemów, jak i rozwiązań specyficznych dla danego sektora.
@@ -622,7 +628,7 @@ Nasze główne doświadczenie na rynku polskim obejmuje strategie IT, dopasowani
           www: 'https://www.cgi.com',
           type: 'silver',
           logo: require('../assets/partners/cgi.svg'),
-        },{
+        }, {
           id: 'luxoft',
           name: 'CGI',
           description: `Luxoft, a DXC Technology Company, is a digital strategy and software engineering firm providing bespoke technology solutions that drive business change for customers globally. As part of DXC Technology (NYSE: DXC), Luxoft enables business transformation, enhances customer experiences, and boosts operational efficiency through its strategy, consulting, and engineering services.
@@ -636,6 +642,51 @@ We have a relaxed corporate culture that’s highlighted by the best employees t
           type: 'silver',
           logo: require('../assets/partners/luxoft.svg'),
           orientation: 'horizontal',
+        }, {
+          id: 'justjoinit',
+          name: 'Just Join IT',
+          description: `With Just Join IT you can find a better job, closer than you think in a convenient way. We intend to focus on only the best software houses & startups. Join it and build with us the first map of the labor market in the IT sector of Poland.`,
+          www: 'https://justjoin.it',
+          type: 'media',
+          logo: require('../assets/partners/justjoinit.png'),
+          orientation: 'horizontal',
+        },{
+          id: 'crossweb',
+          name: 'Crossweb',
+          description: `W Crossweb.pl zbieramy informacje o odbywających się wydarzeniach związanych z szeroko rozumianą branżą internetową.  
+Serwis skierowany jest do osób zainteresowanych tematyką IT, Startup, UX, SEM/SEO oraz e-biznes, chcących brać udział w barcampach, spotkaniach, warsztatach, konferencjach czy targach pracy. Co ważne, serwis obejmuje nie tylko duże, wszystkim znane wydarzenia ale także te mniejsze spotkania, które często są równie ciekawe.  
+Nad każdym publikowanym wydarzeniem w Crossweb czuwa moderator, dbając o jakość każdego wpisu. Co ważne, nie tylko czekamy na zgłoszenia od organizatorów, ale także sami poszukujemy wydarzeń, dlatego warto sprawdzić, czy wydarzenie nie znajduje się już w serwisie.`,
+          www: 'https://crossweb.pl',
+          type: 'media',
+          logo: require('../assets/partners/crossweb.png'),
+          orientation: 'box'
+        },{
+          id: 'codersview',
+          name: 'Coders View Community',
+          description: `Coders View Community to społeczność ludzi pasjonujących się programowaniem. Gromadzi całe środowisko IT wokół ciekawych wydarzeń, szkoleń, warsztatów, meetupów i interesujących projektów, w których można wziąć udział. Poza specjalistami w dziedzinie różnych języków programowania poznacie tutaj również ludzi, którzy pomogą w znalezieniu ciekawej pracy z możliwością rozwoju i zgodnie z Waszymi  oczekiwaniami. CVC to nie tylko osoby z dużym doświadczeniem, ale również takie, które dopiero zaczynają swoją przygodę z programowaniem.  
+CVC jest częścią grupy GS Services League, która wspiera międzynarodowe organizacje w zakresie Outsourcingu IT, Rekrutacji Stałej oraz realizacji projektów w modelu Fixed-Price.  
+CVC to całe IT w jednym miejscu!`,
+          www: 'https://codersview.eu',
+          type: 'media',
+          logo: require('../assets/partners/codersview.svg'),
+          orientation: 'horizontal',
+        },{
+          id: 'PROBrand',
+          name: 'PROBrand',
+          description: `PRObrand: Brand New Event Technologies
+Komfortowa obsługa techniczna targów, konferencji i kongresów w zakresie:
+* Ekranów projekcyjnych, ekranów LED i telewizorów 43-98"
+* Nagłośnienia
+* Oświetlenia architektonicznego i scenicznego
+* Osprzętu do tłumaczeń symultanicznych
+
+Wspieramy przygotowanie wydarzenia na wszystkich jego etapach.  
+Zapraszamy także do naszej wypożyczalni sprzętu eventowego: [www.eventav.pl ](https://www.eventav.pl )`,
+          www: 'https://www.facebook.com/PRObrand-Sp-z-oo-170774782953644/',
+          type: 'tech',
+          logo: require('../assets/partners/probrand.png'),
+          orientation: 'horizontal',
+
         },
 
 
