@@ -11,7 +11,7 @@ export const partnersModule: Module<PartnersState, RootState> = {
   },
   getters: {
     platinum: ({ partners }): Partner[] => filterBy(partners, 'platinum'),
-    path: ({ partners }): Partner[] => filterBy(partners, 'gold'),
+    path: ({ partners }): Partner[] => filterBy(partners, 'path'),
     silver: ({ partners }): Partner[] => filterBy(partners, 'silver'),
     gold: ({ partners }): Partner[] => filterBy(partners, 'gold'),
     bronze: ({ partners }): Partner[] => filterBy(partners, 'bronze'),
