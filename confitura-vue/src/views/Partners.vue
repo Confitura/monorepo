@@ -118,10 +118,10 @@
     }
 
     .logo--bronze {
-        width: 60px;
+        width: 80px;
 
         &.logo--horizontal {
-            width: 120px;
+            width: 160px;
         }
     }
 
