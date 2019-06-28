@@ -1,23 +1,7 @@
 <template>
     <div class="scanner">
         <Box :full="false" :small="true" class="content back-office" color="white">
-            <div class="row">
-                <div class="col m6 s12">
-                    <div class="input-field">
-                        <input id="id" type="text"
-                               placeholder="enter code using keyboard code scanner"
-                               v-model="inputValue">
-                        <label for="id"></label>
-                    </div>
-                </div>
-                <div class="col m6 s12">
-                    or
-                    <button @click="openScanner()"
-                            class="btn btn-large">
-                        Scan (requires app)<i class="fas fa-qrcode"></i>
-                    </button>
-                </div>
-            </div>
+
             <div class="card-panel red error" v-if="error">{{error}}</div>
             <div v-if="participant">
                 <div class="card">
@@ -37,9 +21,21 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                </div>
             </div>
+            <div class="row">
+                <div class="col m6 s12">
+                    <div class="input-field">
+                        <input id="id" type="text"
+                               placeholder="enter code using keyboard code scanner"
+                               v-model="inputValue">
+                        <label for="id"></label>
+                    </div>
+                </div>
+
+            </div>
+            <md-button class="md-fab scanner__scanButton" @click="openScanner()">
+                <md-icon>center_focus_strong</md-icon>
+            </md-button>
         </Box>
     </div>
 </template>
@@ -141,5 +137,11 @@
 
     .error {
         font-size: 2.5rem;
+    }
+
+    .scanner__scanButton {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
     }
 </style>
