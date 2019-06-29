@@ -42,7 +42,9 @@ public class Security {
     }
 
     public boolean isAuthenticated() {
-        return getPrincipal().getId() != null;
+        JelatynaPrincipal principal = getPrincipal();
+        log.info("Logged in user {}", principal);
+        return principal.getId() != null;
     }
 
     public String getUserId() {
