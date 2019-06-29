@@ -1,15 +1,16 @@
 package pl.confitura.jelatyna.presentation.rating;
 
-import lombok.AllArgsConstructor;
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import lombok.AllArgsConstructor;
 import pl.confitura.jelatyna.infrastructure.security.Security;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
 import pl.confitura.jelatyna.user.User;
 import pl.confitura.jelatyna.user.UserRepository;
-
-import javax.persistence.EntityNotFoundException;
 
 @Service
 @AllArgsConstructor
@@ -28,9 +29,9 @@ public class RatingService {
 
         Presentation presentation = repository.findById(presentationId);
         User user = userRepository.findById(userId);
-        if (!user.hasArrived()) {
-            throw new UserRatingPresentationHaveNotArrived();
-        }
+//        if (!user.hasArrived()) {
+//            throw new UserRatingPresentationHaveNotArrived();
+//        }
 
         markUserRated(presentation, user);
         rate = saveRate(rate, presentation);
