@@ -27,6 +27,7 @@ import About from '@/views/About.vue';
 import Agenda from '@/views/Agenda.vue';
 import Venue from '@/views/Venue.vue';
 import Scanner from '@/views/admin/Scanner.vue';
+import Spoina from '@/views/Spoina.vue';
 
 Vue.use(Router);
 Vue.use(VueScrollTo, {
@@ -159,6 +160,11 @@ const router = new Router({
       path: '/venue',
       name: 'venue',
       component: Venue,
+    },
+    {
+      path: '/spoina',
+      name: 'spoina',
+      component: Spoina,
     },
   ],
   scrollBehavior(to, from, savedPosition) {
