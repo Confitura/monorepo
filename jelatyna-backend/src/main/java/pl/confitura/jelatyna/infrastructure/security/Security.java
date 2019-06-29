@@ -1,16 +1,14 @@
 package pl.confitura.jelatyna.infrastructure.security;
 
-import lombok.extern.slf4j.Slf4j;
+import static pl.confitura.jelatyna.infrastructure.security.SecurityContextUtil.getPrincipal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import lombok.extern.slf4j.Slf4j;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
-import pl.confitura.jelatyna.user.User;
 import pl.confitura.jelatyna.user.UserRepository;
-
-import java.util.Objects;
-
-import static pl.confitura.jelatyna.infrastructure.security.SecurityContextUtil.getPrincipal;
 
 @Component
 @Slf4j
@@ -41,6 +39,10 @@ public class Security {
 
     public boolean isVolunteer() {
         return getPrincipal().isVolunteer() || isAdmin();
+    }
+
+    public boolean isAuthenticated() {
+        return getPrincipal().getId() != null;
     }
 
     public String getUserId() {
