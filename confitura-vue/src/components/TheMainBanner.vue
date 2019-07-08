@@ -7,8 +7,7 @@
                     <div>It is not rocket science!</div>
                 </div>
                 <div class="info__live">
-                    <div class="info__live-text">we are live!</div>
-                    <a class="info__live-link" href="https://www.youtube.com/confiturapl" target="_blank">watch our stream</a>
+                    <div class="info__live-text">Thank you!</div>
                 </div>
                 <!--        <TheTimer/>-->
                 <div class="time-and-place">

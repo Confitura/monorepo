@@ -29,8 +29,8 @@ Vue.filter('lastName', (value: string): string => {
   return name.substring(idx);
 });
 
-Vue.filter('crop', (value: string, size = 300): string => {
-  return `${value}?size=${size}&crop=true` ;
+Vue.filter('crop', (value: string, size: number = 300): string => {
+  return `${value}?size=${size}&crop=true`;
 });
 
 new Vue({
