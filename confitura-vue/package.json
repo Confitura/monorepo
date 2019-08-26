@@ -5,14 +5,14 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "build:prod": "yarn build --prod --modern",
-    "build:full": "yarn lint && yarn build:prod",
     "lint": "vue-cli-service lint",
     "deploy": "yarn deploy:public --extra-vars 'edition=next'",
-    "deploy:public": "yarn build:full && yarn deploy:only",
+    "build:full": "yarn lint && yarn build:prod",
+    "build:prod": "yarn build --prod --modern",
     "deploy:only": "ansible-playbook deployment/confitura-page.yml",
-    "sb": "start-storybook -p 9001 -c .storybook",
-    "mock": "http-server ./mock"
+    "deploy:public": "yarn build:full && yarn deploy:only",
+    "mock": "http-server ./mock",
+    "sb": "start-storybook -p 9001 -c .storybook"
   },
   "dependencies": {
     "@types/marked": "^0.6.5",
@@ -33,7 +33,9 @@
     "vue-property-decorator": "^7.0.0",
     "vue-router": "^3.0.1",
     "vue-scrollto": "^2.13.0",
+    "vue-star-rating": "^1.6.1",
     "vue-toasted": "^1.1.27",
+    "vue-types": "^1.5.7",
     "vue2-google-maps": "^0.10.6",
     "vuex": "^3.0.1"
   },
@@ -43,17 +45,49 @@
     "@types/jssha": "^2.0.0",
     "@types/materialize-css": "^1.0.6",
     "@vue/cli-plugin-babel": "^3.2.0",
-    "@vue/cli-plugin-typescript": "^3.2.0",
-    "@vue/cli-service": "^3.2.0",
+    "@vue/cli-plugin-eslint": "^3.9.2",
+    "@vue/cli-plugin-typescript": "^3.9.0",
+    "@vue/cli-service": "^3.9.2",
+    "@vue/eslint-config-prettier": "^4.0.1",
+    "@vue/eslint-config-typescript": "^4.0.0",
+    "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.5",
     "babel-preset-vue": "^2.0.2",
+    "eslint": "^6.0.0",
+    "eslint-plugin-vue": "^5.2.3",
     "fork-ts-checker-webpack-plugin": "^1.0.0",
     "http-server": "^0.11.1",
     "node-sass": "^4.9.0",
-    "prettier": "^1.15.3",
+    "prettier": "1.18.2",
     "sass-loader": "^7.0.1",
-    "typescript": "^3.0.0",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.4.3",
     "vue-loader": "^15.7.0",
     "vue-template-compiler": "^2.6.8"
-  }
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "@vue/prettier",
+      "@vue/typescript"
+    ],
+    "rules": {},
+    "parserOptions": {
+      "parser": "@typescript-eslint/parser"
+    }
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "last 2 versions",
+    "> 5%",
+    "not ie <= 11"
+  ]
 }

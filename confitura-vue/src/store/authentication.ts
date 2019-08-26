@@ -1,18 +1,18 @@
-import { Module } from 'vuex';
-import { LOGIN, LOGOUT, RootState, TOKEN, User } from '@/types';
-import axios from 'axios';
-import router from '../router';
+import { Module } from "vuex";
+import { LOGIN, LOGOUT, RootState, TOKEN, User } from "@/types";
+import axios from "axios";
+import router from "../router";
 
 export const authenticationModule: Module<AuthenticationState, RootState> = {
   state: {
-    token: localStorage.getItem(TOKEN),
+    token: localStorage.getItem(TOKEN)
   },
 
   getters: {
     user: ({ token }): User | null => {
       if (token) {
         try {
-          const body = token.split('.')[1];
+          const body = token.split(".")[1];
           return JSON.parse(atob(body)) as User;
         } catch (error) {
           return null;
@@ -31,7 +31,7 @@ export const authenticationModule: Module<AuthenticationState, RootState> = {
     isVolunteer: (state, getters) => {
       const user: User | null = getters.user;
       return user !== null && user.isVolunteer;
-    },
+    }
   },
   mutations: {
     [TOKEN](store, payload: { token: string }) {
@@ -41,30 +41,30 @@ export const authenticationModule: Module<AuthenticationState, RootState> = {
       } else {
         localStorage.setItem(TOKEN, payload.token);
       }
-    },
+    }
   },
   actions: {
     [LOGIN]({ commit, rootGetters }, { service, params }) {
-      axios.get(`/api/login/${service}/callback`, { params })
+      axios
+        .get(`/api/login/${service}/callback`, { params })
         .then(({ data }) => {
           commit(TOKEN, { token: data });
         })
         .then(() => {
-            const { isNew } = rootGetters.user;
-            if (isNew) {
-              router.push('/register');
-            } else {
-              router.push('/profile');
-            }
-          },
-        );
+          const { isNew } = rootGetters.user;
+          if (isNew) {
+            router.push("/register");
+          } else {
+            router.push("/profile");
+          }
+        });
     },
 
     [LOGOUT]({ commit }) {
       commit(TOKEN, { token: null });
-      router.push('/');
-    },
-  },
+      router.push("/");
+    }
+  }
 };
 
 export interface AuthenticationState {

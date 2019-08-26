@@ -1,1 +1,1 @@
-declare module '@storybook/vue';
+declare module "@storybook/vue";
