@@ -15,7 +15,7 @@
       ></PresentationBox>
     </Box>
 
-    <TheContact id="contact" />
+    <Contact />
   </div>
 </template>
 
@@ -23,7 +23,7 @@
 import { Component, Vue } from "vue-property-decorator";
 import Box from "@/components/Box.vue";
 import PageHeader from "@/components/PageHeader.vue";
-import TheContact from "@/components/TheContact.vue";
+import Contact from "@/components/Contact.vue";
 import { LOAD_ACCEPTED_PRESENTATIONS } from "@/store/admin";
 import PresentationSpeakers from "@/components/PresentationSpeakers.vue";
 import PresentationMetadata from "@/components/PresentationMetadata.vue";
@@ -36,7 +36,7 @@ import PresentationBox from "@/components/PresentationBox.vue";
     PresentationSpeakers,
     PageHeader,
     Box,
-    TheContact
+    Contact
   }
 })
 export default class AcceptedPresentations extends Vue {

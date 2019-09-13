@@ -73,7 +73,7 @@
         </div>
       </div>
     </Box>
-    <TheContact id="contact" />
+    <Contact />
   </div>
 </template>
 
@@ -81,7 +81,7 @@
 import { Component, Vue } from "vue-property-decorator";
 import Box from "@/components/Box.vue";
 import PageHeader from "@/components/PageHeader.vue";
-import TheContact from "@/components/TheContact.vue";
+import Contact from "@/components/Contact.vue";
 import PageFragment from "@/components/PageFragment.vue";
 import axios from "axios";
 import { EmbeddedUserProfiles, UserProfile } from "@/types";
@@ -94,7 +94,7 @@ import UsersGrid from "@/views/UsersGrid.vue";
     SocialLink,
     PageHeader,
     Box,
-    TheContact,
+    Contact,
     PageFragment
   }
 })

@@ -1,10 +1,10 @@
 <template>
-  <Box class="numbers" color="red">
+  <Box class="numbers" color="red" id="numbers">
     <div class="numbers-container">
       <div class="info">
         <h1 class="header">
-          <div>confitura'18</div>
-          <div>in numbers</div>
+          <span>confitura'18</span>
+          <span>in numbers</span>
         </h1>
         <div class="subinfo">
           Everything has started in 2007, when the group of passionate Java
@@ -17,32 +17,32 @@
           us to organize another Confitura, this year it will be the 13th.
         </div>
       </div>
-      <Pictogram
+      <HomeNumbersPictogram
         :src="require('../assets/speakers.svg')"
         value="38"
         unit="speakers"
       />
-      <Pictogram
+      <HomeNumbersPictogram
         :src="require('../assets/sessions.svg')"
         value="5"
         unit="tracks"
       />
-      <Pictogram
+      <HomeNumbersPictogram
         :src="require('../assets/presentations.svg')"
         value="35"
         unit="presentations"
       />
-      <Pictogram
+      <HomeNumbersPictogram
         :src="require('../assets/views.svg')"
         value="693k"
         unit="youtube channel views"
       />
-      <Pictogram
+      <HomeNumbersPictogram
         :src="require('../assets/videos.svg')"
         value="241"
         unit="youtube videos"
       />
-      <Pictogram
+      <HomeNumbersPictogram
         :src="require('../assets/participants.svg')"
         value=">1800"
         unit="participants"
@@ -51,13 +51,13 @@
   </Box>
 </template>
 
-<script>
-import Pictogram from "./Pictogram";
-import Box from "./Box";
+<script lang="ts">
+import HomeNumbersPictogram from "./HomeNumbersPictogram.vue";
+import Box from "./Box.vue";
 
 export default {
-  name: "TheNumbers",
-  components: { Box, Pictogram }
+  name: "HomeNumbers",
+  components: { Box, HomeNumbersPictogram }
 };
 </script>
 

@@ -241,7 +241,7 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import Box from "@/components/Box.vue";
-import TheContact from "@/components/TheContact.vue";
+import Contact from "@/components/Contact.vue";
 import axios, { AxiosError } from "axios";
 import PageHeader from "@/components/PageHeader.vue";
 import { Participant, RegistrationForm } from "@/types";
@@ -262,7 +262,7 @@ Vue.use(MdMenu);
 Vue.use(MdList);
 Vue.use(MdCheckbox);
 @Component({
-  components: { PageHeader, Box, TheContact }
+  components: { PageHeader, Box, Contact }
 })
 export default class ParticipatePage extends Vue {
   public form: RegistrationForm | null = null;

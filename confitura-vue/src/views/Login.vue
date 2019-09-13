@@ -20,19 +20,19 @@
         </div>
       </div>
     </Box>
-    <TheContact id="contact" />
+    <Contact />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import Box from "@/components/Box.vue";
-import TheContact from "@/components/TheContact.vue";
+import Contact from "@/components/Contact.vue";
 import { LOGIN } from "@/types";
 import PageHeader from "@/components/PageHeader.vue";
 
 @Component({
-  components: { Box, TheContact, PageHeader }
+  components: { Box, Contact, PageHeader }
 })
 export default class Login extends Vue {
   public options = ["Sign in", "Sign up"];

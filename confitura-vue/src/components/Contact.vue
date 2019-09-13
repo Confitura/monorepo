@@ -1,5 +1,5 @@
 <template>
-  <Box class="contact" color="black">
+  <Box class="contact" color="black" id="contact">
     <h1 class="header">stay connected</h1>
     <div class="contact__info">
       <div class="contact__mail">
@@ -9,7 +9,7 @@
         <router-link to="privacy-policy" class="contact__privacy"
           >Privacy policy</router-link
         >
-        <TheSocialLinks class="mobile" />
+        <SocialLinks class="mobile" />
       </div>
       <div class="contact__tweet" v-for="tweet in tweets" :key="tweet.time">
         <Tweet :model="tweet" />
@@ -22,13 +22,13 @@
 import { Component, Vue } from "vue-property-decorator";
 import Box from "./Box.vue";
 import Tweet, { TweetItem } from "./Tweet.vue";
-import TheSocialLinks from "./TheSocialLinks.vue";
+import SocialLinks from "./SocialLinks.vue";
 import axios from "axios";
 
 @Component({
-  components: { Box, Tweet, TheSocialLinks }
+  components: { Box, Tweet, SocialLinks }
 })
-export default class TheContact extends Vue {
+export default class Contact extends Vue {
   public tweets: TweetItem[] = [];
 
   protected mounted() {

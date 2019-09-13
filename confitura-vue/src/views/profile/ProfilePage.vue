@@ -221,7 +221,7 @@
         </div>
       </div>
     </Box>
-    <TheContact id="contact" />
+    <Contact />
   </div>
 </template>
 
@@ -233,7 +233,7 @@ import {
   LOAD_PROFILE_PRESENTATIONS_BY_ID
 } from "@/store/store.user-profile";
 import Box from "@/components/Box.vue";
-import TheContact from "@/components/TheContact.vue";
+import Contact from "@/components/Contact.vue";
 import {
   PARTICIPATION_ID,
   Presentation,
@@ -248,7 +248,7 @@ import M from "materialize-css";
 Vue.use(Toasted);
 
 @Component({
-  components: { PageHeader, Box, TheContact }
+  components: { PageHeader, Box, Contact }
 })
 export default class ProfilePage extends Vue {
   get profile() {

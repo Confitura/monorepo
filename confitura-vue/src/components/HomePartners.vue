@@ -1,5 +1,5 @@
 <template>
-  <Box class="partners" color="white">
+  <Box class="partners" color="white" id="partners">
     <h1 class="header">our partners</h1>
     <div class="partners-grid">
       <div class="partners-main">
@@ -90,13 +90,13 @@
 import { Component, Vue } from "vue-property-decorator";
 import Box from "@/components/Box.vue";
 import PageHeader from "@/components/PageHeader.vue";
-import TheContact from "@/components/TheContact.vue";
+import Contact from "@/components/Contact.vue";
 import { LOAD_PARTNERS, Partner } from "@/types";
 
 @Component({
-  components: { PageHeader, Box, TheContact }
+  components: { PageHeader, Box, Contact }
 })
-export default class ThePartners extends Vue {
+export default class HomePartners extends Vue {
   public platinum: Partner[] = [];
   public path: Partner[] = [];
   public gold: Partner[] = [];

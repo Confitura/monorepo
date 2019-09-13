@@ -4,7 +4,7 @@
     <Box class="content no-padding" color="white">
       <UsersGrid :users="speakers" class="speakers__grid" />
     </Box>
-    <TheContact id="contact" />
+    <Contact />
   </div>
 </template>
 
@@ -12,12 +12,12 @@
 import { Component, Vue } from "vue-property-decorator";
 import Box from "@/components/Box.vue";
 import PageHeader from "@/components/PageHeader.vue";
-import TheContact from "@/components/TheContact.vue";
+import Contact from "@/components/Contact.vue";
 import { LOAD_SPEAKERS } from "@/store/admin";
 import UsersGrid from "@/views/UsersGrid.vue";
 
 @Component({
-  components: { UsersGrid, PageHeader, Box, TheContact }
+  components: { UsersGrid, PageHeader, Box, Contact }
 })
 export default class Speakers extends Vue {
   public mounted() {

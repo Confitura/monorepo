@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <TheHeader />
-    <TheSocialLinks class="standard" />
+    <SocialLinks class="standard" />
     <router-view></router-view>
   </div>
 </template>
@@ -12,11 +12,11 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import TheHeader from "@/components/TheHeader.vue";
-import TheSocialLinks from "@/components/TheSocialLinks.vue";
+import SocialLinks from "@/components/SocialLinks.vue";
 import { TOKEN, WINDOW_RESIZED } from "./types";
 
 @Component({
-  components: { TheHeader, TheSocialLinks }
+  components: { TheHeader, SocialLinks }
 })
 export default class App extends Vue {
   public mounted() {

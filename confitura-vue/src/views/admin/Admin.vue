@@ -26,7 +26,7 @@
         <router-view></router-view>
       </div>
     </Box>
-    <TheContact id="contact" />
+    <Contact />
   </div>
 </template>
 
@@ -34,7 +34,7 @@
 import { Component, Vue } from "vue-property-decorator";
 import Box from "@/components/Box.vue";
 import PageHeader from "@/components/PageHeader.vue";
-import TheContact from "@/components/TheContact.vue";
+import Contact from "@/components/Contact.vue";
 import {
   LOAD_USERS,
   LOAD_ALL_PRESENTATIONS,
@@ -42,7 +42,7 @@ import {
 } from "@/store/admin";
 
 @Component({
-  components: { PageHeader, Box, TheContact }
+  components: { PageHeader, Box, Contact }
 })
 export default class Admin extends Vue {
   public mounted() {

@@ -149,7 +149,7 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import TheContact from "@/components/TheContact.vue";
+import Contact from "@/components/Contact.vue";
 import Box from "../components/Box.vue";
 import PageHeader from "../components/PageHeader.vue";
 import LazyImage from "../components/LazyImage.vue";
@@ -159,7 +159,7 @@ import VueScrollTo from "vue-scrollto";
 import axios from "axios";
 
 @Component({
-  components: { PageHeader, Box, TheContact, VueScrollTo, LazyImage }
+  components: { PageHeader, Box, Contact, VueScrollTo, LazyImage }
 })
 export default class Vote4Papers extends Vue {
   public rateValues = [

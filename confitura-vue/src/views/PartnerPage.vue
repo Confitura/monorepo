@@ -23,7 +23,7 @@
         <div class="partner__description" v-html="description"></div>
       </article>
     </Box>
-    <TheContact id="contact" />
+    <Contact />
   </div>
 </template>
 
@@ -31,12 +31,12 @@
 import { Component, Vue } from "vue-property-decorator";
 import Box from "@/components/Box.vue";
 import PageHeader from "@/components/PageHeader.vue";
-import TheContact from "@/components/TheContact.vue";
+import Contact from "@/components/Contact.vue";
 import { LOAD_PARTNER_BY_ID, Partner } from "@/types";
 import marked from "marked";
 
 @Component({
-  components: { PageHeader, Box, TheContact }
+  components: { PageHeader, Box, Contact }
 })
 export default class PartnerPage extends Vue {
   public partner: Partner = {

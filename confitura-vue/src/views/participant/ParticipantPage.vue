@@ -56,13 +56,13 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import Box from "@/components/Box.vue";
-import TheContact from "@/components/TheContact.vue";
+import Contact from "@/components/Contact.vue";
 import axios from "axios";
 import PageHeader from "@/components/PageHeader.vue";
 import { Participant, PARTICIPATION_ID } from "@/types";
 
 @Component({
-  components: { PageHeader, Box, TheContact }
+  components: { PageHeader, Box, Contact }
 })
 export default class ParticipantPage extends Vue {
   public participant: Participant | null = null;

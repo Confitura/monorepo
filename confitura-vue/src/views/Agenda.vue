@@ -33,7 +33,7 @@
       </div>
     </Box>
 
-    <TheContact id="contact" />
+    <Contact />
     <PresentationModal
       :presentationId="selectedPresentationId"
       @close="modalClosed()"
@@ -49,7 +49,7 @@
 import { Component, Vue } from "vue-property-decorator";
 import Box from "@/components/Box.vue";
 import PageHeader from "@/components/PageHeader.vue";
-import TheContact from "@/components/TheContact.vue";
+import Contact from "@/components/Contact.vue";
 import PageFragment from "@/components/PageFragment.vue";
 import axios from "axios";
 import SocialLink from "@/components/SocialLink.vue";
@@ -68,7 +68,7 @@ import { SET_PRESENTATION_UNDER_RATE } from "@/store/presentations";
     SocialLink,
     PageHeader,
     Box,
-    TheContact,
+    Contact,
     PageFragment,
     PresentationModal
   },

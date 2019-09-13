@@ -36,7 +36,7 @@
         </div>
       </div>
     </Box>
-    <TheContact id="contact" />
+    <Contact />
   </div>
 </template>
 
@@ -44,12 +44,12 @@
 import { Component, Vue } from "vue-property-decorator";
 import Box from "@/components/Box.vue";
 import PageHeader from "@/components/PageHeader.vue";
-import TheContact from "@/components/TheContact.vue";
+import Contact from "@/components/Contact.vue";
 import { LOAD_SPEAKER } from "@/store/admin";
 import SocialLink from "@/components/SocialLink.vue";
 
 @Component({
-  components: { PageHeader, Box, TheContact, SocialLink }
+  components: { PageHeader, Box, Contact, SocialLink }
 })
 export default class Speaker extends Vue {
   public mounted() {

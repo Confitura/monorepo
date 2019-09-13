@@ -24,7 +24,7 @@ import { Component, Vue } from "vue-property-decorator";
 @Component({
   components: {}
 })
-export default class TheSocialLinks extends Vue {
+export default class SocialLinks extends Vue {
   public withBackground = true;
   public links = [
     {

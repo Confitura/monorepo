@@ -460,7 +460,7 @@
 </template>
 <script lang="ts">
 export default {
-  name: "TheIllustration"
+  name: "HomeMainBannerIllustration"
 };
 </script>
 <style scoped lang="scss">

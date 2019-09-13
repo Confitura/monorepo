@@ -180,12 +180,12 @@
         </div>
       </div>
     </Box>
-    <TheContact id="contact" />
+    <Contact />
   </div>
 </template>
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import TheContact from "@/components/TheContact.vue";
+import Contact from "@/components/Contact.vue";
 import Box from "@/components/Box.vue";
 import M from "materialize-css";
 import { EmbeddedTags, Presentation, Tag } from "@/types";
@@ -193,7 +193,7 @@ import axios from "axios";
 import PageHeader from "@/components/PageHeader.vue";
 
 @Component({
-  components: { Box, TheContact, PageHeader }
+  components: { Box, Contact, PageHeader }
 })
 export default class PresentationForm extends Vue {
   public $refs!: Vue["$refs"] & {

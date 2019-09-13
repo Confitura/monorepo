@@ -48,12 +48,12 @@
 import { Component, Vue, Watch } from "vue-property-decorator";
 import Box from "@/components/Box.vue";
 import PageHeader from "@/components/PageHeader.vue";
-import TheContact from "@/components/TheContact.vue";
+import Contact from "@/components/Contact.vue";
 import axios from "axios";
 import { Participant } from "@/types";
 
 @Component({
-  components: { PageHeader, Box, TheContact }
+  components: { PageHeader, Box, Contact }
 })
 export default class Scanner extends Vue {
   public inputValue: string = "";

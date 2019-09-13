@@ -120,7 +120,7 @@
         </div>
       </div>
     </Box>
-    <TheContact id="contact" />
+    <Contact />
   </div>
 </template>
 
@@ -128,7 +128,7 @@
 import { Component, Vue } from "vue-property-decorator";
 import { LOAD_PROFILE_BY_ID } from "@/store/store.user-profile";
 import Box from "@/components/Box.vue";
-import TheContact from "@/components/TheContact.vue";
+import Contact from "@/components/Contact.vue";
 import { Participant, PARTICIPATION_ID, User, UserProfile } from "@/types";
 import M from "materialize-css";
 import axios from "axios";
@@ -136,7 +136,7 @@ import PageHeader from "@/components/PageHeader.vue";
 import { validEmail } from "@/validation-utils";
 
 @Component({
-  components: { PageHeader, Box, TheContact }
+  components: { PageHeader, Box, Contact }
 })
 export default class RegisterPage extends Vue {
   public $refs!: Vue["$refs"] & {

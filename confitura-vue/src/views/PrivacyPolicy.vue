@@ -4,7 +4,7 @@
     <Box class="content" color="white">
       <PageFragment name="privacy-policy" />
     </Box>
-    <TheContact id="contact" />
+    <Contact />
   </div>
 </template>
 
@@ -12,11 +12,11 @@
 import { Component, Vue } from "vue-property-decorator";
 import Box from "@/components/Box.vue";
 import PageHeader from "@/components/PageHeader.vue";
-import TheContact from "@/components/TheContact.vue";
+import Contact from "@/components/Contact.vue";
 import PageFragment from "@/components/PageFragment.vue";
 
 @Component({
-  components: { PageFragment, PageHeader, Box, TheContact }
+  components: { PageFragment, PageHeader, Box, Contact }
 })
 export default class PrivacyPolicy extends Vue {}
 </script>

@@ -1,30 +1,30 @@
 <template>
   <div class="home__container">
-    <TheMainBanner id="home" />
-    <TheAbout id="about-us" />
-    <TheNumbers id="numbers" />
-    <ThePartners id="partners" />
-    <TheContact id="contact" />
+    <HomeMainBanner />
+    <HomeAbout />
+    <HomeNumbers />
+    <HomePartners />
+    <Contact />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import TheMainBanner from "@/components/TheMainBanner.vue";
-import TheAbout from "@/components/TheAbout.vue";
-import TheSocialLinks from "@/components/TheSocialLinks.vue";
-import TheNumbers from "@/components/TheNumbers.vue";
-import ThePartners from "@/components/ThePartners.vue";
-import TheContact from "@/components/TheContact.vue";
+import HomeMainBanner from "@/components/HomeMainBanner.vue";
+import HomeAbout from "@/components/HomeAbout.vue";
+import SocialLinks from "@/components/SocialLinks.vue";
+import HomePartners from "@/components/HomePartners.vue";
+import Contact from "@/components/Contact.vue";
+import HomeNumbers from "@/components/HomeNumbers.vue";
 
 @Component({
   components: {
-    TheContact,
-    ThePartners,
-    TheNumbers,
-    TheSocialLinks,
-    TheAbout,
-    TheMainBanner
+    Contact,
+    HomePartners,
+    HomeNumbers,
+    SocialLinks,
+    HomeAbout,
+    HomeMainBanner
   }
 })
 export default class Home extends Vue {}

@@ -19,7 +19,7 @@
         />
       </GmapMap>
     </Box>
-    <TheContact id="contact" />
+    <Contact />
   </div>
 </template>
 
@@ -27,12 +27,12 @@
 import { Component, Vue } from "vue-property-decorator";
 import Box from "@/components/Box.vue";
 import PageHeader from "@/components/PageHeader.vue";
-import TheContact from "@/components/TheContact.vue";
+import Contact from "@/components/Contact.vue";
 import PageFragment from "@/components/PageFragment.vue";
 import SocialLink from "@/components/SocialLink.vue";
 
 @Component({
-  components: { SocialLink, PageHeader, Box, TheContact, PageFragment }
+  components: { SocialLink, PageHeader, Box, Contact, PageFragment }
 })
 export default class Venue extends Vue {
   public center = { lat: 52.2248963, lng: 20.9599152 };

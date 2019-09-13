@@ -17,6 +17,7 @@ export default class Box extends Vue {
   @Prop({ default: true })
   public full!: boolean;
   private threshold: number[] = [];
+  private observer: IntersectionObserver | null = null;
 
   constructor() {
     super();
@@ -42,8 +43,14 @@ export default class Box extends Vue {
         }
       }
     };
-    const observer = new IntersectionObserver(callback, options);
-    observer.observe(this.$el);
+    this.observer = new IntersectionObserver(callback, options);
+    this.observer.observe(this.$el);
+  }
+
+  protected beforeDestroy() {
+    if (this.observer !== null) {
+      this.observer.disconnect();
+    }
   }
 }
 </script>
@@ -66,6 +73,7 @@ export default class Box extends Vue {
       padding: 0;
     }
   }
+
   &.min-padding {
     & .box__container {
       padding: 1rem;

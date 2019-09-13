@@ -1,5 +1,5 @@
 <template>
-  <Box color="white">
+  <Box color="white" id="about-us">
     <div class="about-us">
       <h2 class="header">about us</h2>
       <div class="main-info">
@@ -24,7 +24,7 @@ import Box from "@/components/Box.vue";
 @Component({
   components: { Box }
 })
-export default class TheAbout extends Vue {}
+export default class HomeAbout extends Vue {}
 </script>
 
 <style scoped lang="scss">
@@ -35,18 +35,13 @@ export default class TheAbout extends Vue {}
 .about-us {
   display: grid;
   grid-row-gap: 2rem;
-  grid-template-areas:
-    "h "
-    "mi"
-    "ai";
+  grid-template-areas: "h " "mi" "ai";
   @include lg() {
     grid-column-gap: 8rem;
     grid-row-gap: 52px;
     align-content: center;
     grid-template-columns: 1fr 1fr;
-    grid-template-areas:
-      "h  h"
-      "mi ai";
+    grid-template-areas: "h  h" "mi ai";
   }
 }
 

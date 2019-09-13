@@ -1,6 +1,6 @@
 <template>
-  <section class="banner">
-    <div class="twinkling" ref="twinkling"></div>
+  <section class="banner" id="home">
+    <HomeMainBannerStars />
     <div class="container">
       <div class="info">
         <div class="slogan">
@@ -9,7 +9,7 @@
         <div class="info__live">
           <div class="info__live-text">Thank you!</div>
         </div>
-        <!--        <TheTimer/>-->
+        <!--        <TheTimer />-->
         <div class="time-and-place">
           <div>{{ date }},&nbsp;</div>
           <div class="place">
@@ -25,26 +25,27 @@
           </div>
         </div>
       </div>
-      <TheIllustration />
+      <HomeMainBannerIllustration />
     </div>
-    <img class="rocket-icon" src="../assets/rocket.svg" />
+    <img class="rocket-icon" src="../assets/rocket.svg" alt="rocket" />
   </section>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import TheTimer from "@/components/TheTimer.vue";
-import TheIllustration from "@/components/TheIllustration.vue";
+import HomeMainBannerIllustration from "@/components/HomeMainBannerIllustration.vue";
 import { CHANGE_HEADER_THEME } from "@/types";
-import { TimelineMax } from "gsap";
 import dayjs from "dayjs";
+import HomeMainBannerStars from "@/components/HomeMainBannerStars.vue";
 
 @Component({
-  components: { TheIllustration, TheTimer }
+  components: { HomeMainBannerStars, HomeMainBannerIllustration, TheTimer }
 })
-export default class TheMainBanner extends Vue {
+export default class HomeMainBanner extends Vue {
   public date: string = dayjs(this.$store.state.date).format("DD.MM.YYYY");
   private threshold: number[] = [];
+  private observer: IntersectionObserver | null = null;
 
   constructor() {
     super();
@@ -54,16 +55,6 @@ export default class TheMainBanner extends Vue {
   }
 
   public mounted(): void {
-    const timeline = new TimelineMax({
-      repeat: -1
-    });
-
-    const { twinkling } = this.$refs;
-    timeline.to(twinkling, 100, {
-      "background-position": "-1000px 500px",
-      force3D: true,
-      autoRound: false
-    });
     const options = {
       threshold: this.threshold
     };
@@ -78,8 +69,14 @@ export default class TheMainBanner extends Vue {
         }
       }
     };
-    const observer = new IntersectionObserver(callback, options);
-    observer.observe(this.$el);
+    this.observer = new IntersectionObserver(callback, options);
+    this.observer.observe(this.$el);
+  }
+
+  protected beforeDestroy() {
+    if (this.observer !== null) {
+      this.observer.disconnect();
+    }
   }
 }
 </script>
@@ -94,7 +91,6 @@ export default class TheMainBanner extends Vue {
   box-sizing: border-box;
   min-height: calc(100vh - 15vh);
   padding-top: 15vh;
-  background: #000000 url(../assets/stars.png);
   overflow: hidden;
   padding-left: $standard-padding;
   padding-right: $standard-padding;
@@ -103,19 +99,6 @@ export default class TheMainBanner extends Vue {
     height: 100vh;
     padding-top: 0;
   }
-}
-
-.twinkling {
-  background: transparent url(../assets/stars-mask.png) repeat top center;
-  z-index: 1;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
-  display: block;
 }
 
 .container {

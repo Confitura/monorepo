@@ -11,7 +11,7 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component
-export default class Pictogram extends Vue {
+export default class HomeNumbersPictogram extends Vue {
   @Prop(String)
   public src!: string;
   @Prop(String)
