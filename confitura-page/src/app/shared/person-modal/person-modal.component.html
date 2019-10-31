@@ -1,0 +1,17 @@
+<div class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document" *ngIf="model">
+    <div class="modal-content">
+      <div class="modal-body beige person-modal">
+        <button mat-icon-button data-dismiss="modal" aria-label="close" class="close-button">
+          <mat-icon>clear</mat-icon>
+        </button>
+        <cf-person-view [model]="model"></cf-person-view>
+        <section *ngIf="model.presentations" class="person-presentations">
+          <div *ngFor="let presentation of model.presentations">
+            <a role="button" (click)="goTo(presentation)">{{presentation.title}}</a>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>

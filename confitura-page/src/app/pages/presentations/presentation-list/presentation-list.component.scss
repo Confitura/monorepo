@@ -1,0 +1,34 @@
+@import "../../../sizes";
+@import "../../../colors";
+
+.filter {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  @media all and (min-width: $size_small) {
+    flex-direction: row;
+    align-items: center;
+  }
+  &__group {
+    padding-left: 10px;
+  }
+  &__status {
+    flex-grow: 1;
+  }
+}
+
+.row-1140 {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.presentation-list__presentation {
+  padding: 20px;
+  display: block;
+  @media all and (min-width: $size_small) {
+    padding: 60px;
+  }
+  &--odd {
+    background: $beige;
+  }
+}

@@ -1,0 +1,54 @@
+.back-office {
+  @import '~materialize-css/sass/materialize';
+}
+
+@import '~normalize.css';
+@import "assets/colors";
+
+@font-face {
+  font-family: 'NeuzeitGro-Bol';
+  src: url('assets/fonts/30E5AC_0_0.eot');
+  src: url('assets/fonts/30E5AC_0_0.woff2') format('woff2'),
+  url('assets/fonts/30E5AC_0_0.woff') format('woff'),
+  url('assets/fonts/30E5AC_0_0.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'NeuzeitGro-Reg';
+  src: url('assets/fonts/30E5AC_1_0.eot');
+  src: url('assets/fonts/30E5AC_1_0.woff2') format('woff2'),
+  url('assets/fonts/30E5AC_1_0.woff') format('woff'),
+  url('assets/fonts/30E5AC_1_0.ttf') format('truetype');
+}
+
+body div#app {
+  font-family: 'NeuzeitGro-Reg', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  //img {
+  //  max-width: unset;
+  //}
+}
+
+.link--red {
+  color: $brand;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.md-body-1, body {
+  line-height: 1.15 !important;
+}
+
+@import "~vue-material/dist/theme/engine"; // Import the theme engine
+
+@include md-register-theme("default", (
+        primary: $brand, // The primary color of your brand
+        accent: $brand // The secondary color of your brand
+));
+
+@import "~vue-material/dist/theme/all"; // Apply the theme

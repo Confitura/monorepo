@@ -1,0 +1,69 @@
+@import "../../sizes";
+@import "../../colors";
+
+.navbar {
+  padding: 0;
+  .nav li a {
+    cursor: pointer;
+    padding-bottom: 0;
+    &.active {
+      text-decoration: underline;
+    }
+    &.pink, &.pink:hover {
+      text-align: center;
+      padding-left: 0;
+      padding-right: 0;
+      background: $red;
+      color: #ffffff;
+
+    }
+  }
+
+  .navbar-brand {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    height: 55px;
+    margin: auto;
+
+    @media all and (min-width: $size_medium) {
+      height: 100px;
+      padding-left: 15px;
+      padding-top: 30px;
+      padding-bottom: 30px;
+    }
+  }
+
+  .confitura-logo {
+    border: none;
+    outline: none;
+    height: 100%;
+    img {
+      height: 100%;
+    }
+
+  }
+  &__toggle-fab {
+    position: fixed;
+    right: 40px;
+    bottom: 40px;
+    @media all and (min-width: $size_small) {
+      display: none;
+    }
+  }
+
+  &__toggle {
+    display: none;
+    @media all and (min-width: $size_small) and (max-width: $size_large) {
+      display: block;
+    }
+  }
+
+}
+
+cf-progress-bar {
+  position: fixed;
+  z-index: 1000;
+  right: 0;
+  left: 0;
+}
+

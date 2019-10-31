@@ -1,0 +1,55 @@
+@import "../../../colors";
+@import "../../../sizes";
+
+
+
+.agenda-table {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+
+  ::ng-deep .mat-select-value-text {
+    font-size: 1.2rem;
+  }
+
+  &__room-selector {
+    @media all and (min-width: $size_small) {
+      display: none;
+    }
+  }
+  &__content {
+    border-bottom: 1px solid $beige;
+    grid-column: span 1;
+    padding: 5px;
+
+    @media all and (min-width: $size_small) {
+      padding: 10px;
+    }
+  }
+
+  &__content--columns-5 {
+    grid-column: span 5;
+    text-align: center;
+  }
+
+  &__content--columns-1 {
+    grid-column: span 1;
+    text-align: center;
+  }
+
+  &__content--room-name {
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.2rem;
+    display: none;
+    @media all and (min-width: $size_small) {
+      display: block;
+    }
+  }
+
+  &__content--slot {
+  }
+
+  .selected {
+    background-color: #66D77B;
+  }
+}

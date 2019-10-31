@@ -1,0 +1,6 @@
+{
+  "/api/resources/": {
+    "target": "https://2019.confitura.pl",
+    "secure": false
+  }
+}

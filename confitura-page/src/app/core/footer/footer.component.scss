@@ -1,0 +1,73 @@
+@import "../../sizes";
+@import "../../colors";
+
+.footer {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 60px;
+  text-align: center;
+  font-family: 'NeuzeitGro-Bol', Verdana, Tahoma, sans-serif;
+  font-size: 1.5rem;
+  line-height: 30px;
+  height: 400px;
+  color: #ffffff;
+  @media all and (min-width: $size_small) {
+    padding-left: 60px;
+    text-align: left;
+  }
+
+  &__logo {
+    display: block;
+    width: 306px;
+    height: 100px;
+    padding-bottom: 45px;
+    margin: auto;
+    img {
+      height: 100%;
+    }
+    @media all and (min-width: $size_small) {
+      margin-left: 0;
+    }
+
+  }
+
+  &__social-container {
+    display: flex;
+    flex-direction: column;
+    color: $red;
+    padding-top: 20px;
+    @media all and (min-width: $size_small) {
+      flex-direction: row;
+    }
+  }
+
+  &__link {
+    color: $red;
+    &--small {
+      font-size: 1rem;
+    }
+  }
+  &__privacy, &__email, &__link-item {
+    padding-bottom: 20px;
+    @media all and (min-width: $size_small) {
+      padding-right: 40px;
+    }
+  }
+
+  &__social-icon {
+    background-color: #ffffff;
+    border-radius: 30px;
+    color: #000000;
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    margin: auto 3px;
+    width: 30px;
+    font-size: 1rem;
+    text-align: center;
+    &:hover {
+      background-color: $red;
+    }
+  }
+}
+

@@ -1,0 +1,92 @@
+@import "../../sizes";
+
+.banner-button > a {
+  color: #FFFFFF;
+}
+
+#main_banner {
+  position: relative;
+  display: block;
+  width: 100%;
+  background: black url("/assets/img/main_banner.svg") no-repeat right top;
+  background-size: 130%;
+  background-position-y: 100%;
+  height: calc(100vh - 55px);
+  min-height: 500px;
+  @media all and (min-width: $size_small) {
+    background-size: contain;
+  }
+
+  @media all and (min-width: $size_medium) {
+    height: calc(100vh - 100px);
+  }
+  .carousel-caption {
+    bottom: 120px;
+    padding-bottom: 30px;
+    right: 0;
+    left: 0;
+    @media all and (min-width: $size_medium) {
+      text-align: left;
+      left: 13.25%;
+    }
+
+    .conference-name {
+      font-weight: 700;
+      font-size: 3rem;
+      font-family: NeuzeitGro-Bol, Verdana, Tahoma, sans-serif;
+    }
+    .conference-slogan {
+      font-size: 1.5rem;
+      margin: 25px 0 60px 0;
+    }
+  }
+
+}
+
+.basic-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  @media all and (min-width: $size_medium) {
+    flex-direction: row;
+  }
+
+  .date-info, .venue-info {
+    flex-basis: 50%;
+    flex-shrink: 0;
+    padding-right: 0;
+    padding-left: 0;
+    padding-top: 20px;
+
+    @media all and (min-width: $size_medium) {
+      padding-right: 15px;
+      padding-left: 15px;
+    }
+  }
+
+}
+
+.about {
+  padding-bottom: 20px;
+}
+
+.short-info {
+  display: flex;
+  flex-direction: column;
+  @media all and (min-width: $size_small) {
+    flex-direction: row;
+  }
+  &__date {
+    flex-basis: 50%;
+    @media all and (min-width: $size_small) {
+      padding-left: 20px;
+    }
+  }
+
+  &__place {
+    flex-basis: 50%;
+    @media all and (min-width: $size_small) {
+      padding-right: 20px;
+    }
+  }
+}

@@ -1,0 +1,27 @@
+.presentation-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  margin: auto;
+
+  > * {
+    margin-bottom: 10px;
+  }
+
+  &__language {
+    display: flex;
+  }
+
+  &__language-label {
+    padding-right: 5px;
+  }
+
+  &__level {
+    display: flex;
+  }
+
+  &__level-label {
+    padding-right: 5px;
+  }
+}

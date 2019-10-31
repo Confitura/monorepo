@@ -1,0 +1,24 @@
+@import "../../sizes";
+
+.about {
+  &__map {
+    height: 100vh;
+    @media all and (min-width: $size_medium) {
+      height: 400px;
+    }
+  }
+
+  &__organizers {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    @media all and (min-width: $size_small) {
+      flex-direction: row;
+    }
+  }
+}
+
+@import "person";
+

@@ -1,0 +1,26 @@
+@import "../../sizes";
+
+.action-buttons {
+  display: flex;
+  align-items: center;
+  &__edit {
+    margin-left: auto;
+  }
+
+  //text-align: center;
+  @media all and (min-width: $size_medium) {
+    //text-align: right;
+  }
+}
+
+.presentations {
+  &__status-column {
+    width: 150px;
+  }
+  &__action-column {
+    width: 100px;
+    @media all and (min-width: $size_medium) {
+      width: 270px;
+    }
+  }
+}

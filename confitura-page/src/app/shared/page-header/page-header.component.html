@@ -1,0 +1,7 @@
+<header>
+  <h2 class="m-auto">
+    <ng-container *ngIf="title">{{title}}</ng-container>
+    <ng-content *ngIf="title === null"></ng-content>
+
+  </h2>
+</header>

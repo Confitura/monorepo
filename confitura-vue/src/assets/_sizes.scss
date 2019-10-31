@@ -1,0 +1,10 @@
+@import "media";
+$standard-padding: 3rem;
+$max-width: 1440px;
+
+@mixin padding(){
+  padding: $standard-padding $standard-padding / 2 $standard-padding $standard-padding / 2;
+  @include md(){
+    padding: $standard-padding;
+  }
+}

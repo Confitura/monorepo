@@ -1,0 +1,33 @@
+@import "../../sizes";
+
+.workshops {
+  &__map {
+    height: 100vh;
+    @media all and (min-width: $size_medium) {
+      height: 400px;
+    }
+  }
+}
+
+h4 {
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.center {
+  text-align: center;
+}
+
+.short-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.short-info > div {
+  max-width: 500px;
+  text-align: justify;
+  margin: 20px;
+}

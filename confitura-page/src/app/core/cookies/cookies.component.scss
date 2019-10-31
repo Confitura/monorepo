@@ -1,0 +1,30 @@
+@import "../../colors";
+@import "../../sizes";
+
+.cookies {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  display: block;
+  width: 100%;
+  background: #000000;
+  z-index: 9999;
+  color: #ffffff;
+  padding: 10px;
+  font-family: 'NeuzeitGro-Reg', Verdana, Tahoma, sans-serif; /* NeuzeitGro-Bol */
+  font-size: 1.2rem;
+  text-align: center;
+  height: 240px;
+  @media all and (min-width: $size_small) {
+    height: 200px;
+
+  }
+  &__link {
+    color: $red !important;
+  }
+  &__agree {
+    display: block;
+    width: 100%;
+    cursor: pointer;
+  }
+}

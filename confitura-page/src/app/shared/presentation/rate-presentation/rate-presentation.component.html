@@ -1,0 +1,10 @@
+<div *ngIf="authenticated" class="popup">
+  <button mat-raised-button
+          cfRatePresentationDialog [presentationId]="presentationId">
+    Rate
+  </button>
+  <mat-error *ngIf="error">{{error}}</mat-error>
+</div>
+<span *ngIf="!authenticated">
+    <a href="/login">Login</a> to rate presentation
+</span>

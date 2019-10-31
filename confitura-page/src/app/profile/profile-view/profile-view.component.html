@@ -1,0 +1,42 @@
+<section class="bg-white">
+  <div class="row-1140 pt-3 pb-3" *ngIf="model">
+    <div class="action-buttons pb-2">
+      <cf-back-button></cf-back-button>
+      <a class="action-buttons__edit" mat-button routerLink="/profile/{{model.id}}/edit">Edit profile</a>
+      <a *cfAdmin class="action-buttons__add" mat-button routerLink="/profile/{{model.id}}/presentation" color="primary">Add
+        presentation</a>
+    </div>
+    <cf-person-view [model]="model" (changed)="reload()"></cf-person-view>
+    <cf-participation-status [model]="model" ></cf-participation-status>
+    <table class="table table-bordered table-striped" *ngIf="(presentations | async).length > 0">
+      <tr>
+        <th>title</th>
+        <th class="presentations__status-column">status</th>
+        <th class="presentations__action-column"></th>
+      </tr>
+      <ng-container *ngFor="let presentation of presentations | async">
+        <tr class="active">
+          <td>{{presentation.title}}</td>
+          <td class="presentations__status-column ">
+            <mat-chip-list>
+              <mat-chip>{{presentation.status || "reported"}}</mat-chip>
+            </mat-chip-list>
+          </td>
+          <td class="text-center">
+            <a class="btn" routerLink="/profile/presentation/{{presentation.id}}">edit</a>
+            <a class="btn" routerLink="/profile/presentation/{{presentation.id}}/cospeakers">co-speakers</a>
+            <button class="btn btn-danger" (click)="remove(presentation)">Delete</button>
+          </td>
+        </tr>
+        <tr *ngIf="presentation.status == 'accepted'">
+          <td colspan="3">
+            <cf-comments [presentationId]="presentation.id"></cf-comments>
+          </td>
+        </tr>
+      </ng-container>
+    </table>
+
+  </div>
+
+
+</section>

@@ -1,0 +1,74 @@
+<article class="bg-white">
+  <div class="row-500 pt-5 pb-5">
+
+    <h3>
+      <cf-back-button style="float: left;"></cf-back-button>
+      My profile
+    </h3>
+    <form class="profile-form" (ngSubmit)="save()" #profileForm="ngForm" novalidate>
+      <mat-form-field>
+        <input matInput placeholder="full name" type="text"
+               name="fullname" [(ngModel)]="model.name" #fullname="ngModel"
+               required maxlength="255">
+        <mat-error *ngIf="fullname.hasError('required')">
+          full name is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="e-mail" type="email"
+               name="email" [(ngModel)]="model.email" #email="ngModel"
+               required email maxlength="255">
+        <mat-error *ngIf="email.hasError('email') && !email.hasError('required')">
+          Please enter a valid email address
+        </mat-error>
+        <mat-error *ngIf="email.hasError('required')">
+          e-mail is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <ng-container *ngIf="currentUser.isSpeaker() || currentUser.isPrivileged()">
+
+        <mat-form-field>
+          <span matPrefix>@</span>
+          <input matInput placeholder="twitter handle" type="text"
+                 name="twitter" [(ngModel)]="model.twitter" #twitter="ngModel"
+                 maxlength="20">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="github user" type="text"
+                 name="github" [(ngModel)]="model.github" #github="ngModel"
+                 maxlength="100">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="www" type="url"
+                 name="www" [(ngModel)]="model.www" #www="ngModel">
+        </mat-form-field>
+        <mat-form-field>
+        <textarea matInput matTextareaAutosize placeholder="Bio"
+                  name="bio" [(ngModel)]="model.bio" #bio="ngModel"
+                  required maxlength="2000"></textarea>
+          <mat-error *ngIf="bio.hasError('required')">
+            Please tell us something about yourself!
+          </mat-error>
+        </mat-form-field>
+
+      </ng-container>
+      <mat-checkbox [(ngModel)]="model.privacyPolicyAccepted"
+                    #privacyPolicyAccepted="ngModel"
+                    name="privacyPolicyAccepted" required>
+        I AGREE to <a routerLink="/privacy">privacy policy</a>.
+      </mat-checkbox>
+
+      <mat-error *ngIf="privacyPolicyAccepted.hasError('required')">
+        You MUST accept our privacy policy in order to participate.
+      </mat-error>
+
+      <div>
+        <button mat-raised-button type="submit"
+                [disabled]="profileForm.submitted && !profileForm.form.valid">Save
+        </button>
+        <button mat-raised-button type="submit" color="warn" (click)="cancel()" *ngIf="isEdit">Cancel</button>
+      </div>
+    </form>
+  </div>
+</article>

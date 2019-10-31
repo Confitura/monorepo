@@ -1,0 +1,4 @@
+<div class="margin-auto" (click)="openModal()" *ngIf="model">
+  <cf-photo [src]="model.photo"></cf-photo>
+  <div class="name-speaker"><a role="button">{{firstName()}}<br/>{{lastName()}}</a></div>
+</div>
