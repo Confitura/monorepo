@@ -56,7 +56,7 @@
     "ng2-cookies": "^1.0.12",
     "ng2-file-upload": "^1.2.1",
     "ng2-google-charts": "^3.4.0",
-    "ngx-chips": "^2.0.0-beta.0",
+    "ngx-chips": "2.0.0-beta.0",
     "popper.js": "^1.12.9",
     "reflect-metadata": "^0.1.10",
     "rxjs": "6.3.3",
