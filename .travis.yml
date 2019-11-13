@@ -7,9 +7,13 @@ jobs:
       node_js:
         - "10"
       script: yarn build:full
-      before_script: cd confitura-vue
+      before_script:
+        - cd confitura-vue
+        - npm install
     - language: node_js
       node_js:
         - "8"
       script: yarn build:full
-      before_script: cd confitura-page
+      before_script:
+        - cd confitura-page
+        - npm install
