@@ -63,7 +63,7 @@
     "simplemde": "^1.11.2",
     "style-loader": "^0.23.1",
     "uuid": "^3.2.1",
-    "webpack-bundle-analyzer": "^3.0.3",
+    "webpack-bundle-analyzer": "^3.3.2",
     "zone.js": "^0.8.14"
   },
   "devDependencies": {
