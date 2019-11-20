@@ -3,7 +3,7 @@ package pl.confitura.jelatyna.infrastructure.security;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
-import pl.confitura.jelatyna.user.User;
+import pl.confitura.jelatyna.user.dto.User;
 
 import static java.util.Collections.emptyList;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;

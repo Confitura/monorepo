@@ -25,14 +25,15 @@ import pl.confitura.jelatyna.agenda.AgendaEntry;
 import pl.confitura.jelatyna.agenda.TimeSlot;
 import pl.confitura.jelatyna.infrastructure.db.AuditedEntity;
 import pl.confitura.jelatyna.presentation.Presentation;
+import pl.confitura.jelatyna.presentation.Speaker;
 import pl.confitura.jelatyna.registration.ParticipationData;
+import pl.confitura.jelatyna.user.dto.PublicUser;
 
 @Entity
 @Data
-@ToString(exclude = "presentations")
-@EqualsAndHashCode(exclude = "presentations", callSuper = false)
+@EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class User extends AuditedEntity {
+class User extends AuditedEntity {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
@@ -54,21 +55,13 @@ public class User extends AuditedEntity {
     private String socialId;
 
     private Boolean privacyPolicyAccepted = false;
-
-    @ManyToMany(mappedBy = "speakers")
-    @JsonIgnore
-    private Set<Presentation> presentations;
+    private Boolean speaker = false;
 
     @ManyToMany
     private Set<AgendaEntry> personalAgenda = new LinkedHashSet<>();
 
     @OneToOne(fetch = FetchType.LAZY)
     private ParticipationData participationData = null;
-
-    public boolean isSpeaker() {
-        return presentations != null
-                && !presentations.isEmpty();
-    }
 
     public boolean isParticipant() {
         return participationData != null;
@@ -104,43 +97,60 @@ public class User extends AuditedEntity {
         privacyPolicyAccepted = user.privacyPolicyAccepted;
     }
 
-    public boolean hasAcceptedPresentation() {
-        return presentations.stream().anyMatch(Presentation::isAccepted);
-    }
-
     public boolean hasArrived() {
         return isParticipant() && getParticipationData().getArrivalDate() != null;
     }
 
-    interface Edit {
-
+    pl.confitura.jelatyna.user.dto.User toDto() {
+        pl.confitura.jelatyna.user.dto.User dto = new pl.confitura.jelatyna.user.dto.User();
+        dto.setId(this.id);
+        dto.setOrigin(this.origin);
+        dto.setName(this.name);
+        dto.setEmail(this.email);
+        dto.setBio(this.bio);
+        dto.setUsername(this.username);
+        dto.setTwitter(this.twitter);
+        dto.setGithub(this.github);
+        dto.setWww(this.www);
+        dto.setPhoto(this.photo);
+        dto.setAdmin(this.isAdmin);
+        dto.setVolunteer(this.isVolunteer);
+        dto.setSocialId(this.socialId);
+        dto.setPrivacyPolicyAccepted(this.privacyPolicyAccepted);
+        dto.setSpeaker(this.speaker);
+        return dto;
     }
 
-    @Projection(name = "withPresentations", types = { User.class })
-    interface WithPresentations {
-        String getId();
 
-        String getOrigin();
-
-        String getName();
-
-        String getEmail();
-
-        String getBio();
-
-        String getTwitter();
-
-        String getGithub();
-
-        String getWww();
-
-        String getPhoto();
-
-        boolean isAdmin();
-
-        @Value("#{target.isSpeaker()}")
-        boolean isSpeaker();
-
-        Set<Presentation> getPresentations();
+    static User fromDto(pl.confitura.jelatyna.user.dto.User dto) {
+        User user = new User();
+        user.setId(dto.getId());
+        user.setOrigin(dto.getOrigin());
+        user.setName(dto.getName());
+        user.setEmail(dto.getEmail());
+        user.setBio(dto.getBio());
+        user.setUsername(dto.getUsername());
+        user.setTwitter(dto.getTwitter());
+        user.setGithub(dto.getGithub());
+        user.setWww(dto.getWww());
+        user.setPhoto(dto.getPhoto());
+        user.setAdmin(dto.isAdmin());
+        user.setVolunteer(dto.isVolunteer());
+        user.setSocialId(dto.getSocialId());
+        user.setPrivacyPolicyAccepted(dto.getPrivacyPolicyAccepted());
+        return user;
     }
+
+    PublicUser toPublicUser() {
+        PublicUser that = new PublicUser();
+        that.setId(this.getId());
+        that.setName(this.getName());
+        that.setBio(this.getBio());
+        that.setTwitter(this.getTwitter());
+        that.setGithub(this.getGithub());
+        that.setWww(this.getWww());
+        that.setPhoto(this.getPhoto());
+        return that;
+    }
+
 }

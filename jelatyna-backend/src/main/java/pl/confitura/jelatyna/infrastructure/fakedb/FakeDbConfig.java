@@ -1,16 +1,16 @@
 package pl.confitura.jelatyna.infrastructure.fakedb;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.h2.tools.Server;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import pl.confitura.jelatyna.login.facebook.FacebookService;
 import pl.confitura.jelatyna.login.github.GithubService;
 import pl.confitura.jelatyna.login.google.GoogleService;
-import pl.confitura.jelatyna.user.User;
-import pl.confitura.jelatyna.user.UserRepository;
+import pl.confitura.jelatyna.user.UserFacade;
+import pl.confitura.jelatyna.user.dto.User;
 
 import javax.annotation.PostConstruct;
 import java.sql.SQLException;
@@ -22,6 +22,7 @@ import static pl.confitura.jelatyna.infrastructure.Profiles.FAKE_DB;
 @Slf4j
 @Configuration
 @Profile(FAKE_DB)
+@RequiredArgsConstructor
 public class FakeDbConfig {
     private static String FAKE_ADMIN_ID = "AAAAAAAAAAAAAAAAAAAAAA==";
     private static String FAKE_VOLUNTEER_ID = "BBBBBBBBBBBBBBBBBBBBBB==";
@@ -35,10 +36,7 @@ public class FakeDbConfig {
             FAKE_VOLUNTEER,
             FAKE_SPEAKER);
 
-    @Autowired
-    public FakeDbConfig(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private final UserFacade userFacade;
 
     private static Map<String,User> mapBySystem(User... users) {
         Map<String,User> map = new HashMap<>();
@@ -51,7 +49,7 @@ public class FakeDbConfig {
     public User getBySystem(String provider) {
         User user = bySystem.get(provider);
         if(user!=null && user.getId() != null){
-            return userRepository.findById(user.getId());
+            return userFacade.findById(user.getId());
         }
         return user;
     }
@@ -61,15 +59,13 @@ public class FakeDbConfig {
         return Server.createTcpServer("-tcp", "-tcpAllowOthers", "-tcpPort", "9092");
     }
 
-    private final UserRepository userRepository;
-
     @PostConstruct
     public void createFakeUsers() {
-        if (userRepository.findById(FAKE_ADMIN.getId()) == null) {
-            userRepository.save(FAKE_ADMIN);
+        if (userFacade.findById(FAKE_ADMIN.getId()) == null) {
+            userFacade.createUser(FAKE_ADMIN);
         }
-        userRepository.save(FAKE_VOLUNTEER);
-        userRepository.save(FAKE_SPEAKER);
+        userFacade.createUser(FAKE_VOLUNTEER);
+        userFacade.createUser(FAKE_SPEAKER);
 
     }
 

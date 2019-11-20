@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.GenericGenerator;
 import pl.confitura.jelatyna.presentation.Presentation;
-import pl.confitura.jelatyna.user.User;
+import pl.confitura.jelatyna.user.dto.User;
 
 import javax.persistence.*;
 
@@ -14,20 +14,19 @@ import javax.persistence.*;
 @Data
 @Accessors(chain = true)
 @NoArgsConstructor
-public class UsersPerformedRate {
+class UsersPerformedRate {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(columnDefinition = "varchar(100)")
     private String id;
 
-    @ManyToOne
-    private User user;
+    private String userId;
     @ManyToOne
     private Presentation presentation;
 
-    public UsersPerformedRate(User user, Presentation presentation) {
-        this.user = user;
+    UsersPerformedRate(User user, Presentation presentation) {
+        this.userId = user.getId();
         this.presentation = presentation;
     }
 }

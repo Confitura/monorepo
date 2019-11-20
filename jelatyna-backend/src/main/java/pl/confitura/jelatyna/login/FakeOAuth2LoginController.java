@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import pl.confitura.jelatyna.infrastructure.fakedb.FakeDbConfig;
 import pl.confitura.jelatyna.infrastructure.security.TokenService;
-import pl.confitura.jelatyna.user.User;
+import pl.confitura.jelatyna.user.dto.User;
 
 @RestController
 @RequestMapping("/login/{provider}")

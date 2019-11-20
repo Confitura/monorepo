@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 import lombok.Data;
 import pl.confitura.jelatyna.infrastructure.security.JelatynaPrincipal;
 import pl.confitura.jelatyna.registration.voucher.Voucher;
-import pl.confitura.jelatyna.user.User;
 
 @Data
 class Participant implements Serializable {
@@ -29,7 +28,7 @@ class Participant implements Serializable {
     private boolean hasAcceptedPresentation;
     private boolean isParticipant;
 
-    public Participant(ParticipationData data, JelatynaPrincipal registerer) {
+    Participant(ParticipationData data, JelatynaPrincipal registerer) {
         this.id = data.getId();
         if (registerer.isAdmin()) {
             this.name = data.getFullName();

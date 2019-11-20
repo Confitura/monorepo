@@ -9,8 +9,8 @@ import lombok.AllArgsConstructor;
 import pl.confitura.jelatyna.infrastructure.security.Security;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
-import pl.confitura.jelatyna.user.User;
-import pl.confitura.jelatyna.user.UserRepository;
+import pl.confitura.jelatyna.user.dto.User;
+import pl.confitura.jelatyna.user.UserFacade;
 
 @Service
 @AllArgsConstructor
@@ -19,7 +19,7 @@ public class RatingService {
     private PresentationRepository repository;
     private RateRepository rateRepository;
     private UsersPerformedRateRepository usersPerformedRateRepository;
-    private UserRepository userRepository;
+    private UserFacade userFacade;
     private Security security;
 
     @Transactional
@@ -28,11 +28,7 @@ public class RatingService {
         verifyPresentationNotRatedByUser(presentationId, userId);
 
         Presentation presentation = repository.findById(presentationId);
-        User user = userRepository.findById(userId);
-//        if (!user.hasArrived()) {
-//            throw new UserRatingPresentationHaveNotArrived();
-//        }
-
+        User user = userFacade.findById(userId);
         markUserRated(presentation, user);
         rate = saveRate(rate, presentation);
         return rate;

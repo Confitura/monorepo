@@ -14,7 +14,7 @@ import com.github.scribejava.core.model.OAuthRequest;
 import com.github.scribejava.core.model.Response;
 import com.github.scribejava.core.oauth.OAuth10aService;
 import pl.confitura.jelatyna.login.OAuthUserService;
-import pl.confitura.jelatyna.user.User;
+import pl.confitura.jelatyna.user.dto.User;
 
 @Service
 public class TwitterService {

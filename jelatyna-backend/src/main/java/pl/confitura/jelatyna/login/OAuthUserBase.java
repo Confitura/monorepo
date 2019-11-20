@@ -3,7 +3,7 @@ package pl.confitura.jelatyna.login;
 import java.util.Base64;
 
 import lombok.Data;
-import pl.confitura.jelatyna.user.User;
+import pl.confitura.jelatyna.user.dto.User;
 
 @Data
 public abstract class OAuthUserBase {
