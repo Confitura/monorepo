@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Data
 @Accessors(chain = true)
 @NoArgsConstructor
-class UsersPerformedRate {
+public class UsersPerformedRate {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
