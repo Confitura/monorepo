@@ -6,6 +6,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 interface UserRepository extends Repository<User, String> {
@@ -28,7 +29,7 @@ interface UserRepository extends Repository<User, String> {
 
 
     @PreAuthorize("@security.isAdmin()")
-    Iterable<User> findAll();
+    List<User> findAll();
 
     @Query("FROM User WHERE " +
             "lower(name) like concat('%',lower(:query),'%') OR " +
