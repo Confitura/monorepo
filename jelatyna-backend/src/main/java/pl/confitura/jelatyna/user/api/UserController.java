@@ -1,36 +1,31 @@
-package pl.confitura.jelatyna.user;
+package pl.confitura.jelatyna.user.api;
 
 import com.timgroup.jgravatar.Gravatar;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 import pl.confitura.jelatyna.registration.ParticipationData;
-import pl.confitura.jelatyna.registration.ParticipationRepository;
+import pl.confitura.jelatyna.user.UserFacade;
 import pl.confitura.jelatyna.user.dto.PublicUser;
+import pl.confitura.jelatyna.user.dto.User;
 
 import java.util.Set;
 import java.util.UUID;
 
 import static com.timgroup.jgravatar.GravatarDefaultImage.BLANK;
 import static com.timgroup.jgravatar.GravatarRating.GENERAL_AUDIENCES;
-import static java.util.stream.Collectors.toSet;
 import static org.springframework.util.StringUtils.isEmpty;
 
 @RequiredArgsConstructor
-@RepositoryRestController
+@RestController
 class UserController {
 
-    private final UserRepository repository;
-    private final ParticipationRepository participationRepository;
+    private final UserFacade userFacade;
 
     @PostMapping("/users")
     @PreAuthorize("@security.isOwner(#user.id)")
@@ -38,7 +33,13 @@ class UserController {
         User current = updateUser(user);
         setDefaultPhotoFor(current);
         setIdIfManuallyCreated(current);
-        return ResponseEntity.ok(new Resource<>(repository.save(current)));
+        return ResponseEntity.ok(new Resource<>(userFacade.save(user)));
+    }
+
+
+    @PostMapping("/users/{userId}")
+    User getUser(@PathVariable String userId) {
+        return userFacade.findById(userId);
     }
 
     @PostMapping("/users/{userId}/participationData")
@@ -46,34 +47,34 @@ class UserController {
     public ResponseEntity<?> assignParticipationData(
             @PathVariable String userId,
             @RequestBody ParticipationData participationData) {
-        User current = repository.findById(userId);
-        current.setParticipationData(participationRepository.findById(participationData.getId()));
-        current.setParticipationData(participationRepository.findById(participationData.getId()));
-        return ResponseEntity.ok(new Resource<>(repository.save(current)));
+        User current = userFacade.findById(userId);
+//TODO migrate participation data and implement this logic
+//        current.setParticipationData(participationRepository.findById(participationData.getId()));
+        return ResponseEntity.ok(new Resource<>(userFacade.save(current)));
     }
 
     @GetMapping("/users/{id}")
     @PreAuthorize("@security.isOwner(#id) || @security.isAdmin()")
     public ResponseEntity<?> getById(@PathVariable String id) {
-        User user = repository.findById(id);
+        User user = userFacade.findById(id);
         return ResponseEntity.ok(new Resource<>(user));
     }
 
     @GetMapping("/users/{id}/public")
     public ResponseEntity<?> getPublicById(@PathVariable String id) {
-        User user = repository.findById(id);
+        User user = userFacade.findById(id);
         return ResponseEntity.ok(new Resource<>(user.toPublicUser()));
     }
 
     @GetMapping("/users/search/admins")
     public ResponseEntity<?> getAdmins() {
-        Set<PublicUser> admins = repository.findAdmins().stream().map(User::toPublicUser).collect(toSet());
+        Set<PublicUser> admins = userFacade.findAdmins();
         return ResponseEntity.ok(new Resources<>(admins));
     }
 
     @GetMapping("/users/search/volunteers")
     public ResponseEntity<?> getVolunteers() {
-        Set<PublicUser> volunteers = repository.findVolunteers().stream().map(User::toPublicUser).collect(toSet());
+        Set<PublicUser> volunteers = userFacade.findVolunteers();
         return ResponseEntity.ok(new Resources<>(volunteers));
     }
 
@@ -82,21 +83,18 @@ class UserController {
     @Transactional
     public ResponseEntity<Object> markAsVolunteer(@PathVariable("userId") String userId,
             @PathVariable("isVolunteer") boolean isVolunteer) {
-        User user = repository.findById(userId);
+        User user = userFacade.findById(userId);
         user.setVolunteer(isVolunteer);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/users/search/speakers")
     public ResponseEntity<?> getSpeakers() {
-        Set<Resource<?>> speakers = repository.findAllAccepted().stream()
-                .map(User::toPublicUser)
-                .map(speaker -> new Resource<>(speaker))
-                .collect(toSet());
+        Set<PublicUser> speakers = userFacade.findAcceptedSpeakers();
         return ResponseEntity.ok(new Resources<>(speakers));
     }
 
-    private void setDefaultPhotoFor(@RequestBody User user) {
+    private void setDefaultPhotoFor(User user) {
         if (isEmpty(user.getPhoto())) {
             Gravatar gravatar = new Gravatar(300, GENERAL_AUDIENCES, BLANK);
             String url = gravatar.getUrl(user.getEmail());
@@ -104,17 +102,17 @@ class UserController {
         }
     }
 
-    private User updateUser(@RequestBody User user) {
+    private User updateUser(User user) {
         if (isEmpty(user.getId())) {
             return user;
         } else {
-            User current = repository.findById(user.getId());
+            User current = userFacade.findById(user.getId());
             current.updateFields(user);
             return current;
         }
     }
 
-    private void setIdIfManuallyCreated(@RequestBody User user) {
+    private void setIdIfManuallyCreated(User user) {
         if (StringUtils.isEmpty(user.getId())) {
             user.setId(UUID.randomUUID().toString());
         }

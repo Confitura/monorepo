@@ -46,14 +46,6 @@ public class FakeDbConfig {
         return map;
     }
 
-    public User getBySystem(String provider) {
-        User user = bySystem.get(provider);
-        if(user!=null && user.getId() != null){
-            return userFacade.findById(user.getId());
-        }
-        return user;
-    }
-
     @Bean(initMethod = "start", destroyMethod = "stop")
     public Server h2Server() throws SQLException {
         return Server.createTcpServer("-tcp", "-tcpAllowOthers", "-tcpPort", "9092");
@@ -61,11 +53,9 @@ public class FakeDbConfig {
 
     @PostConstruct
     public void createFakeUsers() {
-        if (userFacade.findById(FAKE_ADMIN.getId()) == null) {
-            userFacade.createUser(FAKE_ADMIN);
-        }
-        userFacade.createUser(FAKE_VOLUNTEER);
-        userFacade.createUser(FAKE_SPEAKER);
+        userFacade.save(FAKE_ADMIN);
+        userFacade.save(FAKE_VOLUNTEER);
+        userFacade.save(FAKE_SPEAKER);
 
     }
 
@@ -74,6 +64,7 @@ public class FakeDbConfig {
         return new User()
                 .setId(FAKE_ADMIN_ID)
                 .setOrigin(GoogleService.SYSTEM)
+                .setSocialId(GoogleService.SYSTEM)
                 .setName("Admin")
                 .setEmail("Admin@example.com")
                 .setBio("admin bio")
@@ -85,6 +76,7 @@ public class FakeDbConfig {
         return new User()
                 .setId(FAKE_VOLUNTEER_ID)
                 .setOrigin(FacebookService.SYSTEM)
+                .setSocialId(FacebookService.SYSTEM)
                 .setName("volunteer")
                 .setEmail("volunteer@example.com")
                 .setBio("volunteer bio")
@@ -96,6 +88,7 @@ public class FakeDbConfig {
         return new User()
                 .setId(FAKE_SPEAKER_ID)
                 .setOrigin(GithubService.SYSTEM)
+                .setSocialId(GithubService.SYSTEM)
                 .setName("Speaker")
                 .setEmail("Speaker@example.com")
                 .setBio("Speaker bio")

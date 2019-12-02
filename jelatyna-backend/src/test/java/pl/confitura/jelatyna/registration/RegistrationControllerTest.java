@@ -3,7 +3,6 @@ package pl.confitura.jelatyna.registration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import pl.confitura.jelatyna.BaseIntegrationTest;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
 import pl.confitura.jelatyna.registration.voucher.Voucher;
@@ -37,7 +36,7 @@ class RegistrationControllerTest extends BaseIntegrationTest {
     @BeforeEach
     void setup() {
         SecurityHelper.asAdmin();
-        this.user = userRepository.createUser(new User().setName("user1"));
+        this.user = userRepository.save(new User().setName("user1"));
         validVoucher = voucherService.generateVoucher("buyer");
         SecurityHelper.cleanSecurity();
 

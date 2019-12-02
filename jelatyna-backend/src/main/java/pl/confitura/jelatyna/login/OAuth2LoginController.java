@@ -21,8 +21,7 @@ import pl.confitura.jelatyna.user.dto.User;
 @RestController
 @RequestMapping("/login/{provider}")
 @CrossOrigin()
-@Profile("!" + FAKE_SECURITY)
-public class OAuth2LoginController {
+class OAuth2LoginController {
 
     private TokenService tokenService;
     private Map<String, AbstractOAuth20Service> services;
