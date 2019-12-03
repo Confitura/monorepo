@@ -20,17 +20,18 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import pl.confitura.jelatyna.infrastructure.WebUtils;
 import pl.confitura.jelatyna.presentation.*;
+import pl.confitura.jelatyna.presentation.dto.Presentation;
 
 @RepositoryRestController
 public class VoteController {
 
-    private PresentationRepository presentationRepository;
+    private PresentationFacade presentationRepository;
     private VoteRepository voteRepository;
     private WebUtils webUtils;
     private LocalValidatorFactoryBean beanValidator;
 
     @Autowired
-    public VoteController(PresentationRepository presentationRepository, VoteRepository voteRepository,
+    public VoteController(PresentationFacade presentationRepository, VoteRepository voteRepository,
                           WebUtils webUtils, LocalValidatorFactoryBean beanValidator) {
         this.presentationRepository = presentationRepository;
         this.voteRepository = voteRepository;
@@ -53,14 +54,14 @@ public class VoteController {
         return ResponseEntity.ok(new Resources<>(votes));
     }
 
-    private Set<Vote> generateVotes(@PathVariable String token) {
+    private Set<Vote> generateVotes(String token) {
         List<Presentation> presentations = Lists.newArrayList(this.presentationRepository.findAllForV4p());
         Collections.shuffle(presentations);
         List<Vote> votes = IntStream.range(0, presentations.size())
                 .mapToObj(idx -> new Vote()
                         .setClient(webUtils.getClientIp())
                         .setToken(token)
-                        .setPresentation(presentations.get(idx))
+                        .setPresentationId(presentations.get(idx).getId())
                         .setOrder(idx))
                 .collect(toList());
         return this.voteRepository.saveAll(votes);

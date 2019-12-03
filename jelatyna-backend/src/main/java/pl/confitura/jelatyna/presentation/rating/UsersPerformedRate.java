@@ -4,7 +4,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.GenericGenerator;
-import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.user.dto.User;
 
 import javax.persistence.*;
@@ -22,11 +21,10 @@ public class UsersPerformedRate {
     private String id;
 
     private String userId;
-    @ManyToOne
-    private Presentation presentation;
+    private String presentationId;
 
-    UsersPerformedRate(User user, Presentation presentation) {
+    public UsersPerformedRate(User user, String presentationId) {
         this.userId = user.getId();
-        this.presentation = presentation;
+        this.presentationId = presentationId;
     }
 }

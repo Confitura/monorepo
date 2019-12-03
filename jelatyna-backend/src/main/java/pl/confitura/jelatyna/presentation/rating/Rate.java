@@ -21,4 +21,6 @@ public class Rate {
     private RateValue value;
 
     private String comment;
+
+    private String presentationId;
 }

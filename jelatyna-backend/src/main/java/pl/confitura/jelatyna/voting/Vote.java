@@ -9,7 +9,6 @@ import javax.validation.constraints.*;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.GenericGenerator;
-import pl.confitura.jelatyna.presentation.Presentation;
 
 @Entity
 @Data
@@ -24,8 +23,7 @@ public class Vote {
     private String token;
     @Column(name = "vote_order")
     private Integer order;
-    @OneToOne
-    private Presentation presentation;
+    private String presentationId;
     @Max(1)
     @Min(-1)
     private Integer rate;

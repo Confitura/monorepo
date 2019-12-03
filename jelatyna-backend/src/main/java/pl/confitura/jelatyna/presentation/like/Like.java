@@ -3,7 +3,6 @@ package pl.confitura.jelatyna.presentation.like;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.GenericGenerator;
-import pl.confitura.jelatyna.presentation.Presentation;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -13,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "presentation_like",
         uniqueConstraints = {
-                @UniqueConstraint(name = "unique_like", columnNames = {"presentation_id", "token"})
+                @UniqueConstraint(name = "unique_like", columnNames = {"presentationId", "token"})
         })
 @Accessors(chain = true)
 class Like {
@@ -26,8 +25,7 @@ class Like {
 
     @NotEmpty
     @NotNull
-    String token;
+    private String token;
 
-    @ManyToOne
-    Presentation presentation;
+    private String presentationId;
 }

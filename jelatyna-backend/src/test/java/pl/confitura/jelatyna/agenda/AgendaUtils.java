@@ -3,7 +3,7 @@ package pl.confitura.jelatyna.agenda;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.confitura.jelatyna.presentation.Presentation;
+import pl.confitura.jelatyna.presentation.dto.Presentation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,9 +34,6 @@ public class AgendaUtils {
         Iterable<AgendaEntry> iterableAgenda = agendaRepository.findAll();
         return StreamSupport
                 .stream(iterableAgenda.spliterator(), false)
-                .peek(it->it.getPresentation().getTitle())
-                .peek(it->it.getPresentation().getTags().size())
-                .peek(it->it.getPresentation().getSpeakers().size())
                 .distinct()
                 .collect(Collectors.toList());
 
@@ -48,7 +45,7 @@ public class AgendaUtils {
             if (timeSlot.isForAllRooms()) {
                 Presentation presentation = pressentations.get(timeSlotIndex).get(0);
                 AgendaEntry agendaEntry = new AgendaEntry()
-                        .setPresentation(presentation)
+                        .setPresentationId(presentation.getId())
                         .setTimeSlot(timeSlot);
                 agendaRepository.save(agendaEntry);
             } else {
@@ -56,7 +53,7 @@ public class AgendaUtils {
                     Room room = rooms.get(roomIndex);
                     Presentation presentation = pressentations.get(timeSlotIndex).get(roomIndex);
                     AgendaEntry agendaEntry = new AgendaEntry()
-                            .setPresentation(presentation)
+                            .setPresentationId(presentation.getId())
                             .setRoom(room)
                             .setTimeSlot(timeSlot);
                     agendaRepository.save(agendaEntry);

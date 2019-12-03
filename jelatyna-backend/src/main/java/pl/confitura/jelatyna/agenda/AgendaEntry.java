@@ -1,28 +1,11 @@
 package pl.confitura.jelatyna.agenda;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.NotNull;
-
+import lombok.Data;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.GenericGenerator;
 
-import lombok.Data;
-import pl.confitura.jelatyna.presentation.Presentation;
-import pl.confitura.jelatyna.presentation.Speaker;
-import pl.confitura.jelatyna.user.dto.PublicUser;
-
-import java.util.Collections;
-import java.util.Set;
-
-import static java.util.stream.Collectors.toSet;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(
@@ -32,7 +15,6 @@ import static java.util.stream.Collectors.toSet;
 @Data
 @Accessors(chain = true)
 public class AgendaEntry {
-
 
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -51,21 +33,10 @@ public class AgendaEntry {
 
     private String label;
 
-    @OneToOne
-    private Presentation presentation;
+    private String presentationId;
 
     public int getTimeSlotOrder(){
         return timeSlot.getDisplayOrder();
     }
 
-
-    public Set<PublicUser> getSpeakers() {
-        if (presentation == null || presentation.getSpeakers().isEmpty()) {
-            return Collections.emptySet();
-        } else {
-            return presentation.getSpeakers().stream()
-                    .map(Speaker::toPublicUser)
-                    .collect(toSet());
-        }
-    }
 }

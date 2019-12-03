@@ -1,37 +1,24 @@
 package pl.confitura.jelatyna.presentation;
 
-import static java.util.stream.Collectors.toSet;
-
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
-import org.hibernate.annotations.GenericGenerator;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.experimental.Accessors;
+import org.hibernate.annotations.GenericGenerator;
 import pl.confitura.jelatyna.presentation.rating.Rate;
-import pl.confitura.jelatyna.user.dto.PublicUser;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
 @ToString(exclude = { "speakers", "ratings" })
 @EqualsAndHashCode(exclude = { "speakers", "ratings" })
 @Accessors(chain = true)
-public class Presentation {
+class Presentation {
 
     public static final String STATUS_ACCEPTED = "accepted";
     public static final String STATUS_REPORTED = "reported";
@@ -90,5 +77,33 @@ public class Presentation {
     public Presentation setSpeaker(Speaker speaker) {
         speakers.add(speaker);
         return this;
+    }
+
+    pl.confitura.jelatyna.presentation.dto.Presentation toDto() {
+        pl.confitura.jelatyna.presentation.dto.Presentation presentation = new pl.confitura.jelatyna.presentation.dto.Presentation();
+        presentation.setId(id);
+        presentation.setTitle(title);
+        presentation.setShortDescription(shortDescription);
+        presentation.setDescription(description);
+        presentation.setLevel(level);
+        presentation.setLanguage(language);
+        presentation.setTags(tags);
+        presentation.setStatus(status);
+        presentation.setWorkshop(workshop);
+        return presentation;
+    }
+
+    static Presentation fromDto(pl.confitura.jelatyna.presentation.dto.Presentation presentationDto) {
+        Presentation presentation = new Presentation();
+        presentation.setId(presentationDto.getId());
+        presentation.setTitle(presentationDto.getTitle());
+        presentation.setShortDescription(presentationDto.getShortDescription());
+        presentation.setDescription(presentationDto.getDescription());
+        presentation.setLevel(presentationDto.getLevel());
+        presentation.setLanguage(presentationDto.getLanguage());
+        presentation.setTags(presentationDto.getTags());
+        presentation.setStatus(presentationDto.getStatus());
+        presentation.setWorkshop(presentationDto.isWorkshop());
+        return presentation;
     }
 }

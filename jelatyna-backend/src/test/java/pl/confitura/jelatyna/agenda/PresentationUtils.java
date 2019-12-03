@@ -2,8 +2,8 @@ package pl.confitura.jelatyna.agenda;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-import pl.confitura.jelatyna.presentation.Presentation;
-import pl.confitura.jelatyna.presentation.PresentationRepository;
+import pl.confitura.jelatyna.presentation.dto.Presentation;
+import pl.confitura.jelatyna.presentation.PresentationFacade;
 import pl.confitura.jelatyna.presentation.Speaker;
 import pl.confitura.jelatyna.user.dto.User;
 
@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class PresentationUtils {
 
-    private final PresentationRepository presentationRepository;
+    private final PresentationFacade presentationRepository;
     private final UserUtils userUtils;
 
     List<List<Presentation>> createPresentationsMatrix(List<List<String>> presentationNames) {
@@ -34,7 +34,8 @@ public class PresentationUtils {
                 .setShortDescription("short description of "+title)
                 .setLanguage("pl")
                 .setLevel("easy")
-                .setSpeaker(Speaker.fromUser(user));
+//TODO                .setSpeaker(Speaker.fromUser(user))
+                ;
         return presentationRepository.save(o);
     }
 

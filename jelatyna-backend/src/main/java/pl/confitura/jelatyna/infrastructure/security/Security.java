@@ -1,28 +1,25 @@
 package pl.confitura.jelatyna.infrastructure.security;
 
-import static pl.confitura.jelatyna.infrastructure.security.SecurityContextUtil.getPrincipal;
-
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
-
 import lombok.extern.slf4j.Slf4j;
-import pl.confitura.jelatyna.presentation.Presentation;
-import pl.confitura.jelatyna.presentation.PresentationRepository;
+import org.springframework.stereotype.Component;
+import pl.confitura.jelatyna.presentation.PresentationSecurity;
+
+import static pl.confitura.jelatyna.infrastructure.security.SecurityContextUtil.getPrincipal;
 
 @Component
 @Slf4j
 @RequiredArgsConstructor
 public class Security {
 
-    private final PresentationRepository presentationRepository;
+    private final PresentationSecurity presentationFacade;
 
     public boolean isOwner(String userId) {
         return isAdmin() || userId.equals(getUserId());
     }
 
     public boolean presentationOwnedByUser(String presentationId) {
-        Presentation presentation = presentationRepository.findById(presentationId);
-        return presentation.ownerHasId(getUserId());
+        return presentationFacade.isUserASpeakerOfPresentation(getUserId(), presentationId);
     }
 
     public boolean isAdmin() {
