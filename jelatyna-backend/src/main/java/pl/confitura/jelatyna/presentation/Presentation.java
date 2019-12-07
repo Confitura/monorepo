@@ -1,8 +1,5 @@
 package pl.confitura.jelatyna.presentation;
 
-import static java.util.stream.Collectors.toSet;
-
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,13 +15,11 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 import pl.confitura.jelatyna.presentation.rating.Rate;
-import pl.confitura.jelatyna.user.dto.PublicUser;
 
 @Entity
 @Data

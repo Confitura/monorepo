@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
 import pl.confitura.jelatyna.presentation.Speaker;
-import pl.confitura.jelatyna.user.dto.User;
+import pl.confitura.jelatyna.user.dto.FullUserDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,7 +26,7 @@ public class PresentationUtils {
     }
 
     private Presentation createPresentation(String title) {
-        User user = userUtils.createUser(title);
+        FullUserDto user = userUtils.createUser(title);
 
         Presentation o = new Presentation()
                 .setTitle(title)

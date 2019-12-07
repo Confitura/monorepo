@@ -2,7 +2,8 @@ package pl.confitura.jelatyna.user;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.confitura.jelatyna.user.dto.PublicUser;
+import pl.confitura.jelatyna.user.dto.FullUserDto;
+import pl.confitura.jelatyna.user.dto.PublicUserDto;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -17,7 +18,7 @@ public class UserFacade {
         return userRepository.existsBySocialId(socialId);
     }
 
-    public pl.confitura.jelatyna.user.dto.User save(pl.confitura.jelatyna.user.dto.User dtoUser) {
+    public FullUserDto save(FullUserDto dtoUser) {
         if (dtoUser != null) {
             User user = User.fromDto(dtoUser);
             return toDto(userRepository.save(user));
@@ -26,19 +27,19 @@ public class UserFacade {
         }
     }
 
-    public pl.confitura.jelatyna.user.dto.User findBySocialId(String socialId) {
+    public FullUserDto findBySocialId(String socialId) {
         return toDto(userRepository.findBySocialId(socialId));
     }
 
-    public pl.confitura.jelatyna.user.dto.User findById(String id) {
+    public FullUserDto findById(String id) {
         return toDto(userRepository.findById(id));
     }
 
-    public pl.confitura.jelatyna.user.dto.User findByEmail(String email) {
+    public FullUserDto findByEmail(String email) {
         return toDto(userRepository.findByEmail(email));
     }
 
-    private pl.confitura.jelatyna.user.dto.User toDto(User user) {
+    private FullUserDto toDto(User user) {
         return user == null ? null : user.toDto();
     }
 
@@ -54,25 +55,25 @@ public class UserFacade {
         userRepository.save(user);
     }
 
-    public Set<PublicUser> findAdmins() {
+    public Set<PublicUserDto> findAdmins() {
         return userRepository.findAdmins().stream()
                 .map(it -> it.toDto().toPublicUser())
                 .collect(Collectors.toSet());
     }
 
-    public Set<PublicUser> findVolunteers() {
+    public Set<PublicUserDto> findVolunteers() {
         return userRepository.findVolunteers().stream()
                 .map(it -> it.toDto().toPublicUser())
                 .collect(Collectors.toSet());
     }
 
-    public Set<PublicUser> findAcceptedSpeakers() {
+    public Set<PublicUserDto> findAcceptedSpeakers() {
         return userRepository.findAllAccepted().stream()
                 .map(it -> it.toDto().toPublicUser())
                 .collect(Collectors.toSet());
     }
 
-    public Set<pl.confitura.jelatyna.user.dto.User> findAll() {
+    public Set<FullUserDto> findAll() {
         return userRepository.findAll().stream()
                 .map(User::toDto)
                 .collect(Collectors.toSet());

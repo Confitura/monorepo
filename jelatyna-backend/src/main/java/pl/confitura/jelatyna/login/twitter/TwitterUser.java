@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import pl.confitura.jelatyna.login.OAuthUserBase;
-import pl.confitura.jelatyna.user.dto.User;
+import pl.confitura.jelatyna.user.dto.FullUserDto;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data
@@ -25,8 +25,8 @@ public class TwitterUser extends OAuthUserBase {
     }
 
     @Override
-    protected User toUser() {
-        return new User()
+    protected FullUserDto toUser() {
+        return new FullUserDto()
                 .setSocialId(encodeId())
                 .setOrigin(getSystem())
                 .setName(name)

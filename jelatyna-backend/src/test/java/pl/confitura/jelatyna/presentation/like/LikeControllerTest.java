@@ -9,7 +9,7 @@ import pl.confitura.jelatyna.BaseIntegrationTest;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
 import pl.confitura.jelatyna.presentation.Speaker;
-import pl.confitura.jelatyna.user.dto.User;
+import pl.confitura.jelatyna.user.dto.FullUserDto;
 import pl.confitura.jelatyna.user.UserFacade;
 
 import java.util.List;
@@ -177,7 +177,7 @@ class LikeControllerTest extends BaseIntegrationTest {
         presentation.setDescription("description");
         presentation.setLevel("level");
         presentation.setLanguage("language");
-        User user = userFacade.save(new User());
+        FullUserDto user = userFacade.save(new FullUserDto());
         presentation.setSpeaker(Speaker.fromUser(user));
         return presentationRepository.save(presentation);
     }
