@@ -40,9 +40,9 @@ public interface PresentationRepository extends Repository<Presentation, String>
 
     @Query("SELECT count(p.id) FROM Presentation p WHERE status ='accepted' AND p.speakers = s")
     @RestResource(exported = false)
-    Long countAcceptedWithSpeaker(Speaker s);
+    Long countAcceptedWithSpeaker(SpeakerEntity s);
 
     @Query("FROM Presentation p JOIN p.speakers co WHERE p.status ='accepted' and co = ?1")
     @RestResource(exported = false)
-    List<Presentation> findAcceptedWithCoSpeaker(Speaker user);
+    List<Presentation> findAcceptedWithCoSpeaker(SpeakerEntity user);
 }

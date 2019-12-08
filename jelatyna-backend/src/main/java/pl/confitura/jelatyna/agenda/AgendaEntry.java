@@ -11,12 +11,11 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
-import lombok.experimental.Accessors;
 import org.hibernate.annotations.GenericGenerator;
 
 import lombok.Data;
 import pl.confitura.jelatyna.presentation.Presentation;
-import pl.confitura.jelatyna.presentation.Speaker;
+import pl.confitura.jelatyna.presentation.SpeakerEntity;
 import pl.confitura.jelatyna.user.dto.PublicUserDto;
 
 import java.util.Collections;
@@ -30,7 +29,6 @@ import static java.util.stream.Collectors.toSet;
         uniqueConstraints = @UniqueConstraint(columnNames = { "time_slot_id", "room_id" })
 )
 @Data
-@Accessors(chain = true)
 public class AgendaEntry {
 
 
@@ -64,7 +62,7 @@ public class AgendaEntry {
             return Collections.emptySet();
         } else {
             return presentation.getSpeakers().stream()
-                    .map(Speaker::toPublicUser)
+                    .map(SpeakerEntity::toPublicUser)
                     .collect(toSet());
         }
     }

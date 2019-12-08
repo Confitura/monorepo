@@ -33,11 +33,11 @@ public class UserRepositoryTest {
 
     @Test
     void should_save_a_user() {
-        User user = new User()
+        UserEntity user = new UserEntity()
                 .setOrigin("twitter")
                 .setSocialId("1234");
 
-        User saved = repository.save(user);
+        UserEntity saved = repository.save(user);
 
         assertThat(repository.findById(saved.getId()))
                 .isEqualToComparingOnlyGivenFields(user, "origin", "socialId");
@@ -45,21 +45,21 @@ public class UserRepositoryTest {
 
     @Test
     void should_find_a_user_by_social_id() {
-        User user = repository.save(new User()
+        UserEntity user = repository.save(new UserEntity()
                 .setOrigin("twitter")
                 .setSocialId("1"));
-        repository.save(new User()
+        repository.save(new UserEntity()
                 .setOrigin("twitter")
                 .setSocialId("2"));
 
-        User found = repository.findBySocialId("1");
+        UserEntity found = repository.findBySocialId("1");
 
         assertThat(found).isEqualTo(user);
     }
 
     @Test
     void should_check_if_exists_by_social_id() {
-        repository.save(new User()
+        repository.save(new UserEntity()
                 .setOrigin("twitter")
                 .setSocialId("1"));
 

@@ -20,7 +20,7 @@ interface InlineSpeaker {
 
     Set<Tag> getTags();
 
-    Set<Speaker> getSpeakers();
+    Set<SpeakerEntity> getSpeakers();
 
     String getStatus();
 

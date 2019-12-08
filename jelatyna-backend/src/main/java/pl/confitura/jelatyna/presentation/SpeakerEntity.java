@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import lombok.experimental.Accessors;
 import org.hibernate.annotations.GenericGenerator;
 import pl.confitura.jelatyna.user.dto.FullUserDto;
 import pl.confitura.jelatyna.user.dto.PublicUserDto;
@@ -16,9 +15,8 @@ import java.util.Set;
 @Data
 @ToString(exclude = "presentations")
 @EqualsAndHashCode(exclude = "presentations", callSuper = false)
-@Accessors(chain = true)
 @Table(name = "user")
-public class Speaker {
+public class SpeakerEntity {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
@@ -52,29 +50,26 @@ public class Speaker {
     }
 
     public PublicUserDto toPublicUser() {
-        Speaker user = this;
-        PublicUserDto that = new PublicUserDto();
-        that.setId(user.getId());
-        that.setName(user.getName());
-        that.setBio(user.getBio());
-        that.setTwitter(user.getTwitter());
-        that.setGithub(user.getGithub());
-        that.setWww(user.getWww());
-        that.setPhoto(user.getPhoto());
-        return that;
+        return new PublicUserDto()
+                .setId(getId())
+                .setName(getName())
+                .setBio(getBio())
+                .setTwitter(getTwitter())
+                .setGithub(getGithub())
+                .setWww(getWww())
+                .setPhoto(getPhoto());
     }
 
-    public static Speaker fromUser(FullUserDto dto) {
-        Speaker user = new Speaker();
-        user.setId(dto.getId());
-        user.setName(dto.getName());
-        user.setEmail(dto.getEmail());
-        user.setBio(dto.getBio());
-        user.setTwitter(dto.getTwitter());
-        user.setGithub(dto.getGithub());
-        user.setWww(dto.getWww());
-        user.setPhoto(dto.getPhoto());
-        return user;
+    public static SpeakerEntity fromUser(FullUserDto dto) {
+        return new SpeakerEntity()
+                .setId(dto.getId())
+                .setName(dto.getName())
+                .setEmail(dto.getEmail())
+                .setBio(dto.getBio())
+                .setTwitter(dto.getTwitter())
+                .setGithub(dto.getGithub())
+                .setWww(dto.getWww())
+                .setPhoto(dto.getPhoto());
     }
 
 }

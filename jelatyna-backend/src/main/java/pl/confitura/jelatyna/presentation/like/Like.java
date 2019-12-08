@@ -1,7 +1,6 @@
 package pl.confitura.jelatyna.presentation.like;
 
 import lombok.Data;
-import lombok.experimental.Accessors;
 import org.hibernate.annotations.GenericGenerator;
 import pl.confitura.jelatyna.presentation.Presentation;
 
@@ -15,7 +14,6 @@ import javax.validation.constraints.NotNull;
         uniqueConstraints = {
                 @UniqueConstraint(name = "unique_like", columnNames = {"presentation_id", "token"})
         })
-@Accessors(chain = true)
 class Like {
 
     @Id

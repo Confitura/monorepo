@@ -38,10 +38,9 @@ public class PresentationController {
     public ResponseEntity<?> accept(@PathVariable String presentationId) {
         this.repository.findById(presentationId).setAccepted(true);
         Presentation presentation = this.repository.findById(presentationId);
-        Set<Speaker> speakers = presentation.getSpeakers();
-        for (Speaker speaker : speakers) {
+        presentation.getSpeakers().forEach(speaker -> {
             userFacade.markSpeaker(speaker.getId(), true);
-        }
+        });
         return ResponseEntity.ok().build();
     }
 
@@ -52,20 +51,19 @@ public class PresentationController {
         Presentation presentation = this.repository.findById(presentationId);
         presentation.setAccepted(false);
         repository.save(presentation);
-        Set<Speaker> speakers = presentation.getSpeakers();
-        for (Speaker speaker : speakers) {
+        presentation.getSpeakers().forEach(speaker -> {
             Long accepted = repository.countAcceptedWithSpeaker(speaker);
             boolean isSpeaker = accepted > 0;
             userFacade.markSpeaker(speaker.getId(), isSpeaker);
-        }
+        });
         return ResponseEntity.ok().build();
 
     }
 
     @PreAuthorize("@security.presentationOwnedByUser(#presentationId) || @security.isAdmin()")
     @GetMapping("/presentations/{presentationId}/cospeakers")
-    public ResponseEntity<Resources<Speaker>> getCospeakers(@PathVariable String presentationId) {
-        Set<Speaker> cospeakers = this.repository.findById(presentationId).getSpeakers();
+    public ResponseEntity<Resources<SpeakerEntity>> getCospeakers(@PathVariable String presentationId) {
+        Set<SpeakerEntity> cospeakers = this.repository.findById(presentationId).getSpeakers();
         return ResponseEntity.ok(new Resources<>(cospeakers));
     }
 
@@ -94,18 +92,18 @@ public class PresentationController {
         if (presentation.isOwnedBy(email)) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("This speaker is already added to this presentation");
         }
-        presentation.getSpeakers().add(Speaker.fromUser(user));
+        presentation.getSpeakers().add(SpeakerEntity.fromUser(user));
         return ResponseEntity.ok(presentation);
     }
 
-    private Set<Speaker> removeCospeakerById(String id, Set<Speaker> cospeakers) {
+    private Set<SpeakerEntity> removeCospeakerById(String id, Set<SpeakerEntity> cospeakers) {
         return cospeakers.stream().filter(it -> !it.getId().equalsIgnoreCase(id)).collect(Collectors.toSet());
     }
 
     @PostMapping("/presentations/{presentationId}/ratings")
     @PreAuthorize("@security.isAuthenticated()")
     @Transactional
-    public ResponseEntity<?>  addRating(@PathVariable String presentationId, @RequestBody @Valid Rate rate){
+    public ResponseEntity<?> addRating(@PathVariable String presentationId, @RequestBody @Valid Rate rate) {
         Rate createdRate = ratingService.rate(presentationId, rate);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -131,7 +129,7 @@ public class PresentationController {
             return ResponseEntity.status(UNAUTHORIZED).build();
         }
         FullUserDto speaker = userFacade.findById(userId);
-        presentation.setSpeaker(Speaker.fromUser(speaker));
+        presentation.setSpeaker(SpeakerEntity.fromUser(speaker));
         retainStatus(presentation);
         Presentation saved = repository.save(presentation);
         return ResponseEntity.ok(new Resource<>(saved));
@@ -147,7 +145,6 @@ public class PresentationController {
             presentation.setStatus(saved.getStatus());
         }
     }
-
 
 
 }

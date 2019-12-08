@@ -18,14 +18,12 @@ import org.hibernate.annotations.GenericGenerator;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import lombok.experimental.Accessors;
 import pl.confitura.jelatyna.presentation.rating.Rate;
 
 @Entity
 @Data
 @ToString(exclude = { "speakers", "ratings" })
 @EqualsAndHashCode(exclude = { "speakers", "ratings" })
-@Accessors(chain = true)
 public class Presentation {
 
     public static final String STATUS_ACCEPTED = "accepted";
@@ -53,7 +51,7 @@ public class Presentation {
 
     @ManyToMany
     @NotNull
-    private Set<Speaker> speakers = new HashSet<>();
+    private Set<SpeakerEntity> speakers = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY)
     private Set<Rate> ratings = new HashSet<>();
@@ -82,7 +80,7 @@ public class Presentation {
         return id == null;
     }
 
-    public Presentation setSpeaker(Speaker speaker) {
+    public Presentation setSpeaker(SpeakerEntity speaker) {
         speakers.add(speaker);
         return this;
     }

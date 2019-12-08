@@ -9,40 +9,40 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-interface UserRepository extends Repository<User, String> {
+interface UserRepository extends Repository<UserEntity, String> {
 
-    User save(User user);
+    UserEntity save(UserEntity user);
 
-    User findById(String userId);
+    UserEntity findById(String userId);
 
-    User findBySocialId(String socialId);
+    UserEntity findBySocialId(String socialId);
 
     boolean existsById(String id);
 
     boolean existsBySocialId(String socialId);
 
-    @Query("FROM User WHERE isAdmin = true")
-    Collection<User> findAdmins();
+    @Query("FROM UserEntity WHERE isAdmin = true")
+    Collection<UserEntity> findAdmins();
 
-    @Query("FROM User WHERE isVolunteer = true")
-    Collection<User> findVolunteers();
+    @Query("FROM UserEntity WHERE isVolunteer = true")
+    Collection<UserEntity> findVolunteers();
 
 
     @PreAuthorize("@security.isAdmin()")
-    List<User> findAll();
+    List<UserEntity> findAll();
 
-    @Query("FROM User WHERE " +
+    @Query("FROM UserEntity WHERE " +
             "lower(name) like concat('%',lower(:query),'%') OR " +
             "lower(email) like concat('%',lower(:query),'%') OR " +
             "lower(username) like concat('%',lower(:query),'%') ")
     @PreAuthorize("@security.isAdmin()")
-    Iterable<User> find(@Param("query") String query);
+    Iterable<UserEntity> find(@Param("query") String query);
 
     @Query("Select co FROM Presentation p  " +
             "LEFT JOIN p.speakers co " +
             "WHERE p.status ='accepted'")
-    Set<User> findAllAccepted();
+    Set<UserEntity> findAllAccepted();
 
-    User findByEmail(String email);
+    UserEntity findByEmail(String email);
 
 }
