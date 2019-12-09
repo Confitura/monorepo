@@ -3,13 +3,12 @@ package pl.confitura.jelatyna.registration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import pl.confitura.jelatyna.BaseIntegrationTest;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
 import pl.confitura.jelatyna.registration.voucher.Voucher;
 import pl.confitura.jelatyna.registration.voucher.VoucherService;
-import pl.confitura.jelatyna.user.User;
-import pl.confitura.jelatyna.user.UserRepository;
+import pl.confitura.jelatyna.user.dto.FullUserDto;
+import pl.confitura.jelatyna.user.UserFacade;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.hateoas.MediaTypes.HAL_JSON;
@@ -29,15 +28,15 @@ class RegistrationControllerTest extends BaseIntegrationTest {
     VoucherService voucherService;
 
     @Autowired
-    UserRepository userRepository;
+    UserFacade userRepository;
 
-    private User user;
+    private FullUserDto user;
     private Voucher validVoucher;
 
     @BeforeEach
     void setup() {
         SecurityHelper.asAdmin();
-        this.user = userRepository.save(new User().setName("user1"));
+        this.user = userRepository.save(new FullUserDto().setName("user1"));
         validVoucher = voucherService.generateVoucher("buyer");
         SecurityHelper.cleanSecurity();
 

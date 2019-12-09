@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 import pl.confitura.jelatyna.registration.ParticipationData;
 import pl.confitura.jelatyna.registration.ParticipationRepository;
-import pl.confitura.jelatyna.user.UserRepository;
 
 @Service
 @RequiredArgsConstructor
@@ -15,7 +14,6 @@ public class VoucherService {
 
     private final VoucherRepository voucherRepository;
     private final ParticipationRepository participationRepository;
-    private final UserRepository userRepository;
 
     public Voucher generateVoucher(String originalBuyer) {
         return generateVoucher(originalBuyer, Voucher.VoucherType.PARTICIPANT, null);

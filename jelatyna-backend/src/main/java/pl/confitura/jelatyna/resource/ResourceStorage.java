@@ -1,26 +1,25 @@
 package pl.confitura.jelatyna.resource;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
-import javax.transaction.Transactional;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-
 import pl.confitura.jelatyna.partner.Partner;
 import pl.confitura.jelatyna.partner.PartnerRepository;
-import pl.confitura.jelatyna.user.User;
-import pl.confitura.jelatyna.user.UserRepository;
+import pl.confitura.jelatyna.user.UserFacade;
 
+import javax.transaction.Transactional;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+@RequiredArgsConstructor
 @Service
 public class ResourceStorage {
+
     @Value("${resources.path}")
     private String rootPath;
     @Value("${resources.folder}")
@@ -28,22 +27,14 @@ public class ResourceStorage {
     @Value("${server.servlet.context-path}")
     private String contextPath;
 
-    private UserRepository repository;
-    private PartnerRepository partnerRepository;
-
-    @Autowired
-    public ResourceStorage(UserRepository repository, PartnerRepository partnerRepository) {
-        this.repository = repository;
-        this.partnerRepository = partnerRepository;
-    }
+    private final UserFacade userFacade;
+    private final PartnerRepository partnerRepository;
 
     @Transactional
     @PreAuthorize("@security.isOwner(#userId)")
     void storeSpeaker(@RequestParam MultipartFile file, String userId) throws IOException {
-        User user = repository.findById(userId);
-        String path = doStore(user.getId(), file, "photos");
-        user.setPhoto(path);
-        repository.save(user);
+        String path = doStore(userId, file, "photos");
+        userFacade.changePhoto(userId, path);
     }
 
     @Transactional

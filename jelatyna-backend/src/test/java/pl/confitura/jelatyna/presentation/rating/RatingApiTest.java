@@ -12,16 +12,15 @@ import pl.confitura.jelatyna.agenda.PresentationUtils;
 import pl.confitura.jelatyna.agenda.UserUtils;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
 import pl.confitura.jelatyna.presentation.Presentation;
-import pl.confitura.jelatyna.user.User;
+import pl.confitura.jelatyna.user.dto.FullUserDto;
 
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
 import static org.springframework.hateoas.MediaTypes.HAL_JSON;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static pl.confitura.jelatyna.infrastructure.security.SecurityHelper.user;
 
 class RatingApiTest extends BaseIntegrationTest {
@@ -33,7 +32,7 @@ class RatingApiTest extends BaseIntegrationTest {
     @Autowired
     PresentationUtils presentationUtils;
 
-    private User user;
+    private FullUserDto user;
     private List<AgendaEntry> agenda;
     private Presentation presentation;
     private Rate rate;
@@ -42,7 +41,6 @@ class RatingApiTest extends BaseIntegrationTest {
     public void setUp() {
         SecurityHelper.asAdmin();
         user = userUtils.createUser("user");
-        user = userUtils.markArrived(user);
         agenda = agendaUtils.createAgenda(
                 new String[]{"", "room1", "room2"},
                 new String[]{"09-12", "presentation1", "presentation2"},
@@ -158,8 +156,7 @@ class RatingApiTest extends BaseIntegrationTest {
         rate(presentation, user, rate);
 
         SecurityHelper.asAdmin();
-        User otherUser = userUtils.createUser("other user");
-        otherUser = userUtils.markArrived(otherUser);
+        FullUserDto otherUser = userUtils.createUser("other user");
         SecurityHelper.cleanSecurity();
         Rate otherRate = new Rate().setValue(RateValue.GREAT);
 
@@ -174,7 +171,7 @@ class RatingApiTest extends BaseIntegrationTest {
 
     }
 
-    private ResultActions rate(Presentation presentation, User user, Rate rate) throws Exception {
+    private ResultActions rate(Presentation presentation, FullUserDto user, Rate rate) throws Exception {
         return mockMvc.perform(
                 post("/presentations/" + presentation.getId() + "/ratings")
                         .with(user(user))

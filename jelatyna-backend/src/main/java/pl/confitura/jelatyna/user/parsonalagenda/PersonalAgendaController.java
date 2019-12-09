@@ -3,18 +3,12 @@ package pl.confitura.jelatyna.user.parsonalagenda;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.data.projection.ProjectionFactory;
-import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 import pl.confitura.jelatyna.agenda.AgendaEntry;
 import pl.confitura.jelatyna.agenda.AgendaRepository;
 import pl.confitura.jelatyna.agenda.InlineAgenda;
-import pl.confitura.jelatyna.user.User;
-import pl.confitura.jelatyna.user.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,38 +19,35 @@ import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
 import static org.springframework.http.HttpStatus.OK;
 
-@RepositoryRestController
+@RestController
 @AllArgsConstructor
 public class PersonalAgendaController {
 
     private final AgendaRepository agendaRepository;
     private final ProjectionFactory projectionFactory;
-    private final UserRepository userRepository;
+    private final PersonalAgendaRepository personalAgendaRepository;
 
     @PostMapping("/users/{userId}/personalAgenda")
-    public ResponseEntity<?> addEntry(@RequestBody AddAgendaEntryRequest entryRequest, @PathVariable User userId) {
+    public ResponseEntity<?> addEntry(@RequestBody AddAgendaEntryRequest entryRequest, @PathVariable String userId) {
         AgendaEntry agendaEntry = agendaRepository.findById(entryRequest.agendaEntryId);
         removeCurrentEntryWithSameTimeSlot(userId, agendaEntry);
         addNewEntry(userId, agendaEntry);
         return ResponseEntity.status(OK).build();
     }
 
-    private void addNewEntry(User user, AgendaEntry agendaEntry) {
-        user.addToPersonalAgenda(agendaEntry);
-        userRepository.save(user);
+    private void addNewEntry(String userId, AgendaEntry agendaEntry) {
+        PersonalAgendaEntry personalAgendaEntry = new PersonalAgendaEntry(userId, agendaEntry);
+        personalAgendaRepository.save(personalAgendaEntry);
     }
 
-    private void removeCurrentEntryWithSameTimeSlot(User user, AgendaEntry agendaEntry) {
-        if (user.personalAgendaContainsTimeSlot(agendaEntry.getTimeSlot())) {
-            user.getFromPersonalAgendaWithTimeSlot(agendaEntry.getTimeSlot())
-                    .ifPresent(user::removeFromPersonalAgenda);
-        }
+    private void removeCurrentEntryWithSameTimeSlot(String userId, AgendaEntry agendaEntry) {
+        personalAgendaRepository.deleteByUserIdAndAgendaEntryTimeSlot(userId, agendaEntry.getTimeSlot());
     }
 
     @GetMapping("/users/{userId}/personalAgenda")
-    public ResponseEntity<?> getAgenda(@PathVariable User userId) {
+    public ResponseEntity<?> getAgenda(@PathVariable String userId) {
         List<AgendaEntry> allRoomsTimeSlotEntries = agendaRepository.findEntriesForAllRooms();
-        Set<AgendaEntry> personalAgenda = userId.getPersonalAgenda();
+        Set<AgendaEntry> personalAgenda = personalAgendaRepository.findPersonalAgenda(userId);
         Stream<AgendaEntry> fullAgenda = concat(allRoomsTimeSlotEntries, personalAgenda);
         List<InlineAgenda> agendaWithInlinedResources = fullAgenda
                 .map(it -> projectionFactory.createProjection(InlineAgenda.class, it))
@@ -74,7 +65,7 @@ public class PersonalAgendaController {
     }
 
     @Data
-    public static class AddAgendaEntryRequest {
+    private static class AddAgendaEntryRequest {
         private String agendaEntryId;
     }
 }

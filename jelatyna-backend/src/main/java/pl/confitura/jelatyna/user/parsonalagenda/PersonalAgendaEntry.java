@@ -1,18 +1,17 @@
-package pl.confitura.jelatyna.presentation.rating;
+package pl.confitura.jelatyna.user.parsonalagenda;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
-import pl.confitura.jelatyna.presentation.Presentation;
-import pl.confitura.jelatyna.user.dto.FullUserDto;
+import pl.confitura.jelatyna.agenda.AgendaEntry;
 
 import javax.persistence.*;
-
 
 @Entity
 @Data
 @NoArgsConstructor
-public class UsersPerformedRate {
+class PersonalAgendaEntry {
+
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
@@ -20,11 +19,12 @@ public class UsersPerformedRate {
     private String id;
 
     private String userId;
-    @ManyToOne
-    private Presentation presentation;
 
-    UsersPerformedRate(FullUserDto user, Presentation presentation) {
-        this.userId = user.getId();
-        this.presentation = presentation;
+    @ManyToOne
+    private AgendaEntry agendaEntry;
+
+    PersonalAgendaEntry(String userId, AgendaEntry agendaEntry) {
+        this.userId = userId;
+        this.agendaEntry = agendaEntry;
     }
 }

@@ -4,35 +4,23 @@ import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.rest.core.config.Projection;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
-import lombok.experimental.Accessors;
 import pl.confitura.jelatyna.agenda.AgendaEntry;
 import pl.confitura.jelatyna.agenda.TimeSlot;
 import pl.confitura.jelatyna.infrastructure.db.AuditedEntity;
-import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.registration.ParticipationData;
+import pl.confitura.jelatyna.user.dto.FullUserDto;
 
 @Entity
+@Table(name = "user")
 @Data
-@ToString(exclude = "presentations")
-@EqualsAndHashCode(exclude = "presentations", callSuper = false)
-@Accessors(chain = true)
-public class User extends AuditedEntity {
+@EqualsAndHashCode(callSuper = false)
+class UserEntity extends AuditedEntity {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
@@ -54,21 +42,13 @@ public class User extends AuditedEntity {
     private String socialId;
 
     private Boolean privacyPolicyAccepted = false;
-
-    @ManyToMany(mappedBy = "speakers")
-    @JsonIgnore
-    private Set<Presentation> presentations;
+    private Boolean speaker = false;
 
     @ManyToMany
     private Set<AgendaEntry> personalAgenda = new LinkedHashSet<>();
 
     @OneToOne(fetch = FetchType.LAZY)
     private ParticipationData participationData = null;
-
-    public boolean isSpeaker() {
-        return presentations != null
-                && !presentations.isEmpty();
-    }
 
     public boolean isParticipant() {
         return participationData != null;
@@ -92,55 +72,48 @@ public class User extends AuditedEntity {
         personalAgenda.remove(entry);
     }
 
-    void updateFields(User user) {
-        name = user.name;
-        email = user.email;
-        bio = user.bio;
-        username = user.username;
-        twitter = user.twitter;
-        github = user.github;
-        www = user.www;
-        photo = user.photo;
-        privacyPolicyAccepted = user.privacyPolicyAccepted;
-    }
-
-    public boolean hasAcceptedPresentation() {
-        return presentations.stream().anyMatch(Presentation::isAccepted);
-    }
 
     public boolean hasArrived() {
         return isParticipant() && getParticipationData().getArrivalDate() != null;
     }
 
-    interface Edit {
-
+    FullUserDto toDto() {
+        return new FullUserDto()
+                .setId(this.id)
+                .setOrigin(this.origin)
+                .setName(this.name)
+                .setEmail(this.email)
+                .setBio(this.bio)
+                .setUsername(this.username)
+                .setTwitter(this.twitter)
+                .setGithub(this.github)
+                .setWww(this.www)
+                .setPhoto(this.photo)
+                .setAdmin(this.isAdmin)
+                .setVolunteer(this.isVolunteer)
+                .setSocialId(this.socialId)
+                .setPrivacyPolicyAccepted(this.privacyPolicyAccepted)
+                .setSpeaker(this.speaker);
     }
 
-    @Projection(name = "withPresentations", types = { User.class })
-    interface WithPresentations {
-        String getId();
 
-        String getOrigin();
-
-        String getName();
-
-        String getEmail();
-
-        String getBio();
-
-        String getTwitter();
-
-        String getGithub();
-
-        String getWww();
-
-        String getPhoto();
-
-        boolean isAdmin();
-
-        @Value("#{target.isSpeaker()}")
-        boolean isSpeaker();
-
-        Set<Presentation> getPresentations();
+    static UserEntity fromDto(FullUserDto dto) {
+        return new UserEntity()
+                .setId(dto.getId())
+                .setOrigin(dto.getOrigin())
+                .setName(dto.getName())
+                .setEmail(dto.getEmail())
+                .setBio(dto.getBio())
+                .setUsername(dto.getUsername())
+                .setTwitter(dto.getTwitter())
+                .setGithub(dto.getGithub())
+                .setWww(dto.getWww())
+                .setPhoto(dto.getPhoto())
+                .setAdmin(dto.isAdmin())
+                .setVolunteer(dto.isVolunteer())
+                .setSocialId(dto.getSocialId())
+                .setPrivacyPolicyAccepted(dto.getPrivacyPolicyAccepted());
     }
+
+
 }
