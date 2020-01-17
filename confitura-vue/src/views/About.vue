@@ -48,13 +48,13 @@
           </div>
         </div>
       </div>
-      <div class="volunteers__headerContainer">
-        <h3 class="volunteers__header">volunteers</h3>
-      </div>
+<!--      <div class="volunteers__headerContainer">-->
+<!--        <h3 class="volunteers__header">volunteers</h3>-->
+<!--      </div>-->
     </Box>
-    <Box color="white" class="no-padding">
-      <UsersGrid :users="volunteers"></UsersGrid>
-    </Box>
+<!--    <Box color="white" class="no-padding">-->
+<!--      <UsersGrid :users="volunteers"></UsersGrid>-->
+<!--    </Box>-->
     <Box color="white">
       <div class="bcc">
         <h3 class="bcc__header">Brain Change Continental</h3>

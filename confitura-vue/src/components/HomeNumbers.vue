@@ -3,13 +3,13 @@
     <div class="numbers-container">
       <div class="info">
         <h1 class="header">
-          <span>confitura'18</span>
-          <span>in numbers</span>
+          <span>confitura'19</span>
+          <span> in numbers</span>
         </h1>
         <div class="subinfo">
           Everything has started in 2007, when the group of passionate Java
           developers decided to create a programming event for the community.
-          Today we're running the conference for more than 1800 attendees. 35
+          Today we're running the conference for more than 2000 attendees. 35
           talks in 5 parallel sessions give an opportunity to learn new things
           to everyone! Our live streams and recordings of talks gain enormous
           popularity on the web. That's why organizing this event gives
@@ -19,7 +19,7 @@
       </div>
       <HomeNumbersPictogram
         :src="require('../assets/speakers.svg')"
-        value="38"
+        value="37"
         unit="speakers"
       />
       <HomeNumbersPictogram
@@ -34,17 +34,17 @@
       />
       <HomeNumbersPictogram
         :src="require('../assets/views.svg')"
-        value="693k"
+        value="830k"
         unit="youtube channel views"
       />
       <HomeNumbersPictogram
         :src="require('../assets/videos.svg')"
-        value="241"
+        value="275"
         unit="youtube videos"
       />
       <HomeNumbersPictogram
         :src="require('../assets/participants.svg')"
-        value=">1800"
+        value="2000"
         unit="participants"
       />
     </div>

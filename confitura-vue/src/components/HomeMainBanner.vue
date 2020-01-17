@@ -4,12 +4,12 @@
     <div class="container">
       <div class="info">
         <div class="slogan">
-          <div>It is not rocket science!</div>
+          <h1 class="h1">It is not rocket science!</h1>
         </div>
-        <div class="info__live">
-          <div class="info__live-text">Thank you!</div>
-        </div>
-        <!--        <TheTimer />-->
+        <!--        <div class="info__live">-->
+        <!--          <div class="info__live-text">Thank you!</div>-->
+        <!--        </div>-->
+        <TheTimer />
         <div class="time-and-place">
           <div>{{ date }},&nbsp;</div>
           <div class="place">
@@ -201,5 +201,14 @@ export default class HomeMainBanner extends Vue {
 }
 .info__live-link {
   font-size: 2rem;
+}
+
+.slogan {
+  .h1 {
+    font-size: 2rem;
+  }
+  .h2 {
+    font-size: 1.7rem;
+  }
 }
 </style>
