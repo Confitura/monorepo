@@ -75,7 +75,6 @@
                 </a>
                 <router-link
                   :to="{ name: 'presentation', params: { userId: profile.id } }"
-                  v-if="isAdmin"
                 >
                   Add presentation
                 </router-link>
