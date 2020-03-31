@@ -5,15 +5,16 @@
   vars:
     - version: 0.0.1-SNAPSHOT
     - dest: /home/jelatyna/2017
-    - code: "{{dest}}/code"
+    - repo: "{{dest}}/code"
+    - code: "{{ repo }}/jelatyna-backend"
     - app: "{{dest}}/app"
 
   tasks:
 
     - name: checkout repository
       git:
-        repo: https://github.com/Confitura/jelatyna-backend
-        dest: "{{code}}"
+        repo: https://github.com/Confitura/monorepo
+        dest: "{{repo}}"
 
     - name: build package
       command: "mvn clean install -DskipTests"
@@ -34,14 +35,14 @@
 
       - name: stop running instance {{pid.stdout}}
         command: "kill {{pid.stdout}}"
-        when: pid|succeeded
+        when: pid is succeeded
         ignore_errors: true
 
       - name: wait for process to stop
         wait_for:
           path: "/proc/{{pid.stdout}}/status"
           state: absent
-        when: pid|succeeded
+        when: pid is succeeded
 
       tags:
         - restart

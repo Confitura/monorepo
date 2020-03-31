@@ -41,8 +41,8 @@ class UserEntity extends AuditedEntity {
     @Column(name = "social_id")
     private String socialId;
 
-    private Boolean privacyPolicyAccepted = false;
-    private Boolean speaker = false;
+    private boolean privacyPolicyAccepted = false;
+    private boolean speaker = false;
 
     @ManyToMany
     private Set<AgendaEntry> personalAgenda = new LinkedHashSet<>();

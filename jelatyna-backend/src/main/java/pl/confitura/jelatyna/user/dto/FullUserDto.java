@@ -18,7 +18,7 @@ public class FullUserDto {
     private boolean isAdmin;
     private boolean isVolunteer;
     private String socialId;
-    private Boolean privacyPolicyAccepted = false;
+    private boolean privacyPolicyAccepted = false;
     private boolean isSpeaker = false;
 
     public void updateFields(FullUserDto user) {
