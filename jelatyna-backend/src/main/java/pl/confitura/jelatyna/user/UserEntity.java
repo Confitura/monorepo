@@ -14,6 +14,8 @@ import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import static java.util.Optional.ofNullable;
+
 @Entity
 @Table(name = "user")
 @Data
@@ -39,8 +41,8 @@ class UserEntity extends AuditedEntity {
     @Column(name = "social_id")
     private String socialId;
 
-    private boolean privacyPolicyAccepted = false;
-    private boolean speaker = false;
+    private Boolean privacyPolicyAccepted = false;
+    private Boolean speaker = false;
 
     @ManyToMany
     private Set<AgendaEntry> personalAgenda = new LinkedHashSet<>();
@@ -90,8 +92,8 @@ class UserEntity extends AuditedEntity {
                 .setAdmin(this.isAdmin)
                 .setVolunteer(this.isVolunteer)
                 .setSocialId(this.socialId)
-                .setPrivacyPolicyAccepted(this.privacyPolicyAccepted)
-                .setSpeaker(this.speaker);
+                .setPrivacyPolicyAccepted(ofNullable(this.privacyPolicyAccepted).orElse(false))
+                .setSpeaker(ofNullable(this.speaker).orElse(false));
     }
 
 
