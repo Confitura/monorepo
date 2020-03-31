@@ -1,20 +1,18 @@
 package pl.confitura.jelatyna.user;
 
-import java.util.LinkedHashSet;
-import java.util.Optional;
-import java.util.Set;
-
-import javax.persistence.*;
-
-import org.hibernate.annotations.GenericGenerator;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.GenericGenerator;
 import pl.confitura.jelatyna.agenda.AgendaEntry;
 import pl.confitura.jelatyna.agenda.TimeSlot;
 import pl.confitura.jelatyna.infrastructure.db.AuditedEntity;
 import pl.confitura.jelatyna.registration.ParticipationData;
 import pl.confitura.jelatyna.user.dto.FullUserDto;
+
+import javax.persistence.*;
+import java.util.LinkedHashSet;
+import java.util.Optional;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
@@ -112,7 +110,7 @@ class UserEntity extends AuditedEntity {
                 .setAdmin(dto.isAdmin())
                 .setVolunteer(dto.isVolunteer())
                 .setSocialId(dto.getSocialId())
-                .setPrivacyPolicyAccepted(dto.getPrivacyPolicyAccepted());
+                .setPrivacyPolicyAccepted(dto.isPrivacyPolicyAccepted());
     }
 
 
