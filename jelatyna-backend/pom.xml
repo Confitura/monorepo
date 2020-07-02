@@ -27,7 +27,7 @@
         <lombok.version>1.16.18</lombok.version>
         <jjwt.version>0.7.0</jjwt.version>
         <jackson-datatype-jsr310.version>2.8.6</jackson-datatype-jsr310.version>
-        <mysql-connector.version>5.1.35</mysql-connector.version>
+        <mysql-connector.version>8.0.16</mysql-connector.version>
         <guava.version>22.0</guava.version>
         <querydsl.version>4.1.3</querydsl.version>
 
