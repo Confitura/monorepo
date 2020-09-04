@@ -52,7 +52,7 @@
     "lodash.shuffle": "^4.2.0",
     "lodash.sortby": "^4.7.0",
     "lozad": "^1.0.9",
-    "marked": "^0.6.1",
+    "marked": "^0.7.0",
     "ng2-cookies": "^1.0.12",
     "ng2-file-upload": "^1.2.1",
     "ng2-google-charts": "^3.4.0",
