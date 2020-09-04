@@ -22,7 +22,7 @@
     "intersection-observer": "^0.5.1",
     "jssha": "^2.3.1",
     "linkifyjs": "^2.1.8",
-    "marked": "^0.6.2",
+    "marked": "^0.7.0",
     "materialize-css": "^1.0.0-rc.2",
     "normalize.css": "^8.0.1",
     "v-hotkey": "^0.4.0",
