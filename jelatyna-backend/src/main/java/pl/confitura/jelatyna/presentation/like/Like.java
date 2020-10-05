@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "presentation_like",
         uniqueConstraints = {
-                @UniqueConstraint(name = "unique_like", columnNames = {"presentation_id", "token"})
+                @UniqueConstraint(name = "unique_like", columnNames = {"presentationId", "token"})
         })
 class Like {
 
@@ -26,6 +26,5 @@ class Like {
     @NotNull
     String token;
 
-    @ManyToOne
-    Presentation presentation;
+    String presentationId;
 }

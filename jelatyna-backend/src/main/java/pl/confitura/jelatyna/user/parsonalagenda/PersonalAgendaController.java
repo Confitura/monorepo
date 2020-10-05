@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import pl.confitura.jelatyna.agenda.AgendaEntry;
 import pl.confitura.jelatyna.agenda.AgendaRepository;
 import pl.confitura.jelatyna.agenda.InlineAgenda;
+import pl.confitura.jelatyna.presentation.Presentation;
+import pl.confitura.jelatyna.presentation.PresentationFacade;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +28,7 @@ public class PersonalAgendaController {
     private final AgendaRepository agendaRepository;
     private final ProjectionFactory projectionFactory;
     private final PersonalAgendaRepository personalAgendaRepository;
+    private final PresentationFacade presentationFacade;
 
     @PostMapping("/users/{userId}/personalAgenda")
     public ResponseEntity<?> addEntry(@RequestBody AddAgendaEntryRequest entryRequest, @PathVariable String userId) {
@@ -50,9 +53,12 @@ public class PersonalAgendaController {
         Set<AgendaEntry> personalAgenda = personalAgendaRepository.findPersonalAgenda(userId);
         Stream<AgendaEntry> fullAgenda = concat(allRoomsTimeSlotEntries, personalAgenda);
         List<InlineAgenda> agendaWithInlinedResources = fullAgenda
-                .map(it -> projectionFactory.createProjection(InlineAgenda.class, it))
+                .map(it -> {
+                    Presentation presentation = presentationFacade.findById(it.getPresentationId());
+                    return new InlineAgenda(it, presentation);
+                })
                 .collect(toList());
-        return ResponseEntity.ok(new Resources<>(agendaWithInlinedResources));
+        return ResponseEntity.ok(agendaWithInlinedResources);
     }
 
     private Stream<AgendaEntry> concat(List<AgendaEntry> allRoomsTimeSlotEntries, Set<AgendaEntry> personalAgenda) {

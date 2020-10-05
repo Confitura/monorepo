@@ -8,41 +8,46 @@ import org.springframework.security.core.parameters.P;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 @RepositoryRestResource(path = "presentations", excerptProjection = InlineTags.class)
-public interface PresentationRepository extends Repository<Presentation, String> {
+interface PresentationRepository extends Repository<PresentationEntity, String> {
 
     @RestResource(exported = false)
-    Presentation save(Presentation presentation);
+    PresentationEntity save(PresentationEntity presentation);
 
     @PreAuthorize("@security.presentationOwnedByUser(#id)")
     void deleteById(@P("id") String id);
 
-    Presentation findById(String id);
+    PresentationEntity findById(String id);
 
     @PreAuthorize("@security.isAdmin()")
-    Iterable<Presentation> findAll();
+    Iterable<PresentationEntity> findAll();
 
-    @Query("FROM Presentation ")
+    @Query("FROM PresentationEntity ")
     @RestResource(exported = false)
-    Iterable<Presentation> findAllForV4p();
+    Stream<PresentationEntity> findAllForV4p();
 
-    @Query("FROM Presentation WHERE status ='accepted'")
+    @Query("FROM PresentationEntity WHERE status ='accepted'")
     @RestResource(path = "accepted", rel = "accepted")
-    Iterable<Presentation> findAccepted();
+    Iterable<PresentationEntity> findAccepted();
 
     @RestResource(exported = false)
     Long count();
 
-    @Query("SELECT count(p.id) FROM Presentation p WHERE status ='accepted'")
+    @Query("SELECT count(p.id) FROM PresentationEntity p WHERE status ='accepted'")
     @RestResource(exported = false)
     Long countAccepted();
 
-    @Query("SELECT count(p.id) FROM Presentation p WHERE status ='accepted' AND p.speakers = s")
+    @Query("SELECT count(p.id) FROM PresentationEntity p WHERE status ='accepted' AND p.speakers = s")
     @RestResource(exported = false)
     Long countAcceptedWithSpeaker(SpeakerEntity s);
 
-    @Query("FROM Presentation p JOIN p.speakers co WHERE p.status ='accepted' and co = ?1")
+    @Query("FROM PresentationEntity p JOIN p.speakers co WHERE p.status ='accepted' and co = ?1")
     @RestResource(exported = false)
-    List<Presentation> findAcceptedWithCoSpeaker(SpeakerEntity user);
+    List<PresentationEntity> findAcceptedWithCoSpeaker(SpeakerEntity user);
+
+    //TODO
+    @Query("select case when (count(p) > 0)  then true else false end from PresentationEntity p where p.id = ?1 AND p.speakers = ?2")
+    boolean isPresentationOwnByUser(String presentationId, String userId);
 }

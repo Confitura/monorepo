@@ -22,8 +22,8 @@ public class Vote {
     private String token;
     @Column(name = "vote_order")
     private Integer order;
-    @OneToOne
-    private Presentation presentation;
+
+    private String presentationId;
     @Max(1)
     @Min(-1)
     private Integer rate;

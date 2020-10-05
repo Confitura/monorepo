@@ -1,37 +1,65 @@
 package pl.confitura.jelatyna.agenda;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.rest.core.config.Projection;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.user.dto.PublicUserDto;
 
 import java.util.Set;
 
-@Projection(name = "inlineAgenda", types = {AgendaEntry.class})
-public interface InlineAgenda {
-    String getId();
+public class InlineAgenda {
+    private final AgendaEntry agendaEntry;
+    private final Presentation presentation;
 
-    @Value("#{target.timeSlot.id}")
-    String getTimeSlotId();
+    public InlineAgenda(AgendaEntry agendaEntry, Presentation presentation) {
+        this.agendaEntry = agendaEntry;
+        this.presentation = presentation;
+    }
 
-    @Value("#{target.timeSlot.label}")
-    String getTimeSlotLabel();
+    public String getId() {
+        return agendaEntry.getId();
+    }
 
-    @Value("#{target.room == null ? null : target.room.id}")
-    String getRoomId();
+    public String getTimeSlotId() {
+        if(agendaEntry.getTimeSlot() == null ){
+            return null;
+        }
+        return agendaEntry.getTimeSlot().getId();
+    }
 
-    @Value("#{target.room == null ? null : target.room.label}")
-    String getRoomLabel();
+    public String getTimeSlotLabel() {
+        if(agendaEntry.getTimeSlot() == null ){
+            return null;
+        }
+        return agendaEntry.getTimeSlot().getLabel();
+    }
 
-    @Value("#{target.label == null ? null : target.label}")
-    String getLabel();
+    public String getRoomId() {
+        if(agendaEntry.getRoom() == null ){
+            return null;
+        }
+        return agendaEntry.getRoom().getId();
+    }
 
-    @Value("#{target.presentation == null ? null : target.presentation.id}")
-    String getPresentationId();
+    public String getRoomLabel() {
+        if(agendaEntry.getRoom() == null ){
+            return null;
+        }
+        return agendaEntry.getRoom().getLabel();
+    }
 
-    Presentation getPresentation();
+    public String getLabel() {
+        return agendaEntry.getLabel();
+    }
 
-    @Value("#{target.getSpeakers()}")
-    Set<PublicUserDto> getSpeaker();
+    public String getPresentationId() {
+        return agendaEntry.getPresentationId();
+    }
+
+    public Presentation getPresentation() {
+        return presentation;
+    }
+
+    public Set<PublicUserDto> getSpeaker() {
+        return agendaEntry.getSpeakers();
+    }
 
 }

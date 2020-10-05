@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 class PresentationStats {
-    String title;
+//    String title;
     String presentationId;
 
     Long positiveVotes = 0L;
@@ -14,8 +14,8 @@ class PresentationStats {
     Long totalVotes = 0L;
 
     PresentationStats(Vote vote) {
-        title = vote.getPresentation().getTitle();
-        presentationId = vote.getPresentation().getId();
+//        title = "";//TODO vote.getPresentation().getTitle();
+        presentationId = vote.getPresentationId();
         if (vote.getRate() != null) {
             totalVotes++;
             if (vote.getRate() > 0) {

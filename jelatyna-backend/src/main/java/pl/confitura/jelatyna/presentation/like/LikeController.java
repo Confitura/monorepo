@@ -26,13 +26,13 @@ class LikeController {
 
     @PostMapping("/presentations/{presentationId}/likes")
     public ResponseEntity createVote(
-            @PathVariable("presentationId") Presentation presentation,
+            @PathVariable("presentationId") String presentationId,
             @Valid @RequestBody Like like
     ) {
-        if (likeRepository.findByPresentationAndToken(presentation, like.token) != null) {
+        if (likeRepository.findByPresentationIdAndToken(presentationId, like.token) != null) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
-        like.setPresentation(presentation);
+        like.setPresentationId(presentationId);
         likeRepository.save(like);
         return ResponseEntity.ok().build();
     }
@@ -40,9 +40,9 @@ class LikeController {
     @GetMapping("/presentations/{presentationId}/likes")
     @PreAuthorize("@security.isAdmin()")
     public Long countByPresentation(
-            @PathVariable("presentationId") Presentation presentation
+            @PathVariable("presentationId") String presentationId
     ) {
-        return likeRepository.countByPresentation(presentation);
+        return likeRepository.countByPresentationId(presentationId);
     }
 
     @DeleteMapping("/likes/{id}")
@@ -55,7 +55,7 @@ class LikeController {
     public Map<String, Long> getLikesSummary() {
         return likeRepository.findAll()
                 .collect(groupingBy(
-                        it -> it.getPresentation().getId(),
+                        Like::getPresentationId,
                         counting()
                 ));
 
@@ -77,7 +77,7 @@ class LikeController {
 
         LikeResponse(Like like) {
             this.id = like.getId();
-            this.presentationId = like.getPresentation().getId();
+            this.presentationId = like.getPresentationId();
         }
     }
 }

@@ -26,125 +26,48 @@ import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 @RequiredArgsConstructor
 public class PresentationController {
 
-    private final PresentationRepository repository;
-    private final UserFacade userFacade;
-    private final RatingService ratingService;
-    private final ConferenceConfigurationProperties conferenceConfiguration;
-    private final Security security;
+    private final PresentationFacade presentationFacade;
 
-    @PreAuthorize("@security.isAdmin()")
     @PostMapping("/presentations/{presentationId}/accept")
     @Transactional
     public ResponseEntity<?> accept(@PathVariable String presentationId) {
-        this.repository.findById(presentationId).setAccepted(true);
-        Presentation presentation = this.repository.findById(presentationId);
-        presentation.getSpeakers().forEach(speaker -> {
-            userFacade.markSpeaker(speaker.getId(), true);
-        });
+        this.presentationFacade.accept(presentationId);
         return ResponseEntity.ok().build();
     }
 
-    @PreAuthorize("@security.isAdmin()")
     @PostMapping("/presentations/{presentationId}/unaccept")
     @Transactional
     public ResponseEntity<?> unaccept(@PathVariable String presentationId) {
-        Presentation presentation = this.repository.findById(presentationId);
-        presentation.setAccepted(false);
-        repository.save(presentation);
-        presentation.getSpeakers().forEach(speaker -> {
-            Long accepted = repository.countAcceptedWithSpeaker(speaker);
-            boolean isSpeaker = accepted > 0;
-            userFacade.markSpeaker(speaker.getId(), isSpeaker);
-        });
+        this.presentationFacade.unaccept(presentationId);
         return ResponseEntity.ok().build();
 
     }
 
-    @PreAuthorize("@security.presentationOwnedByUser(#presentationId) || @security.isAdmin()")
-    @GetMapping("/presentations/{presentationId}/cospeakers")
-    public ResponseEntity<Resources<SpeakerEntity>> getCospeakers(@PathVariable String presentationId) {
-        Set<SpeakerEntity> cospeakers = this.repository.findById(presentationId).getSpeakers();
-        return ResponseEntity.ok(new Resources<>(cospeakers));
+    @GetMapping("/presentations/{presentationId}/speakers")
+    public ResponseEntity<Resources<SpeakerEntity>> getSpeakers(@PathVariable String presentationId) {
+        Set<SpeakerEntity> speakers = presentationFacade.getSpeakers(presentationId);
+        return ResponseEntity.ok(new Resources<>(speakers));
     }
 
-    @PreAuthorize("@security.presentationOwnedByUser(#presentationId) || @security.isAdmin()")
-    @DeleteMapping("/presentations/{presentationId}/cospeakers/{id:.+}")
-    public ResponseEntity<?> removeCospeaker(@PathVariable String presentationId, @PathVariable String id) {
-        Presentation presentation = this.repository.findById(presentationId);
-        if (presentation.getSpeakers().size() == 1) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Presentation needs at least one speaker!");
-        }
-        presentation.setSpeakers(removeCospeakerById(id, presentation.getSpeakers()));
-        repository.save(presentation);
+    @DeleteMapping("/presentations/{presentationId}/speakers/{id:.+}")
+    public ResponseEntity<?> removeSpeaker(@PathVariable String presentationId, @PathVariable String id) {
+        presentationFacade.removeSpeaker(presentationId, id);
         return ResponseEntity.ok().build();
     }
 
-    @PreAuthorize("@security.presentationOwnedByUser(#presentationId) || @security.isAdmin()")
-    @PostMapping("/presentations/{presentationId}/cospeakers/{email:.+}")
+    @PostMapping("/presentations/{presentationId}/speakers/{email:.+}")
     @Transactional
-    public ResponseEntity<?> addCospeaker(@PathVariable String presentationId, @PathVariable String email) {
-        FullUserDto user = this.userFacade.findByEmail(email);
-        if (user == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        Presentation presentation = this.repository.findById(presentationId);
-        if (presentation.isOwnedBy(email)) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("This speaker is already added to this presentation");
-        }
-        presentation.getSpeakers().add(SpeakerEntity.fromUser(user));
+    public ResponseEntity<?> addSpeaker(@PathVariable String presentationId, @PathVariable String email) {
+        Presentation presentation = presentationFacade.addSpeakerByEmail(presentationId, email);
         return ResponseEntity.ok(presentation);
     }
 
-    private Set<SpeakerEntity> removeCospeakerById(String id, Set<SpeakerEntity> cospeakers) {
-        return cospeakers.stream().filter(it -> !it.getId().equalsIgnoreCase(id)).collect(Collectors.toSet());
-    }
-
-    @PostMapping("/presentations/{presentationId}/ratings")
-    @PreAuthorize("@security.isAuthenticated()")
-    @Transactional
-    public ResponseEntity<?> addRating(@PathVariable String presentationId, @RequestBody @Valid Rate rate) {
-        Rate createdRate = ratingService.rate(presentationId, rate);
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(createdRate);
-    }
-
-    @PutMapping("/presentations/{presentationId}/ratings/{ratingId}")
-    @PreAuthorize("@security.isAuthenticated()")
-    @Transactional
-    public ResponseEntity<?> updateRating(@PathVariable("ratingId") String ratingId, @RequestBody @Valid Rate rate) {
-        ratingService.updateRating(rate.setId(ratingId));
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .build();
-    }
-
-
     @PostMapping("/users/{userId}/presentations")
     @PreAuthorize("@security.isOwner(#userId)")
-    public ResponseEntity<?> addPresentationToUser(@Valid @RequestBody Presentation presentation,
-                                                   @PathVariable String userId) {
-        if (presentation.isNew() && !canCreatePresentation()) {
-            return ResponseEntity.status(UNAUTHORIZED).build();
-        }
-        FullUserDto speaker = userFacade.findById(userId);
-        presentation.setSpeaker(SpeakerEntity.fromUser(speaker));
-        retainStatus(presentation);
-        Presentation saved = repository.save(presentation);
+    public ResponseEntity<?> savePresentation(@Valid @RequestBody Presentation presentation,
+                                              @PathVariable String userId) {
+        Presentation saved = presentationFacade.savePresentation(presentation, userId);
         return ResponseEntity.ok(new Resource<>(saved));
     }
-
-    private boolean canCreatePresentation() {
-        return conferenceConfiguration.getC4p().isEnabled() || security.isAdmin();
-    }
-
-    private void retainStatus(Presentation presentation) {
-        if (!presentation.isNew()) {
-            Presentation saved = repository.findById(presentation.getId());
-            presentation.setStatus(saved.getStatus());
-        }
-    }
-
 
 }

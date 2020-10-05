@@ -20,11 +20,10 @@ public class UsersPerformedRate {
     private String id;
 
     private String userId;
-    @ManyToOne
-    private Presentation presentation;
+    private String presentationId;
 
-    UsersPerformedRate(FullUserDto user, Presentation presentation) {
+    UsersPerformedRate(FullUserDto user, String presentationId) {
         this.userId = user.getId();
-        this.presentation = presentation;
+        this.presentationId = presentationId;
     }
 }

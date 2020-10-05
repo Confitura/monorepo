@@ -7,7 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 
-@RepositoryRestResource(path = "agenda", excerptProjection = InlineAgenda.class)
+@RepositoryRestResource(path = "agenda")
 public interface AgendaRepository extends Repository<AgendaEntry, String> {
 
     @PreAuthorize("@security.isAdmin()")

@@ -24,13 +24,13 @@ import pl.confitura.jelatyna.presentation.*;
 @RepositoryRestController
 public class VoteController {
 
-    private PresentationRepository presentationRepository;
+    private PresentationFacade presentationRepository;
     private VoteRepository voteRepository;
     private WebUtils webUtils;
     private LocalValidatorFactoryBean beanValidator;
 
     @Autowired
-    public VoteController(PresentationRepository presentationRepository, VoteRepository voteRepository,
+    public VoteController(PresentationFacade presentationRepository, VoteRepository voteRepository,
                           WebUtils webUtils, LocalValidatorFactoryBean beanValidator) {
         this.presentationRepository = presentationRepository;
         this.voteRepository = voteRepository;
@@ -60,7 +60,7 @@ public class VoteController {
                 .mapToObj(idx -> new Vote()
                         .setClient(webUtils.getClientIp())
                         .setToken(token)
-                        .setPresentation(presentations.get(idx))
+                        .setPresentationId(presentations.get(idx).getId())
                         .setOrder(idx))
                 .collect(toList());
         return this.voteRepository.saveAll(votes);

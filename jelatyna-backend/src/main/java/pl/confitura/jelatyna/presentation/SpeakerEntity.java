@@ -23,9 +23,9 @@ public class SpeakerEntity {
     @Column(columnDefinition = "varchar(255)")
     private String id;
 
-    @ManyToMany(mappedBy = "speakers")
+    @ElementCollection
     @JsonIgnore
-    private Set<Presentation> presentations;
+    private Set<String> presentationIds;
 
 
     @Column(updatable = false, insertable = false)
@@ -45,8 +45,8 @@ public class SpeakerEntity {
 
 
     public boolean isSpeaker() {
-        return presentations != null
-                && !presentations.isEmpty();
+        return presentationIds != null
+                && !presentationIds.isEmpty();
     }
 
     public PublicUserDto toPublicUser() {

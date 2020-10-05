@@ -38,7 +38,7 @@ interface UserRepository extends Repository<UserEntity, String> {
     @PreAuthorize("@security.isAdmin()")
     Iterable<UserEntity> find(@Param("query") String query);
 
-    @Query("Select co FROM Presentation p  " +
+    @Query("Select co FROM PresentationEntity p  " +
             "LEFT JOIN p.speakers co " +
             "WHERE p.status ='accepted'")
     Set<UserEntity> findAllAccepted();

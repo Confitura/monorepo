@@ -17,6 +17,6 @@ public class Rate {
 
     @Enumerated(EnumType.STRING)
     private RateValue value;
-
+    private String presentationId;
     private String comment;
 }

@@ -8,13 +8,13 @@ import java.util.stream.Stream;
 
 interface LikeRepository extends Repository<Like, String> {
 
-    Like findByPresentationAndToken(Presentation id, String token);
+    Like findByPresentationIdAndToken(String presentationId, String token);
 
     Like save(Like like);
 
     void deleteById(String likeId);
 
-    Long countByPresentation(Presentation presentation);
+    Long countByPresentationId(String presentationId);
 
     Stream<Like> findAll();
 

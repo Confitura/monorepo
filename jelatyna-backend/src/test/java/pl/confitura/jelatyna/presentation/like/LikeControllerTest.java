@@ -7,10 +7,10 @@ import org.springframework.hateoas.MediaTypes;
 import org.springframework.transaction.annotation.Transactional;
 import pl.confitura.jelatyna.BaseIntegrationTest;
 import pl.confitura.jelatyna.presentation.Presentation;
-import pl.confitura.jelatyna.presentation.PresentationRepository;
+import pl.confitura.jelatyna.presentation.PresentationFacade;
 import pl.confitura.jelatyna.presentation.SpeakerEntity;
-import pl.confitura.jelatyna.user.dto.FullUserDto;
 import pl.confitura.jelatyna.user.UserFacade;
+import pl.confitura.jelatyna.user.dto.FullUserDto;
 
 import java.util.List;
 import java.util.UUID;
@@ -28,7 +28,7 @@ import static pl.confitura.jelatyna.infrastructure.security.SecurityHelper.admin
 class LikeControllerTest extends BaseIntegrationTest {
 
     @Autowired
-    PresentationRepository presentationRepository;
+    PresentationFacade presentationFacade;
 
     @Autowired
     UserFacade userFacade;
@@ -55,7 +55,7 @@ class LikeControllerTest extends BaseIntegrationTest {
                 .andExpect(status().is2xxSuccessful());
 
         //the like is saved
-        Like like = likeRepository.findByPresentationAndToken(presentation, token);
+        Like like = likeRepository.findByPresentationIdAndToken(presentation.getId(), token);
         assertThat(like).isNotNull();
 
     }
@@ -64,7 +64,7 @@ class LikeControllerTest extends BaseIntegrationTest {
     void shouldNotAllowSameSecondLikeWithSameToken() throws Exception {
         // given user liked presentation
         String token = "token1A";
-        likeRepository.save(new Like().setToken(token).setPresentation(presentation));
+        likeRepository.save(new Like().setToken(token).setPresentationId(presentation.getId()));
 
         // when user tries to liked second time
         mockMvc.perform(post("/presentations/" + presentation.getId() + "/likes")
@@ -80,7 +80,7 @@ class LikeControllerTest extends BaseIntegrationTest {
     void shouldAllowToDeleteVote() throws Exception {
         // given user liked presentation
         String token = "token1A";
-        Like like = likeRepository.save(new Like().setToken(token).setPresentation(presentation));
+        Like like = likeRepository.save(new Like().setToken(token).setPresentationId(presentation.getId()));
 
         //when user deletes like
         mockMvc.perform(delete("/likes/" + like.getId()))
@@ -88,7 +88,7 @@ class LikeControllerTest extends BaseIntegrationTest {
                 .andExpect(status().is2xxSuccessful());
 
         //like is deletes
-        assertThat(likeRepository.findByPresentationAndToken(presentation, token))
+        assertThat(likeRepository.findByPresentationIdAndToken(presentation.getId(), token))
                 .isNull();
 
     }
@@ -96,11 +96,11 @@ class LikeControllerTest extends BaseIntegrationTest {
     @Test
     void adminShouldGetLikesCountForPresentation() throws Exception {
         //given presentation was liked 5 times
-        likeRepository.save(new Like().setToken("A").setPresentation(presentation));
-        likeRepository.save(new Like().setToken("B").setPresentation(presentation));
-        likeRepository.save(new Like().setToken("C").setPresentation(presentation));
-        likeRepository.save(new Like().setToken("D").setPresentation(presentation));
-        likeRepository.save(new Like().setToken("E").setPresentation(presentation));
+        likeRepository.save(new Like().setToken("A").setPresentationId(presentation.getId()));
+        likeRepository.save(new Like().setToken("B").setPresentationId(presentation.getId()));
+        likeRepository.save(new Like().setToken("C").setPresentationId(presentation.getId()));
+        likeRepository.save(new Like().setToken("D").setPresentationId(presentation.getId()));
+        likeRepository.save(new Like().setToken("E").setPresentationId(presentation.getId()));
 
         //when admin gets number of likes
         mockMvc.perform(get("/presentations/" + presentation.getId() + "/likes")
@@ -178,8 +178,8 @@ class LikeControllerTest extends BaseIntegrationTest {
         presentation.setLevel("level");
         presentation.setLanguage("language");
         FullUserDto user = userFacade.save(new FullUserDto());
-        presentation.setSpeaker(SpeakerEntity.fromUser(user));
-        return presentationRepository.save(presentation);
+        presentation.addSpeaker(SpeakerEntity.fromUser(user));
+        return presentationFacade.savePresentation(presentation, "1");
     }
 
     private List<Presentation> createPresentations(int n) {
@@ -190,13 +190,13 @@ class LikeControllerTest extends BaseIntegrationTest {
 
     private void likePresentation(Presentation presentation, int times) {
         for (int i = 0; i < times; i++) {
-            likeRepository.save(new Like().setPresentation(presentation).setToken(randomToken()));
+            likeRepository.save(new Like().setPresentationId(presentation.getId()).setToken(randomToken()));
         }
     }
 
 
     private void likePresentation(Presentation presentation, String token) {
-        likeRepository.save(new Like().setPresentation(presentation).setToken(token));
+        likeRepository.save(new Like().setPresentationId(presentation.getId()).setToken(token));
     }
 
     private String randomToken() {

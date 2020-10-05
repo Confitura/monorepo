@@ -4,6 +4,7 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.transaction.annotation.Transactional;
 import pl.confitura.jelatyna.BaseIntegrationTest;
 import pl.confitura.jelatyna.agenda.AgendaEntry;
@@ -34,7 +35,7 @@ class RatingApiTest extends BaseIntegrationTest {
 
     private FullUserDto user;
     private List<AgendaEntry> agenda;
-    private Presentation presentation;
+    private String presentationId;
     private Rate rate;
 
     @BeforeEach
@@ -46,7 +47,7 @@ class RatingApiTest extends BaseIntegrationTest {
                 new String[]{"09-12", "presentation1", "presentation2"},
                 new String[]{"12-18", "presentation3", "presentation4"}
         );
-        presentation = agenda.get(0).getPresentation();
+        presentationId = agenda.get(0).getPresentationId();
         rate = new Rate().setValue(RateValue.AWESOME);
         SecurityHelper.cleanSecurity();
     }
@@ -57,14 +58,14 @@ class RatingApiTest extends BaseIntegrationTest {
     public void userShouldBeAbleToRate() throws Exception {
 
         // when user rates presentation
-        rate(presentation, user, rate)
+        rate(presentationId, user, rate)
 
                 // then rate is created
                 .andExpect(jsonPath("$.value").value(rate.getValue().name()))
                 .andExpect(status().isCreated());
 
         // and rate is added to presentation
-        mockMvc.perform(get("/presentations/" + presentation.getId() + "/ratings"))
+        mockMvc.perform(get("/presentations/" + presentationId + "/ratings"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded.rates").value(hasSize(1)))
                 .andExpect(jsonPath("$._embedded.rates[0].value").value(rate.getValue().name()));
@@ -76,11 +77,11 @@ class RatingApiTest extends BaseIntegrationTest {
 
         Rate rate = new Rate().setValue(RateValue.AWESOME).setComment("comment");
         // when user rates presentation with comment
-        rate(presentation, user, rate)
+        rate(presentationId, user, rate)
                 .andExpect(status().isCreated());
 
         // then comment is added to presentation
-        mockMvc.perform(get("/presentations/" + presentation.getId() + "/ratings"))
+        mockMvc.perform(get("/presentations/" + presentationId + "/ratings"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded.rates").value(hasSize(1)))
                 .andExpect(jsonPath("$._embedded.rates[0].comment").value(rate.getComment()));
@@ -90,17 +91,18 @@ class RatingApiTest extends BaseIntegrationTest {
     @Transactional
     public void userShouldNotBeAbleToRateSamePresentationTwice() throws Exception {
 
-        rate(presentation, user, rate);
+        rate(presentationId, user, rate);
 
         //when same user tries to rate same presentation
-        rate(presentation, user, rate)
+        rate(presentationId, user, rate)
 
                 //then system denies it
                 .andExpect(status().isConflict());
 
 
         //and new rate is not added
-        mockMvc.perform(get("/presentations/" + presentation.getId() + "/ratings"))
+        mockMvc.perform(get("/presentations/" + presentationId + "/ratings"))
+                .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("$._embedded.rates").value(hasSize(1)));
     }
@@ -110,12 +112,12 @@ class RatingApiTest extends BaseIntegrationTest {
     public void userShouldBeAbleToUpdateRate() throws Exception {
 
         Rate newRate = new Rate().setValue(RateValue.GREAT);
-        MvcResult mvcResult = rate(presentation, user, rate).andReturn();
+        MvcResult mvcResult = rate(presentationId, user, rate).andReturn();
         Rate createdRate = fromJson(mvcResult.getResponse().getContentAsString(), Rate.class);
 
         // when user updates rate
         mockMvc.perform(
-                put("/presentations/" + presentation.getId() + "/ratings/" + createdRate.getId())
+                put("/presentations/" + presentationId + "/ratings/" + createdRate.getId())
                         .with(user(user))
                         .content(json(newRate))
                         .contentType(HAL_JSON)
@@ -123,7 +125,8 @@ class RatingApiTest extends BaseIntegrationTest {
                 .andExpect(status().isOk());
 
         //then vote is updated
-        mockMvc.perform(get("/presentations/" + presentation.getId() + "/ratings"))
+        mockMvc.perform(get("/presentations/" + presentationId + "/ratings"))
+                .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded.rates").value(hasSize(1)))
                 .andExpect(jsonPath("$._embedded.rates[0].value").value(newRate.getValue().name()));
@@ -133,17 +136,17 @@ class RatingApiTest extends BaseIntegrationTest {
     @Test
     @Transactional
     public void userShouldBeAbleToRateSecondPresentation() throws Exception {
-        rate(presentation, user, rate);
+        rate(presentationId, user, rate);
 
         Rate secondRate = new Rate().setValue(RateValue.GREAT);
-        Presentation secondPresentation = agenda.get(1).getPresentation();
+        String secondPresentation = agenda.get(1).getPresentationId();
 
         //when second presentaion is rated
         rate(secondPresentation, user, secondRate);
 
 
         // then rate is added to presentation
-        mockMvc.perform(get("/presentations/" + secondPresentation.getId() + "/ratings"))
+        mockMvc.perform(get("/presentations/" + secondPresentation + "/ratings"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded.rates").value(hasSize(1)))
                 .andExpect(jsonPath("$._embedded.rates[0].value").value(secondRate.getValue().name()));
@@ -153,7 +156,7 @@ class RatingApiTest extends BaseIntegrationTest {
     @Test
     @Transactional
     public void otherUserShouldBeAbleToRateSamePresentation() throws Exception {
-        rate(presentation, user, rate);
+        rate(presentationId, user, rate);
 
         SecurityHelper.asAdmin();
         FullUserDto otherUser = userUtils.createUser("other user");
@@ -161,19 +164,19 @@ class RatingApiTest extends BaseIntegrationTest {
         Rate otherRate = new Rate().setValue(RateValue.GREAT);
 
         //when other user rates presentation
-        rate(presentation, otherUser, otherRate);
+        rate(presentationId, otherUser, otherRate);
 
         //then presantation has added rate;
-        mockMvc.perform(get("/presentations/" + presentation.getId() + "/ratings"))
+        mockMvc.perform(get("/presentations/" + presentationId + "/ratings"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded.rates").value(hasSize(2)));
 
 
     }
 
-    private ResultActions rate(Presentation presentation, FullUserDto user, Rate rate) throws Exception {
+    private ResultActions rate(String presentationId, FullUserDto user, Rate rate) throws Exception {
         return mockMvc.perform(
-                post("/presentations/" + presentation.getId() + "/ratings")
+                post("/presentations/" + presentationId + "/ratings")
                         .with(user(user))
                         .content(json(rate))
                         .contentType(HAL_JSON)
