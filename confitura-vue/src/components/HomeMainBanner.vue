@@ -8,7 +8,7 @@
 
             </div>
             <div class="info__live">
-                <div class="info__live-text">We will be back in 2021!</div>
+                <div class="info__live-text">We will be back in 2022!</div>
             </div>
             <div class="time-and-place">
                 <div class="place">
