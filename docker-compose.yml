@@ -1,0 +1,30 @@
+version: "3.3"
+services:
+
+  frontend:
+    build: confitura-vue
+    volumes:
+      - ./confitura-vue/src:/opt/app/src
+
+  console:
+    build: confitura-page
+    volumes:
+      - ./confitura-page/src:/opt/app/src
+
+  backend:
+    build: jelatyna-backend
+    volumes:
+      - ./jelatyna-backend/src:/opt/app/src
+
+  nginx:
+    image: nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx/config:/etc/nginx/conf.d
+    links:
+      - console
+      - frontend
+      - backend
+
+
