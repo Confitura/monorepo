@@ -8,14 +8,16 @@
 
             </div>
             <div class="info__live">
-                <div class="info__live-text">We will be back in 2022!</div>
+                <div class="info__live-text">Confitura 2022 is under construction</div>
             </div>
-            <div class="time-and-place">
-                <div class="place">
-                    Click
-                    <a href="/#covid-19" class="place__link"> here </a>&nbsp;to read the
-                    full message
-                </div>
+            <div class="info__long">
+              The <a
+                href="https://www.facebook.com/events/expo-xxi-warszawa-międzynarodowe-centrum-targowo-kongresowe/confitura-2022/1321909284639993/">date
+              and place</a> are set, you can start preparing!
+              <br/>
+              If your company want to join us as well, here is our
+              contact mail: <a href="mailto:confitura@confitura.pl">confitura@confitura.pl</a>; we will be happy to
+              start a new friendship
             </div>
         </div>
       <HomeMainBannerIllustration />
@@ -146,6 +148,15 @@ export default class HomeMainBanner extends Vue {
   @include md() {
     flex-direction: row;
     font-size: 1.5rem;
+  }
+}
+
+.info__long {
+  color: #ffffff;
+  font-size: 1.7rem;
+  word-wrap: break-word;
+  @include md() {
+    max-width: 30vw;
   }
 }
 

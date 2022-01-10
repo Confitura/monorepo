@@ -1,7 +1,6 @@
 <template>
   <div class="home__container">
     <HomeMainBanner />
-    <HomeCovid19 />
     <HomeAbout />
     <HomeNumbers />
     <!--    <HomePartners />-->
