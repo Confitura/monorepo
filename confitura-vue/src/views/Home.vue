@@ -1,6 +1,7 @@
 <template>
   <div class="home__container">
     <HomeMainBanner />
+    <HomeCovid19 />
     <HomeAbout />
     <HomeNumbers />
     <!--    <HomePartners />-->
@@ -12,6 +13,7 @@
 import { Component, Vue } from "vue-property-decorator";
 import HomeMainBanner from "@/components/HomeMainBanner.vue";
 import HomeAbout from "@/components/HomeAbout.vue";
+import HomeCovid19 from "@/components/HomeCovid19.vue";
 import SocialLinks from "@/components/SocialLinks.vue";
 import HomePartners from "@/components/HomePartners.vue";
 import Contact from "@/components/Contact.vue";
@@ -24,6 +26,7 @@ import HomeNumbers from "@/components/HomeNumbers.vue";
     HomeNumbers,
     SocialLinks,
     HomeAbout,
+    HomeCovid19,
     HomeMainBanner
   }
 })

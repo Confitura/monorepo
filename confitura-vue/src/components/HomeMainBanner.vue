@@ -2,29 +2,22 @@
   <section class="banner" id="home">
     <HomeMainBannerStars />
     <div class="container">
-      <div class="info">
-        <div class="slogan">
-          <h1 class="h1">It is not rocket science!</h1>
+        <div class="info">
+            <div class="slogan">
+                <h1 class="h1">It is not rocket science!</h1>
+
+            </div>
+            <div class="info__live">
+                <div class="info__live-text">We will be back in 2022!</div>
+            </div>
+            <div class="time-and-place">
+                <div class="place">
+                    Click
+                    <a href="/#covid-19" class="place__link"> here </a>&nbsp;to read the
+                    full message
+                </div>
+            </div>
         </div>
-        <!--        <div class="info__live">-->
-        <!--          <div class="info__live-text">Thank you!</div>-->
-        <!--        </div>-->
-        <TheTimer />
-        <div class="time-and-place">
-          <div>{{ date }},&nbsp;</div>
-          <div class="place">
-            Warsaw Expo XXI
-            <a
-              class="place__link"
-              href="https://www.google.com/maps/place/Warszawskie+Centrum+EXPO+XXI/@52.224893,20.9599152,17z/data=!3m1!4b1!4m5!3m4!1s0x471ecb60b93336e5:0xf7d1cb012bb9954d!8m2!3d52.224893!4d20.962104"
-              target="_blank"
-              rel="noopener"
-            >
-              <i class="fas fa-map-marker-alt"></i>
-            </a>
-          </div>
-        </div>
-      </div>
       <HomeMainBannerIllustration />
     </div>
     <img class="rocket-icon" src="../assets/rocket.svg" alt="rocket" />
