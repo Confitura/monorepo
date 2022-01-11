@@ -17,7 +17,7 @@
               <br/>
               If your company want to join us as well, here is our
               contact mail: <a href="mailto:confitura@confitura.pl">confitura@confitura.pl</a>; we will be happy to
-              start a new friendship
+              start a new friendship.
             </div>
         </div>
       <HomeMainBannerIllustration />
