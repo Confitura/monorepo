@@ -16,7 +16,7 @@
                 href="https://www.facebook.com/events/expo-xxi-warszawa-międzynarodowe-centrum-targowo-kongresowe/confitura-2022/1321909284639993/">date
               and place</a> are set, you can start preparing!
               <br/>
-              If your company want to join us as well, here is our
+              If your company wants to join us as well, here is our
               contact mail: <a href="mailto:confitura@confitura.pl">confitura@confitura.pl</a>; we will be happy to
               start a new friendship.
             </div>
