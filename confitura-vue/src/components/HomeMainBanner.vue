@@ -8,7 +8,8 @@
 
             </div>
             <div class="info__live">
-                <div class="info__live-text">Confitura 2022 is under construction</div>
+                <div class="info__live-text">Confitura 2022</div>
+                <div class="info__live-text">is under construction</div>
             </div>
             <div class="info__long">
               The <a
