@@ -20,6 +20,9 @@
               contact mail: <a href="mailto:confitura@confitura.pl">confitura@confitura.pl</a>; we will be happy to
               start a new friendship.
             </div>
+          <div class="info__long">
+            Confitura 2022 will take place on June 25 in Warsaw Expocentre EXPO XXI.
+          </div>
         </div>
       <HomeMainBannerIllustration />
     </div>
