@@ -17,7 +17,7 @@
               and place</a> are set, you can start preparing!
               <br/>
               If your company wants to join us as well, here is our
-              contact mail: <a href="mailto:confitura@confitura.pl">confitura@confitura.pl</a>; we will be happy to
+              contact mail: <a href="mailto:confitura[at]confitura[dot]pl">confitura[at]confitura[dot]pl</a>; we will be happy to
               start a new friendship.
             </div>
           <div class="info__long">
