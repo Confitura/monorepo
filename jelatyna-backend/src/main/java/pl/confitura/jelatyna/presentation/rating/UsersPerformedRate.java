@@ -2,6 +2,7 @@ package pl.confitura.jelatyna.presentation.rating;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 import org.hibernate.annotations.GenericGenerator;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.user.dto.FullUserDto;
@@ -11,6 +12,7 @@ import javax.persistence.*;
 
 @Entity
 @Data
+@Accessors(chain = true)
 @NoArgsConstructor
 public class UsersPerformedRate {
     @Id

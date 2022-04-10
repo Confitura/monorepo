@@ -5,9 +5,11 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 @MappedSuperclass
 @Data
+@Accessors(chain = true)
 public abstract class Person {
     @Id
     private Long id;

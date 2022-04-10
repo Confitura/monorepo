@@ -1,26 +1,33 @@
 package pl.confitura.jelatyna.user;
 
+import java.util.LinkedHashSet;
+import java.util.Optional;
+import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+
+import org.hibernate.annotations.GenericGenerator;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.hibernate.annotations.GenericGenerator;
+import lombok.experimental.Accessors;
 import pl.confitura.jelatyna.agenda.AgendaEntry;
 import pl.confitura.jelatyna.agenda.TimeSlot;
 import pl.confitura.jelatyna.infrastructure.db.AuditedEntity;
 import pl.confitura.jelatyna.registration.ParticipationData;
 import pl.confitura.jelatyna.user.dto.FullUserDto;
 
-import javax.persistence.*;
-import java.util.LinkedHashSet;
-import java.util.Optional;
-import java.util.Set;
-
-import static java.util.Optional.ofNullable;
-
 @Entity
-@Table(name = "user")
 @Data
 @EqualsAndHashCode(callSuper = false)
-class UserEntity extends AuditedEntity {
+@Accessors(chain = true)
+class User extends AuditedEntity {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
@@ -78,41 +85,43 @@ class UserEntity extends AuditedEntity {
     }
 
     FullUserDto toDto() {
-        return new FullUserDto()
-                .setId(this.id)
-                .setOrigin(this.origin)
-                .setName(this.name)
-                .setEmail(this.email)
-                .setBio(this.bio)
-                .setUsername(this.username)
-                .setTwitter(this.twitter)
-                .setGithub(this.github)
-                .setWww(this.www)
-                .setPhoto(this.photo)
-                .setAdmin(this.isAdmin)
-                .setVolunteer(this.isVolunteer)
-                .setSocialId(this.socialId)
-                .setPrivacyPolicyAccepted(ofNullable(this.privacyPolicyAccepted).orElse(false))
-                .setSpeaker(ofNullable(this.speaker).orElse(false));
+        FullUserDto dto = new FullUserDto();
+        dto.setId(this.id);
+        dto.setOrigin(this.origin);
+        dto.setName(this.name);
+        dto.setEmail(this.email);
+        dto.setBio(this.bio);
+        dto.setUsername(this.username);
+        dto.setTwitter(this.twitter);
+        dto.setGithub(this.github);
+        dto.setWww(this.www);
+        dto.setPhoto(this.photo);
+        dto.setAdmin(this.isAdmin);
+        dto.setVolunteer(this.isVolunteer);
+        dto.setSocialId(this.socialId);
+        dto.setPrivacyPolicyAccepted(this.privacyPolicyAccepted);
+        dto.setSpeaker(this.speaker);
+        return dto;
     }
 
 
-    static UserEntity fromDto(FullUserDto dto) {
-        return new UserEntity()
-                .setId(dto.getId())
-                .setOrigin(dto.getOrigin())
-                .setName(dto.getName())
-                .setEmail(dto.getEmail())
-                .setBio(dto.getBio())
-                .setUsername(dto.getUsername())
-                .setTwitter(dto.getTwitter())
-                .setGithub(dto.getGithub())
-                .setWww(dto.getWww())
-                .setPhoto(dto.getPhoto())
-                .setAdmin(dto.isAdmin())
-                .setVolunteer(dto.isVolunteer())
-                .setSocialId(dto.getSocialId())
-                .setPrivacyPolicyAccepted(dto.isPrivacyPolicyAccepted());
+    static User fromDto(FullUserDto dto) {
+        User user = new User();
+        user.setId(dto.getId());
+        user.setOrigin(dto.getOrigin());
+        user.setName(dto.getName());
+        user.setEmail(dto.getEmail());
+        user.setBio(dto.getBio());
+        user.setUsername(dto.getUsername());
+        user.setTwitter(dto.getTwitter());
+        user.setGithub(dto.getGithub());
+        user.setWww(dto.getWww());
+        user.setPhoto(dto.getPhoto());
+        user.setAdmin(dto.isAdmin());
+        user.setVolunteer(dto.isVolunteer());
+        user.setSocialId(dto.getSocialId());
+        user.setPrivacyPolicyAccepted(dto.getPrivacyPolicyAccepted());
+        return user;
     }
 
 

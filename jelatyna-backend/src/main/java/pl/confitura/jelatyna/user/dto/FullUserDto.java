@@ -2,8 +2,10 @@ package pl.confitura.jelatyna.user.dto;
 
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 @Data
+@Accessors(chain = true)
 public class FullUserDto {
     private String id;
     private String origin;
@@ -18,8 +20,8 @@ public class FullUserDto {
     private boolean isAdmin;
     private boolean isVolunteer;
     private String socialId;
-    private boolean privacyPolicyAccepted = false;
-    private boolean isSpeaker = false;
+    private Boolean privacyPolicyAccepted = false;
+    private Boolean speaker = false;
 
     public void updateFields(FullUserDto user) {
         name = user.name;
@@ -34,13 +36,14 @@ public class FullUserDto {
     }
 
     public PublicUserDto toPublicUser() {
-        return new PublicUserDto()
-                .setId(this.getId())
-                .setName(this.getName())
-                .setBio(this.getBio())
-                .setTwitter(this.getTwitter())
-                .setGithub(this.getGithub())
-                .setWww(this.getWww())
-                .setPhoto(this.getPhoto());
+        PublicUserDto that = new PublicUserDto();
+        that.setId(this.getId());
+        that.setName(this.getName());
+        that.setBio(this.getBio());
+        that.setTwitter(this.getTwitter());
+        that.setGithub(this.getGithub());
+        that.setWww(this.getWww());
+        that.setPhoto(this.getPhoto());
+        return that;
     }
 }

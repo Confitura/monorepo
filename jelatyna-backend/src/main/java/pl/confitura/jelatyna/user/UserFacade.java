@@ -20,7 +20,7 @@ public class UserFacade {
 
     public FullUserDto save(FullUserDto dtoUser) {
         if (dtoUser != null) {
-            UserEntity user = UserEntity.fromDto(dtoUser);
+            User user = User.fromDto(dtoUser);
             return toDto(userRepository.save(user));
         } else {
             return null;
@@ -39,18 +39,18 @@ public class UserFacade {
         return toDto(userRepository.findByEmail(email));
     }
 
-    private FullUserDto toDto(UserEntity user) {
+    private FullUserDto toDto(User user) {
         return user == null ? null : user.toDto();
     }
 
     public void changePhoto(String userId, String path) {
-        UserEntity user = userRepository.findById(userId);
+        User user = userRepository.findById(userId);
         user.setPhoto(path);
         userRepository.save(user);
     }
 
     public void markSpeaker(String id, boolean isSpeaker) {
-        UserEntity user = userRepository.findById(id);
+        User user = userRepository.findById(id);
         user.setSpeaker(isSpeaker);
         userRepository.save(user);
     }
@@ -75,7 +75,7 @@ public class UserFacade {
 
     public Set<FullUserDto> findAll() {
         return userRepository.findAll().stream()
-                .map(UserEntity::toDto)
+                .map(User::toDto)
                 .collect(Collectors.toSet());
     }
 }

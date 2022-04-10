@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
-import pl.confitura.jelatyna.presentation.SpeakerEntity;
+import pl.confitura.jelatyna.presentation.Speaker;
 import pl.confitura.jelatyna.user.dto.FullUserDto;
 
 import java.util.List;
@@ -34,7 +34,7 @@ public class PresentationUtils {
                 .setShortDescription("short description of "+title)
                 .setLanguage("pl")
                 .setLevel("easy")
-                .setSpeaker(SpeakerEntity.fromUser(user));
+                .setSpeaker(Speaker.fromUser(user));
         return presentationRepository.save(o);
     }
 
