@@ -12,7 +12,7 @@ import pl.confitura.jelatyna.agenda.PresentationUtils;
 import pl.confitura.jelatyna.agenda.UserUtils;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
 import pl.confitura.jelatyna.presentation.Presentation;
-import pl.confitura.jelatyna.user.dto.User;
+import pl.confitura.jelatyna.user.User;
 
 import java.util.List;
 
@@ -42,6 +42,7 @@ class RatingApiTest extends BaseIntegrationTest {
     public void setUp() {
         SecurityHelper.asAdmin();
         user = userUtils.createUser("user");
+        user = userUtils.markArrived(user);
         agenda = agendaUtils.createAgenda(
                 new String[]{"", "room1", "room2"},
                 new String[]{"09-12", "presentation1", "presentation2"},
@@ -158,6 +159,7 @@ class RatingApiTest extends BaseIntegrationTest {
 
         SecurityHelper.asAdmin();
         User otherUser = userUtils.createUser("other user");
+        otherUser = userUtils.markArrived(otherUser);
         SecurityHelper.cleanSecurity();
         Rate otherRate = new Rate().setValue(RateValue.GREAT);
 

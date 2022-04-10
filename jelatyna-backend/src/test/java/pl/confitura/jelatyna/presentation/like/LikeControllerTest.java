@@ -8,9 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.confitura.jelatyna.BaseIntegrationTest;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
-import pl.confitura.jelatyna.presentation.Speaker;
-import pl.confitura.jelatyna.user.dto.User;
-import pl.confitura.jelatyna.user.UserFacade;
+import pl.confitura.jelatyna.user.User;
+import pl.confitura.jelatyna.user.UserRepository;
 
 import java.util.List;
 import java.util.UUID;
@@ -31,7 +30,7 @@ class LikeControllerTest extends BaseIntegrationTest {
     PresentationRepository presentationRepository;
 
     @Autowired
-    UserFacade userFacade;
+    UserRepository userRepository;
 
     @Autowired
     LikeRepository likeRepository;
@@ -177,8 +176,8 @@ class LikeControllerTest extends BaseIntegrationTest {
         presentation.setDescription("description");
         presentation.setLevel("level");
         presentation.setLanguage("language");
-        User user = userFacade.createUser(new User());
-        presentation.setSpeaker(Speaker.fromUser(user));
+        User speaker = userRepository.save(new User());
+        presentation.setSpeaker(speaker);
         return presentationRepository.save(presentation);
     }
 

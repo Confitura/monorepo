@@ -1,22 +1,23 @@
 package pl.confitura.jelatyna.login;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import pl.confitura.jelatyna.user.dto.User;
-import pl.confitura.jelatyna.user.UserFacade;
+import pl.confitura.jelatyna.user.User;
+import pl.confitura.jelatyna.user.UserRepository;
 
-@RequiredArgsConstructor
 @Service
 public class OAuthUserService {
+    private UserRepository userRepository;
 
-    private final UserFacade userFacade;
+    public OAuthUserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     public User mapToUser(OAuthUserBase oauthUser) {
         String id = oauthUser.encodeId();
-        if (!userFacade.existsUserWithSocialId(id)) {
-            userFacade.createUser(oauthUser.toUser());
+        if (!userRepository.existsBySocialId(id)) {
+            userRepository.save(oauthUser.toUser());
         }
-        return userFacade.findBySocialId(id);
+        return userRepository.findBySocialId(id);
     }
 }

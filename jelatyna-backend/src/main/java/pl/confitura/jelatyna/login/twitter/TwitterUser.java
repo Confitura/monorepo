@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import pl.confitura.jelatyna.login.OAuthUserBase;
-import pl.confitura.jelatyna.user.dto.User;
+import pl.confitura.jelatyna.user.User;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data

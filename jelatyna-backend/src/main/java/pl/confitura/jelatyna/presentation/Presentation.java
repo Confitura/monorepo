@@ -24,12 +24,13 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 import pl.confitura.jelatyna.presentation.rating.Rate;
-import pl.confitura.jelatyna.user.dto.PublicUser;
+import pl.confitura.jelatyna.user.PublicUser;
+import pl.confitura.jelatyna.user.User;
 
 @Entity
 @Data
-@ToString(exclude = { "speakers", "ratings" })
-@EqualsAndHashCode(exclude = { "speakers", "ratings" })
+@ToString(exclude = { "speakers", "ratings", "publicSpeakers" })
+@EqualsAndHashCode(exclude = { "speakers", "ratings", "publicSpeakers" })
 @Accessors(chain = true)
 public class Presentation {
 
@@ -58,7 +59,7 @@ public class Presentation {
 
     @ManyToMany
     @NotNull
-    private Set<Speaker> speakers = new HashSet<>();
+    private Set<User> speakers = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY)
     private Set<Rate> ratings = new HashSet<>();
@@ -71,11 +72,15 @@ public class Presentation {
         return speakers.stream().anyMatch(it -> it.getEmail().equalsIgnoreCase(email));
     }
 
-    public boolean ownerHasId(String id) {
-        return speakers.stream().anyMatch(it -> it.getId().equals(id));
+    boolean hasCospeaker(String email) {
+        return speakers.stream().anyMatch(it -> it.getEmail().equalsIgnoreCase(email));
     }
 
-    void setAccepted(boolean accepted) {
+    public boolean isAccepted() {
+        return STATUS_ACCEPTED.equals(status);
+    }
+
+    public void setAccepted(boolean accepted) {
         if (accepted) {
             status = STATUS_ACCEPTED;
         } else {
@@ -87,8 +92,19 @@ public class Presentation {
         return id == null;
     }
 
-    public Presentation setSpeaker(Speaker speaker) {
+    public Presentation setSpeaker(User speaker) {
         speakers.add(speaker);
         return this;
+    }
+
+    @JsonIgnore
+    public Set<PublicUser> getPublicSpeakers() {
+        if (getSpeakers().isEmpty()) {
+            return Collections.emptySet();
+        } else {
+            return getSpeakers().stream()
+                    .map(PublicUser::new)
+                    .collect(toSet());
+        }
     }
 }
