@@ -85,6 +85,17 @@ class User extends AuditedEntity {
         personalAgenda.remove(entry);
     }
 
+    void updateFields(User user) {
+        name = user.name;
+        email = user.email;
+        bio = user.bio;
+        username = user.username;
+        twitter = user.twitter;
+        github = user.github;
+        www = user.www;
+        photo = user.photo;
+        privacyPolicyAccepted = user.privacyPolicyAccepted;
+    }
 
     public boolean hasArrived() {
         return isParticipant() && getParticipationData().getArrivalDate() != null;
@@ -130,5 +141,16 @@ class User extends AuditedEntity {
         return user;
     }
 
+    PublicUser toPublicUser() {
+        PublicUser that = new PublicUser();
+        that.setId(this.getId());
+        that.setName(this.getName());
+        that.setBio(this.getBio());
+        that.setTwitter(this.getTwitter());
+        that.setGithub(this.getGithub());
+        that.setWww(this.getWww());
+        that.setPhoto(this.getPhoto());
+        return that;
+    }
 
 }

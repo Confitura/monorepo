@@ -1,7 +1,6 @@
 package pl.confitura.jelatyna.user.parsonalagenda;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 import pl.confitura.jelatyna.agenda.AgendaEntry;
 
@@ -9,7 +8,6 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@NoArgsConstructor
 class PersonalAgendaEntry {
 
     @Id

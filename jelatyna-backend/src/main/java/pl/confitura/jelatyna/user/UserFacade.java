@@ -2,10 +2,6 @@ package pl.confitura.jelatyna.user;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.confitura.jelatyna.user.dto.PublicUser;
-
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -17,7 +13,7 @@ public class UserFacade {
         return userRepository.existsBySocialId(socialId);
     }
 
-    public pl.confitura.jelatyna.user.dto.User save(pl.confitura.jelatyna.user.dto.User dtoUser) {
+    public pl.confitura.jelatyna.user.dto.User createUser(pl.confitura.jelatyna.user.dto.User dtoUser) {
         if (dtoUser != null) {
             User user = User.fromDto(dtoUser);
             return toDto(userRepository.save(user));
@@ -48,27 +44,9 @@ public class UserFacade {
         userRepository.save(user);
     }
 
-    public void markSpeaker(String id, boolean isSpeaker) {
+    public void markSpeaker(String id, boolean b) {
         User user = userRepository.findById(id);
-        user.setSpeaker(isSpeaker);
+        user.setSpeaker(true);
         userRepository.save(user);
-    }
-
-    public Set<PublicUser> findAdmins() {
-        return userRepository.findAdmins().stream()
-                .map(it -> it.toDto().toPublicUser())
-                .collect(Collectors.toSet());
-    }
-
-    public Set<PublicUser> findVolunteers() {
-        return userRepository.findVolunteers().stream()
-                .map(it -> it.toDto().toPublicUser())
-                .collect(Collectors.toSet());
-    }
-
-    public Set<PublicUser> findAcceptedSpeakers() {
-        return userRepository.findAllAccepted().stream()
-                .map(it -> it.toDto().toPublicUser())
-                .collect(Collectors.toSet());
     }
 }

@@ -177,7 +177,7 @@ class LikeControllerTest extends BaseIntegrationTest {
         presentation.setDescription("description");
         presentation.setLevel("level");
         presentation.setLanguage("language");
-        User user = userFacade.save(new User());
+        User user = userFacade.createUser(new User());
         presentation.setSpeaker(Speaker.fromUser(user));
         return presentationRepository.save(presentation);
     }

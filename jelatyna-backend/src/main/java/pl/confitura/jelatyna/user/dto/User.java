@@ -22,28 +22,4 @@ public class User {
     private String socialId;
     private Boolean privacyPolicyAccepted = false;
     private Boolean speaker = false;
-
-    public void updateFields(User user) {
-        name = user.name;
-        email = user.email;
-        bio = user.bio;
-        username = user.username;
-        twitter = user.twitter;
-        github = user.github;
-        www = user.www;
-        photo = user.photo;
-        privacyPolicyAccepted = user.privacyPolicyAccepted;
-    }
-
-    public PublicUser toPublicUser() {
-        PublicUser that = new PublicUser();
-        that.setId(this.getId());
-        that.setName(this.getName());
-        that.setBio(this.getBio());
-        that.setTwitter(this.getTwitter());
-        that.setGithub(this.getGithub());
-        that.setWww(this.getWww());
-        that.setPhoto(this.getPhoto());
-        return that;
-    }
 }
