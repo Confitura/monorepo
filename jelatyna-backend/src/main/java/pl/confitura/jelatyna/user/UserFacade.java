@@ -71,10 +71,4 @@ public class UserFacade {
                 .map(it -> it.toDto().toPublicUser())
                 .collect(Collectors.toSet());
     }
-
-    public Set<pl.confitura.jelatyna.user.dto.User> findAll() {
-        return userRepository.findAll().stream()
-                .map(User::toDto)
-                .collect(Collectors.toSet());
-    }
 }

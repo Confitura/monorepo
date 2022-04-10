@@ -66,12 +66,6 @@ class UserController {
         return ResponseEntity.ok(new Resource<>(user.toPublicUser()));
     }
 
-    @GetMapping("/users")
-    public ResponseEntity<?> getAll() {
-        Set<User> users = userFacade.findAll();
-        return ResponseEntity.ok(new Resources<>(users));
-    }
-
     @GetMapping("/users/search/admins")
     public ResponseEntity<?> getAdmins() {
         Set<PublicUser> admins = userFacade.findAdmins();
