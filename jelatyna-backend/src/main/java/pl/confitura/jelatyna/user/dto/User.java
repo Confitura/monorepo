@@ -6,7 +6,7 @@ import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain = true)
-public class FullUserDto {
+public class User {
     private String id;
     private String origin;
     private String name;
@@ -23,7 +23,7 @@ public class FullUserDto {
     private Boolean privacyPolicyAccepted = false;
     private Boolean speaker = false;
 
-    public void updateFields(FullUserDto user) {
+    public void updateFields(User user) {
         name = user.name;
         email = user.email;
         bio = user.bio;
@@ -35,8 +35,8 @@ public class FullUserDto {
         privacyPolicyAccepted = user.privacyPolicyAccepted;
     }
 
-    public PublicUserDto toPublicUser() {
-        PublicUserDto that = new PublicUserDto();
+    public PublicUser toPublicUser() {
+        PublicUser that = new PublicUser();
         that.setId(this.getId());
         that.setName(this.getName());
         that.setBio(this.getBio());

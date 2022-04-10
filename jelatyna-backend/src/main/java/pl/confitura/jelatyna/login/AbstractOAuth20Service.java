@@ -6,7 +6,8 @@ import com.github.scribejava.core.model.OAuthRequest;
 import com.github.scribejava.core.model.Response;
 import com.github.scribejava.core.model.Verb;
 import com.github.scribejava.core.oauth.OAuth20Service;
-import pl.confitura.jelatyna.user.dto.FullUserDto;
+import org.springframework.beans.factory.annotation.Autowired;
+import pl.confitura.jelatyna.user.dto.User;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
@@ -32,7 +33,7 @@ public abstract class AbstractOAuth20Service {
         return auth20Service.getAuthorizationUrl();
     }
 
-    FullUserDto getUserFor(String code) {
+    User getUserFor(String code) {
         try {
             return doGetUser(code);
         } catch (Exception ex) {
@@ -40,7 +41,7 @@ public abstract class AbstractOAuth20Service {
         }
     }
 
-    private FullUserDto doGetUser(String code)
+    private User doGetUser(String code)
             throws IOException, InterruptedException, ExecutionException {
         OAuth2AccessToken token = auth20Service.getAccessToken(code);
         return oauthUserService.mapToUser(getOAuthUserFor(token));

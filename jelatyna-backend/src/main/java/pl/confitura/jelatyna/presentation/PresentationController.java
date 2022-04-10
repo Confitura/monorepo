@@ -14,7 +14,7 @@ import pl.confitura.jelatyna.infrastructure.security.Security;
 import pl.confitura.jelatyna.presentation.rating.Rate;
 import pl.confitura.jelatyna.presentation.rating.RatingService;
 import pl.confitura.jelatyna.user.UserFacade;
-import pl.confitura.jelatyna.user.dto.FullUserDto;
+import pl.confitura.jelatyna.user.dto.User;
 
 import javax.validation.Valid;
 import java.util.Set;
@@ -85,7 +85,7 @@ public class PresentationController {
     @PostMapping("/presentations/{presentationId}/cospeakers/{email:.+}")
     @Transactional
     public ResponseEntity<?> addCospeaker(@PathVariable String presentationId, @PathVariable String email) {
-        FullUserDto user = this.userFacade.findByEmail(email);
+        User user = this.userFacade.findByEmail(email);
         if (user == null) {
             return ResponseEntity.notFound().build();
         }
@@ -130,7 +130,7 @@ public class PresentationController {
         if (presentation.isNew() && !canCreatePresentation()) {
             return ResponseEntity.status(UNAUTHORIZED).build();
         }
-        FullUserDto speaker = userFacade.findById(userId);
+        User speaker = userFacade.findById(userId);
         presentation.setSpeaker(Speaker.fromUser(speaker));
         retainStatus(presentation);
         Presentation saved = repository.save(presentation);

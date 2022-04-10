@@ -10,7 +10,7 @@ import pl.confitura.jelatyna.agenda.AgendaEntry;
 import pl.confitura.jelatyna.agenda.AgendaUtils;
 import pl.confitura.jelatyna.agenda.PresentationUtils;
 import pl.confitura.jelatyna.agenda.UserUtils;
-import pl.confitura.jelatyna.user.dto.FullUserDto;
+import pl.confitura.jelatyna.user.dto.User;
 
 import java.util.List;
 import java.util.Map;
@@ -34,7 +34,7 @@ class PersonalAgendaControllerTest extends BaseIntegrationTest {
     @Autowired
     PresentationUtils presentationUtils;
 
-    private FullUserDto user;
+    private User user;
     private Map<String, AgendaEntry> entriesByPresentationTitle;
 
     @BeforeEach

@@ -6,8 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.GenericGenerator;
-import pl.confitura.jelatyna.user.dto.FullUserDto;
-import pl.confitura.jelatyna.user.dto.PublicUserDto;
+import pl.confitura.jelatyna.user.dto.PublicUser;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -51,9 +50,9 @@ public class Speaker {
                 && !presentations.isEmpty();
     }
 
-    public PublicUserDto toPublicUser() {
+    public PublicUser toPublicUser() {
         Speaker user = this;
-        PublicUserDto that = new PublicUserDto();
+        PublicUser that = new PublicUser();
         that.setId(user.getId());
         that.setName(user.getName());
         that.setBio(user.getBio());
@@ -64,7 +63,7 @@ public class Speaker {
         return that;
     }
 
-    public static Speaker fromUser(FullUserDto dto) {
+    public static Speaker fromUser(pl.confitura.jelatyna.user.dto.User dto) {
         Speaker user = new Speaker();
         user.setId(dto.getId());
         user.setName(dto.getName());

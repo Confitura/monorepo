@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import pl.confitura.jelatyna.login.OAuthUserBase;
-import pl.confitura.jelatyna.user.dto.FullUserDto;
+import pl.confitura.jelatyna.user.dto.User;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -19,8 +19,8 @@ public class FacebookUser extends OAuthUserBase {
     }
 
     @Override
-    protected FullUserDto toUser() {
-        return new FullUserDto()
+    protected User toUser() {
+        return new User()
                 .setSocialId(encodeId())
                 .setOrigin(getSystem())
                 .setName(name);

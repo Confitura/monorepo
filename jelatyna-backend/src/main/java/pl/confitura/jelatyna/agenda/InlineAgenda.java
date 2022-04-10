@@ -3,7 +3,7 @@ package pl.confitura.jelatyna.agenda;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.rest.core.config.Projection;
 import pl.confitura.jelatyna.presentation.Presentation;
-import pl.confitura.jelatyna.user.dto.PublicUserDto;
+import pl.confitura.jelatyna.user.dto.PublicUser;
 
 import java.util.Set;
 
@@ -32,6 +32,6 @@ public interface InlineAgenda {
     Presentation getPresentation();
 
     @Value("#{target.getSpeakers()}")
-    Set<PublicUserDto> getSpeaker();
+    Set<PublicUser> getSpeaker();
 
 }

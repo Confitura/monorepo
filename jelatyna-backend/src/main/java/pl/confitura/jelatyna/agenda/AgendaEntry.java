@@ -17,7 +17,7 @@ import org.hibernate.annotations.GenericGenerator;
 import lombok.Data;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.Speaker;
-import pl.confitura.jelatyna.user.dto.PublicUserDto;
+import pl.confitura.jelatyna.user.dto.PublicUser;
 
 import java.util.Collections;
 import java.util.Set;
@@ -59,7 +59,7 @@ public class AgendaEntry {
     }
 
 
-    public Set<PublicUserDto> getSpeakers() {
+    public Set<PublicUser> getSpeakers() {
         if (presentation == null || presentation.getSpeakers().isEmpty()) {
             return Collections.emptySet();
         } else {

@@ -13,15 +13,21 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.rest.core.config.Projection;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 import pl.confitura.jelatyna.agenda.AgendaEntry;
 import pl.confitura.jelatyna.agenda.TimeSlot;
 import pl.confitura.jelatyna.infrastructure.db.AuditedEntity;
+import pl.confitura.jelatyna.presentation.Presentation;
+import pl.confitura.jelatyna.presentation.Speaker;
 import pl.confitura.jelatyna.registration.ParticipationData;
-import pl.confitura.jelatyna.user.dto.FullUserDto;
+import pl.confitura.jelatyna.user.dto.PublicUser;
 
 @Entity
 @Data
@@ -84,8 +90,8 @@ class User extends AuditedEntity {
         return isParticipant() && getParticipationData().getArrivalDate() != null;
     }
 
-    FullUserDto toDto() {
-        FullUserDto dto = new FullUserDto();
+    pl.confitura.jelatyna.user.dto.User toDto() {
+        pl.confitura.jelatyna.user.dto.User dto = new pl.confitura.jelatyna.user.dto.User();
         dto.setId(this.id);
         dto.setOrigin(this.origin);
         dto.setName(this.name);
@@ -105,7 +111,7 @@ class User extends AuditedEntity {
     }
 
 
-    static User fromDto(FullUserDto dto) {
+    static User fromDto(pl.confitura.jelatyna.user.dto.User dto) {
         User user = new User();
         user.setId(dto.getId());
         user.setOrigin(dto.getOrigin());

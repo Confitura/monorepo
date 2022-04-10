@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Profile;
 import pl.confitura.jelatyna.login.facebook.FacebookService;
 import pl.confitura.jelatyna.login.github.GithubService;
 import pl.confitura.jelatyna.login.google.GoogleService;
-import pl.confitura.jelatyna.user.dto.FullUserDto;
+import pl.confitura.jelatyna.user.dto.User;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -45,12 +45,12 @@ public class FakeOAuthConfiguration {
             }
 
             @Override
-            protected OAuthUserBase mapToUser(String body) {
+            protected OAuthUserBase mapToUser(String body) throws IOException {
                 return null;
             }
 
             @Override
-            FullUserDto getUserFor(String code) {
+            User getUserFor(String code) {
                 return oAuthUserService.mapToUser(new OAuthUserBase(system) {
 
                     @Override
@@ -59,8 +59,8 @@ public class FakeOAuthConfiguration {
                     }
 
                     @Override
-                    protected FullUserDto toUser() {
-                        return new FullUserDto()
+                    protected User toUser() {
+                        return new User()
                                 .setSocialId(code)
                                 .setOrigin(system)
                                 .setName("User from " + system);

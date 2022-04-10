@@ -3,14 +3,14 @@ package pl.confitura.jelatyna.login;
 import java.util.Base64;
 
 import lombok.Data;
-import pl.confitura.jelatyna.user.dto.FullUserDto;
+import pl.confitura.jelatyna.user.dto.User;
 
 @Data
 public abstract class OAuthUserBase {
     private String id;
     private String system;
 
-    protected abstract FullUserDto toUser();
+    protected abstract User toUser();
 
     protected OAuthUserBase(String system) {
         this.system = system;

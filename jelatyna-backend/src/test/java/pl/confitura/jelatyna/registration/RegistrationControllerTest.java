@@ -7,7 +7,7 @@ import pl.confitura.jelatyna.BaseIntegrationTest;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
 import pl.confitura.jelatyna.registration.voucher.Voucher;
 import pl.confitura.jelatyna.registration.voucher.VoucherService;
-import pl.confitura.jelatyna.user.dto.FullUserDto;
+import pl.confitura.jelatyna.user.dto.User;
 import pl.confitura.jelatyna.user.UserFacade;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -30,13 +30,13 @@ class RegistrationControllerTest extends BaseIntegrationTest {
     @Autowired
     UserFacade userRepository;
 
-    private FullUserDto user;
+    private User user;
     private Voucher validVoucher;
 
     @BeforeEach
     void setup() {
         SecurityHelper.asAdmin();
-        this.user = userRepository.save(new FullUserDto().setName("user1"));
+        this.user = userRepository.save(new User().setName("user1"));
         validVoucher = voucherService.generateVoucher("buyer");
         SecurityHelper.cleanSecurity();
 
