@@ -23,11 +23,8 @@ import static pl.confitura.jelatyna.infrastructure.Profiles.FAKE_DB;
 @Configuration
 @Profile(FAKE_DB)
 public class FakeDbConfig {
-    private static String FAKE_ADMIN_ID = "AAAAAAAAAAAAAAAAAAAAAA==";
-    private static String FAKE_VOLUNTEER_ID = "BBBBBBBBBBBBBBBBBBBBBB==";
-    private static String FAKE_SPEAKER_ID = "CCCCCCCCCCCCCCCCCCCCCC==";
 
-    private static final User FAKE_ADMIN = createFakeAdmin();
+    private static User FAKE_ADMIN = createFakeAdmin();
     private static User FAKE_VOLUNTEER = createFakeVolunteer();
     private static User FAKE_SPEAKER = createFakeSpeaker();
 
@@ -40,17 +37,18 @@ public class FakeDbConfig {
         this.userRepository = userRepository;
     }
 
-    private static Map<String,User> mapBySystem(User... users) {
-        Map<String,User> map = new HashMap<>();
+    private static Map<String, User> mapBySystem(User... users) {
+        Map<String, User> map = new HashMap<>();
         for (User user : users) {
             map.put(user.getOrigin(), user);
         }
+        log.info("fake users: ", map);
         return map;
     }
 
     public User getBySystem(String provider) {
         User user = bySystem.get(provider);
-        if(user!=null && user.getId() != null){
+        if (user != null && user.getId() != null) {
             return userRepository.findById(user.getId());
         }
         return user;
@@ -65,18 +63,20 @@ public class FakeDbConfig {
 
     @PostConstruct
     public void createFakeUsers() {
-        if (userRepository.findById(FAKE_ADMIN.getId()) == null) {
+        try {
             userRepository.save(FAKE_ADMIN);
-        }
-        userRepository.save(FAKE_VOLUNTEER);
-        userRepository.save(FAKE_SPEAKER);
+            userRepository.save(FAKE_VOLUNTEER);
+            userRepository.save(FAKE_SPEAKER);
+            log.info("saved fake users {},{},{}", FAKE_ADMIN, FAKE_VOLUNTEER, FAKE_SPEAKER);
 
+        } catch (Exception e) {
+            log.warn("exception occured", e);
+        }
     }
 
     private static User createFakeAdmin() {
 
         return new User()
-                .setId(FAKE_ADMIN_ID)
                 .setOrigin(GoogleService.SYSTEM)
                 .setName("Admin")
                 .setEmail("Admin@example.com")
@@ -87,7 +87,6 @@ public class FakeDbConfig {
 
     private static User createFakeVolunteer() {
         return new User()
-                .setId(FAKE_VOLUNTEER_ID)
                 .setOrigin(FacebookService.SYSTEM)
                 .setName("volunteer")
                 .setEmail("volunteer@example.com")
@@ -98,7 +97,6 @@ public class FakeDbConfig {
 
     private static User createFakeSpeaker() {
         return new User()
-                .setId(FAKE_SPEAKER_ID)
                 .setOrigin(GithubService.SYSTEM)
                 .setName("Speaker")
                 .setEmail("Speaker@example.com")

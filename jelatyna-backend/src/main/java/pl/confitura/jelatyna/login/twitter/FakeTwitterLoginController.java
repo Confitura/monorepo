@@ -30,8 +30,7 @@ public class FakeTwitterLoginController {
     }
 
     @GetMapping("/callback")
-    public ResponseEntity<String> doLoginWithTwitter(@RequestParam("oauth_token") String token,
-            @RequestParam("oauth_verifier") String verifier) {
+    public ResponseEntity<String> doLoginWithTwitter() {
         return ResponseEntity.ok(tokenService.asToken(
                 new User().setId("dHdpdHRlci9tYXJnaWVsbQ==").setName("Fake User").setAdmin(false)));
     }

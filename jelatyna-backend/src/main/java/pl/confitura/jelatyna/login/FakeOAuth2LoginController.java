@@ -44,8 +44,8 @@ public class FakeOAuth2LoginController {
 
     @GetMapping("/callback")
     public ResponseEntity<String> doLoginWithGitHub(
-            @PathVariable("provider") String provider,
-            @RequestParam("code") String code) {
+            @PathVariable("provider") String provider
+    ) {
 
         User user = fakeDbConfig.getBySystem(provider);
         if (user == null) {
