@@ -21,7 +21,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: ./confitura-vue
+        working-directory: confitura-vue
     steps:
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
