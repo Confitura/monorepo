@@ -235,6 +235,8 @@ export default class PresentationForm extends Vue {
             M.CharacterCounter.init(this.$refs.description);
           })
         );
+    } else {
+      this.setupTagsAutocomplete();
     }
   }
 
