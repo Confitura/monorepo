@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@types/marked": "^0.6.5",
-    "axios": "^0.18.0",
+    "axios": "^0.21.2",
     "dayjs": "^1.7.8",
     "gsap": "^2.0.2",
     "intersection-observer": "^0.5.1",
