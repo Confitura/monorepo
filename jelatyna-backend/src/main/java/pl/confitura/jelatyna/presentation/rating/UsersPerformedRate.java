@@ -2,15 +2,17 @@ package pl.confitura.jelatyna.presentation.rating;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 import org.hibernate.annotations.GenericGenerator;
 import pl.confitura.jelatyna.presentation.Presentation;
-import pl.confitura.jelatyna.user.dto.FullUserDto;
+import pl.confitura.jelatyna.user.User;
 
 import javax.persistence.*;
 
 
 @Entity
 @Data
+@Accessors(chain = true)
 @NoArgsConstructor
 public class UsersPerformedRate {
     @Id
@@ -19,12 +21,13 @@ public class UsersPerformedRate {
     @Column(columnDefinition = "varchar(100)")
     private String id;
 
-    private String userId;
+    @ManyToOne
+    private User user;
     @ManyToOne
     private Presentation presentation;
 
-    UsersPerformedRate(FullUserDto user, Presentation presentation) {
-        this.userId = user.getId();
+    public UsersPerformedRate(User user, Presentation presentation) {
+        this.user = user;
         this.presentation = presentation;
     }
 }

@@ -14,7 +14,7 @@ import com.github.scribejava.core.model.OAuthRequest;
 import com.github.scribejava.core.model.Response;
 import com.github.scribejava.core.oauth.OAuth10aService;
 import pl.confitura.jelatyna.login.OAuthUserService;
-import pl.confitura.jelatyna.user.dto.FullUserDto;
+import pl.confitura.jelatyna.user.User;
 
 @Service
 public class TwitterService {
@@ -48,7 +48,7 @@ public class TwitterService {
         }
     }
 
-    FullUserDto getUser(OAuth1AccessToken accessToken) {
+    User getUser(OAuth1AccessToken accessToken) {
         try {
             return oauthUserService.mapToUser(doGetUser(accessToken));
         } catch (Exception e) {

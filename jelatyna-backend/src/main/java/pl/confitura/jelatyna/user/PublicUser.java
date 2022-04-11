@@ -14,7 +14,7 @@ public class PublicUser {
     private String www;
     private String photo;
 
-    public PublicUser(UserEntity user) {
+    public PublicUser(User user) {
         this.id = user.getId();
         this.name = user.getName();
         this.bio = user.getBio();

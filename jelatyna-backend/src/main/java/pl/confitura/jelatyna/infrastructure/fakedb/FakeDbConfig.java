@@ -1,16 +1,16 @@
 package pl.confitura.jelatyna.infrastructure.fakedb;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.h2.tools.Server;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import pl.confitura.jelatyna.login.facebook.FacebookService;
 import pl.confitura.jelatyna.login.github.GithubService;
 import pl.confitura.jelatyna.login.google.GoogleService;
-import pl.confitura.jelatyna.user.UserFacade;
-import pl.confitura.jelatyna.user.dto.FullUserDto;
+import pl.confitura.jelatyna.user.User;
+import pl.confitura.jelatyna.user.UserRepository;
 
 import javax.annotation.PostConstruct;
 import java.sql.SQLException;
@@ -22,28 +22,36 @@ import static pl.confitura.jelatyna.infrastructure.Profiles.FAKE_DB;
 @Slf4j
 @Configuration
 @Profile(FAKE_DB)
-@RequiredArgsConstructor
 public class FakeDbConfig {
-    private static String FAKE_ADMIN_ID = "AAAAAAAAAAAAAAAAAAAAAA==";
-    private static String FAKE_VOLUNTEER_ID = "BBBBBBBBBBBBBBBBBBBBBB==";
-    private static String FAKE_SPEAKER_ID = "CCCCCCCCCCCCCCCCCCCCCC==";
 
-    private static final FullUserDto FAKE_ADMIN = createFakeAdmin();
-    private static FullUserDto FAKE_VOLUNTEER = createFakeVolunteer();
-    private static FullUserDto FAKE_SPEAKER = createFakeSpeaker();
+    private static User FAKE_ADMIN = createFakeAdmin();
+    private static User FAKE_VOLUNTEER = createFakeVolunteer();
+    private static User FAKE_SPEAKER = createFakeSpeaker();
 
-    private static Map<String, FullUserDto> bySystem = mapBySystem(FAKE_ADMIN,
+    private static Map<String, User> bySystem = mapBySystem(FAKE_ADMIN,
             FAKE_VOLUNTEER,
             FAKE_SPEAKER);
 
-    private final UserFacade userFacade;
+    @Autowired
+    public FakeDbConfig(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
-    private static Map<String, FullUserDto> mapBySystem(FullUserDto... users) {
-        Map<String, FullUserDto> map = new HashMap<>();
-        for (FullUserDto user : users) {
+    private static Map<String, User> mapBySystem(User... users) {
+        Map<String, User> map = new HashMap<>();
+        for (User user : users) {
             map.put(user.getOrigin(), user);
         }
+        log.info("fake users: ", map);
         return map;
+    }
+
+    public User getBySystem(String provider) {
+        User user = bySystem.get(provider);
+        if (user != null && user.getId() != null) {
+            return userRepository.findById(user.getId());
+        }
+        return user;
     }
 
     @Bean(initMethod = "start", destroyMethod = "stop")
@@ -51,20 +59,25 @@ public class FakeDbConfig {
         return Server.createTcpServer("-tcp", "-tcpAllowOthers", "-tcpPort", "9092");
     }
 
+    private final UserRepository userRepository;
+
     @PostConstruct
     public void createFakeUsers() {
-        userFacade.save(FAKE_ADMIN);
-        userFacade.save(FAKE_VOLUNTEER);
-        userFacade.save(FAKE_SPEAKER);
+        try {
+            userRepository.save(FAKE_ADMIN);
+            userRepository.save(FAKE_VOLUNTEER);
+            userRepository.save(FAKE_SPEAKER);
+            log.info("saved fake users {},{},{}", FAKE_ADMIN, FAKE_VOLUNTEER, FAKE_SPEAKER);
 
+        } catch (Exception e) {
+            log.warn("exception occured", e);
+        }
     }
 
-    private static FullUserDto createFakeAdmin() {
+    private static User createFakeAdmin() {
 
-        return new FullUserDto()
-                .setId(FAKE_ADMIN_ID)
+        return new User()
                 .setOrigin(GoogleService.SYSTEM)
-                .setSocialId(GoogleService.SYSTEM)
                 .setName("Admin")
                 .setEmail("Admin@example.com")
                 .setBio("admin bio")
@@ -72,11 +85,9 @@ public class FakeDbConfig {
                 .setAdmin(true);
     }
 
-    private static FullUserDto createFakeVolunteer() {
-        return new FullUserDto()
-                .setId(FAKE_VOLUNTEER_ID)
+    private static User createFakeVolunteer() {
+        return new User()
                 .setOrigin(FacebookService.SYSTEM)
-                .setSocialId(FacebookService.SYSTEM)
                 .setName("volunteer")
                 .setEmail("volunteer@example.com")
                 .setBio("volunteer bio")
@@ -84,11 +95,9 @@ public class FakeDbConfig {
                 .setVolunteer(true);
     }
 
-    private static FullUserDto createFakeSpeaker() {
-        return new FullUserDto()
-                .setId(FAKE_SPEAKER_ID)
+    private static User createFakeSpeaker() {
+        return new User()
                 .setOrigin(GithubService.SYSTEM)
-                .setSocialId(GithubService.SYSTEM)
                 .setName("Speaker")
                 .setEmail("Speaker@example.com")
                 .setBio("Speaker bio")

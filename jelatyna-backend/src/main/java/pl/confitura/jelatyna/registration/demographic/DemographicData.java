@@ -1,6 +1,7 @@
 package pl.confitura.jelatyna.registration.demographic;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.Id;
 
 @Data
 @Entity
+@Accessors(chain = true)
 public class DemographicData {
     @Id
     @GeneratedValue(generator = "uuid2")

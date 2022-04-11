@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
 import pl.confitura.jelatyna.infrastructure.security.TokenService;
-import pl.confitura.jelatyna.user.dto.FullUserDto;
+import pl.confitura.jelatyna.user.User;
 
 @RestController
 @RequestMapping("/login/twitter")
@@ -30,10 +30,9 @@ public class FakeTwitterLoginController {
     }
 
     @GetMapping("/callback")
-    public ResponseEntity<String> doLoginWithTwitter(@RequestParam("oauth_token") String token,
-            @RequestParam("oauth_verifier") String verifier) {
+    public ResponseEntity<String> doLoginWithTwitter() {
         return ResponseEntity.ok(tokenService.asToken(
-                new FullUserDto().setId("dHdpdHRlci9tYXJnaWVsbQ==").setName("Fake User").setAdmin(false)));
+                new User().setId("dHdpdHRlci9tYXJnaWVsbQ==").setName("Fake User").setAdmin(false)));
     }
 
 }

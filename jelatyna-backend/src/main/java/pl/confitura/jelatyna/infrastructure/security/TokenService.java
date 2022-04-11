@@ -16,7 +16,7 @@ import io.jsonwebtoken.JwtHandlerAdapter;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
-import pl.confitura.jelatyna.user.dto.FullUserDto;
+import pl.confitura.jelatyna.user.User;
 
 @Service
 @Slf4j
@@ -24,7 +24,7 @@ public class TokenService {
     @Value("${jwt.key}")
     private String key;
 
-    public String asToken(FullUserDto user) {
+    public String asToken(User user) {
         log.info("Transforming user to token {}", user);
         return Jwts.builder()
                 .setClaims(new HashMap<String, Object>() {{
@@ -39,7 +39,7 @@ public class TokenService {
                 .signWith(SignatureAlgorithm.HS512, getKey()).compact();
     }
 
-    JelatynaPrincipal toUser(String token) {
+    public JelatynaPrincipal toUser(String token) {
         return Jwts.parser().setSigningKey(getKey()).parse(token, new JwtHandlerAdapter<JelatynaPrincipal>() {
 
             @Override

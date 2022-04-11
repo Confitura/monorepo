@@ -2,6 +2,7 @@ package pl.confitura.jelatyna.agenda;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 import org.hibernate.annotations.GenericGenerator;
 import pl.confitura.jelatyna.infrastructure.db.AuditedEntity;
 
@@ -12,6 +13,7 @@ import javax.validation.constraints.NotNull;
 @EqualsAndHashCode(callSuper = false)
 @Table(name = "agenda_room")
 @Data
+@Accessors(chain = true)
 public class Room extends AuditedEntity {
     @Id
     @GeneratedValue(generator = "uuid2")

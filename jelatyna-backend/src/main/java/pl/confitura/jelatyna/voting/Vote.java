@@ -7,11 +7,13 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 import org.hibernate.annotations.GenericGenerator;
 import pl.confitura.jelatyna.presentation.Presentation;
 
 @Entity
 @Data
+@Accessors(chain = true)
 public class Vote {
 
     @Id

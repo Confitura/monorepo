@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.Accessors;
 import pl.confitura.jelatyna.registration.ParticipationData;
 
 @RequiredArgsConstructor
@@ -80,6 +81,7 @@ class VoucherController {
     }
 
     @Data
+    @Accessors(chain = true)
     @NoArgsConstructor
     static class RegistrationError {
         private String reason;
