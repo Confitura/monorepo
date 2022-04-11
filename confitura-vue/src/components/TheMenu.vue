@@ -28,14 +28,14 @@ export default class TheMenu extends Vue {
   public items: MenuItem[] = [
     { label: "scanner", url: "/scanner", visible: () => this.isVolunteer },
     { label: "home", url: "/#home" },
-    { label: "about us", url: "/about" },
-    { label: "venue", url: "/venue" },
+    { label: "about us", url: "/#about-us" },
+    // { label: "venue", url: "/venue" },
     // { label: "partners", url: "/partners" },
     // { label: "schedule", url: "/schedule" },
     // { label: "presentations", url: "/presentations" },
     // { label: "speakers", url: "/speakers" },
     // { label: "workshop day", url: "/workshops" },
-    { label: "FAQ", url: "/faq" },
+    // { label: "FAQ", url: "/faq" },
     { label: "my profile", url: "/profile", visible: () => this.isLogin },
     { label: "ADMIN", url: "/admin", visible: () => this.isAdmin },
     {
