@@ -1,0 +1,27 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: confitura-vue test
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: self-hosted
+
+    defaults:
+      run:
+        working-directory: confitura-vue
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 12.x
+          cache: 'npm'
+          cache-dependency-path: confitura-vue/package-lock.json
+      - run: npm ci
+      - run: npm run build
