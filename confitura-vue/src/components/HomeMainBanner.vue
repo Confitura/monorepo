@@ -21,7 +21,7 @@
               start a new friendship.
             </div>
           <div class="info__long">
-            Confitura 2022 will take place on June 25th in Warsaw Expocentre EXPO XXI.
+            Confitura 2022 will take place on June 25 in Warsaw Expocentre EXPO XXI.
           </div>
         </div>
       <HomeMainBannerIllustration />
