@@ -4,7 +4,7 @@
 name: deploy-ui
 on:
   push:
-    branches: [ next ]
+    branches: [ master ]
 
 jobs:
   build:
@@ -24,4 +24,4 @@ jobs:
           cache-dependency-path: confitura-vue/package-lock.json
       - run: npm ci
       - run: npm run build
-      - run: rm -rf /var/www/github-deployed/next.confitura.pl && cp -r dist /var/www/github-deployed/next.confitura.pl
+      - run: rm -rf /var/www/github-deployed/2022.confitura.pl && cp -r dist /var/www/github-deployed/2022.confitura.pl

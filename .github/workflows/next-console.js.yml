@@ -12,7 +12,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: confitura-vue
+        working-directory: confitura-page
 
     steps:
       - uses: actions/checkout@v3
@@ -21,7 +21,7 @@ jobs:
         with:
           node-version: 12.x
           cache: 'npm'
-          cache-dependency-path: confitura-vue/package-lock.json
+          cache-dependency-path: confitura-page/package-lock.json
       - run: npm ci
       - run: npm run build
-      - run: rm -rf /var/www/github-deployed/next.confitura.pl && cp -r dist /var/www/github-deployed/next.confitura.pl
+      - run: rm -rf /var/www/github-deployed/next-console.confitura.pl && cp -r dist /var/www/github-deployed/next-console.confitura.pl
