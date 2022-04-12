@@ -1,0 +1,64 @@
+# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
+
+name: Deploy backend
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  deploy-backend:
+    runs-on: self-hosted
+    defaults:
+      run:
+        working-directory: jelatyna-backend
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 8
+        uses: actions/setup-java@v3
+        with:
+          java-version: '8'
+          distribution: 'temurin'
+          cache: maven
+      - name: Build with Maven
+        run: mvn -B package -DskipTests
+
+  deploy-frontend:
+    runs-on: self-hosted
+
+    defaults:
+      run:
+        working-directory: confitura-vue
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 12.x
+          cache: 'npm'
+          cache-dependency-path: confitura-vue/package-lock.json
+      - run: npm ci
+      - run: npm run build
+      - run: rm -rf /var/www/github-deployed/2022.confitura.pl && cp -r dist /var/www/github-deployed/2022.confitura.pl
+
+  deploy-console:
+    runs-on: self-hosted
+
+    defaults:
+      run:
+        working-directory: confitura-page
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 12.x
+          cache: 'npm'
+          cache-dependency-path: confitura-page/package-lock.json
+      - run: npm ci
+      - run: npm run build
+      - run: rm -rf /var/www/github-deployed/2022-console.confitura.pl && cp -r dist /var/www/github-deployed/2022-console.confitura.pl

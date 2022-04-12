@@ -7,7 +7,26 @@ on:
     branches: [ next ]
 
 jobs:
-  build:
+  deploy-frontend:
+    runs-on: self-hosted
+
+    defaults:
+      run:
+        working-directory: confitura-vue
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 12.x
+          cache: 'npm'
+          cache-dependency-path: confitura-vue/package-lock.json
+      - run: npm ci
+      - run: npm run build
+      - run: rm -rf /var/www/github-deployed/next.confitura.pl && cp -r dist /var/www/github-deployed/next.confitura.pl
+
+  deploy-console:
     runs-on: self-hosted
 
     defaults:
