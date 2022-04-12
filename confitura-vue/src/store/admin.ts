@@ -54,7 +54,7 @@ export const adminModule: Module<AdminState, RootState> = {
   actions: {
     [LOAD_USERS]({ commit }) {
       return axios.get<EmbeddedUserProfiles>("/api/users").then(it => {
-        commit(SET_USERS, { users: it.data._embedded.users });
+        commit(SET_USERS, { users: it.data._embedded.publicUsers });
       });
     },
     [LOAD_VOUCHERS]({ commit }) {

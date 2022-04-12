@@ -3,7 +3,7 @@
   become: yes
   become_user: root
   vars:
-    - edition: 2020
+    - edition: 2022
     - folder: "/var/www/{{edition}}.confitura.pl"
     - archive: /tmp/confitura_page.tar.gz
 
