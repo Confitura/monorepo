@@ -1,2 +1,3 @@
 .idea
 *.iml
+/confitura-vue/dist.gz
