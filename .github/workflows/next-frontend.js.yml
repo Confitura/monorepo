@@ -24,4 +24,4 @@ jobs:
 #          cache-dependency-path: confitura-vue/package-lock.json
 #      - run: npm ci
 #      - run: npm run build
-      - run: cp dist /var/www/github-deployed
+      - run: cp -r dist /var/www/github-deployed
