@@ -24,7 +24,7 @@ jobs:
 #      - name: Build with Maven
 #        run: mvn -B package -DskipTests
       -  working-directory: .
-         run: pwd
+         run: cp .github/config/application.yml /home/jelatyna/github/application.yml
 #
 #  deploy-frontend:
 #    runs-on: self-hosted
