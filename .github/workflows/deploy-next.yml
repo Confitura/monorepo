@@ -24,6 +24,7 @@ jobs:
       - name: Build with Maven
         run: mvn -B package -DskipTests
       - run: cp target/jelatyna-*.jar /home/jelatyna/github/jelatyna.jar
+      - run: chmod +x /home/jelatyna/github/jelatyna.jar
       - working-directory: .
         run: cp .github/config/application.yml /home/jelatyna/github/application.yml
 #
