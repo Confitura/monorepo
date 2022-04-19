@@ -91,9 +91,6 @@ export const adminModule: Module<AdminState, RootState> = {
           params: { projection: "inlineSpeaker" }
         })
         .then(it => it.data._embedded.presentations)
-        .then(presentations =>
-          presentations.filter(presentation => !presentation.workshop)
-        )
         .then(presentations => {
           commit(SET_PRESENTATIONS, { presentations });
         });
