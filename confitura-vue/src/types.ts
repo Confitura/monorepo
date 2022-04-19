@@ -86,7 +86,6 @@ export interface Presentation {
   shortDescription: string;
   description: string;
   status?: string;
-  workshop: boolean;
 }
 
 export interface WithTitle {

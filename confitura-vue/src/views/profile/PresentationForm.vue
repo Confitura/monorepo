@@ -87,12 +87,6 @@
               </div>
               <div class="col m6 s12">
                 <div class="presentation-section">
-                  <label>
-                    <input type="checkbox" v-model="presentation.workshop" />
-                    <span>Workshop</span>
-                  </label>
-                </div>
-                <div class="presentation-section">
                   <div>
                     <label>Language</label>
                   </div>
@@ -206,8 +200,7 @@ export default class PresentationForm extends Vue {
     level: "",
     tags: [],
     shortDescription: "",
-    description: "",
-    workshop: false
+    description: ""
   };
   public tagInput = "";
   public errors: PresentationErrors = {};
