@@ -28,7 +28,7 @@ const storeOptions: StoreOptions<RootState> = {
     headerTheme: "default",
     headerHeight: 73,
     windowWidth: 0,
-    date: "2020-06-27T09:00",
+    date: "2022-06-25T09:00",
     partners: { partners: [] },
     authentication: { token: null }
   },

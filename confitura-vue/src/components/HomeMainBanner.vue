@@ -7,9 +7,10 @@
                 <h1 class="h1">It is not rocket science!</h1>
 
             </div>
+          <TheTimer/>
             <div class="info__live">
                 <div class="info__live-text">Confitura 2022</div>
-                <div class="info__live-text">is under construction</div>
+                <a class="info__live-link" href="https://www.youtube.com/confiturapl" target="_blank">Call 4 Papers is active!</a>
             </div>
             <div class="info__long">
               The <a
@@ -21,7 +22,7 @@
               start a new friendship.
             </div>
           <div class="info__long">
-            Confitura 2022 will take place on June 25 in Warsaw Expocentre EXPO XXI.
+            Confitura 2022 will take place on June 25 in Warsaw, EXPO XXI.
           </div>
         </div>
       <HomeMainBannerIllustration />
