@@ -11,13 +11,13 @@ const V4P_TOKEN = "V4P_TOKEN";
 
 export const vote4PapersModule: Module<Vote4PapersState, RootState> = {
   state: {
-    votes: []
+    votes: [],
   },
   getters: {},
   mutations: {
     [SET_VOTES](store, payload: { votes: Vote[] }) {
       store.votes = payload.votes;
-    }
+    },
   },
   actions: {
     [LOAD_VOTES]({ commit, rootState, rootGetters }) {
@@ -25,12 +25,12 @@ export const vote4PapersModule: Module<Vote4PapersState, RootState> = {
 
       return axios
         .post<EmbeddedVotes>(`/api/votes/start/${token}`)
-        .then(it => commit(SET_VOTES, { votes: it.data._embedded.votes }));
+        .then((it) => commit(SET_VOTES, { votes: it.data._embedded.votes }));
     },
     [SAVE_VOTE]({ commit }, payload: { vote: Vote }) {
       return axios.post<EmbeddedVotes>(`/api/votes/`, payload.vote);
-    }
-  }
+    },
+  },
 };
 
 export interface Vote4PapersState {

@@ -4,7 +4,7 @@ import {
   RootState,
   UserProfile,
   Presentation,
-  EmbeddedPresentations
+  EmbeddedPresentations,
 } from "@/types";
 
 export const LOAD_PROFILE_BY_ID = "LOAD_PROFILE_BY_ID";
@@ -21,7 +21,7 @@ export const userModule: Module<StoreUserProfile, RootState> = {
   state: {
     currentProfile: null,
     currentProfilePresentations: [],
-    participation: null
+    participation: null,
   },
   mutations: {
     [UPDATE_CURRENT_PROFILE](store, payload: { profile: any }) {
@@ -38,7 +38,7 @@ export const userModule: Module<StoreUserProfile, RootState> = {
       payload: { participation: any }
     ) {
       store.participation = payload.participation;
-    }
+    },
   },
   actions: {
     [LOAD_PROFILE_BY_ID](
@@ -48,7 +48,9 @@ export const userModule: Module<StoreUserProfile, RootState> = {
       if (rootState.authentication) {
         return axios
           .get("/api/users/" + params.id)
-          .then(data => commit(UPDATE_CURRENT_PROFILE, { profile: data.data }));
+          .then((data) =>
+            commit(UPDATE_CURRENT_PROFILE, { profile: data.data })
+          );
       }
     },
     [LOAD_PROFILE_PARTICIPATION_BY_ID](
@@ -58,9 +60,9 @@ export const userModule: Module<StoreUserProfile, RootState> = {
       if (rootState.authentication) {
         return axios
           .get("/api/users/" + params.id + "/participationData")
-          .then(data =>
+          .then((data) =>
             commit(UPDATE_CURRENT_PROFILE_PARTICIPATION, {
-              participation: data.data
+              participation: data.data,
             })
           );
       }
@@ -72,16 +74,16 @@ export const userModule: Module<StoreUserProfile, RootState> = {
       if (rootState.authentication) {
         return axios
           .get<EmbeddedPresentations>(`/api/users/${params.id}/presentations`, {
-            params: { projection: "inlineSpeaker" }
+            params: { projection: "inlineSpeaker" },
           })
-          .then(data =>
+          .then((data) =>
             commit(UPDATE_CURRENT_PROFILE_PRESENTATIONS, {
-              presentations: data.data._embedded.presentations
+              presentations: data.data._embedded.presentations,
             })
           );
       }
-    }
-  }
+    },
+  },
 };
 
 interface StoreUserProfile {

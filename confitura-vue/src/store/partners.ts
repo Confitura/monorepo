@@ -2,12 +2,12 @@ import { Module } from "vuex";
 import { LOAD_PARTNER_BY_ID, LOAD_PARTNERS, Partner, RootState } from "@/types";
 
 function filterBy(partners: Partner[], type: string) {
-  return shuffle(partners.filter(partner => partner.type === type));
+  return shuffle(partners.filter((partner) => partner.type === type));
 }
 
 export const partnersModule: Module<PartnersState, RootState> = {
   state: {
-    partners: []
+    partners: [],
   },
   getters: {
     platinum: ({ partners }): Partner[] => filterBy(partners, "platinum"),
@@ -16,7 +16,7 @@ export const partnersModule: Module<PartnersState, RootState> = {
     gold: ({ partners }): Partner[] => filterBy(partners, "gold"),
     bronze: ({ partners }): Partner[] => filterBy(partners, "bronze"),
     media: ({ partners }): Partner[] => filterBy(partners, "media"),
-    tech: ({ partners }): Partner[] => filterBy(partners, "tech")
+    tech: ({ partners }): Partner[] => filterBy(partners, "tech"),
   },
   actions: {
     [LOAD_PARTNERS]({ state }) {
@@ -48,7 +48,7 @@ export const partnersModule: Module<PartnersState, RootState> = {
           www: "https://softwareplant.com/",
           type: "platinum",
           logo: require("../assets/partners/softwareplant.svg"),
-          orientation: "horizontal"
+          orientation: "horizontal",
         },
         {
           id: "ey",
@@ -57,7 +57,7 @@ export const partnersModule: Module<PartnersState, RootState> = {
           www: "https://workatgds.pl/pl/",
           type: "platinum",
           logo: require("../assets/partners/ey.svg"),
-          orientation: "horizontal"
+          orientation: "horizontal",
         },
         {
           id: "7n",
@@ -74,7 +74,7 @@ export const partnersModule: Module<PartnersState, RootState> = {
           name: "7n",
           www: "https://7n.com/",
           type: "silver",
-          logo: require("../assets/partners/7N.svg")
+          logo: require("../assets/partners/7N.svg"),
         },
         {
           id: "volvo",
@@ -89,7 +89,7 @@ export const partnersModule: Module<PartnersState, RootState> = {
           name: "Volvo Group",
           www: "https://www.volvogroup.pl/kariera",
           type: "silver",
-          logo: require("../assets/partners/volvo.svg")
+          logo: require("../assets/partners/volvo.svg"),
         },
         {
           id: "dynatrace",
@@ -112,7 +112,7 @@ At Dynatrace Gdansk Lab, we design, create and develop a best-in-class product t
           name: "Dynatrace",
           www: "https://jobs.dynatrace.pl/",
           type: "silver",
-          logo: require("../assets/partners/dynatrace.svg")
+          logo: require("../assets/partners/dynatrace.svg"),
         },
         {
           id: "eworkgroup",
@@ -123,7 +123,7 @@ Akcje Ework są notowane na giełdzie NASDAQ OMX w Sztokholmie. W Polsce istniej
           www: "https://www.eworkgroup.com/pl",
           type: "silver",
           logo: require("../assets/partners/ework_group.svg"),
-          orientation: "horizontal"
+          orientation: "horizontal",
         },
         {
           id: "nfj",
@@ -131,7 +131,7 @@ Akcje Ework są notowane na giełdzie NASDAQ OMX w Sztokholmie. W Polsce istniej
           name: "No Fluff Jobs",
           www: "https://www.nofluffjobs.com ",
           type: "silver",
-          logo: require("../assets/partners/nfj.svg")
+          logo: require("../assets/partners/nfj.svg"),
         },
         {
           id: "viacom",
@@ -142,7 +142,7 @@ Viacom.Tech is pioneering a new era of data in entertainment with opportunities 
           www: "https://viacom.tech/",
           type: "gold",
           logo: require("../assets/partners/viacom.svg"),
-          orientation: "horizontal"
+          orientation: "horizontal",
         },
         {
           id: "bosch",
@@ -161,7 +161,7 @@ Zobacz, jak się u nas pracuje: [https://www.youtube.com/watch?v=A2YWrsEDLIg](ht
           www: "https://www.bosch-career.pl/IT",
           type: "silver",
           logo: require("../assets/partners/bosch.svg"),
-          orientation: "horizontal"
+          orientation: "horizontal",
         },
         {
           id: "allegro",
@@ -177,7 +177,7 @@ I bądź na bieżąco [https://www.facebook.com/allegro.tech](https://www.facebo
           www: "https://allegro.tech/",
           type: "silver",
           logo: require("../assets/partners/allegro.svg"),
-          orientation: "horizontal"
+          orientation: "horizontal",
         },
         {
           id: "applause",
@@ -187,7 +187,7 @@ Thousands of leading companies — including Ford, Fox, Google, and Dow Jones �
           www: "https://www.applause.com/join-our-team",
           type: "silver",
           logo: require("../assets/partners/applause.svg"),
-          orientation: "horizontal"
+          orientation: "horizontal",
         },
         {
           id: "nordea",
@@ -196,7 +196,7 @@ Thousands of leading companies — including Ford, Fox, Google, and Dow Jones �
           www: "https://www.nordea.pl",
           type: "silver",
           logo: require("../assets/partners/nordea.svg"),
-          orientation: "horizontal"
+          orientation: "horizontal",
         },
         {
           id: "britenet",
@@ -206,7 +206,7 @@ Rozwój zawodowy idzie w parze z dobrą atmosferą, o czym świadczy tytuł Najl
           www: "https://britenet.com.pl",
           type: "gold",
           logo: require("../assets/partners/britenet.svg"),
-          orientation: "horizontal"
+          orientation: "horizontal",
         },
         {
           id: "kmd",
@@ -217,7 +217,7 @@ We’ve been rapidly growing and we have more than 420 IT and business specialis
           www: "http://careers.kmdpoland.pl",
           type: "silver",
           logo: require("../assets/partners/kmd.svg"),
-          orientation: "horizontal"
+          orientation: "horizontal",
         },
         {
           id: "j-labs",
@@ -231,7 +231,7 @@ Join us:  [https://www.j-labs.pl/open-positions/](https://www.j-labs.pl/open-pos
           www: "https://www.j-labs.pl",
           type: "silver",
           logo: require("../assets/partners/jlabs.svg"),
-          orientation: "horizontal"
+          orientation: "horizontal",
         },
         {
           id: "decerto",
@@ -268,7 +268,7 @@ Poznaj nas i dołącz do zespołu:
           www: "https://decerto.pl/kariera.html",
           type: "silver",
           logo: require("../assets/partners/decerto.svg"),
-          orientation: "horizontal"
+          orientation: "horizontal",
         },
         {
           id: "roche",
@@ -278,7 +278,7 @@ Poznaj nas i dołącz do zespołu:
 Roche Global IT Solution Centre is based in Poland, in two locations: Warsaw and Poznan, and uses the cutting-edge technologies to improve healthcare. We are more than 500 people who create solutions that help doctors, patients and scientist around the world.`,
           www: "https://it.roche.pl",
           type: "gold",
-          logo: require("../assets/partners/roche.svg")
+          logo: require("../assets/partners/roche.svg"),
         },
         {
           id: "4finance",
@@ -297,7 +297,7 @@ Since we were established in 2008, we have provided more than 15,000,000 Single 
           www: "https://www.4financeit.com/",
           type: "silver",
           orientation: "horizontal",
-          logo: require("../assets/partners/4finance.svg")
+          logo: require("../assets/partners/4finance.svg"),
         },
         {
           id: "evojam",
@@ -311,7 +311,7 @@ For growth, fun & building stuff that works, join Evojam!`,
           www: "https://www.evojam.com",
           type: "silver",
           orientation: "horizontal",
-          logo: require("../assets/partners/evojam.svg")
+          logo: require("../assets/partners/evojam.svg"),
         },
         {
           id: "nbc",
@@ -348,7 +348,7 @@ Adresy naszych biur:
 Zapraszamy na naszą stronę: [www.nbc.com.pl](https://www.nbc.com.pl)`,
           www: "https://www.nbc.com.pl",
           type: "silver",
-          logo: require("../assets/partners/nbc.svg")
+          logo: require("../assets/partners/nbc.svg"),
         },
         {
           id: "alior",
@@ -375,11 +375,10 @@ Alior Bank jest wielokrotnym laureatem prestiżowych nagród oraz zwycięzcą ra
 1\\. miejsce w kategorii „New Digital Venture” w konkursie The Heart Corporate Innovation Awards 2018 za partnerstwo Alior Banku i cyfrowej platformy pośrednictwa finansowego online Bancovo,
 tytuł Lidera Informatyki 2018 w 22. edycji konkursu organizowanego przez magazyn „Computerworld”. Głównymi kryteriami wyboru jest biznesowa wartość projektów dostarczanych przez IT oraz ich innowacyjność,
 nagroda honorowa w kategorii „Banki innowacyjne” w rankingu 50. największych banków w Polsce 2018 roku.`,
-          www:
-            "https://www.aliorbank.pl/dodatkowe-informacje/kariera/praca-w-it.html",
+          www: "https://www.aliorbank.pl/dodatkowe-informacje/kariera/praca-w-it.html",
           type: "silver",
           orientation: "horizontal",
-          logo: require("../assets/partners/alior.svg")
+          logo: require("../assets/partners/alior.svg"),
         },
         {
           id: "coi",
@@ -398,7 +397,7 @@ My już jesteśmy częścią cyfryzacji, a Ty? Przetestuj [coi.gov.pl](https://w
           www: "https://www.coi.gov.pl/",
           type: "silver",
           orientation: "horizontal",
-          logo: require("../assets/partners/coi.svg")
+          logo: require("../assets/partners/coi.svg"),
         },
         {
           id: "sml",
@@ -409,7 +408,7 @@ Our focus on quality, self-improvement and a true engineering approach results i
           www: "https://softwaremill.com/",
           type: "silver",
           orientation: "horizontal",
-          logo: require("../assets/partners/sml.svg")
+          logo: require("../assets/partners/sml.svg"),
         },
         {
           id: "netcompany",
@@ -421,7 +420,7 @@ That is the core of Netcompany's decentralized management model. From top to bot
           www: "https://www.netcompany.com/pl",
           type: "gold",
           orientation: "horizontal",
-          logo: require("../assets/partners/netcompany.svg")
+          logo: require("../assets/partners/netcompany.svg"),
         },
         {
           id: "sages",
@@ -434,7 +433,7 @@ Podczas tegorocznej edycji Confitury firma Sages jest oficjalnym opiekunem ście
           www: "http://www.sages.com.pl",
           type: "path",
           orientation: "horizontal",
-          logo: require("../assets/partners/sages.svg")
+          logo: require("../assets/partners/sages.svg"),
         },
         {
           id: "circleK",
@@ -449,7 +448,7 @@ Circle K is growing a team full of passionate, open-minded people with creative 
           www: "https://business-centre-europe.circlek.com/",
           type: "silver",
           orientation: "horizontal",
-          logo: require("../assets/partners/circleK.svg")
+          logo: require("../assets/partners/circleK.svg"),
         },
         {
           id: "spartez",
@@ -474,7 +473,7 @@ Our company is deeply rooted in a few important values and principles - just a f
           www: "https://spartez.com/",
           type: "silver",
           orientation: "horizontal",
-          logo: require("../assets/partners/spartez.svg")
+          logo: require("../assets/partners/spartez.svg"),
         },
         {
           id: "touk",
@@ -493,7 +492,7 @@ We are looking for experienced developers and CS students.
           www: "https://touk.pl",
           type: "silver",
           orientation: "horizontal",
-          logo: require("../assets/partners/touk.svg")
+          logo: require("../assets/partners/touk.svg"),
         },
         {
           id: "goldman-sachs",
@@ -506,7 +505,7 @@ Make things possible at [goldmansachs.com/careers](https://www.goldmansachs.com/
           www: "https://www.goldmansachs.com/careers/",
           type: "gold",
           orientation: "horizontal",
-          logo: require("../assets/partners/gs.svg")
+          logo: require("../assets/partners/gs.svg"),
         },
         {
           id: "rtb-house",
@@ -517,7 +516,7 @@ Founded in 2012, RTB House serves over a thousand campaigns across EMEA, APAC an
           www: "https://www.rtbhouse.com/",
           type: "gold",
           orientation: "horizontal",
-          logo: require("../assets/partners/rtb.svg")
+          logo: require("../assets/partners/rtb.svg"),
         },
         {
           id: "it-kontrakt",
@@ -527,7 +526,7 @@ Founded in 2012, RTB House serves over a thousand campaigns across EMEA, APAC an
 IT Kontrakt, w ramach inwestycji Oaktree Capital Management i Cornerstone Partners, realizuje budowę „IT Services Competence Platform”. Projekt opiera się na intensywnym programie Mergers & Acquisitions i szybkim wzroście organicznym spółek. Celem inwestycji jest stworzenie globalnej organizacji oferującej kompetencje, ekspertyzę i rozwiązania softwarowe dla korporacji międzynarodowych oraz klientów ze Skandynawii, krajów regionu DACH, UK i USA, i ich obsługa przez własne centra delivery zlokalizowane w krajach regionu CEE oraz Azji. Zatrudnienie w Grupie sięga blisko 2.400 inżynierów.`,
           www: "https://www.itkontrakt.com/",
           type: "silver",
-          logo: require("../assets/partners/it-kontrakt.svg")
+          logo: require("../assets/partners/it-kontrakt.svg"),
         },
         {
           id: "fis",
@@ -536,7 +535,7 @@ IT Kontrakt, w ramach inwestycji Oaktree Capital Management i Cornerstone Partne
           www: "https://www.fisglobal.com/",
           type: "gold",
           logo: require("../assets/partners/fis.svg"),
-          orientation: "horizontal"
+          orientation: "horizontal",
         },
         {
           id: "sollers",
@@ -552,7 +551,7 @@ More information about career in Sollers Consulting at: [https://career.sollers.
           www: "https://career.sollers.eu/",
           type: "silver",
           logo: require("../assets/partners/sollers.svg"),
-          orientation: "horizontal"
+          orientation: "horizontal",
         },
         {
           id: "alten",
@@ -561,7 +560,7 @@ More information about career in Sollers Consulting at: [https://career.sollers.
           Nasz zespół to profesjonaliści, którzy dzięki zaangażowaniu i znajomości potrzeb rynku sprawiają, że grupa ALTEN wciąż jest światowym liderem usług konsultingu inżynieryjno-technologicznego.`,
           www: "https://www.altenpolska.pl",
           type: "silver",
-          logo: require("../assets/partners/alten.svg")
+          logo: require("../assets/partners/alten.svg"),
         },
         {
           id: "isolutions",
@@ -596,7 +595,7 @@ Jesteśmy dumni nie tylko z tego, co robimy, ale również z tego kim jesteśmy 
           www: "https://isolution.pl/kariera/",
           type: "silver",
           logo: require("../assets/partners/is.png"),
-          orientation: "horizontal"
+          orientation: "horizontal",
         },
         {
           id: "pentacomp",
@@ -606,7 +605,7 @@ Jesteśmy dumni nie tylko z tego, co robimy, ale również z tego kim jesteśmy 
           www: "https://www.pentacomp.pl/",
           type: "bronze",
           logo: require("../assets/partners/pentacomp.svg"),
-          orientation: "horizontal"
+          orientation: "horizontal",
         },
         {
           id: "ppl",
@@ -615,7 +614,7 @@ Jesteśmy dumni nie tylko z tego, co robimy, ale również z tego kim jesteśmy 
           www: "https://www.polish-airports.com/",
           type: "silver",
           logo: require("../assets/partners/ppl.svg"),
-          orientation: "horizontal"
+          orientation: "horizontal",
         },
         {
           id: "atena",
@@ -624,7 +623,7 @@ Jesteśmy dumni nie tylko z tego, co robimy, ale również z tego kim jesteśmy 
           www: "https://www.atena.pl",
           type: "gold",
           logo: require("../assets/partners/atena.svg"),
-          orientation: "horizontal"
+          orientation: "horizontal",
         },
         {
           id: "groupon",
@@ -635,7 +634,7 @@ Groupon zmienia to, w jaki sposób tradycyjne niewielkie biznesy mogą zdobywać
           www: "https://people.groupon.com/poland",
           type: "silver",
           logo: require("../assets/partners/groupon.svg"),
-          orientation: "horizontal"
+          orientation: "horizontal",
         },
         {
           id: "prodata",
@@ -646,7 +645,7 @@ We act within the Scandinavian business culture focused on achieving goals while
           www: "https://www.itconsultants.pl/",
           type: "silver",
           logo: require("../assets/partners/prodata.png"),
-          orientation: "horizontal"
+          orientation: "horizontal",
         },
         {
           id: "cgi",
@@ -656,7 +655,7 @@ We act within the Scandinavian business culture focused on achieving goals while
 Nasze główne doświadczenie na rynku polskim obejmuje strategie IT, dopasowanie IT do biznesu, zarządzanie procesami biznesowymi i aplikacjami, zarządzanie zmianą organizacji, architekturę IT, prowadzenie biura projektów oraz zarządzanie kosztami IT. Posiadamy bogate doświadczenie w rozwiązaniach biznesowych end-to-end dla danych sektorów.`,
           www: "https://www.cgi.com",
           type: "silver",
-          logo: require("../assets/partners/cgi.svg")
+          logo: require("../assets/partners/cgi.svg"),
         },
         {
           id: "luxoft",
@@ -671,7 +670,7 @@ We have a relaxed corporate culture that’s highlighted by the best employees t
           www: "https://career.luxoft.com/",
           type: "silver",
           logo: require("../assets/partners/luxoft.svg"),
-          orientation: "horizontal"
+          orientation: "horizontal",
         },
         {
           id: "justjoinit",
@@ -680,7 +679,7 @@ We have a relaxed corporate culture that’s highlighted by the best employees t
           www: "https://justjoin.it",
           type: "media",
           logo: require("../assets/partners/justjoinit.png"),
-          orientation: "horizontal"
+          orientation: "horizontal",
         },
         {
           id: "crossweb",
@@ -691,7 +690,7 @@ Nad każdym publikowanym wydarzeniem w Crossweb czuwa moderator, dbając o jako�
           www: "https://crossweb.pl",
           type: "media",
           logo: require("../assets/partners/crossweb.png"),
-          orientation: "box"
+          orientation: "box",
         },
         {
           id: "codersview",
@@ -702,7 +701,7 @@ CVC to całe IT w jednym miejscu!`,
           www: "https://codersview.eu",
           type: "media",
           logo: require("../assets/partners/codersview.svg"),
-          orientation: "horizontal"
+          orientation: "horizontal",
         },
         {
           id: "PROBrand",
@@ -719,19 +718,19 @@ Zapraszamy także do naszej wypożyczalni sprzętu eventowego: [www.eventav.pl ]
           www: "https://www.facebook.com/PRObrand-Sp-z-oo-170774782953644/",
           type: "tech",
           logo: require("../assets/partners/probrand.png"),
-          orientation: "horizontal"
-        }
+          orientation: "horizontal",
+        },
       ];
     },
     // tslint:enable
     [LOAD_PARTNER_BY_ID]({ state, dispatch }, id: string) {
       return dispatch(LOAD_PARTNERS).then(() =>
         state.partners.find(
-          partner => partner.id.toLowerCase() === id.toLowerCase()
+          (partner) => partner.id.toLowerCase() === id.toLowerCase()
         )
       );
-    }
-  }
+    },
+  },
 };
 
 function shuffle<T>(array: T[]): T[] {

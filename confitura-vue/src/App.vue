@@ -1,8 +1,9 @@
 <template>
   <div id="app">
+    Hello!
     <TheHeader />
     <SocialLinks class="standard" />
-    <router-view></router-view>
+<!--    <router-view></router-view>-->
   </div>
 </template>
 
@@ -10,28 +11,32 @@
 @import "styles";
 </style>
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import TheHeader from "@/components/TheHeader.vue";
-import SocialLinks from "@/components/SocialLinks.vue";
 import { TOKEN, WINDOW_RESIZED } from "./types";
+import { defineComponent } from "vue";
+import { useStore } from "vuex";
+import TheHeader from "@/components/TheHeader.vue";
 
-@Component({
-  components: { TheHeader, SocialLinks }
-})
-export default class App extends Vue {
-  public mounted() {
+export default defineComponent({
+  name: "App",
+  components: { TheHeader },
+  setup() {
+    const store = useStore();
+    return { store };
+  },
+  mounted() {
     this.resizedCallback();
     window.addEventListener("resize", this.resizedCallback);
-    this.$store.commit(TOKEN, { token: localStorage.getItem(TOKEN) });
-  }
+    this.store.commit(TOKEN, { token: localStorage.getItem(TOKEN) });
+  },
+  methods: {
+    beforeDestroy() {
+      window.removeEventListener("resize", this.resizedCallback);
+    },
 
-  public beforeDestroy() {
-    window.removeEventListener("resize", this.resizedCallback);
-  }
-
-  private resizedCallback = () => {
-    const width = window.innerWidth;
-    this.$store.commit(WINDOW_RESIZED, { width });
-  };
-}
+    resizedCallback() {
+      const width = window.innerWidth;
+      this.store.commit(WINDOW_RESIZED, { width });
+    },
+  },
+});
 </script>

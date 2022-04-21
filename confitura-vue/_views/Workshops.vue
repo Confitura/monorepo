@@ -1,6 +1,6 @@
 <template>
   <div class="workshops">
-    <PageHeader title="Workshops" class="header" type="coder"> </PageHeader>
+    <PageHeader title="Workshops" class="header" type="coder"></PageHeader>
     <Box class="content" color="white">
       <div class="workshops__info">
         <div class="workshops__short-info">
@@ -33,7 +33,7 @@
             (for both trainers and trainees). If you did not find answer to your
             question there then please contact Maria from Sages:
             <a class="link--red" href="mailto:m.nowakowska@sages.com.pl"
-              >m.nowakowska@sages.com.pl</a
+            >m.nowakowska@sages.com.pl</a
             >
           </p>
         </div>
@@ -49,11 +49,11 @@
               <div class="workshop__speaker">Jakub Nabrdalik</div>
               <div class="workshop__signup">
                 <a
-                  href="https://evenea.pl/event/confituraarchitecture/"
-                  class="workshop__signupLink"
-                  target="_blank"
-                  rel="noopener"
-                  >More info & Sign up</a
+                    href="https://evenea.pl/event/confituraarchitecture/"
+                    class="workshop__signupLink"
+                    target="_blank"
+                    rel="noopener"
+                >More info & Sign up</a
                 >
               </div>
             </div>
@@ -62,11 +62,11 @@
               <div class="workshop__speaker">Piotr Przybył</div>
               <div class="workshop__signup">
                 <a
-                  href="https://evenea.pl/event/confiturajigsaw/"
-                  class="workshop__signupLink"
-                  target="_blank"
-                  rel="noopener"
-                  >More info & Sign up</a
+                    href="https://evenea.pl/event/confiturajigsaw/"
+                    class="workshop__signupLink"
+                    target="_blank"
+                    rel="noopener"
+                >More info & Sign up</a
                 >
               </div>
             </div>
@@ -75,11 +75,11 @@
               <div class="workshop__speaker">Michał Wojtyna</div>
               <div class="workshop__signup">
                 <a
-                  href="https://evenea.pl/event/confiturapragmatictdd/"
-                  class="workshop__signupLink"
-                  target="_blank"
-                  rel="noopener"
-                  >More info & Sign up</a
+                    href="https://evenea.pl/event/confiturapragmatictdd/"
+                    class="workshop__signupLink"
+                    target="_blank"
+                    rel="noopener"
+                >More info & Sign up</a
                 >
               </div>
             </div>
@@ -88,11 +88,11 @@
               <div class="workshop__speaker">Tomasz Łabuz</div>
               <div class="workshop__signup">
                 <a
-                  href="https://evenea.pl/event/confituraspringreactor/"
-                  class="workshop__signupLink"
-                  target="_blank"
-                  rel="noopener"
-                  >More info & Sign up</a
+                    href="https://evenea.pl/event/confituraspringreactor/"
+                    class="workshop__signupLink"
+                    target="_blank"
+                    rel="noopener"
+                >More info & Sign up</a
                 >
               </div>
             </div>
@@ -107,11 +107,11 @@
               <div class="workshop__speaker">Waldemar Kołodziejczyk</div>
               <div class="workshop__signup">
                 <a
-                  href="https://evenea.pl/event/confituraintroml/"
-                  class="workshop__signupLink"
-                  target="_blank"
-                  rel="noopener"
-                  >More info & Sign up</a
+                    href="https://evenea.pl/event/confituraintroml/"
+                    class="workshop__signupLink"
+                    target="_blank"
+                    rel="noopener"
+                >More info & Sign up</a
                 >
               </div>
             </div>
@@ -123,11 +123,11 @@
               <div class="workshop__speaker">Paweł Konior</div>
               <div class="workshop__signup">
                 <a
-                  href="https://evenea.pl/event/confituranlp/"
-                  class="workshop__signupLink"
-                  target="_blank"
-                  rel="noopener"
-                  >More info & Sign up</a
+                    href="https://evenea.pl/event/confituranlp/"
+                    class="workshop__signupLink"
+                    target="_blank"
+                    rel="noopener"
+                >More info & Sign up</a
                 >
               </div>
             </div>
@@ -136,11 +136,11 @@
               <div class="workshop__speaker">Patryk Pilarski</div>
               <div class="workshop__signup">
                 <a
-                  href="https://evenea.pl/event/confituraapachespark/"
-                  class="workshop__signupLink"
-                  target="_blank"
-                  rel="noopener"
-                  >More info & Sign up</a
+                    href="https://evenea.pl/event/confituraapachespark/"
+                    class="workshop__signupLink"
+                    target="_blank"
+                    rel="noopener"
+                >More info & Sign up</a
                 >
               </div>
             </div>
@@ -152,11 +152,11 @@
               <div class="workshop__description"></div>
               <div class="workshop__signup">
                 <a
-                  href="https://evenea.pl/event/confituragenerativemodels/"
-                  class="workshop__signupLink"
-                  target="_blank"
-                  rel="noopener"
-                  >More info & Sign up</a
+                    href="https://evenea.pl/event/confituragenerativemodels/"
+                    class="workshop__signupLink"
+                    target="_blank"
+                    rel="noopener"
+                >More info & Sign up</a
                 >
               </div>
             </div>
@@ -164,220 +164,222 @@
         </div>
       </div>
       <div class="workshops__venue">
-        <div class="workshops__venue-title">
-          workshops venue
-        </div>
+        <div class="workshops__venue-title">workshops venue</div>
         <div class="workshops__venue-address">
           <p>Post-conference workshops will take place in:</p>
-          Golden Floor Plaza,<br />
-          123A Jerozolimskie Avenue,<br />
+          Golden Floor Plaza,<br/>
+          123A Jerozolimskie Avenue,<br/>
           Warsaw, Poland
         </div>
       </div>
       <GmapMap
-        :center="center"
-        :zoom="16"
-        :options="mapOptions"
-        class="workshops__map"
+          :center="center"
+          :zoom="16"
+          :options="mapOptions"
+          class="workshops__map"
       >
         <GmapMarker
-          :position="center"
-          :clickable="true"
-          :draggable="false"
-          :icon="require('../assets/marker.svg')"
+            :position="center"
+            :clickable="true"
+            :draggable="false"
+            :icon="require('../assets/marker.svg')"
         />
       </GmapMap>
     </Box>
-    <Contact />
+    <Contact/>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
 import Box from "@/components/Box.vue";
 import PageHeader from "@/components/PageHeader.vue";
 import Contact from "@/components/Contact.vue";
+import { defineComponent, Ref, ref } from "vue";
 
-@Component({
-  components: { PageHeader, Box, Contact }
-})
-export default class Workshops extends Vue {
-  public center = { lat: 52.225045, lng: 20.990859 };
-  public mapOptions = {
-    zoomControl: true,
-    mapTypeControl: false,
-    styles: [
-      {
-        featureType: "all",
-        elementType: "labels.text.fill",
-        stylers: [
-          {
-            color: "#ffffff"
-          }
-        ]
-      },
-      {
-        featureType: "all",
-        elementType: "labels.text.stroke",
-        stylers: [
-          {
-            visibility: "off"
-          }
-        ]
-      },
-      {
-        featureType: "all",
-        elementType: "labels.icon",
-        stylers: [
-          {
-            visibility: "off"
-          }
-        ]
-      },
-      {
-        featureType: "administrative",
-        elementType: "geometry.fill",
-        stylers: [
-          {
-            color: "#ee1f46"
-          }
-        ]
-      },
-      {
-        featureType: "administrative",
-        elementType: "geometry.stroke",
-        stylers: [
-          {
-            color: "#c9323b"
-          },
-          {
-            weight: 1.2
-          }
-        ]
-      },
-      {
-        featureType: "administrative.locality",
-        elementType: "geometry.fill",
-        stylers: [
-          {
-            lightness: "-1"
-          }
-        ]
-      },
-      {
-        featureType: "administrative.neighborhood",
-        elementType: "labels.text.fill",
-        stylers: [
-          {
-            lightness: "0"
-          },
-          {
-            saturation: "0"
-          }
-        ]
-      },
-      {
-        featureType: "administrative.neighborhood",
-        elementType: "labels.text.stroke",
-        stylers: [
-          {
-            weight: "0.01"
-          }
-        ]
-      },
-      {
-        featureType: "administrative.land_parcel",
-        elementType: "labels.text.stroke",
-        stylers: [
-          {
-            weight: "0.01"
-          }
-        ]
-      },
-      {
-        featureType: "landscape",
-        elementType: "geometry",
-        stylers: [
-          {
-            color: "#ee1f46"
-          }
-        ]
-      },
-      {
-        featureType: "poi",
-        elementType: "geometry",
-        stylers: [
-          {
-            color: "#99282f"
-          }
-        ]
-      },
-      {
-        featureType: "road",
-        elementType: "geometry.stroke",
-        stylers: [
-          {
-            visibility: "off"
-          }
-        ]
-      },
-      {
-        featureType: "road.highway",
-        elementType: "geometry.fill",
-        stylers: [
-          {
-            color: "#99282f"
-          }
-        ]
-      },
-      {
-        featureType: "road.highway.controlled_access",
-        elementType: "geometry.stroke",
-        stylers: [
-          {
-            color: "#99282f"
-          }
-        ]
-      },
-      {
-        featureType: "road.arterial",
-        elementType: "geometry",
-        stylers: [
-          {
-            color: "#99282f"
-          }
-        ]
-      },
-      {
-        featureType: "road.local",
-        elementType: "geometry",
-        stylers: [
-          {
-            color: "#99282f"
-          }
-        ]
-      },
-      {
-        featureType: "transit",
-        elementType: "geometry",
-        stylers: [
-          {
-            color: "#99282f"
-          }
-        ]
-      },
-      {
-        featureType: "water",
-        elementType: "geometry",
-        stylers: [
-          {
-            color: "#090228"
-          }
-        ]
-      }
-    ]
-  };
-}
+export default defineComponent({
+  name: "Workshops",
+  components: { PageHeader, Box, Contact },
+  setup() {
+    const center: Ref<any> = ref({lat: 52.225045, lng: 20.990859});
+    const mapOptions: any = {
+      zoomControl: true,
+      mapTypeControl: false,
+      styles: [
+        {
+          featureType: "all",
+          elementType: "labels.text.fill",
+          stylers: [
+            {
+              color: "#ffffff",
+            },
+          ],
+        },
+        {
+          featureType: "all",
+          elementType: "labels.text.stroke",
+          stylers: [
+            {
+              visibility: "off",
+            },
+          ],
+        },
+        {
+          featureType: "all",
+          elementType: "labels.icon",
+          stylers: [
+            {
+              visibility: "off",
+            },
+          ],
+        },
+        {
+          featureType: "administrative",
+          elementType: "geometry.fill",
+          stylers: [
+            {
+              color: "#ee1f46",
+            },
+          ],
+        },
+        {
+          featureType: "administrative",
+          elementType: "geometry.stroke",
+          stylers: [
+            {
+              color: "#c9323b",
+            },
+            {
+              weight: 1.2,
+            },
+          ],
+        },
+        {
+          featureType: "administrative.locality",
+          elementType: "geometry.fill",
+          stylers: [
+            {
+              lightness: "-1",
+            },
+          ],
+        },
+        {
+          featureType: "administrative.neighborhood",
+          elementType: "labels.text.fill",
+          stylers: [
+            {
+              lightness: "0",
+            },
+            {
+              saturation: "0",
+            },
+          ],
+        },
+        {
+          featureType: "administrative.neighborhood",
+          elementType: "labels.text.stroke",
+          stylers: [
+            {
+              weight: "0.01",
+            },
+          ],
+        },
+        {
+          featureType: "administrative.land_parcel",
+          elementType: "labels.text.stroke",
+          stylers: [
+            {
+              weight: "0.01",
+            },
+          ],
+        },
+        {
+          featureType: "landscape",
+          elementType: "geometry",
+          stylers: [
+            {
+              color: "#ee1f46",
+            },
+          ],
+        },
+        {
+          featureType: "poi",
+          elementType: "geometry",
+          stylers: [
+            {
+              color: "#99282f",
+            },
+          ],
+        },
+        {
+          featureType: "road",
+          elementType: "geometry.stroke",
+          stylers: [
+            {
+              visibility: "off",
+            },
+          ],
+        },
+        {
+          featureType: "road.highway",
+          elementType: "geometry.fill",
+          stylers: [
+            {
+              color: "#99282f",
+            },
+          ],
+        },
+        {
+          featureType: "road.highway.controlled_access",
+          elementType: "geometry.stroke",
+          stylers: [
+            {
+              color: "#99282f",
+            },
+          ],
+        },
+        {
+          featureType: "road.arterial",
+          elementType: "geometry",
+          stylers: [
+            {
+              color: "#99282f",
+            },
+          ],
+        },
+        {
+          featureType: "road.local",
+          elementType: "geometry",
+          stylers: [
+            {
+              color: "#99282f",
+            },
+          ],
+        },
+        {
+          featureType: "transit",
+          elementType: "geometry",
+          stylers: [
+            {
+              color: "#99282f",
+            },
+          ],
+        },
+        {
+          featureType: "water",
+          elementType: "geometry",
+          stylers: [
+            {
+              color: "#090228",
+            },
+          ],
+        },
+      ],
+    }
+    return {center, mapOptions};
+
+  }
+});
+
 </script>
 
 <style lang="scss" scoped>
@@ -456,6 +458,7 @@ export default class Workshops extends Vue {
   @include md() {
     flex-direction: row;
   }
+
   .workshops__track {
     flex-basis: 50%;
     display: flex;
@@ -479,6 +482,7 @@ export default class Workshops extends Vue {
     &:not(:last-child) {
       border-bottom: 1px solid #979797;
     }
+
     padding-bottom: 2rem;
     min-height: 270px;
     padding-right: 1rem;

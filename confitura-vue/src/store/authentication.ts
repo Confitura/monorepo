@@ -1,11 +1,11 @@
 import { Module } from "vuex";
 import { LOGIN, LOGOUT, RootState, TOKEN, User } from "@/types";
 import axios from "axios";
-import router from "../router";
+// import router from "../router";
 
 export const authenticationModule: Module<AuthenticationState, RootState> = {
   state: {
-    token: localStorage.getItem(TOKEN)
+    token: localStorage.getItem(TOKEN),
   },
 
   getters: {
@@ -31,7 +31,7 @@ export const authenticationModule: Module<AuthenticationState, RootState> = {
     isVolunteer: (state, getters) => {
       const user: User | null = getters.user;
       return user !== null && user.isVolunteer;
-    }
+    },
   },
   mutations: {
     [TOKEN](store, payload: { token: string }) {
@@ -41,7 +41,7 @@ export const authenticationModule: Module<AuthenticationState, RootState> = {
       } else {
         localStorage.setItem(TOKEN, payload.token);
       }
-    }
+    },
   },
   actions: {
     [LOGIN]({ commit, rootGetters }, { service, params }) {
@@ -52,19 +52,19 @@ export const authenticationModule: Module<AuthenticationState, RootState> = {
         })
         .then(() => {
           const { isNew } = rootGetters.user;
-          if (isNew) {
-            router.push("/register");
-          } else {
-            router.push("/profile");
-          }
+          // if (isNew) {
+          //   router.push("/register");
+          // } else {
+          //   router.push("/profile");
+          // }
         });
     },
 
     [LOGOUT]({ commit }) {
       commit(TOKEN, { token: null });
-      router.push("/");
-    }
-  }
+      // router.push("/");
+    },
+  },
 };
 
 export interface AuthenticationState {

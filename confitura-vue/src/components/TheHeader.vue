@@ -23,48 +23,52 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import { CHANGE_HEADER_THEME } from "@/types";
+import { defineComponent } from "vue";
+import {CHANGE_HEADER_THEME} from "@/types";
+import {useStore} from "vuex";
 import TheMenu from "@/components/TheMenu.vue";
 
-@Component({
-  components: { TheMenu }
-})
-export default class TheHeader extends Vue {
-  public showMenu = false;
+export default defineComponent({
+  name: "TheHeader",
+  components: { TheMenu },
+  setup() {
+    const showMenu = false;
+    const store = useStore();
 
-  public mounted() {
+    return { showMenu, store };
+  },
+  mounted() {
     window.addEventListener("scroll", this.handleScroll);
-  }
-
-  public beforeDestroy() {
+  },
+  beforeDestroy() {
     window.removeEventListener("scroll", this.handleScroll);
-  }
+  },
+  methods: {
+    handleScroll() {
+      const scroll = window.scrollY;
+      if (scroll < 20) {
+        this.store.commit(CHANGE_HEADER_THEME, { color: "default" });
+      }
+    },
 
-  public handleScroll() {
-    const scroll = window.scrollY;
-    if (scroll < 20) {
-      this.$store.commit(CHANGE_HEADER_THEME, { color: "default" });
-    }
-  }
+    hideMenu() {
+      this.showMenu = false;
+    },
 
-  public hideMenu() {
-    this.showMenu = false;
-  }
+    toggleMenu($event: Event) {
+      $event.preventDefault();
+      this.showMenu = !this.showMenu;
+    },
 
-  public toggleMenu($event: Event) {
-    $event.preventDefault();
-    this.showMenu = !this.showMenu;
-  }
+    theme() {
+      return `header--${this.store.state.headerTheme}`;
+    },
 
-  get theme() {
-    return `header--${this.$store.state.headerTheme}`;
-  }
-
-  get mobileBreakpoint() {
-    return this.$store.getters.isLg;
-  }
-}
+    mobileBreakpoint() {
+      return this.store.getters.isLg;
+    },
+  },
+});
 </script>
 
 <style scoped lang="scss">

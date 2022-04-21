@@ -7,12 +7,12 @@ export const RATE = "RATE";
 export const presentationsModule: Module<PresentationsState, RootState> = {
   state: {
     underRating: null,
-    rates: JSON.parse(localStorage.getItem("rate") || "[]")
+    rates: JSON.parse(localStorage.getItem("rate") || "[]"),
   },
   getters: {
     isRated(state) {
       return (id: string) => state.rates.includes(id);
-    }
+    },
   },
   mutations: {
     [SET_PRESENTATION_UNDER_RATE](
@@ -27,7 +27,7 @@ export const presentationsModule: Module<PresentationsState, RootState> = {
         store.rates = [presentation.id, ...store.rates];
         localStorage.setItem(`rate`, JSON.stringify(store.rates));
       }
-    }
+    },
   },
   actions: {
     [RATE]({ commit }, { presentation, rate, comment }: PresentationRate) {
@@ -37,12 +37,12 @@ export const presentationsModule: Module<PresentationsState, RootState> = {
             `/api/presentations/${presentation.id}/ratings`,
             { value: rate - 1, comment }
           )
-          .then(response => {
+          .then((response) => {
             commit(RATE, { presentation, id: response.data.id });
           });
       }
-    }
-  }
+    },
+  },
 };
 
 export interface PresentationsState {

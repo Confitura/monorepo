@@ -38,11 +38,11 @@
 
           <div class="presentation__speakers">
             <div
-              class="presentation__speaker speaker"
-              v-for="speaker in presentation.speakers"
-              :key="speaker.name"
+                class="presentation__speaker speaker"
+                v-for="speaker in presentation.speakers"
+                :key="speaker.name"
             >
-              <LazyImage :src="speaker.photo" class="speaker__photo" />
+              <LazyImage :src="speaker.photo" class="speaker__photo"/>
               <div class="speaker__name">
                 <span>{{ getFirstNameOf(speaker) }}</span>
                 <span>{{ getLastNameOf(speaker) }}</span>
@@ -56,14 +56,14 @@
             </div>
             <div class="presentation__metadata-group">
               <i
-                class="presentation__icon fas fa-graduation-cap"
-                title="level"
+                  class="presentation__icon fas fa-graduation-cap"
+                  title="level"
               ></i>
               <div class="presentation__level">{{ presentation.level }}</div>
             </div>
             <div
-              class="presentation__metadata-group"
-              v-if="presentation.workshop"
+                class="presentation__metadata-group"
+                v-if="presentation.workshop"
             >
               <i class="presentation__icon fas fa-hammer" title="workshop"></i>
               <div class="presentation__workshop">workshop</div>
@@ -73,10 +73,10 @@
                 <i class="presentation__icon  fas fa-tags" title="tags"></i>
                 <div class="presentation__tags">
                   <span
-                    class="presentation__tag"
-                    v-for="tag in presentation.tags"
-                    :key="tag.name"
-                    >{{ tag.name }}</span
+                      class="presentation__tag"
+                      v-for="tag in presentation.tags"
+                      :key="tag.name"
+                  >{{ tag.name }}</span
                   >
                 </div>
               </template>
@@ -84,20 +84,20 @@
           </div>
           <div class="presentation__description-type description-type">
             <span
-              class="description-type__item"
-              :class="{
+                class="description-type__item"
+                :class="{
                 'description-type__item--active': descriptionType === 'short'
               }"
-              @click="descriptionType = 'short'"
-              >short description</span
+                @click="descriptionType = 'short'"
+            >short description</span
             >
             <span
-              class="description-type__item"
-              :class="{
+                class="description-type__item"
+                :class="{
                 'description-type__item--active': descriptionType === 'full'
               }"
-              @click="descriptionType = 'full'"
-              >full description</span
+                @click="descriptionType = 'full'"
+            >full description</span
             >
           </div>
           <div class="presentation__description">{{ description }}</div>
@@ -105,15 +105,15 @@
         <aside class="side">
           <div class="vote">
             <div
-              class="vote-item"
-              v-for="rate in rateValues"
-              :key="rate.rate"
-              :class="{
+                class="vote-item"
+                v-for="rate in rateValues"
+                :key="rate.rate"
+                :class="{
                 [`vote-item--${rate.name}`]: true,
                 'vote-item--active': isActive(rate.rate)
               }"
-              :disabled="currentVote.rate === rate.rate"
-              @click="doVote(rate.rate)"
+                :disabled="currentVote.rate === rate.rate"
+                @click="doVote(rate.rate)"
             >
               <span>{{ rate.label }}</span>
             </div>
@@ -148,24 +148,51 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import Contact from "@/components/Contact.vue";
-import Box from "../components/Box.vue";
-import PageHeader from "../components/PageHeader.vue";
+import {Component, Vue} from "vue-property-decorator";
 import LazyImage from "../components/LazyImage.vue";
-import { LOAD_VOTES, SAVE_VOTE } from "@/store/vote4papers";
-import { Presentation, UserProfile, Vote } from "@/types";
+import {LOAD_VOTES, SAVE_VOTE} from "@/store/vote4papers";
+import {Presentation, UserProfile, Vote} from "@/types";
 import VueScrollTo from "vue-scrollto";
 import axios from "axios";
 
+import {defineComponent, Ref, ref} from "vue";
+import PageHeader from "@/components/PageHeader.vue";
+import Contact from "@/components/Contact.vue";
+import Box from "@/components/Box.vue";
+
+export default defineComponent({
+  name: "Vote4Papers",
+  components: {PageHeader, Box, Contact, VueScrollTo, LazyImage},
+  setup() {
+    const rateValues = [
+      {rate: +1, label: "+1", name: "positive"},
+      {rate: 0, label: "0", name: "neutral"},
+      {rate: -1, label: "-1", name: "negative"}
+    ];
+    const presentation: Presentation | null = null;
+    const voteIndex = 0;
+    const descriptionType: "short" | "full" = "short";
+    return {voteIndex}
+  },
+  mounted() {
+    const voteIndex = localStorage.getItem("VOTE_INDEX");
+    if (voteIndex != null) {
+      this.voteIndex = Number(voteIndex);
+    }
+    this.$store
+        .dispatch(LOAD_VOTES)
+        .then(() => this.loadPresentationFor(this.currentVote));
+  }
+});
+
 @Component({
-  components: { PageHeader, Box, Contact, VueScrollTo, LazyImage }
+  components: {PageHeader, Box, Contact, VueScrollTo, LazyImage}
 })
-export default class Vote4Papers extends Vue {
+class Vote4Papers extends Vue {
   public rateValues = [
-    { rate: +1, label: "+1", name: "positive" },
-    { rate: 0, label: "0", name: "neutral" },
-    { rate: -1, label: "-1", name: "negative" }
+    {rate: +1, label: "+1", name: "positive"},
+    {rate: 0, label: "0", name: "neutral"},
+    {rate: -1, label: "-1", name: "negative"}
   ];
   public presentation: Presentation | null = null;
   public voteIndex = 0;
@@ -177,8 +204,8 @@ export default class Vote4Papers extends Vue {
       this.voteIndex = Number(voteIndex);
     }
     this.$store
-      .dispatch(LOAD_VOTES)
-      .then(() => this.loadPresentationFor(this.currentVote));
+        .dispatch(LOAD_VOTES)
+        .then(() => this.loadPresentationFor(this.currentVote));
   }
 
   get currentVote(): Vote | null {
@@ -200,8 +227,8 @@ export default class Vote4Papers extends Vue {
   get description(): string {
     if (this.presentation) {
       return this.descriptionType === "short"
-        ? this.presentation.shortDescription
-        : this.presentation.description;
+          ? this.presentation.shortDescription
+          : this.presentation.description;
     } else {
       return "";
     }
@@ -234,7 +261,7 @@ export default class Vote4Papers extends Vue {
       return;
     }
     vote.rate = rate;
-    this.$store.dispatch(SAVE_VOTE, { vote }).then(() => {
+    this.$store.dispatch(SAVE_VOTE, {vote}).then(() => {
       this.changePage(this.voteIndex + direction);
       window.scrollTo(0, 0);
     });
@@ -283,10 +310,10 @@ export default class Vote4Papers extends Vue {
       this.presentation = null;
     } else {
       axios
-        .get<Presentation>(`/api/votes/${vote.id}/presentation`, {
-          params: { projection: "inlineSpeaker" }
-        })
-        .then(it => (this.presentation = it.data));
+          .get<Presentation>(`/api/votes/${vote.id}/presentation`, {
+            params: {projection: "inlineSpeaker"}
+          })
+          .then(it => (this.presentation = it.data));
     }
   }
 
@@ -318,7 +345,7 @@ export default class Vote4Papers extends Vue {
 
   private showHelp() {
     this.$toasted.info(
-      "<pre>" +
+        "<pre>" +
         "shortcuts:\n\n" +
         "enter     -> start\n" +
         "space     -> toggle description\n" +
@@ -328,10 +355,10 @@ export default class Vote4Papers extends Vue {
         "d | right -> next\n" +
         "a | left  -> go back\n\n" +
         "</pre>",
-      {
-        duration: 5000,
-        position: "bottom-right"
-      }
+        {
+          duration: 5000,
+          position: "bottom-right"
+        }
     );
   }
 

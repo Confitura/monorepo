@@ -6,7 +6,7 @@
           v-if="item.url"
           :to="item.url"
           class="menu-link"
-          @click.native="click()"
+          @click="click()"
           >{{ item.label }}
         </router-link>
         <span v-else class="menu-link" @click="item.action()">{{
@@ -18,59 +18,85 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { defineComponent, Ref, ref } from "vue";
+import { useStore } from "vuex";
 import { LOGOUT } from "@/types";
 
-@Component({
-  components: {}
-})
-export default class TheMenu extends Vue {
-  public items: MenuItem[] = [
-    { label: "scanner", url: "/scanner", visible: () => this.isVolunteer },
-    { label: "home", url: "/#home" },
-    { label: "about us", url: "/about" },
-    { label: "venue", url: "/venue" },
-    // { label: "partners", url: "/partners" },
-    // { label: "schedule", url: "/schedule" },
-    // { label: "presentations", url: "/presentations" },
-    // { label: "speakers", url: "/speakers" },
-    // { label: "workshop day", url: "/workshops" },
-    { label: "FAQ", url: "/faq" },
-    { label: "my profile", url: "/profile", visible: () => this.isLogin },
-    { label: "ADMIN", url: "/admin", visible: () => this.isAdmin },
-    {
-      label: "logout",
-      action: () => this.logout(),
-      visible: () => this.isLogin
-    }
-    // { label: "C4P", url: "/c4p", visible: () => !this.isLogin },
-    // { label: "login", url: "/login", visible: () => !this.isLogin }
-  ];
+export default defineComponent({
+  name: "TheMenu",
+  setup() {
+    const store = useStore();
 
-  public isVisible(item: MenuItem): boolean {
-    return item.visible === undefined || item.visible();
-  }
+    const isLogin: Ref<boolean> = ref(store.getters.isLogin);
+    const isAdmin: Ref<boolean> = ref(store.getters.isAdmin);
+    const isVolunteer: Ref<boolean> = ref(store.getters.isVolunteer);
+    const logout = () => {
+      store.dispatch(LOGOUT);
+    };
 
-  public click() {
-    this.$emit("linkClicked");
-  }
+    const items: MenuItem[] = [
+      {
+        label: "scanner",
+        url: "/scanner",
+        visible: () => isVolunteer.value,
+      },
+      { label: "home", url: "/#home" },
+      { label: "about us", url: "/about" },
+      { label: "venue", url: "/venue" },
+      // { label: "partners", url: "/partners" },
+      // { label: "schedule", url: "/schedule" },
+      // { label: "presentations", url: "/presentations" },
+      // { label: "speakers", url: "/speakers" },
+      // { label: "workshop day", url: "/workshops" },
+      { label: "FAQ", url: "/faq" },
+      {
+        label: "my profile",
+        url: "/profile",
+        visible: () => isLogin.value,
+      },
+      {
+        label: "ADMIN",
+        url: "/admin",
+        visible: () => isAdmin.value,
+      },
+      {
+        label: "logout",
+        action: () => {
+          logout();
+        },
+        visible: () => isLogin.value,
+      },
+      // { label: "C4P", url: "/c4p", visible: () => !this.isLogin },
+      // { label: "login", url: "/login", visible: () => !this.isLogin }
+    ];
+    return { items, store };
+  },
+  methods: {
+    isVisible(item: MenuItem): boolean {
+      return item.visible === undefined || item.visible();
+    },
 
-  public get isLogin() {
-    return this.$store.getters.isLogin;
-  }
+    click() {
+      this.$emit("linkClicked");
+    },
 
-  public get isAdmin() {
-    return this.$store.getters.isAdmin;
-  }
+    isLogin() {
+      return this.store.getters.isLogin;
+    },
 
-  public get isVolunteer() {
-    return this.$store.getters.isVolunteer || this.isAdmin;
-  }
+    isAdmin() {
+      return this.store.getters.isAdmin;
+    },
 
-  public logout() {
-    this.$store.dispatch(LOGOUT);
-  }
-}
+    isVolunteer() {
+      return this.store.getters.isVolunteer || this.isAdmin;
+    },
+
+    logout() {
+      this.store.dispatch(LOGOUT);
+    },
+  },
+});
 
 interface MenuItem {
   label: string;

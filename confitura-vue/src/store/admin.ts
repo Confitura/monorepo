@@ -5,7 +5,7 @@ import {
   Presentation,
   RootState,
   UserProfile,
-  Voucher
+  Voucher,
 } from "@/types";
 import axios from "axios";
 
@@ -27,12 +27,12 @@ export const adminModule: Module<AdminState, RootState> = {
     speakers: [],
     speaker: null,
     presentations: [],
-    vouchers: []
+    vouchers: [],
   },
   getters: {
     userCount: ({ users }) => users.length,
     presentationCount: ({ presentations }) => presentations.length,
-    vouchersCount: ({ vouchers }) => vouchers.length
+    vouchersCount: ({ vouchers }) => vouchers.length,
   },
   mutations: {
     [SET_USERS](store, payload: { users: UserProfile[] }) {
@@ -49,56 +49,56 @@ export const adminModule: Module<AdminState, RootState> = {
     },
     [SET_PRESENTATIONS](store, payload: { presentations: Presentation[] }) {
       store.presentations = payload.presentations;
-    }
+    },
   },
   actions: {
     [LOAD_USERS]({ commit }) {
-      return axios.get<EmbeddedUserProfiles>("/api/users").then(it => {
+      return axios.get<EmbeddedUserProfiles>("/api/users").then((it) => {
         commit(SET_USERS, { users: it.data._embedded.publicUsers });
       });
     },
     [LOAD_VOUCHERS]({ commit }) {
-      return axios.get<Voucher[]>("/api/vouchers").then(it => {
+      return axios.get<Voucher[]>("/api/vouchers").then((it) => {
         commit(SET_VOUCHERS, { vouchers: it.data });
       });
     },
     [LOAD_SPEAKERS]({ commit }) {
       return axios
         .get<EmbeddedUserProfiles>("/api/users/search/speakers")
-        .then(it => {
+        .then((it) => {
           commit(SET_SPEAKERS, { speakers: it.data._embedded.publicUsers });
         });
     },
     [LOAD_SPEAKER]({ commit }, { id }) {
-      return axios.get<UserProfile>(`/api/users/${id}/public`).then(it => {
+      return axios.get<UserProfile>(`/api/users/${id}/public`).then((it) => {
         commit(SET_SPEAKER, { speaker: it.data });
       });
     },
     [LOAD_ALL_PRESENTATIONS]({ commit }) {
       return axios
         .get<EmbeddedPresentations>("/api/presentations", {
-          params: { projection: "inlineSpeaker" }
+          params: { projection: "inlineSpeaker" },
         })
-        .then(it => {
+        .then((it) => {
           commit(SET_PRESENTATIONS, {
-            presentations: it.data._embedded.presentations
+            presentations: it.data._embedded.presentations,
           });
         });
     },
     [LOAD_ACCEPTED_PRESENTATIONS]({ commit }) {
       return axios
         .get<EmbeddedPresentations>("/api/presentations/search/accepted", {
-          params: { projection: "inlineSpeaker" }
+          params: { projection: "inlineSpeaker" },
         })
-        .then(it => it.data._embedded.presentations)
-        .then(presentations =>
-          presentations.filter(presentation => !presentation.workshop)
+        .then((it) => it.data._embedded.presentations)
+        .then((presentations) =>
+          presentations.filter((presentation) => !presentation.workshop)
         )
-        .then(presentations => {
+        .then((presentations) => {
           commit(SET_PRESENTATIONS, { presentations });
         });
-    }
-  }
+    },
+  },
 };
 
 export interface AdminState {
