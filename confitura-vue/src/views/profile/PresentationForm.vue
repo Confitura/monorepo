@@ -1,7 +1,7 @@
 <template>
   <div class="profile">
     <PageHeader :small="true" title="Presentation"></PageHeader>
-    <Box class="content" color="white">
+    <Box class="content" color="white" :full="false">
       <div class="back-office">
         <div class="row">
           <form class="col s12">
