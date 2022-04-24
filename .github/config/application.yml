@@ -1,48 +1,48 @@
 server:
-  port: ${port}
+  port: ${PORT}
   servlet:
     context-path: /api
 conference.c4p:
-  start: "2019-01-01T00:00:00.0+02:00[Europe/Warsaw]"
-  end: "2020-06-20T00:00:00.0+02:00[Europe/Warsaw]"
+  start: "2022-01-01T00:00:00.0+02:00[Europe/Warsaw]"
+  end: "2022-06-20T00:00:00.0+02:00[Europe/Warsaw]"
 twitter:
-  api-key: ${twitter_key}
-  api-secret: ${twitter_secret}
-  callback: ${twitter_callback}
-  access-token: ${twitter_access_token}
-  access-token-secret: ${twitter_access_token_secret}
+  api-key: ${TWITTER_KEY}
+  api-secret: ${TWITTER_SECRET}
+  callback: ${TWITTER_CALLBACK}
+  access-token: ${TWITTER_ACCESS_TOKEN}
+  access-token-secret: ${TWITTER_ACCESS_TOKEN_SECRET}
 app.oauth.oauth2:
   facebook:
-    api-key: ${facebook_key}
-    api-secret: ${facebook_secret}
-    callback: ${facebook_callback}
+    api-key: ${FACEBOOK_KEY}
+    api-secret: ${FACEBOOK_SECRET}
+    callback: ${FACEBOOK_CALLBACK}
 
   github:
-    api-key: ${github_key}
-    api-secret: ${github_secret}
-    callback: ${github_callback}
+    api-key: ${GITHUB_KEY}
+    api-secret: ${GITHUB_SECRET}
+    callback: ${GITHUB_CALLBACK}
 
   google:
-    api-key: ${google_key}
-    api-secret: ${google_secret}
-    callback: ${google_callback}
+    api-key: ${GOOGLE_KEY}
+    api-secret: ${GOOGLE_SECRET}
+    callback: ${GOOGLE_CALLBACK}
 
 jwt:
-  key: ${jwt_key}
+  key: ${JWT_KEY}
 
 mail:
-  api-key: ${mail_key}
+  api-key: ${MAIL_KEY}
   from-email: confitura@confitura.pl
   from-name: Confitura
 
 resources:
   path: resources
-  folder: ${resources_folder}
+  folder: ${RESOURCES_FOLDER}
 spring:
   datasource:
-    url: jdbc:mysql://${db_host}:${db_port}/${db_name}?useLegacyDatetimeCode=false&serverTimezone=Europe/Warsaw&useUnicode=yes&characterEncoding=UTF-8
-    username: ${db_user}
-    password: ${db_pass}
+    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}?useLegacyDatetimeCode=false&serverTimezone=Europe/Warsaw&useUnicode=yes&characterEncoding=UTF-8
+    username: ${DB_USER}
+    password: ${DB_PASS}
   jpa:
     hibernate:
       ddl-auto: update
