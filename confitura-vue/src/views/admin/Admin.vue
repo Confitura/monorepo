@@ -1,22 +1,25 @@
 <template>
   <div class="admin">
-    <PageHeader title="Administration" :small="true" />
+    <PageHeader title="Administration" :small="true"/>
     <Box :small="true" class="content back-office" color="white">
       <div class="row">
         <div>
           <div class="admin__menu">
             <div class="admin__menu-item">
-              <router-link to="/admin/users">Users </router-link>
+              <router-link to="/admin">Status</router-link>
+            </div>
+            <div class="admin__menu-item">
+              <router-link to="/admin/users">Users</router-link>
               <span class=" new badge">{{ userCount }}</span>
             </div>
             <div class="admin__menu-item">
               <router-link to="/admin/presentations"
-                >Presentations
+              >Presentations
               </router-link>
               <span class="new badge">{{ presentationCount }}</span>
             </div>
             <div class="admin__menu-item">
-              <router-link to="/admin/vouchers">Vouchers </router-link>
+              <router-link to="/admin/vouchers">Vouchers</router-link>
               <span class=" new badge">{{ voucherCount }}</span>
             </div>
           </div>
@@ -26,29 +29,31 @@
         <router-view></router-view>
       </div>
     </Box>
-    <Contact />
+    <Contact/>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import {Component, Vue} from "vue-property-decorator";
 import Box from "@/components/Box.vue";
 import PageHeader from "@/components/PageHeader.vue";
 import Contact from "@/components/Contact.vue";
 import {
   LOAD_USERS,
   LOAD_ALL_PRESENTATIONS,
-  LOAD_VOUCHERS
+  LOAD_VOUCHERS,
+  LOAD_INFO
 } from "@/store/admin";
 
 @Component({
-  components: { PageHeader, Box, Contact }
+  components: {PageHeader, Box, Contact}
 })
 export default class Admin extends Vue {
   public mounted() {
     this.$store.dispatch(LOAD_USERS);
     this.$store.dispatch(LOAD_ALL_PRESENTATIONS);
     this.$store.dispatch(LOAD_VOUCHERS);
+    this.$store.dispatch(LOAD_INFO);
   }
 
   get userCount() {

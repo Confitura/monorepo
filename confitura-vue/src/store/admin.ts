@@ -15,11 +15,13 @@ export const LOAD_SPEAKER = "LOAD_SPEAKER";
 export const LOAD_ALL_PRESENTATIONS = "LOAD_ALL_PRESENTATIONS";
 export const LOAD_ACCEPTED_PRESENTATIONS = "LOAD_ACCEPTED_PRESENTATIONS";
 export const LOAD_VOUCHERS = "LOAD_VOUCHERS";
+export const LOAD_INFO = "LOAD_INFO";
 const SET_USERS = "SET_USERS";
 const SET_SPEAKERS = "SET_SPEAKERS";
 const SET_SPEAKER = "SET_SPEAKER";
 const SET_PRESENTATIONS = "SET_PRESENTATIONS ";
 const SET_VOUCHERS = "SET_VOUCHERS";
+const SET_INFO = "SET_INFO";
 
 export const adminModule: Module<AdminState, RootState> = {
   state: {
@@ -27,12 +29,14 @@ export const adminModule: Module<AdminState, RootState> = {
     speakers: [],
     speaker: null,
     presentations: [],
-    vouchers: []
+    vouchers: [],
+    info: {}
   },
   getters: {
-    userCount: ({ users }) => users.length,
-    presentationCount: ({ presentations }) => presentations.length,
-    vouchersCount: ({ vouchers }) => vouchers.length
+    userCount: ({users}) => users.length,
+    presentationCount: ({presentations}) => presentations.length,
+    vouchersCount: ({vouchers}) => vouchers.length,
+    info: ({info}) => info
   },
   mutations: {
     [SET_USERS](store, payload: { users: UserProfile[] }) {
@@ -49,6 +53,9 @@ export const adminModule: Module<AdminState, RootState> = {
     },
     [SET_PRESENTATIONS](store, payload: { presentations: Presentation[] }) {
       store.presentations = payload.presentations;
+    },
+    [SET_INFO](store, payload: { info: Info }) {
+      store.info = payload.info;
     }
   },
   actions: {
@@ -94,6 +101,14 @@ export const adminModule: Module<AdminState, RootState> = {
         .then(presentations => {
           commit(SET_PRESENTATIONS, { presentations });
         });
+    },
+    [LOAD_INFO]({commit}) {
+      return axios
+        .get<Info>("/api/api/actuator/info")
+        .then(it => it.data)
+        .then(info => {
+          commit(SET_INFO, {info});
+        });
     }
   }
 };
@@ -104,4 +119,13 @@ export interface AdminState {
   presentations: Presentation[];
   speaker: UserProfile | null;
   vouchers: Voucher[];
+  info: Info;
+}
+
+interface Info {
+  c4p?: {
+    start: number,
+    end: number,
+    enabled: boolean
+  }
 }
