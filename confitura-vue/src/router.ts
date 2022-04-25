@@ -12,6 +12,7 @@ import ProfilePage from "@/views/profile/ProfilePage.vue";
 import PresentationForm from "@/views/profile/PresentationForm.vue";
 import PrivacyPolicy from "@/views/PrivacyPolicy.vue";
 import Admin from "@/views/admin/Admin.vue";
+import Status from "@/views/admin/Status";
 import Users from "@/views/admin/Users.vue";
 import Presentations from "@/views/admin/Presentations.vue";
 import Workshops from "@/views/Workshops.vue";
@@ -96,6 +97,7 @@ const router = new Router({
       name: "admin",
       component: Admin,
       children: [
+        { path: "", component: Status },
         { path: "users", component: Users },
         { path: "presentations", component: Presentations },
         { path: "vouchers", component: Vouchers }
