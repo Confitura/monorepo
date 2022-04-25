@@ -14,16 +14,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: Set up JDK 8
-        uses: actions/setup-java@v3
-        with:
-          java-version: '8'
-          distribution: 'temurin'
-          cache: maven
       - name: Build with Maven
         run: ./mvnw -B package -DskipTests
       - run: cp target/jelatyna-*.jar /home/jelatyna/github/jelatyna.jar
-      - run: chmod +x /home/jelatyna/github/jelatyna.jar
       - working-directory: .
         run: cp .github/config/application.yml /home/jelatyna/github/application.yml
       - run: sudo systemctl restart jelatyna
