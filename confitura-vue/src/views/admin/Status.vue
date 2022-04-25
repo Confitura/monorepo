@@ -39,7 +39,6 @@ export default class Status extends Vue {
     }
   }
 
-
   get c4pState() {
     let info = this.$store.getters.info;
     let state = false
