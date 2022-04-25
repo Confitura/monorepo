@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col s12 m4">
-      <div class="card-panel" v-bind:class="{ opened: c4pEnabled, closed: !c4pEnabled }">
+      <div class="card-panel" v-bind:class="[c4pState]">
         <span class="white-text">
           C4P is now {{ c4pState }} ({{ c4pStart }} to {{ c4pEnd }})
         </span>
@@ -29,16 +29,6 @@ const dateFormat = "DD.MM.YYYY HH:mm";
 
 @Component({})
 export default class Status extends Vue {
-
-  get c4pEnabled() {
-    let info = this.$store.getters.info;
-    if (info && info.c4p) {
-      return info.c4p.enabled
-    } else {
-      return false;
-    }
-  }
-
   get info() {
     return this.$store.getters.info;
   }
@@ -51,7 +41,12 @@ export default class Status extends Vue {
 
 
   get c4pState() {
-    return this.c4pEnabled ? "opened" : "closed";
+    let info = this.$store.getters.info;
+    let state = false
+    if (info && info.c4p) {
+      state = info.c4p.enabled
+    }
+    return state ? "opened" : "closed";
   }
 
   get c4pStart() {
