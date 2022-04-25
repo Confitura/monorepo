@@ -1,0 +1,48 @@
+server:
+  port: ${PORT}
+  servlet:
+    context-path: /api
+conference.c4p:
+  start: "2022-01-01T00:00:00.0+02:00[Europe/Warsaw]"
+  end: "2022-06-20T00:00:00.0+02:00[Europe/Warsaw]"
+twitter:
+  api-key: ${TWITTER_KEY}
+  api-secret: ${TWITTER_SECRET}
+  callback: ${TWITTER_CALLBACK}
+  access-token: ${TWITTER_ACCESS_TOKEN}
+  access-token-secret: ${TWITTER_ACCESS_TOKEN_SECRET}
+app.oauth.oauth2:
+  facebook:
+    api-key: ${FACEBOOK_KEY}
+    api-secret: ${FACEBOOK_SECRET}
+    callback: ${FACEBOOK_CALLBACK}
+
+  github:
+    api-key: ${GITHUB_KEY}
+    api-secret: ${GITHUB_SECRET}
+    callback: ${GITHUB_CALLBACK}
+
+  google:
+    api-key: ${GOOGLE_KEY}
+    api-secret: ${GOOGLE_SECRET}
+    callback: ${GOOGLE_CALLBACK}
+
+jwt:
+  key: ${JWT_KEY}
+
+mail:
+  api-key: ${MAIL_KEY}
+  from-email: confitura@confitura.pl
+  from-name: Confitura
+
+resources:
+  path: resources
+  folder: ${RESOURCES_FOLDER}
+spring:
+  datasource:
+    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}?useLegacyDatetimeCode=false&serverTimezone=Europe/Warsaw&useUnicode=yes&characterEncoding=UTF-8
+    username: ${DB_USER}
+    password: ${DB_PASS}
+  jpa:
+    hibernate:
+      ddl-auto: update
