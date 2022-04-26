@@ -25,20 +25,9 @@ public class ResourcesConfiguration {
         @Override
         public void addResourceHandlers(ResourceHandlerRegistry registry) {
             registry
-                    .addResourceHandler( rootPath + "/**/*")
+                    .addResourceHandler(rootPath + "/**/*")
                     .addResourceLocations("file:///" + folder + "/");
         }
 
-        @Override
-        public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
-            for (HttpMessageConverter<?> converter : converters) {
-                if (converter instanceof MappingJackson2HttpMessageConverter) {
-                    MappingJackson2HttpMessageConverter jsonMessageConverter = (MappingJackson2HttpMessageConverter) converter;
-                    ObjectMapper objectMapper = jsonMessageConverter.getObjectMapper();
-                    objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-                    break;
-                }
-            }
-        }
     }
 }
