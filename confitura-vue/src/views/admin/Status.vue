@@ -35,7 +35,7 @@ export default class Status extends Vue {
 
   get buildDate() {
     if (this.info.build) {
-      return dayjs(this.info.build.time).format(dateFormat)
+      return dayjs.unix(this.info.build.time).format(dateFormat)
     }
   }
 
@@ -51,13 +51,13 @@ export default class Status extends Vue {
   get c4pStart() {
     let info = this.info;
     if (info && info.c4p)
-      return dayjs(info.c4p.start).format(dateFormat)
+      return dayjs.unix(info.c4p.start).format(dateFormat)
   }
 
   get c4pEnd() {
     let info = this.info;
     if (info && info.c4p)
-      return dayjs(info.c4p.end).format(dateFormat)
+      return dayjs.unix(info.c4p.end).format(dateFormat)
   }
 
 }
