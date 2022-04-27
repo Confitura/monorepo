@@ -2,30 +2,32 @@
   <div class="partners">
     <PageHeader title="Partners" type="peace"> </PageHeader>
     <Box class="content" color="white">
-      <article v-for="(items, type) in partners" :key="type">
-        <h2 class="type-header">
-          {{ type }} <br class="type-header__breaker" />partners
-        </h2>
-        <div class="logos">
-          <router-link
-            v-for="partner in items"
-            :key="partner.id"
-            :to="`/partners/${partner.id}`"
-            class="logo-link"
-            :class="`logo-link--${partner.type}`"
-          >
-            <img
-              :src="partner.logo"
-              :alt="partner.name"
-              :class="{
-                ['logo--' + partner.type]: true,
-                ['logo--' + partner.orientation]: partner.orientation,
-                [partner.id]: true
-              }"
-            />
-          </router-link>
-        </div>
-      </article>
+      <template v-for="(items, type) in partners"  >
+        <article v-if="items.length > 0" :key="type">
+          <h2 class="type-header">
+            {{ type }} <br class="type-header__breaker" />partners
+          </h2>
+          <div class="logos">
+            <router-link
+              v-for="partner in items"
+              :key="partner.id"
+              :to="`/partners/${partner.id}`"
+              class="logo-link"
+              :class="`logo-link--${partner.type}`"
+            >
+              <img
+                :src="partner.logo"
+                :alt="partner.name"
+                :class="{
+                  ['logo--' + partner.type]: true,
+                  ['logo--' + partner.orientation]: partner.orientation,
+                  [partner.id]: true
+                }"
+              />
+            </router-link>
+          </div>
+        </article>
+      </template>
     </Box>
     <Contact />
   </div>

@@ -37,7 +37,7 @@
               :class="item.id"
             />
           </a>
-          <span class="type--path">Path</span>
+<!--          <span class="type&#45;&#45;path">Path</span>-->
         </div>
       </div>
       <div class="other-types">
@@ -101,7 +101,7 @@ export default class HomePartners extends Vue {
   public path: Partner[] = [];
   public gold: Partner[] = [];
   public silver: Partner[] = [];
-  public types: PartnerType[] = ["gold", "silver", "bronze"];
+  public types: PartnerType[] = [];
   public partners: Partners = {
     platinum: [],
     path: [],

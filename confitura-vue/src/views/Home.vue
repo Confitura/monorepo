@@ -1,15 +1,15 @@
 <template>
   <div class="home__container">
-    <HomeMainBanner />
-    <HomeAbout />
-    <HomeNumbers />
-<!--        <HomePartners />-->
-    <Contact />
+    <HomeMainBanner/>
+    <HomeAbout/>
+    <HomeNumbers/>
+    <HomePartners/>
+    <Contact/>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import {Component, Vue} from "vue-property-decorator";
 import HomeMainBanner from "@/components/HomeMainBanner.vue";
 import HomeAbout from "@/components/HomeAbout.vue";
 import HomeCovid19 from "@/components/HomeCovid19.vue";
@@ -29,7 +29,8 @@ import HomeNumbers from "@/components/HomeNumbers.vue";
     HomeMainBanner
   }
 })
-export default class Home extends Vue {}
+export default class Home extends Vue {
+}
 </script>
 
 <style lang="scss">
