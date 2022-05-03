@@ -22,6 +22,10 @@
               <router-link to="/admin/vouchers">Vouchers</router-link>
               <span class=" new badge">{{ voucherCount }}</span>
             </div>
+            <div class="admin__menu-item">
+              <router-link to="/admin/votes">Votes</router-link>
+              <span class=" new badge">{{ votesCount }}</span>
+            </div>
           </div>
         </div>
       </div>
@@ -42,7 +46,8 @@ import {
   LOAD_USERS,
   LOAD_ALL_PRESENTATIONS,
   LOAD_VOUCHERS,
-  LOAD_INFO
+  LOAD_INFO,
+  LOAD_VOTE_STATISTICS
 } from "@/store/admin";
 
 @Component({
@@ -54,6 +59,7 @@ export default class Admin extends Vue {
     this.$store.dispatch(LOAD_ALL_PRESENTATIONS);
     this.$store.dispatch(LOAD_VOUCHERS);
     this.$store.dispatch(LOAD_INFO);
+    this.$store.dispatch(LOAD_VOTE_STATISTICS);
   }
 
   get userCount() {
@@ -66,6 +72,9 @@ export default class Admin extends Vue {
 
   get voucherCount() {
     return this.$store.getters.vouchersCount;
+  }
+  get votesCount() {
+    return this.$store.getters.votesCount;
   }
 }
 </script>

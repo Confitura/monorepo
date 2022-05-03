@@ -80,9 +80,9 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { Presentation} from "@/types";
+import { Presentation } from "@/types";
 import axios from "axios";
-import { LOAD_ALL_PRESENTATIONS} from "@/store/admin";
+import { LOAD_ALL_PRESENTATIONS } from "@/store/admin";
 
 @Component({
   components: {}

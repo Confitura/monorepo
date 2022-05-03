@@ -24,6 +24,7 @@ import Speakers from "@/views/Speakers.vue";
 import Speaker from "@/views/Speaker.vue";
 import AcceptedPresentations from "@/views/AcceptedPresentations.vue";
 import Vouchers from "@/views/admin/Vouchers.vue";
+import Votes from "@/views/admin/Votes.vue";
 import About from "@/views/About.vue";
 import Agenda from "@/views/Agenda.vue";
 import Venue from "@/views/Venue.vue";
@@ -100,7 +101,8 @@ const router = new Router({
         { path: "", component: Status },
         { path: "users", component: Users },
         { path: "presentations", component: Presentations },
-        { path: "vouchers", component: Vouchers }
+        { path: "vouchers", component: Vouchers },
+        { path: "votes", component: Votes }
       ]
     },
     {
