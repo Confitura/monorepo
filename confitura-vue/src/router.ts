@@ -30,6 +30,7 @@ import Agenda from "@/views/Agenda.vue";
 import Venue from "@/views/Venue.vue";
 import Scanner from "@/views/admin/Scanner.vue";
 import Spoina from "@/views/Spoina.vue";
+import ManageSchedule from "@/views/admin/ManageSchedule.vue";
 
 Vue.use(Router);
 Vue.use(VueScrollTo, {
@@ -102,7 +103,8 @@ const router = new Router({
         { path: "users", component: Users },
         { path: "presentations", component: Presentations },
         { path: "vouchers", component: Vouchers },
-        { path: "votes", component: Votes }
+        { path: "votes", component: Votes },
+        { path: "schedule", component: ManageSchedule }
       ]
     },
     {
