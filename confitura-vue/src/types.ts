@@ -159,3 +159,11 @@ export interface PresentationRate {
   rate: number;
   comment?: string;
 }
+
+export interface VoteStat {
+  title: string;
+  presentationId: string;
+  positiveVotes: number;
+  negativeVotes: number;
+  totalVotes: number;
+}

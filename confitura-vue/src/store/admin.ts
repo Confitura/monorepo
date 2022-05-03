@@ -5,6 +5,7 @@ import {
   Presentation,
   RootState,
   UserProfile,
+  VoteStat,
   Voucher
 } from "@/types";
 import axios from "axios";
@@ -16,12 +17,14 @@ export const LOAD_ALL_PRESENTATIONS = "LOAD_ALL_PRESENTATIONS";
 export const LOAD_ACCEPTED_PRESENTATIONS = "LOAD_ACCEPTED_PRESENTATIONS";
 export const LOAD_VOUCHERS = "LOAD_VOUCHERS";
 export const LOAD_INFO = "LOAD_INFO";
+export const LOAD_VOTE_STATISTICS = "LOAD_VOTE_STATISTICS";
 const SET_USERS = "SET_USERS";
 const SET_SPEAKERS = "SET_SPEAKERS";
 const SET_SPEAKER = "SET_SPEAKER";
 const SET_PRESENTATIONS = "SET_PRESENTATIONS ";
 const SET_VOUCHERS = "SET_VOUCHERS";
 const SET_INFO = "SET_INFO";
+const SET_VOTE_STATISTICS = "SET_VOTE_STATISTICS";
 
 export const adminModule: Module<AdminState, RootState> = {
   state: {
@@ -30,13 +33,21 @@ export const adminModule: Module<AdminState, RootState> = {
     speaker: null,
     presentations: [],
     vouchers: [],
-    info: {}
+    info: {},
+    votes: []
   },
   getters: {
     userCount: ({ users }) => users.length,
     presentationCount: ({ presentations }) => presentations.length,
     vouchersCount: ({ vouchers }) => vouchers.length,
-    info: ({ info }) => info
+    info: ({ info }) => info,
+    votesCount: ({ votes }) =>
+      votes
+        .map(it => it.totalVotes)
+        .reduce(
+          (previousValue, currentValue) => previousValue + currentValue,
+          0
+        )
   },
   mutations: {
     [SET_USERS](store, payload: { users: UserProfile[] }) {
@@ -60,6 +71,9 @@ export const adminModule: Module<AdminState, RootState> = {
     },
     [SET_INFO](store, payload: { info: Info }) {
       store.info = payload.info;
+    },
+    [SET_VOTE_STATISTICS](store, payload: { votes: VoteStat[] }) {
+      store.votes = payload.votes;
     }
   },
   actions: {
@@ -115,6 +129,14 @@ export const adminModule: Module<AdminState, RootState> = {
         .then(info => {
           commit(SET_INFO, { info });
         });
+    },
+    [LOAD_VOTE_STATISTICS]({ commit }) {
+      return axios
+        .get<VoteStat[]>("/api/votes/statistics")
+        .then(it => it.data)
+        .then(votes => {
+          commit(SET_VOTE_STATISTICS, { votes });
+        });
     }
   }
 };
@@ -126,6 +148,7 @@ export interface AdminState {
   speaker: UserProfile | null;
   vouchers: Voucher[];
   info: Info;
+  votes: VoteStat[];
 }
 
 interface Info {
