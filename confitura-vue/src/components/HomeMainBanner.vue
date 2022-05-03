@@ -2,29 +2,37 @@
   <section class="banner" id="home">
     <HomeMainBannerStars />
     <div class="container">
-        <div class="info">
-            <div class="slogan">
-                <h1 class="h1">It is not rocket science!</h1>
-
-            </div>
-          <TheTimer/>
-            <div class="info__live">
-                <div class="info__live-text">Confitura 2022</div>
-                <a class="info__live-link" href="https://2022.confitura.pl/c4p" target="_blank">Call 4 Papers is active!</a>
-            </div>
-            <div class="info__long">
-              The <a
-                href="https://www.facebook.com/events/expo-xxi-warszawa-międzynarodowe-centrum-targowo-kongresowe/confitura-2022/1321909284639993/">date
-              and place</a> are set, you can start preparing!
-              <br/>
-              If your company wants to join us as well, here is our
-              contact mail: <a href="mailto:confitura[at]confitura[dot]pl">confitura[at]confitura[dot]pl</a>; we will be happy to
-              start a new friendship.
-            </div>
-          <div class="info__long">
-            Confitura 2022 will take place on June 25 in Warsaw, EXPO XXI.
-          </div>
+      <div class="info">
+        <div class="slogan">
+          <h1 class="h1">It is not rocket science!</h1>
         </div>
+        <TheTimer />
+        <div class="info__live">
+          <div class="info__live-text">Confitura 2022</div>
+          <a
+            class="info__live-link"
+            href="https://2022.confitura.pl/c4p"
+            target="_blank"
+            >Call 4 Papers is active!</a
+          >
+        </div>
+        <div class="info__long">
+          The
+          <a
+            href="https://www.facebook.com/events/expo-xxi-warszawa-międzynarodowe-centrum-targowo-kongresowe/confitura-2022/1321909284639993/"
+            >date and place</a
+          >
+          are set, you can start preparing!
+          <br />
+          If your company wants to join us as well, here is our contact mail:
+          <a href="mailto:confitura[at]confitura[dot]pl"
+            >confitura[at]confitura[dot]pl</a
+          >; we will be happy to start a new friendship.
+        </div>
+        <div class="info__long">
+          Confitura 2022 will take place on June 25 in Warsaw, EXPO XXI.
+        </div>
+      </div>
       <HomeMainBannerIllustration />
     </div>
     <img class="rocket-icon" src="../assets/rocket.svg" alt="rocket" />

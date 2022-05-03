@@ -3,10 +3,14 @@
     <PageHeader :small="true" title="Call 4 Papers"></PageHeader>
     <Box class="content" color="white" :full="false">
       <p class="login__info">
-        To register your presentation with our Call 4 Papers process you need to create a profile. Your presentation will be presented to all V4P participants as is - so make sure that it is as polished as possible.
-        <br/>
-        <br/>
-        C4P will be closed on May 21, 2022. If you have any questions about presentations - please make sure to check our <router-link to="faq" class="link--red">FAQ</router-link>.
+        To register your presentation with our Call 4 Papers process you need to
+        create a profile. Your presentation will be presented to all V4P
+        participants as is - so make sure that it is as polished as possible.
+        <br />
+        <br />
+        C4P will be closed on May 21, 2022. If you have any questions about
+        presentations - please make sure to check our
+        <router-link to="faq" class="link--red">FAQ</router-link>.
       </p>
       <div class="login-container">
         <div v-for="option in options" :key="option" class="login-with">

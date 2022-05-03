@@ -10,19 +10,14 @@
 
     <div class="col s12 m4">
       <div class="card-panel">
-        <span>
-          Build date: {{ buildDate }}
-        </span>
+        <span> Build date: {{ buildDate }} </span>
       </div>
     </div>
-
   </div>
-
 </template>
 
 <script>
-
-import {Component, Vue} from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 import dayjs from "dayjs";
 
 const dateFormat = "DD.MM.YYYY HH:mm";
