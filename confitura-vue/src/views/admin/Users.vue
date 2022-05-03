@@ -30,20 +30,20 @@
         </td>
         <td>
           <button
-            class="btn-small"
-            v-bind:class="{ green: user.volunteer, red: !user.volunteer }"
-          >
-            <i class="material-icons">{{
-              user.volunteer ? "check" : "close"
-            }}</i>
-          </button>
-          <button
             class="waves-effect waves-light btn-small grey"
             title="remove volunteer role"
             v-if="user.volunteer"
             @click="markAsVolunteer(user, false)"
           >
             <i class="material-icons ">close</i>
+          </button>
+          <button
+            class="btn-small"
+            v-bind:class="{ green: user.volunteer, red: !user.volunteer }"
+          >
+            <i class="material-icons">{{
+              user.volunteer ? "check" : "close"
+            }}</i>
           </button>
           <button
             class="waves-effect waves-light btn-small grey"

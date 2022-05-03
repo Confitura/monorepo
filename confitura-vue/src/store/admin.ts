@@ -33,14 +33,16 @@ export const adminModule: Module<AdminState, RootState> = {
     info: {}
   },
   getters: {
-    userCount: ({users}) => users.length,
-    presentationCount: ({presentations}) => presentations.length,
-    vouchersCount: ({vouchers}) => vouchers.length,
-    info: ({info}) => info
+    userCount: ({ users }) => users.length,
+    presentationCount: ({ presentations }) => presentations.length,
+    vouchersCount: ({ vouchers }) => vouchers.length,
+    info: ({ info }) => info
   },
   mutations: {
     [SET_USERS](store, payload: { users: UserProfile[] }) {
-      store.users = payload.users;
+      store.users = payload.users.sort((a, b) =>
+        (a.name || "") > (b.name || "") ? 1 : -1
+      );
     },
     [SET_VOUCHERS](store, payload: { vouchers: Voucher[] }) {
       store.vouchers = payload.vouchers;
@@ -52,7 +54,9 @@ export const adminModule: Module<AdminState, RootState> = {
       store.speaker = payload.speaker;
     },
     [SET_PRESENTATIONS](store, payload: { presentations: Presentation[] }) {
-      store.presentations = payload.presentations;
+      store.presentations = payload.presentations.sort((a, b) =>
+        a.title > b.title ? 1 : -1
+      );
     },
     [SET_INFO](store, payload: { info: Info }) {
       store.info = payload.info;
@@ -61,7 +65,9 @@ export const adminModule: Module<AdminState, RootState> = {
   actions: {
     [LOAD_USERS]({ commit }) {
       return axios.get<EmbeddedUserProfiles>("/api/users").then(it => {
-        commit(SET_USERS, { users: it.data._embedded.publicUsers || it.data._embedded.users});
+        commit(SET_USERS, {
+          users: it.data._embedded.publicUsers || it.data._embedded.users
+        });
       });
     },
     [LOAD_VOUCHERS]({ commit }) {
@@ -102,12 +108,12 @@ export const adminModule: Module<AdminState, RootState> = {
           commit(SET_PRESENTATIONS, { presentations });
         });
     },
-    [LOAD_INFO]({commit}) {
+    [LOAD_INFO]({ commit }) {
       return axios
         .get<Info>("/api/api/actuator/info")
         .then(it => it.data)
         .then(info => {
-          commit(SET_INFO, {info});
+          commit(SET_INFO, { info });
         });
     }
   }

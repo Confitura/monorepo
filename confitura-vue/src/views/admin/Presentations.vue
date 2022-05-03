@@ -9,7 +9,7 @@
           <td>level</td>
           <td>speakers</td>
           <td>tags</td>
-          <td>status</td>
+          <td>accepted</td>
         </tr>
       </thead>
       <tr v-for="presentation of presentations" :key="presentation.id">
@@ -42,7 +42,37 @@
             >{{ tag.name }}</span
           >
         </td>
-        <td>{{ presentation.status }}</td>
+        <td>
+          <button
+            class="waves-effect waves-light btn-small grey"
+            title="mark as volunteer"
+            v-if="presentation.status !== 'accepted'"
+            @click="changeStatus(presentation, true)"
+          >
+            <i class="material-icons ">check</i>
+          </button>
+
+          <button
+            class="btn-small"
+            v-bind:class="{
+              green: presentation.status === 'accepted',
+              red: presentation.status !== 'accepted'
+            }"
+          >
+            <i class="material-icons">{{
+              presentation.status === "accepted" ? "check" : "close"
+            }}</i>
+          </button>
+
+          <button
+            class="waves-effect waves-light btn-small grey"
+            title="remove volunteer role"
+            v-if="presentation.status === 'accepted'"
+            @click="changeStatus(presentation, false)"
+          >
+            <i class="material-icons ">close</i>
+          </button>
+        </td>
       </tr>
     </table>
   </div>
@@ -50,6 +80,9 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import { Presentation} from "@/types";
+import axios from "axios";
+import { LOAD_ALL_PRESENTATIONS} from "@/store/admin";
 
 @Component({
   components: {}
@@ -57,6 +90,16 @@ import { Component, Vue } from "vue-property-decorator";
 export default class Presentations extends Vue {
   get presentations() {
     return this.$store.state.admin.presentations;
+  }
+
+  changeStatus(presentation: Presentation, accepted: boolean) {
+    console.log(presentation, accepted);
+    const endpoint = accepted ? "accept" : "unaccept";
+    if (confirm("are you sure?")) {
+      axios
+        .post(`/api/presentations/${presentation.id}/${endpoint}`, {})
+        .then(() => this.$store.dispatch(LOAD_ALL_PRESENTATIONS));
+    }
   }
 }
 </script>
