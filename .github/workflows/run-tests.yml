@@ -47,6 +47,7 @@ jobs:
           cache: 'npm'
           cache-dependency-path: confitura-vue/package-lock.json
       - run: npm ci
+      - run: npm run lint --if-present
       - run: npm run build --if-present
       - run: npm test
 
