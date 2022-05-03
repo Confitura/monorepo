@@ -35,41 +35,47 @@ export default class Status extends Vue {
 
   get buildDate() {
     if (this.info.build) {
-      return dayjs.unix(this.info.build.time).format(dateFormat)
+      return dayjs.unix(this.info.build.time).format(dateFormat);
+    } else {
+      return null;
     }
   }
 
   get c4pState() {
     let info = this.$store.getters.info;
-    let state = false
+    let state = false;
     if (info && info.c4p) {
-      state = info.c4p.enabled
+      state = info.c4p.enabled;
     }
     return state ? "opened" : "closed";
   }
 
   get c4pStart() {
     let info = this.info;
-    if (info && info.c4p)
-      return dayjs.unix(info.c4p.start).format(dateFormat)
+    if (info && info.c4p) {
+      return dayjs.unix(info.c4p.start).format(dateFormat);
+    } else {
+      return null;
+    }
   }
 
   get c4pEnd() {
     let info = this.info;
-    if (info && info.c4p)
-      return dayjs.unix(info.c4p.end).format(dateFormat)
+    if (info && info.c4p) {
+      return dayjs.unix(info.c4p.end).format(dateFormat);
+    } else {
+      return null;
+    }
   }
-
 }
 </script>
 
 <style scoped lang="scss">
-
 .opened {
   background-color: hsl(120, 100%, 25%);
 }
 
 .closed {
-  background-color: hsl(358, 100%, 25%);
+  background-color: hsl(0, 0%, 25%);
 }
 </style>

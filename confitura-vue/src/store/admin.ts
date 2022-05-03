@@ -124,8 +124,8 @@ export interface AdminState {
 
 interface Info {
   c4p?: {
-    start: number,
-    end: number,
-    enabled: boolean
-  }
+    start: number;
+    end: number;
+    enabled: boolean;
+  };
 }

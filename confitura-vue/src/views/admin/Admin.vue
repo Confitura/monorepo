@@ -1,6 +1,6 @@
 <template>
   <div class="admin">
-    <PageHeader title="Administration" :small="true"/>
+    <PageHeader title="Administration" :small="true" />
     <Box :small="true" class="content back-office" color="white">
       <div class="row">
         <div>
@@ -14,7 +14,7 @@
             </div>
             <div class="admin__menu-item">
               <router-link to="/admin/presentations"
-              >Presentations
+                >Presentations
               </router-link>
               <span class="new badge">{{ presentationCount }}</span>
             </div>
@@ -29,12 +29,12 @@
         <router-view></router-view>
       </div>
     </Box>
-    <Contact/>
+    <Contact />
   </div>
 </template>
 
 <script lang="ts">
-import {Component, Vue} from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 import Box from "@/components/Box.vue";
 import PageHeader from "@/components/PageHeader.vue";
 import Contact from "@/components/Contact.vue";
@@ -46,7 +46,7 @@ import {
 } from "@/store/admin";
 
 @Component({
-  components: {PageHeader, Box, Contact}
+  components: { PageHeader, Box, Contact }
 })
 export default class Admin extends Vue {
   public mounted() {
