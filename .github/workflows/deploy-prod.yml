@@ -30,12 +30,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 12.x
-          cache: 'npm'
-          cache-dependency-path: confitura-vue/package-lock.json
+      - run: nvm install 12
+      - run: nvm use 12
       - run: npm ci
       - run: npm run build
       - run: rm -rf /var/www/github-deployed/2022.confitura.pl && cp -r dist /var/www/github-deployed/2022.confitura.pl
@@ -49,12 +45,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 12.x
-          cache: 'npm'
-          cache-dependency-path: confitura-page/package-lock.json
+      - run: nvm install 12
+      - run: nvm use 12
       - run: npm ci
       - run: npm run build
       - run: rm -rf /var/www/github-deployed/2022-console.confitura.pl && cp -r dist /var/www/github-deployed/2022-console.confitura.pl
