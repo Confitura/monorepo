@@ -30,6 +30,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - run: source ~/.bashrc
       - run: nvm install 12
       - run: nvm use 12
       - run: npm ci
