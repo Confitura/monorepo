@@ -91,7 +91,7 @@ export default class AgendaItem extends Vue {
   public timeSlot!: TimeSlot;
 
   @Prop({ required: false })
-  public room: Room;
+  public room: Room | null = null;
 
   public labelModal: boolean = false;
   public newLabel = "";
@@ -133,7 +133,7 @@ export default class AgendaItem extends Vue {
   }
 
   addPresentation(p: Presentation) {
-    if (p) {
+    if (p && p._links) {
       const presentation = p._links.self.href;
       const timeSlot = this.timeSlot._links.self.href;
       const room = this.room ? this.room._links.self.href : null;

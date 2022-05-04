@@ -71,16 +71,18 @@ export const adminModule: Module<AdminState, RootState> = {
       const slotIdToIndex = idToIndex(timeSlots);
       const matrix = createEmptyMatrix(timeSlots, slotIdToIndex, rooms);
       for (const entry of schedule) {
-        const slotIndex = slotIdToIndex[entry.timeSlotId];
-        if (entry.roomId == null) {
-          if (matrix[slotIndex][0] == null) {
-            matrix[slotIndex][0] = entry;
+        if (entry.timeSlotId) {
+          const slotIndex = slotIdToIndex[entry.timeSlotId];
+          if (entry.roomId == null) {
+            if (matrix[slotIndex][0] == null) {
+              matrix[slotIndex][0] = entry;
+            } else {
+              console.warn("conflict in agenda. Two entries in same slot");
+            }
           } else {
-            console.warn("conflict in agenda. Two entries in same slot");
+            const roomIndex = roomIdToIndex[entry.roomId];
+            matrix[slotIndex][roomIndex] = entry;
           }
-        } else {
-          const roomIndex = roomIdToIndex[entry.roomId];
-          matrix[slotIndex][roomIndex] = entry;
         }
       }
       return matrix;
@@ -235,8 +237,8 @@ interface Info {
   };
 }
 
-function idToIndex(entries: any[]) {
-  const roomIdToIndex = {};
+function idToIndex(entries: { id: string }[]) {
+  const roomIdToIndex: { [id: string]: number } = {};
   let index = 0;
   for (const entry of entries) {
     roomIdToIndex[entry.id] = index++;

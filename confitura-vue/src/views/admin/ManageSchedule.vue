@@ -198,7 +198,7 @@ export default class ManageSchedule extends Vue {
       .catch(e => this.showError("cannot add time slot: ", e));
   }
 
-  private showError(prefix, e) {
+  private showError(prefix: string, e: { message: string }) {
     this.$toasted.error(prefix + e.message, {
       duration: 3000,
       className: "error",
@@ -218,12 +218,15 @@ export default class ManageSchedule extends Vue {
 table {
   height: 1px;
 }
+
 tr {
   height: 100%;
 }
+
 td {
   height: 100%;
 }
+
 td > div {
   height: 100%;
 }
