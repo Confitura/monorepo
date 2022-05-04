@@ -24,9 +24,13 @@ export const partnersModule: Module<PartnersState, RootState> = {
             state.partners = [
                 {
                     id: "virtuslab",
-                    description: `Jesteśmy VirtusLab i cieszymy się, że dołączyliśmy do Confirury 2022! Wspieranie społeczności, wymiany wiedzy i doświadczenia, to jest to, co lubimy i co robimy od 2010 roku. Od lat napędzamy rozwój rynku i pomagamy naszym topowym klientom osiągnąć sukces - lokalnie, jak i globalnie. Choć liczymy ponad 300 osób, daleko nam do korporacji. #VLteam to zgrany zespół wierzący, że dobry biznes zależy od dobrego oprogramowania, codziennie udowadniając, jak dużą przewagę konkurencyjną można osiągnąć dzięki implementacji najwyższej jakości rozwiązań, które tworzymy.
-Specjalizujemy się głównie w języku programowania Scala, analizie danych, systemach reaktywnych, czy tworzeniu narzędzi zwiększających efektywność pracy programistów. Intensywnie inwestujemy w badania i rozwój, mocno angażujemy się w community IT organizując konferencje, meet-upy, budując własną platformę eventową [Sphere.it](https://sphere.it/) i współtworząc ponad 40 inicjatyw open source!
-Dowiedz się więcej na [virtuslab.com](https://virtuslab.com/)!`,
+                    description: `We are VirtusLab – 300+ tech enthusiasts constantly striving for growth. We provide expert software engineering and consultancy services to help customers adopt technology transformations. Our aim is to solve complex problems and improve the dev's efficiency. We are building high-quality software in various domains: ranging from smart contracts to investment platforms to compiler servers to brick & mortar retail stores. Our team has extensive knowledge about Data Engineering & Data Science, Cloud-Native Services, Reactive Systems, Dev Tooling, and Frontend.
+
+We are also worldwide experts in Scala language, officially supporting its development and tooling starting with Scala 3 itself to tailor-made solutions for the largest Scala monorepos in the world, like Metals (Language Server Protocol) or scalafmt (Code formatter).
+
+Our  #VLteam delivers high-quality software solving actual problems with modern technology and gives back to the community by supporting open source initiatives, local tech meetups, and conferences (check our own initiative, [Sphere.it](https://sphere.it)). 
+
+We have built a company where everyone can influence how we operate and what we are aiming at. We believe that everyone should participate and create new directions.  Visit [virtuslab.com](https://virtuslab.com) for more!`,
                     name: "VirtusLab",
                     www: "https://virtuslab.com/",
                     type: "platinum",
