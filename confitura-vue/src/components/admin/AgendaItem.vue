@@ -1,48 +1,38 @@
 <template>
-  <div>
+  <div class="hoverable entry">
     <template v-if="!entry">
       <ul>
         <li>
-          <a
-            class="waves-effect waves-light btn-small"
+          <button
+            class="waves-effect waves-light btn-small blue"
             @click="presentationModal = true"
-            >Add Presentation</a
           >
+            Add Presentation
+          </button>
         </li>
         <li>
-          <a
-            class="waves-effect waves-light btn-small"
+          <button
+            class="waves-effect waves-light btn-small blue darken-4"
             @click="labelModal = true"
-            >Add Label</a
           >
+            Add Label
+          </button>
         </li>
       </ul>
     </template>
     <template v-else-if="entry.presentation">
-      <ul>
-        <li>{{ entry.presentation.title }}</li>
-        <li>
-          <button
-            class="waves-effect waves-light btn-small red"
-            @click="remove()"
-          >
-            remove Presentation
-          </button>
-        </li>
-      </ul>
+      <b>presentation:</b>
+      <p>{{ entry.presentation.title }}</p>
+      <a class="waves-effect waves-light btn-small red right" @click="remove()">
+        <i class="material-icons">delete_forever</i>
+      </a>
     </template>
     <template v-else>
-      <ul>
-        <li>{{ entry.label }}</li>
-        <li>
-          <button
-            class="waves-effect waves-light btn-small red"
-            @click="remove()"
-          >
-            remove Label
-          </button>
-        </li>
-      </ul>
+      <b>label:</b>
+      <p>{{ entry.label }}</p>
+      <a class="waves-effect waves-light btn-small red right" @click="remove()">
+        <i class="material-icons">delete_forever</i>
+      </a>
     </template>
 
     <div v-if="labelModal">
@@ -176,5 +166,13 @@ export default class AgendaItem extends Vue {
 
 .available-presentation:hover {
   background-color: rgb(128, 217, 86);
+}
+
+button {
+  width: 100%;
+}
+
+.entry {
+  padding: 2em;
 }
 </style>

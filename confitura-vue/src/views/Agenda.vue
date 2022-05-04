@@ -169,6 +169,8 @@ export interface TimeSlot extends WithOrder {
   label: string;
   id: string;
   forAllRooms: boolean;
+  start: string;
+  end: string;
   _links: { self: { href: string } };
 }
 
