@@ -147,27 +147,31 @@ export default class Agenda extends Vue {
     a.displayOrder - b.displayOrder;
 }
 
-interface EmbeddedRooms {
+export interface EmbeddedRooms {
   _embedded: { rooms: Room[] };
 }
 
-interface EmbeddedTimeSlots {
+export interface EmbeddedTimeSlots {
   _embedded: { timeSlots: TimeSlot[] };
 }
 
-interface EmbeddedAgenda {
+export interface EmbeddedAgenda {
   _embedded: { agendaEntries: AgendaEntry[] };
 }
 
-interface Room extends WithOrder {
+export interface Room extends WithOrder {
   label: string;
   id: string;
+  _links: { self: { href: string } };
 }
 
-interface TimeSlot extends WithOrder {
+export interface TimeSlot extends WithOrder {
   label: string;
   id: string;
   forAllRooms: boolean;
+  start: string;
+  end: string;
+  _links: { self: { href: string } };
 }
 
 interface WithOrder {

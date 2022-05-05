@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import {Component, Vue} from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 import HomeMainBanner from "@/components/HomeMainBanner.vue";
 import HomeAbout from "@/components/HomeAbout.vue";
 import HomeCovid19 from "@/components/HomeCovid19.vue";

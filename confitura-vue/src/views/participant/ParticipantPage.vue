@@ -8,7 +8,7 @@
           <h4>
             Congrats {{ participant.firstName }} {{ participant.lastName }} !!!
           </h4>
-          <p>You are all setup to come to Confitura 2019!</p>
+          <p>You are all setup to come to Confitura 2022!</p>
           <p>
             Want to get a maximum from Confitura experience? If you sign up into
             our system, you will be able to create personal agenda, and rate
@@ -45,7 +45,7 @@
           </p>
           <p>
             Other than that... see you on
-            <strong>Saturday, June 29, 2019</strong>!!
+            <strong>Saturday, June 25, 2022</strong>!!
           </p>
         </div>
       </div>
