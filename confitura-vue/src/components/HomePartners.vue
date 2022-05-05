@@ -37,7 +37,7 @@
               :class="item.id"
             />
           </a>
-<!--          <span class="type&#45;&#45;path">Path</span>-->
+          <!--          <span class="type&#45;&#45;path">Path</span>-->
         </div>
       </div>
       <div class="other-types">

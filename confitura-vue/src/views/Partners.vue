@@ -2,7 +2,7 @@
   <div class="partners">
     <PageHeader title="Partners" type="peace"> </PageHeader>
     <Box class="content" color="white">
-      <template v-for="(items, type) in partners"  >
+      <template v-for="(items, type) in partners">
         <article v-if="items.length > 0" :key="type">
           <h2 class="type-header">
             {{ type }} <br class="type-header__breaker" />partners

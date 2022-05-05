@@ -1,10 +1,10 @@
 <template>
   <div class="home__container">
-    <HomeMainBanner/>
-    <HomeAbout/>
-    <HomeNumbers/>
-    <HomePartners/>
-    <Contact/>
+    <HomeMainBanner />
+    <HomeAbout />
+    <HomeNumbers />
+    <HomePartners />
+    <Contact />
   </div>
 </template>
 
@@ -29,8 +29,7 @@ import HomeNumbers from "@/components/HomeNumbers.vue";
     HomeMainBanner
   }
 })
-export default class Home extends Vue {
-}
+export default class Home extends Vue {}
 </script>
 
 <style lang="scss">
