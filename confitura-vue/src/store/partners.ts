@@ -36,7 +36,7 @@ We have built a company where everyone can influence how we operate and what we 
           type: "platinum",
           logo: require("../assets/partners/2022/virtuslab.svg"),
           orientation: "horizontal"
-        }
+        },
         // {
         //   id: "softwareplant",
         //   description: `Technologiczny startup rozwijający produkty do nowoczesnego zarządzania projektami
@@ -178,22 +178,22 @@ We have built a company where everyone can influence how we operate and what we 
         //                     logo: require("../assets/partners/bosch.svg"),
         //                     orientation: "horizontal"
         //                 },
-        //                 {
-        //                     id: "allegro",
-        //                     name: "Allegro Tech",
-        //                     description: `W [Allegro](https://allegro.tech/) tworzymy i utrzymujemy aplikacje, które dzięki swojej skalowalności i niezawodności zyskały sobie rzeszę wiernych użytkowników w całej Europie Środkowo-Wschodniej. Zadanie nie należy do najłatwiejszych, w pracy napotykamy na szereg wyzwań zarówno w obszarze samej architektury i designu, jak i w procesie doboru technologii, zapewnienia jakości kodu, usprawnienia funkcjonalności oraz w późniejszej fazie wdrożenia i utrzymania produktu.
-        // allegro.tech jest naszym pomysłem na dzielenie się zebranym doświadczeniem poprzez organizację konferencji, warsztatów, meetupów i hackatonów.
-        //
-        // Po więcej informacji zapraszamy na nasz blog [https://allegro.tech/](https://allegro.tech/)
-        //
-        // Dołacz do nas również na [https://www.meetup.com/allegrotech/](https://www.meetup.com/allegrotech/)
-        //
-        // I bądź na bieżąco [https://www.facebook.com/allegro.tech](https://www.facebook.com/allegro.tech)`,
-        //                     www: "https://allegro.tech/",
-        //                     type: "silver",
-        //                     logo: require("../assets/partners/allegro.svg"),
-        //                     orientation: "horizontal"
-        //                 },
+        {
+          id: "allegro",
+          name: "Allegro Tech",
+          description: `W [Allegro](https://allegro.tech/) tworzymy i utrzymujemy aplikacje, które dzięki swojej skalowalności i niezawodności zyskały sobie rzeszę wiernych użytkowników. Zadanie nie należy do najłatwiejszych, w pracy napotykamy na szereg wyzwań zarówno w obszarze samej architektury i designu, jak i w procesie doboru technologii, zapewnienia jakości kodu, usprawnienia funkcjonalności oraz w późniejszej fazie wdrożenia i utrzymania produktu.
+        allegro.tech jest naszym pomysłem na dzielenie się zebranym doświadczeniem poprzez organizację konferencji, warsztatów, meetupów i hackatonów.
+        
+Po więcej informacji zapraszamy na nasz blog [https://allegro.tech/](https://allegro.tech/)
+        
+Dołacz do nas również na [https://www.meetup.com/allegrotech/](https://www.meetup.com/allegrotech/)
+        
+I bądź na bieżąco [https://www.facebook.com/allegro.tech](https://www.facebook.com/allegro.tech)`,
+          www: "https://allegro.tech/",
+          type: "silver",
+          logo: require("../assets/partners/allegro.svg"),
+          orientation: "horizontal"
+        }
         //                 {
         //                     id: "applause",
         //                     name: "Applause",
