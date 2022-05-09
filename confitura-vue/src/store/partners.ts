@@ -99,6 +99,15 @@ https://www.dataart.com.pl/
           logo: require("../assets/partners/2022/dataart.svg"),
           orientation: "horizontal"
        },
+        {
+          id: "coderslab",
+          name: "Coders Lab",
+          description: `Coders Lab to najstarsza szkoła IT w Polsce. W jej ofercie znajdują się kursy z zakresu programowania front-end i back-end, testowania manualnego i automatyzującego oraz analityki danych. Łącząc doświadczenie edukacyjne ze znajomością rynku pracy IT, Coders Lab umożliwia realną zmianę zawodową osobom początkującym, jak i rozwój programistom posiadającym doświadczenie. W ciągu 8 lat jej kursy ukończyło ponad 8 000 absolwentów.`,
+          www: "https://coderslab.pl/",
+          type: "media",
+          logo: require("../assets/partners/2022/coderslab.svg"),
+          orientation: "horizontal"
+       },
         // {
         //   id: "softwareplant",
         //   description: `Technologiczny startup rozwijający produkty do nowoczesnego zarządzania projektami
