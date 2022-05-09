@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.data.projection.ProjectionFactory;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
-import org.springframework.hateoas.Resources;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -61,7 +61,7 @@ public class PersonalAgendaController {
         List<InlineAgenda> agendaWithInlinedResources = fullAgenda
                 .map(it -> projectionFactory.createProjection(InlineAgenda.class, it))
                 .collect(toList());
-        return ResponseEntity.ok(new Resources<>(agendaWithInlinedResources));
+        return ResponseEntity.ok(CollectionModel.of(agendaWithInlinedResources));
     }
 
     private Stream<AgendaEntry> concat(List<AgendaEntry> allRoomsTimeSlotEntries, Set<AgendaEntry> personalAgenda) {

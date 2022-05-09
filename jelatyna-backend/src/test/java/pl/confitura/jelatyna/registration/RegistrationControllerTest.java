@@ -3,7 +3,7 @@ package pl.confitura.jelatyna.registration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.http.MediaType;
 import pl.confitura.jelatyna.BaseIntegrationTest;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
 import pl.confitura.jelatyna.registration.voucher.Voucher;
@@ -11,10 +11,12 @@ import pl.confitura.jelatyna.registration.voucher.VoucherService;
 import pl.confitura.jelatyna.user.User;
 import pl.confitura.jelatyna.user.UserRepository;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.hateoas.MediaTypes.HAL_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class RegistrationControllerTest extends BaseIntegrationTest {
@@ -31,13 +33,11 @@ class RegistrationControllerTest extends BaseIntegrationTest {
     @Autowired
     UserRepository userRepository;
 
-    private User user;
     private Voucher validVoucher;
 
     @BeforeEach
     void setup() {
         SecurityHelper.asAdmin();
-        this.user = userRepository.save(new User().setName("user1"));
         validVoucher = voucherService.generateVoucher("buyer");
         SecurityHelper.cleanSecurity();
 
@@ -50,7 +50,10 @@ class RegistrationControllerTest extends BaseIntegrationTest {
         mockMvc.perform(
                 post("/participants")
                         .content(voucherJson(validVoucher))
-                        .contentType(HAL_JSON))
+                        .characterEncoding(UTF_8)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+
                 .andExpect(status().is2xxSuccessful());
 
 
@@ -66,9 +69,9 @@ class RegistrationControllerTest extends BaseIntegrationTest {
     @Test
     void user_is_not_able_to_create_participation_without_voucher() throws Exception {
         mockMvc.perform(
-                post("/participants")
-                        .content("{}")
-                        .contentType(HAL_JSON))
+                        post("/participants")
+                                .content("{}")
+                                .contentType(HAL_JSON))
                 .andExpect(status().isBadRequest());
 
     }
@@ -80,9 +83,10 @@ class RegistrationControllerTest extends BaseIntegrationTest {
 
         //when user tries to use same voucher
         mockMvc.perform(
-                post("/participants")
-                        .content(voucherJson(validVoucher))
-                        .contentType(HAL_JSON))
+                        post("/participants")
+                                .content(voucherJson(validVoucher))
+                                .contentType(HAL_JSON))
+                .andDo(print())
                 .andExpect(status().isConflict());
 
         //then voucher is assaigned to old user
@@ -94,9 +98,9 @@ class RegistrationControllerTest extends BaseIntegrationTest {
     void should_not_accept_invalid_token() throws Exception {
         //when user tries to register with invalid voucher
         mockMvc.perform(
-                post("/participants")
-                        .content("{\"voucher\" :  \"invalid\"}")
-                        .contentType(HAL_JSON))
+                        post("/participants")
+                                .content("{\"voucher\" :  \"invalid\"}")
+                                .contentType(HAL_JSON))
                 .andExpect(status().is4xxClientError());
 
         //then participationData is not registered
@@ -114,9 +118,11 @@ class RegistrationControllerTest extends BaseIntegrationTest {
 
         //when user assigns token
         mockMvc.perform(
-                put("/participants/" + participationData.getId())
-                        .content(voucherJson(voucher))
-                        .contentType(HAL_JSON))
+                        put("/participants/" + participationData.getId())
+                                .content(voucherJson(voucher))
+                                .characterEncoding(UTF_8)
+                                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
                 .andExpect(status().is2xxSuccessful());
 
         //then token is assigned to participationData
@@ -137,9 +143,9 @@ class RegistrationControllerTest extends BaseIntegrationTest {
 
         //when user assigns token
         mockMvc.perform(
-                put("/participants/" + participationData.getId())
-                        .content(voucherJson(voucher))
-                        .contentType(HAL_JSON))
+                        put("/participants/" + participationData.getId())
+                                .content(voucherJson(voucher))
+                                .contentType(HAL_JSON))
                 .andExpect(status().isConflict());
 
         //then token is assigned to participationData

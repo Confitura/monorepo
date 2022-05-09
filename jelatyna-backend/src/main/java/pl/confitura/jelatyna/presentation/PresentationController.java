@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import org.springframework.data.rest.webmvc.RepositoryRestController;
-import org.springframework.hateoas.Resources;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -51,9 +51,9 @@ public class PresentationController {
 
     @PreAuthorize("@security.presentationOwnedByUser(#presentationId) || @security.isAdmin()")
     @GetMapping("/presentations/{presentationId}/cospeakers")
-    public ResponseEntity<Resources<User>> getCospeakers(@PathVariable String presentationId) {
+    public ResponseEntity<CollectionModel<User>> getCospeakers(@PathVariable String presentationId) {
         Set<User> cospeakers = this.repository.findById(presentationId).getSpeakers();
-        return ResponseEntity.ok(new Resources<>(cospeakers));
+        return ResponseEntity.ok(CollectionModel.of(cospeakers));
     }
 
     @PreAuthorize("@security.presentationOwnedByUser(#presentationId) || @security.isAdmin()")

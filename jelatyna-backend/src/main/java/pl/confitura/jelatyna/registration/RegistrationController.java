@@ -31,6 +31,7 @@ import pl.confitura.jelatyna.infrastructure.security.JelatynaPrincipal;
 import pl.confitura.jelatyna.infrastructure.security.SecurityContextUtil;
 import pl.confitura.jelatyna.mail.MailSender;
 import pl.confitura.jelatyna.mail.MessageInfo;
+import pl.confitura.jelatyna.registration.demographic.DemographicData;
 import pl.confitura.jelatyna.registration.demographic.DemographicDataRepository;
 import pl.confitura.jelatyna.registration.voucher.Voucher;
 import pl.confitura.jelatyna.registration.voucher.VoucherService;
@@ -81,9 +82,10 @@ public class RegistrationController {
 
     @PostMapping("/participants")
     @Transactional
-    public ResponseEntity<Object> save(@RequestBody RegistrationForm registrationForm) {
+    public ResponseEntity<Object> save(@RequestBody ParticipationData participationData,
+                                       @RequestBody(required = false) DemographicData demographicData) {
         JelatynaPrincipal principal = SecurityContextUtil.getPrincipal();
-        Voucher voucher = registrationForm.getVoucher();
+        Voucher voucher = participationData.getVoucher();
         if (voucher != null) {
             if (!voucherService.isValid(voucher)) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("INVALID_VOUCHER");
@@ -93,18 +95,20 @@ public class RegistrationController {
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("MISSING_VOUCHER");
         }
-        ParticipationData participation = saveParticipation(registrationForm);
+        ParticipationData participation = saveParticipation(participationData);
         sendTicketTo(participation);
-        saveStatistics(registrationForm);
+        saveStatistics(demographicData);
         return ResponseEntity.ok(participation);
     }
 
-    private void saveStatistics(RegistrationForm registrationForm) {
-        demographicDataRepository.save(registrationForm.createDemographicData());
+    private void saveStatistics(DemographicData demographicData) {
+        if(demographicData!=null) {
+            demographicDataRepository.save(demographicData);
+        }
     }
 
-    private ParticipationData saveParticipation(RegistrationForm registrationForm) {
-        return repository.save(registrationForm.createParticipant());
+    private ParticipationData saveParticipation(ParticipationData participant) {
+        return repository.save(participant);
     }
 
     @GetMapping("/participants/{id}")

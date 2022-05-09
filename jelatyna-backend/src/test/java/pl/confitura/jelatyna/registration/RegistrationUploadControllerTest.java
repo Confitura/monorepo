@@ -1,15 +1,16 @@
 package pl.confitura.jelatyna.registration;
 
-import org.hamcrest.Matcher;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.ResultActions;
 import pl.confitura.jelatyna.BaseIntegrationTest;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.hamcrest.Matchers.nullValue;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static pl.confitura.jelatyna.infrastructure.security.SecurityHelper.admin;
 
 class RegistrationUploadControllerTest extends BaseIntegrationTest {
@@ -29,11 +30,12 @@ class RegistrationUploadControllerTest extends BaseIntegrationTest {
         ResultActions resultActions = mockMvc.perform(
                 multipart("/participants/upload")
                         .file(file)
+                        .characterEncoding(UTF_8)
                         .with(admin()));
 
         //then
         resultActions
-                .andDo(it -> System.out.println(it.getResponse().getContentAsString()))
+                .andDo(print())
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$[0].buyerEmail").value("test1@confitura.pl"))
@@ -65,11 +67,12 @@ class RegistrationUploadControllerTest extends BaseIntegrationTest {
         ResultActions resultActions = mockMvc.perform(
                 multipart("/participants/upload")
                         .file(file)
+                        .characterEncoding(UTF_8)
                         .with(admin()));
 
         //then
         resultActions
-                .andDo(it -> System.out.println(it.getResponse().getContentAsString()))
+                .andDo(print())
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$[0].buyerEmail").value("test1@confitura.pl"))

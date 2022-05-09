@@ -12,6 +12,10 @@ import java.util.List;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import com.opencsv.CSVParser;
+import com.opencsv.CSVParserBuilder;
+import com.opencsv.CSVReaderBuilder;
+import com.opencsv.exceptions.CsvException;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -43,15 +47,27 @@ public class RegistrationUploadController {
             throws IOException {
         List<GenerateVouchersResponse> responses =
                 parseFile(file)
-                .map(this::sendVouchers)
-                .collect(toList());
+                        .map(this::sendVouchers)
+                        .collect(toList());
         return ResponseEntity.ok(responses);
     }
 
     private Stream<GenerateVouchersRequest> parseFile(@RequestParam MultipartFile file) throws IOException {
-        CSVReader reader = new CSVReader(new InputStreamReader(file.getInputStream()), ';');
-        return stream(reader.spliterator(), false)
-                .map(GenerateVouchersRequest::build);
+        InputStreamReader inputStreamReader = new InputStreamReader(file.getInputStream());
+        CSVParser parser = new CSVParserBuilder().withSeparator(';').build();
+        CSVReaderBuilder builder = new CSVReaderBuilder(inputStreamReader)
+                .withCSVParser(parser);
+
+        try (CSVReader reader = builder.build()) {
+            try {
+                return reader.readAll()
+                        .stream()
+                        .map(GenerateVouchersRequest::build);
+            } catch (CsvException e) {
+                log.error("unable to parse CSV", e);
+                return Stream.of(GenerateVouchersRequest.ERR);
+            }
+        }
     }
 
     private GenerateVouchersResponse sendVouchers(GenerateVouchersRequest registerRequest) {

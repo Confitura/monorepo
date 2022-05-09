@@ -4,7 +4,7 @@ import static com.timgroup.jgravatar.GravatarDefaultImage.BLANK;
 import static com.timgroup.jgravatar.GravatarRating.GENERAL_AUDIENCES;
 import static java.util.stream.Collectors.toSet;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
-import static org.springframework.util.StringUtils.isEmpty;
+import static org.springframework.util.StringUtils.hasText;
 
 import java.util.Set;
 import java.util.UUID;
@@ -12,8 +12,8 @@ import java.util.UUID;
 import javax.validation.Valid;
 
 import org.springframework.data.rest.webmvc.RepositoryRestController;
-import org.springframework.hateoas.Resource;
-import org.springframework.hateoas.Resources;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,7 +48,7 @@ public class UserController {
         User current = updateUser(user);
         setDefaultPhotoFor(current);
         setIdIfManuallyCreated(current);
-        return ResponseEntity.ok(new Resource<>(repository.save(current)));
+        return ResponseEntity.ok(EntityModel.of(repository.save(current)));
     }
 
     @PostMapping("/users/{userId}/participationData")
@@ -59,32 +59,32 @@ public class UserController {
         User current = repository.findById(userId);
         current.setParticipationData(participationRepository.findById(participationData.getId()));
         current.setParticipationData(participationRepository.findById(participationData.getId()));
-        return ResponseEntity.ok(new Resource<>(repository.save(current)));
+        return ResponseEntity.ok(EntityModel.of(repository.save(current)));
     }
 
     @GetMapping("/users/{id}")
     @PreAuthorize("@security.isOwner(#id) || @security.isAdmin()")
     public ResponseEntity<?> getById(@PathVariable String id) {
         User user = repository.findById(id);
-        return ResponseEntity.ok(new Resource<>(user));
+        return ResponseEntity.ok(EntityModel.of(user));
     }
 
     @GetMapping("/users/{id}/public")
     public ResponseEntity<?> getPublicById(@PathVariable String id) {
         User user = repository.findById(id);
-        return ResponseEntity.ok(new Resource<>(new PublicUser(user)));
+        return ResponseEntity.ok(EntityModel.of(new PublicUser(user)));
     }
 
     @GetMapping("/users/search/admins")
     public ResponseEntity<?> getAdmins() {
         Set<PublicUser> admins = repository.findAdmins().stream().map(PublicUser::new).collect(toSet());
-        return ResponseEntity.ok(new Resources<>(admins));
+        return ResponseEntity.ok(CollectionModel.of(admins));
     }
 
     @GetMapping("/users/search/volunteers")
     public ResponseEntity<?> getVolunteers() {
         Set<PublicUser> volunteers = repository.findVolunteers().stream().map(PublicUser::new).collect(toSet());
-        return ResponseEntity.ok(new Resources<>(volunteers));
+        return ResponseEntity.ok(CollectionModel.of(volunteers));
     }
 
     @PostMapping("/users/{userId}/volunteer/{isVolunteer}")
@@ -108,16 +108,16 @@ public class UserController {
         presentation.setSpeaker(speaker);
         retainStatus(presentation);
         Presentation saved = presentationRepository.save(presentation);
-        return ResponseEntity.ok(new Resource<>(saved));
+        return ResponseEntity.ok(EntityModel.of(saved));
     }
 
     @GetMapping("/users/search/speakers")
     public ResponseEntity<?> getSpeakers() {
-        Set<Resource<?>> speakers = repository.findAllAccepted().stream()
+        Set<EntityModel<?>> speakers = repository.findAllAccepted().stream()
                 .map(PublicUser::new)
-                .map(speaker -> new Resource<>(speaker))
+                .map(EntityModel::of)
                 .collect(toSet());
-        return ResponseEntity.ok(new Resources<>(speakers));
+        return ResponseEntity.ok(CollectionModel.of(speakers));
     }
 
     private void retainStatus(Presentation presentation) {
@@ -128,7 +128,7 @@ public class UserController {
     }
 
     private void setDefaultPhotoFor(@RequestBody User user) {
-        if (isEmpty(user.getPhoto())) {
+        if (hasText(user.getPhoto())) {
             Gravatar gravatar = new Gravatar(300, GENERAL_AUDIENCES, BLANK);
             String url = gravatar.getUrl(user.getEmail());
             user.setPhoto(url.replace("http:", "https:"));
@@ -140,7 +140,7 @@ public class UserController {
     }
 
     private User updateUser(@RequestBody User user) {
-        if (isEmpty(user.getId())) {
+        if (hasText(user.getId())) {
             return user;
         } else {
             User current = repository.findById(user.getId());
@@ -150,7 +150,7 @@ public class UserController {
     }
 
     private void setIdIfManuallyCreated(@RequestBody User user) {
-        if (StringUtils.isEmpty(user.getId())) {
+        if (hasText(user.getId())) {
             user.setId(UUID.randomUUID().toString());
         }
     }

@@ -1,5 +1,6 @@
 package pl.confitura.jelatyna.user;
 
+import org.assertj.core.api.recursive.comparison.RecursiveComparisonConfiguration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,7 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-@ActiveProfiles("test, fake-db")
+@ActiveProfiles({"test", "fake-db"})
 @Transactional
 public class UserRepositoryTest {
     @Autowired
@@ -39,8 +40,9 @@ public class UserRepositoryTest {
 
         User saved = repository.save(user);
 
+        RecursiveComparisonConfiguration comparisonConfiguration = RecursiveComparisonConfiguration.builder().withComparedFields("origin", "socialId").build();
         assertThat(repository.findById(saved.getId()))
-                .isEqualToComparingOnlyGivenFields(user, "origin", "socialId");
+                .usingRecursiveComparison(comparisonConfiguration).isEqualTo(user);
     }
 
     @Test

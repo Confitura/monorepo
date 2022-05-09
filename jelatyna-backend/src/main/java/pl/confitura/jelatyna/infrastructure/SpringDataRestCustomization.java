@@ -4,8 +4,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
-import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurerAdapter;
+import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import pl.confitura.jelatyna.page.Page;
 import pl.confitura.jelatyna.partner.Partner;
 import pl.confitura.jelatyna.presentation.Presentation;
@@ -16,9 +17,9 @@ import pl.confitura.jelatyna.user.User;
 import pl.confitura.jelatyna.voting.Vote;
 
 @Configuration
-public class SpringDataRestCustomization extends RepositoryRestConfigurerAdapter {
+public class SpringDataRestCustomization implements RepositoryRestConfigurer {
     @Override
-    public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
+    public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry cors) {
         config
                 .exposeIdsFor(
                         Partner.class,
