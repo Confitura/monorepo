@@ -73,6 +73,18 @@ Dołącz do nas i stwórz swoją historię w Scalo! Odwiedź naszą stronę inte
           logo: require("../assets/partners/2022/scalo.svg"),
           orientation: "horizontal"
         },
+        {
+          id: "nordea",
+          name: "Nordea",
+          description: `W Nordea na co dzień pracują specjaliści, którzy dbają o bezpieczeństwo i sprawne funkcjonowanie banku Nordea. Nordea zatrudnia w Polsce ekspertów w obszarach m.in. IT, bankowości, audytu, rynków kapitałowych, robotyki, AML i sankcji.
+
+https://www.nordea.com/en
+`,
+          www: "https://www.nordea.com/en",
+          type: "silver",
+          logo: require("../assets/partners/2022/nordea.svg"),
+          orientation: "horizontal"
+       },
         // {
         //   id: "softwareplant",
         //   description: `Technologiczny startup rozwijający produkty do nowoczesnego zarządzania projektami
@@ -223,15 +235,6 @@ Dołącz do nas i stwórz swoją historię w Scalo! Odwiedź naszą stronę inte
         //                     www: "https://www.applause.com/join-our-team",
         //                     type: "silver",
         //                     logo: require("../assets/partners/applause.svg"),
-        //                     orientation: "horizontal"
-        //                 },
-        //                 {
-        //                     id: "nordea",
-        //                     name: "Nordea",
-        //                     description: `Nordea w Polsce jest częścią największej skandynawskiej instytucji finansowej. Funkcjonuje jako centrum operacyjne w Łodzi oraz IT w Trójmieście i Warszawie. IT w Polsce dostarcza kompleksowe rozwiązania w zakresie utrzymania i rozwoju platform i systemów informatycznych oraz uczestniczy we wdrożeniu jednego z największych systemów bankowych na świecie. Nordea planuje wzrost zatrudnienia. Poszukuje absolwentów studiów wyższych i ekspertów o ugruntowanej wiedzy informatycznej.`,
-        //                     www: "https://www.nordea.pl",
-        //                     type: "silver",
-        //                     logo: require("../assets/partners/nordea.svg"),
         //                     orientation: "horizontal"
         //                 },
         //                 {
