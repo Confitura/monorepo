@@ -37,6 +37,42 @@ We have built a company where everyone can influence how we operate and what we 
           logo: require("../assets/partners/2022/virtuslab.svg"),
           orientation: "horizontal"
         },
+        {
+        id: "allegro",
+        name: "Allegro Tech",
+        description: `W [Allegro](https://allegro.tech/) tworzymy i utrzymujemy aplikacje, które dzięki swojej skalowalności i niezawodności zyskały sobie rzeszę wiernych użytkowników. Zadanie nie należy do najłatwiejszych, w pracy napotykamy na szereg wyzwań zarówno w obszarze samej architektury i designu, jak i w procesie doboru technologii, zapewnienia jakości kodu, usprawnienia funkcjonalności oraz w późniejszej fazie wdrożenia i utrzymania produktu.
+          allegro.tech jest naszym pomysłem na dzielenie się zebranym doświadczeniem poprzez organizację konferencji, warsztatów, meetupów i hackatonów.
+        
+Po więcej informacji zapraszamy na nasz blog [https://allegro.tech/](https://allegro.tech/)
+        
+Dołacz do nas również na [https://www.meetup.com/allegrotech/](https://www.meetup.com/allegrotech/)
+        
+I bądź na bieżąco [https://www.facebook.com/allegro.tech](https://www.facebook.com/allegro.tech)`,
+        www: "https://allegro.tech/",
+        type: "silver",
+        logo: require("../assets/partners/allegro.svg"),
+        orientation: "horizontal"
+        },
+        {
+          id: "scalo",
+          description: `[Scalo](https://www.scalosoft.com/) to polska firma, w której realizujemy kompleksowe projekty programistyczne, budujemy dedykowane zespoły deweloperskie, rozwijamy systemy wbudowane dla klientów z różnych branż. W naszej firmie każdy może **działać swobodnie**, jesteśmy otwarci na nowe pomysły i rozwiązania. Stawiamy na **współpracę**, chętnie **dzielimy się wiedzą** i wymieniamy **doświadczenia projektowe**.
+
+Nasz sukces to **zgrany zespół**. Wśród nas znajdziesz developerów i projektantów, analityków, testerów oraz administratorów. Biznes wspieramy siłami kilkudziesięciu handlowców, rekruterów i specjalistów od delivery, którzy są dostępni w każdym momencie.
+
+Jeżeli nie przekonują Cię opisy to niech przemówią liczby. W tegorocznym badaniu Great Place to Work uzyskaliśmy **78%** poziom zaangażowania, a do naszych najmocniejszych stron należą:
+- **98%** z nas twierdzi, że każdy nowy pracownik spotyka się w Scalo z ciepłym przyjęciem,
+- **94%** z nas twierdzi, że menedżerowie dostrzegają w członkach zespołu człowieka, a nie tylko pracownika,
+- **93%** z nas twierdzi, że w Scalo panuje przyjazna atmosfera,
+- **92%** z nas twierdzi, że Scalo stwarza korzystne warunki dla pogodzenia pracy z obowiązkami rodzica lub opiekuna,
+- **88%** z nas twierdzi, że w Scalo można liczyć na wzajemną współpracę.
+
+Dołącz do nas i stwórz swoją historię w Scalo! Odwiedź naszą stronę internetową i poznaj nas bliżej: www.career.scalosoft.com`,
+          name: "Scalo",
+          www: "https://www.career.scalosoft.com/",
+          type: "silver",
+          logo: require("../assets/partners/2022/scalo.svg"),
+          orientation: "horizontal"
+        },
         // {
         //   id: "softwareplant",
         //   description: `Technologiczny startup rozwijający produkty do nowoczesnego zarządzania projektami
@@ -178,22 +214,7 @@ We have built a company where everyone can influence how we operate and what we 
         //                     logo: require("../assets/partners/bosch.svg"),
         //                     orientation: "horizontal"
         //                 },
-        {
-          id: "allegro",
-          name: "Allegro Tech",
-          description: `W [Allegro](https://allegro.tech/) tworzymy i utrzymujemy aplikacje, które dzięki swojej skalowalności i niezawodności zyskały sobie rzeszę wiernych użytkowników. Zadanie nie należy do najłatwiejszych, w pracy napotykamy na szereg wyzwań zarówno w obszarze samej architektury i designu, jak i w procesie doboru technologii, zapewnienia jakości kodu, usprawnienia funkcjonalności oraz w późniejszej fazie wdrożenia i utrzymania produktu.
-        allegro.tech jest naszym pomysłem na dzielenie się zebranym doświadczeniem poprzez organizację konferencji, warsztatów, meetupów i hackatonów.
-        
-Po więcej informacji zapraszamy na nasz blog [https://allegro.tech/](https://allegro.tech/)
-        
-Dołacz do nas również na [https://www.meetup.com/allegrotech/](https://www.meetup.com/allegrotech/)
-        
-I bądź na bieżąco [https://www.facebook.com/allegro.tech](https://www.facebook.com/allegro.tech)`,
-          www: "https://allegro.tech/",
-          type: "silver",
-          logo: require("../assets/partners/allegro.svg"),
-          orientation: "horizontal"
-        }
+
         //                 {
         //                     id: "applause",
         //                     name: "Applause",
