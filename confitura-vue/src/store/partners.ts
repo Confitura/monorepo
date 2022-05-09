@@ -85,6 +85,20 @@ https://www.nordea.com/en
           logo: require("../assets/partners/2022/nordea.svg"),
           orientation: "horizontal"
        },
+        {
+          id: "dataart",
+          name: "DataArt",
+          description: `DataArt zajmuje się konsultingiem technologicznym na skalę globalną – projektuje, opracowuje i wspiera unikalne rozwiązania IT. W ten sposób pomaga klientom uzyskać doskonałe rezultaty biznesowe. Nasi specjaliści posiadają ogromne doświadczenie i wybitny talent techniczny. Zespoły DataArt tworzą nowe produkty i modernizują istniejące systemy, mając realny wpływ na transformację technologiczną w wielu branżach.
+
+DataArt zdobyła zaufanie wiodących marek i wymagających klientów takich jak Nasdaq, S&P, oneworld Alliance, Ocado, artnet, Betfair i skyscanner. Funkcjonuje jako globalna sieć firm świadczących usługi technologiczne, współpracując z ponad 2300 profesjonalistami w 20 lokalizacjach w USA, Europie i Ameryce Południowej.
+
+https://www.dataart.com.pl/
+`,
+          www: "https://www.dataart.com.pl/",
+          type: "silver",
+          logo: require("../assets/partners/2022/dataart.svg"),
+          orientation: "horizontal"
+       },
         // {
         //   id: "softwareplant",
         //   description: `Technologiczny startup rozwijający produkty do nowoczesnego zarządzania projektami
