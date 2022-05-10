@@ -37,6 +37,77 @@ We have built a company where everyone can influence how we operate and what we 
           logo: require("../assets/partners/2022/virtuslab.svg"),
           orientation: "horizontal"
         },
+        {
+        id: "allegro",
+        name: "Allegro Tech",
+        description: `W [Allegro](https://allegro.tech/) tworzymy i utrzymujemy aplikacje, które dzięki swojej skalowalności i niezawodności zyskały sobie rzeszę wiernych użytkowników. Zadanie nie należy do najłatwiejszych, w pracy napotykamy na szereg wyzwań zarówno w obszarze samej architektury i designu, jak i w procesie doboru technologii, zapewnienia jakości kodu, usprawnienia funkcjonalności oraz w późniejszej fazie wdrożenia i utrzymania produktu.
+          allegro.tech jest naszym pomysłem na dzielenie się zebranym doświadczeniem poprzez organizację konferencji, warsztatów, meetupów i hackatonów.
+        
+Po więcej informacji zapraszamy na nasz blog [https://allegro.tech/](https://allegro.tech/)
+        
+Dołacz do nas również na [https://www.meetup.com/allegrotech/](https://www.meetup.com/allegrotech/)
+        
+I bądź na bieżąco [https://www.facebook.com/allegro.tech](https://www.facebook.com/allegro.tech)`,
+        www: "https://allegro.tech/",
+        type: "silver",
+        logo: require("../assets/partners/allegro.svg"),
+        orientation: "horizontal"
+        },
+        {
+          id: "scalo",
+          description: `[Scalo](https://www.scalosoft.com/) to polska firma, w której realizujemy kompleksowe projekty programistyczne, budujemy dedykowane zespoły deweloperskie, rozwijamy systemy wbudowane dla klientów z różnych branż. W naszej firmie każdy może **działać swobodnie**, jesteśmy otwarci na nowe pomysły i rozwiązania. Stawiamy na **współpracę**, chętnie **dzielimy się wiedzą** i wymieniamy **doświadczenia projektowe**.
+
+Nasz sukces to **zgrany zespół**. Wśród nas znajdziesz developerów i projektantów, analityków, testerów oraz administratorów. Biznes wspieramy siłami kilkudziesięciu handlowców, rekruterów i specjalistów od delivery, którzy są dostępni w każdym momencie.
+
+Jeżeli nie przekonują Cię opisy to niech przemówią liczby. W tegorocznym badaniu Great Place to Work uzyskaliśmy **78%** poziom zaangażowania, a do naszych najmocniejszych stron należą:
+- **98%** z nas twierdzi, że każdy nowy pracownik spotyka się w Scalo z ciepłym przyjęciem,
+- **94%** z nas twierdzi, że menedżerowie dostrzegają w członkach zespołu człowieka, a nie tylko pracownika,
+- **93%** z nas twierdzi, że w Scalo panuje przyjazna atmosfera,
+- **92%** z nas twierdzi, że Scalo stwarza korzystne warunki dla pogodzenia pracy z obowiązkami rodzica lub opiekuna,
+- **88%** z nas twierdzi, że w Scalo można liczyć na wzajemną współpracę.
+
+Dołącz do nas i stwórz swoją historię w Scalo! Odwiedź naszą stronę internetową i poznaj nas bliżej: www.career.scalosoft.com`,
+          name: "Scalo",
+          www: "https://www.career.scalosoft.com/",
+          type: "silver",
+          logo: require("../assets/partners/2022/scalo.svg"),
+          orientation: "horizontal"
+        },
+        {
+          id: "nordea",
+          name: "Nordea",
+          description: `W Nordea na co dzień pracują specjaliści, którzy dbają o bezpieczeństwo i sprawne funkcjonowanie banku Nordea. Nordea zatrudnia w Polsce ekspertów w obszarach m.in. IT, bankowości, audytu, rynków kapitałowych, robotyki, AML i sankcji.
+
+https://www.nordea.com/en
+`,
+          www: "https://www.nordea.com/en",
+          type: "silver",
+          logo: require("../assets/partners/2022/nordea.svg"),
+          orientation: "horizontal"
+       },
+        {
+          id: "dataart",
+          name: "DataArt",
+          description: `DataArt zajmuje się konsultingiem technologicznym na skalę globalną – projektuje, opracowuje i wspiera unikalne rozwiązania IT. W ten sposób pomaga klientom uzyskać doskonałe rezultaty biznesowe. Nasi specjaliści posiadają ogromne doświadczenie i wybitny talent techniczny. Zespoły DataArt tworzą nowe produkty i modernizują istniejące systemy, mając realny wpływ na transformację technologiczną w wielu branżach.
+
+DataArt zdobyła zaufanie wiodących marek i wymagających klientów takich jak Nasdaq, S&P, oneworld Alliance, Ocado, artnet, Betfair i skyscanner. Funkcjonuje jako globalna sieć firm świadczących usługi technologiczne, współpracując z ponad 2300 profesjonalistami w 20 lokalizacjach w USA, Europie i Ameryce Południowej.
+
+https://www.dataart.com.pl/
+`,
+          www: "https://www.dataart.com.pl/",
+          type: "silver",
+          logo: require("../assets/partners/2022/dataart.svg"),
+          orientation: "horizontal"
+       },
+        {
+          id: "coderslab",
+          name: "Coders Lab",
+          description: `Coders Lab to najstarsza szkoła IT w Polsce. W jej ofercie znajdują się kursy z zakresu programowania front-end i back-end, testowania manualnego i automatyzującego oraz analityki danych. Łącząc doświadczenie edukacyjne ze znajomością rynku pracy IT, Coders Lab umożliwia realną zmianę zawodową osobom początkującym, jak i rozwój programistom posiadającym doświadczenie. W ciągu 8 lat jej kursy ukończyło ponad 8 000 absolwentów.`,
+          www: "https://coderslab.pl/",
+          type: "media",
+          logo: require("../assets/partners/2022/coderslab.svg"),
+          orientation: "horizontal"
+       },
         // {
         //   id: "softwareplant",
         //   description: `Technologiczny startup rozwijający produkty do nowoczesnego zarządzania projektami
@@ -178,22 +249,7 @@ We have built a company where everyone can influence how we operate and what we 
         //                     logo: require("../assets/partners/bosch.svg"),
         //                     orientation: "horizontal"
         //                 },
-        {
-          id: "allegro",
-          name: "Allegro Tech",
-          description: `W [Allegro](https://allegro.tech/) tworzymy i utrzymujemy aplikacje, które dzięki swojej skalowalności i niezawodności zyskały sobie rzeszę wiernych użytkowników. Zadanie nie należy do najłatwiejszych, w pracy napotykamy na szereg wyzwań zarówno w obszarze samej architektury i designu, jak i w procesie doboru technologii, zapewnienia jakości kodu, usprawnienia funkcjonalności oraz w późniejszej fazie wdrożenia i utrzymania produktu.
-        allegro.tech jest naszym pomysłem na dzielenie się zebranym doświadczeniem poprzez organizację konferencji, warsztatów, meetupów i hackatonów.
-        
-Po więcej informacji zapraszamy na nasz blog [https://allegro.tech/](https://allegro.tech/)
-        
-Dołacz do nas również na [https://www.meetup.com/allegrotech/](https://www.meetup.com/allegrotech/)
-        
-I bądź na bieżąco [https://www.facebook.com/allegro.tech](https://www.facebook.com/allegro.tech)`,
-          www: "https://allegro.tech/",
-          type: "silver",
-          logo: require("../assets/partners/allegro.svg"),
-          orientation: "horizontal"
-        }
+
         //                 {
         //                     id: "applause",
         //                     name: "Applause",
@@ -202,15 +258,6 @@ I bądź na bieżąco [https://www.facebook.com/allegro.tech](https://www.facebo
         //                     www: "https://www.applause.com/join-our-team",
         //                     type: "silver",
         //                     logo: require("../assets/partners/applause.svg"),
-        //                     orientation: "horizontal"
-        //                 },
-        //                 {
-        //                     id: "nordea",
-        //                     name: "Nordea",
-        //                     description: `Nordea w Polsce jest częścią największej skandynawskiej instytucji finansowej. Funkcjonuje jako centrum operacyjne w Łodzi oraz IT w Trójmieście i Warszawie. IT w Polsce dostarcza kompleksowe rozwiązania w zakresie utrzymania i rozwoju platform i systemów informatycznych oraz uczestniczy we wdrożeniu jednego z największych systemów bankowych na świecie. Nordea planuje wzrost zatrudnienia. Poszukuje absolwentów studiów wyższych i ekspertów o ugruntowanej wiedzy informatycznej.`,
-        //                     www: "https://www.nordea.pl",
-        //                     type: "silver",
-        //                     logo: require("../assets/partners/nordea.svg"),
         //                     orientation: "horizontal"
         //                 },
         //                 {
