@@ -88,11 +88,11 @@ https://www.nordea.com/en
         {
           id: "dataart",
           name: "DataArt",
-          description: `DataArt zajmuje się konsultingiem technologicznym na skalę globalną – projektuje, opracowuje i wspiera unikalne rozwiązania IT. W ten sposób pomaga klientom uzyskać doskonałe rezultaty biznesowe. Nasi specjaliści posiadają ogromne doświadczenie i wybitny talent techniczny. Zespoły DataArt tworzą nowe produkty i modernizują istniejące systemy, mając realny wpływ na transformację technologiczną w wielu branżach.
+          description: `DataArt zajmuje się inżynierią oprogramowania na skalę globalną. Od ponad 20 lat zespoły składające się z wysoko wykwalifikowanych specjalistów tworzą rozwiązania technologiczne, które pomagają klientom osiągać cele biznesowe i zdobywać nowe rynki. Najważniejszą wartością w DataArt są ludzie. Tę zasadę stosujemy odpowiadając na potrzeby klientów, niezależnie od skali ich biznesu i stosowanych technologii. Dostosowujemy się do kierunku rozwoju naszych partnerów biznesowych i ewoluujemy wraz z nimi. W DataArt łączymy doskonałość techniczną z wartościami, które kształtują nasz model biznesowy: ciekawością, otwartością, zaufaniem, szczerością i intuicją. Takie podejście pozwala nam dostarczać wartościowe rozwiązania wysokiej jakości i budować partnerskie relacje, na których nasi klienci mogą polegać.
 
-DataArt zdobyła zaufanie wiodących marek i wymagających klientów takich jak Nasdaq, S&P, oneworld Alliance, Ocado, artnet, Betfair i skyscanner. Funkcjonuje jako globalna sieć firm świadczących usługi technologiczne, współpracując z ponad 2300 profesjonalistami w 20 lokalizacjach w USA, Europie i Ameryce Południowej.
+DataArt zdobyła zaufanie wiodących marek i wymagających klientów takich jak Nasdaq, S&P, oneworld Alliance, Ocado, artnet, Betfair i skyscanner. Funkcjonuje jako globalna sieć firm świadczących usługi technologiczne, współpracując z ponad 5000 profesjonalistami w ponad 20 lokalizacjach w USA, Europie i Ameryce Południowej.
 
-https://www.dataart.com.pl/
+W Polsce DataArt posiada biura w czterech miastach - w Lublinie, Wrocławiu, Krakowie i Łodzi.
 `,
           www: "https://www.dataart.com.pl/",
           type: "silver",
