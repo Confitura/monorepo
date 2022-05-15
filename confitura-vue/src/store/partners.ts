@@ -121,6 +121,15 @@ Praca w BNP Paribas to praca w środowisku bardzo dynamicznym i pełnym wyzwań,
           logo: require("../assets/partners/2022/bnpparibas.svg"),
           orientation: "horizontal"
        },
+        {
+          id: "decerto",
+          name: "Decerto",
+          description: `Jesteśmy polskim software house’m obecnym na rynku od 2006 roku. Realizujemy projekty dla dużych korporacji, głównie z sektora finansowego. Równocześnie zachowujemy płaską strukturę i niekorporacyjną kulturę pracy. Posiadamy duże doświadczenie i know-how oraz stawiamy na długoterminowe relacje. Dzięki zaufaniu Klientów prowadzimy kilkanaście dużych projektów – pracując z nami zyskujesz nie tylko stabilność zatrudnienia, ale również duże możliwości rozwoju oraz wybór odpowiedniego środowiska pracy. Specjalizujemy się w rozwiązaniach backendowych związanych z dużymi wolumenami danych oraz logiką biznesową. Projektujemy kompleksowe rozwiązania informatyczne, dlatego cenimy otwarty umysł, samodzielność oraz własną inicjatywę. Doceniamy indywidualizm i szanujemy inny punkt widzenia.`,
+          www: " https://www.decerto.com/pl/start",
+          type: "silver",
+          logo: require("../assets/partners/2022/decerto.svg"),
+          orientation: "horizontal"
+       },
         // {
         //   id: "softwareplant",
         //   description: `Technologiczny startup rozwijający produkty do nowoczesnego zarządzania projektami
