@@ -107,7 +107,7 @@ W Polsce DataArt posiada biura w czterech miastach - w Lublinie, Wrocławiu, Kra
           type: "media",
           logo: require("../assets/partners/2022/coderslab.svg"),
           orientation: "horizontal"
-       },
+        },
         {
           id: "bnpparibas",
           name: "BNP Paribas",
@@ -120,7 +120,7 @@ Praca w BNP Paribas to praca w środowisku bardzo dynamicznym i pełnym wyzwań,
           type: "gold",
           logo: require("../assets/partners/2022/bnpparibas.svg"),
           orientation: "horizontal"
-       },
+        },
         {
           id: "decerto",
           name: "Decerto",
@@ -129,7 +129,7 @@ Praca w BNP Paribas to praca w środowisku bardzo dynamicznym i pełnym wyzwań,
           type: "silver",
           logo: require("../assets/partners/2022/decerto.svg"),
           orientation: "horizontal"
-       },
+        },
         {
           id: "bigpicture",
           name: "BigPicture",
@@ -170,7 +170,7 @@ Follow BigPicture's #BigTeam here:
           type: "platinum",
           logo: require("../assets/partners/2022/bigpicture.svg"),
           orientation: "horizontal"
-       },
+        }
         // {
         //   id: "softwareplant",
         //   description: `Technologiczny startup rozwijający produkty do nowoczesnego zarządzania projektami
