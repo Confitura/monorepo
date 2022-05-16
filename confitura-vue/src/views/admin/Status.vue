@@ -10,6 +10,12 @@
 
     <div class="col s12 m4">
       <div class="card-panel">
+        Submitted {{ presentationCount }} Presentations from {{ speakerCount }} Speakers
+      </div>
+    </div>
+
+    <div class="col s12 m4">
+      <div class="card-panel">
         <span> Build date: {{ buildDate }} </span>
       </div>
     </div>
@@ -61,6 +67,14 @@ export default class Status extends Vue {
     } else {
       return null;
     }
+  }
+
+  get presentationCount() {
+    return this.$store.getters.presentationCount;
+  }
+
+  get speakerCount() {
+    return this.$store.getters.speakerCount;
   }
 }
 </script>
