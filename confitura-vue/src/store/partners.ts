@@ -38,9 +38,9 @@ We have built a company where everyone can influence how we operate and what we 
           orientation: "horizontal"
         },
         {
-        id: "allegro",
-        name: "Allegro Tech",
-        description: `W [Allegro](https://allegro.tech/) tworzymy i utrzymujemy aplikacje, które dzięki swojej skalowalności i niezawodności zyskały sobie rzeszę wiernych użytkowników. Zadanie nie należy do najłatwiejszych, w pracy napotykamy na szereg wyzwań zarówno w obszarze samej architektury i designu, jak i w procesie doboru technologii, zapewnienia jakości kodu, usprawnienia funkcjonalności oraz w późniejszej fazie wdrożenia i utrzymania produktu.
+          id: "allegro",
+          name: "Allegro Tech",
+          description: `W [Allegro](https://allegro.tech/) tworzymy i utrzymujemy aplikacje, które dzięki swojej skalowalności i niezawodności zyskały sobie rzeszę wiernych użytkowników. Zadanie nie należy do najłatwiejszych, w pracy napotykamy na szereg wyzwań zarówno w obszarze samej architektury i designu, jak i w procesie doboru technologii, zapewnienia jakości kodu, usprawnienia funkcjonalności oraz w późniejszej fazie wdrożenia i utrzymania produktu.
           allegro.tech jest naszym pomysłem na dzielenie się zebranym doświadczeniem poprzez organizację konferencji, warsztatów, meetupów i hackatonów.
         
 Po więcej informacji zapraszamy na nasz blog [https://allegro.tech/](https://allegro.tech/)
@@ -48,10 +48,10 @@ Po więcej informacji zapraszamy na nasz blog [https://allegro.tech/](https://al
 Dołacz do nas również na [https://www.meetup.com/allegrotech/](https://www.meetup.com/allegrotech/)
         
 I bądź na bieżąco [https://www.facebook.com/allegro.tech](https://www.facebook.com/allegro.tech)`,
-        www: "https://allegro.tech/",
-        type: "silver",
-        logo: require("../assets/partners/allegro.svg"),
-        orientation: "horizontal"
+          www: "https://allegro.tech/",
+          type: "silver",
+          logo: require("../assets/partners/allegro.svg"),
+          orientation: "horizontal"
         },
         {
           id: "scalo",
@@ -84,7 +84,7 @@ https://www.nordea.com/en
           type: "silver",
           logo: require("../assets/partners/2022/nordea.svg"),
           orientation: "horizontal"
-       },
+        },
         {
           id: "dataart",
           name: "DataArt",
@@ -98,7 +98,7 @@ W Polsce DataArt posiada biura w czterech miastach - w Lublinie, Wrocławiu, Kra
           type: "silver",
           logo: require("../assets/partners/2022/dataart.svg"),
           orientation: "horizontal"
-       },
+        },
         {
           id: "coderslab",
           name: "Coders Lab",
@@ -107,7 +107,7 @@ W Polsce DataArt posiada biura w czterech miastach - w Lublinie, Wrocławiu, Kra
           type: "media",
           logo: require("../assets/partners/2022/coderslab.svg"),
           orientation: "horizontal"
-       },
+        }
         // {
         //   id: "softwareplant",
         //   description: `Technologiczny startup rozwijający produkty do nowoczesnego zarządzania projektami

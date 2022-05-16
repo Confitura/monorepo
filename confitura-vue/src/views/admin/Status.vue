@@ -10,7 +10,21 @@
 
     <div class="col s12 m4">
       <div class="card-panel">
-        Submitted {{ presentationCount }} Presentations from {{ speakerCount }} Speakers
+        Submitted {{ presentationCount }} Presentations from
+        {{ speakerCount }} Speakers
+      </div>
+    </div>
+
+    <div class="col s12 m4">
+      <div class="card-panel">
+        Accepted {{ acceptedPresentationCount }} Presentations from
+        {{ acceptedSpeakerCount }} Speakers
+      </div>
+    </div>
+
+    <div class="col s12 m4">
+      <div class="card-panel">
+        There is {{ adminCount }} admins and {{ volunteerCount }} volunteers
       </div>
     </div>
 
@@ -75,6 +89,22 @@ export default class Status extends Vue {
 
   get speakerCount() {
     return this.$store.getters.speakerCount;
+  }
+
+  get acceptedPresentationCount() {
+    return this.$store.getters.acceptedPresentationCount;
+  }
+
+  get acceptedSpeakerCount() {
+    return this.$store.getters.acceptedSpeakerCount;
+  }
+
+  get adminCount() {
+    return this.$store.getters.adminCount;
+  }
+
+  get volunteerCount() {
+    return this.$store.getters.volunteerCount;
   }
 }
 </script>

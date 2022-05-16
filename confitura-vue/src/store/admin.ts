@@ -57,7 +57,12 @@ export const adminModule: Module<AdminState, RootState> = {
   getters: {
     userCount: ({ users }) => users.length,
     presentationCount: ({ presentations }) => presentations.length,
+    acceptedPresentationCount: ({ presentations }) =>
+      presentations.filter(it => it.status === "accepted").length,
     speakerCount: ({ users }) => users.filter(it => it.speaker).length,
+    adminCount: ({ users }) => users.filter(it => it.admin).length,
+    volunteerCount: ({ users }) => users.filter(it => it.volunteer).length,
+    acceptedSpeakerCount: ({ speakers }) => speakers.length,
     vouchersCount: ({ vouchers }) => vouchers.length,
     info: ({ info }) => info,
     votesCount: ({ votes }) =>

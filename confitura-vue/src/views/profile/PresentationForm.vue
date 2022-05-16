@@ -8,11 +8,11 @@
             <div class="row">
               <div class="input-field col s12">
                 <input
-                    class="validate"
-                    id="title"
-                    type="text"
-                    maxlength="255"
-                    v-model="presentation.title"
+                  class="validate"
+                  id="title"
+                  type="text"
+                  maxlength="255"
+                  v-model="presentation.title"
                 />
                 <label for="title">Title</label>
               </div>
@@ -24,18 +24,18 @@
               <div class="col m6 s12">
                 <div class="input-field">
                   <input
-                      class="autocomplete"
-                      id="autocomplete-input"
-                      type="text"
-                      v-model="tagInput"
+                    class="autocomplete"
+                    id="autocomplete-input"
+                    type="text"
+                    v-model="tagInput"
                   />
                   <label for="autocomplete-input">Tags</label>
                 </div>
                 <div>
                   <div
-                      class="chip"
-                      v-for="tag in presentation.tags"
-                      :key="tag.name"
+                    class="chip"
+                    v-for="tag in presentation.tags"
+                    :key="tag.name"
                   >
                     {{ tag.name }}
                     <i @click="removeTag(tag)" class="material-icons">close</i>
@@ -44,43 +44,43 @@
 
                 <div class="input-field">
                   <textarea
-                      class="materialize-textarea"
-                      id="shortDescription"
-                      ref="shortDescription"
-                      data-length="300"
-                      maxlength="300"
-                      v-model="presentation.shortDescription"
+                    class="materialize-textarea"
+                    id="shortDescription"
+                    ref="shortDescription"
+                    data-length="300"
+                    maxlength="300"
+                    v-model="presentation.shortDescription"
                   ></textarea>
                   <label for="shortDescription">Short description</label>
                   <span
-                      class="helper-text"
-                      data-error="wrong"
-                      data-success="right"
-                  >Will be used in V4P process</span
+                    class="helper-text"
+                    data-error="wrong"
+                    data-success="right"
+                    >Will be used in V4P process</span
                   >
                 </div>
                 <div
-                    class="errors"
-                    v-for="error in errors.shortDescription"
-                    :key="error"
+                  class="errors"
+                  v-for="error in errors.shortDescription"
+                  :key="error"
                 >
                   {{ error }}
                 </div>
                 <div class="input-field">
                   <textarea
-                      class="materialize-textarea"
-                      id="description"
-                      ref="description"
-                      data-length="1000"
-                      maxlength="1000"
-                      v-model="presentation.description"
+                    class="materialize-textarea"
+                    id="description"
+                    ref="description"
+                    data-length="1000"
+                    maxlength="1000"
+                    v-model="presentation.description"
                   ></textarea>
                   <label for="description">Description</label>
                 </div>
                 <div
-                    class="errors"
-                    v-for="error in errors.description"
-                    :key="error"
+                  class="errors"
+                  v-for="error in errors.description"
+                  :key="error"
                 >
                   {{ error }}
                 </div>
@@ -92,27 +92,27 @@
                   </div>
                   <label>
                     <input
-                        name="language"
-                        type="radio"
-                        v-model="presentation.language"
-                        value="pl"
+                      name="language"
+                      type="radio"
+                      v-model="presentation.language"
+                      value="pl"
                     />
                     <span>Polish</span>
                   </label>
                   <label>
                     <input
-                        name="language"
-                        type="radio"
-                        v-model="presentation.language"
-                        value="en"
+                      name="language"
+                      type="radio"
+                      v-model="presentation.language"
+                      value="en"
                     />
                     <span>English</span>
                   </label>
                   <span
-                      class="errors"
-                      v-for="error in errors.language"
-                      :key="error"
-                  ><br/>{{ error }}</span
+                    class="errors"
+                    v-for="error in errors.language"
+                    :key="error"
+                    ><br />{{ error }}</span
                   >
                 </div>
 
@@ -122,36 +122,36 @@
                   </div>
                   <label>
                     <input
-                        name="level"
-                        type="radio"
-                        v-model="presentation.level"
-                        value="novice"
+                      name="level"
+                      type="radio"
+                      v-model="presentation.level"
+                      value="novice"
                     />
                     <span>Novice</span>
                   </label>
                   <label>
                     <input
-                        name="level"
-                        type="radio"
-                        v-model="presentation.level"
-                        value="intermediate"
+                      name="level"
+                      type="radio"
+                      v-model="presentation.level"
+                      value="intermediate"
                     />
                     <span>Intermediate</span>
                   </label>
                   <label>
                     <input
-                        name="level"
-                        type="radio"
-                        v-model="presentation.level"
-                        value="master"
+                      name="level"
+                      type="radio"
+                      v-model="presentation.level"
+                      value="master"
                     />
                     <span>Master</span>
                   </label>
                   <span
-                      class="errors"
-                      v-for="error in errors.level"
-                      :key="error"
-                  ><br/>{{ error }}</span
+                    class="errors"
+                    v-for="error in errors.level"
+                    :key="error"
+                    ><br />{{ error }}</span
                   >
                 </div>
               </div>
@@ -160,34 +160,34 @@
         </div>
         <div>
           <button
-              @click="save()"
-              class="waves-effect waves-light btn save-button"
+            @click="save()"
+            class="waves-effect waves-light btn save-button"
           >
             Save
           </button>
           <button
-              @click="cancel()"
-              class="waves-effect waves-light btn cancel-button"
+            @click="cancel()"
+            class="waves-effect waves-light btn cancel-button"
           >
             Cancel
           </button>
         </div>
       </div>
     </Box>
-    <Contact/>
+    <Contact />
   </div>
 </template>
 <script lang="ts">
-import {Component, Vue} from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 import Contact from "@/components/Contact.vue";
 import Box from "@/components/Box.vue";
 import M from "materialize-css";
-import {EmbeddedTags, Presentation, Tag} from "@/types";
+import { EmbeddedTags, Presentation, Tag } from "@/types";
 import axios from "axios";
 import PageHeader from "@/components/PageHeader.vue";
 
 @Component({
-  components: {Box, Contact, PageHeader}
+  components: { Box, Contact, PageHeader }
 })
 export default class PresentationForm extends Vue {
   public $refs!: Vue["$refs"] & {
@@ -209,25 +209,25 @@ export default class PresentationForm extends Vue {
   private userId!: string;
 
   public mounted() {
-    const {id, userId} = this.$route.params;
+    const { id, userId } = this.$route.params;
     this.userId = userId || this.$store.getters.user.jti;
     if (id) {
       axios
-          .get<Presentation>(`/api/presentations/${id}`)
-          .then(response => (this.presentation = response.data))
-          .then(_ => axios.get<EmbeddedTags>(`/api/presentations/${id}/tags`))
-          .then(tagsResponse =>
-              Vue.set(this.presentation, "tags", tagsResponse.data._embedded.tags)
-          )
-          .then(() =>
-              setTimeout(() => {
-                this.setupTagsAutocomplete();
-                M.textareaAutoResize(this.$refs.description);
-                M.textareaAutoResize(this.$refs.shortDescription);
-                M.CharacterCounter.init(this.$refs.shortDescription);
-                M.CharacterCounter.init(this.$refs.description);
-              })
-          );
+        .get<Presentation>(`/api/presentations/${id}`)
+        .then(response => (this.presentation = response.data))
+        .then(_ => axios.get<EmbeddedTags>(`/api/presentations/${id}/tags`))
+        .then(tagsResponse =>
+          Vue.set(this.presentation, "tags", tagsResponse.data._embedded.tags)
+        )
+        .then(() =>
+          setTimeout(() => {
+            this.setupTagsAutocomplete();
+            M.textareaAutoResize(this.$refs.description);
+            M.textareaAutoResize(this.$refs.shortDescription);
+            M.CharacterCounter.init(this.$refs.shortDescription);
+            M.CharacterCounter.init(this.$refs.description);
+          })
+        );
     } else {
       this.setupTagsAutocomplete();
     }
@@ -239,15 +239,15 @@ export default class PresentationForm extends Vue {
 
   public removeTag(tag: Tag) {
     this.presentation.tags = this.presentation.tags.filter(
-        it => it.id !== tag.id
+      it => it.id !== tag.id
     );
   }
 
   public save() {
     if (this.validate()) {
       axios
-          .post(`/api/users/${this.userId}/presentations`, this.presentation)
-          .then(() => this.$router.back());
+        .post(`/api/users/${this.userId}/presentations`, this.presentation)
+        .then(() => this.$router.back());
     }
   }
 
@@ -257,25 +257,25 @@ export default class PresentationForm extends Vue {
 
   private setupTagsAutocomplete() {
     axios
-        .get<EmbeddedTags>("/api/tags")
-        .then(response => response.data._embedded.tags)
-        .then(tags => {
-          const autocompleteData: { [name: string]: null } = {};
-          for (const tag of tags) {
-            autocompleteData[tag.name] = null;
-            this.tagsByName[tag.name] = tag;
+      .get<EmbeddedTags>("/api/tags")
+      .then(response => response.data._embedded.tags)
+      .then(tags => {
+        const autocompleteData: { [name: string]: null } = {};
+        for (const tag of tags) {
+          autocompleteData[tag.name] = null;
+          this.tagsByName[tag.name] = tag;
+        }
+        const autocompleteElement = document.querySelectorAll(".autocomplete");
+        M.Autocomplete.init(autocompleteElement, {
+          minLength: 0,
+          data: autocompleteData,
+          onAutocomplete: arg => {
+            this.tagInput = "";
+            const tag = this.tagsByName[arg];
+            this.presentation.tags.push(tag);
           }
-          const autocompleteElement = document.querySelectorAll(".autocomplete");
-          M.Autocomplete.init(autocompleteElement, {
-            minLength: 0,
-            data: autocompleteData,
-            onAutocomplete: arg => {
-              this.tagInput = "";
-              const tag = this.tagsByName[arg];
-              this.presentation.tags.push(tag);
-            }
-          });
         });
+      });
   }
 
   private validate() {
@@ -311,7 +311,7 @@ export default class PresentationForm extends Vue {
   }
 
   private hasEmoji(value: string) {
-    return /\p{Emoji}/u.test(value)
+    return /\p{Emoji}/u.test(value);
   }
 }
 
