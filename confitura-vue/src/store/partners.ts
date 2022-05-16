@@ -130,6 +130,47 @@ Praca w BNP Paribas to praca w środowisku bardzo dynamicznym i pełnym wyzwań,
           logo: require("../assets/partners/2022/decerto.svg"),
           orientation: "horizontal"
        },
+        {
+          id: "bigpicture",
+          name: "BigPicture",
+          description: `Hi, we’re BigPicture, the proud creators of one of the leading project management tools on the market. Our Portfolio, Product, and Project Management software helps thousands of teams on all continents plan their work, coordinate execution, track progress, and report on results with outstanding efficiency, accuracy, and clarity.
+
+Our vision is shared by over 3 million users of BigPicture in organizations of all sizes: from small startups to market leaders such as Netflix, NASA, Intel, Tesla, Apple, Uber, Samsung, Porsche, Siemens, LG, and many more.
+
+How we work
+- Java, Spring, Hibernate, Git, Maven, Docker, AWS
+- Angular, JavaScript, TypeScript, NgRx, Webpack, HTML, Sass 
+- We use monorepo to maintain consistency of development through automated code standard validations in CI: checkstyle, findbugs, secbug, error prone compiler
+- One of the most extensive CI processes in the local market: static code analysis, compilation, unit testing, E2E testing, performance testing, database migration testing
+- Heterogeneity of distributed runtime environments: Jira Server, Self Hosted, Cloud
+Integration with various data providers: Jira, Trello, Azure and others
+- We support ~10000 users on our own cloud infrastructure
+- Quality assurance is provided in the CI process along with automatic architecture validation based on Architecture Decision Records
+- In Agile and Scrum we trust - we make sure to keep our teams small and our sprints manageable & effective
+- Ownership - we want everyone on our team to feel empowered to grab the reins in their positions and help push the company forward
+- Our product, our deadlines - developing our products allows us to set feasible deadlines and fully focus on quality
+- Top-notch hardware and software
+- We can set our own working hours. We just need to make sure to join our team for the daily meeting
+- We work 100% remotely or from our modern office in Warsaw - we can choose
+
+We focus on the continuous development of our skills. That is why we invest in and offer:
+- Unlimited skills development budget
+- ShipIT Weeks - regular, internal, one week long, fully-paid hackathons
+- Internal tech guilds - meetings dedicated to sharing knowledge, and best practices
+- Taking part in tech events sponsored by us - like Geecon ;)
+- So far, we’ve built an amazing team of 200 experts. Join us!
+
+Check our open positions here: https://bigpicture.one/careers/
+
+Follow BigPicture's #BigTeam here:
+- [Instagram](https://www.instagram.com/bigpicture.one/)
+- [Facebook](https://www.facebook.com/BigPicture.one)
+`,
+          www: " https://bigpicture.one/",
+          type: "platinum",
+          logo: require("../assets/partners/2022/bigpicture.svg"),
+          orientation: "horizontal"
+       },
         // {
         //   id: "softwareplant",
         //   description: `Technologiczny startup rozwijający produkty do nowoczesnego zarządzania projektami
