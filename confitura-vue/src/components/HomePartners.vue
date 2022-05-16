@@ -101,7 +101,7 @@ export default class HomePartners extends Vue {
   public path: Partner[] = [];
   public gold: Partner[] = [];
   public silver: Partner[] = [];
-  public types: PartnerType[] = ["silver"];
+  public types: PartnerType[] = ["gold","silver"];
   public partners: Partners = {
     platinum: [],
     path: [],
@@ -109,7 +109,7 @@ export default class HomePartners extends Vue {
     silver: [],
     bronze: []
   };
-  public active: PartnerType = "silver";
+  public active: PartnerType = "gold";
   private intervalId: number = 0;
 
   public pauseIfActive(type: string) {
