@@ -170,6 +170,37 @@ Follow BigPicture's #BigTeam here:
           type: "platinum",
           logo: require("../assets/partners/2022/bigpicture.svg"),
           orientation: "horizontal"
+        },
+        {
+          id: "softwaremill",
+          name: "SoftwareMill",
+          description: `Hello from [SoftwareMill](https://softwaremill.com/) - a consulting & custom software agency that proactively helps businesses benefit from technologies like Cloud Computing, Big Data, Blockchain and Machine Learning.
+
+We specialise in Java, Scala, Akka, the Lightbend Reactive Platform, Kafka, Spark, TensorFlow, SQL & NoSQL databases: PostgreSQL, Cassandra, Mongo, Node.JS and React. We build on the traditional engineering work ethics and values, which translate directly to the quality of our systems. We are a leading consultancy chosen for digital transformation, recognized for our integrity, versatility, understanding of the business, right soft skills, strong work ethic, rich experience and top notch mastery of technology.
+
+Widening technical horizons is the fabric of our organisation. Not only do we practise and learn constantly, but we also teach, create and contribute. We have a proven track record of working with the IT community, leading open-source projects [[why not to contribute?]](https://github.com/softwaremill/) and organising a [Scalar conference](https://scalar-conf.com/).
+
+Our priority is to deliver quality software: thoroughly tested, well-designed, and reviewed. But, our growth is not limited to technology. Since 2009 we have been building the best, fully remote, workplace for developers. We have a unique, 100% remote and bottom-up structure where leaders are not appointed, but chosen by teammates. In 2022, we’ve grown into a company of 80+ people. We simply like each other and together we create [a friendly environment](https://softwaremill.com/about-us/) that enhances our potential.
+
+We’re eager to welcome more passionate software engineers to our Team. If you want to share your knowledge, empower teammates and lead by example, while working on interesting projects, check out our [career page](https://softwaremill.com/join-us/)!
+
+Catch #SoftwareMillVibes
+- [SoftwareMill Tech Blog](https://softwaremill.com/blog/)
+- [Scala Times newsletter](https://scalatimes.com/)
+- [Scala 3 Tech Report](https://softwaremill.com/ebooks/scala-3-tech-report/)
+- [SoftwareMill Academy](https://academy.softwaremill.com/en/)
+- [AMA Slack](https://sml.io/ask-me-anything)
+- [Instagram](https://instagram.com/softwaremill_vibes)
+- [Youtube](https://www.youtube.com/c/SoftwareMillCom)
+- [Facebook](https://www.facebook.com/softwaremill)
+- [Twitter](https://twitter.com/softwaremill)
+- [Linkedin](https://www.linkedin.com/company/808422)
+- [DevSkin Softwear](https://devskin-softwaremill.myspreadshop.pl/)
+`,
+          www: "https://softwaremill.com/",
+          type: "silver",
+          logo: require("../assets/partners/2022/sml2.svg"),
+          orientation: "horizontal"
         }
         // {
         //   id: "softwareplant",
