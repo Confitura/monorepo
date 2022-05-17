@@ -287,8 +287,6 @@ export default class PresentationForm extends Vue {
     if (!this.presentation.title) {
       this.errors.title = ["Title is required"];
       valid = false;
-    } else if (this.hasEmoji(this.presentation.title)) {
-      this.errors.title = ["We don't support emojis in title. Sorry"];
     }
     if (!this.presentation.shortDescription) {
       this.errors.shortDescription = ["ShortDescription is required"];
