@@ -107,6 +107,100 @@ W Polsce DataArt posiada biura w czterech miastach - w Lublinie, Wrocławiu, Kra
           type: "media",
           logo: require("../assets/partners/2022/coderslab.svg"),
           orientation: "horizontal"
+        },
+        {
+          id: "bnpparibas",
+          name: "BNP Paribas",
+          description: `BNP Paribas działa w pierwszej 6 największych banków w Polsce pod względem kapitałowym dostarczając 4 mln naszych Klientów rozwiązania z zakresu finansowania działalności na rynku krajowym i międzynarodowym oraz szereg produktów oszczędnościowo-inwestycyjnych i kredytowych.
+
+Na Confitura pojawiamy się nie tylko jako bank, ale przede wszystkim jako pracodawca z obszaru IT, bo obszar Technologii jest kluczowy w funkcjonowaniu naszego biznesu. Bankowość to nie tylko działy sprzedaży czy operacji. Nasz bank to również miejsce, w którym pracownicy mogą być odpowiedzialni za rozwój nowoczesnych aplikacji internetowych i mobilnych, budowanie innowacyjnych rozwiązań z wykorzystaniem Big Data, Cloud oraz AI, modernizację i utrzymanie infrastruktury, wsparcie użytkowników i wiele innych.
+
+Praca w BNP Paribas to praca w środowisku bardzo dynamicznym i pełnym wyzwań, dającym możliwość współpracy z największymi firmami z branży technologii oraz z szeregiem innowacyjnych startupów zarówno z Polski jak i ze świata. Chcesz sprawdzić jakie możliwości rozwoju dajemy kandydatom? Wejdź na stronę [Praca w IT | BNP Kariera.](https://www.bnpparibas.pl/kariera/pl/obszary-zatrudnienia/praca-w-it)`,
+          www: "https://www.bnpparibas.pl",
+          type: "gold",
+          logo: require("../assets/partners/2022/bnpparibas.svg"),
+          orientation: "horizontal"
+        },
+        {
+          id: "decerto",
+          name: "Decerto",
+          description: `Jesteśmy polskim software house’m obecnym na rynku od 2006 roku. Realizujemy projekty dla dużych korporacji, głównie z sektora finansowego. Równocześnie zachowujemy płaską strukturę i niekorporacyjną kulturę pracy. Posiadamy duże doświadczenie i know-how oraz stawiamy na długoterminowe relacje. Dzięki zaufaniu Klientów prowadzimy kilkanaście dużych projektów – pracując z nami zyskujesz nie tylko stabilność zatrudnienia, ale również duże możliwości rozwoju oraz wybór odpowiedniego środowiska pracy. Specjalizujemy się w rozwiązaniach backendowych związanych z dużymi wolumenami danych oraz logiką biznesową. Projektujemy kompleksowe rozwiązania informatyczne, dlatego cenimy otwarty umysł, samodzielność oraz własną inicjatywę. Doceniamy indywidualizm i szanujemy inny punkt widzenia.`,
+          www: " https://www.decerto.com/pl/start",
+          type: "silver",
+          logo: require("../assets/partners/2022/decerto.svg"),
+          orientation: "horizontal"
+        },
+        {
+          id: "bigpicture",
+          name: "BigPicture",
+          description: `Hi, we’re BigPicture, the proud creators of one of the leading project management tools on the market. Our Portfolio, Product, and Project Management software helps thousands of teams on all continents plan their work, coordinate execution, track progress, and report on results with outstanding efficiency, accuracy, and clarity.
+
+Our vision is shared by over 3 million users of BigPicture in organizations of all sizes: from small startups to market leaders such as Netflix, NASA, Intel, Tesla, Apple, Uber, Samsung, Porsche, Siemens, LG, and many more.
+
+How we work
+- Java, Spring, Hibernate, Git, Maven, Docker, AWS
+- Angular, JavaScript, TypeScript, NgRx, Webpack, HTML, Sass 
+- We use monorepo to maintain consistency of development through automated code standard validations in CI: checkstyle, findbugs, secbug, error prone compiler
+- One of the most extensive CI processes in the local market: static code analysis, compilation, unit testing, E2E testing, performance testing, database migration testing
+- Heterogeneity of distributed runtime environments: Jira Server, Self Hosted, Cloud
+Integration with various data providers: Jira, Trello, Azure and others
+- We support ~10000 users on our own cloud infrastructure
+- Quality assurance is provided in the CI process along with automatic architecture validation based on Architecture Decision Records
+- In Agile and Scrum we trust - we make sure to keep our teams small and our sprints manageable & effective
+- Ownership - we want everyone on our team to feel empowered to grab the reins in their positions and help push the company forward
+- Our product, our deadlines - developing our products allows us to set feasible deadlines and fully focus on quality
+- Top-notch hardware and software
+- We can set our own working hours. We just need to make sure to join our team for the daily meeting
+- We work 100% remotely or from our modern office in Warsaw - we can choose
+
+We focus on the continuous development of our skills. That is why we invest in and offer:
+- Unlimited skills development budget
+- ShipIT Weeks - regular, internal, one week long, fully-paid hackathons
+- Internal tech guilds - meetings dedicated to sharing knowledge, and best practices
+- Taking part in tech events sponsored by us - like Geecon ;)
+- So far, we’ve built an amazing team of 200 experts. Join us!
+
+Check our open positions here: https://bigpicture.one/careers/
+
+Follow BigPicture's #BigTeam here:
+- [Instagram](https://www.instagram.com/bigpicture.one/)
+- [Facebook](https://www.facebook.com/BigPicture.one)
+`,
+          www: " https://bigpicture.one/",
+          type: "platinum",
+          logo: require("../assets/partners/2022/bigpicture.svg"),
+          orientation: "horizontal"
+        },
+        {
+          id: "softwaremill",
+          name: "SoftwareMill",
+          description: `Hello from [SoftwareMill](https://softwaremill.com/) - a consulting & custom software agency that proactively helps businesses benefit from technologies like Cloud Computing, Big Data, Blockchain and Machine Learning.
+
+We specialise in Java, Scala, Akka, the Lightbend Reactive Platform, Kafka, Spark, TensorFlow, SQL & NoSQL databases: PostgreSQL, Cassandra, Mongo, Node.JS and React. We build on the traditional engineering work ethics and values, which translate directly to the quality of our systems. We are a leading consultancy chosen for digital transformation, recognized for our integrity, versatility, understanding of the business, right soft skills, strong work ethic, rich experience and top notch mastery of technology.
+
+Widening technical horizons is the fabric of our organisation. Not only do we practise and learn constantly, but we also teach, create and contribute. We have a proven track record of working with the IT community, leading open-source projects [[why not to contribute?]](https://github.com/softwaremill/) and organising a [Scalar conference](https://scalar-conf.com/).
+
+Our priority is to deliver quality software: thoroughly tested, well-designed, and reviewed. But, our growth is not limited to technology. Since 2009 we have been building the best, fully remote, workplace for developers. We have a unique, 100% remote and bottom-up structure where leaders are not appointed, but chosen by teammates. In 2022, we’ve grown into a company of 80+ people. We simply like each other and together we create [a friendly environment](https://softwaremill.com/about-us/) that enhances our potential.
+
+We’re eager to welcome more passionate software engineers to our Team. If you want to share your knowledge, empower teammates and lead by example, while working on interesting projects, check out our [career page](https://softwaremill.com/join-us/)!
+
+Catch #SoftwareMillVibes
+- [SoftwareMill Tech Blog](https://softwaremill.com/blog/)
+- [Scala Times newsletter](https://scalatimes.com/)
+- [Scala 3 Tech Report](https://softwaremill.com/ebooks/scala-3-tech-report/)
+- [SoftwareMill Academy](https://academy.softwaremill.com/en/)
+- [AMA Slack](https://sml.io/ask-me-anything)
+- [Instagram](https://instagram.com/softwaremill_vibes)
+- [Youtube](https://www.youtube.com/c/SoftwareMillCom)
+- [Facebook](https://www.facebook.com/softwaremill)
+- [Twitter](https://twitter.com/softwaremill)
+- [Linkedin](https://www.linkedin.com/company/808422)
+- [DevSkin Softwear](https://devskin-softwaremill.myspreadshop.pl/)
+`,
+          www: "https://softwaremill.com/",
+          type: "silver",
+          logo: require("../assets/partners/2022/sml2.svg"),
+          orientation: "horizontal"
         }
         // {
         //   id: "softwareplant",
