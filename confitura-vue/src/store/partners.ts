@@ -201,6 +201,23 @@ Catch #SoftwareMillVibes
           type: "silver",
           logo: require("../assets/partners/2022/sml2.svg"),
           orientation: "horizontal"
+        },
+        {
+          id: "intercars",
+          name: "Inter Cars",
+          description: `Inter Cars has been a leading distributor of spare parts for passenger cars and trucks on the Polish market for many years. In addition, the company has gradually been developing its activity in 18 countries across Europe, ranking first in the Central and Eastern part of the continent, second on the entire continent and eighth globally. 
+ 
+Inter Cars offers over two million spare parts for passenger cars and trucks, parts for motorcycles, farming and industrial machines as well as driver accessories, with as many as 40,000 new items every years being introduced into the sales system for the trucks market alone.
+ 
+The company provides garages fast, convenient and safe access to all tools facilitating their operations as, in addition to spare parts for cars, Inter Cars offers technical support, innovative garage management programs as well as stationary and online training.
+ 
+In the entire IT area at Inter Cars, we see the need to constantly improve the competences of IT Managers and Employees. Every year, we have a specific development budget allocated to this need. We are committed to developing both managerial and technical competences as well as the so-called "Soft" related to, inter area, with communication, cooperation, improvement of individual and team effectiveness.
+ 
+Inter Cars IT department currently consists of about 300 employees and we are still looking for new ones! Teams that you can confidently join, if you are a person open to new challenges, you will surely find an area for yourself.`,
+          www: "https://intercars.com.pl/",
+          type: "silver",
+          logo: require("../assets/partners/2022/intercars.svg"),
+          orientation: "horizontal"
         }
         // {
         //   id: "softwareplant",
