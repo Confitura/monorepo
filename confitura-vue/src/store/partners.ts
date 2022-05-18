@@ -218,6 +218,15 @@ Inter Cars IT department currently consists of about 300 employees and we are st
           type: "silver",
           logo: require("../assets/partners/2022/intercars.svg"),
           orientation: "horizontal"
+        },
+        {
+          id: "bosch",
+          description: `The Bosch Group is a leading global supplier of technology and services. It employs roughly 402,600 associates worldwide (as of December 31, 2021). The company generated sales of 78.7 billion euros in 2021. Its operations are divided into four business sectors: Mobility Solutions, Industrial Technology, Consumer Goods, and Energy and Building Technology. As a leading IoT provider, Bosch offers innovative solutions for smart homes, Industry 4.0, and connected mobility. Bosch is pursuing a vision of mobility that is sustainable, safe, and exciting. It uses its expertise in sensor technology, software, and services, as well as its own IoT cloud, to offer its customers connected, cross-domain solutions from a single source. The Bosch Group’s strategic objective is to facilitate connected living with products and solutions that either contain artificial intelligence (AI) or have been developed or manufactured with its help. Bosch improves quality of life worldwide with products and services that are innovative and spark enthusiasm. In short, Bosch creates technology that is “Invented for life.”`,
+          name: "Bosch",
+          www: "https://www.bosch.com/company/",
+          type: "silver",
+          logo: require("../assets/partners/2022/bosch.svg"),
+          orientation: "horizontal"
         }
         // {
         //   id: "softwareplant",
@@ -339,25 +348,6 @@ Inter Cars IT department currently consists of about 300 employees and we are st
         //                     www: "https://viacom.tech/",
         //                     type: "gold",
         //                     logo: require("../assets/partners/viacom.svg"),
-        //                     orientation: "horizontal"
-        //                 },
-        //                 {
-        //                     id: "bosch",
-        //                     description: `W Warszawskich oddziale Robert Bosch Sp. z. o.o. zatrudnionych jest prawie 300 specjalistów IT. Zajmują się oni konsultacjami, projektowaniem, zarządzaniem i rozwojem oprogramowania. Około połowa z nich to testerzy lub programiści języków .Net, Java, JS, J2EE, ABAP i baz danych Oracle. W wyniku ich pracy powstaje oprogramowanie, które wspiera Bosch Group na całym świecie w zakresie logistyki, IT Security, produkcji oraz e-commerce.
-        //
-        // Dołącz do nas jeśli:
-        //
-        // * Zależy ci na jakości Twojego kodu
-        // * Cenisz sobie samodzielność i autonomię w działaniu
-        // * Chcesz mieć wpływ na projekt, w którym uczestniczysz
-        // * Znasz angielski i chcesz pracować w wielokulturowym środowisku
-        //
-        //
-        // Zobacz, jak się u nas pracuje: [https://www.youtube.com/watch?v=A2YWrsEDLIg](https://www.youtube.com/watch?v=A2YWrsEDLIg)`,
-        //                     name: "Bosch",
-        //                     www: "https://www.bosch-career.pl/IT",
-        //                     type: "silver",
-        //                     logo: require("../assets/partners/bosch.svg"),
         //                     orientation: "horizontal"
         //                 },
 
