@@ -223,6 +223,15 @@ Inter Cars IT department currently consists of about 300 employees and we are st
           type: "silver",
           logo: require("../assets/partners/2022/bosch.svg"),
           orientation: "horizontal"
+        },
+        {
+          id: "kmd",
+          name: "KMD",
+          description: `KMD Poland is a foreign branch of the KMD Group which is one of the largest Danish IT companies. The company specializes in implementing key IT solutions and processes in energy area, finance, insurance, R&D and HR. Its key projects are implemented in the public sector in Denmark and in Scandinavian countries, contributing to the digital transformation of their societies, public institutions and private sector entities. The KMD Group has more than 3,000 employees and it is a subsidiary of NEC Corporation, a global leader in integration of IT and networking technologies. This year, KMD Group is celebrating its 50<sup>th</sup> anniversary.`,
+          www: "https://kmdpoland.pl",
+          type: "silver",
+          logo: require("../assets/partners/2022/kmd.svg"),
+          orientation: "horizontal"
         }
         // {
         //   id: "softwareplant",
@@ -365,17 +374,6 @@ Inter Cars IT department currently consists of about 300 employees and we are st
         //                     www: "https://britenet.com.pl",
         //                     type: "gold",
         //                     logo: require("../assets/partners/britenet.svg"),
-        //                     orientation: "horizontal"
-        //                 },
-        //                 {
-        //                     id: "kmd",
-        //                     name: "KMD",
-        //                     description: `For more than 40 years, KMD has played a key role in digitizing the Danish state, helping make Denmark’s public sector one of the best run, most efficient and highly digitized in the world. KMD is a leading supplier of mission-critical software, solutions and IT services primarily to Denmark’s public sector, but with a growing footprint in the private sector both domestically and in Sweden and Norway. We have a broad portfolio of products and services, based predominantly on our own software solutions.
-        //
-        // We’ve been rapidly growing and we have more than 420 IT and business specialists in our Warsaw office. They translate complex processes and legislation into simple and effective IT solutions. KMD Poland is the largest foreign affiliated branch at KMD Group. Our mission is to provide new technologies and solutions as well as to maintain and develop our systems. We help Scandinavian business and public sector make another major leap in their digital evolution.`,
-        //                     www: "http://careers.kmdpoland.pl",
-        //                     type: "silver",
-        //                     logo: require("../assets/partners/kmd.svg"),
         //                     orientation: "horizontal"
         //                 },
         //                 {
