@@ -232,6 +232,15 @@ Inter Cars IT department currently consists of about 300 employees and we are st
           type: "silver",
           logo: require("../assets/partners/2022/kmd.svg"),
           orientation: "horizontal"
+        },
+        {
+          id: "goldman-sachs",
+          name: "Goldman Sachs",
+          description: `At Goldman Sachs, our Engineers don’t just make things – we make things possible. Join our engineering teams that build massively scalable software and systems, architect low latency infrastructure solutions, proactively guard against cyber threats, and leverage machine learning alongside financial engineering to continuously turn data into action.`,
+          www: "https://www.goldmansachs.com/careers/",
+          type: "gold",
+          orientation: "horizontal",
+          logo: require("../assets/partners/2022/goldmansachs.svg")
         }
         // {
         //   id: "softwareplant",
