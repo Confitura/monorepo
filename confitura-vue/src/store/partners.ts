@@ -198,23 +198,23 @@ Catch #SoftwareMillVibes
           logo: require("../assets/partners/2022/sml2.svg"),
           orientation: "horizontal"
         },
-        {
-          id: "intercars",
-          name: "Inter Cars",
-          description: `Inter Cars has been a leading distributor of spare parts for passenger cars and trucks on the Polish market for many years. In addition, the company has gradually been developing its activity in 18 countries across Europe, ranking first in the Central and Eastern part of the continent, second on the entire continent and eighth globally. 
- 
-Inter Cars offers over two million spare parts for passenger cars and trucks, parts for motorcycles, farming and industrial machines as well as driver accessories, with as many as 40,000 new items every years being introduced into the sales system for the trucks market alone.
- 
-The company provides garages fast, convenient and safe access to all tools facilitating their operations as, in addition to spare parts for cars, Inter Cars offers technical support, innovative garage management programs as well as stationary and online training.
- 
-In the entire IT area at Inter Cars, we see the need to constantly improve the competences of IT Managers and Employees. Every year, we have a specific development budget allocated to this need. We are committed to developing both managerial and technical competences as well as the so-called "Soft" related to, inter area, with communication, cooperation, improvement of individual and team effectiveness.
- 
-Inter Cars IT department currently consists of about 300 employees and we are still looking for new ones! Teams that you can confidently join, if you are a person open to new challenges, you will surely find an area for yourself.`,
-          www: "https://intercars.com.pl/",
-          type: "silver",
-          logo: require("../assets/partners/2022/intercars.svg"),
-          orientation: "horizontal"
-        },
+//         {
+//           id: "intercars",
+//           name: "Inter Cars",
+//           description: `Inter Cars has been a leading distributor of spare parts for passenger cars and trucks on the Polish market for many years. In addition, the company has gradually been developing its activity in 18 countries across Europe, ranking first in the Central and Eastern part of the continent, second on the entire continent and eighth globally.
+//
+// Inter Cars offers over two million spare parts for passenger cars and trucks, parts for motorcycles, farming and industrial machines as well as driver accessories, with as many as 40,000 new items every years being introduced into the sales system for the trucks market alone.
+//
+// The company provides garages fast, convenient and safe access to all tools facilitating their operations as, in addition to spare parts for cars, Inter Cars offers technical support, innovative garage management programs as well as stationary and online training.
+//
+// In the entire IT area at Inter Cars, we see the need to constantly improve the competences of IT Managers and Employees. Every year, we have a specific development budget allocated to this need. We are committed to developing both managerial and technical competences as well as the so-called "Soft" related to, inter area, with communication, cooperation, improvement of individual and team effectiveness.
+//
+// Inter Cars IT department currently consists of about 300 employees and we are still looking for new ones! Teams that you can confidently join, if you are a person open to new challenges, you will surely find an area for yourself.`,
+//           www: "https://intercars.com.pl/",
+//           type: "silver",
+//           logo: require("../assets/partners/2022/intercars.svg"),
+//           orientation: "horizontal"
+//         },
         {
           id: "bosch",
           description: `The Bosch Group is a leading global supplier of technology and services. It employs roughly 402,600 associates worldwide (as of December 31, 2021). The company generated sales of 78.7 billion euros in 2021. Its operations are divided into four business sectors: Mobility Solutions, Industrial Technology, Consumer Goods, and Energy and Building Technology. As a leading IoT provider, Bosch offers innovative solutions for smart homes, Industry 4.0, and connected mobility. Bosch is pursuing a vision of mobility that is sustainable, safe, and exciting. It uses its expertise in sensor technology, software, and services, as well as its own IoT cloud, to offer its customers connected, cross-domain solutions from a single source. The Bosch Group’s strategic objective is to facilitate connected living with products and solutions that either contain artificial intelligence (AI) or have been developed or manufactured with its help. Bosch improves quality of life worldwide with products and services that are innovative and spark enthusiasm. In short, Bosch creates technology that is “Invented for life.”`,
@@ -224,14 +224,23 @@ Inter Cars IT department currently consists of about 300 employees and we are st
           logo: require("../assets/partners/2022/bosch.svg"),
           orientation: "horizontal"
         },
+        // {
+        //   id: "kmd",
+        //   name: "KMD",
+        //   description: `KMD Poland is a foreign branch of the KMD Group which is one of the largest Danish IT companies. The company specializes in implementing key IT solutions and processes in energy area, finance, insurance, R&D and HR. Its key projects are implemented in the public sector in Denmark and in Scandinavian countries, contributing to the digital transformation of their societies, public institutions and private sector entities. The KMD Group has more than 3,000 employees and it is a subsidiary of NEC Corporation, a global leader in integration of IT and networking technologies. This year, KMD Group is celebrating its 50<sup>th</sup> anniversary.`,
+        //   www: "https://kmdpoland.pl",
+        //   type: "silver",
+        //   logo: require("../assets/partners/2022/kmd.svg"),
+        //   orientation: "horizontal"
+        // },
         {
-          id: "kmd",
-          name: "KMD",
-          description: `KMD Poland is a foreign branch of the KMD Group which is one of the largest Danish IT companies. The company specializes in implementing key IT solutions and processes in energy area, finance, insurance, R&D and HR. Its key projects are implemented in the public sector in Denmark and in Scandinavian countries, contributing to the digital transformation of their societies, public institutions and private sector entities. The KMD Group has more than 3,000 employees and it is a subsidiary of NEC Corporation, a global leader in integration of IT and networking technologies. This year, KMD Group is celebrating its 50<sup>th</sup> anniversary.`,
-          www: "https://kmdpoland.pl",
-          type: "silver",
-          logo: require("../assets/partners/2022/kmd.svg"),
-          orientation: "horizontal"
+          id: "goldman-sachs",
+          name: "Goldman Sachs",
+          description: `At Goldman Sachs, our Engineers don’t just make things – we make things possible. Join our engineering teams that build massively scalable software and systems, architect low latency infrastructure solutions, proactively guard against cyber threats, and leverage machine learning alongside financial engineering to continuously turn data into action.`,
+          www: "https://www.goldmansachs.com/careers/",
+          type: "gold",
+          orientation: "horizontal",
+          logo: require("../assets/partners/2022/goldmansachs.svg")
         }
         // {
         //   id: "softwareplant",
