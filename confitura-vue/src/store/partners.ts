@@ -241,6 +241,27 @@ Catch #SoftwareMillVibes
           type: "gold",
           orientation: "horizontal",
           logo: require("../assets/partners/2022/goldmansachs.svg")
+        },
+        {
+          id: "onwelo",
+          name: "Onwelo",
+          description: `Onwelo to nowoczesna polska spółka technologiczna, która specjalizuje się w budowaniu innowacyjnych rozwiązań IT dla organizacji z szeregu sektorów na całym świecie. Główne obszary działalności Onwelo to: tworzenie oprogramowania, jego rozwój oraz utrzymanie, a także mocne wsparcie kompetencyjne. W krótkim czasie firma wdrożyła ponad 300 projektów w Europie i w USA, powiększyła zespół do ponad 400 osób, a także otworzyła biura w sześciu miastach Polski oraz oddziały w Stanach Zjednoczonych, Niemczech i w Szwajcarii. 
+ 
+Chociaż filar naszej firmy stanowią doświadczeni, wykwalifikowani specjaliści, jesteśmy również otwarci na włączenie do naszych zespołów pasjonatów IT, którzy przy naszym wsparciu chcą zmienić dotychczasowy stack lub postawić swoje pierwsze kroki w świecie zaawansowanych technologii. W Onwelo zatrudniamy specjalistów z obszarów: analizy biznesowej, rozwoju i utrzymania oprogramowania, testowania oprogramowania, zarządzania infrastrukturą IT, tworzenia rozwiązań Data & Analytics oraz Intelligent Automation, a także rozwiązań chmurowych. 
+
+Dlaczego warto u nas pracować?
+
+* **Wsparcie mentorskie i jasne ścieżki kariery** – możesz liczyć na wsparcie naszych ekspertów i przełożonych wywodzących się z obszarów merytorycznych oraz na kulturę wymiany wiedzy i spersonalizowany rozwój
+* **Nowoczesne technologie i narzędzia pracy** – realizujemy projekty o wysokim stopniu zaawansowania technologicznego, a dzięki nowoczesnym standardom narzędzi pracy i systemów, Twoja praca jest bardziej przyjemna i rozwojowa
+* **Projekty zagraniczne** – pracuj z nami dla klientów z Europy Zachodniej i Stanów Zjednoczonych
+* **Zgrany zespół i inicjatywy integracyjne** – lubisz planszówki, warsztaty, wyzwania sportowe albo spontaniczne wyjścia w większym gronie? Zadbamy o to!
+* **Elastyczny model zatrudnienia i możliwość pracy zdalnej** – dostosujemy model zatrudnienia do Twoich potrzeb. Jako samodzielny specjalista możesz pracować zarówno w jednym z naszych nowoczesnych biur w atrakcyjnej lokalizacji, jak i zdalnie
+* **Przyjazny onboarding** – zadbamy o to, żeby Twój start w firmie był łatwy i przyjemny
+* **Pakiety benefitów** – karta MultiSport, prywatna opieka medyczna, grupowe ubezpieczenie na życie – to u nas standard`,
+          www: "https://www.onwelo.com",
+          type: "gold",
+          orientation: "horizontal",
+          logo: require("../assets/partners/2022/onwelo.svg")
         }
         // {
         //   id: "softwareplant",
