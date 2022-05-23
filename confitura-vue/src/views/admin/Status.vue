@@ -34,6 +34,12 @@
       </div>
     </div>
 
+    <div class="col s12 m4" v-if="v4pToken">
+      <div class="card-panel">
+        <span> Your v4p token is: {{ v4pToken }} </span>
+      </div>
+    </div>
+
     <div class="col s12 m4">
       <div class="card-panel">
         <span>Tags from submitted presentations:</span>
@@ -152,6 +158,10 @@ export default class Status extends Vue {
         return acc;
       }, new Map());
     return Array.from(tagCountMap).sort((l, r) => r[1] - l[1]);
+  }
+
+  get v4pToken() {
+    return localStorage.getItem("V4P_TOKEN");
   }
 }
 </script>
