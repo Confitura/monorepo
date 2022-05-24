@@ -257,7 +257,9 @@ Dlaczego warto u nas pracować?
 * **Zgrany zespół i inicjatywy integracyjne** – lubisz planszówki, warsztaty, wyzwania sportowe albo spontaniczne wyjścia w większym gronie? Zadbamy o to!
 * **Elastyczny model zatrudnienia i możliwość pracy zdalnej** – dostosujemy model zatrudnienia do Twoich potrzeb. Jako samodzielny specjalista możesz pracować zarówno w jednym z naszych nowoczesnych biur w atrakcyjnej lokalizacji, jak i zdalnie
 * **Przyjazny onboarding** – zadbamy o to, żeby Twój start w firmie był łatwy i przyjemny
-* **Pakiety benefitów** – karta MultiSport, prywatna opieka medyczna, grupowe ubezpieczenie na życie – to u nas standard`,
+* **Pakiety benefitów** – karta MultiSport, prywatna opieka medyczna, grupowe ubezpieczenie na życie – to u nas standard
+
+Chcesz dowiedzieć się o nas więcej? Wejdź na https://onwelo.com/career,p6.html`,
           www: "https://www.onwelo.com",
           type: "gold",
           orientation: "horizontal",
