@@ -7,7 +7,7 @@
         <div class="v4p__info">
           <p>
             The moment you were waiting for is here! Vote 4 Papers is open. You
-            have almost 100 presentations to choose from.
+            have around 50 presentations to choose from.
           </p>
           <p>
             For each and every presentation you can either say that you are very
