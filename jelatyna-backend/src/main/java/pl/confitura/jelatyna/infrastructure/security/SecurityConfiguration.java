@@ -35,6 +35,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .authorizeRequests()
                     .antMatchers(HttpMethod.DELETE,"/likes/*").permitAll()
                     .antMatchers(HttpMethod.DELETE,"/**").authenticated()
+                    .antMatchers("/api/actuator/info").permitAll()
                     .antMatchers("/api/actuator/*").hasAnyAuthority(ADMIN)
                     .antMatchers("/**/*").permitAll()
 
