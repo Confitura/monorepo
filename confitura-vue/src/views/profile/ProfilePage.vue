@@ -245,7 +245,7 @@ import axios, { AxiosError } from "axios";
 import PageHeader from "@/components/PageHeader.vue";
 import Toasted from "vue-toasted";
 import M from "materialize-css";
-import {LOAD_INFO} from "@/store/admin";
+import { LOAD_INFO } from "@/store/admin";
 
 Vue.use(Toasted);
 
@@ -409,7 +409,7 @@ export default class ProfilePage extends Vue {
     this.$store.dispatch(LOAD_PROFILE_PARTICIPATION_BY_ID, { id: userId });
   }
 
-  get isC4POpened(){
+  get isC4POpened() {
     return this.$store.state.admin.info.c4p.enabled;
   }
 }
