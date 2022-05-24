@@ -21,7 +21,7 @@
             can switch to full description.
           </p>
 
-          <p>We are waiting for your votes till end of Sunday, May 26</p>
+          <p>We are waiting for your votes till end of Wednesday, June 1st</p>
 
           <p>
             btw. you can also vote with keyboard shortcuts. Press ? to list of
