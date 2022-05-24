@@ -2,6 +2,7 @@ import { Module } from "vuex";
 import {
   EmbeddedPresentations,
   EmbeddedUserProfiles,
+  Participant,
   Presentation,
   RootState,
   UserProfile,
@@ -29,6 +30,7 @@ export const LOAD_VOTE_STATISTICS = "LOAD_VOTE_STATISTICS";
 export const LOAD_TIME_SLOTS = "LOAD_TIME_SLOTS";
 export const LOAD_ROOMS = "LOAD_ROOMS";
 export const LOAD_SCHEDULE = "LOAD_SCHEDULE";
+export const LOAD_PARTICIPANTS = "LOAD_PARTICIPANTS";
 
 const SET_USERS = "SET_USERS";
 const SET_SPEAKERS = "SET_SPEAKERS";
@@ -40,6 +42,7 @@ const SET_VOTE_STATISTICS = "SET_VOTE_STATISTICS";
 const SET_TIME_SLOTS = "SET_TIME_SLOTS";
 const SET_ROOMS = "SET_ROOMS";
 const SET_SCHEDULE = "SET_SCHEDULE";
+const SET_PARTICIPANTS = "SET_PARTICIPANTS";
 
 export const adminModule: Module<AdminState, RootState> = {
   state: {
@@ -52,10 +55,12 @@ export const adminModule: Module<AdminState, RootState> = {
     votes: [],
     rooms: [],
     timeSlots: [],
-    schedule: []
+    schedule: [],
+    participants: []
   },
   getters: {
     userCount: ({ users }) => users.length,
+    participantsCount: ({ participants }) => participants.length,
     presentationCount: ({ presentations }) => presentations.length,
     acceptedPresentationCount: ({ presentations }) =>
       presentations.filter(it => it.status === "accepted").length,
@@ -131,6 +136,10 @@ export const adminModule: Module<AdminState, RootState> = {
     },
     [SET_SCHEDULE](store, payload: { schedule: AgendaEntry[] }) {
       store.schedule = payload.schedule;
+    },
+    [SET_PARTICIPANTS](store, payload: { participants: Participant[] }) {
+      console.log(SET_PARTICIPANTS, payload);
+      store.participants = payload.participants;
     }
   },
   actions: {
@@ -218,6 +227,14 @@ export const adminModule: Module<AdminState, RootState> = {
         .then(schedule => {
           commit(SET_SCHEDULE, { schedule });
         });
+    },
+    [LOAD_PARTICIPANTS]({ commit }) {
+      return axios
+        .get<Participant[]>("/api/participants")
+        .then(it => it.data)
+        .then(participants => {
+          commit(SET_PARTICIPANTS, { participants });
+        });
     }
   }
 };
@@ -233,6 +250,7 @@ export interface AdminState {
   rooms: Room[];
   timeSlots: TimeSlot[];
   schedule: AgendaEntry[];
+  participants: Participant[];
 }
 
 interface Info {

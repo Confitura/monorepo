@@ -306,10 +306,6 @@ export default class PresentationForm extends Vue {
     }
     return valid;
   }
-
-  private hasEmoji(value: string) {
-    return /\p{Emoji}/u.test(value);
-  }
 }
 
 interface PresentationErrors {
