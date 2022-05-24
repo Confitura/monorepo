@@ -75,6 +75,7 @@
                 </a>
                 <router-link
                   :to="{ name: 'presentation', params: { userId: profile.id } }"
+                  v-if="isC4POpened || isAdmin"
                 >
                   Add presentation
                 </router-link>
@@ -168,6 +169,7 @@
                 </div>
 
                 <label>Short description</label>
+                <label>Short description</label>
                 <div class="description">
                   {{ presentation.shortDescription }}
                 </div>
@@ -243,6 +245,7 @@ import axios, { AxiosError } from "axios";
 import PageHeader from "@/components/PageHeader.vue";
 import Toasted from "vue-toasted";
 import M from "materialize-css";
+import {LOAD_INFO} from "@/store/admin";
 
 Vue.use(Toasted);
 
@@ -401,8 +404,13 @@ export default class ProfilePage extends Vue {
   private reloadData() {
     const userId = this.$route.params.id || this.$store.getters.user.jti;
     this.$store.dispatch(LOAD_PROFILE_BY_ID, { id: userId });
+    this.$store.dispatch(LOAD_INFO);
     this.$store.dispatch(LOAD_PROFILE_PRESENTATIONS_BY_ID, { id: userId });
     this.$store.dispatch(LOAD_PROFILE_PARTICIPATION_BY_ID, { id: userId });
+  }
+
+  get isC4POpened(){
+    return this.$store.state.admin.info.c4p.enabled;
   }
 }
 </script>
