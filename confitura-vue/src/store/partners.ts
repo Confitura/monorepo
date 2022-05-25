@@ -224,15 +224,15 @@ Catch #SoftwareMillVibes
           logo: require("../assets/partners/2022/bosch.svg"),
           orientation: "horizontal"
         },
-        // {
-        //   id: "kmd",
-        //   name: "KMD",
-        //   description: `KMD Poland is a foreign branch of the KMD Group which is one of the largest Danish IT companies. The company specializes in implementing key IT solutions and processes in energy area, finance, insurance, R&D and HR. Its key projects are implemented in the public sector in Denmark and in Scandinavian countries, contributing to the digital transformation of their societies, public institutions and private sector entities. The KMD Group has more than 3,000 employees and it is a subsidiary of NEC Corporation, a global leader in integration of IT and networking technologies. This year, KMD Group is celebrating its 50<sup>th</sup> anniversary.`,
-        //   www: "https://kmdpoland.pl",
-        //   type: "silver",
-        //   logo: require("../assets/partners/2022/kmd.svg"),
-        //   orientation: "horizontal"
-        // },
+        {
+          id: "kmd",
+          name: "KMD",
+          description: `KMD Poland is a foreign branch of the KMD Group which is one of the largest Danish IT companies. The company specializes in implementing key IT solutions and processes in energy area, finance, insurance, R&D and HR. Its key projects are implemented in the public sector in Denmark and in Scandinavian countries, contributing to the digital transformation of their societies, public institutions and private sector entities. The KMD Group has more than 3,000 employees and it is a subsidiary of NEC Corporation, a global leader in integration of IT and networking technologies. This year, KMD Group is celebrating its 50<sup>th</sup> anniversary.`,
+          www: "https://kmdpoland.pl",
+          type: "silver",
+          logo: require("../assets/partners/2022/kmd.svg"),
+          orientation: "horizontal"
+        },
         {
           id: "goldman-sachs",
           name: "Goldman Sachs",
