@@ -9,12 +9,9 @@
         <TheTimer />
         <div class="info__live">
           <div class="info__live-text">Confitura 2022</div>
-          <a
-            class="info__live-link"
-            href="https://2022.confitura.pl/c4p"
-            target="_blank"
-            >Call 4 Papers is active!</a
-          >
+          <router-link class="info__live-link" to="v4p"
+            >Vote 4 Papers is active!
+          </router-link>
         </div>
         <div class="info__long">
           The
@@ -23,6 +20,9 @@
             >date and place</a
           >
           are set, you can start preparing!
+          <router-link to="tickets">Tickets</router-link>
+          are going online on 08:30 friday(2022-05-27)!
+          <br />
           <br />
           If your company wants to join us as well, here is our contact mail:
           <a href="mailto:confitura[at]confitura[dot]pl"
@@ -30,7 +30,12 @@
           >; we will be happy to start a new friendship.
         </div>
         <div class="info__long">
-          Confitura 2022 will take place on June 25 in Warsaw, EXPO XXI.
+          Confitura 2022 will take place on June 25 in Warsaw,
+          <a
+            target="_blank"
+            href="https://www.google.com/maps/place/WARSAW+EXPO+XXI/@52.2249807,20.9621291,15z/data=!4m5!3m4!1s0x0:0xf7d1cb012bb9954d!8m2!3d52.2249807!4d20.9621291"
+            >EXPO XXI</a
+          >.
         </div>
       </div>
       <HomeMainBannerIllustration />
@@ -211,11 +216,13 @@ export default class HomeMainBanner extends Vue {
 .info__live {
   color: $brand;
 }
+
 .info__live-text {
   text-transform: uppercase;
   font-weight: bold;
   font-size: 2.5rem;
 }
+
 .info__live-link {
   font-size: 2rem;
 }
@@ -224,6 +231,7 @@ export default class HomeMainBanner extends Vue {
   .h1 {
     font-size: 2rem;
   }
+
   .h2 {
     font-size: 1.7rem;
   }
