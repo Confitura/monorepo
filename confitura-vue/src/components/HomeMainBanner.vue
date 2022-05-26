@@ -31,11 +31,7 @@
         </div>
         <div class="info__long">
           Confitura 2022 will take place on June 25 in Warsaw,
-          <a
-            target="_blank"
-            href="https://www.google.com/maps/place/WARSAW+EXPO+XXI/@52.2249807,20.9621291,15z/data=!4m5!3m4!1s0x0:0xf7d1cb012bb9954d!8m2!3d52.2249807!4d20.9621291"
-            >EXPO XXI</a
-          >.
+          <a target="_blank" href="https://g.page/expoxxi">EXPO XXI</a>.
         </div>
       </div>
       <HomeMainBannerIllustration />
