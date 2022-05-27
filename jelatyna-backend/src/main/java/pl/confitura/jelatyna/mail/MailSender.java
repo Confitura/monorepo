@@ -29,9 +29,14 @@ public class MailSender {
         this.properties = properties;
     }
 
-    public void send(String template, MessageInfo messageInfo) throws IOException, MandrillApiError {
+    public void send(MailType mailType, MessageInfo messageInfo) throws IOException, MandrillApiError {
+        String template = mailType.templateName;
+        send(template, messageInfo);
+    }
+
+    public void send(String template, MessageInfo messageInfo) throws MandrillApiError, IOException {
         String address = messageInfo.getEmail();
-        log.info("Sending email to {}", address);
+        log.info("Sending email of template {} to {}", template, address);
         MandrillMessage message = new MandrillMessage();
         MandrillTemplate info = api.templates().info(template);
         message.setHtml(api.templates().render(template, ImmutableMap.of("content", "fake"), messageInfo.getVariables()));
@@ -69,5 +74,19 @@ public class MailSender {
                 .filter(it -> it.getPublishedAt() != null)
                 .map(MandrillTemplate::getName)
                 .collect(Collectors.toList());
+    }
+
+    public enum MailType {
+        REGISTRATION_REMINDER("registration-reminder"), //TODO No template yet
+        TICKET("registration-ticket"),
+        SURVEY("survey"), // TODO add link to survey in template
+        VOUCHER("pre-registration");
+
+        private final String templateName;
+
+        MailType(String templateName) {
+            this.templateName = templateName;
+        }
+
     }
 }

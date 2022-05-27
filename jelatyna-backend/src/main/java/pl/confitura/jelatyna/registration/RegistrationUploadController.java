@@ -3,6 +3,7 @@ package pl.confitura.jelatyna.registration;
 import static java.time.LocalDateTime.now;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.StreamSupport.stream;
+import static pl.confitura.jelatyna.mail.MailSender.MailType.VOUCHER;
 import static pl.confitura.jelatyna.registration.VoucherStatus.*;
 
 import java.io.IOException;
@@ -68,7 +69,7 @@ public class RegistrationUploadController {
     @Transactional
     VoucherStatus sendVoucher(Voucher voucher) {
         try {
-            sender.send("pre-registration", new MessageInfo().setEmail(voucher.getOriginalBuyer()).setToken(voucher.getId()));
+            sender.send(VOUCHER, new MessageInfo().setEmail(voucher.getOriginalBuyer()).setToken(voucher.getId()));
             voucher.setTicketSendDate(now());
             service.save(voucher);
             return SUCCESS;
