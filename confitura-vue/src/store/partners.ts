@@ -287,7 +287,7 @@ Learn more at: [jobs.citi.com/Poland](http://jobs.citi.com/Poland)
 `,
           www: "http://jobs.citi.com/Poland",
           type: "gold",
-          orientation: "square",
+          orientation: "box",
           logo: require("../assets/partners/2022/citi.svg")
         }
         // {
