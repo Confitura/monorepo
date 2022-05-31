@@ -273,6 +273,22 @@ Chcesz dowiedzieć się o nas więcej? Wejdź na https://onwelo.com/career,p6.ht
           type: "silver",
           orientation: "horizontal",
           logo: require("../assets/partners/touk.svg")
+        },
+        {
+          id: "citi",
+          name: "Citi",
+          description: `Citi is the leading global bank with a history spanning more than 200 years and which serves more than 200 million customer accounts and does business in more than 160 countries and jurisdictions. Citi provides consumers, corporations, governments and institutions with a broad range of world-class financial products and services, including consumer banking and credit, corporate and investment banking, securities brokerage, transaction services and wealth management.
+
+Our technology teams deliver customized solutions by utilizing cutting edge technologies to deploy everything from cloud computing to mobile solutions to APIs, creating a competitive advantage for Citi, our clients, our regulators and our stakeholders. In this fast-paced environment, our employees are focused on creating solutions, including CitiDirect BE® Mobile for transaction services and Citi Velocity, an electronic trading platform, that provide Citi's institutional clients with unprecedented access to capital markets intelligence and execution.
+
+In Poland we act under Citibank Europe. We opened in 2005 with just 57 employees; today we are a diverse team of almost 6000 serving 96 countries from all continents. We work across the full spectrum of Citi business areas, including Technology.
+
+Learn more at: [jobs.citi.com/Poland](http://jobs.citi.com/Poland)
+`,
+          www: "http://jobs.citi.com/Poland",
+          type: "gold",
+          orientation: "square",
+          logo: require("../assets/partners/2022/citi.svg")
         }
         // {
         //   id: "softwareplant",
