@@ -21,7 +21,10 @@
           >
           are set, you can start preparing!
           <router-link to="tickets">Tickets</router-link>
-          are going online on 08:30 friday(2022-05-27)!
+          are on sale. Confiturius recommends not buying the tickets at the very last moment.
+          <br />
+          <br />
+          The conference agenda is under construction. Stay tuned.
           <br />
           <br />
           If your company wants to join us as well, here is our contact mail:
