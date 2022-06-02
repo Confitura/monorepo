@@ -290,17 +290,28 @@ Learn more at: [jobs.citi.com/Poland](http://jobs.citi.com/Poland)
           orientation: "box",
           logo: require("../assets/partners/2022/citi.svg")
         },
-          {
-              id: "sii",
-              name: "Sii Poland",
-              description: `Since 2006 on the market, 7 000 experts, PLN 1 billion revenue, 8 times Great Place to Work title – get to know Sii, the fastest growing IT, digital transformation, BPO and engineering company in Poland.
+        {
+          id: "sii",
+          name: "Sii Poland",
+          description: `Since 2006 on the market, 7 000 experts, PLN 1 billion revenue, 8 times Great Place to Work title – get to know Sii, the fastest growing IT, digital transformation, BPO and engineering company in Poland.
 
 Sii already has over 1,000 Java developers who carry out projects for brands such as PUMA, Ingenico, Scalepoint, Sennheiser, Berlingske Media, ABB Sartorius, Qiagen every day. Specialists from Sii’s Digital Competency Center join projects in which the majority of the work covers the development of new products and functionalities. Apart from internal communities, the team has various knowledge sharing and professional growth opportunities, including organized training sessions and numerous partnerships, among others with Adobe. Learn more at [sii.pl](https://sii.pl).`,
-              www: "https://sii.pl",
-              type: "silver",
-              orientation: "horizontal",
-              logo: require("../assets/partners/2022/sii.svg")
-          }
+          www: "https://sii.pl",
+          type: "silver",
+          orientation: "horizontal",
+          logo: require("../assets/partners/2022/sii.svg")
+        },
+        {
+          id: "rsystems",
+          name: "R Systems",
+          description: `[R Systems](https://eu.rsystems.com/) is a global technology and analytics services company. We help our clients achieve speed-to-market, overcome digital barriers, and create business value with our specialized service offerings and consultative business approach.
+
+We speak the language of business as fluently as we do the language of technology. In other words: **We speak Digital**. Our goal: accelerate our clients’ digital leadership.`,
+          www: "https://eu.rsystems.com/",
+          type: "silver",
+          orientation: "horizontal",
+          logo: require("../assets/partners/2022/rsystems.svg")
+        }
         // {
         //   id: "softwareplant",
         //   description: `Technologiczny startup rozwijający produkty do nowoczesnego zarządzania projektami
