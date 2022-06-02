@@ -311,6 +311,22 @@ We speak the language of business as fluently as we do the language of technolog
           type: "silver",
           orientation: "horizontal",
           logo: require("../assets/partners/2022/rsystems.svg")
+        },
+        {
+          id: "sages",
+          name: "Sages",
+          description: `[Sages](https://www.sages.pl) od 2007 r., zapewnia kompleksowe wsparcie w zakresie IT. Zajmujemy się kształceniem specjalistów IT oraz tworzeniem rozwiązań opartych na sztucznej inteligencji mających na celu automatyzację procesów w organizacjach.
+ 
+Wspólnie z Politechniką Warszawską stworzyliśmy system Omega-PSIR do ewaluacji uczelni i instytucji naukowych. Jest to nr 1 w Polsce i nr 5 na świecie, jeżeli chodzi o liczbę wdrożeń pośród oprogramowania tego typu.
+W ramach oferty edukacyjnej organizujemy szkolenia dla programistów, testerów, integratorów, managerów, analityków ze wszystkich obszarów związanych z realizacją projektów IT.
+W obszarze sztucznej inteligencji realizujemy projekty związane z przetwarzaniem języka naturalnego, analizą obrazu i automatyzacją procesów, takie jak: chatboty do obsługi klienta zewnętrznego, chatboty do wewnętrznej obsługi procesów w firmie, wyszukiwarki semantyczne, czy ekstrakcja informacji z nieustrukturyzowanych źródeł takich jak dokumenty i skany. Tworzymy narzędzie dla osób niewidzących i niedowidzących do automatycznego odczytu dokumentów tekstowo-obrazowych.
+ 
+Angażujemy się intensywnie w działania na rzecz społeczności IT oraz nauki: od wielu lat moderujemy społeczność Stacji IT, współorganizujemy konkurs PolEval, konferencję AI & NLP Day oraz Seminarium Użytkowników Uczelnianych Baz Wiedzy
+`,
+          www: "https://www.sages.pl",
+          type: "silver",
+          orientation: "horizontal",
+          logo: require("../assets/partners/2022/sages.svg")
         }
         // {
         //   id: "softwareplant",
