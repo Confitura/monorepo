@@ -38,6 +38,11 @@ export default class SocialLinks extends Vue {
       url: "https://www.facebook.com/Confitura"
     },
     {
+      label: "linkedin",
+      icon: "fab fa-linkedin",
+      url: "https://www.linkedin.com/company/confitura"
+    },
+    {
       label: "youtube",
       icon: "fab fa-youtube-square",
       url: "https://www.youtube.com/confiturapl"
