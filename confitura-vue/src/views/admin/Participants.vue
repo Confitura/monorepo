@@ -2,23 +2,23 @@
   <div class="users">
     <table>
       <thead>
-      <tr>
-        <th>id</th>
-        <th>name</th>
-        <th>email</th>
-        <th>gender</th>
-        <th>size</th>
-        <th>arrivalDate</th>
-        <th>registeredBy</th>
-        <th>ticketSendDate</th>
-        <th>surveySendDate</th>
-      </tr>
+        <tr>
+          <th>id</th>
+          <th>name</th>
+          <th>email</th>
+          <th>gender</th>
+          <th>size</th>
+          <th>arrivalDate</th>
+          <th>registeredBy</th>
+          <th>ticketSendDate</th>
+          <th>surveySendDate</th>
+        </tr>
       </thead>
       <tr v-for="participant of participants" :key="participant.id">
         <td>
           <router-link
-              :to="{ name: 'participant', params: { id: participant.id } }"
-          >{{ participant.id }}
+            :to="{ name: 'participant', params: { id: participant.id } }"
+            >{{ participant.id }}
           </router-link>
         </td>
         <td>{{ participant.name }}</td>
@@ -35,8 +35,8 @@
 </template>
 
 <script lang="ts">
-import {Component, Vue} from "vue-property-decorator";
-import {Participant, UserProfile} from "@/types";
+import { Component, Vue } from "vue-property-decorator";
+import { Participant, UserProfile } from "@/types";
 
 @Component({
   components: {}
@@ -47,6 +47,4 @@ export default class Users extends Vue {
   }
 }
 </script>
-<style>
-
-</style>
+<style></style>

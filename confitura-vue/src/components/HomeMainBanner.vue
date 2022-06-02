@@ -19,7 +19,8 @@
           >
           are set, you can start preparing!
           <router-link to="tickets">Tickets</router-link>
-          are on sale. Confiturius recommends not buying the tickets at the very last moment.
+          are on sale. Confiturius recommends not buying the tickets at the very
+          last moment.
           <br />
           <br />
           If your company wants to join us as well, here is our contact mail:
