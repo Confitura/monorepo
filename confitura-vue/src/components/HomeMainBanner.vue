@@ -9,9 +9,7 @@
         <TheTimer />
         <div class="info__live">
           <div class="info__live-text">Confitura 2022</div>
-          <router-link class="info__live-link" to="v4p"
-            >Vote 4 Papers is active!
-          </router-link>
+          The conference agenda is under construction. Stay tuned.
         </div>
         <div class="info__long">
           The
@@ -22,9 +20,6 @@
           are set, you can start preparing!
           <router-link to="tickets">Tickets</router-link>
           are on sale. Confiturius recommends not buying the tickets at the very last moment.
-          <br />
-          <br />
-          The conference agenda is under construction. Stay tuned.
           <br />
           <br />
           If your company wants to join us as well, here is our contact mail:
