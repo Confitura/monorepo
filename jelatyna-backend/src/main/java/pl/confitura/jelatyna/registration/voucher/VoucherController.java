@@ -58,7 +58,7 @@ class VoucherController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/vouchers/send")
+    @PostMapping("/vouchers/send")
     @PreAuthorize("@security.isAdmin()")
     void sendVouchers() {
         voucherService.sendVouchers();
