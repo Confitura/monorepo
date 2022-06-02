@@ -21,7 +21,7 @@ public class VoucherService {
     private final VoucherRepository voucherRepository;
     private final ParticipationRepository participationRepository;
     private final UserRepository userRepository;
-    private MailSender sender;
+    private final MailSender sender;
 
     public Voucher generateVoucher(String originalBuyer) {
         return generateVoucher(originalBuyer, Voucher.VoucherType.PARTICIPANT, null);
