@@ -58,6 +58,12 @@ class VoucherController {
                 .collect(Collectors.toList());
     }
 
+    @GetMapping("/vouchers/send")
+    @PreAuthorize("@security.isAdmin()")
+    void sendVouchers() {
+        voucherService.sendVouchers();
+    }
+
     private Stream<Voucher> generateVouchers(
             int numberOfVouchers,
             Voucher.VoucherType type,

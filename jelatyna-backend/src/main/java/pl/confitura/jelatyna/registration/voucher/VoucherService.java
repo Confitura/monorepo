@@ -1,21 +1,27 @@
 package pl.confitura.jelatyna.registration.voucher;
 
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import pl.confitura.jelatyna.mail.MailSender;
+import pl.confitura.jelatyna.mail.MessageInfo;
 import pl.confitura.jelatyna.registration.ParticipationData;
 import pl.confitura.jelatyna.registration.ParticipationRepository;
 import pl.confitura.jelatyna.user.UserRepository;
 
+import java.util.List;
+
+import static java.time.LocalDateTime.now;
+
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class VoucherService {
 
     private final VoucherRepository voucherRepository;
     private final ParticipationRepository participationRepository;
     private final UserRepository userRepository;
+    private MailSender sender;
 
     public Voucher generateVoucher(String originalBuyer) {
         return generateVoucher(originalBuyer, Voucher.VoucherType.PARTICIPANT, null);
@@ -80,5 +86,20 @@ public class VoucherService {
 
     public List<Voucher> findAll() {
         return voucherRepository.findAll();
+    }
+
+    public void sendVouchers() {
+        voucherRepository.findNotSent().forEach(this::sendVoucher);
+    }
+
+
+    void sendVoucher(Voucher voucher) {
+        try {
+            sender.send("pre-registration", new MessageInfo().setEmail(voucher.getOriginalBuyer()).setToken(voucher.getId()));
+            voucher.setTicketSendDate(now());
+            save(voucher);
+        } catch (Exception ex) {
+            log.error("Error on sending email", ex);
+        }
     }
 }

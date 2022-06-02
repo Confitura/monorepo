@@ -31,4 +31,10 @@ interface VoucherRepository extends Repository<Voucher, String> {
     List<Voucher> findUnusedVouchers();
 
     Voucher findById(String id);
+
+    @Query("SELECT v" +
+            " FROM Voucher v" +
+            " WHERE v.ticketSendDate is null")
+    @RestResource(exported = false)
+    List<Voucher> findNotSent();
 }

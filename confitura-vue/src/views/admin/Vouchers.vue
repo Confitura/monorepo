@@ -92,6 +92,11 @@
         </table>
       </div>
     </div>
+    <div>
+      <button class="waves-effect waves-light btn" @click="sendVouchers">
+        Send vouchers
+      </button>
+    </div>
     <table>
       <thead>
         <tr>
@@ -184,6 +189,10 @@ export default class Vouchers extends Vue {
       .catch(() => {
         this.loadingInProgress = false;
       });
+  }
+
+  sendVouchers() {
+    axios.post<Voucher[]>("/api/vouchers/send");
   }
 
   public generateVouchers() {
