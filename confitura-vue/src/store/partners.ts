@@ -201,7 +201,7 @@ Catch #SoftwareMillVibes
         {
           id: "intercars",
           name: "Inter Cars",
-          description: `Inter Cars has been a leading distributor of spare parts for passenger cars and trucks on the Polish market for many years. In addition, the company has gradually been developing its activity in 18 countries across Europe, ranking first in the Central and Eastern part of the continent, second on the entire continent and eighth globally.
+          description: `[Inter Cars](https://intercars.com.pl/) has been a leading distributor of spare parts for passenger cars and trucks on the Polish market for many years. In addition, the company has gradually been developing its activity in 18 countries across Europe, ranking first in the Central and Eastern part of the continent, second on the entire continent and eighth globally.
 
 Inter Cars offers over two million spare parts for passenger cars and trucks, parts for motorcycles, farming and industrial machines as well as driver accessories, with as many as 40,000 new items every years being introduced into the sales system for the trucks market alone.
 
