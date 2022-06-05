@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import pl.confitura.jelatyna.user.User;
 
 import java.io.IOException;
+import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
 public abstract class AbstractOAuth20Service {
@@ -18,6 +19,7 @@ public abstract class AbstractOAuth20Service {
     private OAuthUserService oauthUserService;
     protected ObjectMapper mapper;
 
+    private final String secretState = "secret" + new Random().nextInt(999_999);
     @Autowired
     public AbstractOAuth20Service(
             OAuthUserService oauthUserService,
@@ -31,7 +33,7 @@ public abstract class AbstractOAuth20Service {
     protected abstract OAuth20Service createService(OAuthConfiguration.OAuthProviderProperties properties);
 
     String getAuthorizationUrl() {
-        return auth20Service.getAuthorizationUrl();
+        return auth20Service.getAuthorizationUrl(secretState);
     }
 
     User getUserFor(String code) {

@@ -21,10 +21,9 @@ public class FacebookService extends AbstractOAuth20Service{
 
     @Override
     protected OAuth20Service createService(OAuthConfiguration.OAuthProviderProperties config) {
-        final String secretState = "secret" + new Random().nextInt(999_999);
         return new ServiceBuilder(config.getApiKey())
                 .apiSecret(config.getApiSecret())
-                .state(secretState)
+//                .state(secretState)
                 .callback(config.getCallback())
                 .build(FacebookApi.instance());
     }
