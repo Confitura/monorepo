@@ -1,19 +1,16 @@
-package pl.confitura.jelatyna.adapters.allegro;
+package pl.confitura.jelatyna.allegro.adapter;
 
 import com.github.scribejava.core.builder.api.DefaultApi20;
 import com.github.scribejava.core.httpclient.HttpClient;
 import com.github.scribejava.core.httpclient.HttpClientConfig;
-import com.github.scribejava.core.model.DeviceAuthorization;
 import com.github.scribejava.core.model.OAuthConstants;
 import com.github.scribejava.core.model.OAuthRequest;
 import com.github.scribejava.core.model.Verb;
 import com.github.scribejava.core.oauth.OAuth20Service;
 
-import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
-import java.util.concurrent.ExecutionException;
 
 class AllegroService extends OAuth20Service {
 

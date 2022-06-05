@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.adapters.allegro;
+package pl.confitura.jelatyna.allegro.adapter;
 
 import com.github.scribejava.core.builder.api.DefaultApi20;
 
