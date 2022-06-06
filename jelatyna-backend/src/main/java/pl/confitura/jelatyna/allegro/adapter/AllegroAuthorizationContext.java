@@ -1,5 +1,6 @@
 package pl.confitura.jelatyna.allegro.adapter;
 
+import com.github.scribejava.core.model.OAuth2AccessToken;
 import lombok.Data;
 
 import java.util.Random;
@@ -15,11 +16,11 @@ import java.util.Random;
                                         Pełną listę znajdziesz w naszej dokumentacji.
 }'*/
 @Data
-public
 class AllegroAuthorizationContext {
 
     private String stateSecret;
     private String code;
+    private OAuth2AccessToken accessToken;
 
     public String newStateSecret() {
         this.stateSecret = "secret" + new Random().nextInt(999_999);
@@ -36,5 +37,9 @@ class AllegroAuthorizationContext {
             System.out.println();
             return false;
         }
+    }
+
+    public boolean hasAccessToken() {
+        return accessToken != null;
     }
 }
