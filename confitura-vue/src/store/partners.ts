@@ -344,6 +344,15 @@ Check out our open vacancies: [https://www.syncron.com/company/careers/open-posi
           type: "silver",
           orientation: "horizontal",
           logo: require("../assets/partners/2022/syncron.svg")
+        },
+        {
+          id: "match-trade",
+          name: "Match-trade",
+          description: `Jesteśmy firmą z branży fintech, tworzącą zaawansowane systemy transakcyjne dla rynku Forex, kontraktów CFD, kryptowalut oraz akcji. Tworzymy własne środowisko technologiczne i jesteśmy autorem platformy tradingowej opartej o technologię PWA. Współpracujemy z klientami z całego świata - w tym największymi brokerami Forex i najbardziej znanymi giełdami kryptowalut. W ramach jednego z naszych głównych projektów, zajmujemy się budową algorytmów z zakresu High Frequency Trading. Algorytmy te każdego dnia obracają kryptowalutami wartymi miliony dolarów. Nasze rozwiązania są wykorzystywane na giełdach z aż pięciu kontynentów. Członkowie naszego zespołu, nierzadko pasjonaci technologii blockchain oraz kryptowalut, każdego dnia zapoznają się z nowinkami tej nowej, dynamicznie rozwijającej się części sektora finansowego. Śmiało możemy powiedzieć też, szeroki zakres oferowanych przez nas usług stwarza dla naszych pracowników możliwości uczestniczenia w różnorodnych projektach, nie tylko dzięki wykorzystaniu różnych technologii (w tym nowoczesnej technologii Blockchain), ale także dzięki pracy z biznesami z całego świata.`,
+          www: "https://match-trade.com/",
+          type: "silver",
+          orientation: "horizontal",
+          logo: require("../assets/partners/2022/match-trade.svg")
         }
         // {
         //   id: "softwareplant",
