@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.confitura.jelatyna.allegro.adapter.AllegroClient;
 import pl.confitura.jelatyna.allegro.adapter.dto.CheckoutForm;
 import pl.confitura.jelatyna.allegro.adapter.dto.CheckoutForms;
+import pl.confitura.jelatyna.registration.voucher.VoucherService;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -14,11 +15,14 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
+import static pl.confitura.jelatyna.registration.voucher.Voucher.VoucherType.PARTICIPANT;
+
 @RestController
 @RequestMapping("allegro")
 @RequiredArgsConstructor
 class AllegroImportController {
     private final AllegroClient allegroClient;
+    private final VoucherService voucherService;
 
     @GetMapping("status")
     Map<String, Object> getStatus() throws IOException {
@@ -39,13 +43,28 @@ class AllegroImportController {
         return "you are authorized. return to app";
     }
 
-    //    @PostMapping("import")
     @GetMapping(value = "report/ready-to-send", produces = {"text/csv"})
     String importFromAllegro() throws IOException, ExecutionException, InterruptedException {
         CheckoutForms readyForProcessing = allegroClient.getReadyForProcessing();
-        return readyForProcessing.getCheckoutForms().stream().map(
-                it -> createLine(it)
-        ).collect(Collectors.joining("\n"));
+        return readyForProcessing.getCheckoutForms().stream()
+                .map(this::createLine)
+                .collect(Collectors.joining("\n"));
+
+    }
+
+    @PostMapping("import")
+    void doImport() throws IOException, ExecutionException, InterruptedException {
+        CheckoutForms readyForProcessing = allegroClient.getReadyForProcessing();
+        for (CheckoutForm checkoutForm : readyForProcessing.getCheckoutForms()) {
+            String email = checkoutForm.getBuyer().getEmail();
+            String comment = "allegro id: " + checkoutForm.getId();
+
+            for (int i = 0; i < checkoutForm.getQuantity(); i++) {
+                voucherService.generateVoucherAndSend(email, PARTICIPANT, comment);
+            }
+
+            allegroClient.markSent(checkoutForm);
+        }
 
     }
 

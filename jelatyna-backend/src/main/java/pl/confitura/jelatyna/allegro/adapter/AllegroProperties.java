@@ -14,6 +14,7 @@ class AllegroProperties {
     private String clientId;
     private String clientSecret;
     private String callback;
-    private String uri = "https://api.allegro.pl.allegrosandbox.pl";
+    private String api = "https://api.allegro.pl.allegrosandbox.pl";
+    private String uri = "https://allegro.pl.allegrosandbox.pl";
 
 }

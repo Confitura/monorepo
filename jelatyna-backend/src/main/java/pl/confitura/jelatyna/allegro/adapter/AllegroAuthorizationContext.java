@@ -5,16 +5,6 @@ import lombok.Data;
 
 import java.util.Random;
 
-/*  curl -X PUT \
-'https://api.allegro.pl/order/checkout-forms/{checkoutFormId}/fulfillment' \
--H 'Authorization: Bearer {token}' \
--H 'Accept: application/vnd.allegro.public.v1+json' \
--H 'Content-Type: application/vnd.allegro.public.v1+json' \
--d '{
-        "status": "SENT"                - przykładowe wartości: NEW (nowe),
-                                        PROCESSING (w realizacji), etc.
-                                        Pełną listę znajdziesz w naszej dokumentacji.
-}'*/
 @Data
 class AllegroAuthorizationContext {
 

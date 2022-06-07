@@ -6,6 +6,10 @@
     <a v-if="status.isAuthorized" class="waves-effect waves-light btn" id="ready-to-send" target="_blank"
        href="/api/allegro/report/ready-to-send">get ready to send</a>
 
+    <button v-if="status.isAuthorized && !importInProgress"
+            @click="doImport()"
+            class="waves-effect waves-light btn">do automatic voucher generation
+    </button>
   </div>
 </template>
 
@@ -19,6 +23,7 @@ import axios from "axios";
 export default class Allegro extends Vue {
   status: { isAuthorized?: boolean } = {};
   query: any = {};
+  importInProgress = false
 
   mounted() {
     const {code, state} = this.$route.query;
@@ -30,6 +35,13 @@ export default class Allegro extends Vue {
     } else {
       this.refreshState();
     }
+  }
+
+  doImport() {
+    this.importInProgress = true;
+    axios.post("/api/allegro/import").then(it => {
+      this.importInProgress = false
+    })
   }
 
   private refreshState() {
