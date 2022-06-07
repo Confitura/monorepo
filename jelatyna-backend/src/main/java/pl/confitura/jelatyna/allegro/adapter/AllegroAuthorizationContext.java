@@ -42,4 +42,13 @@ class AllegroAuthorizationContext {
     public boolean hasAccessToken() {
         return accessToken != null;
     }
+
+    public boolean isAuthorized() {
+        return code!=null;
+    }
+
+    public void clear() {
+        this.accessToken = null;
+        this.code = null;
+    }
 }

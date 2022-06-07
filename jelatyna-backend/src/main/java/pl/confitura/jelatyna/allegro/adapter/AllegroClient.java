@@ -62,18 +62,29 @@ public class AllegroClient {
     }
 
     private OAuth2AccessToken getAccessToken(AllegroAuthorizationContext context) throws IOException, ExecutionException, InterruptedException {
-        if (!context.hasAccessToken()) {
-            Map<String, String> additionalParams = Collections.singletonMap(REDIRECT_URI, properties.getCallback());
-            OAuth2AccessToken accessToken = service.getAccessToken(AccessTokenRequestParams.create(context.getCode()).setExtraParameters(additionalParams));
-            context.setAccessToken(accessToken);
+        try {
+            if (!context.hasAccessToken()) {
+                Map<String, String> additionalParams = Collections.singletonMap(REDIRECT_URI, properties.getCallback());
+                OAuth2AccessToken accessToken = service.getAccessToken(AccessTokenRequestParams.create(context.getCode()).setExtraParameters(additionalParams));
+                context.setAccessToken(accessToken);
+            }
+            return context.getAccessToken();
+        } catch (OAuth2AccessTokenErrorResponse ex) {
+            context.clear();
+            throw new RuntimeException("unable to authorize, try again?", ex);
         }
-        return context.getAccessToken();
     }
 
 
     public String getAuthorizationUrl() {
         Map<String, String> additionalParams = Collections.singletonMap(REDIRECT_URI, properties.getCallback());
-        return service.createAuthorizationUrlBuilder().state(context.newStateSecret()).additionalParams(additionalParams).build();
+        return service.createAuthorizationUrlBuilder()
+                .state(context.newStateSecret())
+                .additionalParams(additionalParams)
+                .build();
     }
 
+    public boolean isAuthorized() {
+        return context.isAuthorized();
+    }
 }
