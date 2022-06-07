@@ -27,7 +27,7 @@ public class AllegroClient {
                 .apiSecret(properties.getClientSecret())
                 .defaultScope("allegro:api:orders:read") /* allegro:api:orders:write */
                 .debug()
-                .build(AllegroApi.instance());
+                .build(AllegroApi.instance(properties.getUri()));
         this.objectMapper = objectMapper;
     }
 
