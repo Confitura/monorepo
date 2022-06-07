@@ -329,6 +329,23 @@ Angażujemy się intensywnie w działania na rzecz społeczności IT oraz nauki:
           logo: require("../assets/partners/2022/sages.svg")
         },
         {
+          id: "syncron",
+          name: "Syncron",
+          description: `Syncron is a global IT product company with Swedish roots, but it is in the Warsaw office where our flagship product - Inventory - has been developed.
+
+We create proprietary Java-based applications in the SaaS model.
+
+They are used to help the world’s leading manufacturers to optimize all the processes around the heavy machinery service lifecycle: spare parts inventory management and supply chain, parts pricing, machine uptime, field service and warranty management.
+
+The highest coding standards are our priority. We are a product company and the quality of our software directly impacts our customers’ revenues, so we thrive to produce a high-quality code with all kinds of tests including unit, integration and end-to-end tests, in the face of constant optimization challenges. We are fully cloud-based, using advanced AWS infrastructure solutions.
+
+Check out our open vacancies: [https://www.syncron.com/company/careers/open-positions/](https://www.syncron.com/company/careers/open-positions/)`,
+          www: "https://www.syncron.com/",
+          type: "silver",
+          orientation: "horizontal",
+          logo: require("../assets/partners/2022/syncron.svg")
+        },
+        {
           id: "match-trade",
           name: "Match-trade",
           description: `Jesteśmy firmą z branży fintech, tworzącą zaawansowane systemy transakcyjne dla rynku Forex, kontraktów CFD, kryptowalut oraz akcji. Tworzymy własne środowisko technologiczne i jesteśmy autorem platformy tradingowej opartej o technologię PWA. Współpracujemy z klientami z całego świata - w tym największymi brokerami Forex i najbardziej znanymi giełdami kryptowalut. W ramach jednego z naszych głównych projektów, zajmujemy się budową algorytmów z zakresu High Frequency Trading. Algorytmy te każdego dnia obracają kryptowalutami wartymi miliony dolarów. Nasze rozwiązania są wykorzystywane na giełdach z aż pięciu kontynentów. Członkowie naszego zespołu, nierzadko pasjonaci technologii blockchain oraz kryptowalut, każdego dnia zapoznają się z nowinkami tej nowej, dynamicznie rozwijającej się części sektora finansowego. Śmiało możemy powiedzieć też, szeroki zakres oferowanych przez nas usług stwarza dla naszych pracowników możliwości uczestniczenia w różnorodnych projektach, nie tylko dzięki wykorzystaniu różnych technologii (w tym nowoczesnej technologii Blockchain), ale także dzięki pracy z biznesami z całego świata.`,
