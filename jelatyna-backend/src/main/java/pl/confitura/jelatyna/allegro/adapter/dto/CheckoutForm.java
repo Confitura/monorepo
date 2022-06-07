@@ -11,8 +11,11 @@ public class CheckoutForm {
     private String messageToSeller;
     private Buyer buyer;
     private List<LineItem> lineItems = new ArrayList<>();
+    private String status;
+    private Fulfillment fulfillment;
 
     public Long getQuantity() {
         return lineItems.stream().mapToLong(it -> it.getQuantity()).sum();
     }
+
 }
