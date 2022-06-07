@@ -43,6 +43,8 @@ public class AllegroClient {
 //        accessToken = refreshAccessToken(accessToken.getRefreshToken());
 
         final OAuthRequest request = new OAuthRequest(Verb.GET, properties.getUri() + "/order/checkout-forms");
+        request.addQuerystringParameter("status", "READY_FOR_PROCESSING");
+        request.addQuerystringParameter("fulfillment.status", "NEW");
         request.addHeader(ACCEPT, ALLEGRO_CONTENT_TYPE);
 
         service.signRequest(accessToken, request);
