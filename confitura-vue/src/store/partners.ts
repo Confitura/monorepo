@@ -331,7 +331,16 @@ Angażujemy się intensywnie w działania na rzecz społeczności IT oraz nauki:
         {
           id: "syncron",
           name: "Syncron",
-          description: ``,
+          description: `Syncron is a global IT product company with Swedish roots, but it is in the Warsaw office where our flagship product - Inventory - has been developed.
+
+We create proprietary Java-based applications in the SaaS model.
+
+They are used to help the world’s leading manufacturers to optimize all the processes around the heavy machinery service lifecycle: spare parts inventory management and supply chain, parts pricing, machine uptime, field service and warranty management.
+
+The highest coding standards are our priority. We are a product company and the quality of our software directly impacts our customers’ revenues, so we thrive to produce a high-quality code with all kinds of tests including unit, integration and end-to-end tests, in the face of constant optimization challenges. We are fully cloud-based, using advanced AWS infrastructure solutions.
+
+Check out our open vacancies: [https://www.syncron.com/company/careers/open-positions/](https://www.syncron.com/company/careers/open-positions/)
+`,
           www: "https://www.syncron.com/",
           type: "silver",
           orientation: "horizontal",
