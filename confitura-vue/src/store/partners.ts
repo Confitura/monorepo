@@ -327,6 +327,15 @@ Angażujemy się intensywnie w działania na rzecz społeczności IT oraz nauki:
           type: "silver",
           orientation: "horizontal",
           logo: require("../assets/partners/2022/sages.svg")
+        },
+        {
+          id: "syncron",
+          name: "Syncron",
+          description: ``,
+          www: "https://www.syncron.com/",
+          type: "silver",
+          orientation: "horizontal",
+          logo: require("../assets/partners/2022/syncron.svg")
         }
         // {
         //   id: "softwareplant",
