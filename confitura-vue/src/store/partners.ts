@@ -353,6 +353,15 @@ Check out our open vacancies: [https://www.syncron.com/company/careers/open-posi
           type: "silver",
           orientation: "horizontal",
           logo: require("../assets/partners/2022/match-trade.svg")
+        },
+        {
+          id: "fis",
+          name: "FIS",
+          description: `FIS is the world’s largest provider of banking and payments technology solutions and a global leader in consulting and outsourcing solutions. With a long history deeply rooted in the financial services sector, FIS serves more than 14,000 institutions in over 130 countries. Headquartered in Jacksonville, Fla., FIS employs more than 55,000 people worldwide and holds leadership positions in payment processing and banking solutions, providing software, services and outsourcing of the technology that drives financial institutions. In October 2014 FIS completed acquisition of Brussels-based Clear2Pay. The transaction brings new corporate payment solutions and services, inclusive of high-value and cross-currency corporate payments, payments managed services, and payments processing utilities that will further bolster FIS’ payments portfolio across all geographies. Clear2Pay is now an FIS company.`,
+          www: "https://www.fisglobal.com/en/",
+          type: "silver",
+          orientation: "horizontal",
+          logo: require("../assets/partners/2022/fis.svg")
         }
         // {
         //   id: "softwareplant",
