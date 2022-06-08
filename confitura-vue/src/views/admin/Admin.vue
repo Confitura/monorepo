@@ -31,6 +31,9 @@
               <span class=" new badge">{{ participantsCount }}</span>
             </div>
             <div class="admin__menu-item">
+              <router-link to="/admin/allegro">Allegro</router-link>
+            </div>
+            <div class="admin__menu-item">
               <router-link to="/admin/schedule">Schedule</router-link>
             </div>
           </div>

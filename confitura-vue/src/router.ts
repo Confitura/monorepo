@@ -32,6 +32,7 @@ import Scanner from "@/views/admin/Scanner.vue";
 import Spoina from "@/views/Spoina.vue";
 import ManageSchedule from "@/views/admin/ManageSchedule.vue";
 import Participants from "@/views/admin/Participants.vue";
+import Allegro from "@/views/admin/Allegro.vue";
 
 Vue.use(Router);
 Vue.use(VueScrollTo, {
@@ -106,7 +107,8 @@ const router = new Router({
         { path: "vouchers", component: Vouchers },
         { path: "votes", component: Votes },
         { path: "schedule", component: ManageSchedule },
-        { path: "participants", component: Participants }
+        { path: "participants", component: Participants },
+        { path: "allegro", component: Allegro }
       ]
     },
     {

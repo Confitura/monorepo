@@ -28,7 +28,7 @@ public class GoogleService extends AbstractOAuth20Service{
     @Override
     protected OAuth20Service createService(OAuthConfiguration.OAuthProviderProperties properties) {
         return new ServiceBuilder(properties.getApiKey())
-                .scope(GOOGLE_SCOPE)
+                .defaultScope(GOOGLE_SCOPE)
                 .responseType("code")
                 .callback(properties.getCallback())
                 .apiSecret(properties.getApiSecret())

@@ -34,6 +34,11 @@ public class VoucherService {
                 .setType(type));
     }
 
+    public void generateVoucherAndSend(String originalBuyer, Voucher.VoucherType type, String comment) {
+        Voucher voucher = generateVoucher(originalBuyer, type, comment);
+        sendVoucher(voucher);
+    }
+
     public boolean isValid(Voucher voucher) {
         if (voucher == null || voucher.getId() == null) {
             return false;
