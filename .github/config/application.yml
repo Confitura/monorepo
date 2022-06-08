@@ -51,5 +51,5 @@ allegro:
   client-id: ${ALLEGRO_CLIENT_ID}
   client-secret: ${ALLEGRO_SECRET}
   callback: https://2022.confitura.pl/admin/allegro
-  api: https://api.allegro.pl.allegrosandbox.pl
-  uri: https://allegro.pl.allegrosandbox.pl
+  api: https://api.allegro.pl
+  uri: https://allegro.pl
