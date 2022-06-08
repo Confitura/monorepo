@@ -362,7 +362,33 @@ Check out our open vacancies: [https://www.syncron.com/company/careers/open-posi
           type: "silver",
           orientation: "horizontal",
           logo: require("../assets/partners/2022/fis.svg")
-        }
+        },
+          {
+              id: "cgi",
+              name: "CGI",
+              description: `**Mamy ofertę na miarę Twoich kwalifikacji. Zbudujmy wspólnie zespół idealnie dopasowany do Ciebie.**
+
+Chcesz pracować z najlepszymi ekspertami w branży, obcować z najnowocześniejszą technologią i wdrażać imponujące projekty, które zmieniają rzeczywistość? Róbmy to razem!
+
+[Dołącz do CGI](https://www.cgi.com/polska/pl/kariera). Stań się częścią jednej z największych na świecie firm konsultingowych w obszarze IT, a jeśli zechcesz, również jej współwłaścicielem. Wraz ze swoim
+
+zespołem możesz tworzyć rozwiązania, które ułatwiają i usprawniają życie. Robimy to od 46 lat na świecie i od 25 lat w Polsce. Oto tylko kilka przykładów naszych działań:
+
+* Wspieraliśmy uruchomienie sieci Plus GSM w Polsce
+* Stworzyliśmy sprawny system zarządzania relacjami z klientami dla wiodącego dewelopera w Polsce
+* Usprawniamy działalność instytucji finansowych poprzez wdrażanie najnowocześniejszych rozwiązań, między innymi regulacji IFRS9
+* Jesteśmy liderem w rozwijaniu i implementacji core’owych systemów ubezpieczeniowych, takich jak IBA i TIA
+* W Polsce Tworzymy środowisko chmurowe, które będzie obsługiwało 50 skandynawskich instytucji finansowych
+
+**CGI to historia setek imponujących karier**
+
+Interesuje Cię rozwój kariery na własnych zasadach? Jeśli tak, to CGI jest miejscem dla Ciebie. Zróżnicowane projekty i możliwości w ramach CGI dają Ci szansę na samorealizację w kierunkach, które interesują Cię najbardziej. Podążaj własną ścieżką mając wsparcie prawie 500 najlepszych specjalistów. Nie ma takiej technologii ani branży, na której się nie znamy Reprezentujemy poziom ekspercki. Będziesz więc otoczony koleżankami i kolegami o najwyższych kwalifikacjach, jak w mistrzowskiej drużynie.
+`,
+              www: "https://www.cgi.com/polska/pl/kariera",
+              type: "gold",
+              orientation: "horizontal",
+              logo: require("../assets/partners/2022/cgi.svg")
+          }
         // {
         //   id: "softwareplant",
         //   description: `Technologiczny startup rozwijający produkty do nowoczesnego zarządzania projektami
@@ -915,16 +941,6 @@ Check out our open vacancies: [https://www.syncron.com/company/careers/open-posi
         //                     type: "silver",
         //                     logo: require("../assets/partners/prodata.png"),
         //                     orientation: "horizontal"
-        //                 },
-        //                 {
-        //                     id: "cgi",
-        //                     name: "CGI",
-        //                     description: `Firma CGI jest wiodącą na rynku polskim firmą konsultingową w branży IT. Efektem ponad dwudziestoletniej działalności jest nawiązanie silnych relacji z naszymi klientami - czołowymi polskimi firmami z sektora telekomunikacyjnego, mediów, usług finansowych, produkcji, handlu, dystrybucji oraz przedsiębiorstw użyteczności publicznej. Polscy specjaliści w CGI łączą znajomość polskiego rynku oraz międzynarodowe doświadczenie. Dzięki temu jesteśmy w stanie dostarczać usługi end-to-end z zakresu doradztwa, integracji systemów, jak i rozwiązań specyficznych dla danego sektora.
-        //
-        // Nasze główne doświadczenie na rynku polskim obejmuje strategie IT, dopasowanie IT do biznesu, zarządzanie procesami biznesowymi i aplikacjami, zarządzanie zmianą organizacji, architekturę IT, prowadzenie biura projektów oraz zarządzanie kosztami IT. Posiadamy bogate doświadczenie w rozwiązaniach biznesowych end-to-end dla danych sektorów.`,
-        //                     www: "https://www.cgi.com",
-        //                     type: "silver",
-        //                     logo: require("../assets/partners/cgi.svg")
         //                 },
         //                 {
         //                     id: "luxoft",
