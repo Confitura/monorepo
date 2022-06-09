@@ -200,7 +200,7 @@ export interface AgendaEntry {
   display: grid;
   grid-template-columns: 60px 1fr;
   @include lg() {
-    grid-template-columns: 120px 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 120px 1fr 1fr 1fr 1fr;
     margin-bottom: 5rem;
   }
 }
@@ -248,7 +248,7 @@ export interface AgendaEntry {
   border-bottom: 2px solid #000000;
   padding-top: 0.7rem;
   padding-bottom: 0.7rem;
-  grid-row: auto / span 5;
+  grid-row: auto / span 4;
   @include lg() {
     grid-row: unset;
     padding-top: 1.5rem;
