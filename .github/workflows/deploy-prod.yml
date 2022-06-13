@@ -34,7 +34,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 12.x
-          cache: 'npm'
+          # cache: 'npm'
           cache-dependency-path: confitura-vue/package-lock.json
       - run: npm ci
       - run: npm run build
@@ -53,7 +53,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 12.x
-          cache: 'npm'
+          # cache: 'npm'
           cache-dependency-path: confitura-page/package-lock.json
       - run: npm ci
       - run: npm run build
