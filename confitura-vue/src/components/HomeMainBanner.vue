@@ -9,7 +9,6 @@
         <TheTimer />
         <div class="info__live">
           <div class="info__live-text">Confitura 2022</div>
-          The conference agenda is under construction. Stay tuned.
         </div>
         <div class="info__long">
           The
