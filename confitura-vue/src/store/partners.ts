@@ -462,6 +462,15 @@ Follow us here:
           type: "silver",
           orientation: "horizontal",
           logo: require("../assets/partners/2022/griddynamics.svg")
+        },
+        {
+          id: "datumo",
+          name: "Datumo",
+          description: `Jesteśmy firmą konsultingową z zakresu technologii Big Data i Cloud. Istniejemy i działamy od 2017 roku z inicjatywy  Piotra Guzika i Daniela Pogrebniaka. Naszym pierwszym produktem był “Storyteller”, który wraz z biegiem czasu został przekształcony w mniejsze moduły, nadal z sukcesem wdrażane u naszych klientów. Wiemy, że potencjał tkwi w danych dlatego też z zaangażowaniem projektujemy dedykowane platformy Big Data dopasowane do potrzeb klienta. Zapewniamy wsparcie całych zespołów jak i pojedynczych ekspertów.`,
+          www: "http://datumo.io/",
+          type: "silver",
+          orientation: "horizontal",
+          logo: require("../assets/partners/2022/datumo.svg")
         }
         // {
         //   id: "softwareplant",
