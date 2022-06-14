@@ -441,6 +441,27 @@ You may also follow our activity on:
           type: "silver",
           orientation: "horizontal",
           logo: require("../assets/partners/2022/starburst.svg")
+        },
+        {
+          id: "grid-dynamics",
+          name: "Grid Dynamics",
+          description: `Grid Dynamics is a leading provider of technology consulting, engineering, and data science services for Fortune 500 corporations from financial, technological and retail sectors. It has been operating since 2006, is headquartered in the San Francisco area (San Ramon), California, and has development centers in the United States and Eastern Europe.  
+
+As of today, Grid Dynamics brings together more than 3,000 engineers in 9 countries (USA, Mexico, Netherlands, UK, Serbia, Moldova, Poland, Ukraine) and continues to grow steadily. The clients include Google, Apple, Microsoft, Tesla, PayPal, and other technology giants.
+
+Grid Dynamics provides unique opportunities for students, fresh graduates and people who want to change their career path. Duration of the Internship is 6 months and it contains training in technical areas. Our interns can expect 30h per week of hands-on technical experience with a flexible schedule.
+
+Check our open positions here: [http://careers.griddynamics.com/](http://careers.griddynamics.com/?utm_source=confitura)
+
+Follow us here:
+ - [Instagram](https://www.instagram.com/griddynamics_pl/)
+ - [Facebook](https://www.facebook.com/lifeatgriddynamics)
+ - [LinkedIn](https://www.linkedin.com/company/grid-dynamics)
+`,
+          www: "http://careers.griddynamics.com",
+          type: "silver",
+          orientation: "horizontal",
+          logo: require("../assets/partners/2022/griddynamics.svg")
         }
         // {
         //   id: "softwareplant",
