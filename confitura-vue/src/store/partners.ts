@@ -363,10 +363,10 @@ Check out our open vacancies: [https://www.syncron.com/company/careers/open-posi
           orientation: "horizontal",
           logo: require("../assets/partners/2022/fis.svg")
         },
-          {
-              id: "cgi",
-              name: "CGI",
-              description: `**Mamy ofertę na miarę Twoich kwalifikacji. Zbudujmy wspólnie zespół idealnie dopasowany do Ciebie.**
+        {
+          id: "cgi",
+          name: "CGI",
+          description: `**Mamy ofertę na miarę Twoich kwalifikacji. Zbudujmy wspólnie zespół idealnie dopasowany do Ciebie.**
 
 Chcesz pracować z najlepszymi ekspertami w branży, obcować z najnowocześniejszą technologią i wdrażać imponujące projekty, które zmieniają rzeczywistość? Róbmy to razem!
 
@@ -384,11 +384,41 @@ zespołem możesz tworzyć rozwiązania, które ułatwiają i usprawniają życi
 
 Interesuje Cię rozwój kariery na własnych zasadach? Jeśli tak, to CGI jest miejscem dla Ciebie. Zróżnicowane projekty i możliwości w ramach CGI dają Ci szansę na samorealizację w kierunkach, które interesują Cię najbardziej. Podążaj własną ścieżką mając wsparcie prawie 500 najlepszych specjalistów. Nie ma takiej technologii ani branży, na której się nie znamy Reprezentujemy poziom ekspercki. Będziesz więc otoczony koleżankami i kolegami o najwyższych kwalifikacjach, jak w mistrzowskiej drużynie.
 `,
-              www: "https://www.cgi.com/polska/pl/kariera",
-              type: "gold",
-              orientation: "horizontal",
-              logo: require("../assets/partners/2022/cgi.svg")
-          }
+          www: "https://www.cgi.com/polska/pl/kariera",
+          type: "gold",
+          orientation: "horizontal",
+          logo: require("../assets/partners/2022/cgi.svg")
+        },
+        {
+          id: "revolut",
+          name: "Revolut",
+          description: `# About [Revolut](https://www.revolut.com/)
+
+People deserve more from their money. More visibility, more control, more freedom. And since 2015, Revolut has been on a mission to deliver just that. With an arsenal of awesome products that span spending, saving, travel, transfers, investing, exchanging and more, our super app has helped over 18 million customers get more from their money. And we're not done yet!
+
+
+## About our Technology Department
+
+Our Technology team isn’t just one of the best in the industry, it’s one of the best in the world. And we’re proud of it. It’s our driving force; our engine 🚀 
+
+From building a new banking backend to creating an award-winning app, there’s nothing (and we mean nothing) our tech team can’t do. Our Technology team isn’t here to fix legacy systems – it’s here to build world-class financial products from the ground up. Products that will be used by millions of people around the world (18+ million people, not that we’re counting)🌎
+
+We have Engineers that want to change the world. If you like to work at a steady pace with no surprises, keep scrolling. If you want your work to change the global financial landscape, you might be just who we’re looking for. We have a minimalist approach to using external frameworks, with emphasis on maintainability and fast turnaround with TDD, DDD and Continuous Integration & Delivery.  \\
+Sound like your speed? Check our openings: [https://www.revolut.com/careers?team=Engineering+%26+Data](https://www.revolut.com/careers?team=Engineering+%26+Data) 
+
+Follow us:
+
+
+
+* [https://www.linkedin.com/company/revolut](https://www.linkedin.com/company/revolut)
+* [https://medium.com/revolut](https://medium.com/revolut)
+* [https://www.facebook.com/RevolutInsider](https://www.facebook.com/RevolutInsider)
+* [https://www.instagram.com/revolutinsider/?hl=en](https://www.instagram.com/revolutinsider/?hl=en)`,
+          www: "https://www.revolut.com/",
+          type: "gold",
+          orientation: "horizontal",
+          logo: require("../assets/partners/2022/revolut.svg")
+        }
         // {
         //   id: "softwareplant",
         //   description: `Technologiczny startup rozwijający produkty do nowoczesnego zarządzania projektami
