@@ -418,6 +418,29 @@ Follow us:
           type: "gold",
           orientation: "horizontal",
           logo: require("../assets/partners/2022/revolut.svg")
+        },
+        {
+          id: "starburst",
+          name: "Starburst",
+          description: `Starburst is a successful, multinational start-up founded by an experienced group of passionates from the US and Poland. After 5 years of presence on the market we currently have more than 400 employees, including people from UK, Poland, US, Germany, Canada and several more engineers around the world.
+
+For now in our portfolio we have around 200 satisfied clients, including Comcast, Zalando, Finra, Verizon, Societe Generale, Randstad, Sky and many more. We tripled the value of the company 3 years in a row and after last funding round (series D) in February 2022 our valuation reached over $3B!
+
+We unlock the value of distributed data by making it fast and easy to access via SQL, no matter where it lives. Starburst queries data across any database, making it instantly actionable for data-driven organizations. With Starburst, teams can lower the total cost of their  infrastructure and analytics investments, prevent vendor lock-in, and use the existing tools that work for their business. Starburst helps companies make better decisions faster on all data.
+
+Currently for our Poland-based team we are looking for new All-Star engineers who are at the top of their game. If this sounds like you, check out our open roles at [starburst.io/careers](https://www.starburst.io/careers/)
+
+For more information visit our website: [starburstdata.io](https://starburst.io/)
+
+You may also follow our activity on:
+- [Linkedin](https://www.linkedin.com/company/starburstdata/)
+- [Twitter](https://twitter.com/starburstdata)
+- [Facebook](https://www.facebook.com/starburstdata)
+`,
+          www: "https://starburst.io/",
+          type: "silver",
+          orientation: "horizontal",
+          logo: require("../assets/partners/2022/starburst.svg")
         }
         // {
         //   id: "softwareplant",
