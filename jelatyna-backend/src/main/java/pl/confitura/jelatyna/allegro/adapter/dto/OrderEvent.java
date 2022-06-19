@@ -6,9 +6,20 @@ import lombok.Data;
 public class OrderEvent {
     private String id;
     private String type;
+    private Order order;
     private String occurredAt;
 
-    public String[] csvLine() {
-        return new String[]{id, type, occurredAt};
+    public long getOrderedQuantityChange() {
+        return getOrderedCountChange() * order.getTotalQuantity();
+    }
+
+    public long getOrderedCountChange() {
+        if (type.equals("BOUGHT")) {
+            return 1;
+        } else if (type.contains("CANCELLED")) {
+            return -1;
+        } else {
+            return 0;
+        }
     }
 }

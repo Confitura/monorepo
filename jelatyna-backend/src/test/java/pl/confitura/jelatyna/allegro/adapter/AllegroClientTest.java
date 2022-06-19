@@ -43,7 +43,6 @@ class AllegroClientTest {
 
 
         Map<String, String> params = new HashMap<>();
-        params.put("type", "BOUGHT");
         OrderEvents orderEvents = new OrderEvents();
         List<OrderEvent> allEvents = new ArrayList<>();
         do {
@@ -59,10 +58,19 @@ class AllegroClientTest {
         } while (orderEvents.hasEvents());
 
         System.out.println("all = " + allEvents);
+        exportToCsv(allEvents);
+    }
+
+    private void exportToCsv(List<OrderEvent> allEvents) throws IOException {
+        long orderCount = 0;
+        long totalQuantity = 0;
         File file = File.createTempFile("allegro-events", ".csv");
-        com.opencsv.CSVWriter csvWriter = new CSVWriter(new FileWriter(file));
+        CSVWriter csvWriter = new CSVWriter(new FileWriter(file));
         for (OrderEvent event : allEvents) {
-            csvWriter.writeNext(event.csvLine());
+            orderCount += event.getOrderedCountChange();
+            totalQuantity += event.getOrderedQuantityChange();
+            String[] nextLine = {event.getId(), event.getType(), event.getOccurredAt(), String.valueOf(orderCount), String.valueOf(totalQuantity), String.valueOf(event.getOrderedQuantityChange())};
+            csvWriter.writeNext(nextLine);
         }
         csvWriter.flush();
         System.out.println(file);
