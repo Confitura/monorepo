@@ -6,6 +6,7 @@ import com.github.scribejava.core.oauth.AccessTokenRequestParams;
 import com.github.scribejava.core.oauth.OAuth20Service;
 import pl.confitura.jelatyna.allegro.adapter.dto.CheckoutForm;
 import pl.confitura.jelatyna.allegro.adapter.dto.CheckoutForms;
+import pl.confitura.jelatyna.allegro.adapter.dto.OrderEvents;
 
 import java.io.IOException;
 import java.util.*;
@@ -40,22 +41,44 @@ public class AllegroClient {
         }
     }
 
-    public CheckoutForms getReadyForProcessing() throws IOException, ExecutionException, InterruptedException {
+    public CheckoutForms getCheckoutForms(Map<String, String> queryParams) throws IOException, ExecutionException, InterruptedException {
+        return doGet("/order/checkout-forms", queryParams, CheckoutForms.class);
+    }
 
+    public OrderEvents getOrderEvents(Map<String, String> queryParams) throws IOException, ExecutionException, InterruptedException {
+        return doGet("/order/events", queryParams, OrderEvents.class);
+    }
+
+    private <T> T doGet(String path, Map<String, String> queryParams, Class<T> type) throws IOException, ExecutionException, InterruptedException {
         OAuth2AccessToken accessToken = getAccessToken(context);
 //        accessToken = refreshAccessToken(accessToken.getRefreshToken());
 
-        final OAuthRequest request = new OAuthRequest(Verb.GET, properties.getApi() + "/order/checkout-forms");
-        request.addQuerystringParameter("status", "READY_FOR_PROCESSING");
-        request.addQuerystringParameter("fulfillment.status", "NEW");
+        final OAuthRequest request = new OAuthRequest(Verb.GET, properties.getApi() + path);
+        addQueryParams(queryParams, request);
         request.addHeader(ACCEPT, ALLEGRO_CONTENT_TYPE);
         service.signRequest(accessToken, request);
 
         try (Response response = service.execute(request)) {
             System.out.println(response.getCode());
             System.out.println(response.getBody());
-            return objectMapper.readValue(response.getBody(), CheckoutForms.class);
+            return objectMapper.readValue(response.getBody(), type);
         }
+    }
+
+    private void addQueryParams(Map<String, String> queryParams, OAuthRequest request) {
+        if (queryParams == null) {
+            return;
+        }
+        for (Map.Entry<String, String> entry : queryParams.entrySet()) {
+            request.addQuerystringParameter(entry.getKey(), entry.getValue());
+        }
+    }
+
+    public CheckoutForms getReadyForProcessing() throws IOException, ExecutionException, InterruptedException {
+        Map<String, String> params = new HashMap<>();
+        params.put("status", "READY_FOR_PROCESSING");
+        params.put("fulfillment.status", "NEW");
+        return getCheckoutForms(params);
     }
 
     public void markSent(CheckoutForm checkoutForm) throws IOException, ExecutionException, InterruptedException {
