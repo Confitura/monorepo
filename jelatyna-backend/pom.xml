@@ -26,7 +26,7 @@
         <expiringmap.version>0.5.7</expiringmap.version>
         <lombok.version>1.16.18</lombok.version>
         <jjwt.version>0.7.0</jjwt.version>
-        <mysql-connector.version>5.1.49</mysql-connector.version>
+        <mysql-connector.version>8.0.28</mysql-connector.version>
         <guava.version>22.0</guava.version>
 
         <junit.jupiter.version>5.1.0</junit.jupiter.version>
