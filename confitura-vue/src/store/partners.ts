@@ -472,15 +472,15 @@ Follow us here:
           orientation: "horizontal",
           logo: require("../assets/partners/2022/datumo.svg")
         },
-          {
-              id: "ppl",
-              name: `'Polish Airports' State Enterprise`,
-              description: `'Polish Airports' State Enterprise (PPL) is one of the top aviation infrastructure companies in Poland, taking active part in the shaping and development of this strategic branch of the industry. PPL resources include Warsaw Chopin Airport (EPWA) – the biggest Polish airport and one of the biggest airports in Central and Eastern Europe.`,
-              www: "https://www.polish-airports.com/",
-              type: "silver",
-              logo: require("../assets/partners/2022/ppl.svg"),
-              orientation: "horizontal"
-          }
+        {
+          id: "ppl",
+          name: `'Polish Airports' State Enterprise`,
+          description: `'Polish Airports' State Enterprise (PPL) is one of the top aviation infrastructure companies in Poland, taking active part in the shaping and development of this strategic branch of the industry. PPL resources include Warsaw Chopin Airport (EPWA) – the biggest Polish airport and one of the biggest airports in Central and Eastern Europe.`,
+          www: "https://www.polish-airports.com/",
+          type: "silver",
+          logo: require("../assets/partners/2022/ppl.svg"),
+          orientation: "horizontal"
+        }
         // {
         //   id: "softwareplant",
         //   description: `Technologiczny startup rozwijający produkty do nowoczesnego zarządzania projektami
