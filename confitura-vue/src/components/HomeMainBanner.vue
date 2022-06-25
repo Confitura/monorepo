@@ -6,7 +6,7 @@
         <div class="slogan">
           <h1 class="h1">It is not rocket science!</h1>
         </div>
-        <TheTimer />
+<!--        <TheTimer />-->
         <div class="info__live">
           <div class="info__live-text">Confitura 2022</div>
         </div>
