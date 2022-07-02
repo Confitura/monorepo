@@ -254,7 +254,7 @@ import Rating from "@/views/profile/Rating.vue";
 Vue.use(Toasted);
 
 @Component({
-  components: {Rating, PageHeader, Box, Contact }
+  components: { Rating, PageHeader, Box, Contact }
 })
 export default class ProfilePage extends Vue {
   get profile() {
