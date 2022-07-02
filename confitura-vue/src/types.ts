@@ -168,3 +168,13 @@ export interface VoteStat {
   negativeVotes: number;
   totalVotes: number;
 }
+
+export interface EmbeddedRates {
+  _embedded: { rates: Rate[] };
+}
+
+export interface Rate {
+  id: string;
+  value: string;
+  comment: string;
+}

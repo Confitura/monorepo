@@ -200,6 +200,9 @@
                 </div>
                 <div v-if="presentation.status === 'accepted'"></div>
               </div>
+              <div class="card-content">
+                <Rating :presentation="presentation"></Rating>
+              </div>
               <div class="card-action">
                 <router-link
                   :to="{
@@ -246,11 +249,12 @@ import PageHeader from "@/components/PageHeader.vue";
 import Toasted from "vue-toasted";
 import M from "materialize-css";
 import { LOAD_INFO } from "@/store/admin";
+import Rating from "@/views/profile/Rating.vue";
 
 Vue.use(Toasted);
 
 @Component({
-  components: { PageHeader, Box, Contact }
+  components: {Rating, PageHeader, Box, Contact }
 })
 export default class ProfilePage extends Vue {
   get profile() {
