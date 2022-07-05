@@ -10,26 +10,16 @@
         <div class="info__live">
           <div class="info__live-text">Confitura 2022</div>
         </div>
+
         <div class="info__long">
-          The
-          <a
-            href="https://www.facebook.com/events/expo-xxi-warszawa-międzynarodowe-centrum-targowo-kongresowe/confitura-2022/1321909284639993/"
-            >date and place</a
-          >
-          are set, you can start preparing!
-          <router-link to="tickets">Tickets</router-link>
-          are on sale. Confiturius recommends not buying the tickets at the very
-          last moment.
-          <br />
-          <br />
-          If your company wants to join us as well, here is our contact mail:
+          Confitura 2022 went down in a history. It was a pleasure to deliver this event for you again! Hope to see you next year.
+          We are waiting for your feedback. You can put all "yays!" and "mehs" in <a href="https://forms.gle/SasGZfQ3Mq211AUz9">[this survey]</a>.
+        </div>
+        <div class="info__long">
+          If your company wants to join us nex year, here is our contact mail:
           <a href="mailto:confitura[at]confitura[dot]pl"
             >confitura[at]confitura[dot]pl</a
           >; we will be happy to start a new friendship.
-        </div>
-        <div class="info__long">
-          Confitura 2022 will take place on June 25 in Warsaw,
-          <a target="_blank" href="https://g.page/expoxxi">EXPO XXI</a>.
         </div>
       </div>
       <HomeMainBannerIllustration />
