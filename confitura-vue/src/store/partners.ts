@@ -22,467 +22,467 @@ export const partnersModule: Module<PartnersState, RootState> = {
     [LOAD_PARTNERS]({ state }) {
       // tslint:disable
       state.partners = [
-        {
-          id: "virtuslab",
-          description: `We are VirtusLab – 300+ tech enthusiasts constantly striving for growth. We provide expert software engineering and consultancy services to help customers adopt technology transformations. Our aim is to solve complex problems and improve the dev's efficiency. We are building high-quality software in various domains: ranging from smart contracts to investment platforms to compiler servers to brick & mortar retail stores. Our team has extensive knowledge about Data Engineering & Data Science, Cloud-Native Services, Reactive Systems, Dev Tooling, and Frontend.
-
-We are also worldwide experts in Scala language, officially supporting its development and tooling starting with Scala 3 itself to tailor-made solutions for the largest Scala monorepos in the world, like Metals (Language Server Protocol) or scalafmt (Code formatter).
-
-Our  #VLteam delivers high-quality software solving actual problems with modern technology and gives back to the community by supporting open source initiatives, local tech meetups, and conferences (check our own initiative, [Sphere.it](https://sphere.it)). 
-
-We have built a company where everyone can influence how we operate and what we are aiming at. We believe that everyone should participate and create new directions.  Visit [virtuslab.com](https://virtuslab.com) for more!`,
-          name: "VirtusLab",
-          www: "https://virtuslab.com/",
-          type: "platinum",
-          logo: require("../assets/partners/2022/virtuslab.svg"),
-          orientation: "horizontal"
-        },
-        {
-          id: "allegro",
-          name: "Allegro Tech",
-          description: `W [Allegro](https://allegro.tech/) tworzymy i utrzymujemy aplikacje, które dzięki swojej skalowalności i niezawodności zyskały sobie rzeszę wiernych użytkowników. Zadanie nie należy do najłatwiejszych, w pracy napotykamy na szereg wyzwań zarówno w obszarze samej architektury i designu, jak i w procesie doboru technologii, zapewnienia jakości kodu, usprawnienia funkcjonalności oraz w późniejszej fazie wdrożenia i utrzymania produktu.
-          allegro.tech jest naszym pomysłem na dzielenie się zebranym doświadczeniem poprzez organizację konferencji, warsztatów, meetupów i hackatonów.
-        
-Po więcej informacji zapraszamy na nasz blog [https://allegro.tech/](https://allegro.tech/)
-        
-Dołacz do nas również na [https://www.meetup.com/allegrotech/](https://www.meetup.com/allegrotech/)
-        
-I bądź na bieżąco [https://www.facebook.com/allegro.tech](https://www.facebook.com/allegro.tech)`,
-          www: "https://allegro.tech/",
-          type: "silver",
-          logo: require("../assets/partners/allegro.svg"),
-          orientation: "horizontal"
-        },
-        {
-          id: "scalo",
-          description: `[Scalo](https://www.scalosoft.com/) to polska firma, w której realizujemy kompleksowe projekty programistyczne, budujemy dedykowane zespoły deweloperskie, rozwijamy systemy wbudowane dla klientów z różnych branż. W naszej firmie każdy może **działać swobodnie**, jesteśmy otwarci na nowe pomysły i rozwiązania. Stawiamy na **współpracę**, chętnie **dzielimy się wiedzą** i wymieniamy **doświadczenia projektowe**.
-
-Nasz sukces to **zgrany zespół**. Wśród nas znajdziesz developerów i projektantów, analityków, testerów oraz administratorów. Biznes wspieramy siłami kilkudziesięciu handlowców, rekruterów i specjalistów od delivery, którzy są dostępni w każdym momencie.
-
-Jeżeli nie przekonują Cię opisy to niech przemówią liczby. W tegorocznym badaniu Great Place to Work uzyskaliśmy **78%** poziom zaangażowania, a do naszych najmocniejszych stron należą:
-- **98%** z nas twierdzi, że każdy nowy pracownik spotyka się w Scalo z ciepłym przyjęciem,
-- **94%** z nas twierdzi, że menedżerowie dostrzegają w członkach zespołu człowieka, a nie tylko pracownika,
-- **93%** z nas twierdzi, że w Scalo panuje przyjazna atmosfera,
-- **92%** z nas twierdzi, że Scalo stwarza korzystne warunki dla pogodzenia pracy z obowiązkami rodzica lub opiekuna,
-- **88%** z nas twierdzi, że w Scalo można liczyć na wzajemną współpracę.
-
-Dołącz do nas i stwórz swoją historię w Scalo! Odwiedź naszą stronę internetową i poznaj nas bliżej: www.career.scalosoft.com`,
-          name: "Scalo",
-          www: "https://www.career.scalosoft.com/",
-          type: "silver",
-          logo: require("../assets/partners/2022/scalo.svg"),
-          orientation: "horizontal"
-        },
-        {
-          id: "nordea",
-          name: "Nordea",
-          description: `W Nordea na co dzień pracują specjaliści, którzy dbają o bezpieczeństwo i sprawne funkcjonowanie banku Nordea. Nordea zatrudnia w Polsce ekspertów w obszarach m.in. IT, bankowości, audytu, rynków kapitałowych, robotyki, AML i sankcji.
-
-https://www.nordea.com/en
-`,
-          www: "https://www.nordea.com/en",
-          type: "silver",
-          logo: require("../assets/partners/2022/nordea.svg"),
-          orientation: "horizontal"
-        },
-        {
-          id: "dataart",
-          name: "DataArt",
-          description: `DataArt zajmuje się inżynierią oprogramowania na skalę globalną. Od ponad 20 lat zespoły składające się z wysoko wykwalifikowanych specjalistów tworzą rozwiązania technologiczne, które pomagają klientom osiągać cele biznesowe i zdobywać nowe rynki. Najważniejszą wartością w DataArt są ludzie. Tę zasadę stosujemy odpowiadając na potrzeby klientów, niezależnie od skali ich biznesu i stosowanych technologii. Dostosowujemy się do kierunku rozwoju naszych partnerów biznesowych i ewoluujemy wraz z nimi. W DataArt łączymy doskonałość techniczną z wartościami, które kształtują nasz model biznesowy: ciekawością, otwartością, zaufaniem, szczerością i intuicją. Takie podejście pozwala nam dostarczać wartościowe rozwiązania wysokiej jakości i budować partnerskie relacje, na których nasi klienci mogą polegać.
-
-DataArt zdobyła zaufanie wiodących marek i wymagających klientów takich jak Nasdaq, S&P, oneworld Alliance, Ocado, artnet, Betfair i skyscanner. Funkcjonuje jako globalna sieć firm świadczących usługi technologiczne, współpracując z ponad 5000 profesjonalistami w ponad 20 lokalizacjach w USA, Europie i Ameryce Południowej.
-
-W Polsce DataArt posiada biura w czterech miastach - w Lublinie, Wrocławiu, Krakowie i Łodzi.
-`,
-          www: "https://www.dataart.com.pl/",
-          type: "silver",
-          logo: require("../assets/partners/2022/dataart.svg"),
-          orientation: "horizontal"
-        },
-        {
-          id: "coderslab",
-          name: "Coders Lab",
-          description: `Coders Lab to najstarsza szkoła IT w Polsce. W jej ofercie znajdują się kursy z zakresu programowania front-end i back-end, testowania manualnego i automatyzującego oraz analityki danych. Łącząc doświadczenie edukacyjne ze znajomością rynku pracy IT, Coders Lab umożliwia realną zmianę zawodową osobom początkującym, jak i rozwój programistom posiadającym doświadczenie. W ciągu 8 lat jej kursy ukończyło ponad 8 000 absolwentów.`,
-          www: "https://coderslab.pl/",
-          type: "media",
-          logo: require("../assets/partners/2022/coderslab.svg"),
-          orientation: "horizontal"
-        },
-        {
-          id: "bnpparibas",
-          name: "BNP Paribas",
-          description: `BNP Paribas działa w pierwszej 6 największych banków w Polsce pod względem kapitałowym dostarczając 4 mln naszych Klientów rozwiązania z zakresu finansowania działalności na rynku krajowym i międzynarodowym oraz szereg produktów oszczędnościowo-inwestycyjnych i kredytowych.
-
-Na Confitura pojawiamy się nie tylko jako bank, ale przede wszystkim jako pracodawca z obszaru IT, bo obszar Technologii jest kluczowy w funkcjonowaniu naszego biznesu. Bankowość to nie tylko działy sprzedaży czy operacji. Nasz bank to również miejsce, w którym pracownicy mogą być odpowiedzialni za rozwój nowoczesnych aplikacji internetowych i mobilnych, budowanie innowacyjnych rozwiązań z wykorzystaniem Big Data, Cloud oraz AI, modernizację i utrzymanie infrastruktury, wsparcie użytkowników i wiele innych.
-
-Praca w BNP Paribas to praca w środowisku bardzo dynamicznym i pełnym wyzwań, dającym możliwość współpracy z największymi firmami z branży technologii oraz z szeregiem innowacyjnych startupów zarówno z Polski jak i ze świata. Chcesz sprawdzić jakie możliwości rozwoju dajemy kandydatom? Wejdź na stronę [Praca w IT | BNP Kariera.](https://www.bnpparibas.pl/kariera/pl/obszary-zatrudnienia/praca-w-it)`,
-          www: "https://www.bnpparibas.pl",
-          type: "gold",
-          logo: require("../assets/partners/2022/bnpparibas.svg"),
-          orientation: "horizontal"
-        },
-        {
-          id: "decerto",
-          name: "Decerto",
-          description: `Jesteśmy polskim software house’m obecnym na rynku od 2006 roku. Realizujemy projekty dla dużych korporacji, głównie z sektora finansowego. Równocześnie zachowujemy płaską strukturę i niekorporacyjną kulturę pracy. Posiadamy duże doświadczenie i know-how oraz stawiamy na długoterminowe relacje. Dzięki zaufaniu Klientów prowadzimy kilkanaście dużych projektów – pracując z nami zyskujesz nie tylko stabilność zatrudnienia, ale również duże możliwości rozwoju oraz wybór odpowiedniego środowiska pracy. Specjalizujemy się w rozwiązaniach backendowych związanych z dużymi wolumenami danych oraz logiką biznesową. Projektujemy kompleksowe rozwiązania informatyczne, dlatego cenimy otwarty umysł, samodzielność oraz własną inicjatywę. Doceniamy indywidualizm i szanujemy inny punkt widzenia.`,
-          www: " https://www.decerto.com/pl/start",
-          type: "silver",
-          logo: require("../assets/partners/2022/decerto.svg"),
-          orientation: "horizontal"
-        },
-        {
-          id: "bigpicture",
-          name: "BigPicture",
-          description: `Hi, we’re BigPicture, the proud creators of one of the leading initiative management software on the market. Our vision is shared by over 3 million users of BigPicture in organizations of all sizes: from small startups to market leaders such as Netflix, NASA, Intel, Tesla, Apple, Uber, Samsung, Porsche, Siemens, LG, and many more.
-
-So far, we’ve built an amazing team of 200 experts. Join us!
-
-How we work
-- In Agile and Scrum we trust - we make sure to keep our teams small and our sprints manageable & effective
-- Ownership - we want everyone on our team to feel empowered to grab the reins in their positions and help push the company forward
-- We can set our own working hours. We just need to make sure to join our team for the daily meeting
-- We work 100% remotely or from our modern office in Warsaw - we can choose
-
-Our solutions stack
-- We use monorepo to maintain consistency of development through automated validations in one of the most extensive CI processes in the local market providing not only static/dynamic code analysis, but Architecture Decision Records appliance as well
-- We support ~10000 users for a single tenant deployed on our own multitenant cloud infrastructure
-- Java with a fully fledged and standardized DDD including Hexagonal Architecture, Event Sourcing, hundreds of Aggregates spanning dozens of domains, Ubiquitous language implemented across the whole organization
-- And for all of you frontend lovers out there, it's worth knowing that this is one of the largest and most complex Angular projects in Poland
-
-We focus on the continuous development of our skills. That is why we invest in and offer:
-- Unlimited skills development budget
-- ShipIT Weeks - regular, internal, one week long, fully-paid hackathons
-- Internal tech guilds - meetings dedicated to sharing knowledge, and best practices
-- Taking part in tech events sponsored by us - like Confitura ;)
-
-Check our open positions here: https://bigpicture.one/careers/
-
-Follow BigPicture's #BigTeam here:
-- [Instagram](https://www.instagram.com/bigpicture.one/)
-- [Facebook](https://www.facebook.com/BigPicture.one)
-- [LinkedIn](https://www.linkedin.com/company/bigpictureone/)
-`,
-          www: " https://bigpicture.one/",
-          type: "platinum",
-          logo: require("../assets/partners/2022/bigpicture.svg"),
-          orientation: "horizontal"
-        },
-        {
-          id: "softwaremill",
-          name: "SoftwareMill",
-          description: `Hello from [SoftwareMill](https://softwaremill.com/) - a consulting & custom software agency that proactively helps businesses benefit from technologies like Cloud Computing, Big Data, Blockchain and Machine Learning.
-
-We specialise in Java, Scala, Akka, the Lightbend Reactive Platform, Kafka, Spark, TensorFlow, SQL & NoSQL databases: PostgreSQL, Cassandra, Mongo, Node.JS and React. We build on the traditional engineering work ethics and values, which translate directly to the quality of our systems. We are a leading consultancy chosen for digital transformation, recognized for our integrity, versatility, understanding of the business, right soft skills, strong work ethic, rich experience and top notch mastery of technology.
-
-Widening technical horizons is the fabric of our organisation. Not only do we practise and learn constantly, but we also teach, create and contribute. We have a proven track record of working with the IT community, leading open-source projects [[why not to contribute?]](https://github.com/softwaremill/) and organising a [Scalar conference](https://scalar-conf.com/).
-
-Our priority is to deliver quality software: thoroughly tested, well-designed, and reviewed. But, our growth is not limited to technology. Since 2009 we have been building the best, fully remote, workplace for developers. We have a unique, 100% remote and bottom-up structure where leaders are not appointed, but chosen by teammates. In 2022, we’ve grown into a company of 80+ people. We simply like each other and together we create [a friendly environment](https://softwaremill.com/about-us/) that enhances our potential.
-
-We’re eager to welcome more passionate software engineers to our Team. If you want to share your knowledge, empower teammates and lead by example, while working on interesting projects, check out our [career page](https://softwaremill.com/join-us/)!
-
-Catch #SoftwareMillVibes
-- [SoftwareMill Tech Blog](https://softwaremill.com/blog/)
-- [Scala Times newsletter](https://scalatimes.com/)
-- [Scala 3 Tech Report](https://softwaremill.com/ebooks/scala-3-tech-report/)
-- [SoftwareMill Academy](https://academy.softwaremill.com/en/)
-- [AMA Slack](https://sml.io/ask-me-anything)
-- [Instagram](https://instagram.com/softwaremill_vibes)
-- [Youtube](https://www.youtube.com/c/SoftwareMillCom)
-- [Facebook](https://www.facebook.com/softwaremill)
-- [Twitter](https://twitter.com/softwaremill)
-- [Linkedin](https://www.linkedin.com/company/808422)
-- [DevSkin Softwear](https://devskin-softwaremill.myspreadshop.pl/)
-`,
-          www: "https://softwaremill.com/",
-          type: "silver",
-          logo: require("../assets/partners/2022/sml2.svg"),
-          orientation: "horizontal"
-        },
-        {
-          id: "intercars",
-          name: "Inter Cars",
-          description: `[Inter Cars](https://intercars.com.pl/) has been a leading distributor of spare parts for passenger cars and trucks on the Polish market for many years. In addition, the company has gradually been developing its activity in 18 countries across Europe, ranking first in the Central and Eastern part of the continent, second on the entire continent and eighth globally.
-
-Inter Cars offers over two million spare parts for passenger cars and trucks, parts for motorcycles, farming and industrial machines as well as driver accessories, with as many as 40,000 new items every years being introduced into the sales system for the trucks market alone.
-
-The company provides garages fast, convenient and safe access to all tools facilitating their operations as, in addition to spare parts for cars, Inter Cars offers technical support, innovative garage management programs as well as stationary and online training.
-
-In the entire IT area at Inter Cars, we see the need to constantly improve the competences of IT Managers and Employees. Every year, we have a specific development budget allocated to this need. We are committed to developing both managerial and technical competences as well as the so-called "Soft" related to, inter area, with communication, cooperation, improvement of individual and team effectiveness.
-
-Inter Cars IT department currently consists of about 300 employees and we are still looking for new ones! Teams that you can confidently join, if you are a person open to new challenges, you will surely find an area for yourself.`,
-          www: "https://intercars.com.pl/",
-          type: "silver",
-          logo: require("../assets/partners/2022/intercars.svg"),
-          orientation: "horizontal"
-        },
-        {
-          id: "bosch",
-          description: `The Bosch Group is a leading global supplier of technology and services. It employs roughly 402,600 associates worldwide (as of December 31, 2021). The company generated sales of 78.7 billion euros in 2021. Its operations are divided into four business sectors: Mobility Solutions, Industrial Technology, Consumer Goods, and Energy and Building Technology. As a leading IoT provider, Bosch offers innovative solutions for smart homes, Industry 4.0, and connected mobility. Bosch is pursuing a vision of mobility that is sustainable, safe, and exciting. It uses its expertise in sensor technology, software, and services, as well as its own IoT cloud, to offer its customers connected, cross-domain solutions from a single source. The Bosch Group’s strategic objective is to facilitate connected living with products and solutions that either contain artificial intelligence (AI) or have been developed or manufactured with its help. Bosch improves quality of life worldwide with products and services that are innovative and spark enthusiasm. In short, Bosch creates technology that is “Invented for life.”`,
-          name: "Bosch",
-          www: "https://www.bosch.com/company/",
-          type: "silver",
-          logo: require("../assets/partners/2022/bosch.svg"),
-          orientation: "horizontal"
-        },
-        {
-          id: "kmd",
-          name: "KMD",
-          description: `KMD Poland is a foreign branch of the KMD Group which is one of the largest Danish IT companies. The company specializes in implementing key IT solutions and processes in energy area, finance, insurance, R&D and HR. Its key projects are implemented in the public sector in Denmark and in Scandinavian countries, contributing to the digital transformation of their societies, public institutions and private sector entities. The KMD Group has more than 3,000 employees and it is a subsidiary of NEC Corporation, a global leader in integration of IT and networking technologies. This year, KMD Group is celebrating its 50<sup>th</sup> anniversary.`,
-          www: "https://kmdpoland.pl",
-          type: "silver",
-          logo: require("../assets/partners/2022/kmd.svg"),
-          orientation: "horizontal"
-        },
-        {
-          id: "goldman-sachs",
-          name: "Goldman Sachs",
-          description: `At Goldman Sachs, our Engineers don’t just make things – we make things possible. Join our engineering teams that build massively scalable software and systems, architect low latency infrastructure solutions, proactively guard against cyber threats, and leverage machine learning alongside financial engineering to continuously turn data into action.`,
-          www: "https://www.goldmansachs.com/careers/",
-          type: "gold",
-          orientation: "horizontal",
-          logo: require("../assets/partners/2022/goldmansachs.svg")
-        },
-        {
-          id: "onwelo",
-          name: "Onwelo",
-          description: `Onwelo to nowoczesna polska spółka technologiczna, która specjalizuje się w budowaniu innowacyjnych rozwiązań IT dla organizacji z szeregu sektorów na całym świecie. Główne obszary działalności Onwelo to: tworzenie oprogramowania, jego rozwój oraz utrzymanie, a także mocne wsparcie kompetencyjne. W krótkim czasie firma wdrożyła ponad 300 projektów w Europie i w USA, powiększyła zespół do ponad 400 osób, a także otworzyła biura w sześciu miastach Polski oraz oddziały w Stanach Zjednoczonych, Niemczech i w Szwajcarii. 
- 
-Chociaż filar naszej firmy stanowią doświadczeni, wykwalifikowani specjaliści, jesteśmy również otwarci na włączenie do naszych zespołów pasjonatów IT, którzy przy naszym wsparciu chcą zmienić dotychczasowy stack lub postawić swoje pierwsze kroki w świecie zaawansowanych technologii. W Onwelo zatrudniamy specjalistów z obszarów: analizy biznesowej, rozwoju i utrzymania oprogramowania, testowania oprogramowania, zarządzania infrastrukturą IT, tworzenia rozwiązań Data & Analytics oraz Intelligent Automation, a także rozwiązań chmurowych. 
-
-Dlaczego warto u nas pracować?
-
-* **Wsparcie mentorskie i jasne ścieżki kariery** – możesz liczyć na wsparcie naszych ekspertów i przełożonych wywodzących się z obszarów merytorycznych oraz na kulturę wymiany wiedzy i spersonalizowany rozwój
-* **Nowoczesne technologie i narzędzia pracy** – realizujemy projekty o wysokim stopniu zaawansowania technologicznego, a dzięki nowoczesnym standardom narzędzi pracy i systemów, Twoja praca jest bardziej przyjemna i rozwojowa
-* **Projekty zagraniczne** – pracuj z nami dla klientów z Europy Zachodniej i Stanów Zjednoczonych
-* **Zgrany zespół i inicjatywy integracyjne** – lubisz planszówki, warsztaty, wyzwania sportowe albo spontaniczne wyjścia w większym gronie? Zadbamy o to!
-* **Elastyczny model zatrudnienia i możliwość pracy zdalnej** – dostosujemy model zatrudnienia do Twoich potrzeb. Jako samodzielny specjalista możesz pracować zarówno w jednym z naszych nowoczesnych biur w atrakcyjnej lokalizacji, jak i zdalnie
-* **Przyjazny onboarding** – zadbamy o to, żeby Twój start w firmie był łatwy i przyjemny
-* **Pakiety benefitów** – karta MultiSport, prywatna opieka medyczna, grupowe ubezpieczenie na życie – to u nas standard
-
-Chcesz dowiedzieć się o nas więcej? Wejdź na https://onwelo.com/career,p6.html`,
-          www: "https://www.onwelo.com",
-          type: "gold",
-          orientation: "horizontal",
-          logo: require("../assets/partners/2022/onwelo.svg")
-        },
-        {
-          id: "touk",
-          name: "Touk",
-          description: `TouK to miejsce twórczej eksploracji dla deweloperów. Tu liczy się pasja, inicjatywa i (współ)działanie. Tworzymy przestrzeń, gdzie ludzie o różnych charakterach, niezależnie od doświadczenia, mają możliwość pracować i rozwijać się przez lata. Nasza kultura, doświadczony i wszechstronny zespół owocują realizacją coraz ciekawszych i ambitniejszych projektów.`,
-          www: "https://touk.pl/careers",
-          type: "silver",
-          orientation: "horizontal",
-          logo: require("../assets/partners/touk.svg")
-        },
-        {
-          id: "citi",
-          name: "Citi",
-          description: `Citi is the leading global bank with a history spanning more than 200 years and which serves more than 200 million customer accounts and does business in more than 160 countries and jurisdictions. Citi provides consumers, corporations, governments and institutions with a broad range of world-class financial products and services, including consumer banking and credit, corporate and investment banking, securities brokerage, transaction services and wealth management.
-
-Our technology teams deliver customized solutions by utilizing cutting edge technologies to deploy everything from cloud computing to mobile solutions to APIs, creating a competitive advantage for Citi, our clients, our regulators and our stakeholders. In this fast-paced environment, our employees are focused on creating solutions, including CitiDirect BE® Mobile for transaction services and Citi Velocity, an electronic trading platform, that provide Citi's institutional clients with unprecedented access to capital markets intelligence and execution.
-
-In Poland we act under Citibank Europe. We opened in 2005 with just 57 employees; today we are a diverse team of almost 6000 serving 96 countries from all continents. We work across the full spectrum of Citi business areas, including Technology.
-
-Learn more at: [jobs.citi.com/Poland](http://jobs.citi.com/Poland)
-`,
-          www: "http://jobs.citi.com/Poland",
-          type: "gold",
-          orientation: "box",
-          logo: require("../assets/partners/2022/citi.svg")
-        },
-        {
-          id: "sii",
-          name: "Sii Poland",
-          description: `Since 2006 on the market, 7 000 experts, PLN 1 billion revenue, 8 times Great Place to Work title – get to know Sii, the fastest growing IT, digital transformation, BPO and engineering company in Poland.
-
-Sii already has over 1,000 Java developers who carry out projects for brands such as PUMA, Ingenico, Scalepoint, Sennheiser, Berlingske Media, ABB Sartorius, Qiagen every day. Specialists from Sii’s Digital Competency Center join projects in which the majority of the work covers the development of new products and functionalities. Apart from internal communities, the team has various knowledge sharing and professional growth opportunities, including organized training sessions and numerous partnerships, among others with Adobe. Learn more at [sii.pl](https://sii.pl).`,
-          www: "https://sii.pl",
-          type: "silver",
-          orientation: "horizontal",
-          logo: require("../assets/partners/2022/sii.svg")
-        },
-        {
-          id: "rsystems",
-          name: "R Systems",
-          description: `[R Systems](https://eu.rsystems.com/) is a global technology and analytics services company. We help our clients achieve speed-to-market, overcome digital barriers, and create business value with our specialized service offerings and consultative business approach.
-
-We speak the language of business as fluently as we do the language of technology. In other words: **We speak Digital**. Our goal: accelerate our clients’ digital leadership.`,
-          www: "https://eu.rsystems.com/",
-          type: "silver",
-          orientation: "horizontal",
-          logo: require("../assets/partners/2022/rsystems.svg")
-        },
-        {
-          id: "sages",
-          name: "Sages",
-          description: `[Sages](https://www.sages.pl) od 2007 r., zapewnia kompleksowe wsparcie w zakresie IT. Zajmujemy się kształceniem specjalistów IT oraz tworzeniem rozwiązań opartych na sztucznej inteligencji mających na celu automatyzację procesów w organizacjach.
- 
-Wspólnie z Politechniką Warszawską stworzyliśmy system Omega-PSIR do ewaluacji uczelni i instytucji naukowych. Jest to nr 1 w Polsce i nr 5 na świecie, jeżeli chodzi o liczbę wdrożeń pośród oprogramowania tego typu.
-W ramach oferty edukacyjnej organizujemy szkolenia dla programistów, testerów, integratorów, managerów, analityków ze wszystkich obszarów związanych z realizacją projektów IT.
-W obszarze sztucznej inteligencji realizujemy projekty związane z przetwarzaniem języka naturalnego, analizą obrazu i automatyzacją procesów, takie jak: chatboty do obsługi klienta zewnętrznego, chatboty do wewnętrznej obsługi procesów w firmie, wyszukiwarki semantyczne, czy ekstrakcja informacji z nieustrukturyzowanych źródeł takich jak dokumenty i skany. Tworzymy narzędzie dla osób niewidzących i niedowidzących do automatycznego odczytu dokumentów tekstowo-obrazowych.
- 
-Angażujemy się intensywnie w działania na rzecz społeczności IT oraz nauki: od wielu lat moderujemy społeczność Stacji IT, współorganizujemy konkurs PolEval, konferencję AI & NLP Day oraz Seminarium Użytkowników Uczelnianych Baz Wiedzy
-`,
-          www: "https://www.sages.pl",
-          type: "silver",
-          orientation: "horizontal",
-          logo: require("../assets/partners/2022/sages.svg")
-        },
-        {
-          id: "syncron",
-          name: "Syncron",
-          description: `Syncron is a global IT product company with Swedish roots, but it is in the Warsaw office where our flagship product - Inventory - has been developed.
-
-We create proprietary Java-based applications in the SaaS model.
-
-They are used to help the world’s leading manufacturers to optimize all the processes around the heavy machinery service lifecycle: spare parts inventory management and supply chain, parts pricing, machine uptime, field service and warranty management.
-
-The highest coding standards are our priority. We are a product company and the quality of our software directly impacts our customers’ revenues, so we thrive to produce a high-quality code with all kinds of tests including unit, integration and end-to-end tests, in the face of constant optimization challenges. We are fully cloud-based, using advanced AWS infrastructure solutions.
-
-Check out our open vacancies: [https://www.syncron.com/company/careers/open-positions/](https://www.syncron.com/company/careers/open-positions/)`,
-          www: "https://www.syncron.com/",
-          type: "silver",
-          orientation: "horizontal",
-          logo: require("../assets/partners/2022/syncron.svg")
-        },
-        {
-          id: "match-trade",
-          name: "Match-trade",
-          description: `Jesteśmy firmą z branży fintech, tworzącą zaawansowane systemy transakcyjne dla rynku Forex, kontraktów CFD, kryptowalut oraz akcji. Tworzymy własne środowisko technologiczne i jesteśmy autorem platformy tradingowej opartej o technologię PWA. Współpracujemy z klientami z całego świata - w tym największymi brokerami Forex i najbardziej znanymi giełdami kryptowalut. W ramach jednego z naszych głównych projektów, zajmujemy się budową algorytmów z zakresu High Frequency Trading. Algorytmy te każdego dnia obracają kryptowalutami wartymi miliony dolarów. Nasze rozwiązania są wykorzystywane na giełdach z aż pięciu kontynentów. Członkowie naszego zespołu, nierzadko pasjonaci technologii blockchain oraz kryptowalut, każdego dnia zapoznają się z nowinkami tej nowej, dynamicznie rozwijającej się części sektora finansowego. Śmiało możemy powiedzieć też, szeroki zakres oferowanych przez nas usług stwarza dla naszych pracowników możliwości uczestniczenia w różnorodnych projektach, nie tylko dzięki wykorzystaniu różnych technologii (w tym nowoczesnej technologii Blockchain), ale także dzięki pracy z biznesami z całego świata.`,
-          www: "https://match-trade.com/",
-          type: "silver",
-          orientation: "horizontal",
-          logo: require("../assets/partners/2022/match-trade.svg")
-        },
-        {
-          id: "fis",
-          name: "FIS",
-          description: `FIS is the world’s largest provider of banking and payments technology solutions and a global leader in consulting and outsourcing solutions. With a long history deeply rooted in the financial services sector, FIS serves more than 14,000 institutions in over 130 countries. Headquartered in Jacksonville, Fla., FIS employs more than 55,000 people worldwide and holds leadership positions in payment processing and banking solutions, providing software, services and outsourcing of the technology that drives financial institutions. In October 2014 FIS completed acquisition of Brussels-based Clear2Pay. The transaction brings new corporate payment solutions and services, inclusive of high-value and cross-currency corporate payments, payments managed services, and payments processing utilities that will further bolster FIS’ payments portfolio across all geographies. Clear2Pay is now an FIS company.`,
-          www: "https://www.fisglobal.com/en/",
-          type: "silver",
-          orientation: "horizontal",
-          logo: require("../assets/partners/2022/fis.svg")
-        },
-        {
-          id: "cgi",
-          name: "CGI",
-          description: `**Mamy ofertę na miarę Twoich kwalifikacji. Zbudujmy wspólnie zespół idealnie dopasowany do Ciebie.**
-
-Chcesz pracować z najlepszymi ekspertami w branży, obcować z najnowocześniejszą technologią i wdrażać imponujące projekty, które zmieniają rzeczywistość? Róbmy to razem!
-
-[Dołącz do CGI](https://www.cgi.com/polska/pl/kariera). Stań się częścią jednej z największych na świecie firm konsultingowych w obszarze IT, a jeśli zechcesz, również jej współwłaścicielem. Wraz ze swoim
-
-zespołem możesz tworzyć rozwiązania, które ułatwiają i usprawniają życie. Robimy to od 46 lat na świecie i od 25 lat w Polsce. Oto tylko kilka przykładów naszych działań:
-
-* Wspieraliśmy uruchomienie sieci Plus GSM w Polsce
-* Stworzyliśmy sprawny system zarządzania relacjami z klientami dla wiodącego dewelopera w Polsce
-* Usprawniamy działalność instytucji finansowych poprzez wdrażanie najnowocześniejszych rozwiązań, między innymi regulacji IFRS9
-* Jesteśmy liderem w rozwijaniu i implementacji core’owych systemów ubezpieczeniowych, takich jak IBA i TIA
-* W Polsce Tworzymy środowisko chmurowe, które będzie obsługiwało 50 skandynawskich instytucji finansowych
-
-**CGI to historia setek imponujących karier**
-
-Interesuje Cię rozwój kariery na własnych zasadach? Jeśli tak, to CGI jest miejscem dla Ciebie. Zróżnicowane projekty i możliwości w ramach CGI dają Ci szansę na samorealizację w kierunkach, które interesują Cię najbardziej. Podążaj własną ścieżką mając wsparcie prawie 500 najlepszych specjalistów. Nie ma takiej technologii ani branży, na której się nie znamy Reprezentujemy poziom ekspercki. Będziesz więc otoczony koleżankami i kolegami o najwyższych kwalifikacjach, jak w mistrzowskiej drużynie.
-`,
-          www: "https://www.cgi.com/polska/pl/kariera",
-          type: "gold",
-          orientation: "horizontal",
-          logo: require("../assets/partners/2022/cgi.svg")
-        },
-        {
-          id: "revolut",
-          name: "Revolut",
-          description: `# About [Revolut](https://www.revolut.com/)
-
-People deserve more from their money. More visibility, more control, more freedom. And since 2015, Revolut has been on a mission to deliver just that. With an arsenal of awesome products that span spending, saving, travel, transfers, investing, exchanging and more, our super app has helped over 18 million customers get more from their money. And we're not done yet!
-
-
-## About our Technology Department
-
-Our Technology team isn’t just one of the best in the industry, it’s one of the best in the world. And we’re proud of it. It’s our driving force; our engine 🚀 
-
-From building a new banking backend to creating an award-winning app, there’s nothing (and we mean nothing) our tech team can’t do. Our Technology team isn’t here to fix legacy systems – it’s here to build world-class financial products from the ground up. Products that will be used by millions of people around the world (18+ million people, not that we’re counting)🌎
-
-We have Engineers that want to change the world. If you like to work at a steady pace with no surprises, keep scrolling. If you want your work to change the global financial landscape, you might be just who we’re looking for. We have a minimalist approach to using external frameworks, with emphasis on maintainability and fast turnaround with TDD, DDD and Continuous Integration & Delivery.  \\
-Sound like your speed? Check our openings: [https://www.revolut.com/careers?team=Engineering+%26+Data](https://www.revolut.com/careers?team=Engineering+%26+Data) 
-
-Follow us:
-
-
-
-* [https://www.linkedin.com/company/revolut](https://www.linkedin.com/company/revolut)
-* [https://medium.com/revolut](https://medium.com/revolut)
-* [https://www.facebook.com/RevolutInsider](https://www.facebook.com/RevolutInsider)
-* [https://www.instagram.com/revolutinsider/?hl=en](https://www.instagram.com/revolutinsider/?hl=en)`,
-          www: "https://www.revolut.com/",
-          type: "gold",
-          orientation: "horizontal",
-          logo: require("../assets/partners/2022/revolut.svg")
-        },
-        {
-          id: "starburst",
-          name: "Starburst",
-          description: `Starburst is a successful, multinational start-up founded by an experienced group of passionates from the US and Poland. After 5 years of presence on the market we currently have more than 400 employees, including people from UK, Poland, US, Germany, Canada and several more engineers around the world.
-
-For now in our portfolio we have around 200 satisfied clients, including Comcast, Zalando, Finra, Verizon, Societe Generale, Randstad, Sky and many more. We tripled the value of the company 3 years in a row and after last funding round (series D) in February 2022 our valuation reached over $3B!
-
-We unlock the value of distributed data by making it fast and easy to access via SQL, no matter where it lives. Starburst queries data across any database, making it instantly actionable for data-driven organizations. With Starburst, teams can lower the total cost of their  infrastructure and analytics investments, prevent vendor lock-in, and use the existing tools that work for their business. Starburst helps companies make better decisions faster on all data.
-
-Currently for our Poland-based team we are looking for new All-Star engineers who are at the top of their game. If this sounds like you, check out our open roles at [starburst.io/careers](https://www.starburst.io/careers/)
-
-For more information visit our website: [starburstdata.io](https://starburst.io/)
-
-You may also follow our activity on:
-- [Linkedin](https://www.linkedin.com/company/starburstdata/)
-- [Twitter](https://twitter.com/starburstdata)
-- [Facebook](https://www.facebook.com/starburstdata)
-`,
-          www: "https://starburst.io/",
-          type: "silver",
-          orientation: "horizontal",
-          logo: require("../assets/partners/2022/starburst.svg")
-        },
-        {
-          id: "grid-dynamics",
-          name: "Grid Dynamics",
-          description: `Grid Dynamics is a leading provider of technology consulting, engineering, and data science services for Fortune 500 corporations from financial, technological and retail sectors. It has been operating since 2006, is headquartered in the San Francisco area (San Ramon), California, and has development centers in the United States and Eastern Europe.  
-
-As of today, Grid Dynamics brings together more than 3,500 engineers in 13 countries (USA, Mexico, Jamaica, Netherlands, England, Switzerland, Romania, Serbia, Armenia, Ukraine, Poland, Moldova, India) and continues to grow steadily. The clients include Google, Apple, Microsoft, Tesla, PayPal, and other technology giants.
-
-Grid Dynamics provides unique opportunities for students, fresh graduates and people who want to change their career path. Duration of the Internship is 6 months and it contains training in technical areas. Our interns can expect 30h per week of hands-on technical experience with a flexible schedule.
-
-Check our open positions here: [http://careers.griddynamics.com/](http://careers.griddynamics.com/?utm_source=confitura)
-
-Follow us here:
- - [Instagram](https://www.instagram.com/griddynamics_pl/)
- - [Facebook](https://www.facebook.com/lifeatgriddynamics)
- - [LinkedIn](https://www.linkedin.com/company/grid-dynamics)
-`,
-          www: "http://careers.griddynamics.com",
-          type: "silver",
-          orientation: "horizontal",
-          logo: require("../assets/partners/2022/griddynamics.svg")
-        },
-        {
-          id: "datumo",
-          name: "Datumo",
-          description: `Jesteśmy firmą konsultingową z zakresu technologii Big Data i Cloud. Istniejemy i działamy od 2017 roku z inicjatywy  Piotra Guzika i Daniela Pogrebniaka. Naszym pierwszym produktem był “Storyteller”, który wraz z biegiem czasu został przekształcony w mniejsze moduły, nadal z sukcesem wdrażane u naszych klientów. Wiemy, że potencjał tkwi w danych dlatego też z zaangażowaniem projektujemy dedykowane platformy Big Data dopasowane do potrzeb klienta. Zapewniamy wsparcie całych zespołów jak i pojedynczych ekspertów.`,
-          www: "http://datumo.io/",
-          type: "silver",
-          orientation: "horizontal",
-          logo: require("../assets/partners/2022/datumo.svg")
-        },
-        {
-          id: "ppl",
-          name: `'Polish Airports' State Enterprise`,
-          description: `'Polish Airports' State Enterprise (PPL) is one of the top aviation infrastructure companies in Poland, taking active part in the shaping and development of this strategic branch of the industry. PPL resources include Warsaw Chopin Airport (EPWA) – the biggest Polish airport and one of the biggest airports in Central and Eastern Europe.
-          
-[Join us](https://www.lotnisko-chopina.pl/pl/praca-w-it.html)`,
-          www: "https://www.lotnisko-chopina.pl/pl/praca-w-it.html",
-          type: "silver",
-          logo: require("../assets/partners/2022/ppl.svg"),
-          orientation: "horizontal"
-        }
+//         {
+//           id: "virtuslab",
+//           description: `We are VirtusLab – 300+ tech enthusiasts constantly striving for growth. We provide expert software engineering and consultancy services to help customers adopt technology transformations. Our aim is to solve complex problems and improve the dev's efficiency. We are building high-quality software in various domains: ranging from smart contracts to investment platforms to compiler servers to brick & mortar retail stores. Our team has extensive knowledge about Data Engineering & Data Science, Cloud-Native Services, Reactive Systems, Dev Tooling, and Frontend.
+//
+// We are also worldwide experts in Scala language, officially supporting its development and tooling starting with Scala 3 itself to tailor-made solutions for the largest Scala monorepos in the world, like Metals (Language Server Protocol) or scalafmt (Code formatter).
+//
+// Our  #VLteam delivers high-quality software solving actual problems with modern technology and gives back to the community by supporting open source initiatives, local tech meetups, and conferences (check our own initiative, [Sphere.it](https://sphere.it)).
+//
+// We have built a company where everyone can influence how we operate and what we are aiming at. We believe that everyone should participate and create new directions.  Visit [virtuslab.com](https://virtuslab.com) for more!`,
+//           name: "VirtusLab",
+//           www: "https://virtuslab.com/",
+//           type: "platinum",
+//           logo: require("../assets/partners/2022/virtuslab.svg"),
+//           orientation: "horizontal"
+//         },
+//         {
+//           id: "allegro",
+//           name: "Allegro Tech",
+//           description: `W [Allegro](https://allegro.tech/) tworzymy i utrzymujemy aplikacje, które dzięki swojej skalowalności i niezawodności zyskały sobie rzeszę wiernych użytkowników. Zadanie nie należy do najłatwiejszych, w pracy napotykamy na szereg wyzwań zarówno w obszarze samej architektury i designu, jak i w procesie doboru technologii, zapewnienia jakości kodu, usprawnienia funkcjonalności oraz w późniejszej fazie wdrożenia i utrzymania produktu.
+//           allegro.tech jest naszym pomysłem na dzielenie się zebranym doświadczeniem poprzez organizację konferencji, warsztatów, meetupów i hackatonów.
+//
+// Po więcej informacji zapraszamy na nasz blog [https://allegro.tech/](https://allegro.tech/)
+//
+// Dołacz do nas również na [https://www.meetup.com/allegrotech/](https://www.meetup.com/allegrotech/)
+//
+// I bądź na bieżąco [https://www.facebook.com/allegro.tech](https://www.facebook.com/allegro.tech)`,
+//           www: "https://allegro.tech/",
+//           type: "silver",
+//           logo: require("../assets/partners/allegro.svg"),
+//           orientation: "horizontal"
+//         },
+//         {
+//           id: "scalo",
+//           description: `[Scalo](https://www.scalosoft.com/) to polska firma, w której realizujemy kompleksowe projekty programistyczne, budujemy dedykowane zespoły deweloperskie, rozwijamy systemy wbudowane dla klientów z różnych branż. W naszej firmie każdy może **działać swobodnie**, jesteśmy otwarci na nowe pomysły i rozwiązania. Stawiamy na **współpracę**, chętnie **dzielimy się wiedzą** i wymieniamy **doświadczenia projektowe**.
+//
+// Nasz sukces to **zgrany zespół**. Wśród nas znajdziesz developerów i projektantów, analityków, testerów oraz administratorów. Biznes wspieramy siłami kilkudziesięciu handlowców, rekruterów i specjalistów od delivery, którzy są dostępni w każdym momencie.
+//
+// Jeżeli nie przekonują Cię opisy to niech przemówią liczby. W tegorocznym badaniu Great Place to Work uzyskaliśmy **78%** poziom zaangażowania, a do naszych najmocniejszych stron należą:
+// - **98%** z nas twierdzi, że każdy nowy pracownik spotyka się w Scalo z ciepłym przyjęciem,
+// - **94%** z nas twierdzi, że menedżerowie dostrzegają w członkach zespołu człowieka, a nie tylko pracownika,
+// - **93%** z nas twierdzi, że w Scalo panuje przyjazna atmosfera,
+// - **92%** z nas twierdzi, że Scalo stwarza korzystne warunki dla pogodzenia pracy z obowiązkami rodzica lub opiekuna,
+// - **88%** z nas twierdzi, że w Scalo można liczyć na wzajemną współpracę.
+//
+// Dołącz do nas i stwórz swoją historię w Scalo! Odwiedź naszą stronę internetową i poznaj nas bliżej: www.career.scalosoft.com`,
+//           name: "Scalo",
+//           www: "https://www.career.scalosoft.com/",
+//           type: "silver",
+//           logo: require("../assets/partners/2022/scalo.svg"),
+//           orientation: "horizontal"
+//         },
+//         {
+//           id: "nordea",
+//           name: "Nordea",
+//           description: `W Nordea na co dzień pracują specjaliści, którzy dbają o bezpieczeństwo i sprawne funkcjonowanie banku Nordea. Nordea zatrudnia w Polsce ekspertów w obszarach m.in. IT, bankowości, audytu, rynków kapitałowych, robotyki, AML i sankcji.
+//
+// https://www.nordea.com/en
+// `,
+//           www: "https://www.nordea.com/en",
+//           type: "silver",
+//           logo: require("../assets/partners/2022/nordea.svg"),
+//           orientation: "horizontal"
+//         },
+//         {
+//           id: "dataart",
+//           name: "DataArt",
+//           description: `DataArt zajmuje się inżynierią oprogramowania na skalę globalną. Od ponad 20 lat zespoły składające się z wysoko wykwalifikowanych specjalistów tworzą rozwiązania technologiczne, które pomagają klientom osiągać cele biznesowe i zdobywać nowe rynki. Najważniejszą wartością w DataArt są ludzie. Tę zasadę stosujemy odpowiadając na potrzeby klientów, niezależnie od skali ich biznesu i stosowanych technologii. Dostosowujemy się do kierunku rozwoju naszych partnerów biznesowych i ewoluujemy wraz z nimi. W DataArt łączymy doskonałość techniczną z wartościami, które kształtują nasz model biznesowy: ciekawością, otwartością, zaufaniem, szczerością i intuicją. Takie podejście pozwala nam dostarczać wartościowe rozwiązania wysokiej jakości i budować partnerskie relacje, na których nasi klienci mogą polegać.
+//
+// DataArt zdobyła zaufanie wiodących marek i wymagających klientów takich jak Nasdaq, S&P, oneworld Alliance, Ocado, artnet, Betfair i skyscanner. Funkcjonuje jako globalna sieć firm świadczących usługi technologiczne, współpracując z ponad 5000 profesjonalistami w ponad 20 lokalizacjach w USA, Europie i Ameryce Południowej.
+//
+// W Polsce DataArt posiada biura w czterech miastach - w Lublinie, Wrocławiu, Krakowie i Łodzi.
+// `,
+//           www: "https://www.dataart.com.pl/",
+//           type: "silver",
+//           logo: require("../assets/partners/2022/dataart.svg"),
+//           orientation: "horizontal"
+//         },
+//         {
+//           id: "coderslab",
+//           name: "Coders Lab",
+//           description: `Coders Lab to najstarsza szkoła IT w Polsce. W jej ofercie znajdują się kursy z zakresu programowania front-end i back-end, testowania manualnego i automatyzującego oraz analityki danych. Łącząc doświadczenie edukacyjne ze znajomością rynku pracy IT, Coders Lab umożliwia realną zmianę zawodową osobom początkującym, jak i rozwój programistom posiadającym doświadczenie. W ciągu 8 lat jej kursy ukończyło ponad 8 000 absolwentów.`,
+//           www: "https://coderslab.pl/",
+//           type: "media",
+//           logo: require("../assets/partners/2022/coderslab.svg"),
+//           orientation: "horizontal"
+//         },
+//         {
+//           id: "bnpparibas",
+//           name: "BNP Paribas",
+//           description: `BNP Paribas działa w pierwszej 6 największych banków w Polsce pod względem kapitałowym dostarczając 4 mln naszych Klientów rozwiązania z zakresu finansowania działalności na rynku krajowym i międzynarodowym oraz szereg produktów oszczędnościowo-inwestycyjnych i kredytowych.
+//
+// Na Confitura pojawiamy się nie tylko jako bank, ale przede wszystkim jako pracodawca z obszaru IT, bo obszar Technologii jest kluczowy w funkcjonowaniu naszego biznesu. Bankowość to nie tylko działy sprzedaży czy operacji. Nasz bank to również miejsce, w którym pracownicy mogą być odpowiedzialni za rozwój nowoczesnych aplikacji internetowych i mobilnych, budowanie innowacyjnych rozwiązań z wykorzystaniem Big Data, Cloud oraz AI, modernizację i utrzymanie infrastruktury, wsparcie użytkowników i wiele innych.
+//
+// Praca w BNP Paribas to praca w środowisku bardzo dynamicznym i pełnym wyzwań, dającym możliwość współpracy z największymi firmami z branży technologii oraz z szeregiem innowacyjnych startupów zarówno z Polski jak i ze świata. Chcesz sprawdzić jakie możliwości rozwoju dajemy kandydatom? Wejdź na stronę [Praca w IT | BNP Kariera.](https://www.bnpparibas.pl/kariera/pl/obszary-zatrudnienia/praca-w-it)`,
+//           www: "https://www.bnpparibas.pl",
+//           type: "gold",
+//           logo: require("../assets/partners/2022/bnpparibas.svg"),
+//           orientation: "horizontal"
+//         },
+//         {
+//           id: "decerto",
+//           name: "Decerto",
+//           description: `Jesteśmy polskim software house’m obecnym na rynku od 2006 roku. Realizujemy projekty dla dużych korporacji, głównie z sektora finansowego. Równocześnie zachowujemy płaską strukturę i niekorporacyjną kulturę pracy. Posiadamy duże doświadczenie i know-how oraz stawiamy na długoterminowe relacje. Dzięki zaufaniu Klientów prowadzimy kilkanaście dużych projektów – pracując z nami zyskujesz nie tylko stabilność zatrudnienia, ale również duże możliwości rozwoju oraz wybór odpowiedniego środowiska pracy. Specjalizujemy się w rozwiązaniach backendowych związanych z dużymi wolumenami danych oraz logiką biznesową. Projektujemy kompleksowe rozwiązania informatyczne, dlatego cenimy otwarty umysł, samodzielność oraz własną inicjatywę. Doceniamy indywidualizm i szanujemy inny punkt widzenia.`,
+//           www: " https://www.decerto.com/pl/start",
+//           type: "silver",
+//           logo: require("../assets/partners/2022/decerto.svg"),
+//           orientation: "horizontal"
+//         },
+//         {
+//           id: "bigpicture",
+//           name: "BigPicture",
+//           description: `Hi, we’re BigPicture, the proud creators of one of the leading initiative management software on the market. Our vision is shared by over 3 million users of BigPicture in organizations of all sizes: from small startups to market leaders such as Netflix, NASA, Intel, Tesla, Apple, Uber, Samsung, Porsche, Siemens, LG, and many more.
+//
+// So far, we’ve built an amazing team of 200 experts. Join us!
+//
+// How we work
+// - In Agile and Scrum we trust - we make sure to keep our teams small and our sprints manageable & effective
+// - Ownership - we want everyone on our team to feel empowered to grab the reins in their positions and help push the company forward
+// - We can set our own working hours. We just need to make sure to join our team for the daily meeting
+// - We work 100% remotely or from our modern office in Warsaw - we can choose
+//
+// Our solutions stack
+// - We use monorepo to maintain consistency of development through automated validations in one of the most extensive CI processes in the local market providing not only static/dynamic code analysis, but Architecture Decision Records appliance as well
+// - We support ~10000 users for a single tenant deployed on our own multitenant cloud infrastructure
+// - Java with a fully fledged and standardized DDD including Hexagonal Architecture, Event Sourcing, hundreds of Aggregates spanning dozens of domains, Ubiquitous language implemented across the whole organization
+// - And for all of you frontend lovers out there, it's worth knowing that this is one of the largest and most complex Angular projects in Poland
+//
+// We focus on the continuous development of our skills. That is why we invest in and offer:
+// - Unlimited skills development budget
+// - ShipIT Weeks - regular, internal, one week long, fully-paid hackathons
+// - Internal tech guilds - meetings dedicated to sharing knowledge, and best practices
+// - Taking part in tech events sponsored by us - like Confitura ;)
+//
+// Check our open positions here: https://bigpicture.one/careers/
+//
+// Follow BigPicture's #BigTeam here:
+// - [Instagram](https://www.instagram.com/bigpicture.one/)
+// - [Facebook](https://www.facebook.com/BigPicture.one)
+// - [LinkedIn](https://www.linkedin.com/company/bigpictureone/)
+// `,
+//           www: " https://bigpicture.one/",
+//           type: "platinum",
+//           logo: require("../assets/partners/2022/bigpicture.svg"),
+//           orientation: "horizontal"
+//         },
+//         {
+//           id: "softwaremill",
+//           name: "SoftwareMill",
+//           description: `Hello from [SoftwareMill](https://softwaremill.com/) - a consulting & custom software agency that proactively helps businesses benefit from technologies like Cloud Computing, Big Data, Blockchain and Machine Learning.
+//
+// We specialise in Java, Scala, Akka, the Lightbend Reactive Platform, Kafka, Spark, TensorFlow, SQL & NoSQL databases: PostgreSQL, Cassandra, Mongo, Node.JS and React. We build on the traditional engineering work ethics and values, which translate directly to the quality of our systems. We are a leading consultancy chosen for digital transformation, recognized for our integrity, versatility, understanding of the business, right soft skills, strong work ethic, rich experience and top notch mastery of technology.
+//
+// Widening technical horizons is the fabric of our organisation. Not only do we practise and learn constantly, but we also teach, create and contribute. We have a proven track record of working with the IT community, leading open-source projects [[why not to contribute?]](https://github.com/softwaremill/) and organising a [Scalar conference](https://scalar-conf.com/).
+//
+// Our priority is to deliver quality software: thoroughly tested, well-designed, and reviewed. But, our growth is not limited to technology. Since 2009 we have been building the best, fully remote, workplace for developers. We have a unique, 100% remote and bottom-up structure where leaders are not appointed, but chosen by teammates. In 2022, we’ve grown into a company of 80+ people. We simply like each other and together we create [a friendly environment](https://softwaremill.com/about-us/) that enhances our potential.
+//
+// We’re eager to welcome more passionate software engineers to our Team. If you want to share your knowledge, empower teammates and lead by example, while working on interesting projects, check out our [career page](https://softwaremill.com/join-us/)!
+//
+// Catch #SoftwareMillVibes
+// - [SoftwareMill Tech Blog](https://softwaremill.com/blog/)
+// - [Scala Times newsletter](https://scalatimes.com/)
+// - [Scala 3 Tech Report](https://softwaremill.com/ebooks/scala-3-tech-report/)
+// - [SoftwareMill Academy](https://academy.softwaremill.com/en/)
+// - [AMA Slack](https://sml.io/ask-me-anything)
+// - [Instagram](https://instagram.com/softwaremill_vibes)
+// - [Youtube](https://www.youtube.com/c/SoftwareMillCom)
+// - [Facebook](https://www.facebook.com/softwaremill)
+// - [Twitter](https://twitter.com/softwaremill)
+// - [Linkedin](https://www.linkedin.com/company/808422)
+// - [DevSkin Softwear](https://devskin-softwaremill.myspreadshop.pl/)
+// `,
+//           www: "https://softwaremill.com/",
+//           type: "silver",
+//           logo: require("../assets/partners/2022/sml2.svg"),
+//           orientation: "horizontal"
+//         },
+//         {
+//           id: "intercars",
+//           name: "Inter Cars",
+//           description: `[Inter Cars](https://intercars.com.pl/) has been a leading distributor of spare parts for passenger cars and trucks on the Polish market for many years. In addition, the company has gradually been developing its activity in 18 countries across Europe, ranking first in the Central and Eastern part of the continent, second on the entire continent and eighth globally.
+//
+// Inter Cars offers over two million spare parts for passenger cars and trucks, parts for motorcycles, farming and industrial machines as well as driver accessories, with as many as 40,000 new items every years being introduced into the sales system for the trucks market alone.
+//
+// The company provides garages fast, convenient and safe access to all tools facilitating their operations as, in addition to spare parts for cars, Inter Cars offers technical support, innovative garage management programs as well as stationary and online training.
+//
+// In the entire IT area at Inter Cars, we see the need to constantly improve the competences of IT Managers and Employees. Every year, we have a specific development budget allocated to this need. We are committed to developing both managerial and technical competences as well as the so-called "Soft" related to, inter area, with communication, cooperation, improvement of individual and team effectiveness.
+//
+// Inter Cars IT department currently consists of about 300 employees and we are still looking for new ones! Teams that you can confidently join, if you are a person open to new challenges, you will surely find an area for yourself.`,
+//           www: "https://intercars.com.pl/",
+//           type: "silver",
+//           logo: require("../assets/partners/2022/intercars.svg"),
+//           orientation: "horizontal"
+//         },
+//         {
+//           id: "bosch",
+//           description: `The Bosch Group is a leading global supplier of technology and services. It employs roughly 402,600 associates worldwide (as of December 31, 2021). The company generated sales of 78.7 billion euros in 2021. Its operations are divided into four business sectors: Mobility Solutions, Industrial Technology, Consumer Goods, and Energy and Building Technology. As a leading IoT provider, Bosch offers innovative solutions for smart homes, Industry 4.0, and connected mobility. Bosch is pursuing a vision of mobility that is sustainable, safe, and exciting. It uses its expertise in sensor technology, software, and services, as well as its own IoT cloud, to offer its customers connected, cross-domain solutions from a single source. The Bosch Group’s strategic objective is to facilitate connected living with products and solutions that either contain artificial intelligence (AI) or have been developed or manufactured with its help. Bosch improves quality of life worldwide with products and services that are innovative and spark enthusiasm. In short, Bosch creates technology that is “Invented for life.”`,
+//           name: "Bosch",
+//           www: "https://www.bosch.com/company/",
+//           type: "silver",
+//           logo: require("../assets/partners/2022/bosch.svg"),
+//           orientation: "horizontal"
+//         },
+//         {
+//           id: "kmd",
+//           name: "KMD",
+//           description: `KMD Poland is a foreign branch of the KMD Group which is one of the largest Danish IT companies. The company specializes in implementing key IT solutions and processes in energy area, finance, insurance, R&D and HR. Its key projects are implemented in the public sector in Denmark and in Scandinavian countries, contributing to the digital transformation of their societies, public institutions and private sector entities. The KMD Group has more than 3,000 employees and it is a subsidiary of NEC Corporation, a global leader in integration of IT and networking technologies. This year, KMD Group is celebrating its 50<sup>th</sup> anniversary.`,
+//           www: "https://kmdpoland.pl",
+//           type: "silver",
+//           logo: require("../assets/partners/2022/kmd.svg"),
+//           orientation: "horizontal"
+//         },
+//         {
+//           id: "goldman-sachs",
+//           name: "Goldman Sachs",
+//           description: `At Goldman Sachs, our Engineers don’t just make things – we make things possible. Join our engineering teams that build massively scalable software and systems, architect low latency infrastructure solutions, proactively guard against cyber threats, and leverage machine learning alongside financial engineering to continuously turn data into action.`,
+//           www: "https://www.goldmansachs.com/careers/",
+//           type: "gold",
+//           orientation: "horizontal",
+//           logo: require("../assets/partners/2022/goldmansachs.svg")
+//         },
+//         {
+//           id: "onwelo",
+//           name: "Onwelo",
+//           description: `Onwelo to nowoczesna polska spółka technologiczna, która specjalizuje się w budowaniu innowacyjnych rozwiązań IT dla organizacji z szeregu sektorów na całym świecie. Główne obszary działalności Onwelo to: tworzenie oprogramowania, jego rozwój oraz utrzymanie, a także mocne wsparcie kompetencyjne. W krótkim czasie firma wdrożyła ponad 300 projektów w Europie i w USA, powiększyła zespół do ponad 400 osób, a także otworzyła biura w sześciu miastach Polski oraz oddziały w Stanach Zjednoczonych, Niemczech i w Szwajcarii.
+//
+// Chociaż filar naszej firmy stanowią doświadczeni, wykwalifikowani specjaliści, jesteśmy również otwarci na włączenie do naszych zespołów pasjonatów IT, którzy przy naszym wsparciu chcą zmienić dotychczasowy stack lub postawić swoje pierwsze kroki w świecie zaawansowanych technologii. W Onwelo zatrudniamy specjalistów z obszarów: analizy biznesowej, rozwoju i utrzymania oprogramowania, testowania oprogramowania, zarządzania infrastrukturą IT, tworzenia rozwiązań Data & Analytics oraz Intelligent Automation, a także rozwiązań chmurowych.
+//
+// Dlaczego warto u nas pracować?
+//
+// * **Wsparcie mentorskie i jasne ścieżki kariery** – możesz liczyć na wsparcie naszych ekspertów i przełożonych wywodzących się z obszarów merytorycznych oraz na kulturę wymiany wiedzy i spersonalizowany rozwój
+// * **Nowoczesne technologie i narzędzia pracy** – realizujemy projekty o wysokim stopniu zaawansowania technologicznego, a dzięki nowoczesnym standardom narzędzi pracy i systemów, Twoja praca jest bardziej przyjemna i rozwojowa
+// * **Projekty zagraniczne** – pracuj z nami dla klientów z Europy Zachodniej i Stanów Zjednoczonych
+// * **Zgrany zespół i inicjatywy integracyjne** – lubisz planszówki, warsztaty, wyzwania sportowe albo spontaniczne wyjścia w większym gronie? Zadbamy o to!
+// * **Elastyczny model zatrudnienia i możliwość pracy zdalnej** – dostosujemy model zatrudnienia do Twoich potrzeb. Jako samodzielny specjalista możesz pracować zarówno w jednym z naszych nowoczesnych biur w atrakcyjnej lokalizacji, jak i zdalnie
+// * **Przyjazny onboarding** – zadbamy o to, żeby Twój start w firmie był łatwy i przyjemny
+// * **Pakiety benefitów** – karta MultiSport, prywatna opieka medyczna, grupowe ubezpieczenie na życie – to u nas standard
+//
+// Chcesz dowiedzieć się o nas więcej? Wejdź na https://onwelo.com/career,p6.html`,
+//           www: "https://www.onwelo.com",
+//           type: "gold",
+//           orientation: "horizontal",
+//           logo: require("../assets/partners/2022/onwelo.svg")
+//         },
+//         {
+//           id: "touk",
+//           name: "Touk",
+//           description: `TouK to miejsce twórczej eksploracji dla deweloperów. Tu liczy się pasja, inicjatywa i (współ)działanie. Tworzymy przestrzeń, gdzie ludzie o różnych charakterach, niezależnie od doświadczenia, mają możliwość pracować i rozwijać się przez lata. Nasza kultura, doświadczony i wszechstronny zespół owocują realizacją coraz ciekawszych i ambitniejszych projektów.`,
+//           www: "https://touk.pl/careers",
+//           type: "silver",
+//           orientation: "horizontal",
+//           logo: require("../assets/partners/touk.svg")
+//         },
+//         {
+//           id: "citi",
+//           name: "Citi",
+//           description: `Citi is the leading global bank with a history spanning more than 200 years and which serves more than 200 million customer accounts and does business in more than 160 countries and jurisdictions. Citi provides consumers, corporations, governments and institutions with a broad range of world-class financial products and services, including consumer banking and credit, corporate and investment banking, securities brokerage, transaction services and wealth management.
+//
+// Our technology teams deliver customized solutions by utilizing cutting edge technologies to deploy everything from cloud computing to mobile solutions to APIs, creating a competitive advantage for Citi, our clients, our regulators and our stakeholders. In this fast-paced environment, our employees are focused on creating solutions, including CitiDirect BE® Mobile for transaction services and Citi Velocity, an electronic trading platform, that provide Citi's institutional clients with unprecedented access to capital markets intelligence and execution.
+//
+// In Poland we act under Citibank Europe. We opened in 2005 with just 57 employees; today we are a diverse team of almost 6000 serving 96 countries from all continents. We work across the full spectrum of Citi business areas, including Technology.
+//
+// Learn more at: [jobs.citi.com/Poland](http://jobs.citi.com/Poland)
+// `,
+//           www: "http://jobs.citi.com/Poland",
+//           type: "gold",
+//           orientation: "box",
+//           logo: require("../assets/partners/2022/citi.svg")
+//         },
+//         {
+//           id: "sii",
+//           name: "Sii Poland",
+//           description: `Since 2006 on the market, 7 000 experts, PLN 1 billion revenue, 8 times Great Place to Work title – get to know Sii, the fastest growing IT, digital transformation, BPO and engineering company in Poland.
+//
+// Sii already has over 1,000 Java developers who carry out projects for brands such as PUMA, Ingenico, Scalepoint, Sennheiser, Berlingske Media, ABB Sartorius, Qiagen every day. Specialists from Sii’s Digital Competency Center join projects in which the majority of the work covers the development of new products and functionalities. Apart from internal communities, the team has various knowledge sharing and professional growth opportunities, including organized training sessions and numerous partnerships, among others with Adobe. Learn more at [sii.pl](https://sii.pl).`,
+//           www: "https://sii.pl",
+//           type: "silver",
+//           orientation: "horizontal",
+//           logo: require("../assets/partners/2022/sii.svg")
+//         },
+//         {
+//           id: "rsystems",
+//           name: "R Systems",
+//           description: `[R Systems](https://eu.rsystems.com/) is a global technology and analytics services company. We help our clients achieve speed-to-market, overcome digital barriers, and create business value with our specialized service offerings and consultative business approach.
+//
+// We speak the language of business as fluently as we do the language of technology. In other words: **We speak Digital**. Our goal: accelerate our clients’ digital leadership.`,
+//           www: "https://eu.rsystems.com/",
+//           type: "silver",
+//           orientation: "horizontal",
+//           logo: require("../assets/partners/2022/rsystems.svg")
+//         },
+//         {
+//           id: "sages",
+//           name: "Sages",
+//           description: `[Sages](https://www.sages.pl) od 2007 r., zapewnia kompleksowe wsparcie w zakresie IT. Zajmujemy się kształceniem specjalistów IT oraz tworzeniem rozwiązań opartych na sztucznej inteligencji mających na celu automatyzację procesów w organizacjach.
+//
+// Wspólnie z Politechniką Warszawską stworzyliśmy system Omega-PSIR do ewaluacji uczelni i instytucji naukowych. Jest to nr 1 w Polsce i nr 5 na świecie, jeżeli chodzi o liczbę wdrożeń pośród oprogramowania tego typu.
+// W ramach oferty edukacyjnej organizujemy szkolenia dla programistów, testerów, integratorów, managerów, analityków ze wszystkich obszarów związanych z realizacją projektów IT.
+// W obszarze sztucznej inteligencji realizujemy projekty związane z przetwarzaniem języka naturalnego, analizą obrazu i automatyzacją procesów, takie jak: chatboty do obsługi klienta zewnętrznego, chatboty do wewnętrznej obsługi procesów w firmie, wyszukiwarki semantyczne, czy ekstrakcja informacji z nieustrukturyzowanych źródeł takich jak dokumenty i skany. Tworzymy narzędzie dla osób niewidzących i niedowidzących do automatycznego odczytu dokumentów tekstowo-obrazowych.
+//
+// Angażujemy się intensywnie w działania na rzecz społeczności IT oraz nauki: od wielu lat moderujemy społeczność Stacji IT, współorganizujemy konkurs PolEval, konferencję AI & NLP Day oraz Seminarium Użytkowników Uczelnianych Baz Wiedzy
+// `,
+//           www: "https://www.sages.pl",
+//           type: "silver",
+//           orientation: "horizontal",
+//           logo: require("../assets/partners/2022/sages.svg")
+//         },
+//         {
+//           id: "syncron",
+//           name: "Syncron",
+//           description: `Syncron is a global IT product company with Swedish roots, but it is in the Warsaw office where our flagship product - Inventory - has been developed.
+//
+// We create proprietary Java-based applications in the SaaS model.
+//
+// They are used to help the world’s leading manufacturers to optimize all the processes around the heavy machinery service lifecycle: spare parts inventory management and supply chain, parts pricing, machine uptime, field service and warranty management.
+//
+// The highest coding standards are our priority. We are a product company and the quality of our software directly impacts our customers’ revenues, so we thrive to produce a high-quality code with all kinds of tests including unit, integration and end-to-end tests, in the face of constant optimization challenges. We are fully cloud-based, using advanced AWS infrastructure solutions.
+//
+// Check out our open vacancies: [https://www.syncron.com/company/careers/open-positions/](https://www.syncron.com/company/careers/open-positions/)`,
+//           www: "https://www.syncron.com/",
+//           type: "silver",
+//           orientation: "horizontal",
+//           logo: require("../assets/partners/2022/syncron.svg")
+//         },
+//         {
+//           id: "match-trade",
+//           name: "Match-trade",
+//           description: `Jesteśmy firmą z branży fintech, tworzącą zaawansowane systemy transakcyjne dla rynku Forex, kontraktów CFD, kryptowalut oraz akcji. Tworzymy własne środowisko technologiczne i jesteśmy autorem platformy tradingowej opartej o technologię PWA. Współpracujemy z klientami z całego świata - w tym największymi brokerami Forex i najbardziej znanymi giełdami kryptowalut. W ramach jednego z naszych głównych projektów, zajmujemy się budową algorytmów z zakresu High Frequency Trading. Algorytmy te każdego dnia obracają kryptowalutami wartymi miliony dolarów. Nasze rozwiązania są wykorzystywane na giełdach z aż pięciu kontynentów. Członkowie naszego zespołu, nierzadko pasjonaci technologii blockchain oraz kryptowalut, każdego dnia zapoznają się z nowinkami tej nowej, dynamicznie rozwijającej się części sektora finansowego. Śmiało możemy powiedzieć też, szeroki zakres oferowanych przez nas usług stwarza dla naszych pracowników możliwości uczestniczenia w różnorodnych projektach, nie tylko dzięki wykorzystaniu różnych technologii (w tym nowoczesnej technologii Blockchain), ale także dzięki pracy z biznesami z całego świata.`,
+//           www: "https://match-trade.com/",
+//           type: "silver",
+//           orientation: "horizontal",
+//           logo: require("../assets/partners/2022/match-trade.svg")
+//         },
+//         {
+//           id: "fis",
+//           name: "FIS",
+//           description: `FIS is the world’s largest provider of banking and payments technology solutions and a global leader in consulting and outsourcing solutions. With a long history deeply rooted in the financial services sector, FIS serves more than 14,000 institutions in over 130 countries. Headquartered in Jacksonville, Fla., FIS employs more than 55,000 people worldwide and holds leadership positions in payment processing and banking solutions, providing software, services and outsourcing of the technology that drives financial institutions. In October 2014 FIS completed acquisition of Brussels-based Clear2Pay. The transaction brings new corporate payment solutions and services, inclusive of high-value and cross-currency corporate payments, payments managed services, and payments processing utilities that will further bolster FIS’ payments portfolio across all geographies. Clear2Pay is now an FIS company.`,
+//           www: "https://www.fisglobal.com/en/",
+//           type: "silver",
+//           orientation: "horizontal",
+//           logo: require("../assets/partners/2022/fis.svg")
+//         },
+//         {
+//           id: "cgi",
+//           name: "CGI",
+//           description: `**Mamy ofertę na miarę Twoich kwalifikacji. Zbudujmy wspólnie zespół idealnie dopasowany do Ciebie.**
+//
+// Chcesz pracować z najlepszymi ekspertami w branży, obcować z najnowocześniejszą technologią i wdrażać imponujące projekty, które zmieniają rzeczywistość? Róbmy to razem!
+//
+// [Dołącz do CGI](https://www.cgi.com/polska/pl/kariera). Stań się częścią jednej z największych na świecie firm konsultingowych w obszarze IT, a jeśli zechcesz, również jej współwłaścicielem. Wraz ze swoim
+//
+// zespołem możesz tworzyć rozwiązania, które ułatwiają i usprawniają życie. Robimy to od 46 lat na świecie i od 25 lat w Polsce. Oto tylko kilka przykładów naszych działań:
+//
+// * Wspieraliśmy uruchomienie sieci Plus GSM w Polsce
+// * Stworzyliśmy sprawny system zarządzania relacjami z klientami dla wiodącego dewelopera w Polsce
+// * Usprawniamy działalność instytucji finansowych poprzez wdrażanie najnowocześniejszych rozwiązań, między innymi regulacji IFRS9
+// * Jesteśmy liderem w rozwijaniu i implementacji core’owych systemów ubezpieczeniowych, takich jak IBA i TIA
+// * W Polsce Tworzymy środowisko chmurowe, które będzie obsługiwało 50 skandynawskich instytucji finansowych
+//
+// **CGI to historia setek imponujących karier**
+//
+// Interesuje Cię rozwój kariery na własnych zasadach? Jeśli tak, to CGI jest miejscem dla Ciebie. Zróżnicowane projekty i możliwości w ramach CGI dają Ci szansę na samorealizację w kierunkach, które interesują Cię najbardziej. Podążaj własną ścieżką mając wsparcie prawie 500 najlepszych specjalistów. Nie ma takiej technologii ani branży, na której się nie znamy Reprezentujemy poziom ekspercki. Będziesz więc otoczony koleżankami i kolegami o najwyższych kwalifikacjach, jak w mistrzowskiej drużynie.
+// `,
+//           www: "https://www.cgi.com/polska/pl/kariera",
+//           type: "gold",
+//           orientation: "horizontal",
+//           logo: require("../assets/partners/2022/cgi.svg")
+//         },
+//         {
+//           id: "revolut",
+//           name: "Revolut",
+//           description: `# About [Revolut](https://www.revolut.com/)
+//
+// People deserve more from their money. More visibility, more control, more freedom. And since 2015, Revolut has been on a mission to deliver just that. With an arsenal of awesome products that span spending, saving, travel, transfers, investing, exchanging and more, our super app has helped over 18 million customers get more from their money. And we're not done yet!
+//
+//
+// ## About our Technology Department
+//
+// Our Technology team isn’t just one of the best in the industry, it’s one of the best in the world. And we’re proud of it. It’s our driving force; our engine 🚀
+//
+// From building a new banking backend to creating an award-winning app, there’s nothing (and we mean nothing) our tech team can’t do. Our Technology team isn’t here to fix legacy systems – it’s here to build world-class financial products from the ground up. Products that will be used by millions of people around the world (18+ million people, not that we’re counting)🌎
+//
+// We have Engineers that want to change the world. If you like to work at a steady pace with no surprises, keep scrolling. If you want your work to change the global financial landscape, you might be just who we’re looking for. We have a minimalist approach to using external frameworks, with emphasis on maintainability and fast turnaround with TDD, DDD and Continuous Integration & Delivery.  \\
+// Sound like your speed? Check our openings: [https://www.revolut.com/careers?team=Engineering+%26+Data](https://www.revolut.com/careers?team=Engineering+%26+Data)
+//
+// Follow us:
+//
+//
+//
+// * [https://www.linkedin.com/company/revolut](https://www.linkedin.com/company/revolut)
+// * [https://medium.com/revolut](https://medium.com/revolut)
+// * [https://www.facebook.com/RevolutInsider](https://www.facebook.com/RevolutInsider)
+// * [https://www.instagram.com/revolutinsider/?hl=en](https://www.instagram.com/revolutinsider/?hl=en)`,
+//           www: "https://www.revolut.com/",
+//           type: "gold",
+//           orientation: "horizontal",
+//           logo: require("../assets/partners/2022/revolut.svg")
+//         },
+//         {
+//           id: "starburst",
+//           name: "Starburst",
+//           description: `Starburst is a successful, multinational start-up founded by an experienced group of passionates from the US and Poland. After 5 years of presence on the market we currently have more than 400 employees, including people from UK, Poland, US, Germany, Canada and several more engineers around the world.
+//
+// For now in our portfolio we have around 200 satisfied clients, including Comcast, Zalando, Finra, Verizon, Societe Generale, Randstad, Sky and many more. We tripled the value of the company 3 years in a row and after last funding round (series D) in February 2022 our valuation reached over $3B!
+//
+// We unlock the value of distributed data by making it fast and easy to access via SQL, no matter where it lives. Starburst queries data across any database, making it instantly actionable for data-driven organizations. With Starburst, teams can lower the total cost of their  infrastructure and analytics investments, prevent vendor lock-in, and use the existing tools that work for their business. Starburst helps companies make better decisions faster on all data.
+//
+// Currently for our Poland-based team we are looking for new All-Star engineers who are at the top of their game. If this sounds like you, check out our open roles at [starburst.io/careers](https://www.starburst.io/careers/)
+//
+// For more information visit our website: [starburstdata.io](https://starburst.io/)
+//
+// You may also follow our activity on:
+// - [Linkedin](https://www.linkedin.com/company/starburstdata/)
+// - [Twitter](https://twitter.com/starburstdata)
+// - [Facebook](https://www.facebook.com/starburstdata)
+// `,
+//           www: "https://starburst.io/",
+//           type: "silver",
+//           orientation: "horizontal",
+//           logo: require("../assets/partners/2022/starburst.svg")
+//         },
+//         {
+//           id: "grid-dynamics",
+//           name: "Grid Dynamics",
+//           description: `Grid Dynamics is a leading provider of technology consulting, engineering, and data science services for Fortune 500 corporations from financial, technological and retail sectors. It has been operating since 2006, is headquartered in the San Francisco area (San Ramon), California, and has development centers in the United States and Eastern Europe.
+//
+// As of today, Grid Dynamics brings together more than 3,500 engineers in 13 countries (USA, Mexico, Jamaica, Netherlands, England, Switzerland, Romania, Serbia, Armenia, Ukraine, Poland, Moldova, India) and continues to grow steadily. The clients include Google, Apple, Microsoft, Tesla, PayPal, and other technology giants.
+//
+// Grid Dynamics provides unique opportunities for students, fresh graduates and people who want to change their career path. Duration of the Internship is 6 months and it contains training in technical areas. Our interns can expect 30h per week of hands-on technical experience with a flexible schedule.
+//
+// Check our open positions here: [http://careers.griddynamics.com/](http://careers.griddynamics.com/?utm_source=confitura)
+//
+// Follow us here:
+//  - [Instagram](https://www.instagram.com/griddynamics_pl/)
+//  - [Facebook](https://www.facebook.com/lifeatgriddynamics)
+//  - [LinkedIn](https://www.linkedin.com/company/grid-dynamics)
+// `,
+//           www: "http://careers.griddynamics.com",
+//           type: "silver",
+//           orientation: "horizontal",
+//           logo: require("../assets/partners/2022/griddynamics.svg")
+//         },
+//         {
+//           id: "datumo",
+//           name: "Datumo",
+//           description: `Jesteśmy firmą konsultingową z zakresu technologii Big Data i Cloud. Istniejemy i działamy od 2017 roku z inicjatywy  Piotra Guzika i Daniela Pogrebniaka. Naszym pierwszym produktem był “Storyteller”, który wraz z biegiem czasu został przekształcony w mniejsze moduły, nadal z sukcesem wdrażane u naszych klientów. Wiemy, że potencjał tkwi w danych dlatego też z zaangażowaniem projektujemy dedykowane platformy Big Data dopasowane do potrzeb klienta. Zapewniamy wsparcie całych zespołów jak i pojedynczych ekspertów.`,
+//           www: "http://datumo.io/",
+//           type: "silver",
+//           orientation: "horizontal",
+//           logo: require("../assets/partners/2022/datumo.svg")
+//         },
+//         {
+//           id: "ppl",
+//           name: `'Polish Airports' State Enterprise`,
+//           description: `'Polish Airports' State Enterprise (PPL) is one of the top aviation infrastructure companies in Poland, taking active part in the shaping and development of this strategic branch of the industry. PPL resources include Warsaw Chopin Airport (EPWA) – the biggest Polish airport and one of the biggest airports in Central and Eastern Europe.
+//
+// [Join us](https://www.lotnisko-chopina.pl/pl/praca-w-it.html)`,
+//           www: "https://www.lotnisko-chopina.pl/pl/praca-w-it.html",
+//           type: "silver",
+//           logo: require("../assets/partners/2022/ppl.svg"),
+//           orientation: "horizontal"
+//         }
         // {
         //   id: "softwareplant",
         //   description: `Technologiczny startup rozwijający produkty do nowoczesnego zarządzania projektami
