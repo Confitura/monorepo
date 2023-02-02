@@ -34,7 +34,7 @@
       />
       <HomeNumbersPictogram
         :src="require('../assets/views.svg')"
-        value="over 1 mln"
+        value="1 mln +"
         unit="youtube channel views"
       />
       <HomeNumbersPictogram
