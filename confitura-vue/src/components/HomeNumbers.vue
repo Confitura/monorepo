@@ -3,7 +3,7 @@
     <div class="numbers-container">
       <div class="info">
         <h1 class="header">
-          <span>confitura'19</span>
+          <span>confitura'22</span>
           <span> in numbers</span>
         </h1>
         <div class="subinfo">
@@ -14,37 +14,37 @@
           to everyone! Our live streams and recordings of talks gain enormous
           popularity on the web. That's why organizing this event gives
           satisfaction to more than 30 people from Confitura's team. That eagers
-          us to organize another Confitura, this year it will be the 13th.
+          us to organize another Confitura, this year it will be the 15th.
         </div>
       </div>
       <HomeNumbersPictogram
         :src="require('../assets/speakers.svg')"
-        value="37"
+        value="30"
         unit="speakers"
       />
       <HomeNumbersPictogram
         :src="require('../assets/sessions.svg')"
-        value="5"
+        value="4"
         unit="tracks"
       />
       <HomeNumbersPictogram
         :src="require('../assets/presentations.svg')"
-        value="35"
+        value="30"
         unit="presentations"
       />
       <HomeNumbersPictogram
         :src="require('../assets/views.svg')"
-        value="830k"
+        value="over 1 mln"
         unit="youtube channel views"
       />
       <HomeNumbersPictogram
         :src="require('../assets/videos.svg')"
-        value="275"
+        value="323"
         unit="youtube videos"
       />
       <HomeNumbersPictogram
         :src="require('../assets/participants.svg')"
-        value="2000"
+        value="1500"
         unit="participants"
       />
     </div>
