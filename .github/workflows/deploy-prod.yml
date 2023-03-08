@@ -38,7 +38,7 @@ jobs:
           cache-dependency-path: confitura-vue/package-lock.json
       - run: npm ci
       - run: npm run build
-      - run: rm -rf /var/www/github-deployed/2022.confitura.pl && cp -r dist /var/www/github-deployed/2022.confitura.pl
+      - run: rm -rf /var/www/github-deployed/2023.confitura.pl && cp -r dist /var/www/github-deployed/2023.confitura.pl
 
   deploy-console:
     runs-on: self-hosted
@@ -57,4 +57,4 @@ jobs:
           cache-dependency-path: confitura-page/package-lock.json
       - run: npm ci
       - run: npm run build
-      - run: rm -rf /var/www/github-deployed/2022-console.confitura.pl && cp -r dist /var/www/github-deployed/2022-console.confitura.pl
+      - run: rm -rf /var/www/github-deployed/2023-console.confitura.pl && cp -r dist /var/www/github-deployed/2023-console.confitura.pl
