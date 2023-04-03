@@ -3,8 +3,8 @@ server:
   servlet:
     context-path: /api
 conference.c4p:
-  start: "2022-01-01T00:00:00.0+02:00[Europe/Warsaw]"
-  end: "2022-05-21T00:00:00.0+02:00[Europe/Warsaw]"
+  start: "2023-01-01T00:00:00.0+02:00[Europe/Warsaw]"
+  end: "2023-05-21T00:00:00.0+02:00[Europe/Warsaw]"
 twitter:
   api-key: ${TWITTER_KEY}
   api-secret: ${TWITTER_SECRET}
