@@ -87,8 +87,6 @@ As part of one of the world’s biggest tech companies, we like staying ahead of
 6. Appreciate each other
 
 As a team, we value peoples input and respect the hard work they do every day. So we empower our teammates to be innovative and creative, and thank them for their contributions.
-
-<img src="../assets/partners/2023/jpmorgan-benefits.png" alt="Benefits">
 `,
           name: "JPMorgan Chase & Co.",
           www: "https://www.chase.co.uk/gb/en/careers-at-chase/",
