@@ -9,6 +9,7 @@
 <!--        <TheTimer />-->
         <div class="info__live">
           <div class="info__live-text">CONFITURA 2023</div>
+          <a class="info__live-link" href="https://2023.confitura.pl/c4p" target="_blank" >Call 4 Papers is active!</a>
         </div>
 
         <div class="info__long">
