@@ -13,7 +13,7 @@
         </div>
 
         <div class="info__long">
-          Confitura 2023 will take place on June 24th, 2023. Meet us in Warsaw at the fifteenth edition of our super #JVMish event. Mark your calendars and stay tuned, we will announce the C4P soon.
+          Confitura 2023 will take place on June 24th, 2023. Meet us in Warsaw at the fifteenth edition of our super #JVMish event. Mark your calendars!
         </div>
         <div class="info__long">
           If your company wants to join us for this year's edition, here is our contact mail:
