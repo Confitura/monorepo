@@ -46,47 +46,9 @@ Fintech is a fast-paced, ever-evolving world. So we like working with people who
 
 So that you can get the most out of working with us, having a motivated, resourceful spirit is key, as well as a hunger to learn more about technology and financial services. If you’re a forward thinker with a head for fintech, we’d love to hear from you.
 
-Company Values
-
-What we believe in
-
-We like getting things done but it’s more important that we do them in the right way. Our principles help to guide our behaviours, empower us to make fair decisions, and create a culture that we’re proud of.
-
-
-
-1. Focus on the customer
-
-Our customers are at the heart of everything we do. That means balancing business innovation with what our customers need, want and desire.
-
-
-
-2. Be connected
-
-As colleagues, we bring our whole selves to work, and are stronger for it. Collaboration thrives on trust so we value and support everyone around us, and take time to speak up, listen and learn.
-
-
-
-3. Do the right thing
-
-Innovating at pace means mistakes are inevitable but we’re proud to learn from our failures and let go of bad choices. To help us do the right thing, we take time to understand problems and seek out different perspectives.
-
-
-
-4. Get stuff done
-
-There are lots of exciting developments in the pipeline. To handle everything, we work in lean, empowered and high-impact teams, and operate with purpose and energy to achieve our goals.
-
-
-
-5. Have an agile mindset
-
-As part of one of the world’s biggest tech companies, we like staying ahead of the digital curve. And with no legacy systems holding us back, we’re poised to solve big, complex challenges at pace.
-
-
-
-6. Appreciate each other
-
-As a team, we value peoples input and respect the hard work they do every day. So we empower our teammates to be innovative and creative, and thank them for their contributions.
+Check our open positions here:
+ 
+https://www.chase.co.uk/gb/en/careers-at-chase/
 `,
           name: "JPMorgan Chase & Co.",
           www: "https://www.chase.co.uk/gb/en/careers-at-chase/",
