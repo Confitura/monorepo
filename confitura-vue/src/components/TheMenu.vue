@@ -32,7 +32,7 @@ export default class TheMenu extends Vue {
     { label: "venue", url: "/venue" },
     // { label: "tickets", url: "/tickets" },
     // { label: "vote", url: "/v4p" },
-    // { label: "partners", url: "/partners" },
+    { label: "partners", url: "/partners" },
     // { label: "schedule", url: "/schedule" },
     // { label: "presentations", url: "/presentations" },
     // { label: "speakers", url: "/speakers" },

@@ -22,6 +22,78 @@ export const partnersModule: Module<PartnersState, RootState> = {
     [LOAD_PARTNERS]({ state }) {
       // tslint:disable
       state.partners = [
+        {
+          id: "jp-morgan",
+          description: `**JPMorgan Chase & Co.** has expanded its consumer business and we have launched a new digital retail bank in the UK. We are offering consumers a completely new banking experience. Under the Chase brand, the bank provides products and features tailored to meet the needs of customers in the UK, made available via an innovative mobile app.
+
+Our team is at the heart of building this new venture, focused on developing offerings that put the customer at the center. We have created a new organization and we are looking for solution-oriented, commercially minded, customer-focused engineers, used to working in a true agile environment who want to be a part of something new, built from the ground up as a green-field with zero legacy initiative within a global, diverse and inclusive team.
+
+Culture is as important to us and we are looking for intellectually curious, new technology passionate individuals who would like to expand their skills whilst working on a new exciting venture for the firm. Your work will have a direct impact to our customers as our business expands around the world.
+
+Want to help build the digital bank of the future? Join us!
+
+At Chase, we know that people want great value combined with an excellent experience, from a bank they can trust. That’s why we’re revolutionising mobile banking, by creating seamless digital journeys that our customers love.
+
+For us, that means keeping ourselves customer obsessed and always being open to trying new things. Above all, it’s about working with people who are passionate about building the bank of the future.
+
+**Diversity and Inclusion**
+
+We understand that everyone’s unique and that diversity of thought, experience and backgrounds is what makes a good team, great. By bringing people with different points of view together, we can represent everyone and truly reflect the communities we serve.
+
+Who we’re looking for
+
+Fintech is a fast-paced, ever-evolving world. So we like working with people who are adaptable, open to new things and don’t mind making mistakes. To help us tackle problems together, we also look for skills like critical thinking and problem solving, as well as having a curious mindset and being a great communicator.
+
+So that you can get the most out of working with us, having a motivated, resourceful spirit is key, as well as a hunger to learn more about technology and financial services. If you’re a forward thinker with a head for fintech, we’d love to hear from you.
+
+Company Values
+
+What we believe in
+
+We like getting things done but it’s more important that we do them in the right way. Our principles help to guide our behaviours, empower us to make fair decisions, and create a culture that we’re proud of.
+
+
+
+1. Focus on the customer
+
+Our customers are at the heart of everything we do. That means balancing business innovation with what our customers need, want and desire.
+
+
+
+2. Be connected
+
+As colleagues, we bring our whole selves to work, and are stronger for it. Collaboration thrives on trust so we value and support everyone around us, and take time to speak up, listen and learn.
+
+
+
+3. Do the right thing
+
+Innovating at pace means mistakes are inevitable but we’re proud to learn from our failures and let go of bad choices. To help us do the right thing, we take time to understand problems and seek out different perspectives.
+
+
+
+4. Get stuff done
+
+There are lots of exciting developments in the pipeline. To handle everything, we work in lean, empowered and high-impact teams, and operate with purpose and energy to achieve our goals.
+
+
+
+5. Have an agile mindset
+
+As part of one of the world’s biggest tech companies, we like staying ahead of the digital curve. And with no legacy systems holding us back, we’re poised to solve big, complex challenges at pace.
+
+
+
+6. Appreciate each other
+
+As a team, we value peoples input and respect the hard work they do every day. So we empower our teammates to be innovative and creative, and thank them for their contributions.
+`,
+          name: "JPMorgan Chase & Co.",
+          www: "https://www.chase.co.uk/gb/en/careers-at-chase/",
+          type: "platinum",
+          logo: require("../assets/partners/2023/Colour_Logo_Chase.svg"),
+          orientation: "horizontal"
+        },
 //         {
 //           id: "virtuslab",
 //           description: `We are VirtusLab – 300+ tech enthusiasts constantly striving for growth. We provide expert software engineering and consultancy services to help customers adopt technology transformations. Our aim is to solve complex problems and improve the dev's efficiency. We are building high-quality software in various domains: ranging from smart contracts to investment platforms to compiler servers to brick & mortar retail stores. Our team has extensive knowledge about Data Engineering & Data Science, Cloud-Native Services, Reactive Systems, Dev Tooling, and Frontend.
