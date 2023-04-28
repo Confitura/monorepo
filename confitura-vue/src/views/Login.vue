@@ -8,7 +8,7 @@
         participants as is - so make sure that it is as polished as possible.
         <br />
         <br />
-        C4P will be closed on May 21, 2022. If you have any questions about
+        C4P will be closed on May 21, 2023. If you have any questions about
         presentations - please make sure to check our
         <router-link to="faq" class="link--red">FAQ</router-link>.
       </p>
