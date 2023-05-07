@@ -141,6 +141,7 @@ export interface RegistrationForm {
   city?: string;
   experience?: string;
   role?: string;
+  technologies: string[];
 }
 
 export interface Voucher {
