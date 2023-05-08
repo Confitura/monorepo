@@ -668,7 +668,7 @@ Our motto is "Code matters. YOU more!" - that’s why j-labs gathers the best ta
 We do good IT, or not at all!`,
           www: "https://www.j-labs.pl",
           type: "silver",
-          logo: require("../assets/partners/2023/jlabs.svg"),
+          logo: require("../assets/partners/2023/jlabs.png"),
           orientation: "horizontal"
         },
         //                 {
