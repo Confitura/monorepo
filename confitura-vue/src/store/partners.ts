@@ -10,16 +10,16 @@ export const partnersModule: Module<PartnersState, RootState> = {
     partners: []
   },
   getters: {
-    platinum: ({ partners }): Partner[] => filterBy(partners, "platinum"),
-    path: ({ partners }): Partner[] => filterBy(partners, "path"),
-    silver: ({ partners }): Partner[] => filterBy(partners, "silver"),
-    gold: ({ partners }): Partner[] => filterBy(partners, "gold"),
-    bronze: ({ partners }): Partner[] => filterBy(partners, "bronze"),
-    media: ({ partners }): Partner[] => filterBy(partners, "media"),
-    tech: ({ partners }): Partner[] => filterBy(partners, "tech")
+    platinum: ({partners}): Partner[] => filterBy(partners, "platinum"),
+    path: ({partners}): Partner[] => filterBy(partners, "path"),
+    silver: ({partners}): Partner[] => filterBy(partners, "silver"),
+    gold: ({partners}): Partner[] => filterBy(partners, "gold"),
+    bronze: ({partners}): Partner[] => filterBy(partners, "bronze"),
+    media: ({partners}): Partner[] => filterBy(partners, "media"),
+    tech: ({partners}): Partner[] => filterBy(partners, "tech")
   },
   actions: {
-    [LOAD_PARTNERS]({ state }) {
+    [LOAD_PARTNERS]({state}) {
       // tslint:disable
       state.partners = [
         {
@@ -660,20 +660,17 @@ Follow us here:
         //                     logo: require("../assets/partners/britenet.svg"),
         //                     orientation: "horizontal"
         //                 },
-        //                 {
-        //                     id: "j-labs",
-        //                     name: "j-labs",
-        //                     description: `We are polish software company founded by engineers for engineers in 2008 with all the best business practices and values.
-        // We provide complete development teams, individual engineers and outsourcing of whole project in agile models in the field of software development.
-        // Over 250 engineers work in our branches in Krakow and Warsaw. We support companies in the various sectors - such as banking, aviation, telco, as well as niches like machine learning, woodwork, and IoT.
-        // Our activities based on technology, content, and reliability have been recognized by the Forbes Diamond 2017, and the distinction in the Business Gazelle 2018 ranking.
-        //
-        // Join us:  [https://www.j-labs.pl/open-positions/](https://www.j-labs.pl/open-positions/)`,
-        //                     www: "https://www.j-labs.pl",
-        //                     type: "silver",
-        //                     logo: require("../assets/partners/jlabs.svg"),
-        //                     orientation: "horizontal"
-        //                 },
+        {
+          id: "j-labs",
+          name: "j-labs",
+          description: `Created by engineers for engineers – we are j-labs software specialist!
+Our motto is "Code matters. YOU more!" - that’s why j-labs gathers the best talents with an average of nine years of work experience, giving them the opportunity to use and develop their skills. How? By providing the highest level of software development to their clients. Over 500 people work in j-labs branches in Krakow and Warsaw.
+We do good IT, or not at all!`,
+          www: "https://www.j-labs.pl",
+          type: "silver",
+          logo: require("../assets/partners/2023/jlabs.svg"),
+          orientation: "horizontal"
+        },
         //                 {
         //                     id: "decerto",
         //                     name: "decerto",
@@ -1127,7 +1124,7 @@ Follow us here:
       ];
     },
     // tslint:enable
-    [LOAD_PARTNER_BY_ID]({ state, dispatch }, id: string) {
+    [LOAD_PARTNER_BY_ID]({state, dispatch}, id: string) {
       return dispatch(LOAD_PARTNERS).then(() =>
         state.partners.find(
           partner => partner.id.toLowerCase() === id.toLowerCase()
