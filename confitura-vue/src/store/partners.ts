@@ -71,22 +71,22 @@ https://www.chase.co.uk/gb/en/careers-at-chase/
 //           logo: require("../assets/partners/2022/virtuslab.svg"),
 //           orientation: "horizontal"
 //         },
-//         {
-//           id: "allegro",
-//           name: "Allegro Tech",
-//           description: `W [Allegro](https://allegro.tech/) tworzymy i utrzymujemy aplikacje, które dzięki swojej skalowalności i niezawodności zyskały sobie rzeszę wiernych użytkowników. Zadanie nie należy do najłatwiejszych, w pracy napotykamy na szereg wyzwań zarówno w obszarze samej architektury i designu, jak i w procesie doboru technologii, zapewnienia jakości kodu, usprawnienia funkcjonalności oraz w późniejszej fazie wdrożenia i utrzymania produktu.
-//           allegro.tech jest naszym pomysłem na dzielenie się zebranym doświadczeniem poprzez organizację konferencji, warsztatów, meetupów i hackatonów.
-//
-// Po więcej informacji zapraszamy na nasz blog [https://allegro.tech/](https://allegro.tech/)
-//
-// Dołacz do nas również na [https://www.meetup.com/allegrotech/](https://www.meetup.com/allegrotech/)
-//
-// I bądź na bieżąco [https://www.facebook.com/allegro.tech](https://www.facebook.com/allegro.tech)`,
-//           www: "https://allegro.tech/",
-//           type: "silver",
-//           logo: require("../assets/partners/allegro.svg"),
-//           orientation: "horizontal"
-//         },
+        {
+          id: "allegro",
+          name: "Allegro Tech",
+          description: `W [Allegro](https://allegro.tech/) tworzymy i utrzymujemy aplikacje, które dzięki swojej skalowalności i niezawodności zyskały sobie rzeszę wiernych użytkowników. Zadanie nie należy do najłatwiejszych, w pracy napotykamy na szereg wyzwań zarówno w obszarze samej architektury i designu, jak i w procesie doboru technologii, zapewnienia jakości kodu, usprawnienia funkcjonalności oraz w późniejszej fazie wdrożenia i utrzymania produktu.
+          allegro.tech jest naszym pomysłem na dzielenie się zebranym doświadczeniem poprzez organizację konferencji, warsztatów, meetupów i hackatonów.
+
+Po więcej informacji zapraszamy na nasz blog [https://allegro.tech/](https://allegro.tech/)
+
+Dołacz do nas również na [https://www.meetup.com/allegrotech/](https://www.meetup.com/allegrotech/)
+
+I bądź na bieżąco [https://www.facebook.com/allegro.tech](https://www.facebook.com/allegro.tech)`,
+          www: "https://allegro.tech/",
+          type: "silver",
+          logo: require("../assets/partners/2023/allegro.svg"),
+          orientation: "horizontal"
+        },
 //         {
 //           id: "scalo",
 //           description: `[Scalo](https://www.scalosoft.com/) to polska firma, w której realizujemy kompleksowe projekty programistyczne, budujemy dedykowane zespoły deweloperskie, rozwijamy systemy wbudowane dla klientów z różnych branż. W naszej firmie każdy może **działać swobodnie**, jesteśmy otwarci na nowe pomysły i rozwiązania. Stawiamy na **współpracę**, chętnie **dzielimy się wiedzą** i wymieniamy **doświadczenia projektowe**.
