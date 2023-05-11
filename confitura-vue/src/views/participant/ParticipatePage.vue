@@ -211,6 +211,27 @@
               </md-field>
             </div>
             <div class="row">
+              <md-chips
+                md-clickable
+                md-check-duplicated
+                v-model="form.technologies"
+                md-placeholder="Technologies..."
+                @md-insert="refreshAvailableTech()"
+                @md-delete="refreshAvailableTech()"
+              ></md-chips>
+            </div>
+            <div class="row">
+              <div>
+                <md-chip
+                  md-clickable
+                  v-for="tech in availableTechnologies"
+                  :key="tech"
+                  @click="addTech(tech)"
+                  >{{ tech }}
+                </md-chip>
+              </div>
+            </div>
+            <div class="row">
               <md-checkbox
                 v-model="form.privacyPolicyAccepted"
                 required
@@ -248,6 +269,7 @@ import { Participant, RegistrationForm } from "@/types";
 import {
   MdButton,
   MdCheckbox,
+  MdChips,
   MdField,
   MdList,
   MdMenu,
@@ -261,11 +283,21 @@ Vue.use(MdRadio);
 Vue.use(MdMenu);
 Vue.use(MdList);
 Vue.use(MdCheckbox);
+Vue.use(MdChips);
 @Component({
   components: { PageHeader, Box, Contact }
 })
 export default class ParticipatePage extends Vue {
   public form: RegistrationForm | null = null;
+  private allTechnologies = [
+    "Java",
+    "Scala",
+    "Kotlin",
+    "Groovy",
+    "Spring",
+    "JakartaEE"
+  ];
+  public availableTechnologies: String[] = this.allTechnologies;
   public loadError: ResponseError | null = null;
   public savingInProgress = false;
 
@@ -274,13 +306,28 @@ export default class ParticipatePage extends Vue {
     axios
       .get(`/api/vouchers/${voucher}/check`)
       .then(() => {
-        this.form = { voucher: { id: voucher as string } };
+        this.form = { voucher: { id: voucher as string }, technologies: [] };
       })
       .catch((error: AxiosError) => {
         if (error.response) {
           this.loadError = error.response.data;
         }
       });
+  }
+
+  async addTech(tech: string) {
+    if (this.form) {
+      this.form.technologies.push(tech);
+      this.refreshAvailableTech();
+      await this.$nextTick();
+    }
+  }
+
+  refreshAvailableTech() {
+    if (this.form) {
+      const used = this.form.technologies || [];
+      this.availableTechnologies = this.allTechnologies.filter(it => used.indexOf(it) < 0)
+    }
   }
 
   public async save(event: Event) {
