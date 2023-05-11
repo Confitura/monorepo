@@ -56,21 +56,42 @@ https://www.chase.co.uk/gb/en/careers-at-chase/
           logo: require("../assets/partners/2023/Colour_Logo_Chase.svg"),
           orientation: "horizontal"
         },
-//         {
-//           id: "virtuslab",
-//           description: `We are VirtusLab – 300+ tech enthusiasts constantly striving for growth. We provide expert software engineering and consultancy services to help customers adopt technology transformations. Our aim is to solve complex problems and improve the dev's efficiency. We are building high-quality software in various domains: ranging from smart contracts to investment platforms to compiler servers to brick & mortar retail stores. Our team has extensive knowledge about Data Engineering & Data Science, Cloud-Native Services, Reactive Systems, Dev Tooling, and Frontend.
-//
-// We are also worldwide experts in Scala language, officially supporting its development and tooling starting with Scala 3 itself to tailor-made solutions for the largest Scala monorepos in the world, like Metals (Language Server Protocol) or scalafmt (Code formatter).
-//
-// Our  #VLteam delivers high-quality software solving actual problems with modern technology and gives back to the community by supporting open source initiatives, local tech meetups, and conferences (check our own initiative, [Sphere.it](https://sphere.it)).
-//
-// We have built a company where everyone can influence how we operate and what we are aiming at. We believe that everyone should participate and create new directions.  Visit [virtuslab.com](https://virtuslab.com) for more!`,
-//           name: "VirtusLab",
-//           www: "https://virtuslab.com/",
-//           type: "platinum",
-//           logo: require("../assets/partners/2022/virtuslab.svg"),
-//           orientation: "horizontal"
-//         },
+        {
+          id: "ing",
+          description: `W ING rozwiązania jutra tworzymy już dzisiaj.
+ING Bank Śląski to jeden z największych banków w Polsce z ofertą dla klientów indywidualnych, małych przedsiębiorców oraz dużych podmiotów gospodarczych.
+
+Bank tworzą ludzie, którzy inspirują się do działania i wspierają wzajemnie, aby być krok do przodu, w życiu i w biznesie. Zatrudnia ponad 8 tysięcy pracowników w całej Polsce. To oni na co dzień dostarczają nowoczesne rozwiązania i narzędzia, dzięki którym bankowość staje się przyjazna i transparentna.
+
+Indywidualny rozwój, ambitne zadania, dostęp do technologii i praca w zwinny sposób to tylko część oferty, którą ING proponuje kandydatom i zapewnia pracownikom.
+
+Inspiruje do uczenia się i rozwoju na swój sposób, według własnego pomysłu i planu, zgodnie z zasadą brania odpowiedzialności za rozwój w swoje ręce.
+
+Wartości ING wyrażają stosunek organizacji i pracowników do świata oraz do siebie nawzajem. Te wartości to między innymi: jesteśmy uczciwi, kierujemy się zdrowym rozsądkiem i jesteśmy odpowiedzialni.
+
+Od wielu lat bank nagradzany jest tytułem Top Employer w Polsce. Oferuje pracownikom wiele rozwiązań, dba o komfort miejsca pracy i dobrą atmosferę.
+
+To bank przyszłości zarówno dla klientów jak i dla pracowników.
+
+Centrala znajduje się w Katowicach i Warszawie.
+ 
+Pracuj z nami i rozwijaj się w ING Banku Śląskim. Rekrutujemy do:
+- IT
+- Ryzyka
+- Bankowości korporacyjnej
+- Bankowości detalicznej
+- KYC/ AML
+- Finansów
+- HR
+- Marketingu
+ 
+https://www.ing.jobs/polska/`,
+          name: "ING Polska",
+          www: "https://www.ing.jobs/polska/",
+          type: "silver",
+          logo: require("../assets/partners/2023/ing.svg"),
+          orientation: "horizontal"
+        },
         {
           id: "allegro",
           name: "Allegro Tech",
