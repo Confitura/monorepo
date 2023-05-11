@@ -840,25 +840,31 @@ We do good IT, or not at all!`,
         //                     orientation: "horizontal",
         //                     logo: require("../assets/partners/alior.svg")
         //                 },
-        //                 {
-        //                     id: "coi",
-        //                     name: "Centralny Ośrodek Informatyki",
-        //                     description: `Są tacy, dla których przy tworzeniu usług cyfrowych najważniejszy jest człowiek. Jest miejsce, gdzie dzięki technologii rozproszone instytucje łączą się w proste usługi przyjazne dla obywateli – tak wygląda kod do cyfryzacji. W Centralnym Ośrodku Informatyki realizujemy projekty dla Ministerstwa Cyfryzacji.
-        // Jesteśmy unikalnym w skali państwa zespołem liczącym ponad 500 specjalistów.
-        // Zatrudniamy ekspertów IT
-        // Zarządzamy Systemem Rejestrów Państwowych
-        // Projektujemy e-usługi
-        // Prowadzimy projekty
-        // Dzielimy się wiedzą
-        //
-        // Mamy swoje biura w  Warszawie, Lublinie, Katowicach, Łodzi, Rzeszowie, Poznaniu, Bydgoszczy i Gorzowie Wielkopolskim.
-        // \\#cyfryzacjatofrajda
-        // My już jesteśmy częścią cyfryzacji, a Ty? Przetestuj [coi.gov.pl](https://www.coi.gov.pl/).`,
-        //                     www: "https://www.coi.gov.pl/",
-        //                     type: "silver",
-        //                     orientation: "horizontal",
-        //                     logo: require("../assets/partners/coi.svg")
-        //                 },
+                 {
+                    id: "coi",
+                    name: "Centralny Ośrodek Informatyki",
+                    description: `Centralny Ośrodek Informatyki is the largest polish company that develops IT projects for the public sector. You may know COI projects such as mObywatel or Profil Zaufany. Company also created the "COI for Ukraine" project, which introduced a comprehensive PESEL registration system for Ukrainian citizens.
+
+As you can see, COI projects are of great importance. You can also be a part of them and create solutions that make life easier for millions of people! COI is constantly working on new projects, which means that it’s always recruiting 🚀
+
+COI is looking for experts in backend (mainly Java), frontend (Angular), mobile applications (Android, iOS), testing, analysis, IT architecture, security, UX/UI, and more!
+
+Some of the advantages of working at COI include:
+
+✅ work with the best experts on the largest systems in the country,
+
+✅ huge opportunities for development and knowledge sharing (internal and external trainings, conferences, subsidized studies, promotion opportunities and possibility to change project),
+
+✅ comfortable work (100% remote, flexible hours, modern office in Warsaw if you prefer office/hybrid work),
+
+✅ a vast range of benefits (day off on birthdays, an additional four-weeks off after three years of work, vacation subsidies, bonuses)… and many more!
+
+Visit COI booth during Confitura and learn more about their career opportunities! 💥`,
+                    www: "https://www.coi.gov.pl/",
+                    type: "silver",
+                    orientation: "horizontal",
+                    logo: require("../assets/partners/2023/coi.svg")
+                },
         //                 {
         //                     id: "sml",
         //                     name: "SoftwareMill",
