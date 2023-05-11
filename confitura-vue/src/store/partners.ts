@@ -108,26 +108,17 @@ I bądź na bieżąco [https://www.facebook.com/allegro.tech](https://www.facebo
           logo: require("../assets/partners/2023/allegro.svg"),
           orientation: "horizontal"
         },
-//         {
-//           id: "scalo",
-//           description: `[Scalo](https://www.scalosoft.com/) to polska firma, w której realizujemy kompleksowe projekty programistyczne, budujemy dedykowane zespoły deweloperskie, rozwijamy systemy wbudowane dla klientów z różnych branż. W naszej firmie każdy może **działać swobodnie**, jesteśmy otwarci na nowe pomysły i rozwiązania. Stawiamy na **współpracę**, chętnie **dzielimy się wiedzą** i wymieniamy **doświadczenia projektowe**.
-//
-// Nasz sukces to **zgrany zespół**. Wśród nas znajdziesz developerów i projektantów, analityków, testerów oraz administratorów. Biznes wspieramy siłami kilkudziesięciu handlowców, rekruterów i specjalistów od delivery, którzy są dostępni w każdym momencie.
-//
-// Jeżeli nie przekonują Cię opisy to niech przemówią liczby. W tegorocznym badaniu Great Place to Work uzyskaliśmy **78%** poziom zaangażowania, a do naszych najmocniejszych stron należą:
-// - **98%** z nas twierdzi, że każdy nowy pracownik spotyka się w Scalo z ciepłym przyjęciem,
-// - **94%** z nas twierdzi, że menedżerowie dostrzegają w członkach zespołu człowieka, a nie tylko pracownika,
-// - **93%** z nas twierdzi, że w Scalo panuje przyjazna atmosfera,
-// - **92%** z nas twierdzi, że Scalo stwarza korzystne warunki dla pogodzenia pracy z obowiązkami rodzica lub opiekuna,
-// - **88%** z nas twierdzi, że w Scalo można liczyć na wzajemną współpracę.
-//
-// Dołącz do nas i stwórz swoją historię w Scalo! Odwiedź naszą stronę internetową i poznaj nas bliżej: www.career.scalosoft.com`,
-//           name: "Scalo",
-//           www: "https://www.career.scalosoft.com/",
-//           type: "silver",
-//           logo: require("../assets/partners/2022/scalo.svg"),
-//           orientation: "horizontal"
-//         },
+        {
+          id: "iqvia",
+          description: `IQVIA jest wiodącym globalnym dostawcą zaawansowanych rozwiązań analitycznych i technologicznych oraz usług w zakresie badań klinicznych. Dzięki analizom, wykorzystaniu przełomowej technologii, zasobom big data i rozległej wiedzy branżowej, tworzymy inteligentne połączenia we wszystkich aspektach ochrony zdrowia. IQVIA Connected Intelligence™ w sposób szybki i zwinny dostarcza istotnych informacji, umożliwiając klientom przyspieszenie rozwoju klinicznego i komercjalizacji innowacyjnych metod terapeutycznych, które poprawiają wyniki leczenia pacjentów. Zatrudniając około 85 000 pracowników, IQVIA prowadzi działalność w ponad 100 krajach.
+
+IQVIA is a leading global provider of advanced analytics, technology solutions, and clinical research services to the life sciences industry. IQVIA creates intelligent connections across all aspects of healthcare through its analytics, transformative technology, big data resources and extensive domain expertise. IQVIA Connected Intelligence™ delivers powerful insights with speed and agility — enabling customers to accelerate the clinical development and commercialization of innovative medical treatments that improve healthcare outcomes for patients. With approximately 85,000 employees, IQVIA conducts operations in more than 100 countries.`,
+          name: "IQVIA",
+          www: "https://www.iqvia.com/",
+          type: "silver",
+          logo: require("../assets/partners/2023/iqvia.jpg"),
+          orientation: "horizontal"
+        },
 //         {
 //           id: "nordea",
 //           name: "Nordea",
