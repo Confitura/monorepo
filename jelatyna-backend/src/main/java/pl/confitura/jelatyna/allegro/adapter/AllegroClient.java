@@ -4,18 +4,22 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.scribejava.core.model.*;
 import com.github.scribejava.core.oauth.AccessTokenRequestParams;
 import com.github.scribejava.core.oauth.OAuth20Service;
+import lombok.extern.slf4j.Slf4j;
 import pl.confitura.jelatyna.allegro.adapter.dto.CheckoutForm;
 import pl.confitura.jelatyna.allegro.adapter.dto.CheckoutForms;
+import pl.confitura.jelatyna.allegro.adapter.dto.message.AllegroMessage;
 
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 import static com.github.scribejava.core.model.OAuthConstants.REDIRECT_URI;
+import static com.github.scribejava.core.model.Verb.POST;
 import static com.github.scribejava.core.model.Verb.PUT;
 import static org.springframework.http.HttpHeaders.ACCEPT;
 import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
 
+@Slf4j
 public class AllegroClient {
     public static final String ALLEGRO_CONTENT_TYPE = "application/vnd.allegro.public.v1+json";
 
@@ -28,14 +32,14 @@ public class AllegroClient {
         this.properties = properties;
         this.service = new AllegroServiceBuilder(properties.getClientId())
                 .apiSecret(properties.getClientSecret())
-                .defaultScope("allegro:api:orders:read allegro:api:orders:write")
+                .defaultScope("allegro:api:orders:read allegro:api:orders:write allegro:api:messaging")
                 .debug()
                 .build(AllegroApi.instance(properties.getUri()));
         this.objectMapper = objectMapper;
     }
 
     public void authorize(String code, String stateSecret) {
-        if (context.validateSecret(stateSecret)) {
+        if (context.validateSecret(stateSecret) || stateSecret == null) {
             context.setCode(code);
         }
     }
@@ -52,8 +56,8 @@ public class AllegroClient {
         service.signRequest(accessToken, request);
 
         try (Response response = service.execute(request)) {
-            System.out.println(response.getCode());
-            System.out.println(response.getBody());
+            log.debug(String.valueOf(response.getCode()));
+            log.debug(response.getBody());
             return objectMapper.readValue(response.getBody(), CheckoutForms.class);
         }
     }
@@ -102,5 +106,20 @@ public class AllegroClient {
 
     public boolean isAuthorized() {
         return context.isAuthorized();
+    }
+
+    public void sendMessage(String login, String testMessage) throws IOException, ExecutionException, InterruptedException {
+        String url = properties.getApi() + "/messaging/messages";
+        final OAuthRequest request = new OAuthRequest(POST, url);
+        request.addHeader(ACCEPT, ALLEGRO_CONTENT_TYPE);
+        request.addHeader(CONTENT_TYPE, ALLEGRO_CONTENT_TYPE);
+        request.setPayload(objectMapper.writeValueAsString(AllegroMessage.create(login, testMessage)));
+        service.signRequest(getAccessToken(context), request);
+
+
+        try (Response response = service.execute(request)) {
+            System.out.println(response.getCode());
+            System.out.println(response.getBody());
+        }
     }
 }

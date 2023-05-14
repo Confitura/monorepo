@@ -1,7 +1,9 @@
 package pl.confitura.jelatyna.registration.voucher;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.GenericGenerator;
 import pl.confitura.jelatyna.infrastructure.db.AuditedEntity;
@@ -21,6 +23,9 @@ public class Voucher  extends AuditedEntity {
 
     private String originalBuyer;
     private String comment;
+
+    @Embedded
+    private AllegroContext allegro;
 
     private LocalDateTime ticketSendDate;
 
@@ -42,6 +47,15 @@ public class Voucher  extends AuditedEntity {
         PARTICIPANT, SPEAKER, SPONSOR
     }
 
+    @Embeddable
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    static class AllegroContext{
+        private String auctionId;
+        private String auctionName;
+        private String buyerLogin;
+    }
 }
 
 
