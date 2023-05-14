@@ -295,6 +295,7 @@ export default class ParticipatePage extends Vue {
     "JUnit", "TestNG", "Mockito", "Spock",
     "Go", "Rust", "Python", "SQL", "NoSQL",
     "GraalVM", "Docker", "Kubernetes",
+    "Excel"
   ];
   public availableTechnologies: String[] = this.allTechnologies;
   public loadError: ResponseError | null = null;
