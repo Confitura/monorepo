@@ -55,7 +55,6 @@ public class MailSender {
         image.setType(MediaType.IMAGE_PNG_VALUE + "; name=\"ticket.png\"");
         image.setContent(Base64.getEncoder().encodeToString(ticket));
         return image;
-
     }
 
     private List<MandrillMessage.Recipient> recipients(String emailAddress) {

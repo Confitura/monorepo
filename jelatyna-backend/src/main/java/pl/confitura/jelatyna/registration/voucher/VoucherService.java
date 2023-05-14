@@ -34,6 +34,19 @@ public class VoucherService {
                 .setType(type));
     }
 
+    public Voucher generateVoucherFromAllegro(String originalBuyer,
+                                              String comment,
+                                              String buyerLogin,
+                                              String auctionId,
+                                              String auctionName) {
+        return voucherRepository.save(new Voucher()
+                .setOriginalBuyer(originalBuyer)
+                .setComment(comment)
+                .setType(Voucher.VoucherType.PARTICIPANT)
+                .setAllegro(new Voucher.AllegroContext(auctionId, auctionName, buyerLogin))
+        );
+    }
+
     public void generateVoucherAndSend(String originalBuyer, Voucher.VoucherType type, String comment) {
         Voucher voucher = generateVoucher(originalBuyer, type, comment);
         sendVoucher(voucher);

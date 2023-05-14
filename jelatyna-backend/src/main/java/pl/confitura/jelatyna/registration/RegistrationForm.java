@@ -38,7 +38,8 @@ class RegistrationForm {
     public DemographicData createDemographicData() {
         return new DemographicData()
                 .setCity(city)
-                .setMealOption(mealOption).setRole(role)
+                .setMealOption(mealOption)
+                .setRole(role)
                 .setExperience(experience)
                 .setTechnologies(technologies);
     }
