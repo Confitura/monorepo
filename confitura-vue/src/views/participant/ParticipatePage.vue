@@ -290,12 +290,11 @@ Vue.use(MdChips);
 export default class ParticipatePage extends Vue {
   public form: RegistrationForm | null = null;
   private allTechnologies = [
-    "Java",
-    "Scala",
-    "Kotlin",
-    "Groovy",
-    "Spring",
-    "JakartaEE"
+    "Java", "Scala", "Kotlin", "Groovy",
+    "Spring", "JakartaEE", "Microprofile",
+    "JUnit", "TestNG", "Mockito", "Spock",
+    "Go", "Rust", "Python", "SQL", "NoSQL",
+    "GraalVM", "Docker", "Kubernetes",
   ];
   public availableTechnologies: String[] = this.allTechnologies;
   public loadError: ResponseError | null = null;
