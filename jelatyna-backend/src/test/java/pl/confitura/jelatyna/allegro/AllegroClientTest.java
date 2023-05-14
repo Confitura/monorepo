@@ -14,6 +14,7 @@ import java.io.InputStreamReader;
 import java.util.concurrent.ExecutionException;
 
 @ActiveProfiles({"dev", "fake-db"})
+@Disabled("used for testing allegro connection - requires allegro credentials")
 class AllegroClientTest extends BaseIntegrationTest {
 
     @Autowired
@@ -23,7 +24,6 @@ class AllegroClientTest extends BaseIntegrationTest {
     VoucherService voucherService;
 
     @Test
-    @Disabled("used for testing allegro connection - requires allegro credentials")
     void testAllegroCall() throws IOException, ExecutionException, InterruptedException {
         SecurityHelper.asAdmin();
 
