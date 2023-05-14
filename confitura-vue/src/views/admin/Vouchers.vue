@@ -105,6 +105,7 @@
           <th>email sent</th>
           <th>type</th>
           <th>comment</th>
+          <th></th>
         </tr>
       </thead>
       <tr v-for="voucher of vouchers" :key="voucher.id">
@@ -113,6 +114,12 @@
         <td>{{ voucher.emailSent }}</td>
         <td>{{ voucher.type }}</td>
         <td>{{ voucher.comment }}</td>
+        <th>
+          <button class="waves-effect waves-light btn"
+                  @click="resendVoucher(voucher.id)">
+            resend
+          </button>
+        </th>
       </tr>
     </table>
   </div>
@@ -205,6 +212,12 @@ export default class Vouchers extends Vue {
       })
       .then(it => (this.generatedVouchers = it.data))
       .then(() => this.$store.dispatch(LOAD_VOUCHERS));
+  }
+
+  public resendVoucher(voucherId: string) {
+    if (confirm("sure to resend voucher?")) {
+      axios.post(`/api/vouchers/${voucherId}/re-send`);
+    }
   }
 }
 

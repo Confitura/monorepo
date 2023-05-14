@@ -40,7 +40,11 @@ class VoucherController {
         } else {
             return ResponseEntity.status(HttpStatus.OK).build();
         }
+    }
 
+    @PostMapping("/vouchers/{id}/re-send")
+    void resendVoucher(@PathVariable("id") String voucherId) {
+        voucherService.resend(voucherId);
     }
 
     @GetMapping("/vouchers")
