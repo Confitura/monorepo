@@ -13,6 +13,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * register app on https://apps.developer.allegro.pl.allegrosandbox.pl/
+ * and setup application-dev.yml
+ * allegro:
+ *   client-id:
+ *   client-secret:
+ *   callback: "http://localhost:8080/"
+ */
 @ActiveProfiles({"dev", "fake-db"})
 @Disabled("used for testing allegro connection - requires allegro credentials")
 class AllegroClientTest extends BaseIntegrationTest {
