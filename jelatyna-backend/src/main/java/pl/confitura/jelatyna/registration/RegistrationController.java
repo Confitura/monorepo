@@ -71,6 +71,16 @@ public class RegistrationController {
         return ResponseEntity.accepted().build();
     }
 
+    @PostMapping("/participants/{id}/resend-ticket")
+    @PreAuthorize("@security.isAdmin()")
+    @Transactional
+    public ResponseEntity<Object> resendTicket(@PathVariable("id") String id) {
+        log.info("re-sending ticket to {}", id);
+        ParticipationData user = repository.findById(id);
+        sendTicketTo(user);
+        return ResponseEntity.accepted().build();
+    }
+
     @PostMapping("/participants/survey")
     @PreAuthorize("@security.isAdmin()")
     @Transactional

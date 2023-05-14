@@ -20,7 +20,6 @@ public class VoucherService {
 
     private final VoucherRepository voucherRepository;
     private final ParticipationRepository participationRepository;
-    private final UserRepository userRepository;
     private final MailSender sender;
 
     public Voucher generateVoucher(String originalBuyer) {
@@ -45,11 +44,6 @@ public class VoucherService {
                 .setType(Voucher.VoucherType.PARTICIPANT)
                 .setAllegro(new Voucher.AllegroContext(auctionId, auctionName, buyerLogin))
         );
-    }
-
-    public void generateVoucherAndSend(String originalBuyer, Voucher.VoucherType type, String comment) {
-        Voucher voucher = generateVoucher(originalBuyer, type, comment);
-        sendVoucher(voucher);
     }
 
     public boolean isValid(Voucher voucher) {
@@ -85,10 +79,6 @@ public class VoucherService {
         return owner == null || owner.getId().equals(participationDataId);
     }
 
-    public void save(Voucher voucher) {
-        voucherRepository.save(voucher);
-    }
-
     public boolean isUsed(Voucher voucher) {
         return participationRepository.findByVoucher(voucher) != null;
     }
@@ -110,14 +100,18 @@ public class VoucherService {
         voucherRepository.findNotSent().forEach(this::sendVoucher);
     }
 
-
-    void sendVoucher(Voucher voucher) {
+    public void sendVoucher(Voucher voucher) {
         try {
             sender.send("pre-registration", new MessageInfo().setEmail(voucher.getOriginalBuyer()).setToken(voucher.getId()));
             voucher.setTicketSendDate(now());
-            save(voucher);
+            voucherRepository.save(voucher);
         } catch (Exception ex) {
             log.error("Error on sending email", ex);
         }
+    }
+
+    void resend(String voucherId) {
+        Voucher voucher = voucherRepository.findById(voucherId);
+        sendVoucher(voucher);
     }
 }

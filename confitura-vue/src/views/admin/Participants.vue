@@ -11,6 +11,7 @@
           <th>arrivalDate</th>
           <th>registeredBy</th>
           <th>ticketSendDate</th>
+          <th></th>
           <th>surveySendDate</th>
         </tr>
       </thead>
@@ -28,6 +29,12 @@
         <td>{{ participant.arrivalDate }}</td>
         <td>{{ participant.registeredBy }}</td>
         <td>{{ participant.ticketSendDate }}</td>
+        <td>
+          <button class="waves-effect waves-light btn"
+                  @click="resendTicket(participant.id)">
+            resend
+          </button>
+        </td>
         <td>{{ participant.surveySendDate }}</td>
       </tr>
     </table>
@@ -37,6 +44,7 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { Participant, UserProfile } from "@/types";
+import axios from "axios";
 
 @Component({
   components: {}
@@ -44,6 +52,12 @@ import { Participant, UserProfile } from "@/types";
 export default class Users extends Vue {
   get participants(): Participant[] {
     return this.$store.state.admin.participants;
+  }
+
+  public resendTicket(participantId: string) {
+    if (confirm("sure to resend ticket?")) {
+      axios.post(`/api/participants/${participantId}/resend-ticket`);
+    }
   }
 }
 </script>
