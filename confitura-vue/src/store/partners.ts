@@ -491,17 +491,14 @@ IQVIA is a leading global provider of advanced analytics, technology solutions, 
         {
           id: "grid-dynamics",
           name: "Grid Dynamics",
-          description: `Grid Dynamics is a leading provider of technology consulting, engineering, and data science services for Fortune 500 corporations from financial, technological and retail sectors. It has been operating since 2006, is headquartered in the San Francisco area (San Ramon), California, and has development centers in the United States and Eastern Europe.
+          description: `Grid Dynamics is an engineering services company known for transformative, mission-critical cloud solutions for the retail, finance, and technology sectors. We have architected some of the busiest e-commerce services on the Internet, and have never had an outage during the peak season. Founded in 2006 and headquartered in San Ramon, California with offices throughout the US and Eastern Europe, we focus on big data analytics, scalable omnichannel services, DevOps, and cloud enablement.
+As of today, Grid Dynamics brings together more than 4,000 engineers in 13 countries (USA, Mexico, Jamaica, Netherlands, England, Switzerland, Romania, Serbia, Armenia, Ukraine, Poland, Moldova, India) and continues to grow steadily. 
 
-As of today, Grid Dynamics brings together more than 3,500 engineers in 13 countries (USA, Mexico, Jamaica, Netherlands, England, Switzerland, Romania, Serbia, Armenia, Ukraine, Poland, Moldova, India) and continues to grow steadily. The clients include Google, Apple, Microsoft, Tesla, PayPal, and other technology giants.
-
-Grid Dynamics provides unique opportunities for students, fresh graduates and people who want to change their career path. Duration of the Internship is 6 months and it contains training in technical areas. Our interns can expect 30h per week of hands-on technical experience with a flexible schedule.
-
-Check our open positions here: [http://careers.griddynamics.com/](http://careers.griddynamics.com/?utm_source=confitura)
+Check our open positions here: [https://careers.griddynamics.com/](https://careers.griddynamics.com/?utm_source=confitura)
 
 Follow us here:
- - [Instagram](https://www.instagram.com/griddynamics_pl/)
- - [Facebook](https://www.facebook.com/lifeatgriddynamics)
+ - [Instagram](https://www.instagram.com/griddynamics_global)
+ - [Facebook](https://www.facebook.com/griddynamicsglobal)
  - [LinkedIn](https://www.linkedin.com/company/grid-dynamics)
 `,
           www: "http://careers.griddynamics.com",
