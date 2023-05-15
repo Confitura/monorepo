@@ -94,7 +94,7 @@ public class AllegroClient {
     }
 
     public boolean sendMessage(String login, String testMessage) throws IOException, ExecutionException, InterruptedException {
-        log.info("sending message to login");
+        log.info("sending message to {}", login);
         String url = properties.getApi() + "/messaging/messages";
         final OAuthRequest request = new OAuthRequest(POST, url);
         request.addHeader(ACCEPT, ALLEGRO_CONTENT_TYPE);
@@ -122,6 +122,10 @@ public class AllegroClient {
 
     private static void logResponse(Response response) throws IOException {
         log.debug(String.valueOf(response.getCode()));
-        log.debug(response.getBody());
+        if (response.getCode() >= 200 && response.getCode() < 300) {
+            log.debug(response.getBody());
+        } else {
+            log.warn(response.getBody());
+        }
     }
 }
