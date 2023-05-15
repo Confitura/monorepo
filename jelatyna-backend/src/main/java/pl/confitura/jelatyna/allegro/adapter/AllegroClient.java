@@ -5,6 +5,7 @@ import com.github.scribejava.core.model.*;
 import com.github.scribejava.core.oauth.AccessTokenRequestParams;
 import com.github.scribejava.core.oauth.OAuth20Service;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import pl.confitura.jelatyna.allegro.adapter.dto.CheckoutForm;
 import pl.confitura.jelatyna.allegro.adapter.dto.CheckoutForms;
 import pl.confitura.jelatyna.allegro.adapter.dto.message.AllegroMessage;
@@ -92,14 +93,14 @@ public class AllegroClient {
         return context.isAuthorized();
     }
 
-    public void sendMessage(String login, String testMessage) throws IOException, ExecutionException, InterruptedException {
+    public boolean sendMessage(String login, String testMessage) throws IOException, ExecutionException, InterruptedException {
         log.info("sending message to login");
         String url = properties.getApi() + "/messaging/messages";
         final OAuthRequest request = new OAuthRequest(POST, url);
         request.addHeader(ACCEPT, ALLEGRO_CONTENT_TYPE);
         request.addHeader(CONTENT_TYPE, ALLEGRO_CONTENT_TYPE);
         request.setPayload(objectMapper.writeValueAsString(AllegroMessage.create(login, testMessage)));
-        executeRequest(request);
+        return executeRequest(request);
     }
 
 
@@ -111,10 +112,11 @@ public class AllegroClient {
         }
     }
 
-    private void executeRequest(OAuthRequest request) throws IOException, ExecutionException, InterruptedException {
+    private boolean executeRequest(OAuthRequest request) throws IOException, ExecutionException, InterruptedException {
         service.signRequest(getAccessToken(context), request);
         try (Response response = service.execute(request)) {
             logResponse(response);
+            return HttpStatus.valueOf(response.getCode()).is2xxSuccessful();
         }
     }
 

@@ -1,6 +1,7 @@
 package pl.confitura.jelatyna.allegro;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 import pl.confitura.jelatyna.allegro.adapter.AllegroClient;
@@ -18,6 +19,7 @@ import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AllegroImportService {
     private final AllegroClient allegroClient;
     private final VoucherService voucherService;
@@ -45,12 +47,16 @@ public class AllegroImportService {
     void createVouchersFromAuctions() throws IOException, ExecutionException, InterruptedException {
         CheckoutForms readyForProcessing = allegroClient.getReadyForProcessing();
         for (CheckoutForm checkoutForm : readyForProcessing.getCheckoutForms()) {
-            String buyerLogin = checkoutForm.getBuyer().getLogin();
-            Stream<Voucher> vouchers = createVouchers(checkoutForm);
 
+            Stream<Voucher> vouchers = createVouchers(checkoutForm);
             String allegroMessage = buildMessage(vouchers);
-            allegroClient.sendMessage(buyerLogin, allegroMessage);
-            allegroClient.markSent(checkoutForm);
+
+            String buyerLogin = checkoutForm.getBuyer().getLogin();
+            if (allegroClient.sendMessage(buyerLogin, allegroMessage)) {
+                allegroClient.markSent(checkoutForm);
+            } else {
+                log.warn("sending message to {} failed", buyerLogin);
+            }
         }
     }
 
