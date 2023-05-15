@@ -6,7 +6,6 @@ import com.github.scribejava.core.oauth.AccessTokenRequestParams;
 import com.github.scribejava.core.oauth.OAuth20Service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import pl.confitura.jelatyna.allegro.adapter.dto.CheckoutForm;
 import pl.confitura.jelatyna.allegro.adapter.dto.CheckoutForms;
 import pl.confitura.jelatyna.allegro.adapter.dto.message.AllegroMessage;
 
@@ -53,8 +52,8 @@ public class AllegroClient {
         return executeRequest(request, CheckoutForms.class);
     }
 
-    public void markSent(CheckoutForm checkoutForm) throws IOException, ExecutionException, InterruptedException {
-        String url = properties.getApi() + "/order/checkout-forms/" + checkoutForm.getId() + "/fulfillment";
+    public void markSent(String checkoutFormId) throws IOException, ExecutionException, InterruptedException {
+        String url = properties.getApi() + "/order/checkout-forms/" + checkoutFormId + "/fulfillment";
         final OAuthRequest request = new OAuthRequest(PUT, url);
         request.addHeader(ACCEPT, ALLEGRO_CONTENT_TYPE);
         request.addHeader(CONTENT_TYPE, ALLEGRO_CONTENT_TYPE);

@@ -23,6 +23,8 @@ import java.util.stream.Stream;
 public class AllegroImportService {
     private final AllegroClient allegroClient;
     private final VoucherService voucherService;
+    private final AllegroVoucherMessageRepository allegroVoucherMessageRepository;
+    private final AllegroVoucherSender voucherSender;
 
     String getReadyToSendCsv() throws IOException, ExecutionException, InterruptedException {
         CheckoutForms readyForProcessing = allegroClient.getReadyForProcessing();
@@ -50,14 +52,12 @@ public class AllegroImportService {
 
             Stream<Voucher> vouchers = createVouchers(checkoutForm);
             String allegroMessage = buildMessage(vouchers);
-
             String buyerLogin = checkoutForm.getBuyer().getLogin();
-            if (allegroClient.sendMessage(buyerLogin, allegroMessage)) {
-                allegroClient.markSent(checkoutForm);
-            } else {
-                log.warn("sending message to {} failed", buyerLogin);
-            }
+            AllegroVoucherMessage messageToSend = AllegroVoucherMessage.from(buyerLogin, allegroMessage, checkoutForm.getId());
+            allegroVoucherMessageRepository.save(messageToSend);
         }
+
+        voucherSender.send();
     }
 
     @NotNull
