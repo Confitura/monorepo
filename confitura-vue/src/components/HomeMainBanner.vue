@@ -14,6 +14,10 @@
         </div>
 
         <div class="info__long">
+          <a href ="https://allegro.pl/uzytkownik/ConfituraPL" target="_blank">Tickets are now available for purchase!</a>
+          As always, your Confitura ticket serves a dual purpose - a conference pass and a donation to a charity (to support Dom Hospicyjny w Pruszczu Gdańskim).
+        </div>
+        <div class="info__long">
           Confitura 2023 will take place on June 24th, 2023. Meet us in Warsaw at the fifteenth edition of our super #JVMish event. Mark your calendars!
         </div>
         <div class="info__long">
