@@ -1076,21 +1076,23 @@ Visit COI booth during Confitura and learn more about their career opportunities
         //                     logo: require("../assets/partners/prodata.png"),
         //                     orientation: "horizontal"
         //                 },
-        //                 {
-        //                     id: "luxoft",
-        //                     name: "CGI",
-        //                     description: `Luxoft, a DXC Technology Company, is a digital strategy and software engineering firm providing bespoke technology solutions that drive business change for customers globally. As part of DXC Technology (NYSE: DXC), Luxoft enables business transformation, enhances customer experiences, and boosts operational efficiency through its strategy, consulting, and engineering services.
-        //
-        // Luxoft combines a unique blend of engineering excellence and deep industry expertise to serve clients globally, specializing in automotive, financial services, travel and hospitality, healthcare, life sciences, media and telecommunications.
-        //
-        // We offer a full stack of digital expertise including edge computing, server-less computing, AI and Machine Learning, plus we leverage both open source and native cloud platforms and APIs (mainly Big Data, Information Security, Cloud, DevOps, Mobile, Blockchain and IoT). We work using various agile methodologies (Kanban, Scrum, Waterfall) and our experienced project teams design, implement, maintain, and develop our clients’ digital assets.
-        //
-        // We have a relaxed corporate culture that’s highlighted by the best employees this side of Jupiter who always make fun a priority. But don’t get us wrong, it’s not all fun and games. We take our work and coding seriously and our ever-expanding global reach offers you a whole new world of opportunities that help you to \\#GoFarwithLuxoft. Go to: [www.poland.luxoft.com](https://www.poland.luxoft.com)`,
-        //                     www: "https://career.luxoft.com/",
-        //                     type: "silver",
-        //                     logo: require("../assets/partners/luxoft.svg"),
-        //                     orientation: "horizontal"
-        //                 },
+                {
+                    id: "luxoft",
+                    name: "Luxoft",
+                    description: `**Who we are**
+                    
+Luxoft, a DXC Technology Company is an international digital strategy and software engineering company. We have been operating in Poland since 2010. Luxoft is a digital transformation and software engineering services company that provides customized IT solutions that drive business change for customers in every corner of the globe. 
+
+At Luxoft Poland, we strive to provide customers with tailor-made technological solutions. Furthermore, we combine high-quality services with in-depth industry knowledge. We specialize in automotive, financial services, media, telecommunications, and other sectors. Technology is our passion! We employ experienced specialists with whom we implement ambitious and long-term projects. Luxoft is a global family with an epic atmosphere - we love what we do! We are not slowing down, so we can confidently say that we are a stable employer even in difficult times. 
+
+Luxoft Poland is well known for its consistently high level of supply and complex project management. Then, it is the talent of our highly qualified experts. We are operating in the field of digital engineering. Luxoft offers exceptional customer orientation as well as agility, creativity, and outstanding problem-solving capabilities.
+
+[Career at Luxoft](https://career.luxoft.com/locations/poland/?utm_source=website&utm_medium=website&utm_campaign=20230624-b2e-eb-poland-confitura)`,
+                    www: "https://career.luxoft.com/locations/poland/?utm_source=website&utm_medium=website&utm_campaign=20230624-b2e-eb-poland-confitura",
+                    type: "silver",
+                    logo: require("../assets/partners/2023/luxoft.png"),
+                    orientation: "horizontal"
+                },
         //                 {
         //                     id: "justjoinit",
         //                     name: "Just Join IT",
