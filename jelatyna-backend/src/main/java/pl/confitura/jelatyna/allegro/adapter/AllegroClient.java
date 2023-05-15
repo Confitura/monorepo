@@ -45,36 +45,20 @@ public class AllegroClient {
     }
 
     public CheckoutForms getReadyForProcessing() throws IOException, ExecutionException, InterruptedException {
-
-        OAuth2AccessToken accessToken = getAccessToken(context);
-//        accessToken = refreshAccessToken(accessToken.getRefreshToken());
-
         final OAuthRequest request = new OAuthRequest(Verb.GET, properties.getApi() + "/order/checkout-forms");
         request.addQuerystringParameter("status", "READY_FOR_PROCESSING");
         request.addQuerystringParameter("fulfillment.status", "NEW");
         request.addHeader(ACCEPT, ALLEGRO_CONTENT_TYPE);
-        service.signRequest(accessToken, request);
-
-        try (Response response = service.execute(request)) {
-            log.debug(String.valueOf(response.getCode()));
-            log.debug(response.getBody());
-            return objectMapper.readValue(response.getBody(), CheckoutForms.class);
-        }
+        return executeRequest(request, CheckoutForms.class);
     }
 
     public void markSent(CheckoutForm checkoutForm) throws IOException, ExecutionException, InterruptedException {
-
         String url = properties.getApi() + "/order/checkout-forms/" + checkoutForm.getId() + "/fulfillment";
         final OAuthRequest request = new OAuthRequest(PUT, url);
         request.addHeader(ACCEPT, ALLEGRO_CONTENT_TYPE);
         request.addHeader(CONTENT_TYPE, ALLEGRO_CONTENT_TYPE);
         request.setPayload("{\"status\": \"SENT\"}");
-        service.signRequest(getAccessToken(context), request);
-
-        try (Response response = service.execute(request)) {
-            System.out.println(response.getCode());
-            System.out.println(response.getBody());
-        }
+        executeRequest(request);
     }
 
     private OAuth2AccessToken refreshAccessToken(String refreshToken) throws IOException, ExecutionException, InterruptedException {
@@ -109,17 +93,33 @@ public class AllegroClient {
     }
 
     public void sendMessage(String login, String testMessage) throws IOException, ExecutionException, InterruptedException {
+        log.info("sending message to login");
         String url = properties.getApi() + "/messaging/messages";
         final OAuthRequest request = new OAuthRequest(POST, url);
         request.addHeader(ACCEPT, ALLEGRO_CONTENT_TYPE);
         request.addHeader(CONTENT_TYPE, ALLEGRO_CONTENT_TYPE);
         request.setPayload(objectMapper.writeValueAsString(AllegroMessage.create(login, testMessage)));
+        executeRequest(request);
+    }
+
+
+    private <T> T executeRequest(OAuthRequest request, Class<T> responseType) throws IOException, ExecutionException, InterruptedException {
         service.signRequest(getAccessToken(context), request);
-
-
         try (Response response = service.execute(request)) {
-            System.out.println(response.getCode());
-            System.out.println(response.getBody());
+            logResponse(response);
+            return objectMapper.readValue(response.getBody(), responseType);
         }
+    }
+
+    private void executeRequest(OAuthRequest request) throws IOException, ExecutionException, InterruptedException {
+        service.signRequest(getAccessToken(context), request);
+        try (Response response = service.execute(request)) {
+            logResponse(response);
+        }
+    }
+
+    private static void logResponse(Response response) throws IOException {
+        log.debug(String.valueOf(response.getCode()));
+        log.debug(response.getBody());
     }
 }
