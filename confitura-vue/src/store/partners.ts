@@ -116,7 +116,7 @@ IQVIA is a leading global provider of advanced analytics, technology solutions, 
           name: "IQVIA",
           www: "https://www.iqvia.com/",
           type: "silver",
-          logo: require("../assets/partners/2023/iqvia.jpg"),
+          logo: require("../assets/partners/2023/iqvia.svg"),
           orientation: "horizontal"
         },
 //         {
