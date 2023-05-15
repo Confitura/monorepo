@@ -2,7 +2,6 @@ package pl.confitura.jelatyna.allegro;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import pl.confitura.jelatyna.allegro.adapter.AllegroClient;
 
@@ -20,7 +19,6 @@ public class AllegroVoucherSender {
     private final AllegroVoucherMessageRepository repository;
 
 
-    @Async
     public void send() {
         List<AllegroVoucherMessage> all = repository.findAllBySendDateIsNull();
         for (AllegroVoucherMessage message : all) {

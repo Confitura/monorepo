@@ -49,7 +49,9 @@ public class AllegroImportService {
     void createVouchersFromAuctions() throws IOException, ExecutionException, InterruptedException {
         CheckoutForms readyForProcessing = allegroClient.getReadyForProcessing();
         for (CheckoutForm checkoutForm : readyForProcessing.getCheckoutForms()) {
-
+            if (allegroVoucherMessageRepository.existsByCheckoutFormId(checkoutForm.getId())) {
+                continue;
+            }
             Stream<Voucher> vouchers = createVouchers(checkoutForm);
             String allegroMessage = buildMessage(vouchers);
             String buyerLogin = checkoutForm.getBuyer().getLogin();

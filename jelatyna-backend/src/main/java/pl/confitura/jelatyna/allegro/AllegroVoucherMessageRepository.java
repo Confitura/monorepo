@@ -9,4 +9,6 @@ public interface AllegroVoucherMessageRepository extends Repository<AllegroVouch
     List<AllegroVoucherMessage> findAllBySendDateIsNull();
 
     void save(AllegroVoucherMessage messageToSend);
+
+    boolean existsByCheckoutFormId(String checkoutFormId);
 }
