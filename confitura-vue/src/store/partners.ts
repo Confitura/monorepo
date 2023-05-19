@@ -408,6 +408,22 @@ IQVIA is a leading global provider of advanced analytics, technology solutions, 
   orientation: "horizontal",
   logo: require("../assets/partners/2023/match-trade.svg")
 },
+{
+  id: "jit-team",
+  name: "Jit team",
+  description: `Jit Team – the human factor of IT.
+
+We are a team full of teams! We build software development teams for our clients operating in various branches of business. We believe that the most important factor, even when technology is concerned, is the human factor. Our main value are JIT people, who are excellent specialists.
+
+We are transparent and honest to ensure the cooperation with our clients and employees is successful and long-term.
+
+https://jit.team
+`,
+  www: "https://jit.team",
+  type: "silver",
+  orientation: "horizontal",
+  logo: require("../assets/partners/2023/jit-team.svg")
+},
 //         {
 //           id: "fis",
 //           name: "FIS",
