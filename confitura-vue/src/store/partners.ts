@@ -154,19 +154,31 @@ IQVIA is a leading global provider of advanced analytics, technology solutions, 
 //           logo: require("../assets/partners/2022/coderslab.svg"),
 //           orientation: "horizontal"
 //         },
-//         {
-//           id: "bnpparibas",
-//           name: "BNP Paribas",
-//           description: `BNP Paribas działa w pierwszej 6 największych banków w Polsce pod względem kapitałowym dostarczając 4 mln naszych Klientów rozwiązania z zakresu finansowania działalności na rynku krajowym i międzynarodowym oraz szereg produktów oszczędnościowo-inwestycyjnych i kredytowych.
-//
-// Na Confitura pojawiamy się nie tylko jako bank, ale przede wszystkim jako pracodawca z obszaru IT, bo obszar Technologii jest kluczowy w funkcjonowaniu naszego biznesu. Bankowość to nie tylko działy sprzedaży czy operacji. Nasz bank to również miejsce, w którym pracownicy mogą być odpowiedzialni za rozwój nowoczesnych aplikacji internetowych i mobilnych, budowanie innowacyjnych rozwiązań z wykorzystaniem Big Data, Cloud oraz AI, modernizację i utrzymanie infrastruktury, wsparcie użytkowników i wiele innych.
-//
-// Praca w BNP Paribas to praca w środowisku bardzo dynamicznym i pełnym wyzwań, dającym możliwość współpracy z największymi firmami z branży technologii oraz z szeregiem innowacyjnych startupów zarówno z Polski jak i ze świata. Chcesz sprawdzić jakie możliwości rozwoju dajemy kandydatom? Wejdź na stronę [Praca w IT | BNP Kariera.](https://www.bnpparibas.pl/kariera/pl/obszary-zatrudnienia/praca-w-it)`,
-//           www: "https://www.bnpparibas.pl",
-//           type: "gold",
-//           logo: require("../assets/partners/2022/bnpparibas.svg"),
-//           orientation: "horizontal"
-//         },
+{
+          id: "bnpparibas",
+          name: "BNP Paribas",
+          description: `Wprowadzamy pozytywną bankowość w życie naszych Klientów, odpowiadając na ich potrzeby finansowe i ułatwiając im realizację ich celów. Działamy w sposób prosty, przemyślany i bezpieczny, dbając o społeczeństwo i środowisko. 
+
+Na Confitura pojawiamy się nie tylko jako bank, ale przede wszystkim jako pracodawca z obszaru IT, bo obszar Nowych Technologii i Cyberbezpieczeństwa jest kluczowy w funkcjonowaniu naszego biznesu. Bankowość to nie tylko obszary sprzedaży czy operacji. Bank BNP Paribas to również miejsce, w którym pracownicy i pracowniczki mogą być odpowiedzialni za rozwój nowoczesnych aplikacji internetowych i mobilnych, budowanie innowacyjnych rozwiązań z wykorzystaniem Big Data, Cloud oraz AI, modernizację i utrzymanie infrastruktury, wsparcie użytkowników i wiele innych.
+
+Transformujemy się i wprowadzamy nieustannie nowe technologie by jeszcze lepiej i sprawniej obsługiwać naszych Klientów i dostarczać im najwyższą jakość usług i produktów.
+
+Możesz liczyć na:
+- Dołączenie do banku o globalnym zasięgu, który jest częścią grupy bankowej BNP Paribas obecnej w 65 krajach z 200-letnią tradycją,
+- Pracę w miejscu, w którym możesz być sobą niezależnie od swojej orientacji seksualnej, tożsamości płciowej, koloru skóry, pochodzenia czy poziomu sprawności,
+- Rozwój w Banku Zielonych Zmian, w którym możesz mieć wpływ na naszą planetę i otaczający nas świat,
+- Dużą autonomię w działaniu przy jednoczesnym wsparciu przełożonego/przełożonej,
+- Możliwość podejmowania własnych decyzji, eksperymentowania i tworzenia swojej unikalnej ścieżki doświadczeń,
+- Pracę w środowisku agile’owym, które wspiera elastyczność i innowacyjność organizacji, w końcu jesteśmy Bankiem zmieniającego się świata.
+
+Razem zobowiązaliśmy się być liderem zrównoważonego finansowania.
+
+#tumożesz https://www.bnpparibas.pl`,
+          www: "https://www.bnpparibas.pl",
+          type: "silver",
+          logo: require("../assets/partners/2023/bnpparibas.svg"),
+          orientation: "horizontal"
+        },
 //         {
 //           id: "decerto",
 //           name: "Decerto",
