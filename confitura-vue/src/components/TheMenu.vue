@@ -30,8 +30,8 @@ export default class TheMenu extends Vue {
     { label: "home", url: "/#home" },
     { label: "about us", url: "/about" },
     { label: "venue", url: "/venue" },
-    // { label: "tickets", url: "/tickets" },
-    // { label: "vote", url: "/v4p" },
+    { label: "tickets", url: "/tickets" },
+    { label: "vote", url: "/v4p" },
     { label: "partners", url: "/partners" },
     // { label: "schedule", url: "/schedule" },
     // { label: "presentations", url: "/presentations" },
@@ -45,7 +45,7 @@ export default class TheMenu extends Vue {
       action: () => this.logout(),
       visible: () => this.isLogin
     },
-    { label: "C4P", url: "/c4p", visible: () => !this.isLogin },
+    // { label: "C4P", url: "/c4p", visible: () => !this.isLogin },
     { label: "login", url: "/login", visible: () => !this.isLogin }
   ];
 
