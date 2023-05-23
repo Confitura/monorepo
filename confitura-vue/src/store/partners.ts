@@ -661,17 +661,21 @@ Follow us here:
         //                     type: "silver",
         //                     logo: require("../assets/partners/nfj.svg")
         //                 },
-        //                 {
-        //                     id: "viacom",
-        //                     description: `As a part of leading global entertainment company Viacom.tech offers challenging projects for iconic brands like MTV, Nickelodeon, Nick Jr, COMEDY CENTRAL, and Paramount Channel. Focusing on Viacom’s global engineering organization, the Warsaw Software Development Center plays a crucial role in the creation of highly efficient, advanced systems which are implemented by millions of users around the world. Our excellence center in Warsaw builds scalable and efficient systems, serving high volume traffic. We are an Agile and growing team of software engineers who use modern development and deployment technologies (Java 11, Kotlin, Swift, TypeScript, Docker, Kubernetes, clouds).
-        //
-        // Viacom.Tech is pioneering a new era of data in entertainment with opportunities in mobile application development, artificial intelligence, and data science. Want to become an architect of change and join a team of innovative thought leaders who aim to transform the entertainment industry with technological expertise? Here you can check out our current job openings and learn more about the company: https://viacom.tech/`,
-        //                     name: "Viacom.Tech",
-        //                     www: "https://viacom.tech/",
-        //                     type: "gold",
-        //                     logo: require("../assets/partners/viacom.svg"),
-        //                     orientation: "horizontal"
-        //                 },
+                {
+                    id: "paramount",
+                    description: `Paramount Global delivers premium content to audiences across platforms worldwide. Through our studios, networks, streaming services, live events, merchandise, we connect with billions of people. Our studios create content for all audiences, across every genre and format, while our networks and brands forge deep connections with the world’s most diverse audiences. In streaming, our differentiated strategy is scaling rapidly across free, broad pay, and premium.
+ 
+Paramount in Poland plays a crucial role in the global engineering organization, ensuring worldwide access to Paramount content through SVOD, TVOD, and AVOD services. Our projects cover content and delivery platforms, user management, personalization, event collection, and solutions for emerging platforms. Our talented teams are essential to achieving our mission of Entertaining The Planet by attracting and retaining top tech talent.
+ 
+Our teams are constantly growing, and we are always on a look out for new talents to join Paramount. If you want a chance to decide if Paramount is a place where you want to be – apply! We will be more than happy to get to know you and to tell you more about opportunities here in our company!
+
+https://www.paramount.com/`,
+                    name: "Paramount",
+                    www: "https://www.paramount.com//",
+                    type: "gold",
+                    logo: require("../assets/partners/2023/paramount.svg"),
+                    orientation: "horizontal"
+                },
 
         //                 {
         //                     id: "applause",
