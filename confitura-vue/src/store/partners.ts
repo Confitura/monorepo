@@ -271,6 +271,23 @@ Catch #SoftwareMillVibes:
           logo: require("../assets/partners/2023/sml.svg"),
           orientation: "horizontal"
         },
+        {
+          id: "vodeno",
+          name: "Vodeno",
+          description: `Hi, we are Vodeno!
+
+We are transforming the financial services industry. We offer instant access to the most comprehensive banking as a service platform available in the market, addressing the challenges of increased regulation and exploiting the digital revolution through innovation.
+
+Our Engineers built Vodeno Cloud Platform. It is the most comprehensive, ready to use solution for Retail & SME Banking enabled by advanced API technology and the world's first banking platform based entirely on Google Cloud. The platform complies with strict regulations and allows innovation at speed. The Platform is a unique composition of micro-services operating within a scalable lambda architecture and with native support of big data processing. Being fully cloud-based and API-enabled, our platform simplifies migration from any legacy core banking systems or other in-house solutions. This is what we call pioneering!
+
+Each of us brings different experiences and knowledge to Vodeno. Together we create a team of people who have an enormous drive to explore the unknown. To pioneer and be ready to test and learn. To fail forward. To innovate. To change things for the better.
+
+Get to know us at [www.vodeno.com/careers](https://www.vodeno.com/careers)`,
+          www: "https://www.vodeno.com/careers",
+          type: "silver",
+          logo: require("../assets/partners/2023/vodeno.svg"),
+          orientation: "horizontal"
+        },
 //         {
 //           id: "intercars",
 //           name: "Inter Cars",
