@@ -6,11 +6,11 @@
         <div class="slogan">
           <h1 class="h1">It is not rocket science!</h1>
         </div>
-        <TheTimer />
+<!--        <TheTimer />-->
         <div class="info__live">
           <div class="info__live-text">CONFITURA 2023</div>
-<!--          <span class="info__live-link">Vote 4 Papers is active!</span><br/>-->
-<!--          <a class="info__live-link" href="https://2023.confitura.pl/v4p" target="_blank">vote here</a>-->
+          <span class="info__live-link">Vote 4 Papers is active!</span><br/>
+          <a class="info__live-link" href="https://2023.confitura.pl/v4p" target="_blank">vote here</a>
         </div>
 
         <div class="info__long">
