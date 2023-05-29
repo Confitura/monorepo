@@ -1104,16 +1104,20 @@ Visit COI booth during Confitura and learn more about their career opportunities
         //                     logo: require("../assets/partners/is.png"),
         //                     orientation: "horizontal"
         //                 },
-        //                 {
-        //                     id: "pentacomp",
-        //                     name: "Pentacomp",
-        //                     description: `Historia Pentacomp Systemy Informatyczne S.A. zaczęła się 24 lata temu od pięciu komputerów, właścicieli których połączyła wspólna pasja – programowanie i marzenie o rzeczach większych, niż te, które można osiągnąć w pojedynkę. Obecnie, Pentacomp to ponad 250 „zwinnych" specjalistów. To oni wprowadzają cyfrową rewolucję w administracji oraz pomagają skutecznie, szybko i innowacyjnie rozwijać biznes prywatnych przedsiębiorstw.
-        // `,
-        //                     www: "https://www.pentacomp.pl/",
-        //                     type: "bronze",
-        //                     logo: require("../assets/partners/pentacomp.svg"),
-        //                     orientation: "horizontal"
-        //                 },
+{
+    id: "appfire",
+    name: "Appfire",
+    description: `Appfire is a leading provider of software that helps developers and teams solve modern challenges with digital solutions.
+
+Since launching in 2005, Appfire has built a platform of 200+ trusted apps and top-selling solutions for more than 30,000 customers spanning 150 countries and all industry groups — including 55% of Fortune 500 companies. Our software is available as standalone products and through platforms such as Atlassian, Microsoft, Salesforce, Monday.com, and more. We support teams with Workflow Automation, Product Portfolio Management, IT Service Management, Document Management, Business Intelligence and Reporting, Administrative Tools, Agile, Developer Tools, and Publishing. With over 750 employees globally, Appfire prioritizes a flexible work model and human-focused perspective culture.
+
+[www.appfire.com](https://www.appfire.com)
+`,
+    www: "https://www.appfire.com",
+    type: "silver",
+    logo: require("../assets/partners/2023/appfire.svg"),
+    orientation: "horizontal"
+},
         //                 {
         //                     id: "atena",
         //                     name: "Atena",
