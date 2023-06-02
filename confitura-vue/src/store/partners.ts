@@ -179,15 +179,18 @@ Razem zobowiązaliśmy się być liderem zrównoważonego finansowania.
           logo: require("../assets/partners/2023/bnpparibas.svg"),
           orientation: "horizontal"
         },
-//         {
-//           id: "decerto",
-//           name: "Decerto",
-//           description: `Jesteśmy polskim software house’m obecnym na rynku od 2006 roku. Realizujemy projekty dla dużych korporacji, głównie z sektora finansowego. Równocześnie zachowujemy płaską strukturę i niekorporacyjną kulturę pracy. Posiadamy duże doświadczenie i know-how oraz stawiamy na długoterminowe relacje. Dzięki zaufaniu Klientów prowadzimy kilkanaście dużych projektów – pracując z nami zyskujesz nie tylko stabilność zatrudnienia, ale również duże możliwości rozwoju oraz wybór odpowiedniego środowiska pracy. Specjalizujemy się w rozwiązaniach backendowych związanych z dużymi wolumenami danych oraz logiką biznesową. Projektujemy kompleksowe rozwiązania informatyczne, dlatego cenimy otwarty umysł, samodzielność oraz własną inicjatywę. Doceniamy indywidualizm i szanujemy inny punkt widzenia.`,
-//           www: " https://www.decerto.com/pl/start",
-//           type: "silver",
-//           logo: require("../assets/partners/2022/decerto.svg"),
-//           orientation: "horizontal"
-//         },
+{
+id: "decerto",
+name: "Decerto",
+description: `Jesteśmy polskim software house’m obecnym na rynku od 2006 roku. Realizujemy projekty dla dużych korporacji, głównie z sektora finansowego. Zachowujemy płaską strukturę organizacyjną i niekorporacyjną kulturę pracy. Dzięki zaufaniu Klientów prowadzimy kilkanaście dużych projektów. Posiadamy duże doświadczenie i know-how, a we współpracy stawiamy na długoterminowe relacje. Pracując z nami, zyskujesz stabilność zatrudnienia, rozwój oraz możliwość poznania świata finansów i ubezpieczeń. Specjalizujemy się w rozwiązaniach backendowych związanych z dużymi wolumenami danych oraz logiką biznesową. Projektujemy kompleksowe systemy informatyczne, dlatego cenimy otwarty umysł, własną inicjatywę oraz samodzielność.
+
+[www.decerto.com](https://www.decerto.com/pl/kariera)
+`,
+www: " https://www.decerto.com/pl/kariera",
+type: "silver",
+logo: require("../assets/partners/2023/decerto.svg"),
+orientation: "horizontal"
+},
 //         {
 //           id: "bigpicture",
 //           name: "BigPicture",
