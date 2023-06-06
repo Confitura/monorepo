@@ -358,15 +358,24 @@ Get to know us at [www.vodeno.com/careers](https://www.vodeno.com/careers)`,
 //           orientation: "horizontal",
 //           logo: require("../assets/partners/2022/onwelo.svg")
 //         },
-//         {
-//           id: "touk",
-//           name: "Touk",
-//           description: `TouK to miejsce twórczej eksploracji dla deweloperów. Tu liczy się pasja, inicjatywa i (współ)działanie. Tworzymy przestrzeń, gdzie ludzie o różnych charakterach, niezależnie od doświadczenia, mają możliwość pracować i rozwijać się przez lata. Nasza kultura, doświadczony i wszechstronny zespół owocują realizacją coraz ciekawszych i ambitniejszych projektów.`,
-//           www: "https://touk.pl/careers",
-//           type: "silver",
-//           orientation: "horizontal",
-//           logo: require("../assets/partners/touk.svg")
-//         },
+         {
+           id: "nussknacker",
+           name: "Nussknacker",
+           description: `Nussknacker to produkt stworzony i rozwijany przez developerów z TouK. Jest to narzędzie low-code, które umożliwia tworzenie i uruchamianie scenariuszy przetwarzania danych w czasie rzeczywistym. Podstawowym wejściem są dla Nussknackera strumienie (Kafka), ale w zależności od potrzeb może też działać w trybie synchronicznym i wsadowym. Dane wejściowe mogą być z kolei wzbogacane o dane z baz danych, API czy modeli ML. Nu wykorzystywany jest między innymi do wykrywania fraudów, tworzenia akcji marketingowych, wspomagania decyzji sprzedażowych oraz sprawdzania wiarygodności klientów zarówno w Polsce jak i za granicą.
+
+ Podstawowa wersja Nu to open source, ale jednocześnie rozwijamy Nu Cloud, czyli Nussknackera dostępnego w chmurze.
+
+Wykorzystujemy technologie takie jak: Scala, Kafka, Flink, Java, Kubernetes, Kotlin i React.
+
+Jeżeli nie przeraża Cię praca w złożonym ekosystemie, a wręcz czujesz nutkę ekscytacji na myśl o eksploracji, chcesz się uczyć Scali i Kotlina, podoba Ci się projekt, w którym rzadko trafia się na podobne zadanie, chodź rozwijać i wdrażać Nussknackera i podbijać międzynarodowe rynki razem z nami ;)
+
+[nussknacker.io](https://nussknacker.io/)
+`,
+           www: "https://nussknacker.io/",
+           type: "silver",
+           orientation: "horizontal",
+           logo: require("../assets/partners/2023/nussknacker.svg")
+         },
 //         {
 //           id: "citi",
 //           name: "Citi",
