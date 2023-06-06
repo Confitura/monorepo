@@ -335,29 +335,19 @@ Get to know us at [www.vodeno.com/careers](https://www.vodeno.com/careers)`,
 //           orientation: "horizontal",
 //           logo: require("../assets/partners/2022/goldmansachs.svg")
 //         },
-//         {
-//           id: "onwelo",
-//           name: "Onwelo",
-//           description: `Onwelo to nowoczesna polska spółka technologiczna, która specjalizuje się w budowaniu innowacyjnych rozwiązań IT dla organizacji z szeregu sektorów na całym świecie. Główne obszary działalności Onwelo to: tworzenie oprogramowania, jego rozwój oraz utrzymanie, a także mocne wsparcie kompetencyjne. W krótkim czasie firma wdrożyła ponad 300 projektów w Europie i w USA, powiększyła zespół do ponad 400 osób, a także otworzyła biura w sześciu miastach Polski oraz oddziały w Stanach Zjednoczonych, Niemczech i w Szwajcarii.
-//
-// Chociaż filar naszej firmy stanowią doświadczeni, wykwalifikowani specjaliści, jesteśmy również otwarci na włączenie do naszych zespołów pasjonatów IT, którzy przy naszym wsparciu chcą zmienić dotychczasowy stack lub postawić swoje pierwsze kroki w świecie zaawansowanych technologii. W Onwelo zatrudniamy specjalistów z obszarów: analizy biznesowej, rozwoju i utrzymania oprogramowania, testowania oprogramowania, zarządzania infrastrukturą IT, tworzenia rozwiązań Data & Analytics oraz Intelligent Automation, a także rozwiązań chmurowych.
-//
-// Dlaczego warto u nas pracować?
-//
-// * **Wsparcie mentorskie i jasne ścieżki kariery** – możesz liczyć na wsparcie naszych ekspertów i przełożonych wywodzących się z obszarów merytorycznych oraz na kulturę wymiany wiedzy i spersonalizowany rozwój
-// * **Nowoczesne technologie i narzędzia pracy** – realizujemy projekty o wysokim stopniu zaawansowania technologicznego, a dzięki nowoczesnym standardom narzędzi pracy i systemów, Twoja praca jest bardziej przyjemna i rozwojowa
-// * **Projekty zagraniczne** – pracuj z nami dla klientów z Europy Zachodniej i Stanów Zjednoczonych
-// * **Zgrany zespół i inicjatywy integracyjne** – lubisz planszówki, warsztaty, wyzwania sportowe albo spontaniczne wyjścia w większym gronie? Zadbamy o to!
-// * **Elastyczny model zatrudnienia i możliwość pracy zdalnej** – dostosujemy model zatrudnienia do Twoich potrzeb. Jako samodzielny specjalista możesz pracować zarówno w jednym z naszych nowoczesnych biur w atrakcyjnej lokalizacji, jak i zdalnie
-// * **Przyjazny onboarding** – zadbamy o to, żeby Twój start w firmie był łatwy i przyjemny
-// * **Pakiety benefitów** – karta MultiSport, prywatna opieka medyczna, grupowe ubezpieczenie na życie – to u nas standard
-//
-// Chcesz dowiedzieć się o nas więcej? Wejdź na https://onwelo.com/career,p6.html`,
-//           www: "https://www.onwelo.com",
-//           type: "gold",
-//           orientation: "horizontal",
-//           logo: require("../assets/partners/2022/onwelo.svg")
-//         },
+         {
+           id: "onwelo",
+           name: "Onwelo",
+           description: `We are one of the fastest-growing technology companies in the Polish market, delivering modern IT solutions that shape the digital growth of organizations from many industries around the world. Our main areas of operations are: business analysis, software development and maintenance, software testing, IT infrastructure management, development of Data & Analytics and Intelligent Automation solutions, delivering cloud-based products and services. Figures confirm our dynamic growth. In a short time, we have completed over 300 projects in Europe and the USA, enlarged our team to over 700 experts, and opened offices in seven Polish cities and also branches in the United States, Germany and Switzerland. Our success is the work of a team of experienced IT experts. We strive to align employee skills with customer requirements in such a way as to support business growth of international brands while also enabling our experts to participate in challenging projects using state-of-the-art technologies.
+
+Get to know us better!
+
+[onwelo.com](https://onwelo.com/career/)`,
+           www: "https://onwelo.com/career/",
+           type: "silver",
+           orientation: "horizontal",
+           logo: require("../assets/partners/2023/onwelo.svg")
+         },
          {
            id: "nussknacker",
            name: "Nussknacker",
