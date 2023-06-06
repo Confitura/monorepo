@@ -370,6 +370,10 @@ Wykorzystujemy technologie takie jak: Scala, Kafka, Flink, Java, Kubernetes, Kot
 Jeżeli nie przeraża Cię praca w złożonym ekosystemie, a wręcz czujesz nutkę ekscytacji na myśl o eksploracji, chcesz się uczyć Scali i Kotlina, podoba Ci się projekt, w którym rzadko trafia się na podobne zadanie, chodź rozwijać i wdrażać Nussknackera i podbijać międzynarodowe rynki razem z nami ;)
 
 [nussknacker.io](https://nussknacker.io/)
+
+[Twitter](https://twitter.com/Nussknacker_io)
+
+[LinkedIn](https://www.linkedin.com/company/nussknacker/)
 `,
            www: "https://nussknacker.io/",
            type: "silver",
