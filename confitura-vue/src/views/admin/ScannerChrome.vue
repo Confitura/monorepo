@@ -1,5 +1,6 @@
 <template>
   <div class="scanner">
+    <div id="reader" width="600px"></div>
     <Box :full="false" :small="true" class="content back-office" color="white">
       <div class="card-panel red error" v-if="error">{{ error }}</div>
       <div v-if="participant">
@@ -41,7 +42,6 @@
         <md-icon>center_focus_strong</md-icon>
       </md-button>
     </Box>
-    <div id="reader" width="600px"></div>
   </div>
 </template>
 
