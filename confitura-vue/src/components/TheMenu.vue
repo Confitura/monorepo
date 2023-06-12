@@ -26,7 +26,7 @@ import { LOGOUT } from "@/types";
 })
 export default class TheMenu extends Vue {
   public items: MenuItem[] = [
-    { label: "scanner", url: "/scanner", visible: () => this.isVolunteer },
+    { label: "scanner", url: "/new-scanner", visible: () => this.isVolunteer },
     { label: "home", url: "/#home" },
     { label: "about us", url: "/about" },
     { label: "venue", url: "/venue" },

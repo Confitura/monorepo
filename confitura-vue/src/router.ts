@@ -33,6 +33,7 @@ import Spoina from "@/views/Spoina.vue";
 import ManageSchedule from "@/views/admin/ManageSchedule.vue";
 import Participants from "@/views/admin/Participants.vue";
 import Allegro from "@/views/admin/Allegro.vue";
+import ScannerChrome from "@/views/admin/ScannerChrome.vue";
 
 Vue.use(Router);
 Vue.use(VueScrollTo, {
@@ -155,6 +156,11 @@ const router = new Router({
       path: "/scanner/:id?",
       name: "scanner",
       component: Scanner
+    },
+    {
+      path: "/new-scanner/:id?",
+      name: "new-scanner",
+      component: ScannerChrome
     },
     {
       path: "/about",
