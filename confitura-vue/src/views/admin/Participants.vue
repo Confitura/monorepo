@@ -1,5 +1,9 @@
 <template>
   <div class="users">
+    <div>
+      <button class="waves-effect waves-light btn"
+              @click="sendReminders()">
+        send reminders </button></div>
     <table>
       <thead>
         <tr>
@@ -57,6 +61,11 @@ export default class Users extends Vue {
   public resendTicket(participantId: string) {
     if (confirm("sure to resend ticket?")) {
       axios.post(`/api/participants/${participantId}/resend-ticket`);
+    }
+  }
+  public sendReminders() {
+    if (confirm("sure to send reminder ticket?")) {
+      axios.post(`/api/participants/reminder`);
     }
   }
 }
