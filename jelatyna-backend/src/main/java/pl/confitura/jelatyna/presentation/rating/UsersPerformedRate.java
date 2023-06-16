@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.GenericGenerator;
 import pl.confitura.jelatyna.presentation.Presentation;
-import pl.confitura.jelatyna.user.User;
 
 import javax.persistence.*;
 
@@ -21,13 +20,13 @@ public class UsersPerformedRate {
     @Column(columnDefinition = "varchar(100)")
     private String id;
 
-    @ManyToOne
-    private User user;
+    private String reviewerToken;
+
     @ManyToOne
     private Presentation presentation;
 
-    public UsersPerformedRate(User user, Presentation presentation) {
-        this.user = user;
+    public UsersPerformedRate(String reviewerToken, Presentation presentation) {
+        this.reviewerToken = reviewerToken;
         this.presentation = presentation;
     }
 }

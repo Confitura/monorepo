@@ -28,11 +28,7 @@
       ></PresentationMetadata>
       <div class="agendaItem__separator"></div>
       <div class="agendaItem__rate" @click.stop="">
-        <template v-if="!loggedIn">
-          <router-link to="login">Sign in</router-link>
-          to rate.
-        </template>
-        <template v-else-if="isRated(entry.presentation)">
+        <template v-if="isRated(entry.presentation)">
           already rated!
         </template>
         <template v-else
@@ -90,10 +86,6 @@ export default class AgendaItem extends Vue {
 
   public get rates() {
     return this.$store.state.presentations.rates;
-  }
-
-  public get loggedIn() {
-    return this.$store.getters.isLogin;
   }
 }
 </script>

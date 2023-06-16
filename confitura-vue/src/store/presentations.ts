@@ -1,9 +1,13 @@
 import { Module } from "vuex";
 import { Presentation, PresentationRate, RootState } from "@/types";
 import axios from "axios";
+import { getToken } from "@/utils";
 
 export const SET_PRESENTATION_UNDER_RATE = "SET_PRESENTATION_UNDER_RATE";
 export const RATE = "RATE";
+
+const RATING_TOKEN = "RATING_TOKEN";
+
 export const presentationsModule: Module<PresentationsState, RootState> = {
   state: {
     underRating: null,
@@ -32,10 +36,11 @@ export const presentationsModule: Module<PresentationsState, RootState> = {
   actions: {
     [RATE]({ commit }, { presentation, rate, comment }: PresentationRate) {
       if (presentation) {
+        let reviewerToken = getToken(RATING_TOKEN);
         return axios
           .post<{ id: string }>(
             `/api/presentations/${presentation.id}/ratings`,
-            { value: rate - 1, comment }
+            { value: rate - 1, comment, reviewerToken }
           )
           .then(response => {
             commit(RATE, { presentation, id: response.data.id });

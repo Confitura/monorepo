@@ -12,12 +12,12 @@ import pl.confitura.jelatyna.agenda.PresentationUtils;
 import pl.confitura.jelatyna.agenda.UserUtils;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
 import pl.confitura.jelatyna.presentation.Presentation;
-import pl.confitura.jelatyna.user.User;
+import pl.confitura.jelatyna.presentation.RateRequest;
 
 import java.util.List;
+import java.util.UUID;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
 import static org.springframework.hateoas.MediaTypes.HAL_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -33,33 +33,29 @@ class RatingApiTest extends BaseIntegrationTest {
     @Autowired
     PresentationUtils presentationUtils;
 
-    private User user;
     private List<AgendaEntry> agenda;
     private Presentation presentation;
-    private Rate rate;
+    private Rate rate = new Rate().setValue(RateValue.AWESOME);
+    private String reviewerToken = UUID.randomUUID().toString();
 
     @BeforeEach
     public void setUp() {
         SecurityHelper.asAdmin();
-        user = userUtils.createUser("user");
-        user = userUtils.markArrived(user);
         agenda = agendaUtils.createAgenda(
                 new String[]{"", "room1", "room2"},
                 new String[]{"09-12", "presentation1", "presentation2"},
                 new String[]{"12-18", "presentation3", "presentation4"}
         );
         presentation = agenda.get(0).getPresentation();
-        rate = new Rate().setValue(RateValue.AWESOME);
         SecurityHelper.cleanSecurity();
     }
-
 
     @Test
     @Transactional
     public void userShouldBeAbleToRate() throws Exception {
 
         // when user rates presentation
-        rate(presentation, user, rate)
+        rate(presentation, reviewerToken, rate)
 
                 // then rate is created
                 .andExpect(jsonPath("$.value").value(rate.getValue().name()))
@@ -78,7 +74,7 @@ class RatingApiTest extends BaseIntegrationTest {
 
         Rate rate = new Rate().setValue(RateValue.AWESOME).setComment("comment");
         // when user rates presentation with comment
-        rate(presentation, user, rate)
+        rate(presentation, reviewerToken, rate)
                 .andExpect(status().isCreated());
 
         // then comment is added to presentation
@@ -92,10 +88,10 @@ class RatingApiTest extends BaseIntegrationTest {
     @Transactional
     public void userShouldNotBeAbleToRateSamePresentationTwice() throws Exception {
 
-        rate(presentation, user, rate);
+        rate(presentation, reviewerToken, rate);
 
         //when same user tries to rate same presentation
-        rate(presentation, user, rate)
+        rate(presentation, reviewerToken, rate)
 
                 //then system denies it
                 .andExpect(status().isConflict());
@@ -112,16 +108,16 @@ class RatingApiTest extends BaseIntegrationTest {
     public void userShouldBeAbleToUpdateRate() throws Exception {
 
         Rate newRate = new Rate().setValue(RateValue.GREAT);
-        MvcResult mvcResult = rate(presentation, user, rate).andReturn();
+        MvcResult mvcResult = rate(presentation, reviewerToken, rate).andReturn();
         Rate createdRate = fromJson(mvcResult.getResponse().getContentAsString(), Rate.class);
 
         // when user updates rate
         mockMvc.perform(
-                put("/presentations/" + presentation.getId() + "/ratings/" + createdRate.getId())
-                        .with(user(user))
-                        .content(json(newRate))
-                        .contentType(HAL_JSON)
-        )
+                        put("/presentations/" + presentation.getId() + "/ratings/" + createdRate.getId())
+                                .with(user(reviewerToken))
+                                .content(json(newRate))
+                                .contentType(HAL_JSON)
+                )
                 .andExpect(status().isOk());
 
         //then vote is updated
@@ -135,13 +131,13 @@ class RatingApiTest extends BaseIntegrationTest {
     @Test
     @Transactional
     public void userShouldBeAbleToRateSecondPresentation() throws Exception {
-        rate(presentation, user, rate);
+        rate(presentation, reviewerToken, rate);
 
         Rate secondRate = new Rate().setValue(RateValue.GREAT);
         Presentation secondPresentation = agenda.get(1).getPresentation();
 
         //when second presentaion is rated
-        rate(secondPresentation, user, secondRate);
+        rate(secondPresentation, reviewerToken, secondRate);
 
 
         // then rate is added to presentation
@@ -155,16 +151,11 @@ class RatingApiTest extends BaseIntegrationTest {
     @Test
     @Transactional
     public void otherUserShouldBeAbleToRateSamePresentation() throws Exception {
-        rate(presentation, user, rate);
-
-        SecurityHelper.asAdmin();
-        User otherUser = userUtils.createUser("other user");
-        otherUser = userUtils.markArrived(otherUser);
-        SecurityHelper.cleanSecurity();
+        rate(presentation, reviewerToken, rate);
         Rate otherRate = new Rate().setValue(RateValue.GREAT);
 
         //when other user rates presentation
-        rate(presentation, otherUser, otherRate);
+        rate(presentation, "other token", otherRate);
 
         //then presantation has added rate;
         mockMvc.perform(get("/presentations/" + presentation.getId() + "/ratings"))
@@ -174,11 +165,15 @@ class RatingApiTest extends BaseIntegrationTest {
 
     }
 
-    private ResultActions rate(Presentation presentation, User user, Rate rate) throws Exception {
+    private ResultActions rate(Presentation presentation, String token, Rate rate) throws Exception {
+        RateRequest rateRequest = new RateRequest()
+                .setId(rate.getId())
+                .setReviewerToken(token)
+                .setValue(rate.getValue())
+                .setComment(rate.getComment());
         return mockMvc.perform(
                 post("/presentations/" + presentation.getId() + "/ratings")
-                        .with(user(user))
-                        .content(json(rate))
+                        .content(json(rateRequest))
                         .contentType(HAL_JSON)
         );
     }

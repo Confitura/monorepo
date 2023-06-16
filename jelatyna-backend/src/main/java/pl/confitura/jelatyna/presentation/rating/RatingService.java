@@ -6,11 +6,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.AllArgsConstructor;
-import pl.confitura.jelatyna.infrastructure.security.Security;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
-import pl.confitura.jelatyna.user.User;
-import pl.confitura.jelatyna.user.UserRepository;
 
 @Service
 @AllArgsConstructor
@@ -19,28 +16,19 @@ public class RatingService {
     private PresentationRepository repository;
     private RateRepository rateRepository;
     private UsersPerformedRateRepository usersPerformedRateRepository;
-    private UserRepository userRepository;
-    private Security security;
 
     @Transactional
-    public Rate rate(String presentationId, Rate rate) {
-        String userId = security.getUserId();
-        verifyPresentationNotRatedByUser(presentationId, userId);
-
+    public Rate rate(String presentationId, String reviewerToken,  Rate rate) {
+        verifyPresentationNotRatedByReviewer(presentationId, reviewerToken);
         Presentation presentation = repository.findById(presentationId);
-        User user = userRepository.findById(userId);
-//        if (!user.hasArrived()) {
-//            throw new UserRatingPresentationHaveNotArrived();
-//        }
-
-        markUserRated(presentation, user);
+        markUserRated(presentation, reviewerToken);
         rate = saveRate(rate, presentation);
         return rate;
     }
 
-    private void verifyPresentationNotRatedByUser(String presentationId, String userId) {
-        if(usersPerformedRateRepository.existsByUserIdAndPresentationId(userId, presentationId)){
-            throw new UserAlreadyRatedPresentation(userId, presentationId);
+    private void verifyPresentationNotRatedByReviewer(String presentationId, String reviewerToken) {
+        if(usersPerformedRateRepository.existsByReviewerTokenAndPresentationId(reviewerToken, presentationId)){
+            throw new UserAlreadyRatedPresentation(reviewerToken, presentationId);
         }
     }
 
@@ -51,8 +39,8 @@ public class RatingService {
         return rate;
     }
 
-    private void markUserRated(Presentation presentation, User user) {
-        usersPerformedRateRepository.save(new UsersPerformedRate(user, presentation));
+    private void markUserRated(Presentation presentation, String reviewerToken) {
+        usersPerformedRateRepository.save(new UsersPerformedRate(reviewerToken, presentation));
     }
 
     public void updateRating(Rate rate) {

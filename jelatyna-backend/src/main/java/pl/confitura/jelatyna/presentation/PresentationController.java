@@ -4,6 +4,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.hateoas.Resources;
@@ -97,17 +98,18 @@ public class PresentationController {
     }
 
     @PostMapping("/presentations/{presentationId}/ratings")
-    @PreAuthorize("@security.isAuthenticated()")
     @Transactional
-    public ResponseEntity<?>  addRating(@PathVariable String presentationId, @RequestBody @Valid Rate rate){
-        Rate createdRate = ratingService.rate(presentationId, rate);
+    public ResponseEntity<?> addRating(@PathVariable String presentationId, @RequestBody @Valid @NotNull RateRequest rate) {
+        if (rate.getReviewerToken() == null) {
+            return ResponseEntity.badRequest().body("Reviewer token is required");
+        }
+        Rate createdRate = ratingService.rate(presentationId, rate.getReviewerToken(), rate.toRate());
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(createdRate);
     }
 
     @PutMapping("/presentations/{presentationId}/ratings/{ratingId}")
-    @PreAuthorize("@security.isAuthenticated()")
     @Transactional
     public ResponseEntity<?> updateRating(@PathVariable("ratingId") String ratingId, @RequestBody @Valid Rate rate) {
         ratingService.updateRating(rate.setId(ratingId));

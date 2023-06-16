@@ -1,7 +1,7 @@
 import { Module } from "vuex";
 import { RootState, Vote } from "@/types";
 import axios from "axios";
-import * as jsSHA from "jssha";
+import { getToken } from "@/utils";
 
 export const LOAD_VOTES = "LOAD_VOTES";
 export const SAVE_VOTE = "SAVE_VOTE";
@@ -21,7 +21,7 @@ export const vote4PapersModule: Module<Vote4PapersState, RootState> = {
   },
   actions: {
     [LOAD_VOTES]({ commit, rootState, rootGetters }) {
-      const token = getToken();
+      const token = getToken(V4P_TOKEN);
 
       return axios
         .post<EmbeddedVotes>(`/api/votes/start/${token}`)
@@ -39,22 +39,4 @@ export interface Vote4PapersState {
 
 interface EmbeddedVotes {
   _embedded: { votes: Vote[] };
-}
-
-function getToken() {
-  const localStorageToken = localStorage.getItem(V4P_TOKEN);
-  if (localStorageToken) {
-    return localStorageToken;
-  } else {
-    const token = generateToken();
-    localStorage.setItem(V4P_TOKEN, token);
-    return token;
-  }
-}
-
-function generateToken() {
-  const jssha = jsSHA as any;
-  const sha = new jssha("SHA-256", "TEXT");
-  sha.update(`${new Date().getMilliseconds()}${Math.random()}`);
-  return sha.getHash("HEX");
 }

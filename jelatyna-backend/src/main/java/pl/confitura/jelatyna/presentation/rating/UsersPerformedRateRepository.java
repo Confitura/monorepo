@@ -9,5 +9,5 @@ public interface UsersPerformedRateRepository extends org.springframework.data.r
     @RestResource(exported = false)
     UsersPerformedRate save(UsersPerformedRate rate);
 
-    boolean existsByUserIdAndPresentationId(String userId, String presentationId);
+    boolean existsByReviewerTokenAndPresentationId(String reviewerToken, String presentationId);
 }
