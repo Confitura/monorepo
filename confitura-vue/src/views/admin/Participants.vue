@@ -3,7 +3,11 @@
     <div>
       <button class="waves-effect waves-light btn"
               @click="sendReminders()">
-        send reminders </button></div>
+        send reminders </button>
+      <button class="waves-effect waves-light btn"
+              @click="sendSurveys()">
+        send surveys </button>
+    </div>
     <table>
       <thead>
         <tr>
@@ -66,6 +70,11 @@ export default class Users extends Vue {
   public sendReminders() {
     if (confirm("sure to send reminder ticket?")) {
       axios.post(`/api/participants/reminder`);
+    }
+  }
+  public sendSurveys() {
+    if (confirm("sure to send survey?")) {
+      axios.post(`/api/participants/survey`);
     }
   }
 }
