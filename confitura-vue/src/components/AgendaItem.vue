@@ -43,7 +43,7 @@
       </div>
     </div>
     <div v-else class="agendaItem__label">
-      <span v-if="entry.label == 'Lean Coffee'">
+      <span v-if="entry.label.startsWith('Lean Coffee')">
               <a href="/lean-coffee">Lean Coffee</a>
             </span>
       <span v-else>{{ entry.label }}</span>
