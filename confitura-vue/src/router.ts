@@ -34,6 +34,7 @@ import ManageSchedule from "@/views/admin/ManageSchedule.vue";
 import Participants from "@/views/admin/Participants.vue";
 import Allegro from "@/views/admin/Allegro.vue";
 import ScannerChrome from "@/views/admin/ScannerChrome.vue";
+import LeanCoffee from "@/views/LeanCoffee.vue";
 
 Vue.use(Router);
 Vue.use(VueScrollTo, {
@@ -60,6 +61,11 @@ const router = new Router({
       path: "/faq",
       name: "faq",
       component: Faq
+    },
+    {
+      path: "/lean-coffee",
+      name: "lean-coffee",
+      component: LeanCoffee
     },
     {
       path: "/partners",

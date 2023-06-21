@@ -35,6 +35,7 @@ export default class TheMenu extends Vue {
     { label: "partners", url: "/partners" },
     { label: "schedule", url: "/schedule" },
     { label: "presentations", url: "/presentations" },
+    { label: "lean coffee", url: "/lean-coffee" },
     { label: "speakers", url: "/speakers" },
     // { label: "workshop day", url: "/workshops" },
     { label: "FAQ", url: "/faq" },

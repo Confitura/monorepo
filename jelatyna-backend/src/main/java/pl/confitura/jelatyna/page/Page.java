@@ -14,6 +14,8 @@ public class Page {
     @Id
     @Column(name = "title")
     private String id;
+
+    @Column(columnDefinition = "TEXT")
     private String content;
 
 }

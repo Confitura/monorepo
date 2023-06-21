@@ -144,7 +144,7 @@ export default class Agenda extends Vue {
   }
 
   private sortByOrder = (a: WithOrder, b: WithOrder) =>
-    a.displayOrder - b.displayOrder;
+      a.displayOrder - b.displayOrder;
 }
 
 export interface EmbeddedRooms {
