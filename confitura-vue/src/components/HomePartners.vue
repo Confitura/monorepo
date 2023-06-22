@@ -5,36 +5,36 @@
       <div class="partners-main">
         <div class="platinum">
           <a
-            v-for="item in partners.platinum"
-            :key="item.id"
-            :href="item.www"
-            class="link"
-            rel="noopener"
-            target="_blank"
+              v-for="item in partners.platinum"
+              :key="item.id"
+              :href="item.www"
+              class="link"
+              rel="noopener"
+              target="_blank"
           >
             <img
-              :src="item.logo"
-              :alt="item.name"
-              class="logo__img--platinum"
-              :class="item.id"
+                :src="item.logo"
+                :alt="item.name"
+                class="logo__img--platinum"
+                :class="item.id"
             />
           </a>
           <span class="type--platinum">Platinum</span>
         </div>
         <div class="path">
           <a
-            v-for="item in partners.path"
-            :key="item.id"
-            :href="item.www"
-            class="link"
-            rel="noopener"
-            target="_blank"
+              v-for="item in partners.path"
+              :key="item.id"
+              :href="item.www"
+              class="link"
+              rel="noopener"
+              target="_blank"
           >
             <img
-              :src="item.logo"
-              :alt="item.name"
-              class="logo__img--platinum"
-              :class="item.id"
+                :src="item.logo"
+                :alt="item.name"
+                class="logo__img--platinum"
+                :class="item.id"
             />
           </a>
           <!--          <span class="type&#45;&#45;path">Path</span>-->
@@ -45,20 +45,20 @@
           <template v-for="type in types">
             <div class="logos" v-if="type === active" :key="type">
               <div
-                v-for="item in partners[type]"
-                :key="item.id"
-                class="logo"
-                :class="{
+                  v-for="item in partners[type]"
+                  :key="item.id"
+                  class="logo"
+                  :class="{
                   [`logo--${item.orientation}`]: item.orientation,
                   [`logo--${active}`]: active
                 }"
               >
                 <a :href="item.www" class="link" rel="noopener" target="_blank">
                   <img
-                    :src="item.logo"
-                    :alt="item.name"
-                    class="logo__img"
-                    :title="item.name"
+                      :src="item.logo"
+                      :alt="item.name"
+                      class="logo__img"
+                      :title="item.name"
                   />
                 </a>
               </div>
@@ -67,13 +67,13 @@
         </transition>
         <div class="type__selector">
           <div
-            class="type"
-            v-for="type in types"
-            :key="type"
-            @click="activate(type)"
-            @mouseenter="pauseIfActive(type)"
-            @mouseleave="startCarousel()"
-            :class="{
+              class="type"
+              v-for="type in types"
+              :key="type"
+              @click="activate(type)"
+              @mouseenter="pauseIfActive(type)"
+              @mouseleave="startCarousel()"
+              :class="{
               [`type--${type}`]: true,
               [`type--active`]: type === active
             }"
@@ -101,13 +101,15 @@ export default class HomePartners extends Vue {
   public path: Partner[] = [];
   public gold: Partner[] = [];
   public silver: Partner[] = [];
-  public types: PartnerType[] = ["gold", "silver"];
+  public tech: Partner[] = [];
+  public types: PartnerType[] = ["gold", "silver", "tech"];
   public partners: Partners = {
     platinum: [],
     path: [],
     gold: [],
     silver: [],
-    bronze: []
+    bronze: [],
+    tech: []
   };
   public active: PartnerType = "gold";
   private intervalId: number = 0;
@@ -140,6 +142,7 @@ export default class HomePartners extends Vue {
       this.partners.gold = this.$store.getters.gold;
       this.partners.silver = this.$store.getters.silver;
       this.partners.bronze = this.$store.getters.bronze;
+      this.partners.tech = this.$store.getters.tech;
       this.startCarousel();
     });
   }
@@ -156,9 +159,10 @@ interface Partners {
   gold: Partner[];
   silver: Partner[];
   bronze: Partner[];
+  tech: Partner[];
 }
 
-type PartnerType = "gold" | "silver" | "bronze";
+type PartnerType = "gold" | "silver" | "bronze" | "tech";
 </script>
 
 <style scoped lang="scss">
@@ -244,6 +248,11 @@ type PartnerType = "gold" | "silver" | "bronze";
     margin-right: 1.1rem;
   }
 
+  .logo--tech {
+    margin-left: 1.1rem;
+    margin-right: 1.1rem;
+  }
+
   .logo--gold {
     margin: 1.5rem;
   }
@@ -321,7 +330,8 @@ type PartnerType = "gold" | "silver" | "bronze";
 
   .type--gold,
   .type--silver,
-  .type--bronze {
+  .type--bronze,
+  .type--tech {
     font-size: 1.5rem;
     color: #eaeaea;
     margin: 5px;

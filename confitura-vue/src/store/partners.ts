@@ -1203,23 +1203,29 @@ Luxoft Poland is well known for its consistently high level of supply and comple
         //                     logo: require("../assets/partners/codersview.svg"),
         //                     orientation: "horizontal"
         //                 },
-        //                 {
-        //                     id: "PROBrand",
-        //                     name: "PROBrand",
-        //                     description: `PRObrand: Brand New Event Technologies
-        // Komfortowa obsługa techniczna targów, konferencji i kongresów w zakresie:
-        // * Ekranów projekcyjnych, ekranów LED i telewizorów 43-98"
-        // * Nagłośnienia
-        // * Oświetlenia architektonicznego i scenicznego
-        // * Osprzętu do tłumaczeń symultanicznych
-        //
-        // Wspieramy przygotowanie wydarzenia na wszystkich jego etapach.
-        // Zapraszamy także do naszej wypożyczalni sprzętu eventowego: [www.eventav.pl ](https://www.eventav.pl )`,
-        //                     www: "https://www.facebook.com/PRObrand-Sp-z-oo-170774782953644/",
-        //                     type: "tech",
-        //                     logo: require("../assets/partners/probrand.png"),
-        //                     orientation: "horizontal"
-        //                 }
+        {
+          id: "PROBrand",
+          name: "PROBrand",
+          description: `PRObrand: Brand New Event Technologies
+
+Komfortowa obsługa techniczna targów, konferencji i kongresów w zakresie:
+
+* Ekranów projekcyjnych, ekranów LED i telewizorów 43-98"
+
+* Nagłośnienia
+
+* Oświetlenia architektonicznego i scenicznego
+
+* Osprzętu do tłumaczeń symultanicznych
+
+Wspieramy przygotowanie wydarzenia na wszystkich jego etapach.
+
+Zapraszamy także do naszej wypożyczalni sprzętu eventowego: [www.eventav.pl](www.eventav.pl)`,
+          www: "https://www.facebook.com/PRObrand-Sp-z-oo-170774782953644/",
+          type: "tech",
+          logo: require("../assets/partners/2023/eventAV.svg"),
+          orientation: "horizontal"
+        },
       ];
     },
     // tslint:enable
