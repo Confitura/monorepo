@@ -119,18 +119,17 @@ IQVIA is a leading global provider of advanced analytics, technology solutions, 
           logo: require("../assets/partners/2023/iqvia.svg"),
           orientation: "horizontal"
         },
-//         {
-//           id: "nordea",
-//           name: "Nordea",
-//           description: `W Nordea na co dzień pracują specjaliści, którzy dbają o bezpieczeństwo i sprawne funkcjonowanie banku Nordea. Nordea zatrudnia w Polsce ekspertów w obszarach m.in. IT, bankowości, audytu, rynków kapitałowych, robotyki, AML i sankcji.
-//
-// https://www.nordea.com/en
-// `,
-//           www: "https://www.nordea.com/en",
-//           type: "silver",
-//           logo: require("../assets/partners/2022/nordea.svg"),
-//           orientation: "horizontal"
-//         },
+        {
+          id: "nordea",
+          name: "Nordea",
+          description: `Nordea Technology zatrudnia ponad 8000 osób o różnym pochodzeniu, narodowości i kompetencjach, którzy pracują ramię w ramię niezależnie od lokalizacji. Core development team znajduje się w Warszawie i Trójmieście. Rozbudowujemy również zespoły IT w Łodzi. Nordea Technology odpowiada za implementację rozwiązań IT dla całego banku zgodnie z obowiązującymi regulacjami systemów bezpieczeństwa.
+
+[nordea.com](https://www.nordea.com/)`,
+          www: "https://www.nordea.com/",
+          type: "silver",
+          logo: require("../assets/partners/2022/nordea.svg"),
+          orientation: "horizontal"
+        },
 //         {
 //           id: "dataart",
 //           name: "DataArt",
