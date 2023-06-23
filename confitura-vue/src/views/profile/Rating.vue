@@ -44,15 +44,15 @@ export default class Rating extends Vue {
   mapRate(rate: string) {
     switch (rate) {
       case "AWESOME":
-        return 1.0;
+        return 5.0;
       case "GREAT":
-        return 2.0;
+        return 4.0;
       case "IT_WAS_FINE":
         return 3.0;
       case "BAD":
-        return 4.0;
+        return 2.0;
       case "TERRIBLE":
-        return 5.0;
+        return 1.0;
     }
   }
 }

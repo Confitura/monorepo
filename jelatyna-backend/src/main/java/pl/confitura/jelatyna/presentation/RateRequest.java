@@ -12,13 +12,13 @@ import pl.confitura.jelatyna.presentation.rating.RateValue;
 public class RateRequest {
     private String id;
     private String reviewerToken;
-    private RateValue value;
+    private int value;
     private String comment;
 
     public Rate toRate() {
         return new Rate()
                 .setId(id)
-                .setValue(value)
+                .setValue(RateValue.from(value))
                 .setComment(comment);
     }
 }

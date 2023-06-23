@@ -169,7 +169,7 @@ class RatingApiTest extends BaseIntegrationTest {
         RateRequest rateRequest = new RateRequest()
                 .setId(rate.getId())
                 .setReviewerToken(token)
-                .setValue(rate.getValue())
+                .setValue(rate.getValue().getNumericValue())
                 .setComment(rate.getComment());
         return mockMvc.perform(
                 post("/presentations/" + presentation.getId() + "/ratings")
