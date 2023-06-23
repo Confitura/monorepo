@@ -4,15 +4,14 @@
       <h2 class="presentationBox__title">{{ presentation.title }}</h2>
       <div class="presentationBox__infoGroup">
         <PresentationSpeakers
-          :speakers="presentation.speakers"
+            :speakers="presentation.speakers"
         ></PresentationSpeakers>
         <PresentationMetadata
-          :presentation="presentation"
+            :presentation="presentation"
         ></PresentationMetadata>
       </div>
     </div>
-    <div class="presentationBox__description">
-      {{ presentation.description }}
+    <div class="presentationBox__description" v-html="description">
     </div>
   </div>
 </template>
@@ -22,6 +21,7 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 import PresentationSpeakers from "@/components/PresentationSpeakers.vue";
 import PresentationMetadata from "@/components/PresentationMetadata.vue";
 import { Presentation } from "@/types";
+import marked from "marked";
 
 @Component({
   components: { PresentationMetadata, PresentationSpeakers }
@@ -29,6 +29,10 @@ import { Presentation } from "@/types";
 export default class AcceptedPresentations extends Vue {
   @Prop({ required: false, default: null })
   public readonly presentation!: Presentation;
+
+  public get description() {
+    return marked(this.presentation.description);
+  }
 }
 </script>
 
