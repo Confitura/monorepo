@@ -85,7 +85,7 @@ public class RegistrationController {
     @PreAuthorize("@security.isAdmin()")
     @Transactional
     public ResponseEntity<Object> sendSurveys() {
-        doSendSurveyTo(repository.findAll());
+        doSendSurveyTo(repository.findAllPresentOnConference());
         return ResponseEntity.accepted().build();
     }
 
@@ -223,7 +223,7 @@ public class RegistrationController {
     @Async
     void doSendSurveyTo(Iterable<ParticipationData> users) {
         StreamSupport.stream(users.spliterator(), false)
-//                .filter(ParticipationData::alreadyArrived)
+                .filter(ParticipationData::alreadyArrived)
                 .filter(ParticipationData::surveyNotSentYet)
                 .forEach(this::sendSurveyTo);
     }
@@ -242,7 +242,7 @@ public class RegistrationController {
         MessageInfo info = new MessageInfo()
                 .setEmail(user.getEmail())
                 .setName(user.getFullName());
-        sender.send("lunch-and-lanyards", info);
+        sender.send("survey", info);
         repository.save(user.setSurveySendDate(LocalDateTime.now()));
     }
 }
