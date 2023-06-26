@@ -124,6 +124,10 @@ IQVIA is a leading global provider of advanced analytics, technology solutions, 
           name: "Nordea",
           description: `Nordea Technology zatrudnia ponad 8000 osób o różnym pochodzeniu, narodowości i kompetencjach, którzy pracują ramię w ramię niezależnie od lokalizacji. Core development team znajduje się w Warszawie i Trójmieście. Rozbudowujemy również zespoły IT w Łodzi. Nordea Technology odpowiada za implementację rozwiązań IT dla całego banku zgodnie z obowiązującymi regulacjami systemów bezpieczeństwa.
 
+[facebook.com/KarierawNordea/](https://www.facebook.com/KarierawNordea/)
+
+[instagram.com/nordea_polska](http://www.instagram.com/nordea_polska)
+
 [nordea.com](https://www.nordea.com/)`,
           www: "https://www.nordea.com/",
           type: "silver",
