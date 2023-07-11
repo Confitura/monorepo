@@ -6,18 +6,18 @@
         <div class="slogan">
           <h1 class="h1">It is not rocket science!</h1>
         </div>
-        <TheTimer />
+        <!--        <TheTimer />-->
         <div class="info__live">
           <div class="info__live-text">CONFITURA 2023</div>
-          <span class="info__live-link">Tickets are sold out :(</span><br/>
 <!--          <a class="info__live-link" href="https://2023.confitura.pl/v4p" target="_blank">vote here</a>-->
         </div>
 
         <div class="info__long">
-          Confitura 2023 will take place on June 24th, 2023. Meet us in Warsaw at the fifteenth edition of our super #JVMish event. Mark your calendars!
+          The CONFITURA 2023 conference has come to an end!
+          It was a pleasure to serve you this conference. We look forward to seeing you again in June 2024!
         </div>
         <div class="info__long">
-          If your company wants to join us for this year's edition, here is our contact mail:
+          If your company wants to join us for next year's edition, here is our contact mail:
           <a href="mailto:confitura[at]confitura[dot]pl"
             >confitura[at]confitura[dot]pl</a
           >; we will be happy to start a new friendship.
