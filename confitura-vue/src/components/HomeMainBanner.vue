@@ -14,7 +14,7 @@
 
         <div class="info__long">
           The CONFITURA 2023 conference has come to an end!
-          It was a pleasure to serve you this conference. We look forward to seeing you again in June 2024!
+          It was a pleasure to serve you this conference. We look forward to seeing you again in 2025!
         </div>
         <div class="info__long">
           If your company wants to join us for next year's edition, here is our contact mail:
