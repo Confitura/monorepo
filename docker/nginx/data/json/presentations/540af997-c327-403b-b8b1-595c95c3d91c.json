@@ -1,0 +1,47 @@
+{
+  "level" : "intermediate",
+  "shortDescription" : "Każdy chciałby pisać greenfield. A my tworzymy od 10 lat jeden produkt używany w ponad setce krajów. I co najważniejsze, nie wstajemy rano z kacem, myśląc o piętrzącym się długu technologicznym. System nadal wdrażamy codziennie, jest pokryty testami i działa stabilnie. ",
+  "tags" : [ ],
+  "description" : "Każdy chciałby pisać greenfield. A my tworzymy od 10 lat jeden produkt używany w ponad setce krajów. I co najważniejsze, nie wstajemy rano z kacem, myśląc o piętrzącym się długu technologicznym. System nadal wdrażamy codziennie, jest pokryty testami i działa stabilnie. Dodajemy (i usuwamy!) nowe funkcje oraz refakturujemy i modularyzujemy. Z głową.\n\nCzego nauczysz się z tej prezentacji?\nJak zdecydować, co implementujemy i co wyrzucamy?\nJak bezpiecznie wdrażać zmiany\nJak unowocześniać aplikację nie zamrażając rozwoju\nCzy i jak współdzielić kod?\nCo warto implementować, a co kupić?",
+  "title" : "No Big Bang Theory: dekada rozwijania własnego produktu",
+  "status" : "accepted",
+  "workshop" : false,
+  "speakers" : [ {
+    "id" : "a61d0fd1-27f8-47ef-8365-485cea8acce1",
+    "name" : "Jakub Kubrynski",
+    "bio" : null,
+    "twitter" : "jkubrynski",
+    "github" : null,
+    "www" : null,
+    "photo" : "https://www.gravatar.com/avatar/13962ee99d2c07e7b7a7776222532f1d.jpg?s=300&d=blank"
+  }, {
+    "id" : "6b8d6fd2-b835-4c51-a78d-4c988a80c58d",
+    "name" : "Tomasz Nurkiewicz",
+    "bio" : "Spent half of his life on programming, for the last decade professionally in Java land. Loves back-end and data visualization. Passionate about alternative JVM languages. Disappointed with the quality of software written these days (so often by himself!), hates long methods and hidden side effects. Interested in charting, data analysis, and reactive programming. Believes that computers were invented so that developers can automate boring and repetitive tasks. Also their own.\n\nOn a daily basis works in the e-commerce sector. Involved in open-source, DZone’s Most Valuable Blogger, used to be very active on StackOverflow. Author, trainer, conference speaker, technical reviewer, runner. Claims that code not tested automatically is not a feature but just a rumour. Wrote a book on RxJava for O'Reilly.\n\nhttps://nurkiewicz.com/talks - almost 100 public speaking engagements",
+    "twitter" : "https://twitter.com/tnurkiewicz",
+    "github" : "https://github.com/nurkiewicz/",
+    "www" : "https://nurkiewicz.com/",
+    "photo" : "https://www.gravatar.com/avatar/a0a3a4200899708103f7430d87d56e24.jpg?s=300&d=blank"
+  } ],
+  "language" : "pl",
+  "id" : "540af997-c327-403b-b8b1-595c95c3d91c",
+  "_links" : {
+    "self" : {
+      "href" : "https://2023.confitura.pl/api/presentations/540af997-c327-403b-b8b1-595c95c3d91c"
+    },
+    "presentation" : {
+      "href" : "https://2023.confitura.pl/api/presentations/540af997-c327-403b-b8b1-595c95c3d91c{?projection}",
+      "templated" : true
+    },
+    "tags" : {
+      "href" : "https://2023.confitura.pl/api/presentations/540af997-c327-403b-b8b1-595c95c3d91c/tags"
+    },
+    "speakers" : {
+      "href" : "https://2023.confitura.pl/api/presentations/540af997-c327-403b-b8b1-595c95c3d91c/speakers{?projection}",
+      "templated" : true
+    },
+    "ratings" : {
+      "href" : "https://2023.confitura.pl/api/presentations/540af997-c327-403b-b8b1-595c95c3d91c/ratings"
+    }
+  }
+}

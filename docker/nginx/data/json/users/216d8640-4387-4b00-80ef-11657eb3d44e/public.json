@@ -1,0 +1,9 @@
+{
+  "id" : "216d8640-4387-4b00-80ef-11657eb3d44e",
+  "name" : "Paweł Warczyński",
+  "bio" : "fun main() {\n    val me = SoftwareDeveloper()\n    while(me.isActive()) {\n        val result = me.doYourJob()\n        if (result is Mistake) {\n            me.improveMyself(result)\n        } else {\n            println(\"result = $result\")\n        }\n    }\n}",
+  "twitter" : null,
+  "github" : null,
+  "www" : null,
+  "photo" : "/api/resources//photos/216d8640-4387-4b00-80ef-11657eb3d44e.jpeg"
+}

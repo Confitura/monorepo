@@ -1,0 +1,48 @@
+{
+  "level" : "intermediate",
+  "shortDescription" : "You’ve heard about microservices, right? It’s likely you know a service mesh (such as Istio) can help? Most likely, that’s an antipattern! Instead, what you need is the Event Mesh. With it, you can architect your apps into a distributed CQRS-style solution, which would reconcile state eventually.",
+  "tags" : [ {
+    "id" : "reactive",
+    "name" : "Reactive"
+  }, {
+    "id" : "sc",
+    "name" : "Software Craftsmanship"
+  }, {
+    "id" : "microservices",
+    "name" : "Microservices"
+  } ],
+  "description" : "You’ve probably heard about building microservices-style applications, right? It’s likely that you’ve heard that a service mesh (such as Istio) can help you achieve this. Unfortunately, in most cases that’s an antipattern. Instead, what you need is the Event Mesh. Using the Event Mesh could help you architect your application into a distributed CQRS-style solution that would eventually reconcile system state.\n\nIn this session, you’ll learn why you should avoid using blocking API calls when building your microservices, and instead use the CQRS architecture to separate commands and queries. Your architecture for commands should be implemented with asynchronous events, which are processed whenever possible. We’ll take some inspiration from the Kubernetes architecture, and how you can model such a reconciliation loop within your own enterprise microservices. All this on top of the Knative framework, as an excellent example of event mesh implementation.",
+  "title" : "You need Event Mesh, not Service Mesh",
+  "status" : "accepted",
+  "workshop" : false,
+  "speakers" : [ {
+    "id" : "4a1b8e56-3b16-4a7b-b43a-bfd303b30d1b",
+    "name" : "Chris Suszynski",
+    "bio" : "I work at Red Hat as a Senior Software Engineer on the OpenShift Serverless team. I can describe myself as a software craftsman with over 15 years of experience in various technologies such as Golang, Java, Ruby, Python and Rust. My main interests are hybrid cloud technologies, especially Kubernetes and WASI technologies, and clear architecture for applications. I work on open-source software and strongly believe in its success.",
+    "twitter" : "@ksuszynski",
+    "github" : "cardil",
+    "www" : null,
+    "photo" : "https://avatars.githubusercontent.com/u/540893?v=4"
+  } ],
+  "language" : "en",
+  "id" : "c653553b-c4fb-46fe-b641-d1d722d79946",
+  "_links" : {
+    "self" : {
+      "href" : "https://2023.confitura.pl/api/presentations/c653553b-c4fb-46fe-b641-d1d722d79946"
+    },
+    "presentation" : {
+      "href" : "https://2023.confitura.pl/api/presentations/c653553b-c4fb-46fe-b641-d1d722d79946{?projection}",
+      "templated" : true
+    },
+    "tags" : {
+      "href" : "https://2023.confitura.pl/api/presentations/c653553b-c4fb-46fe-b641-d1d722d79946/tags"
+    },
+    "speakers" : {
+      "href" : "https://2023.confitura.pl/api/presentations/c653553b-c4fb-46fe-b641-d1d722d79946/speakers{?projection}",
+      "templated" : true
+    },
+    "ratings" : {
+      "href" : "https://2023.confitura.pl/api/presentations/c653553b-c4fb-46fe-b641-d1d722d79946/ratings"
+    }
+  }
+}

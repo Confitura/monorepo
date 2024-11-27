@@ -10,10 +10,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import pl.confitura.jelatyna.infrastructure.fakedb.FakeDbConfig;
+import pl.confitura.jelatyna.infrastructure.fakedb.FakeUsers;
 import pl.confitura.jelatyna.infrastructure.security.TokenService;
 import pl.confitura.jelatyna.user.User;
 
@@ -24,12 +23,12 @@ import pl.confitura.jelatyna.user.User;
 public class FakeOAuth2LoginController {
 
     private TokenService tokenService;
-    private FakeDbConfig fakeDbConfig;
+    private FakeUsers fakeUsers;
 
     @Autowired
-    public FakeOAuth2LoginController(TokenService tokenService, FakeDbConfig fakeDbConfig) {
+    public FakeOAuth2LoginController(TokenService tokenService, FakeUsers fakeUsers) {
         this.tokenService = tokenService;
-        this.fakeDbConfig = fakeDbConfig;
+        this.fakeUsers = fakeUsers;
     }
 
     @GetMapping()
@@ -47,7 +46,7 @@ public class FakeOAuth2LoginController {
             @PathVariable("provider") String provider
     ) {
 
-        User user = fakeDbConfig.getBySystem(provider);
+        User user = fakeUsers.getBySystem(provider);
         if (user == null) {
             user = new User()
                     .setId("dHdpdHRlci9tYXJnaWVsbQ==")

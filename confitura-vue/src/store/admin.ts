@@ -157,13 +157,13 @@ export const adminModule: Module<AdminState, RootState> = {
     },
     [LOAD_SPEAKERS]({ commit }) {
       return axios
-        .get<EmbeddedUserProfiles>("/api/users/search/speakers")
+        .get<EmbeddedUserProfiles>("/json/users/search/speakers.json")
         .then(it => {
           commit(SET_SPEAKERS, { speakers: it.data._embedded.publicUsers });
         });
     },
     [LOAD_SPEAKER]({ commit }, { id }) {
-      return axios.get<UserProfile>(`/api/users/${id}/public`).then(it => {
+      return axios.get<UserProfile>(`/json/users/${id}/public.json`).then(it => {
         commit(SET_SPEAKER, { speaker: it.data });
       });
     },

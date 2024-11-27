@@ -11,9 +11,6 @@
         >
         <SocialLinks class="mobile" />
       </div>
-      <div class="contact__tweet" v-for="tweet in tweets" :key="tweet.time">
-        <Tweet :model="tweet" />
-      </div>
     </div>
   </Box>
 </template>
@@ -21,23 +18,14 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import Box from "./Box.vue";
-import Tweet, { TweetItem } from "./Tweet.vue";
+import Tweet from "./Tweet.vue";
 import SocialLinks from "./SocialLinks.vue";
-import axios from "axios";
 
 @Component({
   components: { Box, Tweet, SocialLinks }
 })
 export default class Contact extends Vue {
-  public tweets: TweetItem[] = [];
 
-  protected mounted() {
-    axios
-      .get("/api/api/tweets")
-      .then((response: { data: TweetItem[] }) => response.data)
-      .then((tweets: TweetItem[]) => tweets.slice(0, 4))
-      .then((tweets: TweetItem[]) => (this.tweets = tweets));
-  }
 }
 </script>
 

@@ -1,0 +1,81 @@
+{
+  "_embedded" : {
+    "rooms" : [ {
+      "displayOrder" : 0,
+      "label" : "long",
+      "id" : "c1fd821c-5615-4518-8aaa-19fd191d0c10",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/rooms/c1fd821c-5615-4518-8aaa-19fd191d0c10"
+        },
+        "room" : {
+          "href" : "http://localhost:8080/rooms/c1fd821c-5615-4518-8aaa-19fd191d0c10{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "displayOrder" : 1,
+      "label" : "int",
+      "id" : "6c1af97a-ee93-4a18-9fa1-32e1f4c14a4c",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/rooms/6c1af97a-ee93-4a18-9fa1-32e1f4c14a4c"
+        },
+        "room" : {
+          "href" : "http://localhost:8080/rooms/6c1af97a-ee93-4a18-9fa1-32e1f4c14a4c{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "displayOrder" : 2,
+      "label" : "double",
+      "id" : "d20b2ac4-4d2a-40a4-a0d9-63b3decb55e8",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/rooms/d20b2ac4-4d2a-40a4-a0d9-63b3decb55e8"
+        },
+        "room" : {
+          "href" : "http://localhost:8080/rooms/d20b2ac4-4d2a-40a4-a0d9-63b3decb55e8{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "displayOrder" : 3,
+      "label" : "byte",
+      "id" : "6674fb81-d97b-44b2-9762-96062b542891",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/rooms/6674fb81-d97b-44b2-9762-96062b542891"
+        },
+        "room" : {
+          "href" : "http://localhost:8080/rooms/6674fb81-d97b-44b2-9762-96062b542891{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "displayOrder" : 4,
+      "label" : "Lean Coffee",
+      "id" : "db1e8898-2c34-44ab-9a90-3a453c06e04c",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/rooms/db1e8898-2c34-44ab-9a90-3a453c06e04c"
+        },
+        "room" : {
+          "href" : "http://localhost:8080/rooms/db1e8898-2c34-44ab-9a90-3a453c06e04c{?projection}",
+          "templated" : true
+        }
+      }
+    } ]
+  },
+  "_links" : {
+    "self" : {
+      "href" : "http://localhost:8080/rooms"
+    },
+    "profile" : {
+      "href" : "http://localhost:8080/profile/rooms"
+    },
+    "search" : {
+      "href" : "http://localhost:8080/rooms/search"
+    }
+  }
+}

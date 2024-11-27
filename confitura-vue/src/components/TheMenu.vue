@@ -47,7 +47,7 @@ export default class TheMenu extends Vue {
       visible: () => this.isLogin
     },
     // { label: "C4P", url: "/c4p", visible: () => !this.isLogin },
-    { label: "login", url: "/login", visible: () => !this.isLogin }
+    // { label: "login", url: "/login", visible: () => !this.isLogin }
   ];
 
   public isVisible(item: MenuItem): boolean {

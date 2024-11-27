@@ -1,0 +1,51 @@
+{
+  "level" : "intermediate",
+  "shortDescription" : "Prezentacja dotyczy jednego z aspektów testowania mikrousług - testów kontraktowych.",
+  "tags" : [ {
+    "id" : "testing",
+    "name" : "Testing"
+  }, {
+    "id" : "java",
+    "name" : "Java"
+  }, {
+    "id" : "jvm",
+    "name" : "JVM"
+  }, {
+    "id" : "microservices",
+    "name" : "Microservices"
+  } ],
+  "description" : "Problem zapewnienia poprawności komunikacji dotknął z pewnością każdego, kto kiedykolwiek pracował z systemami rozproszonymi. Szczęściarzem jest ten, kto nie musiał nigdy wycofywać wdrożenia z powodu złamanego kontraktu. Oczywiście testy integracyjne czy end-to-end bardzo pomagają w zachowaniu kompatybilności, ale mają sporo wad. \n\nA co jeśli jest możliwość szybkiego, taniego i co najważniejsze, skutecznego przetestowania poprawności komunikacji naszych systemów? Takie możliwości dają nam właśnie testy kontraktowe. \n\nPodczas spotkanie dowiesz się między innymi:\n\n* dlaczego testy integracyjne oraz end-to-end nie są najlepszym kandydatem do testowania poprawności komunikacji\n* czemu powinnismy stosować właśnie testy kontraktowe\n* jak implementować poprawne testy kontraktowe",
+  "title" : "Komunikacja bez przemocy w świecie systemów rozproszonych",
+  "status" : "accepted",
+  "workshop" : false,
+  "speakers" : [ {
+    "id" : "2f111a87-8d0f-4861-b378-cb9df8cb747c",
+    "name" : "Rafał Maciak",
+    "bio" : "Programista pasjonat i pragmatyk z doświadczeniem głównie w technologiach około JVMowych. Wierzy w koncepcje stojące za trzyliterowymi skrótami - TDD, DDD i tym podobnymi. Lubi od czasu do czasu wyjść z piwnicy i porozmawiać z ludźmi. Często możecie go spotkać przy ścianie przyklejającego karteczki.\n",
+    "twitter" : "r_maciak",
+    "github" : "https://github.com/ramafasa",
+    "www" : null,
+    "photo" : "/api/resources//photos/2f111a87-8d0f-4861-b378-cb9df8cb747c.jpg"
+  } ],
+  "language" : "pl",
+  "id" : "25dc651f-ea5c-4e74-8294-f13d260046cc",
+  "_links" : {
+    "self" : {
+      "href" : "https://2023.confitura.pl/api/presentations/25dc651f-ea5c-4e74-8294-f13d260046cc"
+    },
+    "presentation" : {
+      "href" : "https://2023.confitura.pl/api/presentations/25dc651f-ea5c-4e74-8294-f13d260046cc{?projection}",
+      "templated" : true
+    },
+    "tags" : {
+      "href" : "https://2023.confitura.pl/api/presentations/25dc651f-ea5c-4e74-8294-f13d260046cc/tags"
+    },
+    "speakers" : {
+      "href" : "https://2023.confitura.pl/api/presentations/25dc651f-ea5c-4e74-8294-f13d260046cc/speakers{?projection}",
+      "templated" : true
+    },
+    "ratings" : {
+      "href" : "https://2023.confitura.pl/api/presentations/25dc651f-ea5c-4e74-8294-f13d260046cc/ratings"
+    }
+  }
+}

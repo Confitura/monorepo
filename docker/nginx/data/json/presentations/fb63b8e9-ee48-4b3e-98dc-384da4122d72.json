@@ -1,0 +1,50 @@
+{
+  "level" : "novice",
+  "shortDescription" : "wstępny brainstorm i przypisywanie się do tematów dyskusji/konsultacji\n[Lean Coffee](https://2023.confitura.pl/lean-coffee)",
+  "tags" : [ {
+    "id" : "sc",
+    "name" : "Software Craftsmanship"
+  } ],
+  "description" : "ZBIERANIE TEMATÓW\n\nŻebyśmy mieli na czym pracować, musimy pozyskać pomysły problemów do rozwiązania i tematów do konsultowania. Przyjdź do sali Lean Coffee w drugiej połowie przerwy obiadowej. Nasi trenerzy zapoznają Cię z zasadami i wyjaśnią ogólne reguły metodyk lean coffee i troika consulting. Możesz wtedy zgłosić swój pomysł do przepracowania lub zagłosować na temat kogoś innego. Wtedy też podzielimy się na grupy i przypiszemy do slotów czasowych podczas których będziemy pracować. Mamy 5 sesji po 30 minut. Wtedy też zdecydujesz czy chcesz wziąć udział w dyskusji lean coffee czy troika consulting. Mamy miejsce na 4 grupy troika consulting i 2 grupy lean coffee w trakcie każdej sesji.\n\nWięcej informacji: [Lean Coffee](https://2023.confitura.pl/lean-coffee)",
+  "title" : "Lean Coffee - Zbieranie Tematów",
+  "status" : "accepted",
+  "workshop" : false,
+  "speakers" : [ {
+    "id" : "a4f76848-872a-44e5-a95f-0468d1f4ea9a",
+    "name" : "Piotr Suwała",
+    "bio" : "I'm a programmer with several years experience in enterprise systems.\nTackling code debt made me appreciate well structurised and easy to change systems.\nI augment my experience with knowledge from the books which I apply to commercial projects and open source ones.\nCurrently I am working at Kinguin as architect and leading Domain Driven Design meetup in Gdańsk.",
+    "twitter" : "https://twitter.com/ksidelta",
+    "github" : null,
+    "www" : "https://www.ksidelta.com/",
+    "photo" : "/api/resources//photos/a4f76848-872a-44e5-a95f-0468d1f4ea9a.jpg"
+  }, {
+    "id" : "9a68de66-3c1a-4238-99ae-c8b19875b006",
+    "name" : "Dastin Sandura",
+    "bio" : "Inżynier oprogramowania działający w branży IT od 2015 roku. Obenie pracuje w roli Doświadczonego Konsultanta w GFT Poland. Przez 5 lat pracował w startupie w rolach, między innymi: front-end i back-end developera, konsultanta, dowódcy zespołu konsultantów, dowódcy działu wsparcia klienta oraz międzynarodowego trenera prowadzącego w języku angielskim szkolenia między innymi dla klientów takich jak SONY Interactive Entertainment i Tom Tom między innymi w biurach San Mateo - California, Las Vegas - Nevada, Monachium, Estonii oraz U.K. Współorganizator spotkań Domain Driven Design Gdańsk.",
+    "twitter" : "https://twitter.com/dastin_it",
+    "github" : "https://github.com/dastin-sandura",
+    "www" : "https://dastin-sandura-software-developer.blogspot.com",
+    "photo" : "/api/resources//photos/9a68de66-3c1a-4238-99ae-c8b19875b006.jpg"
+  } ],
+  "language" : "pl",
+  "id" : "fb63b8e9-ee48-4b3e-98dc-384da4122d72",
+  "_links" : {
+    "self" : {
+      "href" : "https://2023.confitura.pl/api/presentations/fb63b8e9-ee48-4b3e-98dc-384da4122d72"
+    },
+    "presentation" : {
+      "href" : "https://2023.confitura.pl/api/presentations/fb63b8e9-ee48-4b3e-98dc-384da4122d72{?projection}",
+      "templated" : true
+    },
+    "tags" : {
+      "href" : "https://2023.confitura.pl/api/presentations/fb63b8e9-ee48-4b3e-98dc-384da4122d72/tags"
+    },
+    "speakers" : {
+      "href" : "https://2023.confitura.pl/api/presentations/fb63b8e9-ee48-4b3e-98dc-384da4122d72/speakers{?projection}",
+      "templated" : true
+    },
+    "ratings" : {
+      "href" : "https://2023.confitura.pl/api/presentations/fb63b8e9-ee48-4b3e-98dc-384da4122d72/ratings"
+    }
+  }
+}

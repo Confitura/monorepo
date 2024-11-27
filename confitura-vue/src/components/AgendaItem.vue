@@ -27,20 +27,20 @@
         class="agendaItem__metadata"
       ></PresentationMetadata>
       <div class="agendaItem__separator"></div>
-      <div class="agendaItem__rate" @click.stop="">
-        <template v-if="isRated(entry.presentation)">
-          already rated!
-        </template>
-        <template v-else
-          >rate it!
-          <div :key="rate">
-            <PresentationRateStars
-              v-model="rate"
-              @input="startRating(entry.presentation)"
-            ></PresentationRateStars>
-          </div>
-        </template>
-      </div>
+<!--      <div class="agendaItem__rate" @click.stop="">-->
+<!--        <template v-if="isRated(entry.presentation)">-->
+<!--          already rated!-->
+<!--        </template>-->
+<!--        <template v-else-->
+<!--          >rate it!-->
+<!--          <div :key="rate">-->
+<!--            <PresentationRateStars-->
+<!--              v-model="rate"-->
+<!--              @input="startRating(entry.presentation)"-->
+<!--            ></PresentationRateStars>-->
+<!--          </div>-->
+<!--        </template>-->
+<!--      </div>-->
     </div>
     <div v-else class="agendaItem__label">
       <span v-if="!!entry.label.match(/\[(.+)\]\((.+)\)/)">
