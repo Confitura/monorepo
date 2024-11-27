@@ -96,19 +96,19 @@ export default class Agenda extends Vue {
 
   public mounted(): void {
     axios
-      .get<EmbeddedRooms>(`/api/rooms`)
+      .get<EmbeddedRooms>(`/json/rooms.json`)
       .then(it => it.data._embedded.rooms)
       .then(rooms => rooms.sort(this.sortByOrder))
       .then(rooms => (this.rooms = rooms));
 
     axios
-      .get<EmbeddedTimeSlots>(`/api/time-slots`)
+      .get<EmbeddedTimeSlots>(`/json/time-slots.json`)
       .then(it => it.data._embedded.timeSlots)
       .then(slots => slots.sort(this.sortByOrder))
       .then(slots => (this.slots = slots));
 
     axios
-      .get<EmbeddedAgenda>(`/api/agenda`)
+      .get<EmbeddedAgenda>(`/json/agenda.json`)
       .then(it => it.data._embedded.agendaEntries)
       .then(agenda => (this.agenda = agenda));
   }

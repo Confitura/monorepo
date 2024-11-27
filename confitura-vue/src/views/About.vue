@@ -117,7 +117,7 @@ export default class About extends Vue {
 
   private fetch(type: string) {
     return axios
-      .get<EmbeddedUserProfiles>(`/api/users/search/${type}`)
+      .get<EmbeddedUserProfiles>(`/json/users/search/${type}.json`)
       .then(it => it.data._embedded.publicUsers)
       .then(it => this.shuffle(it));
   }

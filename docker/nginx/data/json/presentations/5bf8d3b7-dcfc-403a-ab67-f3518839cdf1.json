@@ -1,0 +1,45 @@
+{
+  "level" : "intermediate",
+  "shortDescription" : "Have you ever wondered how JVM works under the hood?\n\nIn my talk, I focus on the inner working of JVM itself and JVM compilation process in particular. \n\nI will bring closer concepts like JIT or tiered compilation. I will also mention Graal VM and its impact on the JVM ecosystem.",
+  "tags" : [ {
+    "id" : "java",
+    "name" : "Java"
+  }, {
+    "id" : "jvm",
+    "name" : "JVM"
+  } ],
+  "description" : "Have you ever wondered how JVM works under the hood?\n\nIn my talk, I focus on the inner working of JVM itself and JVM compilation process in particular. \n\nI will open with a short description of what compilation is, bring closer concept of tiered compilation, and describe what HotSpot means in terms of JVM. I will also mention Graal VM and its impact on the JVM ecosystem.\n\nPlease mind that this is a basic level talk that revolves around how JVM works and I will not be sharing tips & tricks around JVM performance.",
+  "title" : "JVM Under The Hood",
+  "status" : "accepted",
+  "workshop" : false,
+  "speakers" : [ {
+    "id" : "b8badba8-89b9-4f30-a63b-55b566d119f8",
+    "name" : "Bartłomiej Żyliński",
+    "bio" : "I'm a Software Engineer with industry experience in designing and implementing complex applications and systems, mostly where it's not visible to users - at the backend.\nI'm a self-taught developer and a hands-on learner, constantly working towards expanding my knowledge further.\n\nI contribute to several open source projects, my main focus being sttp (where you can see my contributions on the project's Github). \n\nI appreciate the exchange of technical know-how - which is expressed by my various publications found on Medium and DZone, and appearances at top tech conferences and meetups, including Devoxx Belgium. I enjoy exploring topics that combine software engineering and mathematics.\n\nIn my free time, I like to read a good book.",
+    "twitter" : "@PaskSoftware",
+    "github" : "Pask423",
+    "www" : "https://medium.com/@PaskSoftware",
+    "photo" : "/api/resources//photos/b8badba8-89b9-4f30-a63b-55b566d119f8.jpg"
+  } ],
+  "language" : "en",
+  "id" : "5bf8d3b7-dcfc-403a-ab67-f3518839cdf1",
+  "_links" : {
+    "self" : {
+      "href" : "https://2023.confitura.pl/api/presentations/5bf8d3b7-dcfc-403a-ab67-f3518839cdf1"
+    },
+    "presentation" : {
+      "href" : "https://2023.confitura.pl/api/presentations/5bf8d3b7-dcfc-403a-ab67-f3518839cdf1{?projection}",
+      "templated" : true
+    },
+    "tags" : {
+      "href" : "https://2023.confitura.pl/api/presentations/5bf8d3b7-dcfc-403a-ab67-f3518839cdf1/tags"
+    },
+    "speakers" : {
+      "href" : "https://2023.confitura.pl/api/presentations/5bf8d3b7-dcfc-403a-ab67-f3518839cdf1/speakers{?projection}",
+      "templated" : true
+    },
+    "ratings" : {
+      "href" : "https://2023.confitura.pl/api/presentations/5bf8d3b7-dcfc-403a-ab67-f3518839cdf1/ratings"
+    }
+  }
+}

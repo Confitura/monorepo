@@ -31,7 +31,7 @@ export default class PageFragment extends Vue {
 
   public mounted() {
     axios
-      .get<Page>(`/api/pages/${this.name}`)
+      .get<Page>(`/json/pages/${this.name}.json`)
       .then(response => response.data.content)
       .then((content: string) => (this.content = content));
   }

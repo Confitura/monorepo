@@ -1,0 +1,48 @@
+{
+  "level" : "intermediate",
+  "shortDescription" : "Dług technologiczny umożliwia szybsze dostarczanie wartości biznesowej. Rosnący rozwala nawet najlepsze aplikacje i wzbudza frustrację w zespole. Kiedy? Jak? Po co go spłacać? Programistom często brakuje odpowiedzi. Moje doświadczenia skutecznego zarządzania długiem technologicznym w projekcie.",
+  "tags" : [ {
+    "id" : "scrum",
+    "name" : "Scrum"
+  }, {
+    "id" : "sc",
+    "name" : "Software Craftsmanship"
+  }, {
+    "id" : "agile",
+    "name" : "Agile"
+  } ],
+  "description" : "Dług technologiczny umożliwia szybsze dostarczanie wartości biznesowej. Rosnący rozwala nawet najlepsze aplikacje i wzbudza frustrację w zespole. Kiedy? Jak? Po co go spłacać? Programistom często brakuje odpowiedzi. Moje doświadczenia skutecznego zarządzania długiem technologicznym w projekcie.",
+  "title" : "Obligacje, kredyty i pożyczki - co jesteś winien wobec swojego kodu?",
+  "status" : "accepted",
+  "workshop" : false,
+  "speakers" : [ {
+    "id" : "862eaef6-32b7-48bb-b3ba-ba31ce19a495",
+    "name" : "Mateusz Parada",
+    "bio" : null,
+    "twitter" : null,
+    "github" : null,
+    "www" : null,
+    "photo" : "/api/resources//photos/862eaef6-32b7-48bb-b3ba-ba31ce19a495.jpeg"
+  } ],
+  "language" : "pl",
+  "id" : "3080ded2-aed9-452b-8c5f-566c9b4cc628",
+  "_links" : {
+    "self" : {
+      "href" : "https://2023.confitura.pl/api/presentations/3080ded2-aed9-452b-8c5f-566c9b4cc628"
+    },
+    "presentation" : {
+      "href" : "https://2023.confitura.pl/api/presentations/3080ded2-aed9-452b-8c5f-566c9b4cc628{?projection}",
+      "templated" : true
+    },
+    "tags" : {
+      "href" : "https://2023.confitura.pl/api/presentations/3080ded2-aed9-452b-8c5f-566c9b4cc628/tags"
+    },
+    "speakers" : {
+      "href" : "https://2023.confitura.pl/api/presentations/3080ded2-aed9-452b-8c5f-566c9b4cc628/speakers{?projection}",
+      "templated" : true
+    },
+    "ratings" : {
+      "href" : "https://2023.confitura.pl/api/presentations/3080ded2-aed9-452b-8c5f-566c9b4cc628/ratings"
+    }
+  }
+}

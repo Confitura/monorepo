@@ -30,7 +30,7 @@ export default class PresentationModal extends Vue {
     if (this.presentationId) {
       axios
         .get<Presentation>(
-          `/api/presentations/${this.presentationId}?projection=inlineSpeaker`
+          `/json/presentations/${this.presentationId}.json`
         )
         .then(result => (this.presentation = result.data));
     } else {
