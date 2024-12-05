@@ -1,11 +1,26 @@
-<script setup lang="ts">
-const route = useRoute()
-</script>
-
 <template>
-  <div>
-    <h1>Nuxt Routing set up successfully!</h1>
-    <p>Current route: {{ route.path }}</p>
-    <a href="https://nuxt.com/docs/getting-started/routing" target="_blank">Learn more about Nuxt Routing</a>
+  <div class="home__container">
+    <HomeMainBanner />
+    <HomeAbout />
+    <HomeNumbers />
+    <HomePartners />
+    <Contact />
   </div>
 </template>
+
+<script setup lang="ts">
+</script>
+
+<style lang="scss">
+@supports not (-webkit-overflow-scrolling: touch) {
+  .home__container {
+    max-height: 100vh;
+    overflow-y: scroll;
+    scroll-snap-type: y proximity;
+
+    & > section {
+      scroll-snap-align: start;
+    }
+  }
+}
+</style>
