@@ -8,13 +8,12 @@
         </div>
         <!--        <TheTimer />-->
         <div class="info__live">
-          <div class="info__live-text">CONFITURA 2023</div>
+          <div class="info__live-text">CONFITURA 2025</div>
           <!--          <a class="info__live-link" href="https://2023.confitura.pl/v4p" target="_blank">vote here</a>-->
         </div>
 
         <div class="info__long">
-          The CONFITURA 2023 conference has come to an end!
-          It was a pleasure to serve you this conference. We look forward to seeing you again in 2025!
+          We look forward to seeing you again in 2025!
         </div>
         <div class="info__long">
           If your company wants to join us for next year's edition, here is our contact mail:
