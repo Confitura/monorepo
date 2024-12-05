@@ -3,7 +3,7 @@
     <HomeMainBanner />
     <HomeAbout />
     <HomeNumbers />
-    <HomePartners />
+<!--    <HomePartners />-->
     <Contact />
   </div>
 </template>

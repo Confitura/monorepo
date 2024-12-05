@@ -20,26 +20,26 @@
 <script setup lang="ts">
 
 let items: MenuItem[] = [
-  { label: 'scanner', url: '/new-scanner', visible: () => isVolunteer() },
+  // { label: 'scanner', url: '/new-scanner', visible: () => isVolunteer() },
   { label: 'home', url: '/#home' },
   { label: 'about us', url: '/about' },
-  { label: 'venue', url: '/venue' },
-  { label: 'tickets', url: '/tickets' },
+  // { label: 'venue', url: '/venue' },
+  // { label: 'tickets', url: '/tickets' },
   // { label: "vote", url: "/v4p" },
-  { label: 'partners', url: '/partners' },
-  { label: 'schedule', url: '/schedule' },
-  { label: 'presentations', url: '/presentations' },
-  { label: 'lean coffee', url: '/lean-coffee' },
-  { label: 'speakers', url: '/speakers' },
+  // { label: 'partners', url: '/partners' },
+  // { label: 'schedule', url: '/schedule' },
+  // { label: 'presentations', url: '/presentations' },
+  // { label: 'lean coffee', url: '/lean-coffee' },
+  // { label: 'speakers', url: '/speakers' },
   // { label: "workshop day", url: "/workshops" },
-  { label: 'FAQ', url: '/faq' },
-  { label: 'my profile', url: '/profile', visible: () => isLogin() },
-  { label: 'ADMIN', url: '/admin', visible: () => isAdmin() },
-  {
-    label: 'logout',
-    action: () => logout(),
-    visible: () => isLogin()
-  }
+  // { label: 'FAQ', url: '/faq' },
+  // { label: 'my profile', url: '/profile', visible: () => isLogin() },
+  // { label: 'ADMIN', url: '/admin', visible: () => isAdmin() },
+  // {
+  //   label: 'logout',
+  //   action: () => logout(),
+  //   visible: () => isLogin()
+  // }
   // { label: "C4P", url: "/c4p", visible: () => !this.isLogin },
   // { label: "login", url: "/login", visible: () => !this.isLogin }
 ]

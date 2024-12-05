@@ -101,7 +101,7 @@ $small-menu-padding: 10px;
     padding-bottom: $small-menu-padding;
 
     .header__logo {
-      background-image: url("../assets/logo_black.2023.svg");
+      background-image: url("../assets/logo_black.svg");
     }
   }
 
@@ -123,7 +123,7 @@ $small-menu-padding: 10px;
   &__logo {
     width: 150px;
     height: 30px;
-    background-image: url("../assets/logo_white.2023.svg");
+    background-image: url("../assets/logo_white.svg");
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
