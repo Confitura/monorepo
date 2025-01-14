@@ -2,9 +2,9 @@
 const withBackground = true
 const links = [
   {
-    label: 'twitter',
-    icon: 'fab fa-twitter-square',
-    url: 'https://twitter.com/confiturapl'
+    label: 'x',
+    icon: 'fa-brands fa-square-x-twitter',
+    url: 'https://x.com/confiturapl'
   },
   {
     label: 'facebook',

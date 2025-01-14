@@ -3,23 +3,23 @@
     <div class="numbers-container">
       <div class="info">
         <h1 class="header">
-          <span>confitura'22</span>
+          <span>confitura'23</span>
           <span> in numbers</span>
         </h1>
         <div class="subinfo">
           Everything has started in 2007, when the group of passionate Java
           developers decided to create a programming event for the community.
-          Today we're running the conference for more than 2000 attendees. 35
-          talks in 5 parallel sessions give an opportunity to learn new things
+          Today we're running the conference for more than 1000 attendees. 30
+          talks in 4 parallel sessions give an opportunity to learn new things
           to everyone! Our live streams and recordings of talks gain enormous
           popularity on the web. That's why organizing this event gives
           satisfaction to more than 30 people from Confitura's team. That eagers
-          us to organize another Confitura, this year it will be the 15th.
+          us to organize another Confitura, this year it will be the 18th.
         </div>
       </div>
       <HomeNumbersPictogram
         :src="speakers"
-        value="30"
+        value="32"
         unit="speakers"
       />
       <HomeNumbersPictogram
@@ -39,12 +39,12 @@
       />
       <HomeNumbersPictogram
         :src="videos"
-        value="323"
+        value="338"
         unit="youtube videos"
       />
       <HomeNumbersPictogram
         :src="participants"
-        value="1500"
+        value="1300"
         unit="participants"
       />
     </div>

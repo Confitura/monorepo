@@ -17,8 +17,8 @@ const { type = 'twitter', id, theme = 'black' } = defineProps<{ type: string, id
 
 const social = {
   twitter: {
-    icon: 'fab fa-twitter-square',
-    url: 'https://twitter.com/'
+    icon: 'fa-brands fa-square-x-twitter',
+    url: 'https://x.com/'
   },
   facebook: {
     icon: 'fab fa-facebook-square',
@@ -35,7 +35,13 @@ const social = {
 }
 
 let icon = computed(() => social[type].icon)
-let url = computed(() => social[type].url + id)
+let url = computed(() => {
+  if (type == 'www' && !id.startsWith('http')) {
+    return 'https://' + id
+  }
+  return social[type].url + id
+
+})
 </script>
 <style scoped lang="scss">
 @use "~/assets/colors" as *;

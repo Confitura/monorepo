@@ -1,14 +1,27 @@
 <template>
   <Box color="white" id="about-us">
     <div class="about-us">
-      <h2 class="header">about us</h2>
+      <h2 class="header">About Confitura
+      </h2>
       <div class="main-info">
-        Organized by a group of highly-skilled, passionate Java developers,
-        architects, and affiliates gathers Polish and International leaders of
-        the community to share their knowledge and experience both, during
-        sessions and breaks. Low attending fee makes Confitura accessible for
-        everyone, what's more money from sales goes straight to charity
-        organizations.
+        <p>
+          Confitura is one of Poland’s premier and longest-running software conferences. Organized by a dedicated team
+          of Java developers, architects, and industry professionals, the conference features a comprehensive program of
+          sessions and workshops led by both Polish and international experts. Covering a broad spectrum of topics,
+          Confitura addresses everything from advanced coding practices to the latest trends in software development.
+        </p>
+        <p>
+          The conference is renowned for its inclusive and welcoming atmosphere, ensuring accessibility for
+          professionals at every stage of their career. With multiple tracks available, attendees can customize their
+          experience based on their areas of interest and expertise. Additionally, Confitura remains committed to
+          keeping its attendance fees affordable, fostering wider participation.
+        </p>
+        <p>
+          Beyond the technical sessions, Confitura offers extensive networking opportunities during breaks and social
+          events, promoting meaningful connections between attendees, speakers, and industry leaders. The conference’s
+          unwavering focus on quality content and community engagement has established it as a cornerstone event in
+          Poland’s IT sector.
+        </p>
       </div>
       <div class="additional-info">
         Our main goal is to promote JVM technologies and have fun doing so.

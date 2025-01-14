@@ -4,7 +4,7 @@
     <Box color="white">
       <div class="about__info">
         <h2 class="about__header">
-          Confitura is created by Java community members since 2007.
+          Confitura: Brewing Java Excellence Since 2007
         </h2>
         <PageFragment name="about-page" class="about__infoContent" />
       </div>
@@ -28,19 +28,19 @@
             <div class="member__social">
               <SocialLink
                 type="twitter"
-                :id="'twitter-'+member.id"
+                :id="member.twitter"
                 theme="white"
                 class="member__socialLink"
               ></SocialLink>
               <SocialLink
                 type="github"
-                :id="'github-'+member.id"
+                :id="member.github"
                 theme="white"
                 class="member__socialLink"
               ></SocialLink>
               <SocialLink
                 type="www"
-                :id="'github-'+member.www"
+                :id="member.www"
                 theme="white"
                 class="member__socialLink"
               ></SocialLink>
@@ -61,7 +61,11 @@
         <img src="~/assets/bcc.png" alt="bcc" class="bcc__logo" />
         <div class="bcc__info">
           <PageFragment name="bcc" />
-          <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/NLD0btOtFbg?si=I6ZQrIYmoFfYSYfy" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>        </div>
+          <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/NLD0btOtFbg?si=I6ZQrIYmoFfYSYfy"
+                  title="YouTube video player"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
       </div>
     </Box>
     <Contact />
