@@ -28,7 +28,8 @@ export default defineNuxtConfig({
   modules: ['@pinia/nuxt'],
 
   routeRules: {
-    '/api/**': { proxy: { to: 'https://2023.confitura.pl/api/**' } },
-    '/json/**': { proxy: { to: 'https://2023.confitura.pl/json/**' } }
+    '/api/resources/**': { proxy: { to: 'https://2023.confitura.pl/api/resources/**' } },
+    '/api/**': { proxy: { to: 'https://api.confitura.pl/api/**' } },
+    '/json/**': { proxy: { to: 'https://api.confitura.pl/2025/**' } }
   }
 })

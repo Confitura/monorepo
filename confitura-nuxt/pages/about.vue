@@ -48,12 +48,12 @@
           </div>
         </div>
       </div>
+    </Box>
+    <Box color="white" class="no-padding" v-if="volunteers.length > 0">
       <div class="volunteers__headerContainer">
         <h3 class="volunteers__header">volunteers</h3>
       </div>
-    </Box>
-    <Box color="white" class="no-padding">
-      <UsersGrid :users="volunteers"></UsersGrid>
+      <UsersGrid :users="volunteers" ></UsersGrid>
     </Box>
     <Box color="white">
       <div class="bcc">
