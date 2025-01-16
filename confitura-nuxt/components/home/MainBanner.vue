@@ -34,7 +34,7 @@ import dayjs from 'dayjs'
 //TODO let date: string = dayjs(this.$store.state.date).format('DD.MM.YYYY')
 
 let section = ref(null)
-let date: string = dayjs("2025-06-24T09:00").format('DD.MM.YYYY')
+let date: string = dayjs('2025-06-24T09:00').format('DD.MM.YYYY')
 let threshold: number[] = []
 let observer: IntersectionObserver | null = null
 
@@ -189,6 +189,10 @@ onBeforeUnmount(() => {
 }
 
 .info__live {
+  color: $brand;
+}
+
+a {
   color: $brand;
 }
 
