@@ -1,10 +1,10 @@
 version: "3.3"
 services:
 
-  frontend:
-    build: confitura-vue
-    volumes:
-      - ./confitura-vue/src:/opt/app/src
+#  frontend:
+#    build: confitura-vue
+#    volumes:
+#      - ./confitura-vue/src:/opt/app/src
 
   backend:
     build: jelatyna-backend
@@ -30,7 +30,7 @@ services:
       - ./docker/nginx/config:/etc/nginx/conf.d
       - ./docker/nginx/data:/www/data
     links:
-      - frontend
+#      - frontend
       - backend
 
   mysql:
