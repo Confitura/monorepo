@@ -32,11 +32,11 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [ 12.x, 14.x ]
+        node-version: [ 22.x ]
 
     defaults:
       run:
-        working-directory: confitura-vue
+        working-directory: webpage
 
     steps:
       - uses: actions/checkout@v3
@@ -45,30 +45,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-          cache-dependency-path: confitura-vue/package-lock.json
+          cache-dependency-path: webpage/package-lock.json
       - run: npm ci
       - run: npm run lint --if-present
-      - run: npm run build --if-present
-      - run: npm test
-
-  test-console:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [ 12.x, 14.x ]
-
-    defaults:
-      run:
-        working-directory: confitura-page
-
-    steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-          cache-dependency-path: confitura-page/package-lock.json
-      - run: npm ci
       - run: npm run build --if-present
       - run: npm test
