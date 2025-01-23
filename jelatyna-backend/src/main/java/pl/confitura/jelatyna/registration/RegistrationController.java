@@ -28,7 +28,6 @@ import com.microtripit.mandrillapp.lutung.model.MandrillApiError;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import pl.confitura.jelatyna.infrastructure.security.JelatynaPrincipal;
-import pl.confitura.jelatyna.infrastructure.security.SecurityContextUtil;
 import pl.confitura.jelatyna.mail.MailSender;
 import pl.confitura.jelatyna.mail.MessageInfo;
 import pl.confitura.jelatyna.registration.demographic.DemographicDataRepository;
@@ -92,10 +91,9 @@ public class RegistrationController {
     @PostMapping("/participants")
     @Transactional
     public ResponseEntity<Object> save(@RequestBody RegistrationForm registrationForm) {
-        JelatynaPrincipal principal = SecurityContextUtil.getPrincipal();
-        Voucher voucher = registrationForm.getVoucher();
+        String voucher = registrationForm.getVoucher();
         if (voucher != null) {
-            if (!voucherService.isValid(voucher)) {
+            if (voucherService.isInvalid(voucher)) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("INVALID_VOUCHER");
             } else if (voucherService.isUsed(voucher)) {
                 return ResponseEntity.status(HttpStatus.CONFLICT).body("VOUCHER_USED");
@@ -114,7 +112,8 @@ public class RegistrationController {
     }
 
     private ParticipationData saveParticipation(RegistrationForm registrationForm) {
-        return repository.save(registrationForm.createParticipant());
+        Voucher voucher = voucherService.findById(registrationForm.getVoucher());
+        return repository.save(registrationForm.createParticipant(voucher));
     }
 
     @GetMapping("/participants/{id}")
@@ -209,7 +208,6 @@ public class RegistrationController {
         }
     }
 
-    @Transactional
     void doSendTicketTo(ParticipationData user) throws IOException, MandrillApiError {
         MessageInfo info = new MessageInfo()
                 .setToken(user.getId())
@@ -237,7 +235,6 @@ public class RegistrationController {
         }
     }
 
-    @Transactional
     void doSendSurvey(ParticipationData user) throws IOException, MandrillApiError {
         MessageInfo info = new MessageInfo()
                 .setEmail(user.getEmail())

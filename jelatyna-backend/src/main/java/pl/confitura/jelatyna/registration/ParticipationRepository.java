@@ -22,28 +22,31 @@ public interface ParticipationRepository extends Repository<ParticipationData, S
     @RestResource(exported = false)
     ParticipationData findById(String id);
 
-    @RestResource(exported = false)
-    @Query("FROM ParticipationData WHERE registrationDate IS NULL")
-    Collection<ParticipationData> findAllUnregistered();
+//    @RestResource(exported = false)
+//    @Query("FROM ParticipationData WHERE registrationDate IS NULL")
+//    Collection<ParticipationData> findAllUnregistered();
 
-    @RestResource(exported = false)
-    @Query("FROM ParticipationData WHERE registrationDate IS NOT NULL")
-    Collection<ParticipationData> findAllRegistered();
+//    @RestResource(exported = false)
+//    @Query("FROM ParticipationData WHERE registrationDate IS NOT NULL")
+//    Collection<ParticipationData> findAllRegistered();
 
-    @RestResource(exported = false)
-    Long count();
+//    @RestResource(exported = false)
+//    Long count();
 
 
-    @Query("SELECT count(p.id) FROM ParticipationData p WHERE registrationDate IS NOT NULL")
-    @RestResource(exported = false)
-    Long countRegistered();
+//    @Query("SELECT count(p.id) FROM ParticipationData p WHERE registrationDate IS NOT NULL")
+//    @RestResource(exported = false)
+//    Long countRegistered();
 
-    @Query("SELECT count(p.id) FROM ParticipationData p WHERE arrivalDate IS NOT NULL")
-    @RestResource(exported = false)
-    Long countArrived();
+//    @Query("SELECT count(p.id) FROM ParticipationData p WHERE arrivalDate IS NOT NULL")
+//    @RestResource(exported = false)
+//    Long countArrived();
 
     @RestResource(exported = false)
     ParticipationData findByVoucher(Voucher voucher);
+
+    @RestResource(exported = false)
+    ParticipationData findByVoucherId(String voucher);
 
 
     @Query("SELECT u FROM ParticipationData u" +

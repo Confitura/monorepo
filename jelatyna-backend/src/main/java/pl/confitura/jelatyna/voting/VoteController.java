@@ -24,10 +24,10 @@ import pl.confitura.jelatyna.presentation.*;
 @RepositoryRestController
 public class VoteController {
 
-    private PresentationRepository presentationRepository;
-    private VoteRepository voteRepository;
-    private WebUtils webUtils;
-    private LocalValidatorFactoryBean beanValidator;
+    private final PresentationRepository presentationRepository;
+    private final VoteRepository voteRepository;
+    private final WebUtils webUtils;
+    private final LocalValidatorFactoryBean beanValidator;
 
     @Autowired
     public VoteController(PresentationRepository presentationRepository, VoteRepository voteRepository,
@@ -45,12 +45,12 @@ public class VoteController {
 
     @RequestMapping(value = "/votes/start/{token}", method = RequestMethod.POST)
     @Transactional
-    public ResponseEntity<Resources<?>> start(@PathVariable String token) {
+    public ResponseEntity<CollectionModel<?>> start(@PathVariable String token) {
         Set<Vote> votes = voteRepository.findAllForToken(token);
         if (votes.isEmpty()) {
             votes = generateVotes(token);
         }
-        return ResponseEntity.ok(new Resources<>(votes));
+        return ResponseEntity.ok(CollectionModel.of(votes));
     }
 
     private Set<Vote> generateVotes(@PathVariable String token) {
@@ -68,11 +68,11 @@ public class VoteController {
 
     @PostMapping("/votes")
     @Transactional
-    public ResponseEntity<Resource<Vote>> save(@RequestBody @Valid Vote vote) {
+    public ResponseEntity<EntityModel<Vote>> save(@RequestBody @Valid Vote vote) {
         Vote loaded = voteRepository.findById(vote.getId());
         loaded.setRate(vote.getRate());
         loaded.setVoteDate(LocalDateTime.now());
-        return ResponseEntity.ok(new Resource<>(loaded));
+        return ResponseEntity.ok(EntityModel.of(loaded));
     }
 
 

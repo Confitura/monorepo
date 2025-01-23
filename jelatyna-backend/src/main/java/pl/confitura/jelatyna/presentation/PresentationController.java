@@ -7,7 +7,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.data.rest.webmvc.RepositoryRestController;
-import org.springframework.hateoas.Resources;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -52,9 +52,9 @@ public class PresentationController {
 
     @PreAuthorize("@security.presentationOwnedByUser(#presentationId) || @security.isAdmin()")
     @GetMapping("/presentations/{presentationId}/cospeakers")
-    public ResponseEntity<Resources<User>> getCospeakers(@PathVariable String presentationId) {
+    public ResponseEntity<CollectionModel<User>> getCospeakers(@PathVariable String presentationId) {
         Set<User> cospeakers = this.repository.findById(presentationId).getSpeakers();
-        return ResponseEntity.ok(new Resources<>(cospeakers));
+        return ResponseEntity.ok(CollectionModel.of(cospeakers));
     }
 
     @PreAuthorize("@security.presentationOwnedByUser(#presentationId) || @security.isAdmin()")
@@ -89,9 +89,9 @@ public class PresentationController {
         return ResponseEntity.ok(user);
     }
 
-    private Set<User> removeCospeakerByEmail(String email, Set<User> cospeakers) {
-        return cospeakers.stream().filter(it -> !it.getEmail().equalsIgnoreCase(email)).collect(Collectors.toSet());
-    }
+//    private Set<User> removeCospeakerByEmail(String email, Set<User> cospeakers) {
+//        return cospeakers.stream().filter(it -> !it.getEmail().equalsIgnoreCase(email)).collect(Collectors.toSet());
+//    }
 
     private Set<User> removeCospeakerById(String id, Set<User> cospeakers) {
         return cospeakers.stream().filter(it -> !it.getId().equalsIgnoreCase(id)).collect(Collectors.toSet());

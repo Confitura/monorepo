@@ -7,7 +7,6 @@ import pl.confitura.jelatyna.mail.MailSender;
 import pl.confitura.jelatyna.mail.MessageInfo;
 import pl.confitura.jelatyna.registration.ParticipationData;
 import pl.confitura.jelatyna.registration.ParticipationRepository;
-import pl.confitura.jelatyna.user.UserRepository;
 
 import java.util.List;
 
@@ -54,12 +53,12 @@ public class VoucherService {
         }
     }
 
-    boolean isValid(String voucherId) {
+    public boolean isInvalid(String voucherId) {
         Voucher voucher = voucherRepository.findById(voucherId);
         if (voucher == null || voucher.getId() == null) {
-            return false;
+            return true;
         } else {
-            return voucherRepository.existsById(voucher.getId());
+            return !voucherRepository.existsById(voucher.getId());
         }
     }
 
@@ -79,8 +78,8 @@ public class VoucherService {
         return owner == null || owner.getId().equals(participationDataId);
     }
 
-    public boolean isUsed(Voucher voucher) {
-        return participationRepository.findByVoucher(voucher) != null;
+    public boolean isUsed(String voucher) {
+        return participationRepository.findByVoucherId(voucher) != null;
     }
 
     boolean canUseVoucher(String voucherId) {

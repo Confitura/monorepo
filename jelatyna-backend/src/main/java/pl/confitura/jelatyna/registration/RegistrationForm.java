@@ -8,7 +8,7 @@ import java.util.Set;
 
 @Data
 class RegistrationForm {
-    private Voucher voucher;
+    private String voucher;
 
     private String lastName;
     private String firstName;
@@ -24,7 +24,7 @@ class RegistrationForm {
     private String role;
     private Set<String> technologies;
 
-    public ParticipationData createParticipant() {
+    public ParticipationData createParticipant(Voucher voucher) {
         return new ParticipationData()
                 .setVoucher(voucher)
                 .setLastName(lastName)

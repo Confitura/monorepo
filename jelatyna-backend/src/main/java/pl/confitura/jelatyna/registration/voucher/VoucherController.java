@@ -28,7 +28,7 @@ class VoucherController {
 
     @GetMapping("/vouchers/{id}/check")
     ResponseEntity<RegistrationError> canUseVoucher(@PathVariable("id") String voucherId) {
-        if (!voucherService.isValid(voucherId)) {
+        if (voucherService.isInvalid(voucherId)) {
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
                     .body(new RegistrationError().setReason("INVALID"));

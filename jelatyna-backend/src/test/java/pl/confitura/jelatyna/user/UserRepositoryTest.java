@@ -14,7 +14,6 @@ import pl.confitura.jelatyna.registration.ParticipationRepository;
 import pl.confitura.jelatyna.registration.voucher.Voucher;
 import pl.confitura.jelatyna.registration.voucher.VoucherService;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 
 import static java.time.LocalDateTime.now;
@@ -22,11 +21,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-@ActiveProfiles("test, fake-db")
+@ActiveProfiles({"test", "fake-db"})
 @Transactional
 public class UserRepositoryTest {
-    @Autowired
-    private EntityManager em;
 
     @Autowired
     private UserRepository repository;
@@ -40,7 +37,9 @@ public class UserRepositoryTest {
         User saved = repository.save(user);
 
         assertThat(repository.findById(saved.getId()))
-                .isEqualToComparingOnlyGivenFields(user, "origin", "socialId");
+                .usingRecursiveComparison()
+                .ignoringFields("origin", "socialId")
+                .isEqualTo(user);
     }
 
     @Test
