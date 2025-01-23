@@ -14,7 +14,7 @@
           to everyone! Our live streams and recordings of talks gain enormous
           popularity on the web. That's why organizing this event gives
           satisfaction to more than 30 people from Confitura's team. That eagers
-          us to organize another Confitura, this year it will be the 18th.
+          us to organize another Confitura, this year it will be the 15th.
         </div>
       </div>
       <HomeNumbersPictogram
