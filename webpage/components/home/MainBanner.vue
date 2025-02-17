@@ -13,7 +13,12 @@
         </div>
 
         <div class="info__long">
-          We look forward to seeing you again in 2025!
+          Help us organize the next edition of Confitura!
+          Fill the quick survey:
+          <p>
+            <span ><a href="https://forms.gle/wAxigYG1YcF5wuCh6"> as Participant</a></span> <br />
+            <span ><a href="https://forms.gle/wAxigYG1YcF5wuCh6"> as Speaker</a></span>
+          </p>
         </div>
         <div class="info__long">
           If your company wants to join us for next year's edition, here is our contact mail:
