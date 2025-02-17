@@ -16,8 +16,8 @@
           Help us organize the next edition of Confitura!
           Fill the quick survey:
           <p>
-            <span ><a href="https://forms.gle/wAxigYG1YcF5wuCh6"> as Participant</a></span> <br />
-            <span ><a href="https://forms.gle/wAxigYG1YcF5wuCh6"> as Speaker</a></span>
+            <span ><a href="https://forms.gle/wAxigYG1YcF5wuCh6"> as Attendee</a></span> <br />
+            <span ><a href="https://forms.gle/xaLJ5R5foQcj5pcY9"> as Speaker</a></span>
           </p>
         </div>
         <div class="info__long">
