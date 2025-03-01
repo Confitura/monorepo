@@ -37,7 +37,7 @@ public class FakeOAuth2LoginController {
     ) {
         return ResponseEntity
                 .status(PERMANENT_REDIRECT)
-                .header("Location", "http://localhost:8080/login/" + provider)
+                .header("Location", "http://localhost:8080/login/" + provider + "/callback")
                 .build();
     }
 
