@@ -23,6 +23,7 @@ declare module 'vue-router/auto-routes' {
     '/dashboard': RouteRecordInfo<'/dashboard', '/dashboard', Record<never, never>, Record<never, never>>,
     '/homepage': RouteRecordInfo<'/homepage', '/homepage', Record<never, never>, Record<never, never>>,
     '/login': RouteRecordInfo<'/login', '/login', Record<never, never>, Record<never, never>>,
+    '/login.[provider]': RouteRecordInfo<'/login.[provider]', '/login/:provider', { provider: ParamValue<true> }, { provider: ParamValue<false> }>,
     '/nested': RouteRecordInfo<'/nested', '/nested', Record<never, never>, Record<never, never>>,
     '/nested/menu1': RouteRecordInfo<'/nested/menu1', '/nested/menu1', Record<never, never>, Record<never, never>>,
     '/nested/menu2': RouteRecordInfo<'/nested/menu2', '/nested/menu2', Record<never, never>, Record<never, never>>,
