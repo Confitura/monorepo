@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { useToggle, useDark } from '@vueuse/core'
-import router from "@/plugins/router.ts";
+import {useToggle, useDark} from '@vueuse/core'
 const theme = useTheme()
-const { drawer } = storeToRefs(useAppStore())
+const {drawer} = storeToRefs(useAppStore())
+const {user} = storeToRefs(useAuthStore())
 const route = useRoute()
 const breadcrumbs = computed(() => {
   return route!.matched
@@ -25,17 +25,20 @@ const isDark = useDark({
 })
 const toggleDark = useToggle<true, false | null>(isDark)
 function logout() {
-  localStorage.removeItem('token')
-  router.push("/login")
+  useAuthStore().logout()
 }
 </script>
 
 <template>
   <v-app-bar flat>
-    <v-app-bar-nav-icon @click="drawer = !drawer" />
-    <v-breadcrumbs :items="breadcrumbs" />
-    <v-spacer />
-    <div id="app-bar" />
+    <v-app-bar-nav-icon @click="drawer = !drawer"/>
+    <v-breadcrumbs :items="breadcrumbs"/>
+    <v-spacer/>
+    <div id="app-bar"/>
+
+    <div>
+      <v-chip v-if="user">{{ user?.sub }}</v-chip>
+    </div>
     <div>
       <v-switch
         :model-value="isDark"
@@ -56,7 +59,7 @@ function logout() {
       class="ml-2"
       target="_blank"
     >
-      <v-icon size="30" icon="mdi-logout" />
+      <v-icon size="30" icon="mdi-logout"/>
     </v-btn>
   </v-app-bar>
 </template>

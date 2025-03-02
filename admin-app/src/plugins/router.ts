@@ -8,14 +8,13 @@ let router = createRouter({
 })
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth) {
-    const token = localStorage.getItem('token');
-    console.log('token',token)
-    if (token) {
-      // User is authenticated, proceed to the route
-      next();
-    } else {
-      // User is not authenticated, redirect to login
+    let user = useAuthStore().user;
+    if (user == null) {
       next('/login');
+    } else if (user.isNew) {
+      next('/register');
+    } else {
+      next();
     }
   } else {
     // Non-protected route, allow access

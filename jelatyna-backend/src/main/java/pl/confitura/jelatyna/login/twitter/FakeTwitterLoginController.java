@@ -25,7 +25,7 @@ public class FakeTwitterLoginController {
     public ResponseEntity<Object> redirectToTwitterLogin() {
         return ResponseEntity
                 .status(PERMANENT_REDIRECT)
-                .header("Location", "http://localhost:8080/login/twitter")
+                .header("Location", "http://localhost:5173/login/twitter?code=testCode")
                 .build();
     }
 

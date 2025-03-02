@@ -70,6 +70,7 @@ declare global {
   const unref: typeof import('vue')['unref']
   const useAppStore: typeof import('./stores/app')['useAppStore']
   const useAttrs: typeof import('vue')['useAttrs']
+  const useAuthStore: typeof import('./stores/auth')['useAuthStore']
   const useCssModule: typeof import('vue')['useCssModule']
   const useCssVars: typeof import('vue')['useCssVars']
   const useDisplay: typeof import('vuetify')['useDisplay']
@@ -94,6 +95,9 @@ declare global {
   // @ts-ignore
   export type { Component, ComponentPublicInstance, ComputedRef, DirectiveBinding, ExtractDefaultPropTypes, ExtractPropTypes, ExtractPublicPropTypes, InjectionKey, PropType, Ref, MaybeRef, MaybeRefOrGetter, VNode, WritableComputedRef } from 'vue'
   import('vue')
+  // @ts-ignore
+  export type { User } from './stores/auth'
+  import('./stores/auth')
   // @ts-ignore
   export type { Notification } from './stores/notification'
   import('./stores/notification')

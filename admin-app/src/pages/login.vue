@@ -6,7 +6,6 @@ const name = ref('')
 function sayHi() {
   localStorage.setItem('token', name.value)
   router.push('/')
-
 }
 
 function warning() {
@@ -32,16 +31,20 @@ definePage({
     <v-container>
       <v-row align="center" justify="center">
         <v-col cols="auto">
-          <v-btn icon="mdi-github" size="x-large"></v-btn>
+          <v-btn icon="mdi-github" size="x-large"
+          href="http://localhost:8080/login/github"></v-btn>
         </v-col>
         <v-col cols="auto">
-          <v-btn icon="mdi-google" size="x-large"></v-btn>
+          <v-btn icon="mdi-google" size="x-large"
+                 href="http://localhost:8080/login/google"></v-btn>
         </v-col>
         <v-col cols="auto">
-          <v-btn icon="mdi-facebook" size="x-large"></v-btn>
+          <v-btn icon="mdi-facebook" size="x-large"
+                 href="http://localhost:8080/login/facebook"></v-btn>
         </v-col>
         <v-col cols="auto">
-          <v-btn icon="mdi-alpha-x" size="x-large"></v-btn>
+          <v-btn icon="mdi-alpha-x" size="x-large"
+                 href="http://localhost:8080/login/twitter"></v-btn>
         </v-col>
       </v-row>
     </v-container>
