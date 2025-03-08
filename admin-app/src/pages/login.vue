@@ -2,6 +2,7 @@
 import router from "@/plugins/router.ts";
 
 const name = ref('')
+const apiUrl = import.meta.env.VITE_API_URL;
 
 function sayHi() {
   localStorage.setItem('token', name.value)
@@ -32,29 +33,29 @@ definePage({
       <v-row align="center" justify="center">
         <v-col cols="auto">
           <v-btn icon="mdi-github" size="x-large"
-          href="http://localhost:8080/login/github"></v-btn>
+                 :href="apiUrl+'/login/github'"></v-btn>
         </v-col>
         <v-col cols="auto">
           <v-btn icon="mdi-google" size="x-large"
-                 href="http://localhost:8080/login/google"></v-btn>
+                 :href="apiUrl+'/login/google'"></v-btn>
         </v-col>
         <v-col cols="auto">
           <v-btn icon="mdi-facebook" size="x-large"
-                 href="http://localhost:8080/login/facebook"></v-btn>
+                 :href="apiUrl+'/login/facebook'"></v-btn>
         </v-col>
         <v-col cols="auto">
           <v-btn icon="mdi-alpha-x" size="x-large"
-                 href="http://localhost:8080/login/twitter"></v-btn>
+                 :href="apiUrl+'/login/twitter'"></v-btn>
         </v-col>
       </v-row>
     </v-container>
     <v-responsive max-width="300" class="mx-auto">
       <v-text-field
-          v-model="name"
-          color="primary"
-          placeholder="Hello World"
-          label="What's your name?"
-          class="mx-auto mt-8"
+        v-model="name"
+        color="primary"
+        placeholder="Hello World"
+        label="What's your name?"
+        class="mx-auto mt-8"
       />
     </v-responsive>
     <v-btn :disabled="!name" class="mr-2" color="primary" @click="sayHi">
