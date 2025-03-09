@@ -18,7 +18,6 @@ definePage({
 const route = useRoute()
 
 let provider: string = route.params["provider"];
-console.log(route.query)
 api.get(`login/${provider}/callback`, {params: route.query})
   .then(response => {
     useAuthStore().login(response.data)
