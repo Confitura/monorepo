@@ -19,27 +19,22 @@ import org.springframework.web.bind.annotation.*;
 import pl.confitura.jelatyna.infrastructure.WebUtils;
 import pl.confitura.jelatyna.presentation.*;
 
+
 @RestController
 public class VoteController {
 
-    private PresentationRepository presentationRepository;
-    private VoteRepository voteRepository;
-    private WebUtils webUtils;
-    private LocalValidatorFactoryBean beanValidator;
+    private final PresentationRepository presentationRepository;
+    private final VoteRepository voteRepository;
+    private final WebUtils webUtils;
 
     @Autowired
     public VoteController(PresentationRepository presentationRepository, VoteRepository voteRepository,
-                          WebUtils webUtils, LocalValidatorFactoryBean beanValidator) {
+                          WebUtils webUtils) {
         this.presentationRepository = presentationRepository;
         this.voteRepository = voteRepository;
         this.webUtils = webUtils;
-        this.beanValidator = beanValidator;
     }
 
-    @InitBinder
-    protected void initBinder(WebDataBinder binder) {
-        binder.addValidators(beanValidator);
-    }
 
     @RequestMapping(value = "/votes/start/{token}", method = RequestMethod.POST)
     @Transactional

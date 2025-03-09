@@ -4,13 +4,7 @@ import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,6 +21,7 @@ import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.registration.ParticipationData;
 
 @Entity
+@Table(name = "users")
 @Data
 @ToString(exclude = "presentations")
 @EqualsAndHashCode(exclude = "presentations", callSuper = false)

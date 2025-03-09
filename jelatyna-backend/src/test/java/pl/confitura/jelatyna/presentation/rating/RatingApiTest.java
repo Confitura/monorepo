@@ -36,7 +36,7 @@ class RatingApiTest extends BaseIntegrationTest {
 
     private List<AgendaEntry> agenda;
     private Presentation presentation;
-    private Rate rate = new Rate().setValue(RateValue.AWESOME);
+    private Rate rate = new Rate().setRate(RateValue.AWESOME);
     private String reviewerToken = UUID.randomUUID().toString();
 
     @BeforeEach
@@ -61,20 +61,20 @@ class RatingApiTest extends BaseIntegrationTest {
                 // then rate is created
                 .andDo(print())
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.value").value(rate.getValue().name()));
+                .andExpect(jsonPath("$.rate").value(rate.getRate().name()));
 
         // and rate is added to presentation
         mockMvc.perform(get("/presentations/" + presentation.getId() + "/ratings"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").value(hasSize(1)))
-                .andExpect(jsonPath("$[0].value").value(rate.getValue().name()));
+                .andExpect(jsonPath("$[0].rate").value(rate.getRate().name()));
     }
 
     @Test
     @Transactional
     public void userShouldBeAbleToAddComment() throws Exception {
 
-        Rate rate = new Rate().setValue(RateValue.AWESOME).setComment("comment");
+        Rate rate = new Rate().setRate(RateValue.AWESOME).setComment("comment");
         // when user rates presentation with comment
         rate(presentation, reviewerToken, rate)
                 .andExpect(status().isCreated());
@@ -109,7 +109,7 @@ class RatingApiTest extends BaseIntegrationTest {
     @Transactional
     public void userShouldBeAbleToUpdateRate() throws Exception {
 
-        Rate newRate = new Rate().setValue(RateValue.GREAT);
+        Rate newRate = new Rate().setRate(RateValue.GREAT);
         MvcResult mvcResult = rate(presentation, reviewerToken, rate).andReturn();
         Rate createdRate = fromJson(mvcResult.getResponse().getContentAsString(), Rate.class);
 
@@ -126,7 +126,7 @@ class RatingApiTest extends BaseIntegrationTest {
         mockMvc.perform(get("/presentations/" + presentation.getId() + "/ratings"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").value(hasSize(1)))
-                .andExpect(jsonPath("$[0].value").value(newRate.getValue().name()));
+                .andExpect(jsonPath("$[0].rate").value(newRate.getRate().name()));
     }
 
 
@@ -135,7 +135,7 @@ class RatingApiTest extends BaseIntegrationTest {
     public void userShouldBeAbleToRateSecondPresentation() throws Exception {
         rate(presentation, reviewerToken, rate);
 
-        Rate secondRate = new Rate().setValue(RateValue.GREAT);
+        Rate secondRate = new Rate().setRate(RateValue.GREAT);
         Presentation secondPresentation = agenda.get(1).getPresentation();
 
         //when second presentaion is rated
@@ -146,7 +146,7 @@ class RatingApiTest extends BaseIntegrationTest {
         mockMvc.perform(get("/presentations/" + secondPresentation.getId() + "/ratings"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").value(hasSize(1)))
-                .andExpect(jsonPath("$[0].value").value(secondRate.getValue().name()));
+                .andExpect(jsonPath("$[0].rate").value(secondRate.getRate().name()));
 
     }
 
@@ -154,7 +154,7 @@ class RatingApiTest extends BaseIntegrationTest {
     @Transactional
     public void otherUserShouldBeAbleToRateSamePresentation() throws Exception {
         rate(presentation, reviewerToken, rate);
-        Rate otherRate = new Rate().setValue(RateValue.GREAT);
+        Rate otherRate = new Rate().setRate(RateValue.GREAT);
 
         //when other user rates presentation
         rate(presentation, "other token", otherRate);
@@ -172,7 +172,7 @@ class RatingApiTest extends BaseIntegrationTest {
         RateRequest rateRequest = new RateRequest()
                 .setId(rate.getId())
                 .setReviewerToken(token)
-                .setValue(rate.getValue().getNumericValue())
+                .setValue(rate.getRate().getNumericValue())
                 .setComment(rate.getComment());
         return mockMvc.perform(
                 post("/presentations/" + presentation.getId() + "/ratings")
