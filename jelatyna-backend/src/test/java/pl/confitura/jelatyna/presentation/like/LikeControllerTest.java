@@ -3,7 +3,6 @@ package pl.confitura.jelatyna.presentation.like;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.MediaTypes;
 import org.springframework.transaction.annotation.Transactional;
 import pl.confitura.jelatyna.BaseIntegrationTest;
 import pl.confitura.jelatyna.presentation.Presentation;
@@ -49,8 +48,7 @@ class LikeControllerTest extends BaseIntegrationTest {
 
         //when user likes a presentations
         mockMvc.perform(post("/presentations/" + presentation.getId() + "/likes")
-                .content("{\"token\": \"" + token + "\"}")
-                .contentType(MediaTypes.HAL_JSON))
+                .content("{\"token\": \"" + token + "\"}"))
                 .andExpect(status().is2xxSuccessful());
 
         //the like is saved
@@ -67,8 +65,7 @@ class LikeControllerTest extends BaseIntegrationTest {
 
         // when user tries to liked second time
         mockMvc.perform(post("/presentations/" + presentation.getId() + "/likes")
-                .content("{\"token\": \"" + token + "\"}")
-                .contentType(MediaTypes.HAL_JSON))
+                .content("{\"token\": \"" + token + "\"}"))
 
                 // user recieves an error
                 .andExpect(status().is4xxClientError());

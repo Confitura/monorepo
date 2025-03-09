@@ -14,7 +14,6 @@ import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.rest.core.config.Projection;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
@@ -116,7 +115,6 @@ public class User extends AuditedEntity {
 
     }
 
-    @Projection(name = "withPresentations", types = { User.class })
     interface WithPresentations {
         String getId();
 

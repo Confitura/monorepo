@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.hateoas.MediaTypes.HAL_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -116,7 +115,6 @@ class RatingApiTest extends BaseIntegrationTest {
                         put("/presentations/" + presentation.getId() + "/ratings/" + createdRate.getId())
                                 .with(user(reviewerToken))
                                 .content(json(newRate))
-                                .contentType(HAL_JSON)
                 )
                 .andExpect(status().isOk());
 
@@ -174,7 +172,6 @@ class RatingApiTest extends BaseIntegrationTest {
         return mockMvc.perform(
                 post("/presentations/" + presentation.getId() + "/ratings")
                         .content(json(rateRequest))
-                        .contentType(HAL_JSON)
         );
     }
 }

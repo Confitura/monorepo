@@ -20,8 +20,6 @@ import java.util.Map;
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
-import static org.springframework.hateoas.MediaTypes.HAL_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -123,8 +121,7 @@ class PersonalAgendaControllerTest extends BaseIntegrationTest {
 
     private void addToPersonalAgenda(AgendaEntry agendaEntry) throws Exception {
         mockMvc.perform(post("/users/" + user.getId() + "/personalAgenda")
-                .content("{\"agendaEntryId\": \"" + agendaEntry.getId() + "\"}")
-                .contentType(HAL_JSON))
+                .content("{\"agendaEntryId\": \"" + agendaEntry.getId() + "\"}"))
                 .andExpect(status().is2xxSuccessful());
     }
 
