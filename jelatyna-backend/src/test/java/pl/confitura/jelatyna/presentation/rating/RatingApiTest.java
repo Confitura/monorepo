@@ -2,6 +2,7 @@ package pl.confitura.jelatyna.presentation.rating;
 
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +20,7 @@ import java.util.UUID;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static pl.confitura.jelatyna.infrastructure.security.SecurityHelper.user;
@@ -57,14 +59,15 @@ class RatingApiTest extends BaseIntegrationTest {
         rate(presentation, reviewerToken, rate)
 
                 // then rate is created
-                .andExpect(jsonPath("$.value").value(rate.getValue().name()))
-                .andExpect(status().isCreated());
+                .andDo(print())
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.value").value(rate.getValue().name()));
 
         // and rate is added to presentation
         mockMvc.perform(get("/presentations/" + presentation.getId() + "/ratings"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$._embedded.rates").value(hasSize(1)))
-                .andExpect(jsonPath("$._embedded.rates[0].value").value(rate.getValue().name()));
+                .andExpect(jsonPath("$").value(hasSize(1)))
+                .andExpect(jsonPath("$[0].value").value(rate.getValue().name()));
     }
 
     @Test
@@ -79,8 +82,8 @@ class RatingApiTest extends BaseIntegrationTest {
         // then comment is added to presentation
         mockMvc.perform(get("/presentations/" + presentation.getId() + "/ratings"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$._embedded.rates").value(hasSize(1)))
-                .andExpect(jsonPath("$._embedded.rates[0].comment").value(rate.getComment()));
+                .andExpect(jsonPath("$").value(hasSize(1)))
+                .andExpect(jsonPath("$[0].comment").value(rate.getComment()));
     }
 
     @Test
@@ -99,7 +102,7 @@ class RatingApiTest extends BaseIntegrationTest {
         //and new rate is not added
         mockMvc.perform(get("/presentations/" + presentation.getId() + "/ratings"))
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(jsonPath("$._embedded.rates").value(hasSize(1)));
+                .andExpect(jsonPath("$").value(hasSize(1)));
     }
 
     @Test
@@ -115,14 +118,15 @@ class RatingApiTest extends BaseIntegrationTest {
                         put("/presentations/" + presentation.getId() + "/ratings/" + createdRate.getId())
                                 .with(user(reviewerToken))
                                 .content(json(newRate))
+                                .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk());
 
         //then vote is updated
         mockMvc.perform(get("/presentations/" + presentation.getId() + "/ratings"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$._embedded.rates").value(hasSize(1)))
-                .andExpect(jsonPath("$._embedded.rates[0].value").value(newRate.getValue().name()));
+                .andExpect(jsonPath("$").value(hasSize(1)))
+                .andExpect(jsonPath("$[0].value").value(newRate.getValue().name()));
     }
 
 
@@ -141,8 +145,8 @@ class RatingApiTest extends BaseIntegrationTest {
         // then rate is added to presentation
         mockMvc.perform(get("/presentations/" + secondPresentation.getId() + "/ratings"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$._embedded.rates").value(hasSize(1)))
-                .andExpect(jsonPath("$._embedded.rates[0].value").value(secondRate.getValue().name()));
+                .andExpect(jsonPath("$").value(hasSize(1)))
+                .andExpect(jsonPath("$[0].value").value(secondRate.getValue().name()));
 
     }
 
@@ -158,7 +162,8 @@ class RatingApiTest extends BaseIntegrationTest {
         //then presantation has added rate;
         mockMvc.perform(get("/presentations/" + presentation.getId() + "/ratings"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$._embedded.rates").value(hasSize(2)));
+                .andDo(print())
+                .andExpect(jsonPath("$").value(hasSize(2)));
 
 
     }
@@ -172,6 +177,8 @@ class RatingApiTest extends BaseIntegrationTest {
         return mockMvc.perform(
                 post("/presentations/" + presentation.getId() + "/ratings")
                         .content(json(rateRequest))
+                        .contentType(MediaType.APPLICATION_JSON)
+
         );
     }
 }

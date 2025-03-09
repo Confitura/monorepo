@@ -95,25 +95,5 @@ public class PresentationController {
         return cospeakers.stream().filter(it -> !it.getId().equalsIgnoreCase(id)).collect(Collectors.toSet());
     }
 
-    @PostMapping("/presentations/{presentationId}/ratings")
-    @Transactional
-    public ResponseEntity<?> addRating(@PathVariable String presentationId, @RequestBody @Valid @NotNull RateRequest rate) {
-        if (rate.getReviewerToken() == null) {
-            return ResponseEntity.badRequest().body("Reviewer token is required");
-        }
-        Rate createdRate = ratingService.rate(presentationId, rate.getReviewerToken(), rate.toRate());
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(createdRate);
-    }
-
-    @PutMapping("/presentations/{presentationId}/ratings/{ratingId}")
-    @Transactional
-    public ResponseEntity<?> updateRating(@PathVariable("ratingId") String ratingId, @RequestBody @Valid Rate rate) {
-        ratingService.updateRating(rate.setId(ratingId));
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .build();
-    }
 
 }

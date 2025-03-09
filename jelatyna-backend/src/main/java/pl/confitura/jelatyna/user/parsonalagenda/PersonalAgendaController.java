@@ -2,12 +2,8 @@ package pl.confitura.jelatyna.user.parsonalagenda;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.data.projection.ProjectionFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 import pl.confitura.jelatyna.agenda.AgendaEntry;
 import pl.confitura.jelatyna.agenda.AgendaRepository;
 import pl.confitura.jelatyna.agenda.InlineAgenda;
@@ -23,11 +19,11 @@ import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
 import static org.springframework.http.HttpStatus.OK;
 
+@RestController
 @AllArgsConstructor
 public class PersonalAgendaController {
 
     private final AgendaRepository agendaRepository;
-    private final ProjectionFactory projectionFactory;
     private final UserRepository userRepository;
 
     @PostMapping("/users/{userId}/personalAgenda")
@@ -56,7 +52,7 @@ public class PersonalAgendaController {
         Set<AgendaEntry> personalAgenda = userId.getPersonalAgenda();
         Stream<AgendaEntry> fullAgenda = concat(allRoomsTimeSlotEntries, personalAgenda);
         List<InlineAgenda> agendaWithInlinedResources = fullAgenda
-                .map(it -> projectionFactory.createProjection(InlineAgenda.class, it))
+                .map(InlineAgenda::new)
                 .collect(toList());
         return ResponseEntity.ok(agendaWithInlinedResources);
     }
