@@ -26,6 +26,6 @@
     "happy-dom": "^16.6.0",
     "playwright-core": "^1.49.1",
     "sass-embedded": "^1.81.0",
-    "vitest": "^3.0.2"
+    "vitest": "^3.0.8"
   }
 }
