@@ -6,7 +6,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import java.util.List;
 
 
-//@org.springframework.stereotype.Repository
 public interface DemographicDataRepository extends Repository<DemographicData, String> {
 
     DemographicData save(DemographicData token);

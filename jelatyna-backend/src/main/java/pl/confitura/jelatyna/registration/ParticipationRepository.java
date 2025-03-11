@@ -9,7 +9,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 import pl.confitura.jelatyna.registration.voucher.Voucher;
 
-//@org.springframework.stereotype.Repository
 public interface ParticipationRepository extends Repository<ParticipationData, String> {
     ParticipationData save(ParticipationData participationData);
 

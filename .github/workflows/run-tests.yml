@@ -13,16 +13,19 @@ on:
 jobs:
   test-backend:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java-version: [ 8, 11, 21 ]
     defaults:
       run:
         working-directory: jelatyna-backend
 
     steps:
       - uses: actions/checkout@v3
-      - name: Set up JDK 8
+      - name: Set up JDK ${{ matrix.java-version }}
         uses: actions/setup-java@v3
         with:
-          java-version: '8'
+          java-version: ${{ matrix.java-version }}
           distribution: 'temurin'
           cache: maven
       - name: run Maven
