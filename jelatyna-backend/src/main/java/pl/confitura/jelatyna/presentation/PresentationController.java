@@ -1,13 +1,12 @@
 package pl.confitura.jelatyna.presentation;
 
+import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-import org.springframework.data.rest.webmvc.RepositoryRestController;
-import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,7 +24,6 @@ import pl.confitura.jelatyna.presentation.rating.RatingService;
 import pl.confitura.jelatyna.user.User;
 import pl.confitura.jelatyna.user.UserRepository;
 
-@RepositoryRestController
 @AllArgsConstructor
 public class PresentationController {
 
@@ -52,9 +50,9 @@ public class PresentationController {
 
     @PreAuthorize("@security.presentationOwnedByUser(#presentationId) || @security.isAdmin()")
     @GetMapping("/presentations/{presentationId}/cospeakers")
-    public ResponseEntity<Resources<User>> getCospeakers(@PathVariable String presentationId) {
+    public ResponseEntity<Collection<User>> getCospeakers(@PathVariable String presentationId) {
         Set<User> cospeakers = this.repository.findById(presentationId).getSpeakers();
-        return ResponseEntity.ok(new Resources<>(cospeakers));
+        return ResponseEntity.ok(cospeakers);
     }
 
     @PreAuthorize("@security.presentationOwnedByUser(#presentationId) || @security.isAdmin()")
@@ -97,25 +95,5 @@ public class PresentationController {
         return cospeakers.stream().filter(it -> !it.getId().equalsIgnoreCase(id)).collect(Collectors.toSet());
     }
 
-    @PostMapping("/presentations/{presentationId}/ratings")
-    @Transactional
-    public ResponseEntity<?> addRating(@PathVariable String presentationId, @RequestBody @Valid @NotNull RateRequest rate) {
-        if (rate.getReviewerToken() == null) {
-            return ResponseEntity.badRequest().body("Reviewer token is required");
-        }
-        Rate createdRate = ratingService.rate(presentationId, rate.getReviewerToken(), rate.toRate());
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(createdRate);
-    }
-
-    @PutMapping("/presentations/{presentationId}/ratings/{ratingId}")
-    @Transactional
-    public ResponseEntity<?> updateRating(@PathVariable("ratingId") String ratingId, @RequestBody @Valid Rate rate) {
-        ratingService.updateRating(rate.setId(ratingId));
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .build();
-    }
 
 }

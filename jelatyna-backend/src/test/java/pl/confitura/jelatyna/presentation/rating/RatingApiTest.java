@@ -2,6 +2,7 @@ package pl.confitura.jelatyna.presentation.rating;
 
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,8 +19,8 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.hateoas.MediaTypes.HAL_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static pl.confitura.jelatyna.infrastructure.security.SecurityHelper.user;
@@ -35,7 +36,7 @@ class RatingApiTest extends BaseIntegrationTest {
 
     private List<AgendaEntry> agenda;
     private Presentation presentation;
-    private Rate rate = new Rate().setValue(RateValue.AWESOME);
+    private Rate rate = new Rate().setRate(RateValue.AWESOME);
     private String reviewerToken = UUID.randomUUID().toString();
 
     @BeforeEach
@@ -58,21 +59,22 @@ class RatingApiTest extends BaseIntegrationTest {
         rate(presentation, reviewerToken, rate)
 
                 // then rate is created
-                .andExpect(jsonPath("$.value").value(rate.getValue().name()))
-                .andExpect(status().isCreated());
+                .andDo(print())
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.rate").value(rate.getRate().name()));
 
         // and rate is added to presentation
         mockMvc.perform(get("/presentations/" + presentation.getId() + "/ratings"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$._embedded.rates").value(hasSize(1)))
-                .andExpect(jsonPath("$._embedded.rates[0].value").value(rate.getValue().name()));
+                .andExpect(jsonPath("$").value(hasSize(1)))
+                .andExpect(jsonPath("$[0].rate").value(rate.getRate().name()));
     }
 
     @Test
     @Transactional
     public void userShouldBeAbleToAddComment() throws Exception {
 
-        Rate rate = new Rate().setValue(RateValue.AWESOME).setComment("comment");
+        Rate rate = new Rate().setRate(RateValue.AWESOME).setComment("comment");
         // when user rates presentation with comment
         rate(presentation, reviewerToken, rate)
                 .andExpect(status().isCreated());
@@ -80,8 +82,8 @@ class RatingApiTest extends BaseIntegrationTest {
         // then comment is added to presentation
         mockMvc.perform(get("/presentations/" + presentation.getId() + "/ratings"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$._embedded.rates").value(hasSize(1)))
-                .andExpect(jsonPath("$._embedded.rates[0].comment").value(rate.getComment()));
+                .andExpect(jsonPath("$").value(hasSize(1)))
+                .andExpect(jsonPath("$[0].comment").value(rate.getComment()));
     }
 
     @Test
@@ -100,14 +102,14 @@ class RatingApiTest extends BaseIntegrationTest {
         //and new rate is not added
         mockMvc.perform(get("/presentations/" + presentation.getId() + "/ratings"))
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(jsonPath("$._embedded.rates").value(hasSize(1)));
+                .andExpect(jsonPath("$").value(hasSize(1)));
     }
 
     @Test
     @Transactional
     public void userShouldBeAbleToUpdateRate() throws Exception {
 
-        Rate newRate = new Rate().setValue(RateValue.GREAT);
+        Rate newRate = new Rate().setRate(RateValue.GREAT);
         MvcResult mvcResult = rate(presentation, reviewerToken, rate).andReturn();
         Rate createdRate = fromJson(mvcResult.getResponse().getContentAsString(), Rate.class);
 
@@ -116,15 +118,15 @@ class RatingApiTest extends BaseIntegrationTest {
                         put("/presentations/" + presentation.getId() + "/ratings/" + createdRate.getId())
                                 .with(user(reviewerToken))
                                 .content(json(newRate))
-                                .contentType(HAL_JSON)
+                                .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk());
 
         //then vote is updated
         mockMvc.perform(get("/presentations/" + presentation.getId() + "/ratings"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$._embedded.rates").value(hasSize(1)))
-                .andExpect(jsonPath("$._embedded.rates[0].value").value(newRate.getValue().name()));
+                .andExpect(jsonPath("$").value(hasSize(1)))
+                .andExpect(jsonPath("$[0].rate").value(newRate.getRate().name()));
     }
 
 
@@ -133,7 +135,7 @@ class RatingApiTest extends BaseIntegrationTest {
     public void userShouldBeAbleToRateSecondPresentation() throws Exception {
         rate(presentation, reviewerToken, rate);
 
-        Rate secondRate = new Rate().setValue(RateValue.GREAT);
+        Rate secondRate = new Rate().setRate(RateValue.GREAT);
         Presentation secondPresentation = agenda.get(1).getPresentation();
 
         //when second presentaion is rated
@@ -143,8 +145,8 @@ class RatingApiTest extends BaseIntegrationTest {
         // then rate is added to presentation
         mockMvc.perform(get("/presentations/" + secondPresentation.getId() + "/ratings"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$._embedded.rates").value(hasSize(1)))
-                .andExpect(jsonPath("$._embedded.rates[0].value").value(secondRate.getValue().name()));
+                .andExpect(jsonPath("$").value(hasSize(1)))
+                .andExpect(jsonPath("$[0].rate").value(secondRate.getRate().name()));
 
     }
 
@@ -152,7 +154,7 @@ class RatingApiTest extends BaseIntegrationTest {
     @Transactional
     public void otherUserShouldBeAbleToRateSamePresentation() throws Exception {
         rate(presentation, reviewerToken, rate);
-        Rate otherRate = new Rate().setValue(RateValue.GREAT);
+        Rate otherRate = new Rate().setRate(RateValue.GREAT);
 
         //when other user rates presentation
         rate(presentation, "other token", otherRate);
@@ -160,7 +162,8 @@ class RatingApiTest extends BaseIntegrationTest {
         //then presantation has added rate;
         mockMvc.perform(get("/presentations/" + presentation.getId() + "/ratings"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$._embedded.rates").value(hasSize(2)));
+                .andDo(print())
+                .andExpect(jsonPath("$").value(hasSize(2)));
 
 
     }
@@ -169,12 +172,13 @@ class RatingApiTest extends BaseIntegrationTest {
         RateRequest rateRequest = new RateRequest()
                 .setId(rate.getId())
                 .setReviewerToken(token)
-                .setValue(rate.getValue().getNumericValue())
+                .setValue(rate.getRate().getNumericValue())
                 .setComment(rate.getComment());
         return mockMvc.perform(
                 post("/presentations/" + presentation.getId() + "/ratings")
                         .content(json(rateRequest))
-                        .contentType(HAL_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+
         );
     }
 }

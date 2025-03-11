@@ -20,7 +20,6 @@ import pl.confitura.jelatyna.user.User;
 
 @RestController
 @RequestMapping("/login/{provider}")
-@CrossOrigin()
 @Profile("!" + FAKE_SECURITY)
 public class OAuth2LoginController {
 

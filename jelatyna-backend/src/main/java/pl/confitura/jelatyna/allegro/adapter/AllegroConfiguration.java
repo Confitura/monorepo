@@ -11,7 +11,6 @@ import static org.springframework.context.annotation.ScopedProxyMode.TARGET_CLAS
 import static org.springframework.web.context.WebApplicationContext.SCOPE_SESSION;
 
 @Configuration
-@EnableConfigurationProperties(AllegroProperties.class)
 @RequiredArgsConstructor
 class AllegroConfiguration {
     private final AllegroProperties properties;

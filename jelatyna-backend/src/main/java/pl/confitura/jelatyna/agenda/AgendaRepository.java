@@ -2,12 +2,11 @@ package pl.confitura.jelatyna.agenda;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.security.access.prepost.PreAuthorize;
+import pl.confitura.jelatyna.user.User;
 
 import java.util.List;
 
-@RepositoryRestResource(path = "agenda", excerptProjection = InlineAgenda.class)
 public interface AgendaRepository extends Repository<AgendaEntry, String> {
 
     @PreAuthorize("@security.isAdmin()")
@@ -23,4 +22,6 @@ public interface AgendaRepository extends Repository<AgendaEntry, String> {
     @Query("from AgendaEntry where timeSlot.forAllRooms = true")
     List<AgendaEntry> findEntriesForAllRooms();
 
+    @Query("select u.personalAgenda from User u where u.id = ?1")
+    List<AgendaEntry> findByUserId(User userId);
 }

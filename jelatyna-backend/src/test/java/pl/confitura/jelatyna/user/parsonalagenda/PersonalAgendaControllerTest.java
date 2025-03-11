@@ -1,11 +1,10 @@
 package pl.confitura.jelatyna.user.parsonalagenda;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
 import pl.confitura.jelatyna.BaseIntegrationTest;
 import pl.confitura.jelatyna.agenda.AgendaEntry;
@@ -20,10 +19,9 @@ import java.util.Map;
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.jupiter.api.TestInstance.Lifecycle.PER_CLASS;
-import static org.springframework.hateoas.MediaTypes.HAL_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -53,7 +51,7 @@ class PersonalAgendaControllerTest extends BaseIntegrationTest {
         );
 
         entriesByPresentationTitle = agenda.stream()
-                .peek(it->log.info(String.valueOf(it)))
+                .peek(it -> log.info(String.valueOf(it)))
                 .collect(
                         toMap(
                                 it -> it.getPresentation().getTitle(),
@@ -69,11 +67,11 @@ class PersonalAgendaControllerTest extends BaseIntegrationTest {
         mockMvc.perform(get("/users/" + user.getId() + "/personalAgenda"))
 
                 //then it should contain slots taking part in all rooms
-                .andExpect(jsonPath("$._embedded.agendaEntries", hasSize(2)))
-                .andExpect(jsonPath("$._embedded.agendaEntries[0].presentation.title").value("presentation3"))
-                .andExpect(jsonPath("$._embedded.agendaEntries[0].timeSlotLabel").value("11-12"))
-                .andExpect(jsonPath("$._embedded.agendaEntries[1].presentation.title").value("presentation6"))
-                .andExpect(jsonPath("$._embedded.agendaEntries[1].timeSlotLabel").value("13-14"));
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].presentation.title").value("presentation3"))
+                .andExpect(jsonPath("$[0].timeSlotLabel").value("11-12"))
+                .andExpect(jsonPath("$[1].presentation.title").value("presentation6"))
+                .andExpect(jsonPath("$[1].timeSlotLabel").value("13-14"));
 
     }
 
@@ -88,15 +86,15 @@ class PersonalAgendaControllerTest extends BaseIntegrationTest {
 
         //then personal agenda should contain added presentations
         mockMvc.perform(get("/users/" + user.getId() + "/personalAgenda"))
-                .andExpect(jsonPath("$._embedded.agendaEntries", hasSize(4)))
-                .andExpect(jsonPath("$._embedded.agendaEntries[0].presentation.title").value("presentation1"))
-                .andExpect(jsonPath("$._embedded.agendaEntries[0].timeSlotLabel").value("10-11"))
-                .andExpect(jsonPath("$._embedded.agendaEntries[1].presentation.title").value("presentation3"))
-                .andExpect(jsonPath("$._embedded.agendaEntries[1].timeSlotLabel").value("11-12"))
-                .andExpect(jsonPath("$._embedded.agendaEntries[2].presentation.title").value("presentation5"))
-                .andExpect(jsonPath("$._embedded.agendaEntries[2].timeSlotLabel").value("12-13"))
-                .andExpect(jsonPath("$._embedded.agendaEntries[3].presentation.title").value("presentation6"))
-                .andExpect(jsonPath("$._embedded.agendaEntries[3].timeSlotLabel").value("13-14"));
+                .andExpect(jsonPath("$", hasSize(4)))
+                .andExpect(jsonPath("$[0].presentation.title").value("presentation1"))
+                .andExpect(jsonPath("$[0].timeSlotLabel").value("10-11"))
+                .andExpect(jsonPath("$[1].presentation.title").value("presentation3"))
+                .andExpect(jsonPath("$[1].timeSlotLabel").value("11-12"))
+                .andExpect(jsonPath("$[2].presentation.title").value("presentation5"))
+                .andExpect(jsonPath("$[2].timeSlotLabel").value("12-13"))
+                .andExpect(jsonPath("$[3].presentation.title").value("presentation6"))
+                .andExpect(jsonPath("$[3].timeSlotLabel").value("13-14"));
 
     }
 
@@ -111,20 +109,21 @@ class PersonalAgendaControllerTest extends BaseIntegrationTest {
 
         //then personal agenda should contain only latest added presentations
         mockMvc.perform(get("/users/" + user.getId() + "/personalAgenda"))
-                .andExpect(jsonPath("$._embedded.agendaEntries", hasSize(3)))
-                .andExpect(jsonPath("$._embedded.agendaEntries[0].presentation.title").value("presentation2"))
-                .andExpect(jsonPath("$._embedded.agendaEntries[0].timeSlotLabel").value("10-11"))
-                .andExpect(jsonPath("$._embedded.agendaEntries[1].presentation.title").value("presentation3"))
-                .andExpect(jsonPath("$._embedded.agendaEntries[1].timeSlotLabel").value("11-12"))
-                .andExpect(jsonPath("$._embedded.agendaEntries[2].presentation.title").value("presentation6"))
-                .andExpect(jsonPath("$._embedded.agendaEntries[2].timeSlotLabel").value("13-14"));
+                .andExpect(jsonPath("$", hasSize(3)))
+                .andExpect(jsonPath("$[0].presentation.title").value("presentation2"))
+                .andExpect(jsonPath("$[0].timeSlotLabel").value("10-11"))
+                .andExpect(jsonPath("$[1].presentation.title").value("presentation3"))
+                .andExpect(jsonPath("$[1].timeSlotLabel").value("11-12"))
+                .andExpect(jsonPath("$[2].presentation.title").value("presentation6"))
+                .andExpect(jsonPath("$[2].timeSlotLabel").value("13-14"));
 
     }
 
     private void addToPersonalAgenda(AgendaEntry agendaEntry) throws Exception {
         mockMvc.perform(post("/users/" + user.getId() + "/personalAgenda")
-                .content("{\"agendaEntryId\": \"" + agendaEntry.getId() + "\"}")
-                .contentType(HAL_JSON))
+                        .content("{\"agendaEntryId\": \"" + agendaEntry.getId() + "\"}")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
                 .andExpect(status().is2xxSuccessful());
     }
 
