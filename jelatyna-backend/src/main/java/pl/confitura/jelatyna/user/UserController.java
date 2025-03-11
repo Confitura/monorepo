@@ -15,10 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import com.timgroup.jgravatar.Gravatar;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +26,7 @@ import pl.confitura.jelatyna.presentation.PresentationRepository;
 import pl.confitura.jelatyna.registration.ParticipationData;
 import pl.confitura.jelatyna.registration.ParticipationRepository;
 
+@RestController
 @RequiredArgsConstructor
 public class UserController {
 
