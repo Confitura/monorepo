@@ -5,7 +5,7 @@
 This project is part of stack for managing [Confitura](confitura.pl) conference 
 
 In order to use this project you will also need an UI - for this there is separate repo [confitura-page](https://github.com/Confitura/confitura-page) 
- 
+
 
 ## how to start backend
 
