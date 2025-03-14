@@ -13,12 +13,7 @@
         </div>
 
         <div class="info__long">
-          Help us organize the next edition of Confitura!
-          Fill the quick survey:
-          <p>
-            <span ><a href="https://forms.gle/wAxigYG1YcF5wuCh6"> as Attendee</a></span> <br />
-            <span ><a href="https://forms.gle/xaLJ5R5foQcj5pcY9"> as Speaker</a></span>
-          </p>
+          We look forward to seeing you again!
         </div>
         <div class="info__long">
           If your company wants to join us for next year's edition, here is our contact mail:
