@@ -2,3 +2,4 @@
 *.iml
 /confitura-vue/dist.gz
 logs
+dump

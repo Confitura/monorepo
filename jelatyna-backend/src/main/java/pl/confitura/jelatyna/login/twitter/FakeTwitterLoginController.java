@@ -16,7 +16,6 @@ import pl.confitura.jelatyna.user.UserRepository;
 @RequestMapping("/login/twitter")
 @Profile(FAKE_SECURITY)
 @RequiredArgsConstructor
-@CrossOrigin()
 public class FakeTwitterLoginController {
     private final TokenService tokenService;
     private final UserRepository userRepository;

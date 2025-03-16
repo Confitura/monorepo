@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-@ActiveProfiles("test, fake-db")
+@ActiveProfiles({"test", "fake-db"})
 @Transactional
 public class UserRepositoryTest {
     @Autowired

@@ -14,6 +14,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - name: print version
+        run: ./mvnw -version
       - name: Build with Maven
         run: ./mvnw -B package -DskipTests
       - run: cp target/jelatyna-*.jar /home/jelatyna/github/jelatyna.jar

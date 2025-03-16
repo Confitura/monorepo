@@ -33,8 +33,8 @@ public class TimeSlot extends AuditedEntity {
     private String id;
     String label; //fallback for already created slots - to be removed after fixing data in db
 
-    LocalTime start;
-    LocalTime end;
+    LocalTime startTime;
+    LocalTime endTime;
 
     private boolean forAllRooms = false;
 
@@ -42,10 +42,10 @@ public class TimeSlot extends AuditedEntity {
     private int displayOrder;
 
     public String getLabel() {
-        if (start == null || end == null) {
+        if (startTime == null || endTime == null) {
             return label;
         } else {
-            return start.format(HOUR_FORMAT) + " - " + end.format(HOUR_FORMAT);
+            return startTime.format(HOUR_FORMAT) + " - " + endTime.format(HOUR_FORMAT);
         }
 
     }
