@@ -2,10 +2,13 @@ server:
   port: 8080
 spring:
   datasource:
-    url: jdbc:h2:mem:jelatyna
-    username: confitura
-    password: confitura
+    url: jdbc:mysql://localhost:3306/my_database?useLegacyDatetimeCode=false&serverTimezone=Europe/Warsaw&useUnicode=yes&characterEncoding=UTF-8&useSSL=false
+    username: my_user
+    password: my_password
 
+  jpa:
+    hibernate:
+      ddl-auto: validate
 resources.path: /tmp
 resources.folder: /tmp
 jwt.key: /tmp
