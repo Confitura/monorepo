@@ -1,3 +1,5 @@
+server:
+  port: 8080
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/jelatyna
@@ -11,4 +13,8 @@ resources.path: /tmp
 resources.folder: /tmp
 jwt.key: /tmp
 mail.apiKey: 123
-ui.origin: "*"
+
+app:
+  cors:
+    origins:
+      - http://localhost:5173/

@@ -44,12 +44,6 @@
         prefix="https://"
       ></v-text-field>
 
-      <v-text-field
-        v-model="form.photo"
-        label="Photo URL"
-        type="url"
-      ></v-text-field>
-
       <v-checkbox
         v-model="form.privacyPolicyAccepted"
         label="I accept the privacy policy"
@@ -64,8 +58,9 @@
 <script setup lang="ts">
 import axios from "axios";
 import api from "@/utils/api.ts";
-const {user} = storeToRefs(useAuthStore())
-console.log(user.value)
+let store = useAuthStore();
+const {user} = storeToRefs(store)
+
 interface UserForm {
   id: string | undefined;
   name: string;
@@ -75,7 +70,6 @@ interface UserForm {
   twitter: string;
   github: string;
   www: string;
-  photo: string;
   privacyPolicyAccepted: boolean;
 }
 
@@ -88,19 +82,22 @@ const form = ref<UserForm>({
   twitter: '',
   github: '',
   www: '',
-  photo: '',
   privacyPolicyAccepted: false
 });
 
 const onSubmit = () => {
-  // Handle form submission
-  console.log(form.value);
   api.post('/users', form.value).then(
     () => {
-      console.log('success');
+      store.updateRegistered(form.value.name);
     },
     (error) => {
       console.log(error);
     });
 };
+
+api.get('/users/' + user.value.jti).then(
+  it => {
+    form.value = it.data;
+  }
+)
 </script>

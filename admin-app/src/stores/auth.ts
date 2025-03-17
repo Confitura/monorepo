@@ -37,6 +37,14 @@ export const useAuthStore = defineStore('auth', {
       api.defaults.headers.common['Authorization'] = token;
       router.push("/dashboard")
     },
+    updateRegistered(name: string) {
+      this.user = {
+        ...this.user,
+        isNew: false,
+        sub: name
+      };
+      router.push("/dashboard")
+    },
     logout() {
       localStorage.removeItem('token')
       this.token = null;

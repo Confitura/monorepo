@@ -53,7 +53,8 @@ public class User extends AuditedEntity {
     @JsonIgnore
     private Set<Presentation> presentations;
 
-    @ManyToMany
+//    @ManyToMany
+    @Transient
     private Set<AgendaEntry> personalAgenda = new LinkedHashSet<>();
 
     @OneToOne(fetch = FetchType.LAZY)
