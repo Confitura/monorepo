@@ -31,6 +31,7 @@ public class JelatynaCorsConfiguration {
         config.setAllowCredentials(true);
         config.setAllowedOrigins(properties.getOrigins());
         config.addAllowedMethod("*");
+        config.addAllowedHeader("*");
         return config;
     }
 

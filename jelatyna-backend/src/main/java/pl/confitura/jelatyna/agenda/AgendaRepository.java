@@ -22,6 +22,6 @@ public interface AgendaRepository extends Repository<AgendaEntry, String> {
     @Query("from AgendaEntry where timeSlot.forAllRooms = true")
     List<AgendaEntry> findEntriesForAllRooms();
 
-    @Query("select u.personalAgenda from User u where u.id = ?1")
-    List<AgendaEntry> findByUserId(User userId);
+//    @Query("select u.personalAgenda from User u where u.id = ?1")
+//    List<AgendaEntry> findByUserId(User userId);
 }
