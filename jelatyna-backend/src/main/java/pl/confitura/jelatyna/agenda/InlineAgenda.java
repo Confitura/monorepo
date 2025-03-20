@@ -1,34 +1,37 @@
 package pl.confitura.jelatyna.agenda;
 
-import lombok.Data;
-import lombok.Value;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.rest.core.config.Projection;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.user.PublicUser;
 
 import java.util.Set;
 
-@Value
-public class InlineAgenda {
-    String id;
-    String timeSlotId;
-    String timeSlotLabel;
-    String roomId;
-    String roomLabel;
-    String label;
-    String presentationId;
-    Presentation presentation;
-    Set<PublicUser> speakers;
+@Projection(name = "inlineAgenda", types = {AgendaEntry.class})
+public interface InlineAgenda {
+    String getId();
 
-    public InlineAgenda(AgendaEntry target) {
-        this.id = target.getId();
-        this.timeSlotId = target.getTimeSlot() != null ? target.getTimeSlot().getId() : null;
-        this.timeSlotLabel = target.getTimeSlot() != null ? target.getTimeSlot().getLabel() : null;
-        this.roomId = target.getRoom() != null ? target.getRoom().getId() : null;
-        this.roomLabel = target.getRoom() != null ? target.getRoom().getLabel() : null;
-        this.label = target.getLabel();
-        this.presentationId = target.getPresentation() != null ? target.getPresentation().getId() : null;
-        this.presentation = target.getPresentation();
-        this.speakers = target.getSpeakers();
-    }
+    @Value("#{target.timeSlot.id}")
+    String getTimeSlotId();
+
+    @Value("#{target.timeSlot.label}")
+    String getTimeSlotLabel();
+
+    @Value("#{target.room == null ? null : target.room.id}")
+    String getRoomId();
+
+    @Value("#{target.room == null ? null : target.room.label}")
+    String getRoomLabel();
+
+    @Value("#{target.label == null ? null : target.label}")
+    String getLabel();
+
+    @Value("#{target.presentation == null ? null : target.presentation.id}")
+    String getPresentationId();
+
+    Presentation getPresentation();
+
+    @Value("#{target.getSpeakers()}")
+    Set<PublicUser> getSpeaker();
 
 }

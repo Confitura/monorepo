@@ -17,7 +17,7 @@ import java.io.IOException;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
-@ActiveProfiles({"test", "fake-db"})
+@ActiveProfiles("test, fake-db")
 @Transactional(propagation = Propagation.NEVER)
 public class BaseIntegrationTest {
 

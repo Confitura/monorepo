@@ -9,6 +9,7 @@ import java.util.stream.StreamSupport;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,11 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.microtripit.mandrillapp.lutung.model.MandrillApiError;
 import lombok.AllArgsConstructor;
@@ -30,7 +35,7 @@ import pl.confitura.jelatyna.registration.demographic.DemographicDataRepository;
 import pl.confitura.jelatyna.registration.voucher.Voucher;
 import pl.confitura.jelatyna.registration.voucher.VoucherService;
 
-@RestController
+@RepositoryRestController
 @Slf4j
 @AllArgsConstructor
 public class RegistrationController {

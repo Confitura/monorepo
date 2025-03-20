@@ -10,6 +10,8 @@ import java.util.stream.*;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.RepositoryRestController;
+import org.springframework.hateoas.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,31 +21,36 @@ import org.springframework.web.bind.annotation.*;
 import pl.confitura.jelatyna.infrastructure.WebUtils;
 import pl.confitura.jelatyna.presentation.*;
 
-
-@RestController
+@RepositoryRestController
 public class VoteController {
 
-    private final PresentationRepository presentationRepository;
-    private final VoteRepository voteRepository;
-    private final WebUtils webUtils;
+    private PresentationRepository presentationRepository;
+    private VoteRepository voteRepository;
+    private WebUtils webUtils;
+    private LocalValidatorFactoryBean beanValidator;
 
     @Autowired
     public VoteController(PresentationRepository presentationRepository, VoteRepository voteRepository,
-                          WebUtils webUtils) {
+                          WebUtils webUtils, LocalValidatorFactoryBean beanValidator) {
         this.presentationRepository = presentationRepository;
         this.voteRepository = voteRepository;
         this.webUtils = webUtils;
+        this.beanValidator = beanValidator;
     }
 
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        binder.addValidators(beanValidator);
+    }
 
     @RequestMapping(value = "/votes/start/{token}", method = RequestMethod.POST)
     @Transactional
-    public ResponseEntity<?> start(@PathVariable String token) {
+    public ResponseEntity<Resources<?>> start(@PathVariable String token) {
         Set<Vote> votes = voteRepository.findAllForToken(token);
         if (votes.isEmpty()) {
             votes = generateVotes(token);
         }
-        return ResponseEntity.ok(votes);
+        return ResponseEntity.ok(new Resources<>(votes));
     }
 
     private Set<Vote> generateVotes(@PathVariable String token) {
@@ -61,11 +68,11 @@ public class VoteController {
 
     @PostMapping("/votes")
     @Transactional
-    public ResponseEntity<Vote> save(@RequestBody @Valid Vote vote) {
+    public ResponseEntity<Resource<Vote>> save(@RequestBody @Valid Vote vote) {
         Vote loaded = voteRepository.findById(vote.getId());
         loaded.setRate(vote.getRate());
         loaded.setVoteDate(LocalDateTime.now());
-        return ResponseEntity.ok(loaded);
+        return ResponseEntity.ok(new Resource<>(loaded));
     }
 
 

@@ -17,6 +17,7 @@ import java.util.Map;
 
 import static pl.confitura.jelatyna.infrastructure.Profiles.FAKE_SECURITY;
 
+@EnableConfigurationProperties(OAuthConfiguration.OAuthConfigurationProperties.class)
 @Configuration
 @Profile("!" + FAKE_SECURITY)
 public class OAuthConfiguration {

@@ -1,5 +1,3 @@
-server:
-  port: 8080
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/my_database?useLegacyDatetimeCode=false&serverTimezone=Europe/Warsaw&useUnicode=yes&characterEncoding=UTF-8&useSSL=false
@@ -13,8 +11,3 @@ resources.path: /tmp
 resources.folder: /tmp
 jwt.key: /tmp
 mail.apiKey: 123
-
-app:
-  cors:
-    origins:
-      - http://localhost:5173/

@@ -2,7 +2,9 @@ package pl.confitura.jelatyna.presentation;
 
 import java.util.Set;
 
+import org.springframework.data.rest.core.config.Projection;
 
+@Projection(name = "inlineTags", types = { Presentation.class })
 interface InlineTags {
     String getId();
 

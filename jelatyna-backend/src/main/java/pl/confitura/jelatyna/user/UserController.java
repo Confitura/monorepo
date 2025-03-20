@@ -11,11 +11,17 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 
+import org.springframework.data.rest.webmvc.RepositoryRestController;
+import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.timgroup.jgravatar.Gravatar;
 import lombok.RequiredArgsConstructor;
@@ -26,8 +32,8 @@ import pl.confitura.jelatyna.presentation.PresentationRepository;
 import pl.confitura.jelatyna.registration.ParticipationData;
 import pl.confitura.jelatyna.registration.ParticipationRepository;
 
-@RestController
 @RequiredArgsConstructor
+@RepositoryRestController
 public class UserController {
 
     private final UserRepository repository;
@@ -42,7 +48,7 @@ public class UserController {
         User current = updateUser(user);
         setDefaultPhotoFor(current);
         setIdIfManuallyCreated(current);
-        return ResponseEntity.ok(repository.save(current));
+        return ResponseEntity.ok(new Resource<>(repository.save(current)));
     }
 
     @PostMapping("/users/{userId}/participationData")
@@ -53,32 +59,32 @@ public class UserController {
         User current = repository.findById(userId);
         current.setParticipationData(participationRepository.findById(participationData.getId()));
         current.setParticipationData(participationRepository.findById(participationData.getId()));
-        return ResponseEntity.ok(repository.save(current));
+        return ResponseEntity.ok(new Resource<>(repository.save(current)));
     }
 
     @GetMapping("/users/{id}")
     @PreAuthorize("@security.isOwner(#id) || @security.isAdmin()")
     public ResponseEntity<?> getById(@PathVariable String id) {
         User user = repository.findById(id);
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(new Resource<>(user));
     }
 
     @GetMapping("/users/{id}/public")
     public ResponseEntity<?> getPublicById(@PathVariable String id) {
         User user = repository.findById(id);
-        return ResponseEntity.ok(new PublicUser(user));
+        return ResponseEntity.ok(new Resource<>(new PublicUser(user)));
     }
 
     @GetMapping("/users/search/admins")
     public ResponseEntity<?> getAdmins() {
         Set<PublicUser> admins = repository.findAdmins().stream().map(PublicUser::new).collect(toSet());
-        return ResponseEntity.ok(admins);
+        return ResponseEntity.ok(new Resources<>(admins));
     }
 
     @GetMapping("/users/search/volunteers")
     public ResponseEntity<?> getVolunteers() {
         Set<PublicUser> volunteers = repository.findVolunteers().stream().map(PublicUser::new).collect(toSet());
-        return ResponseEntity.ok(volunteers);
+        return ResponseEntity.ok(new Resources<>(volunteers));
     }
 
     @PostMapping("/users/{userId}/volunteer/{isVolunteer}")
@@ -102,16 +108,16 @@ public class UserController {
         presentation.setSpeaker(speaker);
         retainStatus(presentation);
         Presentation saved = presentationRepository.save(presentation);
-        return ResponseEntity.ok(saved);
+        return ResponseEntity.ok(new Resource<>(saved));
     }
 
     @GetMapping("/users/search/speakers")
     public ResponseEntity<?> getSpeakers() {
-        Set<?> speakers = repository.findAllAccepted().stream()
+        Set<Resource<?>> speakers = repository.findAllAccepted().stream()
                 .map(PublicUser::new)
-                .map(speaker -> speaker)
+                .map(speaker -> new Resource<>(speaker))
                 .collect(toSet());
-        return ResponseEntity.ok(speakers);
+        return ResponseEntity.ok(new Resources<>(speakers));
     }
 
     private void retainStatus(Presentation presentation) {

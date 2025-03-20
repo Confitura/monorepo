@@ -18,6 +18,7 @@ import pl.confitura.jelatyna.user.User;
 
 @RestController
 @RequestMapping("/login/{provider}")
+@CrossOrigin()
 @Profile(FAKE_SECURITY)
 public class FakeOAuth2LoginController {
 
@@ -36,7 +37,7 @@ public class FakeOAuth2LoginController {
     ) {
         return ResponseEntity
                 .status(PERMANENT_REDIRECT)
-                .header("Location", "http://localhost:5173/login/" + provider)
+                .header("Location", "http://localhost:8080/login/" + provider)
                 .build();
     }
 

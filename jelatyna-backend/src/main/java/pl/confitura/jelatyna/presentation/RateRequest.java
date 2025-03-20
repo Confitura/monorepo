@@ -18,7 +18,7 @@ public class RateRequest {
     public Rate toRate() {
         return new Rate()
                 .setId(id)
-                .setRate(RateValue.from(value))
+                .setValue(RateValue.from(value))
                 .setComment(comment);
     }
 }

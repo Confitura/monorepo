@@ -7,22 +7,32 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import pl.confitura.jelatyna.login.twitter.TwitterConfigurationProperties;
+import pl.confitura.jelatyna.mail.MailConfigurationProperties;
 import pl.confitura.jelatyna.presentation.Tag;
 import pl.confitura.jelatyna.presentation.TagRepository;
 
 @SpringBootApplication
 @EnableWebMvc
 @EnableAsync
+@CrossOrigin
 @EntityScan(
         basePackageClasses = { JelatynaApplication.class, Jsr310JpaConverters.class }
 )
-@ConfigurationPropertiesScan
+@EnableConfigurationProperties(
+        {
+                TwitterConfigurationProperties.class,
+                MailConfigurationProperties.class,
+                ConferenceConfigurationProperties.class
+        }
+)
 public class JelatynaApplication {
 
     public static void main(String[] args) {

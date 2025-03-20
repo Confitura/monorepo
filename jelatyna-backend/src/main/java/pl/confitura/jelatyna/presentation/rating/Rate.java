@@ -18,7 +18,7 @@ public class Rate {
     private String id;
 
     @Enumerated(EnumType.STRING)
-    private RateValue rate;
+    private RateValue value;
 
     private String comment;
 }
