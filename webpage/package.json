@@ -9,7 +9,7 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "test": "vitest",
-    "start": "nuxt start"
+    "start": " node .output/server/index.mjs"
   },
   "dependencies": {
     "@pinia/nuxt": "^0.8.0",
