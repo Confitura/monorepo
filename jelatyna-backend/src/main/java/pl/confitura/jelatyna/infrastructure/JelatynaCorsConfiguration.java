@@ -8,17 +8,17 @@ import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurerAdapt
 @Configuration
 public class JelatynaCorsConfiguration {
 
-    @Bean
-    public RepositoryRestConfigurerAdapter repositoryRestConfigurerAdapter() {
-        return new RepositoryRestConfigurerAdapter() {
-            @Override
-            public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
-                config
-                        .getCorsRegistry()
-                        .addMapping("/**")
-                        .allowedOrigins("*");
-            }
-        };
-    }
+//    @Bean
+//    public RepositoryRestConfigurerAdapter repositoryRestConfigurerAdapter() {
+//        return new RepositoryRestConfigurerAdapter() {
+//            @Override
+//            public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
+//                config
+//                        .getCorsRegistry()
+//                        .addMapping("/**")
+//                        .allowedOrigins("*");
+//            }
+//        };
+//    }
 
 }
