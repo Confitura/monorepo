@@ -8,9 +8,8 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   runtimeConfig: {
     public: {
-      baseURL: process.env.BASE_URL || '',
-      apiServer: process.env.API_SERVER || '',
-      fileServer: process.env.FILE_SERVER || ''
+      apiServer: process.env.NUXT_PUBLIC_API_SERVER || '',
+      fileServer: process.env.NUXT_PUBLIC_FILE_SERVER || ''
     }
   },
   app: {
