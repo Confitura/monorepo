@@ -63,15 +63,15 @@ function subname(room: string) {
   return null
 }
 
-let { data: rooms } = useAPIFetch('/json/rooms.json', {
+let { data: rooms } = useAPIFetch('/rooms.json', {
   key: 'rooms',
   transform: (data: EmbeddedRooms) => data._embedded.rooms.sort(sortByOrder)
 })
-let { data: slots } = useAPIFetch('/json/time-slots.json', {
+let { data: slots } = useAPIFetch('/time-slots.json', {
   key: 'timeSlots',
   transform: (data: EmbeddedTimeSlots) => data._embedded.timeSlots.sort(sortByOrder)
 })
-let { data: agenda } = useAPIFetch('/json/agenda.json', {
+let { data: agenda } = useAPIFetch('/agenda.json', {
   key: 'agenda',
   transform: (data: EmbeddedAgenda) => data._embedded.agendaEntries
 })

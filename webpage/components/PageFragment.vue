@@ -18,7 +18,7 @@ import { marked } from 'marked'
 const { name } = defineProps<{ name: string }>()
 const contentInEdit = useState('contentInEdit', () => '')
 const editMode = useState('editMode', () => false)
-const { data: content } = useAPIFetch(`/json/pages/${name}.json`, {
+const { data: content } = useAPIFetch(`/pages/${name}.json`, {
   key: `content-${name}`,
   transform: (response) => response.content
 })

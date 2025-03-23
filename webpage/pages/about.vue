@@ -1,66 +1,66 @@
 <template>
   <div class="about__page">
-    <PageHeader title="About Us" type="coder" />
+    <PageHeader title="About Us" type="coder"/>
     <Box color="white">
       <div class="about__info">
         <h2 class="about__header">
           Confitura: Brewing Java Excellence Since 2007
         </h2>
-        <PageFragment name="about-page" class="about__infoContent" />
+        <PageFragment name="about-page" class="about__infoContent"/>
       </div>
     </Box>
     <Box color="red" class="about__committee no-padding">
       <h3 class="committee__header">organizers</h3>
       <div class="committee__members">
         <div
-          class="committee__member"
-          v-for="member in committee"
-          :key="member.id"
+            class="committee__member"
+            v-for="member in committee"
+            :key="member.id"
         >
           <img
-            :src="member.photo "
-            :alt="member.name"
-            class="member__photo"
+              :src="member.photo "
+              :alt="member.name"
+              class="member__photo"
           />
           <div class="member__info">
             <div class="member__name">{{ member.name }}</div>
             <div class="member__bio">{{ member.bio }}</div>
             <div class="member__social">
               <SocialLink
-                type="twitter"
-                :id="member.twitter"
-                theme="white"
-                class="member__socialLink"
+                  type="twitter"
+                  :id="member.twitter"
+                  theme="white"
+                  class="member__socialLink"
               ></SocialLink>
               <SocialLink
-                type="github"
-                :id="member.github"
-                theme="white"
-                class="member__socialLink"
+                  type="github"
+                  :id="member.github"
+                  theme="white"
+                  class="member__socialLink"
               ></SocialLink>
               <SocialLink
-                type="www"
-                :id="member.www"
-                theme="white"
-                class="member__socialLink"
+                  type="www"
+                  :id="member.www"
+                  theme="white"
+                  class="member__socialLink"
               ></SocialLink>
             </div>
           </div>
         </div>
       </div>
     </Box>
-    <Box color="white" class="no-padding" v-if="volunteers.length > 0">
+    <Box color="white" class="no-padding" v-if="volunteers?.length > 0">
       <div class="volunteers__headerContainer">
         <h3 class="volunteers__header">volunteers</h3>
       </div>
-      <UsersGrid :users="volunteers" ></UsersGrid>
+      <UsersGrid :users="volunteers"></UsersGrid>
     </Box>
     <Box color="white">
       <div class="bcc">
         <h3 class="bcc__header">Brain Change Continental</h3>
-        <img src="~/assets/bcc.png" alt="bcc" class="bcc__logo" />
+        <img src="~/assets/bcc.png" alt="bcc" class="bcc__logo"/>
         <div class="bcc__info">
-          <PageFragment name="bcc" />
+          <PageFragment name="bcc"/>
           <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/NLD0btOtFbg?si=I6ZQrIYmoFfYSYfy"
                   title="YouTube video player"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -68,21 +68,31 @@
         </div>
       </div>
     </Box>
-    <Contact />
+    <Contact/>
   </div>
 </template>
 
 <script setup lang="ts">
+const config = useRuntimeConfig();
+import {useAPIFetch} from '~/composables/useAPIFetch'
 
-import { useAPIFetch } from '~/composables/useAPIFetch'
-
-const { data: committee } = await fetchUsers('admins')
-const { data: volunteers } = await fetchUsers('volunteers')
+const {data: committee} = await fetchUsers('admins')
+const {data: volunteers} = await fetchUsers('volunteers')
 
 async function fetchUsers(type: string) {
-  return useAPIFetch('/json/users/search/' + type + '.json', {
+  return useAPIFetch('/users/search/' + type + '.json', {
     key: type,
-    transform: (response) => response._embedded.publicUsers
+    transform: (response) => {
+      let users = response._embedded.publicUsers;
+      users = users.map(user => {
+        let photo = user.photo;
+        if (photo.startsWith('/')) {
+          photo = config.public.fileServer + photo;
+        }
+        return ({...user, photo})
+      })
+      return users
+    }
   })
 }
 

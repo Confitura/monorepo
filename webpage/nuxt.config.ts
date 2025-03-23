@@ -8,7 +8,9 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   runtimeConfig: {
     public: {
-      baseURL: process.env.BASE_URL || ''
+      baseURL: process.env.BASE_URL || '',
+      apiServer: process.env.API_SERVER || '',
+      fileServer: process.env.FILE_SERVER || ''
     }
   },
   app: {
@@ -25,11 +27,5 @@ export default defineNuxtConfig({
       }]
     }
   },
-  modules: ['@pinia/nuxt', '@nuxt/test-utils/module'],
-
-  routeRules: {
-    '/api/resources/**': { proxy: { to: 'https://2023.confitura.pl/api/resources/**' } },
-    '/api/**': { proxy: { to: 'https://api.confitura.pl/api/**' } },
-    '/json/**': { proxy: { to: 'https://api.confitura.pl/2025/**' } }
-  }
+  modules: ['@pinia/nuxt', '@nuxt/test-utils/module']
 })

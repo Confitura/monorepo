@@ -44,7 +44,7 @@
 import { useAPIFetch } from '~/composables/useAPIFetch'
 
 let route = useRoute()
-let { data: speaker } = useAPIFetch(`/json/users/${route.params.id}/public.json`)
+let { data: speaker } = useAPIFetch(`/users/${route.params.id}/public.json`)
 </script>
 
 <style lang="scss" scoped>
