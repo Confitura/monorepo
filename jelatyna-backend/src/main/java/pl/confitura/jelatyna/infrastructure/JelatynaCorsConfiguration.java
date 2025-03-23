@@ -15,7 +15,8 @@ public class JelatynaCorsConfiguration {
             public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
                 config
                         .getCorsRegistry()
-                        .addMapping("/**");
+                        .addMapping("/**")
+                        .allowedOrigins("*");
             }
         };
     }
