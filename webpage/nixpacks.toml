@@ -1,0 +1,10 @@
+[build]
+builder = "nodejs"
+command = "npm run build"
+
+[start]
+command = "node .output/server/index.mjs"
+
+[variables]
+NUXT_PUBLIC_API_SERVER="http://files.confitura.pl:19052/api/resources/archive/2025/"
+NUXT_PUBLIC_FILE_SERVER="http://files.confitura.pl:19052"
