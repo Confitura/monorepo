@@ -8,7 +8,8 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "test": "vitest"
+    "test": "vitest",
+    "start": "nuxt start"
   },
   "dependencies": {
     "@pinia/nuxt": "^0.8.0",
