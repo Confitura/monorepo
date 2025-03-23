@@ -33,7 +33,9 @@ public class TimeSlot extends AuditedEntity {
     private String id;
     String label; //fallback for already created slots - to be removed after fixing data in db
 
+    @Column(name = "start_time")
     LocalTime start;
+    @Column(name = "end_time")
     LocalTime end;
 
     private boolean forAllRooms = false;
