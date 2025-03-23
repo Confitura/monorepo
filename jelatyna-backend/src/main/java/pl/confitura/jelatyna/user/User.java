@@ -4,13 +4,7 @@ import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,6 +26,7 @@ import pl.confitura.jelatyna.registration.ParticipationData;
 @ToString(exclude = "presentations")
 @EqualsAndHashCode(exclude = "presentations", callSuper = false)
 @Accessors(chain = true)
+@Table(name = "users")
 public class User extends AuditedEntity {
     @Id
     @GeneratedValue(generator = "uuid2")
