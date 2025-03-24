@@ -6,5 +6,5 @@ command = "npm run build"
 command = "node .output/server/index.mjs"
 
 [variables]
-NUXT_PUBLIC_API_SERVER="http://files.confitura.pl:19052/api/resources/archive/2025/"
-NUXT_PUBLIC_FILE_SERVER="http://files.confitura.pl:19052"
+NUXT_PUBLIC_API_SERVER="https://api.confitura.pl/api/resources/archive/2025/"
+NUXT_PUBLIC_FILE_SERVER="https://api.confitura.pl"
