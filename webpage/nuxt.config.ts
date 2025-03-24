@@ -8,8 +8,8 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   runtimeConfig: {
     public: {
-      apiServer: "http://files.confitura.pl:19052/api/resources/archive/2025/",
-      fileServer: "http://files.confitura.pl:19052"
+      apiServer: "https://api.confitura.pl/api/resources/archive/2025/",
+      fileServer: "https://api.confitura.pl"
     }
   },
   app: {
