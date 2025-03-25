@@ -61,7 +61,7 @@ public class Presentation {
     @NotNull
     private Set<User> speakers = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "presentation")
     private Set<Rate> ratings = new HashSet<>();
 
     private String status;

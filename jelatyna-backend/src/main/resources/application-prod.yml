@@ -1,5 +1,4 @@
 server:
-  port: ${PORT}
   servlet:
     context-path: /api
 conference.c4p:
@@ -40,7 +39,6 @@ resources:
   folder: ${RESOURCES_FOLDER}
 spring:
   datasource:
-    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}?useLegacyDatetimeCode=false&serverTimezone=Europe/Warsaw&useUnicode=yes&characterEncoding=UTF-8
     username: ${DB_USER}
     password: ${DB_PASS}
   jpa:
