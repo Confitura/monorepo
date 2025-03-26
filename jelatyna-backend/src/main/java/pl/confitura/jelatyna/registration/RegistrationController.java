@@ -9,7 +9,7 @@ import java.util.stream.StreamSupport;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.data.rest.webmvc.RepositoryRestController;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +17,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,7 +26,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.microtripit.mandrillapp.lutung.model.MandrillApiError;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import pl.confitura.jelatyna.infrastructure.security.JelatynaPrincipal;
 import pl.confitura.jelatyna.infrastructure.security.SecurityContextUtil;
@@ -35,16 +35,16 @@ import pl.confitura.jelatyna.registration.demographic.DemographicDataRepository;
 import pl.confitura.jelatyna.registration.voucher.Voucher;
 import pl.confitura.jelatyna.registration.voucher.VoucherService;
 
-@RepositoryRestController
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
+@Controller
 public class RegistrationController {
 
-    private MailSender sender;
-    private ParticipationRepository repository;
-    private VoucherService voucherService;
-    private TicketGenerator generator;
-    private DemographicDataRepository demographicDataRepository;
+    private final MailSender sender;
+    private final ParticipationRepository repository;
+    private final VoucherService voucherService;
+    private final TicketGenerator generator;
+    private final DemographicDataRepository demographicDataRepository;
 
     @GetMapping("/participants")
     @PreAuthorize("@security.isAdmin()")

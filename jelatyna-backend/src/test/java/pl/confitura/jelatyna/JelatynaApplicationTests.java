@@ -1,29 +1,16 @@
 package pl.confitura.jelatyna;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.hateoas.MediaTypes;
+import org.springframework.http.MediaType;
 import pl.confitura.jelatyna.agenda.Room;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static pl.confitura.jelatyna.infrastructure.security.SecurityHelper.admin;
 import static pl.confitura.jelatyna.infrastructure.security.SecurityHelper.user;
 
 class JelatynaApplicationTests extends BaseIntegrationTest {
-
-    @Test
-    void dataRestJpaWorks() throws Exception {
-
-        mockMvc
-                .perform(
-                        get("/")
-                                .accept(MediaTypes.HAL_JSON)
-                )
-                .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaTypes.HAL_JSON));
-    }
 
 
     @Test
@@ -33,8 +20,8 @@ class JelatynaApplicationTests extends BaseIntegrationTest {
                 .perform(
                         post("/rooms/")
                                 .with(user("user"))
+                                .contentType(MediaType.APPLICATION_JSON)
                                 .content(json(room))
-                                .accept(MediaTypes.HAL_JSON)
                 )
                 .andExpect(status().isForbidden());
 
@@ -42,7 +29,7 @@ class JelatynaApplicationTests extends BaseIntegrationTest {
                 .perform(
                         post("/rooms/")
                                 .content(json(room))
-                                .accept(MediaTypes.HAL_JSON)
+                                .contentType(MediaType.APPLICATION_JSON)
                                 .with(admin())
                 )
                 .andExpect(status().isCreated());
