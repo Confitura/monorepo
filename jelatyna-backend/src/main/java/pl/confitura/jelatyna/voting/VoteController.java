@@ -10,8 +10,6 @@ import java.util.stream.*;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.webmvc.RepositoryRestController;
-import org.springframework.hateoas.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import pl.confitura.jelatyna.infrastructure.WebUtils;
 import pl.confitura.jelatyna.presentation.*;
 
-@RepositoryRestController
 public class VoteController {
 
     private PresentationRepository presentationRepository;
@@ -45,12 +42,12 @@ public class VoteController {
 
     @RequestMapping(value = "/votes/start/{token}", method = RequestMethod.POST)
     @Transactional
-    public ResponseEntity<Resources<?>> start(@PathVariable String token) {
+    public ResponseEntity<?> start(@PathVariable String token) {
         Set<Vote> votes = voteRepository.findAllForToken(token);
         if (votes.isEmpty()) {
             votes = generateVotes(token);
         }
-        return ResponseEntity.ok(new Resources<>(votes));
+        return ResponseEntity.ok(votes);
     }
 
     private Set<Vote> generateVotes(@PathVariable String token) {
@@ -68,11 +65,11 @@ public class VoteController {
 
     @PostMapping("/votes")
     @Transactional
-    public ResponseEntity<Resource<Vote>> save(@RequestBody @Valid Vote vote) {
+    public ResponseEntity<Vote> save(@RequestBody @Valid Vote vote) {
         Vote loaded = voteRepository.findById(vote.getId());
         loaded.setRate(vote.getRate());
         loaded.setVoteDate(LocalDateTime.now());
-        return ResponseEntity.ok(new Resource<>(loaded));
+        return ResponseEntity.ok(loaded);
     }
 
 
