@@ -14,7 +14,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.0.9.RELEASE</version>
+        <version>2.7.18</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -24,7 +24,6 @@
         <java.version>1.8</java.version>
         <scribejava.version>8.3.1</scribejava.version>
         <expiringmap.version>0.5.7</expiringmap.version>
-        <lombok.version>1.16.18</lombok.version>
         <jjwt.version>0.7.0</jjwt.version>
         <mysql-connector.version>5.1.49</mysql-connector.version>
         <guava.version>22.0</guava.version>
@@ -32,7 +31,6 @@
         <junit.jupiter.version>5.1.0</junit.jupiter.version>
         <junit.vintage.version>5.1.0</junit.vintage.version>
         <junit.platform.version>1.1.1</junit.platform.version>
-        <hibernate.version>5.3.1.Final</hibernate.version>
     </properties>
 
     <dependencies>
@@ -51,7 +49,7 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-rest</artifactId>
+            <artifactId>spring-boot-properties-migrator</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -84,7 +82,6 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -112,7 +109,6 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>1.4.192</version>
         </dependency>
         <dependency>
             <groupId>com.opencsv</groupId>
@@ -140,7 +136,14 @@
             <groupId>com.querydsl</groupId>
             <artifactId>querydsl-jpa</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.annotation</groupId>
+            <artifactId>javax.annotation-api</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
