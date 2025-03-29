@@ -2,6 +2,7 @@ package pl.confitura.jelatyna.login.twitter;
 
 import static com.github.scribejava.core.model.Verb.GET;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import pl.confitura.jelatyna.login.OAuthUserService;
 import pl.confitura.jelatyna.user.User;
 
 @Service
+@Slf4j
 public class TwitterService {
     private ObjectMapper mapper;
     private OAuth10aService service;
@@ -64,6 +66,7 @@ public class TwitterService {
     }
 
     private TwitterUser mapToUser(String body) throws java.io.IOException {
+        log.info("mapToUser {}", body);
         return mapper.readValue(body, TwitterUser.class);
     }
 }
