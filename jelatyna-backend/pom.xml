@@ -25,7 +25,7 @@
         <scribejava.version>8.3.1</scribejava.version>
         <expiringmap.version>0.5.7</expiringmap.version>
         <jjwt.version>0.7.0</jjwt.version>
-        <mysql-connector.version>5.1.49</mysql-connector.version>
+        <mysql-connector.version>8.0.33</mysql-connector.version>
         <guava.version>22.0</guava.version>
 
         <junit.jupiter.version>5.1.0</junit.jupiter.version>
