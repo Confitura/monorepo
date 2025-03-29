@@ -31,7 +31,7 @@ public class TokenService {
                     put("isAdmin", user.isAdmin());
                     put("isVolunteer", user.isVolunteer());
                     put("isSpeaker", user.isSpeaker());
-                    put("isNew", user.getPrivacyPolicyAccepted());
+                    put("isNew", !user.getPrivacyPolicyAccepted());
                 }})
                 .setId(user.getId())
                 .setSubject(user.getName())
