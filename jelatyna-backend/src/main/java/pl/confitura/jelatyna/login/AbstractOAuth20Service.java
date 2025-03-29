@@ -6,6 +6,7 @@ import com.github.scribejava.core.model.OAuthRequest;
 import com.github.scribejava.core.model.Response;
 import com.github.scribejava.core.model.Verb;
 import com.github.scribejava.core.oauth.OAuth20Service;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.confitura.jelatyna.user.User;
 
@@ -13,20 +14,21 @@ import java.io.IOException;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
+@Slf4j
 public abstract class AbstractOAuth20Service {
 
-    protected OAuth20Service auth20Service;
-    private OAuthUserService oauthUserService;
-    protected ObjectMapper mapper;
+    protected final OAuth20Service auth20Service;
+    private final OAuthUserService oauthUserService;
+    protected final ObjectMapper mapper;
 
     private final String secretState = "secret" + new Random().nextInt(999_999);
-    @Autowired
+
     public AbstractOAuth20Service(
             OAuthUserService oauthUserService,
             OAuthConfiguration.OAuthProviderProperties properties,
             ObjectMapper mapper) {
-        this.oauthUserService = oauthUserService;
         this.auth20Service = createService(properties);
+        this.oauthUserService = oauthUserService;
         this.mapper = mapper;
     }
 
@@ -54,11 +56,12 @@ public abstract class AbstractOAuth20Service {
         final OAuthRequest request = new OAuthRequest(Verb.GET, getProtectedUserUrl());
         auth20Service.signRequest(accessToken, request);
         final Response response = auth20Service.execute(request);
+        log.info("getOAuthUserFor {}", response.getBody());
         return mapToUser(response.getBody());
     }
 
     protected abstract String getProtectedUserUrl();
 
-    protected abstract OAuthUserBase mapToUser(String body) throws IOException ;
+    protected abstract OAuthUserBase mapToUser(String body) throws IOException;
 
 }

@@ -49,19 +49,6 @@ definePage({
         </v-col>
       </v-row>
     </v-container>
-    <v-responsive max-width="300" class="mx-auto">
-      <v-text-field
-        v-model="name"
-        color="primary"
-        placeholder="Hello World"
-        label="What's your name?"
-        class="mx-auto mt-8"
-      />
-    </v-responsive>
-    <v-btn :disabled="!name" class="mr-2" color="primary" @click="sayHi">
-      Login
-    </v-btn>
-    <v-btn :disabled="!name" @click="warning">Cancel</v-btn>
   </div>
 </template>
 

@@ -22,7 +22,7 @@ import pl.confitura.jelatyna.registration.ParticipationData;
 
 @Entity
 @Data
-@ToString(exclude = "presentations")
+@ToString(onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(exclude = "presentations", callSuper = false)
 @Accessors(chain = true)
 @Table(name = "users")
@@ -31,7 +31,9 @@ public class User extends AuditedEntity {
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(columnDefinition = "varchar(255)")
+    @ToString.Include
     private String id;
+    @ToString.Include
     private String origin;
     private String name;
     private String email;
@@ -41,12 +43,16 @@ public class User extends AuditedEntity {
     private String twitter;
     private String github;
     private String www;
+    @ToString.Include
     private String photo;
+    @ToString.Include
     private boolean isAdmin;
+    @ToString.Include
     private boolean isVolunteer;
     @Column(name = "social_id")
     private String socialId;
 
+    @ToString.Include
     private Boolean privacyPolicyAccepted = false;
 
     @ManyToMany(mappedBy = "speakers")

@@ -26,6 +26,7 @@ import pl.confitura.jelatyna.presentation.PresentationRepository;
 import pl.confitura.jelatyna.registration.ParticipationData;
 import pl.confitura.jelatyna.registration.ParticipationRepository;
 
+@RestController
 @RequiredArgsConstructor
 public class UserController {
 

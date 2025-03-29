@@ -7,19 +7,22 @@ let router = createRouter({
   routes: setupLayouts(routes),
 })
 router.beforeEach((to, from, next) => {
-  if (to.meta.requiresAuth) {
-    let user = useAuthStore().user;
-    if (user == null) {
-      next('/login');
-    } else if (user.isNew) {
-      next('/register');
-    } else {
+  let user = useAuthStore().user;
+  if (user == null) {
+    if (to.name.startsWith('/login')) {
       next();
+    } else {
+      next('/login');
+    }
+  } else if (user.isNew) {
+    if (to.name === '/register') {
+      next();
+    } else {
+      next('/register');
     }
   } else {
-    // Non-protected route, allow access
     next();
   }
-});
+})
 
 export default router;

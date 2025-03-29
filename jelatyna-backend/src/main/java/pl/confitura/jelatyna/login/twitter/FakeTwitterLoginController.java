@@ -35,7 +35,11 @@ public class FakeTwitterLoginController {
     public ResponseEntity<String> doLoginWithTwitter() {
         User user;
         if (userId == null) {
-            user = userRepository.save(new User().setName("Fake User"));
+            user = userRepository.save(new User()
+                    .setName("Fake User")
+                    .setOrigin("twitter")
+                    .setTwitter("fake_user")
+                    .setBio("Fake bio"));
             userId = user.getId();
         } else {
             user = userRepository.findById(userId);

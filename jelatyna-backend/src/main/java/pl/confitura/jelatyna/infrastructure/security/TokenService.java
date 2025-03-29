@@ -27,11 +27,11 @@ public class TokenService {
     public String asToken(User user) {
         log.info("Transforming user to token {}", user);
         return Jwts.builder()
-                .setClaims(new HashMap<String, Object>() {{
+                .setClaims(new HashMap<>() {{
                     put("isAdmin", user.isAdmin());
                     put("isVolunteer", user.isVolunteer());
                     put("isSpeaker", user.isSpeaker());
-                    put("isNew", StringUtils.isEmpty(user.getEmail()));
+                    put("isNew", user.getPrivacyPolicyAccepted());
                 }})
                 .setId(user.getId())
                 .setSubject(user.getName())
