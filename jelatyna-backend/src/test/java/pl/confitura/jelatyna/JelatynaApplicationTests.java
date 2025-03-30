@@ -18,7 +18,7 @@ class JelatynaApplicationTests extends BaseIntegrationTest {
         Room room = new Room().setId("id").setLabel("room1").setDisplayOrder(1);
         mockMvc
                 .perform(
-                        post("/rooms/")
+                        post("/rooms")
                                 .with(user("user"))
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(json(room))
@@ -27,7 +27,7 @@ class JelatynaApplicationTests extends BaseIntegrationTest {
 
         mockMvc
                 .perform(
-                        post("/rooms/")
+                        post("/rooms")
                                 .content(json(room))
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .with(admin())

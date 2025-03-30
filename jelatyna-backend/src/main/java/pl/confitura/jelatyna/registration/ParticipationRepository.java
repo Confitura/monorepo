@@ -26,10 +26,10 @@ public interface ParticipationRepository extends Repository<ParticipationData, S
     Long count();
 
 
-    @Query("SELECT count(p.id) FROM ParticipationData p WHERE registrationDate IS NOT NULL")
+    @Query("SELECT count(p.id) FROM ParticipationData p WHERE p.registrationDate IS NOT NULL")
     Long countRegistered();
 
-    @Query("SELECT count(p.id) FROM ParticipationData p WHERE arrivalDate IS NOT NULL")
+    @Query("SELECT count(p.id) FROM ParticipationData p WHERE p.arrivalDate IS NOT NULL")
     Long countArrived();
 
     ParticipationData findByVoucher(Voucher voucher);

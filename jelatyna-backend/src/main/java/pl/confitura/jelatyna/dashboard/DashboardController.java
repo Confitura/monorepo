@@ -11,7 +11,7 @@ import pl.confitura.jelatyna.registration.QParticipationData;
 import pl.confitura.jelatyna.registration.demographic.QDemographicData;
 import pl.confitura.jelatyna.registration.voucher.QVoucher;
 
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;

@@ -6,8 +6,8 @@ import lombok.experimental.Accessors;
 import org.hibernate.annotations.GenericGenerator;
 import pl.confitura.jelatyna.infrastructure.db.AuditedEntity;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @EqualsAndHashCode(callSuper = false)

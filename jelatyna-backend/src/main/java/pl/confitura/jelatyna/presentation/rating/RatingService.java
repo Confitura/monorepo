@@ -1,6 +1,6 @@
 package pl.confitura.jelatyna.presentation.rating;
 
-import javax.persistence.EntityNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

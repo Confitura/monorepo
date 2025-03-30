@@ -27,13 +27,13 @@ public class SecurityConfiguration {
                 .sessionManagement(it -> it
                         .sessionCreationPolicy(STATELESS)
                 )
-                .authorizeRequests(it -> it
-                        .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .antMatchers(HttpMethod.DELETE, "/likes/*").permitAll()
-                        .antMatchers(HttpMethod.DELETE, "/**").authenticated()
-                        .antMatchers("/api/actuator/info").permitAll()
-                        .antMatchers("/api/actuator/*").hasAnyAuthority(ADMIN)
-                        .antMatchers("/**/*").permitAll())
+                .authorizeHttpRequests(it -> it
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/likes/*").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/**").authenticated()
+                        .requestMatchers("/api/actuator/info").permitAll()
+                        .requestMatchers("/api/actuator/*").hasAnyAuthority(ADMIN)
+                        .requestMatchers("/**").permitAll())
 
                 .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
 

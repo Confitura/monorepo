@@ -16,7 +16,8 @@ class RegistrationUploadControllerTest extends BaseIntegrationTest {
 
 
     @Test
-    @Disabled("TODO: implement")    void shouldReportProgress() throws Exception {
+    @Disabled("TODO: implement")
+    void shouldReportProgress() throws Exception {
         //given
         String content = "" +
                 "test1@confitura.pl;1;SPONSOR;test\n" +
@@ -52,7 +53,8 @@ class RegistrationUploadControllerTest extends BaseIntegrationTest {
     }
 
     @Test
-    @Disabled("TODO: implement")    void shouldWorkIfOneLineIsNotCorrect() throws Exception {
+    @Disabled("TODO: implement")
+    void shouldWorkIfOneLineIsNotCorrect() throws Exception {
         //given
         String content = "" +
                 "test1@confitura.pl;1\n" +

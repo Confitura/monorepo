@@ -5,7 +5,7 @@ import lombok.experimental.Accessors;
 import org.hibernate.annotations.GenericGenerator;
 import pl.confitura.jelatyna.presentation.Presentation;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Data

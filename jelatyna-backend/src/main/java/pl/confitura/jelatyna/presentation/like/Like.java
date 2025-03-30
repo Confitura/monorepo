@@ -5,9 +5,9 @@ import lombok.experimental.Accessors;
 import org.hibernate.annotations.GenericGenerator;
 import pl.confitura.jelatyna.presentation.Presentation;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 @Data
 @Entity

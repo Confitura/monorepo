@@ -7,7 +7,7 @@ import com.google.common.collect.Lists;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.*;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

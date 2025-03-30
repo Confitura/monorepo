@@ -9,7 +9,7 @@ import static org.springframework.util.StringUtils.hasText;
 import java.util.Set;
 import java.util.UUID;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
