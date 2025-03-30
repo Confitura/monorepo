@@ -22,18 +22,13 @@ public class SecurityConfiguration {
     private final AuthenticationFilter authenticationFilter;
 
     @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return web -> web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**");
-    }
-
-
-    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .sessionManagement(it -> it
                         .sessionCreationPolicy(STATELESS)
                 )
                 .authorizeRequests(it -> it
+                        .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .antMatchers(HttpMethod.DELETE, "/likes/*").permitAll()
                         .antMatchers(HttpMethod.DELETE, "/**").authenticated()
                         .antMatchers("/api/actuator/info").permitAll()
