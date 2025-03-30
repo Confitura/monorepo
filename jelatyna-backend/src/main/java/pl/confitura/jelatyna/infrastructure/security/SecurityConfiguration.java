@@ -2,45 +2,51 @@ package pl.confitura.jelatyna.infrastructure.security;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+@RequiredArgsConstructor
+public class SecurityConfiguration {
     static final String ADMIN = "ROLE_ADMIN";
 
-    @Autowired
-    private AuthenticationFilter authenticationFilter;
+    private final AuthenticationFilter authenticationFilter;
 
-    @Override
-    public void configure(WebSecurity web) {
-        web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**");
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return web -> web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**");
     }
 
-    @Override
-    public void configure(HttpSecurity http) throws Exception {
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
+                .sessionManagement(it -> it
+                        .sessionCreationPolicy(STATELESS)
+                )
+                .authorizeRequests(it -> it
+                        .antMatchers(HttpMethod.DELETE, "/likes/*").permitAll()
+                        .antMatchers(HttpMethod.DELETE, "/**").authenticated()
+                        .antMatchers("/api/actuator/info").permitAll()
+                        .antMatchers("/api/actuator/*").hasAnyAuthority(ADMIN)
+                        .antMatchers("/**/*").permitAll())
 
-                .sessionManagement().sessionCreationPolicy(STATELESS)
-                .and()
-                    .authorizeRequests()
-                    .antMatchers(HttpMethod.DELETE,"/likes/*").permitAll()
-                    .antMatchers(HttpMethod.DELETE,"/**").authenticated()
-                    .antMatchers("/api/actuator/info").permitAll()
-                    .antMatchers("/api/actuator/*").hasAnyAuthority(ADMIN)
-                    .antMatchers("/**/*").permitAll()
+                .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
 
-                .and()
-                .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                .csrf(AbstractHttpConfigurer::disable)
+                .httpBasic(AbstractHttpConfigurer::disable)
+                .formLogin(AbstractHttpConfigurer::disable);
 
+        return http.build();
     }
 
 }

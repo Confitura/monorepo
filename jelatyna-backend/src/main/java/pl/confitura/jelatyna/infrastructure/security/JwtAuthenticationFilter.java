@@ -1,7 +1,5 @@
 package pl.confitura.jelatyna.infrastructure.security;
 
-import static pl.confitura.jelatyna.infrastructure.Profiles.PRODUCTION;
-
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
@@ -13,8 +11,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -28,18 +25,12 @@ import lombok.extern.slf4j.Slf4j;
 import pl.confitura.jelatyna.infrastructure.JsonError;
 
 @Component
-@Profile(PRODUCTION)
 @Slf4j
+@RequiredArgsConstructor
 public class JwtAuthenticationFilter extends AuthenticationFilter {
 
-    private TokenService tokenService;
-    private ObjectMapper mapper;
-
-    @Autowired
-    public JwtAuthenticationFilter(TokenService tokenService, ObjectMapper mapper) {
-        this.tokenService = tokenService;
-        this.mapper = mapper;
-    }
+    private final TokenService tokenService;
+    private final ObjectMapper mapper;
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
@@ -61,9 +52,9 @@ public class JwtAuthenticationFilter extends AuthenticationFilter {
         String authorization = request.getHeader("Authorization");
         if (authorization != null) {
             JelatynaPrincipal principal = tokenService.toUser(authorization.replaceFirst("Bearer ", ""));
-            SecurityContextHolder.getContext()
-                    .setAuthentication(new PreAuthenticatedAuthenticationToken(principal, "",
-                            getAuthorities(principal)));
+            SecurityContextHolder.getContext().setAuthentication(
+                    new PreAuthenticatedAuthenticationToken(principal, "", getAuthorities(principal))
+            );
         }
     }
 

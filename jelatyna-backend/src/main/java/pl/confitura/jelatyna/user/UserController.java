@@ -4,7 +4,7 @@ import static com.timgroup.jgravatar.GravatarDefaultImage.BLANK;
 import static com.timgroup.jgravatar.GravatarRating.GENERAL_AUDIENCES;
 import static java.util.stream.Collectors.toSet;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
-import static org.springframework.util.StringUtils.isEmpty;
+import static org.springframework.util.StringUtils.hasText;
 
 import java.util.Set;
 import java.util.UUID;
@@ -14,7 +14,6 @@ import javax.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import com.timgroup.jgravatar.Gravatar;
@@ -120,8 +119,8 @@ public class UserController {
         }
     }
 
-    private void setDefaultPhotoFor(@RequestBody User user) {
-        if (isEmpty(user.getPhoto())) {
+    private void setDefaultPhotoFor(User user) {
+        if (hasText(user.getPhoto())) {
             Gravatar gravatar = new Gravatar(300, GENERAL_AUDIENCES, BLANK);
             String url = gravatar.getUrl(user.getEmail());
             user.setPhoto(url.replace("http:", "https:"));
@@ -132,8 +131,8 @@ public class UserController {
         return conferenceConfiguration.getC4p().isEnabled() || security.isAdmin();
     }
 
-    private User updateUser(@RequestBody User user) {
-        if (isEmpty(user.getId())) {
+    private User updateUser(User user) {
+        if (hasText(user.getId())) {
             return user;
         } else {
             User current = repository.findById(user.getId());
@@ -142,8 +141,8 @@ public class UserController {
         }
     }
 
-    private void setIdIfManuallyCreated(@RequestBody User user) {
-        if (StringUtils.isEmpty(user.getId())) {
+    private void setIdIfManuallyCreated(User user) {
+        if (hasText(user.getId())) {
             user.setId(UUID.randomUUID().toString());
         }
     }
