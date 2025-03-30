@@ -2,11 +2,9 @@ FROM node:10 as build
 
 WORKDIR /opt/app
 
-COPY package.json yarn.lock ./
-RUN yarn install
-
 COPY . ./
-RUN npm run build
+RUN npm install
+RUN npm run build --prod --modern
 
 # Use Nginx to serve the built files
 FROM nginx:stable-alpine
