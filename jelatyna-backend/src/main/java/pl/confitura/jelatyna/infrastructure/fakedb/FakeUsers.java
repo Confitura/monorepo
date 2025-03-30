@@ -74,7 +74,8 @@ public class FakeUsers {
                 .setEmail("Admin@example.com")
                 .setBio("admin bio")
                 .setWww("admin.example.com")
-                .setAdmin(true);
+                .setAdmin(true)
+                .setPrivacyPolicyAccepted(true);
     }
 
     private static User createFakeVolunteer() {
@@ -84,7 +85,8 @@ public class FakeUsers {
                 .setEmail("volunteer@example.com")
                 .setBio("volunteer bio")
                 .setWww("volunteer.example.com")
-                .setVolunteer(true);
+                .setVolunteer(true)
+                .setPrivacyPolicyAccepted(true);
     }
 
     private static User createFakeSpeaker() {
@@ -93,6 +95,7 @@ public class FakeUsers {
                 .setName("Speaker")
                 .setEmail("Speaker@example.com")
                 .setBio("Speaker bio")
-                .setWww("Speaker.example.com");
+                .setWww("Speaker.example.com")
+                .setPrivacyPolicyAccepted(true);
     }
 }

@@ -56,20 +56,7 @@ let filteredRoutes = routes.filter((r) => r.meta?.skipMenu !== true)
     <template #append>
       <v-list-item class="drawer-footer px-0 d-flex flex-column justify-center">
         <div class="text-caption pt-6 pb-1 pt-md-0 text-center text-no-wrap">
-          &copy; Copyright 2023
-          <a
-            href="https://github.com/kingyue737"
-            class="font-weight-bold text-primary"
-            target="_blank"
-            >Yue JIN</a
-          >
-          <span> & </span>
-          <a
-            href="https://www.nustarnuclear.com/"
-            class="font-weight-bold text-primary"
-            target="_blank"
-            >NuStar</a
-          >
+          &copy; Confitura 2025
         </div>
       </v-list-item>
     </template>
