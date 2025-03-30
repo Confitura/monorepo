@@ -18,14 +18,3 @@ axios.interceptors.request.use(
     return Promise.reject(error);
   }
 );
-axios.interceptors.response.use(
-  config => {
-    return config;
-  },
-  (error: AxiosError) => {
-    if (error!.response!.status === 401) {
-      store.dispatch(LOGOUT);
-    }
-    return Promise.reject(error);
-  }
-);
