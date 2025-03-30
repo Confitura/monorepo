@@ -1,0 +1,51 @@
+{
+  "level" : "intermediate",
+  "shortDescription" : "The whole world is crazy about microservices. I would like to show that Scala can be used  in that madness too. And it may be a very good choice.",
+  "tags" : [ {
+    "id" : "reactive",
+    "name" : "Reactive"
+  }, {
+    "id" : "sc",
+    "name" : "Software Craftsmanship"
+  }, {
+    "id" : "could",
+    "name" : "Cloud"
+  }, {
+    "id" : "microservices",
+    "name" : "Microservices"
+  } ],
+  "description" : "The whole world is crazy about microservices. In the JVM world, the first choice is Java. The second one is Kotlin.\nScala is very often considered a great tool for Big Data. However, I strongly believe that it may be also used as a tool to create microservices. It has many advantages and I would like to present some of them.\nOne of the brightest aspects of Scala is Akka which provides a very powerful environment for asynchronous communication. Unfortunately, Akka has changed the license. In my presentation, I will show how it can be replaced.",
+  "title" : "How to write microservices in Scala without Akka",
+  "status" : "accepted",
+  "workshop" : false,
+  "speakers" : [ {
+    "id" : "23176155-4e7b-44f9-9d78-aff0c7dfe7a0",
+    "name" : "Paweł Bogdan",
+    "bio" : "Scala&Java developer with ~10 years of experience. PhD in mathematics. Heavy metal lover. Weight loss expert. Bookworm. Cryptography&blockchain padawan",
+    "twitter" : null,
+    "github" : "https://github.com/PawelBogdan",
+    "www" : "https://www.linkedin.com/in/pawe%C5%82-bogdan-2166b869/",
+    "photo" : "/api/resources//photos/23176155-4e7b-44f9-9d78-aff0c7dfe7a0.png"
+  } ],
+  "language" : "en",
+  "id" : "9df5d57f-805b-44bf-8d78-846d8fd6e891",
+  "_links" : {
+    "self" : {
+      "href" : "https://2023.confitura.pl/api/presentations/9df5d57f-805b-44bf-8d78-846d8fd6e891"
+    },
+    "presentation" : {
+      "href" : "https://2023.confitura.pl/api/presentations/9df5d57f-805b-44bf-8d78-846d8fd6e891{?projection}",
+      "templated" : true
+    },
+    "tags" : {
+      "href" : "https://2023.confitura.pl/api/presentations/9df5d57f-805b-44bf-8d78-846d8fd6e891/tags"
+    },
+    "speakers" : {
+      "href" : "https://2023.confitura.pl/api/presentations/9df5d57f-805b-44bf-8d78-846d8fd6e891/speakers{?projection}",
+      "templated" : true
+    },
+    "ratings" : {
+      "href" : "https://2023.confitura.pl/api/presentations/9df5d57f-805b-44bf-8d78-846d8fd6e891/ratings"
+    }
+  }
+}

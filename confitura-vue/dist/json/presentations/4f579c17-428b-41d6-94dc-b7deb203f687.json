@@ -1,0 +1,51 @@
+{
+  "level" : "intermediate",
+  "shortDescription" : "Prezentacja przedstawa wyniki analizy ataków na publicznie wystawiony Honeypot imitujący aplikację Java w ciągu ostatniego roku oraz opis jak samemu analizować zagrożenia w sieci.",
+  "tags" : [ {
+    "id" : "devops",
+    "name" : "DevOps"
+  }, {
+    "id" : "web",
+    "name" : "Web"
+  }, {
+    "id" : "java",
+    "name" : "Java"
+  }, {
+    "id" : "security",
+    "name" : "Security"
+  } ],
+  "description" : "W trakcie prezentacji uczestnicy zapoznają się z wynikami analizy ataków przeprowadzonych na publicznie wystawiony Honeypot w trakcie ostatnich 365 dni. Autor pokaże jakie ataki były najpopularniejsze, jak charakteryzuje się scena cyber-security w kontekście publicznie wystawionych serwerów oraz na co zwracać uwagę chroniąc swój serwer. W ramach prezentacji zastanowimy się wspólnie czy warto uruchamiać własne garnuszki miodu oraz jak mogą one wpływać na bezpieczeństwo zarówno domowych jak i firmowych środowisk IT.",
+  "title" : "365 dni cyber wojny, czyli jakie ataki przeżył mój serwer w ostatnim roku",
+  "status" : "accepted",
+  "workshop" : false,
+  "speakers" : [ {
+    "id" : "0cc7ff41-ab9e-40cb-bde8-d25e9214c716",
+    "name" : "Tomasz Janczewski ",
+    "bio" : null,
+    "twitter" : null,
+    "github" : null,
+    "www" : null,
+    "photo" : "/api/resources//photos/18bda3aa-2253-4f35-ac9f-7fb65370a59e.jpg"
+  } ],
+  "language" : "pl",
+  "id" : "4f579c17-428b-41d6-94dc-b7deb203f687",
+  "_links" : {
+    "self" : {
+      "href" : "https://2023.confitura.pl/api/presentations/4f579c17-428b-41d6-94dc-b7deb203f687"
+    },
+    "presentation" : {
+      "href" : "https://2023.confitura.pl/api/presentations/4f579c17-428b-41d6-94dc-b7deb203f687{?projection}",
+      "templated" : true
+    },
+    "tags" : {
+      "href" : "https://2023.confitura.pl/api/presentations/4f579c17-428b-41d6-94dc-b7deb203f687/tags"
+    },
+    "speakers" : {
+      "href" : "https://2023.confitura.pl/api/presentations/4f579c17-428b-41d6-94dc-b7deb203f687/speakers{?projection}",
+      "templated" : true
+    },
+    "ratings" : {
+      "href" : "https://2023.confitura.pl/api/presentations/4f579c17-428b-41d6-94dc-b7deb203f687/ratings"
+    }
+  }
+}

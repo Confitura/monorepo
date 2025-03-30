@@ -1,0 +1,39 @@
+{
+  "level" : "novice",
+  "shortDescription" : "\nWspólna retrospekcja warsztatów Lean Coffe i Troika consulting.\n",
+  "tags" : [ ],
+  "description" : "16:10 - Sesja V\n\nLean Coffee I: Jak nie dać się AI?\nLean Coffee II: Jak przekonać inżynierów do retrospekcji?\nTroika III: Jak utrzymać produktywność zespołu?\nTroika IV: Warunki przejścia z monolitu na mikroserwisy\nTroika V: Jak przekonać szefa do wprowadzenia testów automatycznych\nTroika VI: Wolne\n\n16:40 - RETROSPEKTYWA\nNa samym końcu odbędzie się retrospektywa. Chcemy dostać od Was jak najwięcej feedbacku, żeby nasze warsztaty stawały się za każdym razem lepsze. Będzie nam bardzo miło jeśli wpadniesz i podzielisz się odczuciami i sugestiami.\n\nWięcej info: [Lean Coffee](https://2023.confitura.pl/lean-coffee)",
+  "title" : "Lean Coffee - Sesja V, Retrospektywa",
+  "status" : "accepted",
+  "workshop" : false,
+  "speakers" : [ {
+    "id" : "a4f76848-872a-44e5-a95f-0468d1f4ea9a",
+    "name" : "Piotr Suwała",
+    "bio" : "I'm a programmer with several years experience in enterprise systems.\nTackling code debt made me appreciate well structurised and easy to change systems.\nI augment my experience with knowledge from the books which I apply to commercial projects and open source ones.\nCurrently I am working at Kinguin as architect and leading Domain Driven Design meetup in Gdańsk.",
+    "twitter" : "https://twitter.com/ksidelta",
+    "github" : null,
+    "www" : "https://www.ksidelta.com/",
+    "photo" : "/api/resources//photos/a4f76848-872a-44e5-a95f-0468d1f4ea9a.jpg"
+  } ],
+  "language" : "pl",
+  "id" : "fb67d149-516a-4914-a52e-4d4e12d79690",
+  "_links" : {
+    "self" : {
+      "href" : "https://2023.confitura.pl/api/presentations/fb67d149-516a-4914-a52e-4d4e12d79690"
+    },
+    "presentation" : {
+      "href" : "https://2023.confitura.pl/api/presentations/fb67d149-516a-4914-a52e-4d4e12d79690{?projection}",
+      "templated" : true
+    },
+    "tags" : {
+      "href" : "https://2023.confitura.pl/api/presentations/fb67d149-516a-4914-a52e-4d4e12d79690/tags"
+    },
+    "speakers" : {
+      "href" : "https://2023.confitura.pl/api/presentations/fb67d149-516a-4914-a52e-4d4e12d79690/speakers{?projection}",
+      "templated" : true
+    },
+    "ratings" : {
+      "href" : "https://2023.confitura.pl/api/presentations/fb67d149-516a-4914-a52e-4d4e12d79690/ratings"
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "id": "venue-page",
+  "content": "## EXPO XXI\n\nJust like last year Confitura will take place in a [EXPO XXI](https://www.expoxxi.pl). But this year we will have even more space! 2 halls, instead of one, and 7000 m<sup>2</sup>!  \nWe are also putting more attention to a sound quality - so that your experience is not disturbed by a sound coming from a different talk. We cannot promise that it will be perfect, but we can that we will do our best!\n\n## How to get there\n\nFor informations on how to get there from your location we recommend to use a service like [jakdojade.pl](https://jakdojade.pl/warszawa/trasa/?tn=Centrum%20Expo%20XXI). Uber, Bolt, or just a taxi would be also a good option.\n\n## Parking\n\nEXPO XXI has its own parking. Please be aware that you will have to cover charges for it from your own pocket. Conference pass DOES NOT include parking fees. You can also park on the street, but only in allowed places. ",
+  "_links": {
+    "self": {
+      "href": "https://2023.confitura.pl/api/pages/venue-page"
+    },
+    "page": {
+      "href": "https://2023.confitura.pl/api/pages/venue-page"
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "level" : "intermediate",
+  "shortDescription" : "Za niecałe 3 lata Java będzie świętować swoje 30 urodziny. Jej krytycy powiedzieliby że nie ma ona już nic nowego do zaoferowania w stosunku do młodszych języków. Tymczasem, doświadczenie pokazuje, że ilość innowacji w Javie sprawia, że ciężko jest za nią nadążyć i o tym opowiem Wam w prezentacji.",
+  "tags" : [ {
+    "id" : "java",
+    "name" : "Java"
+  }, {
+    "id" : "algorithms",
+    "name" : "Algorithms"
+  }, {
+    "id" : "bigdata",
+    "name" : "Big Data"
+  }, {
+    "id" : "sc",
+    "name" : "Software Craftsmanship"
+  } ],
+  "description" : "W swojej prezentacji rozprawię się z niektórymi mitami o rozwoju Javy. Pokażę, jakie nowe możliwości przyniosły nam kolejne wersje języka, od 8 do 21, na przykładach z ich praktycznego zastosowania w projekcie open-source Trino (dawnie PrestoSQL). Szczególny nacisk położę na aspekty związane z czytelnością kodu, jego wydajnością oraz skalowalnością.",
+  "title" : "Modern Java for decade-old problems",
+  "status" : "accepted",
+  "workshop" : false,
+  "speakers" : [ {
+    "id" : "f868002d-5281-4747-a81c-2c4ff5ae46b4",
+    "name" : "Mateusz \"Serafin\" Gajewski",
+    "bio" : "Time isn’t slowing,\r\njust speed,\r\nit’s all we’re knowing.",
+    "twitter" : "wendigo",
+    "github" : "wendigo",
+    "www" : "https://wendigo.pl",
+    "photo" : "https://avatars.githubusercontent.com/u/66972?v=4"
+  } ],
+  "language" : "pl",
+  "id" : "d8a12fa2-d432-402f-8ee3-2fa3cf7ad242",
+  "_links" : {
+    "self" : {
+      "href" : "https://2023.confitura.pl/api/presentations/d8a12fa2-d432-402f-8ee3-2fa3cf7ad242"
+    },
+    "presentation" : {
+      "href" : "https://2023.confitura.pl/api/presentations/d8a12fa2-d432-402f-8ee3-2fa3cf7ad242{?projection}",
+      "templated" : true
+    },
+    "tags" : {
+      "href" : "https://2023.confitura.pl/api/presentations/d8a12fa2-d432-402f-8ee3-2fa3cf7ad242/tags"
+    },
+    "speakers" : {
+      "href" : "https://2023.confitura.pl/api/presentations/d8a12fa2-d432-402f-8ee3-2fa3cf7ad242/speakers{?projection}",
+      "templated" : true
+    },
+    "ratings" : {
+      "href" : "https://2023.confitura.pl/api/presentations/d8a12fa2-d432-402f-8ee3-2fa3cf7ad242/ratings"
+    }
+  }
+}
