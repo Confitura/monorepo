@@ -3,7 +3,7 @@ package pl.confitura.jelatyna.login.twitter;
 import static org.springframework.http.HttpStatus.PERMANENT_REDIRECT;
 import static pl.confitura.jelatyna.infrastructure.Profiles.FAKE_SECURITY;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,18 +19,12 @@ import pl.confitura.jelatyna.infrastructure.security.TokenService;
 @RestController
 @RequestMapping("/login/twitter")
 @Profile("!" + FAKE_SECURITY)
+@RequiredArgsConstructor
 public class TwitterLoginController {
-    private OAuthTokenHolder holder;
-    private TwitterService twitter;
-    private TokenService tokenService;
 
-    @Autowired
-    public TwitterLoginController(OAuthTokenHolder holder, TwitterService twitter,
-            TokenService tokenService) {
-        this.holder = holder;
-        this.twitter = twitter;
-        this.tokenService = tokenService;
-    }
+    private final OAuthTokenHolder holder;
+    private final TwitterService twitter;
+    private final TokenService tokenService;
 
     @GetMapping
     public ResponseEntity<Object> redirectToTwitterLogin() {
@@ -44,7 +38,7 @@ public class TwitterLoginController {
 
     @GetMapping("/callback")
     public ResponseEntity<String> doLoginWithTwitter(@RequestParam("oauth_token") String token,
-            @RequestParam("oauth_verifier") String verifier) {
+                                                     @RequestParam("oauth_verifier") String verifier) {
         OAuth1AccessToken accessToken = twitter.getAccessToken(new OAuth1RequestToken(token, holder.getSecretFor(token)), verifier);
         return ResponseEntity.ok(tokenService.asToken(twitter.getUser(accessToken)));
     }
