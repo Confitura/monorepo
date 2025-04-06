@@ -37,7 +37,8 @@ function loginUrl(provider: string) {
 <template>
   <div class="wrapper">
     <v-icon icon="custom:confitura" size="3.5em" color="primary" class="mb-4"/>
-    <p>Register/Login with chosen provider:</p>
+    <p>By registering you accept our <a href="/privacy-policy">privacy
+      policy</a>:</p>
     <v-container>
       <v-row align="center" justify="center">
         <v-col cols="auto">
