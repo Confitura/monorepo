@@ -16,12 +16,17 @@ definePage({
 
 
 const route = useRoute()
-let accessToken = route.query["access_token"];
-if (accessToken == null) {
-  router.push('/login')
-} else {
-  useAuthStore().login(accessToken.toString())
-}
+
+import {onMounted} from 'vue';
+
+onMounted(() => {
+  let accessToken = route.query["access_token"];
+  if (accessToken == null) {
+    router.push('/login');
+  } else {
+    useAuthStore().login(accessToken.toString());
+  }
+});
 </script>
 
 <template>
