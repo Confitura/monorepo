@@ -10,8 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import pl.confitura.jelatyna.user.User;
 
 import java.io.IOException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
@@ -35,9 +33,8 @@ public abstract class AbstractOAuth20Service {
 
     protected abstract OAuth20Service createService(OAuthConfiguration.OAuthProviderProperties properties);
 
-    protected String getAuthorizationUrl(String state, String redirectUri) {
+    protected String getAuthorizationUrl(String state) {
         Map<String, String> additionalParams = Map.of(
-                "redirect_uri", buildCallbackUri(redirectUri),
                 "state", state);
         return auth20Service.getAuthorizationUrl(additionalParams);
     }

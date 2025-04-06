@@ -21,6 +21,7 @@ public class GithubService extends AbstractOAuth20Service {
     protected OAuth20Service createService(OAuthConfiguration.OAuthProviderProperties properties) {
         return new ServiceBuilder(properties.getApiKey())
                 .apiSecret(properties.getApiSecret())
+                .callback(properties.getCallback())
                 .build(GitHubApi.instance());
     }
 

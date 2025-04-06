@@ -36,13 +36,12 @@ public class OAuth2LoginController {
     @GetMapping()
     public ResponseEntity<Object> loginInProvider(
             @PathVariable("provider") String provider,
-            @RequestParam("redirect_uri") String redirectUri,
             @RequestParam("state") String state
     ) {
         AbstractOAuth20Service service = services.get(provider);
         return ResponseEntity
                 .status(PERMANENT_REDIRECT)
-                .header("Location", service.getAuthorizationUrl(state, redirectUri))
+                .header("Location", service.getAuthorizationUrl(state))
                 .build();
     }
 
