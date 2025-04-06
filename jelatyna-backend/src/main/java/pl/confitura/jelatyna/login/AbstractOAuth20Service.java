@@ -7,11 +7,12 @@ import com.github.scribejava.core.model.Response;
 import com.github.scribejava.core.model.Verb;
 import com.github.scribejava.core.oauth.OAuth20Service;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import pl.confitura.jelatyna.user.User;
 
 import java.io.IOException;
-import java.util.Random;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 @Slf4j
@@ -20,8 +21,7 @@ public abstract class AbstractOAuth20Service {
     protected final OAuth20Service auth20Service;
     private final OAuthUserService oauthUserService;
     protected final ObjectMapper mapper;
-
-    private final String secretState = "secret" + new Random().nextInt(999_999);
+    private final String callback;
 
     public AbstractOAuth20Service(
             OAuthUserService oauthUserService,
@@ -30,12 +30,16 @@ public abstract class AbstractOAuth20Service {
         this.auth20Service = createService(properties);
         this.oauthUserService = oauthUserService;
         this.mapper = mapper;
+        this.callback = properties.getCallback();
     }
 
     protected abstract OAuth20Service createService(OAuthConfiguration.OAuthProviderProperties properties);
 
-    String getAuthorizationUrl() {
-        return auth20Service.getAuthorizationUrl(secretState);
+    protected String getAuthorizationUrl(String state, String redirectUri) {
+        Map<String, String> additionalParams = Map.of(
+                "redirect_uri", buildCallbackUri(redirectUri),
+                "state", state);
+        return auth20Service.getAuthorizationUrl(additionalParams);
     }
 
     User getUserFor(String code) {
@@ -64,4 +68,7 @@ public abstract class AbstractOAuth20Service {
 
     protected abstract OAuthUserBase mapToUser(String body) throws IOException;
 
+    public String buildCallbackUri(String redirectUri) {
+        return callback + "?redirect_uri=" + URLEncoder.encode(redirectUri, StandardCharsets.UTF_8);
+    }
 }

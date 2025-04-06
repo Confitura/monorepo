@@ -1,19 +1,16 @@
 package pl.confitura.jelatyna.allegro.adapter;
 
 import com.github.scribejava.core.builder.ScopeBuilder;
-import com.github.scribejava.core.builder.ServiceBuilderOAuth10a;
 import com.github.scribejava.core.builder.ServiceBuilderOAuth20;
-import com.github.scribejava.core.builder.api.DefaultApi10a;
 import com.github.scribejava.core.builder.api.DefaultApi20;
 import com.github.scribejava.core.httpclient.HttpClient;
 import com.github.scribejava.core.httpclient.HttpClientConfig;
-import com.github.scribejava.core.oauth.OAuth10aService;
 import com.github.scribejava.core.oauth.OAuth20Service;
 import com.github.scribejava.core.utils.Preconditions;
 
 import java.io.OutputStream;
 
-class AllegroServiceBuilder implements ServiceBuilderOAuth10a, ServiceBuilderOAuth20 {
+class AllegroServiceBuilder implements ServiceBuilderOAuth20 {
 
     private String callback;
     private String apiKey;
@@ -73,11 +70,6 @@ class AllegroServiceBuilder implements ServiceBuilderOAuth10a, ServiceBuilderOAu
     }
 
     @Override
-    public ServiceBuilderOAuth10a withScope(String scope) {
-        return setScope(scope);
-    }
-
-    @Override
     public AllegroServiceBuilder debugStream(OutputStream debugStream) {
         Preconditions.checkNotNull(debugStream, "debug stream can't be null");
         this.debugStream = debugStream;
@@ -113,11 +105,6 @@ class AllegroServiceBuilder implements ServiceBuilderOAuth10a, ServiceBuilderOAu
     @Override
     public AllegroServiceBuilder debug() {
         return debugStream(System.out);
-    }
-
-    @Override
-    public OAuth10aService build(DefaultApi10a api) {
-        throw new RuntimeException("unsupported api");
     }
 
     @Override

@@ -13,12 +13,14 @@ import jakarta.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import com.timgroup.jgravatar.Gravatar;
 import lombok.RequiredArgsConstructor;
 import pl.confitura.jelatyna.ConferenceConfigurationProperties;
+import pl.confitura.jelatyna.infrastructure.security.JelatynaPrincipal;
 import pl.confitura.jelatyna.infrastructure.security.Security;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
@@ -110,6 +112,14 @@ public class UserController {
                 .map(PublicUser::new)
                 .collect(toSet());
         return ResponseEntity.ok(speakers);
+    }
+
+    @GetMapping("/current-user")
+    public ResponseEntity<?> getCurrentUser(@AuthenticationPrincipal JelatynaPrincipal user) {
+        if(user == null){
+            return ResponseEntity.status(UNAUTHORIZED).build();
+        }
+        return ResponseEntity.ok(repository.findById(user.getId()));
     }
 
     private void retainStatus(Presentation presentation) {

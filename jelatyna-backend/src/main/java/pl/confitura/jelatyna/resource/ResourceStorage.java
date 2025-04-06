@@ -7,7 +7,7 @@ import java.nio.file.Paths;
 
 import jakarta.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -20,6 +20,7 @@ import pl.confitura.jelatyna.user.User;
 import pl.confitura.jelatyna.user.UserRepository;
 
 @Service
+@RequiredArgsConstructor
 public class ResourceStorage {
     @Value("${resources.path}")
     private String rootPath;
@@ -28,14 +29,8 @@ public class ResourceStorage {
     @Value("${server.servlet.context-path}")
     private String contextPath;
 
-    private UserRepository repository;
-    private PartnerRepository partnerRepository;
-
-    @Autowired
-    public ResourceStorage(UserRepository repository, PartnerRepository partnerRepository) {
-        this.repository = repository;
-        this.partnerRepository = partnerRepository;
-    }
+    private final UserRepository repository;
+    private final PartnerRepository partnerRepository;
 
     @Transactional
     @PreAuthorize("@security.isOwner(#userId)")
@@ -56,8 +51,7 @@ public class ResourceStorage {
 
     private String doStore(String fileName, MultipartFile file, String... paths) throws IOException {
         Path path = Files.createDirectories(Paths.get(folder, paths));
-        Path filePath =
-                Paths.get(path.toString(), fileName + "." + com.google.common.io.Files.getFileExtension(file.getOriginalFilename()));
+        Path filePath = Paths.get(path.toString(), fileName + "." + com.google.common.io.Files.getFileExtension(file.getOriginalFilename()));
         Files.write(filePath, file.getBytes());
         return contextPath + "/" + rootPath + "/" + filePath.toString().replace(folder, "");
     }

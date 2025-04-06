@@ -3,9 +3,10 @@ package pl.confitura.jelatyna.login;
 import static org.springframework.http.HttpStatus.PERMANENT_REDIRECT;
 import static pl.confitura.jelatyna.infrastructure.Profiles.FAKE_SECURITY;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -24,34 +25,41 @@ import pl.confitura.jelatyna.user.User;
 @Profile("!" + FAKE_SECURITY)
 public class OAuth2LoginController {
 
-    private TokenService tokenService;
-    private Map<String, AbstractOAuth20Service> services;
+    private final TokenService tokenService;
+    private final Map<String, AbstractOAuth20Service> services;
 
-    @Autowired
-    public OAuth2LoginController(
-            TokenService tokenService,
-            Map<String, AbstractOAuth20Service> services) {
+    public OAuth2LoginController(TokenService tokenService, Map<String, AbstractOAuth20Service> services) {
         this.tokenService = tokenService;
         this.services = services;
     }
 
     @GetMapping()
-    public ResponseEntity<Object> redirectToLogin(
-            @PathVariable("provider") String provider
+    public ResponseEntity<Object> loginInProvider(
+            @PathVariable("provider") String provider,
+            @RequestParam("redirect_uri") String redirectUri,
+            @RequestParam("state") String state
     ) {
         AbstractOAuth20Service service = services.get(provider);
         return ResponseEntity
                 .status(PERMANENT_REDIRECT)
-                .header("Location", service.getAuthorizationUrl())
+                .header("Location", service.getAuthorizationUrl(state, redirectUri))
                 .build();
     }
 
     @GetMapping("/callback")
-    public ResponseEntity<String> doLogin(
+    public ResponseEntity<String> callback(
             @PathVariable("provider") String provider,
+            @RequestParam("redirect_uri") String redirectUri,
+            @RequestParam("state") String state,
             @RequestParam("code") String code) {
         User user = services.get(provider).getUserFor(code);
-        return ResponseEntity.ok(tokenService.asToken(user));
+        String token = URLEncoder.encode(tokenService.asToken(user), StandardCharsets.UTF_8);
+        String uri = redirectUri + "/?access_token=" + token + "&state=" + state;
+
+        return ResponseEntity
+                .status(PERMANENT_REDIRECT)
+                .header("Location", uri)
+                .build();
     }
 
 }

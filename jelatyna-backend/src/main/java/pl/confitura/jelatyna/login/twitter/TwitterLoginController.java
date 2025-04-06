@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.scribejava.core.model.OAuth1AccessToken;
 import com.github.scribejava.core.model.OAuth1RequestToken;
-import pl.confitura.jelatyna.infrastructure.security.OAuthTokenHolder;
+import pl.confitura.jelatyna.infrastructure.security.OAuthCallbackContextHolder;
 import pl.confitura.jelatyna.infrastructure.security.TokenService;
+
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 @RestController
 @RequestMapping("/login/twitter")
@@ -22,14 +25,17 @@ import pl.confitura.jelatyna.infrastructure.security.TokenService;
 @RequiredArgsConstructor
 public class TwitterLoginController {
 
-    private final OAuthTokenHolder holder;
+    private final OAuthCallbackContextHolder holder;
     private final TwitterService twitter;
     private final TokenService tokenService;
 
     @GetMapping
-    public ResponseEntity<Object> redirectToTwitterLogin() {
+    public ResponseEntity<Object> redirectToTwitterLogin(
+            @RequestParam("redirect_uri") String redirectUri,
+            @RequestParam("state") String state
+    ) {
         OAuth1RequestToken token = twitter.getRequestToken();
-        holder.setSecret(token.getToken(), token.getTokenSecret());
+        holder.setContext(token.getToken(), token.getTokenSecret(), state, redirectUri);
         return ResponseEntity
                 .status(PERMANENT_REDIRECT)
                 .header("Location", "https://api.twitter.com/oauth/authenticate?oauth_token=" + token.getToken())
@@ -39,8 +45,15 @@ public class TwitterLoginController {
     @GetMapping("/callback")
     public ResponseEntity<String> doLoginWithTwitter(@RequestParam("oauth_token") String token,
                                                      @RequestParam("oauth_verifier") String verifier) {
-        OAuth1AccessToken accessToken = twitter.getAccessToken(new OAuth1RequestToken(token, holder.getSecretFor(token)), verifier);
-        return ResponseEntity.ok(tokenService.asToken(twitter.getUser(accessToken)));
+        OAuthCallbackContextHolder.OAuth2Context context = holder.getSecretFor(token);
+        OAuth1AccessToken accessToken = twitter.getAccessToken(new OAuth1RequestToken(token, context.secret()), verifier);
+        String code = tokenService.asToken(twitter.getUser(accessToken));
+        String state = URLEncoder.encode(context.state(), StandardCharsets.UTF_8);
+        String callbackUrl = context.callback().concat("?access_token=").concat(code).concat("&state=").concat(state);
+        return ResponseEntity
+                .status(PERMANENT_REDIRECT)
+                .header("Location", callbackUrl)
+                .build();
     }
 
 }
