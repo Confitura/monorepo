@@ -37,6 +37,7 @@ public abstract class AbstractOAuth20Service {
 
     protected String getAuthorizationUrl(String state, String redirectUri) {
         Map<String, String> additionalParams = Map.of(
+                "redirect_uri", buildCallbackUri(redirectUri),
                 "state", state);
         return auth20Service.getAuthorizationUrl(additionalParams);
     }
@@ -68,6 +69,6 @@ public abstract class AbstractOAuth20Service {
     protected abstract OAuthUserBase mapToUser(String body) throws IOException;
 
     public String buildCallbackUri(String redirectUri) {
-        return callback + "?redirect_uri=" + URLEncoder.encode(redirectUri, StandardCharsets.UTF_8);
+        return callback;
     }
 }
