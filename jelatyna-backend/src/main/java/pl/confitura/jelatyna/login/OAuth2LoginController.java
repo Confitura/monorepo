@@ -49,12 +49,11 @@ public class OAuth2LoginController {
     @GetMapping("/callback")
     public ResponseEntity<String> callback(
             @PathVariable("provider") String provider,
-            @RequestParam("redirect_uri") String redirectUri,
             @RequestParam("state") String state,
             @RequestParam("code") String code) {
         User user = services.get(provider).getUserFor(code);
         String token = URLEncoder.encode(tokenService.asToken(user), StandardCharsets.UTF_8);
-        String uri = redirectUri + "/?access_token=" + token + "&state=" + state;
+        String uri = "https://app.confitura.pl/login/" + provider + "?access_token=" + token + "&state=" + state;
 
         return ResponseEntity
                 .status(PERMANENT_REDIRECT)

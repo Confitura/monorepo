@@ -37,7 +37,6 @@ public abstract class AbstractOAuth20Service {
 
     protected String getAuthorizationUrl(String state, String redirectUri) {
         Map<String, String> additionalParams = Map.of(
-                "redirect_uri", buildCallbackUri(redirectUri),
                 "state", state);
         return auth20Service.getAuthorizationUrl(additionalParams);
     }
