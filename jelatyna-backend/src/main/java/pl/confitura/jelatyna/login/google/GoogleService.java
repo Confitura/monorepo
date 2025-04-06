@@ -31,6 +31,7 @@ public class GoogleService extends AbstractOAuth20Service{
                 .defaultScope(GOOGLE_SCOPE)
                 .responseType("code")
                 .apiSecret(properties.getApiSecret())
+                .callback(properties.getCallback())
                 .build(GoogleApi20.instance());
     }
 

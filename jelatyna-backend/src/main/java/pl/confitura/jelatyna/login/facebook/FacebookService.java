@@ -22,6 +22,7 @@ public class FacebookService extends AbstractOAuth20Service{
     protected OAuth20Service createService(OAuthConfiguration.OAuthProviderProperties config) {
         return new ServiceBuilder(config.getApiKey())
                 .apiSecret(config.getApiSecret())
+                .callback(config.getCallback())
                 .build(FacebookApi.instance());
     }
 
