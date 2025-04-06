@@ -115,7 +115,7 @@ public class UserController {
     }
 
     @GetMapping("/current-user")
-    public ResponseEntity<?> getCurrentUser(@AuthenticationPrincipal JelatynaPrincipal user) {
+    public ResponseEntity<User> getCurrentUser(@AuthenticationPrincipal JelatynaPrincipal user) {
         if(user == null){
             return ResponseEntity.status(UNAUTHORIZED).build();
         }
@@ -130,7 +130,7 @@ public class UserController {
     }
 
     private void setDefaultPhotoFor(User user) {
-        if (hasText(user.getPhoto())) {
+        if (!hasText(user.getPhoto())) {
             Gravatar gravatar = new Gravatar(300, GENERAL_AUDIENCES, BLANK);
             String url = gravatar.getUrl(user.getEmail());
             user.setPhoto(url.replace("http:", "https:"));
@@ -142,7 +142,7 @@ public class UserController {
     }
 
     private User updateUser(User user) {
-        if (hasText(user.getId())) {
+        if (!hasText(user.getId())) {
             return user;
         } else {
             User current = repository.findById(user.getId());
@@ -152,7 +152,7 @@ public class UserController {
     }
 
     private void setIdIfManuallyCreated(User user) {
-        if (hasText(user.getId())) {
+        if (!hasText(user.getId())) {
             user.setId(UUID.randomUUID().toString());
         }
     }

@@ -3,6 +3,7 @@ import router from "@/plugins/router.ts";
 
 const name = ref('')
 const apiUrl = import.meta.env.VITE_API_URL;
+const selfUrl = import.meta.env.VITE_SELF_URL;
 
 function sayHi() {
   localStorage.setItem('token', name.value)
@@ -23,6 +24,14 @@ definePage({
     layout: 'whole-page',
   },
 })
+
+function loginUrl(provider: string) {
+
+  const url = new URL(`${apiUrl}/login/${provider}`);
+  url.searchParams.set('redirect_uri', `${selfUrl}/login/${provider}`);
+  url.searchParams.set('state', "static-state");
+  return url.toString();
+}
 </script>
 
 <template>
@@ -33,19 +42,19 @@ definePage({
       <v-row align="center" justify="center">
         <v-col cols="auto">
           <v-btn icon="mdi-github" size="x-large"
-                 :href="apiUrl+'/login/github'"></v-btn>
+                 :href="loginUrl('github')"></v-btn>
         </v-col>
         <v-col cols="auto">
           <v-btn icon="mdi-google" size="x-large"
-                 :href="apiUrl+'/login/google'"></v-btn>
+                 :href="loginUrl('google')"></v-btn>
         </v-col>
         <v-col cols="auto">
           <v-btn icon="mdi-facebook" size="x-large"
-                 :href="apiUrl+'/login/facebook'"></v-btn>
+                 :href="loginUrl('facebook')"></v-btn>
         </v-col>
         <v-col cols="auto">
           <v-btn icon="mdi-alpha-x" size="x-large"
-                 :href="apiUrl+'/login/twitter'"></v-btn>
+                 :href="loginUrl('twitter')"></v-btn>
         </v-col>
       </v-row>
     </v-container>

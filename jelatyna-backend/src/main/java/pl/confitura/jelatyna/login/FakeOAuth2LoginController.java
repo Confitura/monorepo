@@ -3,7 +3,9 @@ package pl.confitura.jelatyna.login;
 import static org.springframework.http.HttpStatus.PERMANENT_REDIRECT;
 import static pl.confitura.jelatyna.infrastructure.Profiles.FAKE_SECURITY;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,11 +23,13 @@ import java.nio.charset.StandardCharsets;
 @RequiredArgsConstructor
 @CrossOrigin()
 public class FakeOAuth2LoginController {
+
     private final TokenService tokenService;
     private final FakeUsers fakeUsers;
 
 
-    @GetMapping
+
+    @GetMapping()
     public ResponseEntity<Object> redirectToGitHubLogin(
             @PathVariable("provider") String provider,
             @RequestParam("redirect_uri") String redirectUri,
@@ -34,9 +38,9 @@ public class FakeOAuth2LoginController {
         return ResponseEntity
                 .status(PERMANENT_REDIRECT)
                 .header("Location", "http://localhost:8080/api/login/" + provider + "/callback?" +
-                                    "code=testCode" +
-                                    "&state=" + state +
-                                    "&redirect_uri=" + URLEncoder.encode(redirectUri, StandardCharsets.UTF_8))
+                        "code=testCode" +
+                        "&state=" + state +
+                        "&redirect_uri=" + URLEncoder.encode(redirectUri, StandardCharsets.UTF_8))
                 .build();
     }
 
@@ -46,26 +50,23 @@ public class FakeOAuth2LoginController {
             @RequestParam("redirect_uri") String redirectUri,
             @RequestParam("state") String state
     ) {
-        User user = getUser(provider);
-        String token = URLEncoder.encode(tokenService.asToken(user), StandardCharsets.UTF_8);
-        String uri = redirectUri +
-                     "?access_token=" + token +
-                     "&state=" + state;
-        return ResponseEntity
-                .status(PERMANENT_REDIRECT)
-                .header("Location", uri)
-                .build();
 
-    }
-
-    private User getUser(String provider) {
         User user = fakeUsers.getBySystem(provider);
         if (user == null) {
             user = new User()
                     .setId("dHdpdHRlci9tYXJnaWVsbQ==")
                     .setName("Fake User " + provider);
         }
-        return user;
+
+        String token = URLEncoder.encode(tokenService.asToken(user), StandardCharsets.UTF_8);
+        String uri = redirectUri +
+                "?access_token=" + token +
+                "&state=" + state;
+        return ResponseEntity
+                .status(PERMANENT_REDIRECT)
+                .header("Location", uri)
+                .build();
+
     }
 
 }

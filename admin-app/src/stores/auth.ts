@@ -1,6 +1,6 @@
 import {defineStore} from "pinia";
 import router from "@/plugins/router.ts";
-import api from "@/utils/api.ts";
+import {api} from "@/utils/api.ts";
 
 export interface User {
   sub: string;

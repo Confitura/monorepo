@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 import {useRoute} from 'vue-router'
-import api from "@/utils/api.ts";
+import router from "@/plugins/router.ts";
 
 definePage({
   meta: {
@@ -16,14 +16,12 @@ definePage({
 
 
 const route = useRoute()
-
-let provider: string = route.params["provider"];
-api.get(`login/${provider}/callback`, {params: route.query})
-  .then(response => {
-    useAuthStore().login(response.data)
-  })
-
-// router.push('/homepage')
+let accessToken = route.query["access_token"];
+if (accessToken == null) {
+  router.push('/login')
+} else {
+  useAuthStore().login(accessToken.toString())
+}
 </script>
 
 <template>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import api from "@/utils/api.ts";
+import api, {usersApi} from "@/utils/api.ts";
 
 let store = useAuthStore();
 const {user} = storeToRefs(store)
@@ -44,15 +44,16 @@ const onSubmit = async () => {
   let valid = await xForm.value.validate()
 
   if (valid.valid) {
-    api.post('/users', form.value).then(
-      () => store.updateRegistered(form.value.name),
-      console.log);
+    usersApi.save(form.value)
+      .then(
+        () => store.updateRegistered(form.value.name),
+        console.log);
   }
 };
 
 const fetchUserData = async (userId: string) => {
   try {
-    const response = await api.get(`/users/${userId}`);
+    const response = await usersApi.getById(userId);
     form.value = response.data;
   } catch (error) {
     console.error('Failed to fetch user data:', error);

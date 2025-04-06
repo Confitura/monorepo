@@ -7,15 +7,15 @@ const route = useRoute();
 console.log('Current route:', route);
 
 import {ref, onMounted} from 'vue';
-import api from "@/utils/api.ts";
+import {pagesApi} from "@/utils/api.ts";
 
 const pageData = ref(null);
 
 onMounted(async () => {
   try {
     const routePath = route.params["all"];
-    const response = await api.get(`/pages/${routePath}`);
-    pageData.value = response.data;
+    const response = await pagesApi.getPage(routePath);
+    pageData.value = response.data || "";
   } catch (error) {
     console.error('Failed to fetch page data:', error);
   }
