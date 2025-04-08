@@ -3,11 +3,14 @@ package pl.confitura.jelatyna.user;
 import static com.timgroup.jgravatar.GravatarDefaultImage.BLANK;
 import static com.timgroup.jgravatar.GravatarRating.GENERAL_AUDIENCES;
 import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.toUnmodifiableSet;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static org.springframework.util.StringUtils.hasText;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 import jakarta.validation.Valid;
 
@@ -24,6 +27,8 @@ import pl.confitura.jelatyna.infrastructure.security.JelatynaPrincipal;
 import pl.confitura.jelatyna.infrastructure.security.Security;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
+import pl.confitura.jelatyna.presentation.Tag;
+import pl.confitura.jelatyna.presentation.TagRepository;
 import pl.confitura.jelatyna.registration.ParticipationData;
 import pl.confitura.jelatyna.registration.ParticipationRepository;
 
@@ -36,6 +41,7 @@ public class UserController {
     private final Security security;
     private final ConferenceConfigurationProperties conferenceConfiguration;
     private final ParticipationRepository participationRepository;
+    private final TagRepository tagRepository;
 
     @PostMapping("/users")
     @PreAuthorize("@security.isOwner(#user.id)")
@@ -86,7 +92,7 @@ public class UserController {
     @PreAuthorize("@security.isAdmin()")
     @Transactional
     public ResponseEntity<Object> markAsVolunteer(@PathVariable("userId") String userId,
-            @PathVariable("isVolunteer") boolean isVolunteer) {
+                                                  @PathVariable("isVolunteer") boolean isVolunteer) {
         User user = repository.findById(userId);
         user.setVolunteer(isVolunteer);
         return ResponseEntity.ok().build();
@@ -94,12 +100,19 @@ public class UserController {
 
     @PostMapping("/users/{userId}/presentations")
     @PreAuthorize("@security.isOwner(#userId)")
-    public ResponseEntity<?> addPresentationToUser(@Valid @RequestBody Presentation presentation,
-            @PathVariable String userId) {
-        if (presentation.isNew() && !canCreatePresentation()) {
-            return ResponseEntity.status(UNAUTHORIZED).build();
-        }
+    public ResponseEntity<?> addPresentationToUser(@Valid @RequestBody PresentationRequest presentationRequest,
+                                                   @PathVariable String userId) {
+        // TODO close c4p
+//        if (presentation.isNew() && !canCreatePresentation()) {
+//            return ResponseEntity.status(UNAUTHORIZED).build();
+//        }
         User speaker = repository.findById(userId);
+        Set<Tag> tags = Stream.of(presentationRequest.tags())
+                .map(tag -> tagRepository.findById(tag))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(toUnmodifiableSet());
+        var presentation = Presentation.from(presentationRequest, speaker, tags);
         presentation.setSpeaker(speaker);
         retainStatus(presentation);
         Presentation saved = presentationRepository.save(presentation);
@@ -116,7 +129,7 @@ public class UserController {
 
     @GetMapping("/current-user")
     public ResponseEntity<User> getCurrentUser(@AuthenticationPrincipal JelatynaPrincipal user) {
-        if(user == null){
+        if (user == null) {
             return ResponseEntity.status(UNAUTHORIZED).build();
         }
         return ResponseEntity.ok(repository.findById(user.getId()));
@@ -155,5 +168,15 @@ public class UserController {
         if (!hasText(user.getId())) {
             user.setId(UUID.randomUUID().toString());
         }
+    }
+
+    public record PresentationRequest(
+            String title,
+            String shortDescription,
+            String description,
+            String level,
+            String language,
+            String[] tags
+    ) {
     }
 }

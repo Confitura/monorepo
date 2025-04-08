@@ -1,21 +1,18 @@
 package pl.confitura.jelatyna.presentation;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import lombok.AllArgsConstructor;
 import pl.confitura.jelatyna.presentation.rating.Rate;
@@ -23,12 +20,14 @@ import pl.confitura.jelatyna.presentation.rating.RatingService;
 import pl.confitura.jelatyna.user.User;
 import pl.confitura.jelatyna.user.UserRepository;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
+@RestController
 public class PresentationController {
 
-    private PresentationRepository repository;
-    private UserRepository userRepository;
-    private RatingService ratingService;
+    private final PresentationRepository repository;
+    private final UserRepository userRepository;
+    private final RatingService ratingService;
+    private final TagRepository tagRepository;
 
     @PreAuthorize("@security.isAdmin()")
     @PostMapping("/presentations/{presentationId}/accept")
@@ -96,7 +95,9 @@ public class PresentationController {
 
     @PostMapping("/presentations/{presentationId}/ratings")
     @Transactional
-    public ResponseEntity<?> addRating(@PathVariable String presentationId, @RequestBody @Valid @NotNull RateRequest rate) {
+    public ResponseEntity<?> addRating(
+            @PathVariable String presentationId,
+            @RequestBody @Valid @NotNull RateRequest rate) {
         if (rate.getReviewerToken() == null) {
             return ResponseEntity.badRequest().body("Reviewer token is required");
         }
@@ -108,11 +109,25 @@ public class PresentationController {
 
     @PutMapping("/presentations/{presentationId}/ratings/{ratingId}")
     @Transactional
-    public ResponseEntity<?> updateRating(@PathVariable("ratingId") String ratingId, @RequestBody @Valid Rate rate) {
+    public ResponseEntity<?> updateRating(
+            @PathVariable("presentationId") String presentationId,
+            @PathVariable("ratingId") String ratingId,
+            @RequestBody @Valid Rate rate) {
         ratingService.updateRating(rate.setId(ratingId));
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .build();
     }
 
+
+    @GetMapping("/tags")
+    public ResponseEntity<List<Tag>> getAllTags() {
+        return ResponseEntity.ok(tagRepository.findAll());
+    }
+
+    @PreAuthorize("@security.isAdmin()")
+    @PostMapping("/tags")
+    public ResponseEntity<?> saveTags(@RequestBody Iterable<Tag> tags) {
+        return ResponseEntity.ok(tagRepository.saveAll(tags));
+    }
 }

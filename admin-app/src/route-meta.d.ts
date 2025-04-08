@@ -7,5 +7,6 @@ declare module 'vue-router' {
     icon?: string
     title?: string
     drawerIndex?: number
+    requiresAuth?: boolean
   }
 }

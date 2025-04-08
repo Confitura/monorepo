@@ -19,4 +19,8 @@ public class Tag {
     @Id
     private String id;
     private String name;
+
+    public static Tag of(String tag) {
+        return new Tag().setName(tag);
+    }
 }

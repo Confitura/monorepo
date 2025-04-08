@@ -1,6 +1,7 @@
 import {createRouter, createWebHistory} from 'vue-router/auto'
 import {routes} from 'vue-router/auto-routes'
 import {setupLayouts} from 'virtual:meta-layouts'
+import type {RouteMeta} from "vue-router";
 
 let publicPaths = ['/privacy-policy']
 
@@ -10,21 +11,18 @@ let router = createRouter({
 })
 router.beforeEach((to, from, next) => {
 
-  const isPublicPath = (path: string) => publicPaths.includes(path);
-  const isLoginPath = (path: string) => path.startsWith('/login');
-  const isRegistrationPath = (path: string) => path === '/register';
-
-  if (isPublicPath(to.path)) {
+  let pathMeta: RouteMeta = to.meta
+  if (!pathMeta.requiresAuth) {
     return next();
   }
 
   const currentUser = useAuthStore().user;
 
   if (currentUser === null) {
-    return isLoginPath(to.name) ? next() : next('/login');
+    return to.name.startsWith('/login') ? next() : next('/login');
   }
   if (currentUser.isNew) {
-    return isRegistrationPath(to.name) ? next() : next('/register');
+    return to.name === '/register' ? next() : next('/register');
   }
   return next();
 });

@@ -26,11 +26,12 @@ import lombok.experimental.Accessors;
 import pl.confitura.jelatyna.presentation.rating.Rate;
 import pl.confitura.jelatyna.user.PublicUser;
 import pl.confitura.jelatyna.user.User;
+import pl.confitura.jelatyna.user.UserController;
 
 @Entity
 @Data
-@ToString(exclude = { "speakers", "ratings", "publicSpeakers" })
-@EqualsAndHashCode(exclude = { "speakers", "ratings", "publicSpeakers" })
+@ToString(exclude = {"speakers", "ratings", "publicSpeakers"})
+@EqualsAndHashCode(exclude = {"speakers", "ratings", "publicSpeakers"})
 @Accessors(chain = true)
 public class Presentation {
 
@@ -67,6 +68,19 @@ public class Presentation {
     private String status;
 
     private boolean workshop = false;
+
+    public static Presentation from(UserController.PresentationRequest presentationRequest, User speaker, Set<Tag> tags) {
+        return new Presentation()
+                .setSpeaker(speaker)
+                .setTitle(presentationRequest.title())
+                .setShortDescription(presentationRequest.shortDescription())
+                .setDescription(presentationRequest.description())
+                .setLevel(presentationRequest.level())
+                .setLanguage(presentationRequest.language())
+                .setTags(tags)
+                .setStatus(STATUS_REPORTED);
+
+    }
 
     boolean isOwnedBy(String email) {
         return speakers.stream().anyMatch(it -> it.getEmail().equalsIgnoreCase(email));

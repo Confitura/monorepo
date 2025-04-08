@@ -438,6 +438,12 @@ export interface Presentation {
      * @type {boolean}
      * @memberof Presentation
      */
+    'new'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Presentation
+     */
     'accepted'?: boolean;
     /**
      * 
@@ -445,12 +451,49 @@ export interface Presentation {
      * @memberof Presentation
      */
     'speaker'?: Presentation;
+}
+/**
+ * 
+ * @export
+ * @interface PresentationRequest
+ */
+export interface PresentationRequest {
     /**
      * 
-     * @type {boolean}
-     * @memberof Presentation
+     * @type {string}
+     * @memberof PresentationRequest
      */
-    'new'?: boolean;
+    'title'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PresentationRequest
+     */
+    'shortDescription'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PresentationRequest
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PresentationRequest
+     */
+    'level'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PresentationRequest
+     */
+    'language'?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof PresentationRequest
+     */
+    'tags'?: Array<string>;
 }
 /**
  * 
@@ -543,6 +586,37 @@ export const RateValueEnum = {
 
 export type RateValueEnum = typeof RateValueEnum[keyof typeof RateValueEnum];
 
+/**
+ * 
+ * @export
+ * @interface RateRequest
+ */
+export interface RateRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof RateRequest
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RateRequest
+     */
+    'reviewerToken'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof RateRequest
+     */
+    'value'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RateRequest
+     */
+    'comment'?: string;
+}
 /**
  * 
  * @export
@@ -2766,6 +2840,664 @@ export class PageControllerApi extends BaseAPI {
 
 
 /**
+ * PresentationControllerApi - axios parameter creator
+ * @export
+ */
+export const PresentationControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} presentationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        accept: async (presentationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'presentationId' is not null or undefined
+            assertParamExists('accept', 'presentationId', presentationId)
+            const localVarPath = `/presentations/{presentationId}/accept`
+                .replace(`{${"presentationId"}}`, encodeURIComponent(String(presentationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} presentationId 
+         * @param {string} email 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        addCospeaker: async (presentationId: string, email: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'presentationId' is not null or undefined
+            assertParamExists('addCospeaker', 'presentationId', presentationId)
+            // verify required parameter 'email' is not null or undefined
+            assertParamExists('addCospeaker', 'email', email)
+            const localVarPath = `/presentations/{presentationId}/cospeakers/{email}`
+                .replace(`{${"presentationId"}}`, encodeURIComponent(String(presentationId)))
+                .replace(`{${"email"}}`, encodeURIComponent(String(email)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} presentationId 
+         * @param {RateRequest} rateRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        addRating: async (presentationId: string, rateRequest: RateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'presentationId' is not null or undefined
+            assertParamExists('addRating', 'presentationId', presentationId)
+            // verify required parameter 'rateRequest' is not null or undefined
+            assertParamExists('addRating', 'rateRequest', rateRequest)
+            const localVarPath = `/presentations/{presentationId}/ratings`
+                .replace(`{${"presentationId"}}`, encodeURIComponent(String(presentationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(rateRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllTags: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/tags`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} presentationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCospeakers: async (presentationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'presentationId' is not null or undefined
+            assertParamExists('getCospeakers', 'presentationId', presentationId)
+            const localVarPath = `/presentations/{presentationId}/cospeakers`
+                .replace(`{${"presentationId"}}`, encodeURIComponent(String(presentationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} presentationId 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        removeCospeaker: async (presentationId: string, id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'presentationId' is not null or undefined
+            assertParamExists('removeCospeaker', 'presentationId', presentationId)
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('removeCospeaker', 'id', id)
+            const localVarPath = `/presentations/{presentationId}/cospeakers/{id}`
+                .replace(`{${"presentationId"}}`, encodeURIComponent(String(presentationId)))
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {object} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        saveTags: async (body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('saveTags', 'body', body)
+            const localVarPath = `/tags`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} presentationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        unaccept: async (presentationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'presentationId' is not null or undefined
+            assertParamExists('unaccept', 'presentationId', presentationId)
+            const localVarPath = `/presentations/{presentationId}/unaccept`
+                .replace(`{${"presentationId"}}`, encodeURIComponent(String(presentationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} presentationId 
+         * @param {string} ratingId 
+         * @param {Rate} rate 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateRating: async (presentationId: string, ratingId: string, rate: Rate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'presentationId' is not null or undefined
+            assertParamExists('updateRating', 'presentationId', presentationId)
+            // verify required parameter 'ratingId' is not null or undefined
+            assertParamExists('updateRating', 'ratingId', ratingId)
+            // verify required parameter 'rate' is not null or undefined
+            assertParamExists('updateRating', 'rate', rate)
+            const localVarPath = `/presentations/{presentationId}/ratings/{ratingId}`
+                .replace(`{${"presentationId"}}`, encodeURIComponent(String(presentationId)))
+                .replace(`{${"ratingId"}}`, encodeURIComponent(String(ratingId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(rate, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * PresentationControllerApi - functional programming interface
+ * @export
+ */
+export const PresentationControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = PresentationControllerApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} presentationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async accept(presentationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.accept(presentationId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PresentationControllerApi.accept']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} presentationId 
+         * @param {string} email 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async addCospeaker(presentationId: string, email: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.addCospeaker(presentationId, email, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PresentationControllerApi.addCospeaker']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} presentationId 
+         * @param {RateRequest} rateRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async addRating(presentationId: string, rateRequest: RateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.addRating(presentationId, rateRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PresentationControllerApi.addRating']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAllTags(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Tag>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAllTags(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PresentationControllerApi.getAllTags']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} presentationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getCospeakers(presentationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Set<User>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCospeakers(presentationId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PresentationControllerApi.getCospeakers']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} presentationId 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async removeCospeaker(presentationId: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.removeCospeaker(presentationId, id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PresentationControllerApi.removeCospeaker']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {object} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async saveTags(body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.saveTags(body, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PresentationControllerApi.saveTags']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} presentationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async unaccept(presentationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.unaccept(presentationId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PresentationControllerApi.unaccept']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} presentationId 
+         * @param {string} ratingId 
+         * @param {Rate} rate 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateRating(presentationId: string, ratingId: string, rate: Rate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateRating(presentationId, ratingId, rate, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PresentationControllerApi.updateRating']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * PresentationControllerApi - factory interface
+ * @export
+ */
+export const PresentationControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = PresentationControllerApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} presentationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        accept(presentationId: string, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.accept(presentationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} presentationId 
+         * @param {string} email 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        addCospeaker(presentationId: string, email: string, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.addCospeaker(presentationId, email, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} presentationId 
+         * @param {RateRequest} rateRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        addRating(presentationId: string, rateRequest: RateRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.addRating(presentationId, rateRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllTags(options?: RawAxiosRequestConfig): AxiosPromise<Array<Tag>> {
+            return localVarFp.getAllTags(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} presentationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCospeakers(presentationId: string, options?: RawAxiosRequestConfig): AxiosPromise<Set<User>> {
+            return localVarFp.getCospeakers(presentationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} presentationId 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        removeCospeaker(presentationId: string, id: string, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.removeCospeaker(presentationId, id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {object} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        saveTags(body: object, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.saveTags(body, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} presentationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        unaccept(presentationId: string, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.unaccept(presentationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} presentationId 
+         * @param {string} ratingId 
+         * @param {Rate} rate 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateRating(presentationId: string, ratingId: string, rate: Rate, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.updateRating(presentationId, ratingId, rate, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * PresentationControllerApi - object-oriented interface
+ * @export
+ * @class PresentationControllerApi
+ * @extends {BaseAPI}
+ */
+export class PresentationControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} presentationId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PresentationControllerApi
+     */
+    public accept(presentationId: string, options?: RawAxiosRequestConfig) {
+        return PresentationControllerApiFp(this.configuration).accept(presentationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} presentationId 
+     * @param {string} email 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PresentationControllerApi
+     */
+    public addCospeaker(presentationId: string, email: string, options?: RawAxiosRequestConfig) {
+        return PresentationControllerApiFp(this.configuration).addCospeaker(presentationId, email, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} presentationId 
+     * @param {RateRequest} rateRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PresentationControllerApi
+     */
+    public addRating(presentationId: string, rateRequest: RateRequest, options?: RawAxiosRequestConfig) {
+        return PresentationControllerApiFp(this.configuration).addRating(presentationId, rateRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PresentationControllerApi
+     */
+    public getAllTags(options?: RawAxiosRequestConfig) {
+        return PresentationControllerApiFp(this.configuration).getAllTags(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} presentationId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PresentationControllerApi
+     */
+    public getCospeakers(presentationId: string, options?: RawAxiosRequestConfig) {
+        return PresentationControllerApiFp(this.configuration).getCospeakers(presentationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} presentationId 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PresentationControllerApi
+     */
+    public removeCospeaker(presentationId: string, id: string, options?: RawAxiosRequestConfig) {
+        return PresentationControllerApiFp(this.configuration).removeCospeaker(presentationId, id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {object} body 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PresentationControllerApi
+     */
+    public saveTags(body: object, options?: RawAxiosRequestConfig) {
+        return PresentationControllerApiFp(this.configuration).saveTags(body, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} presentationId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PresentationControllerApi
+     */
+    public unaccept(presentationId: string, options?: RawAxiosRequestConfig) {
+        return PresentationControllerApiFp(this.configuration).unaccept(presentationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} presentationId 
+     * @param {string} ratingId 
+     * @param {Rate} rate 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PresentationControllerApi
+     */
+    public updateRating(presentationId: string, ratingId: string, rate: Rate, options?: RawAxiosRequestConfig) {
+        return PresentationControllerApiFp(this.configuration).updateRating(presentationId, ratingId, rate, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
  * ResourceControllerApi - axios parameter creator
  * @export
  */
@@ -3348,15 +4080,15 @@ export const UserControllerApiAxiosParamCreator = function (configuration?: Conf
         /**
          * 
          * @param {string} userId 
-         * @param {Presentation} presentation 
+         * @param {PresentationRequest} presentationRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        addPresentationToUser: async (userId: string, presentation: Presentation, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        addPresentationToUser: async (userId: string, presentationRequest: PresentationRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'userId' is not null or undefined
             assertParamExists('addPresentationToUser', 'userId', userId)
-            // verify required parameter 'presentation' is not null or undefined
-            assertParamExists('addPresentationToUser', 'presentation', presentation)
+            // verify required parameter 'presentationRequest' is not null or undefined
+            assertParamExists('addPresentationToUser', 'presentationRequest', presentationRequest)
             const localVarPath = `/users/{userId}/presentations`
                 .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -3377,7 +4109,7 @@ export const UserControllerApiAxiosParamCreator = function (configuration?: Conf
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(presentation, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(presentationRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3690,12 +4422,12 @@ export const UserControllerApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {string} userId 
-         * @param {Presentation} presentation 
+         * @param {PresentationRequest} presentationRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async addPresentationToUser(userId: string, presentation: Presentation, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.addPresentationToUser(userId, presentation, options);
+        async addPresentationToUser(userId: string, presentationRequest: PresentationRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.addPresentationToUser(userId, presentationRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UserControllerApi.addPresentationToUser']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -3819,12 +4551,12 @@ export const UserControllerApiFactory = function (configuration?: Configuration,
         /**
          * 
          * @param {string} userId 
-         * @param {Presentation} presentation 
+         * @param {PresentationRequest} presentationRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        addPresentationToUser(userId: string, presentation: Presentation, options?: RawAxiosRequestConfig): AxiosPromise<object> {
-            return localVarFp.addPresentationToUser(userId, presentation, options).then((request) => request(axios, basePath));
+        addPresentationToUser(userId: string, presentationRequest: PresentationRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.addPresentationToUser(userId, presentationRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3918,13 +4650,13 @@ export class UserControllerApi extends BaseAPI {
     /**
      * 
      * @param {string} userId 
-     * @param {Presentation} presentation 
+     * @param {PresentationRequest} presentationRequest 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserControllerApi
      */
-    public addPresentationToUser(userId: string, presentation: Presentation, options?: RawAxiosRequestConfig) {
-        return UserControllerApiFp(this.configuration).addPresentationToUser(userId, presentation, options).then((request) => request(this.axios, this.basePath));
+    public addPresentationToUser(userId: string, presentationRequest: PresentationRequest, options?: RawAxiosRequestConfig) {
+        return UserControllerApiFp(this.configuration).addPresentationToUser(userId, presentationRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
