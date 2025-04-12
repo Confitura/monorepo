@@ -1,5 +1,6 @@
 package pl.confitura.jelatyna.presentation;
 
+import jakarta.validation.constraints.NotNull;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.security.core.parameters.P;
@@ -7,6 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import pl.confitura.jelatyna.user.User;
 
 import java.util.List;
+import java.util.Set;
 
 public interface PresentationRepository extends Repository<Presentation, String> {
 
@@ -33,4 +35,7 @@ public interface PresentationRepository extends Repository<Presentation, String>
 
     @Query("FROM Presentation p JOIN p.speakers co WHERE p.status ='accepted' and co = ?1")
     List<Presentation> findAcceptedWithCoSpeaker(User user);
+
+
+    List<Presentation> findBySpeakersContains(User speakers);
 }

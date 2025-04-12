@@ -9,6 +9,7 @@ let router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: setupLayouts(routes),
 })
+
 router.beforeEach((to, from, next) => {
 
   let pathMeta: RouteMeta = to.meta
@@ -23,6 +24,11 @@ router.beforeEach((to, from, next) => {
   }
   if (currentUser.isNew) {
     return to.name === '/register' ? next() : next('/register');
+  }
+  if (pathMeta?.requiresAdmin && !currentUser.isAdmin) {
+    Notify.warning(`You do not have the required permissions to access this page`)
+    console.log("You do not have the required permissions to access this page", to)
+    return null;
   }
   return next();
 });

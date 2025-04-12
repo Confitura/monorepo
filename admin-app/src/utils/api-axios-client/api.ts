@@ -131,6 +131,128 @@ export interface GenerateVouchersRequest {
 /**
  * 
  * @export
+ * @interface InlinePresentation
+ */
+export interface InlinePresentation {
+    /**
+     * 
+     * @type {string}
+     * @memberof InlinePresentation
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlinePresentation
+     */
+    'title'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlinePresentation
+     */
+    'shortDescription'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlinePresentation
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlinePresentation
+     */
+    'level'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlinePresentation
+     */
+    'language'?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof InlinePresentation
+     */
+    'tags'?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface InlineWorkshop
+ */
+export interface InlineWorkshop {
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineWorkshop
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineWorkshop
+     */
+    'title'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineWorkshop
+     */
+    'shortDescription'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineWorkshop
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineWorkshop
+     */
+    'level'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineWorkshop
+     */
+    'language'?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof InlineWorkshop
+     */
+    'tags'?: Array<string>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof InlineWorkshop
+     */
+    'isFree'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof InlineWorkshop
+     */
+    'expectedPrice'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof InlineWorkshop
+     */
+    'durationInMinutes'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof InlineWorkshop
+     */
+    'maxGroupSize'?: number;
+}
+/**
+ * 
+ * @export
  * @interface Like
  */
 export interface Like {
@@ -438,7 +560,25 @@ export interface Presentation {
      * @type {boolean}
      * @memberof Presentation
      */
-    'new'?: boolean;
+    'isFree'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof Presentation
+     */
+    'expectedPrice'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Presentation
+     */
+    'durationInMinutes'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Presentation
+     */
+    'maxGroupSize'?: number;
     /**
      * 
      * @type {boolean}
@@ -451,6 +591,12 @@ export interface Presentation {
      * @memberof Presentation
      */
     'speaker'?: Presentation;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Presentation
+     */
+    'new'?: boolean;
 }
 /**
  * 
@@ -1060,6 +1206,309 @@ export const VoucherTypeEnum = {
 } as const;
 
 export type VoucherTypeEnum = typeof VoucherTypeEnum[keyof typeof VoucherTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface WorkshopRequest
+ */
+export interface WorkshopRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof WorkshopRequest
+     */
+    'title'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WorkshopRequest
+     */
+    'shortDescription'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WorkshopRequest
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WorkshopRequest
+     */
+    'level'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof WorkshopRequest
+     */
+    'language'?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof WorkshopRequest
+     */
+    'tags'?: Array<string>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof WorkshopRequest
+     */
+    'isFree'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof WorkshopRequest
+     */
+    'expectedPrice'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof WorkshopRequest
+     */
+    'durationInMinutes'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof WorkshopRequest
+     */
+    'maxGroupSize'?: number;
+}
+
+/**
+ * AdminPresentationControllerApi - axios parameter creator
+ * @export
+ */
+export const AdminPresentationControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} presentationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        accept: async (presentationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'presentationId' is not null or undefined
+            assertParamExists('accept', 'presentationId', presentationId)
+            const localVarPath = `/presentations/{presentationId}/accept`
+                .replace(`{${"presentationId"}}`, encodeURIComponent(String(presentationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {object} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        saveTags: async (body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('saveTags', 'body', body)
+            const localVarPath = `/tags`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} presentationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        unaccept: async (presentationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'presentationId' is not null or undefined
+            assertParamExists('unaccept', 'presentationId', presentationId)
+            const localVarPath = `/presentations/{presentationId}/unaccept`
+                .replace(`{${"presentationId"}}`, encodeURIComponent(String(presentationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * AdminPresentationControllerApi - functional programming interface
+ * @export
+ */
+export const AdminPresentationControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = AdminPresentationControllerApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} presentationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async accept(presentationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.accept(presentationId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminPresentationControllerApi.accept']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {object} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async saveTags(body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.saveTags(body, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminPresentationControllerApi.saveTags']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} presentationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async unaccept(presentationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.unaccept(presentationId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminPresentationControllerApi.unaccept']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * AdminPresentationControllerApi - factory interface
+ * @export
+ */
+export const AdminPresentationControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = AdminPresentationControllerApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} presentationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        accept(presentationId: string, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.accept(presentationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {object} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        saveTags(body: object, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.saveTags(body, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} presentationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        unaccept(presentationId: string, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.unaccept(presentationId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * AdminPresentationControllerApi - object-oriented interface
+ * @export
+ * @class AdminPresentationControllerApi
+ * @extends {BaseAPI}
+ */
+export class AdminPresentationControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} presentationId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminPresentationControllerApi
+     */
+    public accept(presentationId: string, options?: RawAxiosRequestConfig) {
+        return AdminPresentationControllerApiFp(this.configuration).accept(presentationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {object} body 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminPresentationControllerApi
+     */
+    public saveTags(body: object, options?: RawAxiosRequestConfig) {
+        return AdminPresentationControllerApiFp(this.configuration).saveTags(body, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} presentationId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminPresentationControllerApi
+     */
+    public unaccept(presentationId: string, options?: RawAxiosRequestConfig) {
+        return AdminPresentationControllerApiFp(this.configuration).unaccept(presentationId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
 
 
 /**
@@ -2848,39 +3297,6 @@ export const PresentationControllerApiAxiosParamCreator = function (configuratio
         /**
          * 
          * @param {string} presentationId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        accept: async (presentationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'presentationId' is not null or undefined
-            assertParamExists('accept', 'presentationId', presentationId)
-            const localVarPath = `/presentations/{presentationId}/accept`
-                .replace(`{${"presentationId"}}`, encodeURIComponent(String(presentationId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} presentationId 
          * @param {string} email 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3055,74 +3471,6 @@ export const PresentationControllerApiAxiosParamCreator = function (configuratio
         },
         /**
          * 
-         * @param {object} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        saveTags: async (body: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'body' is not null or undefined
-            assertParamExists('saveTags', 'body', body)
-            const localVarPath = `/tags`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} presentationId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        unaccept: async (presentationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'presentationId' is not null or undefined
-            assertParamExists('unaccept', 'presentationId', presentationId)
-            const localVarPath = `/presentations/{presentationId}/unaccept`
-                .replace(`{${"presentationId"}}`, encodeURIComponent(String(presentationId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @param {string} presentationId 
          * @param {string} ratingId 
          * @param {Rate} rate 
@@ -3174,18 +3522,6 @@ export const PresentationControllerApiAxiosParamCreator = function (configuratio
 export const PresentationControllerApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = PresentationControllerApiAxiosParamCreator(configuration)
     return {
-        /**
-         * 
-         * @param {string} presentationId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async accept(presentationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.accept(presentationId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PresentationControllerApi.accept']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
         /**
          * 
          * @param {string} presentationId 
@@ -3250,30 +3586,6 @@ export const PresentationControllerApiFp = function(configuration?: Configuratio
         },
         /**
          * 
-         * @param {object} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async saveTags(body: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.saveTags(body, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PresentationControllerApi.saveTags']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} presentationId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async unaccept(presentationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.unaccept(presentationId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['PresentationControllerApi.unaccept']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
          * @param {string} presentationId 
          * @param {string} ratingId 
          * @param {Rate} rate 
@@ -3296,15 +3608,6 @@ export const PresentationControllerApiFp = function(configuration?: Configuratio
 export const PresentationControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = PresentationControllerApiFp(configuration)
     return {
-        /**
-         * 
-         * @param {string} presentationId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        accept(presentationId: string, options?: RawAxiosRequestConfig): AxiosPromise<object> {
-            return localVarFp.accept(presentationId, options).then((request) => request(axios, basePath));
-        },
         /**
          * 
          * @param {string} presentationId 
@@ -3354,24 +3657,6 @@ export const PresentationControllerApiFactory = function (configuration?: Config
         },
         /**
          * 
-         * @param {object} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        saveTags(body: object, options?: RawAxiosRequestConfig): AxiosPromise<object> {
-            return localVarFp.saveTags(body, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} presentationId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        unaccept(presentationId: string, options?: RawAxiosRequestConfig): AxiosPromise<object> {
-            return localVarFp.unaccept(presentationId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
          * @param {string} presentationId 
          * @param {string} ratingId 
          * @param {Rate} rate 
@@ -3391,17 +3676,6 @@ export const PresentationControllerApiFactory = function (configuration?: Config
  * @extends {BaseAPI}
  */
 export class PresentationControllerApi extends BaseAPI {
-    /**
-     * 
-     * @param {string} presentationId 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof PresentationControllerApi
-     */
-    public accept(presentationId: string, options?: RawAxiosRequestConfig) {
-        return PresentationControllerApiFp(this.configuration).accept(presentationId, options).then((request) => request(this.axios, this.basePath));
-    }
-
     /**
      * 
      * @param {string} presentationId 
@@ -3457,28 +3731,6 @@ export class PresentationControllerApi extends BaseAPI {
      */
     public removeCospeaker(presentationId: string, id: string, options?: RawAxiosRequestConfig) {
         return PresentationControllerApiFp(this.configuration).removeCospeaker(presentationId, id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {object} body 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof PresentationControllerApi
-     */
-    public saveTags(body: object, options?: RawAxiosRequestConfig) {
-        return PresentationControllerApiFp(this.configuration).saveTags(body, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} presentationId 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof PresentationControllerApi
-     */
-    public unaccept(presentationId: string, options?: RawAxiosRequestConfig) {
-        return PresentationControllerApiFp(this.configuration).unaccept(presentationId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4119,6 +4371,45 @@ export const UserControllerApiAxiosParamCreator = function (configuration?: Conf
         /**
          * 
          * @param {string} userId 
+         * @param {WorkshopRequest} workshopRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        addWorkshopToUser: async (userId: string, workshopRequest: WorkshopRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'userId' is not null or undefined
+            assertParamExists('addWorkshopToUser', 'userId', userId)
+            // verify required parameter 'workshopRequest' is not null or undefined
+            assertParamExists('addWorkshopToUser', 'workshopRequest', workshopRequest)
+            const localVarPath = `/users/{userId}/workshops`
+                .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(workshopRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} userId 
          * @param {ParticipationData} participationData 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4149,6 +4440,80 @@ export const UserControllerApiAxiosParamCreator = function (configuration?: Conf
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(participationData, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} userId 
+         * @param {string} presentationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deletePresentation: async (userId: string, presentationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'userId' is not null or undefined
+            assertParamExists('deletePresentation', 'userId', userId)
+            // verify required parameter 'presentationId' is not null or undefined
+            assertParamExists('deletePresentation', 'presentationId', presentationId)
+            const localVarPath = `/users/{userId}/presentations/{presentationId}`
+                .replace(`{${"userId"}}`, encodeURIComponent(String(userId)))
+                .replace(`{${"presentationId"}}`, encodeURIComponent(String(presentationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} userId 
+         * @param {string} workshopId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteWorkshop: async (userId: string, workshopId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'userId' is not null or undefined
+            assertParamExists('deleteWorkshop', 'userId', userId)
+            // verify required parameter 'workshopId' is not null or undefined
+            assertParamExists('deleteWorkshop', 'workshopId', workshopId)
+            const localVarPath = `/users/{userId}/workshops/{workshopId}`
+                .replace(`{${"userId"}}`, encodeURIComponent(String(userId)))
+                .replace(`{${"workshopId"}}`, encodeURIComponent(String(workshopId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4249,6 +4614,43 @@ export const UserControllerApiAxiosParamCreator = function (configuration?: Conf
         /**
          * 
          * @param {string} id 
+         * @param {string} presentationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPresentation: async (id: string, presentationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getPresentation', 'id', id)
+            // verify required parameter 'presentationId' is not null or undefined
+            assertParamExists('getPresentation', 'presentationId', presentationId)
+            const localVarPath = `/users/{id}/presentations/{presentationId}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)))
+                .replace(`{${"presentationId"}}`, encodeURIComponent(String(presentationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4310,11 +4712,114 @@ export const UserControllerApiAxiosParamCreator = function (configuration?: Conf
         },
         /**
          * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserPresentations: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getUserPresentations', 'id', id)
+            const localVarPath = `/users/{id}/presentations`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserWorkshops: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getUserWorkshops', 'id', id)
+            const localVarPath = `/users/{id}/workshops`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getVolunteers: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/users/search/volunteers`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {string} workshopId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getWorkshop: async (id: string, workshopId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getWorkshop', 'id', id)
+            // verify required parameter 'workshopId' is not null or undefined
+            assertParamExists('getWorkshop', 'workshopId', workshopId)
+            const localVarPath = `/users/{id}/workshops/{workshopId}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)))
+                .replace(`{${"workshopId"}}`, encodeURIComponent(String(workshopId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -4409,6 +4914,92 @@ export const UserControllerApiAxiosParamCreator = function (configuration?: Conf
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {string} userId 
+         * @param {string} presentationId 
+         * @param {PresentationRequest} presentationRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updatePresentation: async (userId: string, presentationId: string, presentationRequest: PresentationRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'userId' is not null or undefined
+            assertParamExists('updatePresentation', 'userId', userId)
+            // verify required parameter 'presentationId' is not null or undefined
+            assertParamExists('updatePresentation', 'presentationId', presentationId)
+            // verify required parameter 'presentationRequest' is not null or undefined
+            assertParamExists('updatePresentation', 'presentationRequest', presentationRequest)
+            const localVarPath = `/users/{userId}/presentations/{presentationId}`
+                .replace(`{${"userId"}}`, encodeURIComponent(String(userId)))
+                .replace(`{${"presentationId"}}`, encodeURIComponent(String(presentationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(presentationRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} userId 
+         * @param {string} workshopId 
+         * @param {WorkshopRequest} workshopRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateWorkshop: async (userId: string, workshopId: string, workshopRequest: WorkshopRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'userId' is not null or undefined
+            assertParamExists('updateWorkshop', 'userId', userId)
+            // verify required parameter 'workshopId' is not null or undefined
+            assertParamExists('updateWorkshop', 'workshopId', workshopId)
+            // verify required parameter 'workshopRequest' is not null or undefined
+            assertParamExists('updateWorkshop', 'workshopRequest', workshopRequest)
+            const localVarPath = `/users/{userId}/workshops/{workshopId}`
+                .replace(`{${"userId"}}`, encodeURIComponent(String(userId)))
+                .replace(`{${"workshopId"}}`, encodeURIComponent(String(workshopId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(workshopRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -4426,10 +5017,23 @@ export const UserControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async addPresentationToUser(userId: string, presentationRequest: PresentationRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+        async addPresentationToUser(userId: string, presentationRequest: PresentationRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlinePresentation>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.addPresentationToUser(userId, presentationRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UserControllerApi.addPresentationToUser']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} userId 
+         * @param {WorkshopRequest} workshopRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async addWorkshopToUser(userId: string, workshopRequest: WorkshopRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineWorkshop>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.addWorkshopToUser(userId, workshopRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UserControllerApi.addWorkshopToUser']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4443,6 +5047,32 @@ export const UserControllerApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.assignParticipationData(userId, participationData, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UserControllerApi.assignParticipationData']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} userId 
+         * @param {string} presentationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deletePresentation(userId: string, presentationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deletePresentation(userId, presentationId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UserControllerApi.deletePresentation']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} userId 
+         * @param {string} workshopId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteWorkshop(userId: string, workshopId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteWorkshop(userId, workshopId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UserControllerApi.deleteWorkshop']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4462,7 +5092,7 @@ export const UserControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+        async getById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<User>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UserControllerApi.getById']?.[localVarOperationServerIndex]?.url;
@@ -4477,6 +5107,19 @@ export const UserControllerApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCurrentUser(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UserControllerApi.getCurrentUser']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {string} presentationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getPresentation(id: string, presentationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlinePresentation>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPresentation(id, presentationId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UserControllerApi.getPresentation']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4504,6 +5147,30 @@ export const UserControllerApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getUserPresentations(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<InlinePresentation>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getUserPresentations(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UserControllerApi.getUserPresentations']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getUserWorkshops(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<InlineWorkshop>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getUserWorkshops(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UserControllerApi.getUserWorkshops']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4511,6 +5178,19 @@ export const UserControllerApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getVolunteers(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UserControllerApi.getVolunteers']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {string} workshopId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getWorkshop(id: string, workshopId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineWorkshop>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getWorkshop(id, workshopId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UserControllerApi.getWorkshop']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -4538,6 +5218,34 @@ export const UserControllerApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['UserControllerApi.save']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * 
+         * @param {string} userId 
+         * @param {string} presentationId 
+         * @param {PresentationRequest} presentationRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updatePresentation(userId: string, presentationId: string, presentationRequest: PresentationRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlinePresentation>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updatePresentation(userId, presentationId, presentationRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UserControllerApi.updatePresentation']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} userId 
+         * @param {string} workshopId 
+         * @param {WorkshopRequest} workshopRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateWorkshop(userId: string, workshopId: string, workshopRequest: WorkshopRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineWorkshop>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateWorkshop(userId, workshopId, workshopRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UserControllerApi.updateWorkshop']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -4555,8 +5263,18 @@ export const UserControllerApiFactory = function (configuration?: Configuration,
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        addPresentationToUser(userId: string, presentationRequest: PresentationRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+        addPresentationToUser(userId: string, presentationRequest: PresentationRequest, options?: RawAxiosRequestConfig): AxiosPromise<InlinePresentation> {
             return localVarFp.addPresentationToUser(userId, presentationRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} userId 
+         * @param {WorkshopRequest} workshopRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        addWorkshopToUser(userId: string, workshopRequest: WorkshopRequest, options?: RawAxiosRequestConfig): AxiosPromise<InlineWorkshop> {
+            return localVarFp.addWorkshopToUser(userId, workshopRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4567,6 +5285,26 @@ export const UserControllerApiFactory = function (configuration?: Configuration,
          */
         assignParticipationData(userId: string, participationData: ParticipationData, options?: RawAxiosRequestConfig): AxiosPromise<object> {
             return localVarFp.assignParticipationData(userId, participationData, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} userId 
+         * @param {string} presentationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deletePresentation(userId: string, presentationId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deletePresentation(userId, presentationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} userId 
+         * @param {string} workshopId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteWorkshop(userId: string, workshopId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteWorkshop(userId, workshopId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4582,7 +5320,7 @@ export const UserControllerApiFactory = function (configuration?: Configuration,
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getById(id: string, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+        getById(id: string, options?: RawAxiosRequestConfig): AxiosPromise<User> {
             return localVarFp.getById(id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -4592,6 +5330,16 @@ export const UserControllerApiFactory = function (configuration?: Configuration,
          */
         getCurrentUser(options?: RawAxiosRequestConfig): AxiosPromise<User> {
             return localVarFp.getCurrentUser(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {string} presentationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPresentation(id: string, presentationId: string, options?: RawAxiosRequestConfig): AxiosPromise<InlinePresentation> {
+            return localVarFp.getPresentation(id, presentationId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4612,11 +5360,39 @@ export const UserControllerApiFactory = function (configuration?: Configuration,
         },
         /**
          * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserPresentations(id: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<InlinePresentation>> {
+            return localVarFp.getUserPresentations(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUserWorkshops(id: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<InlineWorkshop>> {
+            return localVarFp.getUserWorkshops(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getVolunteers(options?: RawAxiosRequestConfig): AxiosPromise<object> {
             return localVarFp.getVolunteers(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {string} workshopId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getWorkshop(id: string, workshopId: string, options?: RawAxiosRequestConfig): AxiosPromise<InlineWorkshop> {
+            return localVarFp.getWorkshop(id, workshopId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4636,6 +5412,28 @@ export const UserControllerApiFactory = function (configuration?: Configuration,
          */
         save(user: User, options?: RawAxiosRequestConfig): AxiosPromise<object> {
             return localVarFp.save(user, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} userId 
+         * @param {string} presentationId 
+         * @param {PresentationRequest} presentationRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updatePresentation(userId: string, presentationId: string, presentationRequest: PresentationRequest, options?: RawAxiosRequestConfig): AxiosPromise<InlinePresentation> {
+            return localVarFp.updatePresentation(userId, presentationId, presentationRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} userId 
+         * @param {string} workshopId 
+         * @param {WorkshopRequest} workshopRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateWorkshop(userId: string, workshopId: string, workshopRequest: WorkshopRequest, options?: RawAxiosRequestConfig): AxiosPromise<InlineWorkshop> {
+            return localVarFp.updateWorkshop(userId, workshopId, workshopRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -4662,6 +5460,18 @@ export class UserControllerApi extends BaseAPI {
     /**
      * 
      * @param {string} userId 
+     * @param {WorkshopRequest} workshopRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserControllerApi
+     */
+    public addWorkshopToUser(userId: string, workshopRequest: WorkshopRequest, options?: RawAxiosRequestConfig) {
+        return UserControllerApiFp(this.configuration).addWorkshopToUser(userId, workshopRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} userId 
      * @param {ParticipationData} participationData 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -4669,6 +5479,30 @@ export class UserControllerApi extends BaseAPI {
      */
     public assignParticipationData(userId: string, participationData: ParticipationData, options?: RawAxiosRequestConfig) {
         return UserControllerApiFp(this.configuration).assignParticipationData(userId, participationData, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} userId 
+     * @param {string} presentationId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserControllerApi
+     */
+    public deletePresentation(userId: string, presentationId: string, options?: RawAxiosRequestConfig) {
+        return UserControllerApiFp(this.configuration).deletePresentation(userId, presentationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} userId 
+     * @param {string} workshopId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserControllerApi
+     */
+    public deleteWorkshop(userId: string, workshopId: string, options?: RawAxiosRequestConfig) {
+        return UserControllerApiFp(this.configuration).deleteWorkshop(userId, workshopId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4705,6 +5539,18 @@ export class UserControllerApi extends BaseAPI {
     /**
      * 
      * @param {string} id 
+     * @param {string} presentationId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserControllerApi
+     */
+    public getPresentation(id: string, presentationId: string, options?: RawAxiosRequestConfig) {
+        return UserControllerApiFp(this.configuration).getPresentation(id, presentationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserControllerApi
@@ -4725,12 +5571,46 @@ export class UserControllerApi extends BaseAPI {
 
     /**
      * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserControllerApi
+     */
+    public getUserPresentations(id: string, options?: RawAxiosRequestConfig) {
+        return UserControllerApiFp(this.configuration).getUserPresentations(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserControllerApi
+     */
+    public getUserWorkshops(id: string, options?: RawAxiosRequestConfig) {
+        return UserControllerApiFp(this.configuration).getUserWorkshops(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserControllerApi
      */
     public getVolunteers(options?: RawAxiosRequestConfig) {
         return UserControllerApiFp(this.configuration).getVolunteers(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {string} workshopId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserControllerApi
+     */
+    public getWorkshop(id: string, workshopId: string, options?: RawAxiosRequestConfig) {
+        return UserControllerApiFp(this.configuration).getWorkshop(id, workshopId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4754,6 +5634,32 @@ export class UserControllerApi extends BaseAPI {
      */
     public save(user: User, options?: RawAxiosRequestConfig) {
         return UserControllerApiFp(this.configuration).save(user, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} userId 
+     * @param {string} presentationId 
+     * @param {PresentationRequest} presentationRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserControllerApi
+     */
+    public updatePresentation(userId: string, presentationId: string, presentationRequest: PresentationRequest, options?: RawAxiosRequestConfig) {
+        return UserControllerApiFp(this.configuration).updatePresentation(userId, presentationId, presentationRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} userId 
+     * @param {string} workshopId 
+     * @param {WorkshopRequest} workshopRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserControllerApi
+     */
+    public updateWorkshop(userId: string, workshopId: string, workshopRequest: WorkshopRequest, options?: RawAxiosRequestConfig) {
+        return UserControllerApiFp(this.configuration).updateWorkshop(userId, workshopId, workshopRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

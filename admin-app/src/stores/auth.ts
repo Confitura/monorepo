@@ -35,7 +35,7 @@ export const useAuthStore = defineStore('auth', {
       this.token = token;
       this.user = extractUser(token);
       api.defaults.headers.common['Authorization'] = token;
-      router.push("/dashboard")
+      router.push("/homepage")
     },
     updateRegistered(name: string) {
       this.user = {
@@ -43,7 +43,7 @@ export const useAuthStore = defineStore('auth', {
         isNew: false,
         sub: name
       };
-      router.push("/dashboard")
+      router.push("/homepage")
     },
     logout() {
       localStorage.removeItem('token')

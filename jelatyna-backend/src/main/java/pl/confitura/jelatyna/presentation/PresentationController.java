@@ -29,23 +29,6 @@ public class PresentationController {
     private final RatingService ratingService;
     private final TagRepository tagRepository;
 
-    @PreAuthorize("@security.isAdmin()")
-    @PostMapping("/presentations/{presentationId}/accept")
-    @Transactional
-    public ResponseEntity<?> accept(@PathVariable String presentationId) {
-        this.repository.findById(presentationId).setAccepted(true);
-        return ResponseEntity.ok().build();
-    }
-
-    @PreAuthorize("@security.isAdmin()")
-    @PostMapping("/presentations/{presentationId}/unaccept")
-    @Transactional
-    public ResponseEntity<?> unaccept(@PathVariable String presentationId) {
-        this.repository.findById(presentationId).setAccepted(false);
-        return ResponseEntity.ok().build();
-
-    }
-
     @PreAuthorize("@security.presentationOwnedByUser(#presentationId) || @security.isAdmin()")
     @GetMapping("/presentations/{presentationId}/cospeakers")
     public ResponseEntity<Set<User>> getCospeakers(@PathVariable String presentationId) {
@@ -85,10 +68,6 @@ public class PresentationController {
         return ResponseEntity.ok(user);
     }
 
-    private Set<User> removeCospeakerByEmail(String email, Set<User> cospeakers) {
-        return cospeakers.stream().filter(it -> !it.getEmail().equalsIgnoreCase(email)).collect(Collectors.toSet());
-    }
-
     private Set<User> removeCospeakerById(String id, Set<User> cospeakers) {
         return cospeakers.stream().filter(it -> !it.getId().equalsIgnoreCase(id)).collect(Collectors.toSet());
     }
@@ -125,9 +104,4 @@ public class PresentationController {
         return ResponseEntity.ok(tagRepository.findAll());
     }
 
-    @PreAuthorize("@security.isAdmin()")
-    @PostMapping("/tags")
-    public ResponseEntity<?> saveTags(@RequestBody Iterable<Tag> tags) {
-        return ResponseEntity.ok(tagRepository.saveAll(tags));
-    }
 }

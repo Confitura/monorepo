@@ -5,6 +5,7 @@ definePage({
     title: 'Dashboard',
     drawerIndex: 1,
     requiresAuth: true,
+    requiresAdmin: true,
   },
 })
 const stats = ref([

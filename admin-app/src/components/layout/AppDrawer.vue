@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import { routes } from 'vue-router/auto-routes'
+import {routes} from 'vue-router/auto-routes'
+import type {RouteRecordRaw} from "vue-router/auto";
+import type {UnwrapRef} from "vue";
 
 const appStore = useAppStore()
-const { drawer: drawerStored } = storeToRefs(appStore)
+const {drawer: drawerStored} = storeToRefs(appStore)
 
-const { mobile, lgAndUp, width } = useDisplay()
+const {mobile, lgAndUp, width} = useDisplay()
 const drawer = computed({
   get() {
     return drawerStored.value || !mobile.value
@@ -18,8 +20,15 @@ routes.sort((a, b) => (a.meta?.drawerIndex ?? 99) - (b.meta?.drawerIndex ?? 98))
 
 drawerStored.value = lgAndUp.value && width.value !== 1280
 
+let filteredRoutes: Ref<UnwrapRef<RouteRecordRaw[]>, UnwrapRef<RouteRecordRaw[]> | RouteRecordRaw[]> = ref([])
 
-let filteredRoutes = routes.filter((r) => r.meta?.skipMenu !== true)
+onMounted(() => {
+  const currentUser = useAuthStore().user;
+  filteredRoutes.value = routes
+    .filter((r) => r.meta?.skipMenu !== true)
+    .filter((r) => r.meta?.requireAuth !== true || currentUser != null)
+    .filter((r) => r.meta?.requiresAdmin !== true || currentUser?.isAdmin)
+});
 </script>
 
 <template>
@@ -50,9 +59,10 @@ let filteredRoutes = routes.filter((r) => r.meta?.skipMenu !== true)
       </v-list>
     </template>
     <v-list nav density="compact">
-      <AppDrawerItem v-for="route in filteredRoutes" :key="route.name" :item="route" />
+      <AppDrawerItem v-for="route in filteredRoutes" :key="route.name"
+                     :item="route"/>
     </v-list>
-    <v-spacer />
+    <v-spacer/>
     <template #append>
       <v-list-item class="drawer-footer px-0 d-flex flex-column justify-center">
         <div class="text-caption pt-6 pb-1 pt-md-0 text-center text-no-wrap">
@@ -65,44 +75,51 @@ let filteredRoutes = routes.filter((r) => r.meta?.skipMenu !== true)
 
 <style>
 .v-navigation-drawer {
-  transition-property:
-    box-shadow, transform, visibility, width, height, left, right, top, bottom,
-    border-radius !important;
+  transition-property: box-shadow, transform, visibility, width, height, left, right, top, bottom,
+  border-radius !important;
   overflow: hidden;
+
   &.v-navigation-drawer--rail {
     border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
+
     &.v-navigation-drawer--is-hovering {
       border-top-right-radius: 10px;
       border-bottom-right-radius: 10px;
-      box-shadow:
-        0px 1px 2px 0px rgb(0 0 0 / 30%),
-        0px 1px 3px 1px rgb(0 0 0 / 15%);
+      box-shadow: 0px 1px 2px 0px rgb(0 0 0 / 30%),
+      0px 1px 3px 1px rgb(0 0 0 / 15%);
     }
+
     &:not(.v-navigation-drawer--is-hovering) {
       .drawer-footer {
         transform: translateX(-160px);
       }
+
       .drawer-header-icon {
         height: 1em !important;
         width: 1em !important;
       }
+
       .v-list-group {
         --list-indent-size: 0px;
         --prepend-width: 0px;
       }
     }
   }
+
   .v-navigation-drawer__content {
     overflow-y: hidden;
+
     &:hover {
       overflow-y: overlay;
     }
   }
+
   .drawer-footer {
     transition: all 0.2s;
     min-height: 30px;
   }
+
   .drawer-header-icon {
     opacity: 1 !important;
     height: 1.2em !important;
@@ -110,9 +127,11 @@ let filteredRoutes = routes.filter((r) => r.meta?.skipMenu !== true)
     transition: all 0.2s;
     margin-right: -10px;
   }
+
   .v-list-group {
     --prepend-width: 10px;
   }
+
   .v-list-item {
     transition: all 0.2s;
   }

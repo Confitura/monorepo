@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import api, {usersApi} from "@/utils/api.ts";
+import {usersApi} from "@/utils/api.ts";
 
 let store = useAuthStore();
 const {user} = storeToRefs(store)

@@ -21,7 +21,6 @@ declare module 'vue-router/auto-routes' {
     '/': RouteRecordInfo<'/', '/', Record<never, never>, Record<never, never>>,
     '/[...all]': RouteRecordInfo<'/[...all]', '/:all(.*)', { all: ParamValue<true> }, { all: ParamValue<false> }>,
     '/dashboard': RouteRecordInfo<'/dashboard', '/dashboard', Record<never, never>, Record<never, never>>,
-    '/dodaj-prezke': RouteRecordInfo<'/dodaj-prezke', '/dodaj-prezke', Record<never, never>, Record<never, never>>,
     '/homepage': RouteRecordInfo<'/homepage', '/homepage', Record<never, never>, Record<never, never>>,
     '/login': RouteRecordInfo<'/login', '/login', Record<never, never>, Record<never, never>>,
     '/login.[provider]': RouteRecordInfo<'/login.[provider]', '/login/:provider', { provider: ParamValue<true> }, { provider: ParamValue<false> }>,
@@ -30,7 +29,9 @@ declare module 'vue-router/auto-routes' {
     '/nested/menu2': RouteRecordInfo<'/nested/menu2', '/nested/menu2', Record<never, never>, Record<never, never>>,
     '/nested/menu2/menu2-1': RouteRecordInfo<'/nested/menu2/menu2-1', '/nested/menu2/menu2-1', Record<never, never>, Record<never, never>>,
     '/nested/menu2/menu2-2': RouteRecordInfo<'/nested/menu2/menu2-2', '/nested/menu2/menu2-2', Record<never, never>, Record<never, never>>,
+    '/presentation-form.[[id]]': RouteRecordInfo<'/presentation-form.[[id]]', '/presentation-form/:id?', { id?: ParamValueZeroOrOne<true> }, { id?: ParamValueZeroOrOne<false> }>,
     '/register': RouteRecordInfo<'/register', '/register', Record<never, never>, Record<never, never>>,
     '/table': RouteRecordInfo<'/table', '/table', Record<never, never>, Record<never, never>>,
+    '/workshop-form.[[id]]': RouteRecordInfo<'/workshop-form.[[id]]', '/workshop-form/:id?', { id?: ParamValueZeroOrOne<true> }, { id?: ParamValueZeroOrOne<false> }>,
   }
 }

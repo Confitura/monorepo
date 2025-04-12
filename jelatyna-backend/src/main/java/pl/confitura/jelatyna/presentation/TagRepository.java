@@ -11,4 +11,6 @@ public interface TagRepository extends Repository<Tag, String> {
     List<Tag> findAll();
 
     Optional<Tag> findById(String id);
+
+    Tag getReferenceById(String id);
 }

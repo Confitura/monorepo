@@ -3,13 +3,18 @@ import {presentationApi, usersApi} from "@/utils/api.ts";
 import {ref} from 'vue'
 import type {PresentationRequest, Tag} from "@/utils/api-axios-client";
 import {useAuthStore} from "@/stores/auth.ts";
+import {onMounted} from 'vue'
+import {useRoute} from "vue-router";
+import router from "@/plugins/router.ts";
 
 let user = useAuthStore().user
+const route = useRoute()
+const presentationId = route.params.id
 
 definePage({
   meta: {
     icon: 'mdi-monitor-dashboard',
-    title: 'Dodaj prezke',
+    title: 'Submit Presentation',
     drawerIndex: 5,
     requiresAuth: true,
   },
@@ -20,29 +25,41 @@ const presentation = ref<PresentationRequest>({
   shortDescription: '',
   description: '',
   level: '',
-  language: '',
+  language: 'Polish',
   tags: [],
 })
 
-import {onMounted} from 'vue'
-
 let availableTags = ref<Tag[]>([])
+
 onMounted(async () => {
   presentationApi.getAllTags()
     .then(response => response.data)
     .then(data => availableTags.value = data)
     .catch(error => console.error(error))
 
+  if (presentationId) {
+    usersApi.getPresentation(user!.jti, presentationId)
+      .then(response => response.data)
+      .then(data => presentation.value = data)
+  } else {
+    console.log('no id')
+  }
+
 })
 
+function doSubmit() {
+  if (presentationId) {
+    return usersApi.updatePresentation(user!.jti, presentationId, presentation.value)
+  } else {
+    return usersApi.addPresentationToUser(user!.jti, presentation.value);
+  }
+}
+
 function handleSubmit() {
-  console.log('Form Submitted:', presentation.value)
-  // Example API call
-  usersApi.addPresentationToUser(user!.jti, presentation.value).then(response => {
-    console.log('Submission successful:', response)
-  }).catch(error => {
-    console.error('Submission failed:', error)
-  })
+  doSubmit()
+    .then(_ => Notify.success(`Presentation ${presentation.value.title} saved`))
+    .then(_ => router.push('/homepage'))
+    .catch(error => console.error('Submission failed:', error))
 }
 
 
@@ -82,7 +99,7 @@ function handleSubmit() {
 
     <v-select
       v-model="presentation.language"
-      :items="['English', 'French', 'Spanish', 'German']"
+      :items="['English', 'Polish']"
       label="Language"
       outlined
       required

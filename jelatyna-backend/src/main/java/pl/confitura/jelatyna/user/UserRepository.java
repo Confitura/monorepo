@@ -15,6 +15,8 @@ public interface UserRepository extends Repository<User, String> {
 
     User findById(String userId);
 
+    User getReferenceById(String id);
+
     User findBySocialId(String socialId);
 
     boolean existsById(String id);
@@ -32,15 +34,15 @@ public interface UserRepository extends Repository<User, String> {
     Iterable<User> findAll();
 
     @Query("FROM User WHERE " +
-            "lower(name) like concat('%',lower(:query),'%') OR " +
-            "lower(email) like concat('%',lower(:query),'%') OR " +
-            "lower(username) like concat('%',lower(:query),'%') ")
+           "lower(name) like concat('%',lower(:query),'%') OR " +
+           "lower(email) like concat('%',lower(:query),'%') OR " +
+           "lower(username) like concat('%',lower(:query),'%') ")
     @PreAuthorize("@security.isAdmin()")
     Iterable<User> find(@Param("query") String query);
 
     @Query("Select co FROM Presentation p  " +
-            "LEFT JOIN p.speakers co " +
-            "WHERE p.status ='accepted'")
+           "LEFT JOIN p.speakers co " +
+           "WHERE p.status ='accepted'")
     Set<User> findAllAccepted();
 
     User findByEmail(String email);

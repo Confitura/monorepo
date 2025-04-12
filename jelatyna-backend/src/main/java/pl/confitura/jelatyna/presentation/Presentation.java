@@ -13,6 +13,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -23,10 +24,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.experimental.Accessors;
+import pl.confitura.jelatyna.api.model.WorkshopRequest;
 import pl.confitura.jelatyna.presentation.rating.Rate;
+import pl.confitura.jelatyna.api.model.PresentationRequest;
 import pl.confitura.jelatyna.user.PublicUser;
 import pl.confitura.jelatyna.user.User;
-import pl.confitura.jelatyna.user.UserController;
 
 @Entity
 @Data
@@ -69,7 +71,12 @@ public class Presentation {
 
     private boolean workshop = false;
 
-    public static Presentation from(UserController.PresentationRequest presentationRequest, User speaker, Set<Tag> tags) {
+    private Boolean isFree = null;
+    private Double expectedPrice = null;
+    private Integer durationInMinutes = null;
+    private Integer maxGroupSize = null;
+
+    public static Presentation from(PresentationRequest presentationRequest, User speaker, Set<Tag> tags) {
         return new Presentation()
                 .setSpeaker(speaker)
                 .setTitle(presentationRequest.title())
@@ -79,7 +86,23 @@ public class Presentation {
                 .setLanguage(presentationRequest.language())
                 .setTags(tags)
                 .setStatus(STATUS_REPORTED);
+    }
 
+    public static Presentation from(WorkshopRequest workshopRequest, User speaker, Set<Tag> tags) {
+        return new Presentation()
+                .setSpeaker(speaker)
+                .setTitle(workshopRequest.title())
+                .setShortDescription(workshopRequest.shortDescription())
+                .setDescription(workshopRequest.description())
+                .setLevel(workshopRequest.level())
+                .setLanguage(workshopRequest.language())
+                .setTags(tags)
+                .setWorkshop(true)
+                .setIsFree(workshopRequest.isFree())
+                .setExpectedPrice(workshopRequest.expectedPrice())
+                .setDurationInMinutes(workshopRequest.durationInMinutes())
+                .setMaxGroupSize(workshopRequest.maxGroupSize())
+                .setStatus(STATUS_REPORTED);
     }
 
     boolean isOwnedBy(String email) {
@@ -120,5 +143,28 @@ public class Presentation {
                     .map(PublicUser::new)
                     .collect(toSet());
         }
+    }
+
+    public void update(PresentationRequest presentationRequest, Set<Tag> tags) {
+        this.tags = tags;
+        this.title = presentationRequest.title();
+        this.shortDescription = presentationRequest.shortDescription();
+        this.description = presentationRequest.description();
+        this.level = presentationRequest.level();
+        this.language = presentationRequest.language();
+    }
+
+    public void update(WorkshopRequest workshopRequest, Set<Tag> tags) {
+        this.tags = tags;
+        this.title = workshopRequest.title();
+        this.shortDescription = workshopRequest.shortDescription();
+        this.description = workshopRequest.description();
+        this.level = workshopRequest.level();
+        this.language = workshopRequest.language();
+        this.isFree = workshopRequest.isFree();
+        this.expectedPrice = workshopRequest.expectedPrice();
+        this.durationInMinutes = workshopRequest.durationInMinutes();
+        this.maxGroupSize = workshopRequest.maxGroupSize();
+
     }
 }
