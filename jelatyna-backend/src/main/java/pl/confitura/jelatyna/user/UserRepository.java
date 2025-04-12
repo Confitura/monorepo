@@ -31,7 +31,7 @@ public interface UserRepository extends Repository<User, String> {
 
 
     @PreAuthorize("@security.isAdmin()")
-    Iterable<User> findAll();
+    List<User> findAll();
 
     @Query("FROM User WHERE " +
            "lower(name) like concat('%',lower(:query),'%') OR " +

@@ -15,10 +15,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import lombok.AllArgsConstructor;
+import pl.confitura.jelatyna.api.model.FullPresentation;
 import pl.confitura.jelatyna.presentation.rating.Rate;
 import pl.confitura.jelatyna.presentation.rating.RatingService;
 import pl.confitura.jelatyna.user.User;
 import pl.confitura.jelatyna.user.UserRepository;
+
+import static java.util.stream.Collectors.toList;
 
 @RequiredArgsConstructor
 @RestController
@@ -28,6 +31,7 @@ public class PresentationController {
     private final UserRepository userRepository;
     private final RatingService ratingService;
     private final TagRepository tagRepository;
+
 
     @PreAuthorize("@security.presentationOwnedByUser(#presentationId) || @security.isAdmin()")
     @GetMapping("/presentations/{presentationId}/cospeakers")
@@ -104,4 +108,8 @@ public class PresentationController {
         return ResponseEntity.ok(tagRepository.findAll());
     }
 
+    @GetMapping("/presentations")
+    public ResponseEntity<List<FullPresentation>> getAllPresentations() {
+        return ResponseEntity.ok(repository.findAll().stream().map(FullPresentation::new).collect(toList()));
+    }
 }

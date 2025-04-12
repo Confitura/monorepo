@@ -1,24 +1,31 @@
 package pl.confitura.jelatyna.infrastructure.fakedb;
 
 import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import pl.confitura.jelatyna.api.model.PresentationRequest;
+import pl.confitura.jelatyna.api.model.WorkshopRequest;
 import pl.confitura.jelatyna.login.facebook.FacebookService;
 import pl.confitura.jelatyna.login.github.GithubService;
 import pl.confitura.jelatyna.login.google.GoogleService;
+import pl.confitura.jelatyna.presentation.Presentation;
+import pl.confitura.jelatyna.presentation.PresentationRepository;
 import pl.confitura.jelatyna.user.User;
 import pl.confitura.jelatyna.user.UserRepository;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import static pl.confitura.jelatyna.infrastructure.Profiles.FAKE_SECURITY;
 
 @Slf4j
 @Configuration
 @Profile(FAKE_SECURITY)
+@RequiredArgsConstructor
 public class FakeUsers {
 
     private static final User FAKE_ADMIN = createFakeAdmin();
@@ -29,10 +36,8 @@ public class FakeUsers {
             FAKE_VOLUNTEER,
             FAKE_SPEAKER);
 
-    @Autowired
-    public FakeUsers(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private final UserRepository userRepository;
+    private final PresentationRepository presentationRepository;
 
     private static Map<String, User> mapBySystem(User... users) {
         Map<String, User> map = new HashMap<>();
@@ -51,7 +56,6 @@ public class FakeUsers {
         return user;
     }
 
-    private final UserRepository userRepository;
 
     @PostConstruct
     public void createFakeUsers() {
@@ -60,7 +64,8 @@ public class FakeUsers {
             userRepository.save(FAKE_VOLUNTEER);
             userRepository.save(FAKE_SPEAKER);
             log.info("saved fake users {},{},{}", FAKE_ADMIN, FAKE_VOLUNTEER, FAKE_SPEAKER);
-
+            presentationRepository.save(Presentation.from(new PresentationRequest("test", "test", "description", "begingner", "Polish", new String[]{"java"}), FAKE_SPEAKER, Set.of()));
+            presentationRepository.save(Presentation.from(new WorkshopRequest("test", "test", "description", "begingner", "Polish", new String[]{"java"}, false, 12.20, 45, 21), FAKE_SPEAKER, Set.of()));
         } catch (Exception e) {
             log.warn("exception occured", e);
         }

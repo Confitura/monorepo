@@ -13,8 +13,6 @@ import pl.confitura.jelatyna.user.UserRepository;
 public class AdminPresentationController {
 
     private final PresentationRepository repository;
-    private final UserRepository userRepository;
-    private final RatingService ratingService;
     private final TagRepository tagRepository;
 
     @PreAuthorize("@security.isAdmin()")
@@ -26,9 +24,9 @@ public class AdminPresentationController {
     }
 
     @PreAuthorize("@security.isAdmin()")
-    @PostMapping("/presentations/{presentationId}/unaccept")
+    @PostMapping("/presentations/{presentationId}/reject")
     @Transactional
-    public ResponseEntity<?> unaccept(@PathVariable String presentationId) {
+    public ResponseEntity<?> reject(@PathVariable String presentationId) {
         this.repository.findById(presentationId).setAccepted(false);
         return ResponseEntity.ok().build();
 

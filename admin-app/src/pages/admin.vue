@@ -1,8 +1,11 @@
 <script setup lang="ts">
 definePage({
   meta: {
-    title: 'Menu 2',
+    title: 'Admin',
     icon: 'mdi-view-list',
+    drawerIndex: 2,
+    breadcrumb: 'disabled',
+    requiresAdmin: true
   },
 })
 </script>

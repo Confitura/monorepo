@@ -124,20 +124,16 @@ onMounted(() => {
             </v-list-item>
           </v-list>
         </v-card>
-        <v-sheet>
-          <v-btn size="large" class="submit-new" to="/presentation-form">submit
-            new presentation
-          </v-btn>
-          <v-btn size="large" class="submit-new" to="/workshop-form">submit new
-            workshop
-          </v-btn>
-        </v-sheet>
       </v-col>
       <v-col cols="12" md="8">
 
         <v-container>
           <v-row>
             <h2> Workshops </h2>
+
+            <v-btn size="large" class="submit-new" to="/workshop-form">submit new
+              workshop
+            </v-btn>
           </v-row>
           <v-row v-for="workshop in workshops" :key="workshop.id">
             <v-col>
@@ -181,6 +177,10 @@ onMounted(() => {
           </v-row>
           <v-row>
             <h2> Presentations </h2>
+
+            <v-btn size="large" class="submit-new" to="/presentation-form">submit
+              new presentation
+            </v-btn>
           </v-row>
           <v-row v-for="presentation in presentations" :key="presentation.id">
             <v-col>

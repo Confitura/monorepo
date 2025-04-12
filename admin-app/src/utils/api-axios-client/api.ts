@@ -61,16 +61,16 @@ export interface AgendaEntry {
     'presentation'?: Presentation;
     /**
      * 
-     * @type {Set<PublicUser>}
-     * @memberof AgendaEntry
-     */
-    'speakers'?: Set<PublicUser>;
-    /**
-     * 
      * @type {number}
      * @memberof AgendaEntry
      */
     'timeSlotOrder'?: number;
+    /**
+     * 
+     * @type {Set<PublicUser>}
+     * @memberof AgendaEntry
+     */
+    'speakers'?: Set<PublicUser>;
 }
 /**
  * 
@@ -96,6 +96,194 @@ export interface AllegroContext {
      * @memberof AllegroContext
      */
     'buyerLogin'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface FullPresentation
+ */
+export interface FullPresentation {
+    /**
+     * 
+     * @type {string}
+     * @memberof FullPresentation
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FullPresentation
+     */
+    'title'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FullPresentation
+     */
+    'shortDescription'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FullPresentation
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FullPresentation
+     */
+    'level'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FullPresentation
+     */
+    'language'?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof FullPresentation
+     */
+    'tags'?: Array<string>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof FullPresentation
+     */
+    'isWorkshop'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof FullPresentation
+     */
+    'isFree'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof FullPresentation
+     */
+    'expectedPrice'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof FullPresentation
+     */
+    'durationInMinutes'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof FullPresentation
+     */
+    'maxGroupSize'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof FullPresentation
+     */
+    'status'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface FullUser
+ */
+export interface FullUser {
+    /**
+     * 
+     * @type {string}
+     * @memberof FullUser
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FullUser
+     */
+    'origin'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FullUser
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FullUser
+     */
+    'email'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FullUser
+     */
+    'bio'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FullUser
+     */
+    'username'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FullUser
+     */
+    'twitter'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FullUser
+     */
+    'github'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FullUser
+     */
+    'www'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof FullUser
+     */
+    'photo'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof FullUser
+     */
+    'isAdmin'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof FullUser
+     */
+    'isVolunteer'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof FullUser
+     */
+    'isSpeaker'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof FullUser
+     */
+    'privacyPolicyAccepted'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof FullUser
+     */
+    'isParticipant'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof FullUser
+     */
+    'hasAcceptedPresentation'?: boolean;
 }
 /**
  * 
@@ -1316,6 +1504,39 @@ export const AdminPresentationControllerApiAxiosParamCreator = function (configu
         },
         /**
          * 
+         * @param {string} presentationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        reject: async (presentationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'presentationId' is not null or undefined
+            assertParamExists('reject', 'presentationId', presentationId)
+            const localVarPath = `/presentations/{presentationId}/reject`
+                .replace(`{${"presentationId"}}`, encodeURIComponent(String(presentationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1349,39 +1570,6 @@ export const AdminPresentationControllerApiAxiosParamCreator = function (configu
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * 
-         * @param {string} presentationId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        unaccept: async (presentationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'presentationId' is not null or undefined
-            assertParamExists('unaccept', 'presentationId', presentationId)
-            const localVarPath = `/presentations/{presentationId}/unaccept`
-                .replace(`{${"presentationId"}}`, encodeURIComponent(String(presentationId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -1406,6 +1594,18 @@ export const AdminPresentationControllerApiFp = function(configuration?: Configu
         },
         /**
          * 
+         * @param {string} presentationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async reject(presentationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.reject(presentationId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminPresentationControllerApi.reject']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1414,18 +1614,6 @@ export const AdminPresentationControllerApiFp = function(configuration?: Configu
             const localVarAxiosArgs = await localVarAxiosParamCreator.saveTags(body, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminPresentationControllerApi.saveTags']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {string} presentationId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async unaccept(presentationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.unaccept(presentationId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AdminPresentationControllerApi.unaccept']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -1449,21 +1637,21 @@ export const AdminPresentationControllerApiFactory = function (configuration?: C
         },
         /**
          * 
+         * @param {string} presentationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        reject(presentationId: string, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.reject(presentationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {object} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         saveTags(body: object, options?: RawAxiosRequestConfig): AxiosPromise<object> {
             return localVarFp.saveTags(body, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} presentationId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        unaccept(presentationId: string, options?: RawAxiosRequestConfig): AxiosPromise<object> {
-            return localVarFp.unaccept(presentationId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1488,6 +1676,17 @@ export class AdminPresentationControllerApi extends BaseAPI {
 
     /**
      * 
+     * @param {string} presentationId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminPresentationControllerApi
+     */
+    public reject(presentationId: string, options?: RawAxiosRequestConfig) {
+        return AdminPresentationControllerApiFp(this.configuration).reject(presentationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @param {object} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1495,17 +1694,6 @@ export class AdminPresentationControllerApi extends BaseAPI {
      */
     public saveTags(body: object, options?: RawAxiosRequestConfig) {
         return AdminPresentationControllerApiFp(this.configuration).saveTags(body, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} presentationId 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AdminPresentationControllerApi
-     */
-    public unaccept(presentationId: string, options?: RawAxiosRequestConfig) {
-        return AdminPresentationControllerApiFp(this.configuration).unaccept(presentationId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -3375,6 +3563,35 @@ export const PresentationControllerApiAxiosParamCreator = function (configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        getAllPresentations: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/presentations`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         getAllTags: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/tags`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -3553,6 +3770,17 @@ export const PresentationControllerApiFp = function(configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        async getAllPresentations(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<FullPresentation>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAllPresentations(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PresentationControllerApi.getAllPresentations']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         async getAllTags(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Tag>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAllTags(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
@@ -3633,6 +3861,14 @@ export const PresentationControllerApiFactory = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        getAllPresentations(options?: RawAxiosRequestConfig): AxiosPromise<Array<FullPresentation>> {
+            return localVarFp.getAllPresentations(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         getAllTags(options?: RawAxiosRequestConfig): AxiosPromise<Array<Tag>> {
             return localVarFp.getAllTags(options).then((request) => request(axios, basePath));
         },
@@ -3698,6 +3934,16 @@ export class PresentationControllerApi extends BaseAPI {
      */
     public addRating(presentationId: string, rateRequest: RateRequest, options?: RawAxiosRequestConfig) {
         return PresentationControllerApiFp(this.configuration).addRating(presentationId, rateRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PresentationControllerApi
+     */
+    public getAllPresentations(options?: RawAxiosRequestConfig) {
+        return PresentationControllerApiFp(this.configuration).getAllPresentations(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4324,6 +4570,247 @@ export class TweeterControllerApi extends BaseAPI {
 
 
 /**
+ * UserAdminControllerApi - axios parameter creator
+ * @export
+ */
+export const UserAdminControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllUsers: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/users`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} userId 
+         * @param {boolean} isAdmin 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        markAsAdmin: async (userId: string, isAdmin: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'userId' is not null or undefined
+            assertParamExists('markAsAdmin', 'userId', userId)
+            // verify required parameter 'isAdmin' is not null or undefined
+            assertParamExists('markAsAdmin', 'isAdmin', isAdmin)
+            const localVarPath = `/users/{userId}/admin/{isAdmin}`
+                .replace(`{${"userId"}}`, encodeURIComponent(String(userId)))
+                .replace(`{${"isAdmin"}}`, encodeURIComponent(String(isAdmin)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} userId 
+         * @param {boolean} isVolunteer 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        markAsVolunteer: async (userId: string, isVolunteer: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'userId' is not null or undefined
+            assertParamExists('markAsVolunteer', 'userId', userId)
+            // verify required parameter 'isVolunteer' is not null or undefined
+            assertParamExists('markAsVolunteer', 'isVolunteer', isVolunteer)
+            const localVarPath = `/users/{userId}/volunteer/{isVolunteer}`
+                .replace(`{${"userId"}}`, encodeURIComponent(String(userId)))
+                .replace(`{${"isVolunteer"}}`, encodeURIComponent(String(isVolunteer)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * UserAdminControllerApi - functional programming interface
+ * @export
+ */
+export const UserAdminControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = UserAdminControllerApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAllUsers(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<FullUser>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAllUsers(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UserAdminControllerApi.getAllUsers']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} userId 
+         * @param {boolean} isAdmin 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async markAsAdmin(userId: string, isAdmin: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.markAsAdmin(userId, isAdmin, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UserAdminControllerApi.markAsAdmin']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} userId 
+         * @param {boolean} isVolunteer 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async markAsVolunteer(userId: string, isVolunteer: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.markAsVolunteer(userId, isVolunteer, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UserAdminControllerApi.markAsVolunteer']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * UserAdminControllerApi - factory interface
+ * @export
+ */
+export const UserAdminControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = UserAdminControllerApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllUsers(options?: RawAxiosRequestConfig): AxiosPromise<Array<FullUser>> {
+            return localVarFp.getAllUsers(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} userId 
+         * @param {boolean} isAdmin 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        markAsAdmin(userId: string, isAdmin: boolean, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.markAsAdmin(userId, isAdmin, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} userId 
+         * @param {boolean} isVolunteer 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        markAsVolunteer(userId: string, isVolunteer: boolean, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.markAsVolunteer(userId, isVolunteer, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * UserAdminControllerApi - object-oriented interface
+ * @export
+ * @class UserAdminControllerApi
+ * @extends {BaseAPI}
+ */
+export class UserAdminControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserAdminControllerApi
+     */
+    public getAllUsers(options?: RawAxiosRequestConfig) {
+        return UserAdminControllerApiFp(this.configuration).getAllUsers(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} userId 
+     * @param {boolean} isAdmin 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserAdminControllerApi
+     */
+    public markAsAdmin(userId: string, isAdmin: boolean, options?: RawAxiosRequestConfig) {
+        return UserAdminControllerApiFp(this.configuration).markAsAdmin(userId, isAdmin, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} userId 
+     * @param {boolean} isVolunteer 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserAdminControllerApi
+     */
+    public markAsVolunteer(userId: string, isVolunteer: boolean, options?: RawAxiosRequestConfig) {
+        return UserAdminControllerApiFp(this.configuration).markAsVolunteer(userId, isVolunteer, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
  * UserControllerApi - axios parameter creator
  * @export
  */
@@ -4844,43 +5331,6 @@ export const UserControllerApiAxiosParamCreator = function (configuration?: Conf
         },
         /**
          * 
-         * @param {string} userId 
-         * @param {boolean} isVolunteer 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        markAsVolunteer: async (userId: string, isVolunteer: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'userId' is not null or undefined
-            assertParamExists('markAsVolunteer', 'userId', userId)
-            // verify required parameter 'isVolunteer' is not null or undefined
-            assertParamExists('markAsVolunteer', 'isVolunteer', isVolunteer)
-            const localVarPath = `/users/{userId}/volunteer/{isVolunteer}`
-                .replace(`{${"userId"}}`, encodeURIComponent(String(userId)))
-                .replace(`{${"isVolunteer"}}`, encodeURIComponent(String(isVolunteer)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @param {User} user 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5195,19 +5645,6 @@ export const UserControllerApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @param {string} userId 
-         * @param {boolean} isVolunteer 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async markAsVolunteer(userId: string, isVolunteer: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.markAsVolunteer(userId, isVolunteer, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['UserControllerApi.markAsVolunteer']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
          * @param {User} user 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -5393,16 +5830,6 @@ export const UserControllerApiFactory = function (configuration?: Configuration,
          */
         getWorkshop(id: string, workshopId: string, options?: RawAxiosRequestConfig): AxiosPromise<InlineWorkshop> {
             return localVarFp.getWorkshop(id, workshopId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {string} userId 
-         * @param {boolean} isVolunteer 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        markAsVolunteer(userId: string, isVolunteer: boolean, options?: RawAxiosRequestConfig): AxiosPromise<object> {
-            return localVarFp.markAsVolunteer(userId, isVolunteer, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -5611,18 +6038,6 @@ export class UserControllerApi extends BaseAPI {
      */
     public getWorkshop(id: string, workshopId: string, options?: RawAxiosRequestConfig) {
         return UserControllerApiFp(this.configuration).getWorkshop(id, workshopId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {string} userId 
-     * @param {boolean} isVolunteer 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UserControllerApi
-     */
-    public markAsVolunteer(userId: string, isVolunteer: boolean, options?: RawAxiosRequestConfig) {
-        return UserControllerApiFp(this.configuration).markAsVolunteer(userId, isVolunteer, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

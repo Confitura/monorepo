@@ -20,7 +20,7 @@ public interface PresentationRepository extends Repository<Presentation, String>
     Presentation findById(String id);
 
     @PreAuthorize("@security.isAdmin()")
-    Iterable<Presentation> findAll();
+    List<Presentation> findAll();
 
     @Query("FROM Presentation ")
     Iterable<Presentation> findAllForV4p();

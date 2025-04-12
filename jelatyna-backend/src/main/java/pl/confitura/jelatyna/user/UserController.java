@@ -117,16 +117,6 @@ public class UserController {
         return ResponseEntity.ok(volunteers);
     }
 
-    @PostMapping("/users/{userId}/volunteer/{isVolunteer}")
-    @PreAuthorize("@security.isAdmin()")
-    @Transactional
-    public ResponseEntity<Object> markAsVolunteer(@PathVariable("userId") String userId,
-                                                  @PathVariable("isVolunteer") boolean isVolunteer) {
-        User user = repository.findById(userId);
-        user.setVolunteer(isVolunteer);
-        return ResponseEntity.ok().build();
-    }
-
     @PostMapping("/users/{userId}/presentations")
     @PreAuthorize("@security.isOwner(#userId)")
     public ResponseEntity<InlinePresentation> addPresentationToUser(@Valid @RequestBody PresentationRequest presentationRequest,
