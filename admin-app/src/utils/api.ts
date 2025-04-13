@@ -1,6 +1,6 @@
 import axios from "axios";
 import {
-  AdminPresentationControllerApi,
+  AdminPresentationControllerApi, DashboardControllerApi,
   PageControllerApi,
   PresentationControllerApi, UserAdminControllerApi,
   UserControllerApi
@@ -15,3 +15,4 @@ export let pagesApi = new PageControllerApi(undefined, import.meta.env.VITE_API_
 export let presentationApi = new PresentationControllerApi(undefined, import.meta.env.VITE_API_URL, api)
 export let adminPresentationApi = new AdminPresentationControllerApi(undefined, import.meta.env.VITE_API_URL, api)
 export let adminUsersApi = new UserAdminControllerApi(undefined, import.meta.env.VITE_API_URL, api)
+export let dashboardApi = new DashboardControllerApi(undefined, import.meta.env.VITE_API_URL, api)

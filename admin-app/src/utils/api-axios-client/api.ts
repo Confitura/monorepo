@@ -772,6 +772,12 @@ export interface Presentation {
      * @type {boolean}
      * @memberof Presentation
      */
+    'new'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Presentation
+     */
     'accepted'?: boolean;
     /**
      * 
@@ -779,12 +785,6 @@ export interface Presentation {
      * @memberof Presentation
      */
     'speaker'?: Presentation;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Presentation
-     */
-    'new'?: boolean;
 }
 /**
  * 
@@ -1054,6 +1054,31 @@ export interface StoreRequest {
 /**
  * 
  * @export
+ * @interface SubmittedStats
+ */
+export interface SubmittedStats {
+    /**
+     * 
+     * @type {number}
+     * @memberof SubmittedStats
+     */
+    'total'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof SubmittedStats
+     */
+    'presentations'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof SubmittedStats
+     */
+    'workshops'?: number;
+}
+/**
+ * 
+ * @export
  * @interface Tag
  */
 export interface Tag {
@@ -1293,6 +1318,12 @@ export interface User {
      * @type {boolean}
      * @memberof User
      */
+    'participant'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof User
+     */
     'admin'?: boolean;
     /**
      * 
@@ -1306,12 +1337,31 @@ export interface User {
      * @memberof User
      */
     'speaker'?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface UsersStats
+ */
+export interface UsersStats {
     /**
      * 
-     * @type {boolean}
-     * @memberof User
+     * @type {number}
+     * @memberof UsersStats
      */
-    'participant'?: boolean;
+    'total'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UsersStats
+     */
+    'admins'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UsersStats
+     */
+    'volunteers'?: number;
 }
 /**
  * 
@@ -1491,6 +1541,10 @@ export const AdminPresentationControllerApiAxiosParamCreator = function (configu
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -1524,6 +1578,10 @@ export const AdminPresentationControllerApiAxiosParamCreator = function (configu
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -1555,6 +1613,10 @@ export const AdminPresentationControllerApiAxiosParamCreator = function (configu
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -2072,6 +2134,10 @@ export const DashboardControllerApiAxiosParamCreator = function (configuration?:
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -2100,6 +2166,10 @@ export const DashboardControllerApiAxiosParamCreator = function (configuration?:
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -2130,6 +2200,10 @@ export const DashboardControllerApiAxiosParamCreator = function (configuration?:
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -2158,6 +2232,10 @@ export const DashboardControllerApiAxiosParamCreator = function (configuration?:
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -2188,6 +2266,10 @@ export const DashboardControllerApiAxiosParamCreator = function (configuration?:
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -2216,6 +2298,76 @@ export const DashboardControllerApiAxiosParamCreator = function (configuration?:
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        submissionStats: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/dashboard/submissions`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersStats: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/dashboard/users`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -2304,6 +2456,28 @@ export const DashboardControllerApiFp = function(configuration?: Configuration) 
             const localVarOperationServerBasePath = operationServerMap['DashboardControllerApi.registrations']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async submissionStats(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SubmittedStats>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.submissionStats(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DashboardControllerApi.submissionStats']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async usersStats(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UsersStats>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.usersStats(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DashboardControllerApi.usersStats']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -2361,6 +2535,22 @@ export const DashboardControllerApiFactory = function (configuration?: Configura
          */
         registrations(options?: RawAxiosRequestConfig): AxiosPromise<object> {
             return localVarFp.registrations(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        submissionStats(options?: RawAxiosRequestConfig): AxiosPromise<SubmittedStats> {
+            return localVarFp.submissionStats(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersStats(options?: RawAxiosRequestConfig): AxiosPromise<UsersStats> {
+            return localVarFp.usersStats(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2430,6 +2620,26 @@ export class DashboardControllerApi extends BaseAPI {
      */
     public registrations(options?: RawAxiosRequestConfig) {
         return DashboardControllerApiFp(this.configuration).registrations(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DashboardControllerApi
+     */
+    public submissionStats(options?: RawAxiosRequestConfig) {
+        return DashboardControllerApiFp(this.configuration).submissionStats(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DashboardControllerApi
+     */
+    public usersStats(options?: RawAxiosRequestConfig) {
+        return DashboardControllerApiFp(this.configuration).usersStats(options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -4593,6 +4803,10 @@ export const UserAdminControllerApiAxiosParamCreator = function (configuration?:
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -4630,6 +4844,10 @@ export const UserAdminControllerApiAxiosParamCreator = function (configuration?:
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -4666,6 +4884,10 @@ export const UserAdminControllerApiAxiosParamCreator = function (configuration?:
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     

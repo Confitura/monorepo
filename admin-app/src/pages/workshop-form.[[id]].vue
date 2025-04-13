@@ -62,7 +62,7 @@ function doSubmit() {
 function handleSubmit() {
   doSubmit()
     .then(_ => Notify.success(`Workshop ${workshop.value.title} saved`))
-    .then(_ => router.push('/homepage'))
+    .then(_ => router.back())
     .catch(error => console.error('Submission failed:', error))
 }
 

@@ -24,12 +24,11 @@ declare module 'vue-router/auto-routes' {
     '/admin/presentations': RouteRecordInfo<'/admin/presentations', '/admin/presentations', Record<never, never>, Record<never, never>>,
     '/admin/users': RouteRecordInfo<'/admin/users', '/admin/users', Record<never, never>, Record<never, never>>,
     '/dashboard': RouteRecordInfo<'/dashboard', '/dashboard', Record<never, never>, Record<never, never>>,
-    '/homepage': RouteRecordInfo<'/homepage', '/homepage', Record<never, never>, Record<never, never>>,
+    '/homepage.[[id]]': RouteRecordInfo<'/homepage.[[id]]', '/homepage/:id?', { id?: ParamValueZeroOrOne<true> }, { id?: ParamValueZeroOrOne<false> }>,
     '/login': RouteRecordInfo<'/login', '/login', Record<never, never>, Record<never, never>>,
     '/login.[provider]': RouteRecordInfo<'/login.[provider]', '/login/:provider', { provider: ParamValue<true> }, { provider: ParamValue<false> }>,
     '/presentation-form.[[id]]': RouteRecordInfo<'/presentation-form.[[id]]', '/presentation-form/:id?', { id?: ParamValueZeroOrOne<true> }, { id?: ParamValueZeroOrOne<false> }>,
     '/register': RouteRecordInfo<'/register', '/register', Record<never, never>, Record<never, never>>,
-    '/table': RouteRecordInfo<'/table', '/table', Record<never, never>, Record<never, never>>,
     '/workshop-form.[[id]]': RouteRecordInfo<'/workshop-form.[[id]]', '/workshop-form/:id?', { id?: ParamValueZeroOrOne<true> }, { id?: ParamValueZeroOrOne<false> }>,
   }
 }

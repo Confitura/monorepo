@@ -1,4 +1,9 @@
 <script setup lang="ts">
+import ChartUserTypes from "@/components/demo-charts/ChartUserTypes.vue";
+
+import {onMounted} from 'vue';
+import {dashboardApi} from "@/utils/api.ts";
+
 definePage({
   meta: {
     icon: 'mdi-monitor-dashboard',
@@ -8,51 +13,78 @@ definePage({
     requiresAdmin: true,
   },
 })
+
+
+async function loadStats() {
+  const {data: users} = await dashboardApi.usersStats();
+  const {data: submissions} = await dashboardApi.submissionStats();
+  stats.value = [
+    {
+      icon: 'mdi-account',
+      title: 'Users',
+      value: users.total!,
+      unit: '',
+      color: 'primary',
+      caption: 'Registered',
+    },
+    {
+      icon: 'mdi-presentation',
+      title: 'Submissions',
+      value: submissions.total!,
+      color: 'primary',
+      caption: `Workshops: ${submissions.workshops}, prestations: ${submissions.presentations}`,
+    }]
+
+}
+
+onMounted(() => {
+  loadStats();
+});
 const stats = ref([
   {
-    icon: 'mdi-web',
-    title: 'Bandwidth',
-    value: 230,
-    unit: 'GB',
+    icon: 'mdi-account',
+    title: 'Users',
+    value: 0,
+    unit: '',
     color: 'primary',
-    caption: 'Up: 100, Down: 130',
+    caption: 'Registered',
   },
   {
-    icon: 'mdi-rss',
+    icon: 'mdi-presentation',
     title: 'Submissions',
-    value: 108,
+    value: 0,
     color: 'primary',
-    caption: 'Too young, too naive',
+    caption: 'Workshops: 0, prestations: 0',
   },
-  {
-    icon: 'mdi-send',
-    title: 'Requests',
-    value: 1238,
-    color: 'warning',
-    caption: 'Limit: 1320',
-  },
-  {
-    icon: 'mdi-bell',
-    title: 'Messages',
-    value: 9042,
-    color: 'primary',
-    caption: 'Warnings: 300, erros: 47',
-  },
-  {
-    icon: 'mdi-github',
-    title: 'Github Stars',
-    value: NaN,
-    color: 'grey',
-    caption: 'API has no response',
-  },
-  {
-    icon: 'mdi-currency-cny',
-    title: 'Total Fee',
-    value: 2300,
-    unit: '￥',
-    color: 'error',
-    caption: 'Upper Limit: 2000 ￥',
-  },
+  // {
+  //   icon: 'mdi-send',
+  //   title: 'Requests',
+  //   value: 1238,
+  //   color: 'warning',
+  //   caption: 'Limit: 1320',
+  // },
+  // {
+  //   icon: 'mdi-bell',
+  //   title: 'Messages',
+  //   value: 9042,
+  //   color: 'primary',
+  //   caption: 'Warnings: 300, erros: 47',
+  // },
+  // {
+  //   icon: 'mdi-github',
+  //   title: 'Github Stars',
+  //   value: NaN,
+  //   color: 'grey',
+  //   caption: 'API has no response',
+  // },
+  // {
+  //   icon: 'mdi-currency-cny',
+  //   title: 'Total Fee',
+  //   value: 2300,
+  //   unit: '￥',
+  //   color: 'error',
+  //   caption: 'Upper Limit: 2000 ￥',
+  // },
 ])
 </script>
 
@@ -81,32 +113,35 @@ const stats = ref([
       </v-col>
     </v-row>
     <v-row>
-      <v-col cols="12" md="6" lg="12">
+      <!--      <v-col cols="12" md="6" lg="12">-->
+      <!--        <v-card class="pa-2">-->
+      <!--          <ChartLine />-->
+      <!--        </v-card>-->
+      <!--      </v-col>-->
+      <!--      <v-col cols="12" md="6" lg="4">-->
+      <!--        <v-card class="pa-2">-->
+      <!--          <ChartRadar />-->
+      <!--        </v-card>-->
+      <!--      </v-col>-->
+      <v-col cols="12" md="6" lg="4">
         <v-card class="pa-2">
-          <ChartLine />
+          <ChartUserTypes/>
         </v-card>
       </v-col>
       <v-col cols="12" md="6" lg="4">
         <v-card class="pa-2">
-          <ChartRadar />
+          <ChartSubmissionTypes/>
         </v-card>
       </v-col>
-      <v-col cols="12" md="6" lg="4">
-        <v-card class="pa-2">
-          <ChartPie />
-        </v-card>
-      </v-col>
-      <v-col cols="12" md="6" lg="4">
-        <v-card class="pa-2">
-          <ChartBar />
-        </v-card>
-      </v-col>
+      <!--      <v-col cols="12" md="6" lg="4">-->
+      <!--        <v-card class="pa-2">-->
+      <!--          <ChartBar />-->
+      <!--        </v-card>-->
+      <!--      </v-col>-->
     </v-row>
   </v-container>
 </template>
 
 <style scoped>
-.v-card:not(.stats-card) {
-  height: 340px;
-}
+
 </style>

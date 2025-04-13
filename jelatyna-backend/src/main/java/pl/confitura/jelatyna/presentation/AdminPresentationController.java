@@ -1,15 +1,15 @@
 package pl.confitura.jelatyna.presentation;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import pl.confitura.jelatyna.presentation.rating.RatingService;
-import pl.confitura.jelatyna.user.UserRepository;
 
 @RequiredArgsConstructor
 @RestController
+@SecurityRequirement(name = "bearerAuth")
 public class AdminPresentationController {
 
     private final PresentationRepository repository;

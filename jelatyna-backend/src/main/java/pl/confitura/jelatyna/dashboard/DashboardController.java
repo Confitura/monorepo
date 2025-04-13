@@ -2,16 +2,20 @@ package pl.confitura.jelatyna.dashboard;
 
 import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQuery;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pl.confitura.jelatyna.dashboard.model.SubmittedStats;
+import pl.confitura.jelatyna.dashboard.model.UsersStats;
 import pl.confitura.jelatyna.registration.QParticipationData;
 import pl.confitura.jelatyna.registration.demographic.QDemographicData;
 import pl.confitura.jelatyna.registration.voucher.QVoucher;
 
 import jakarta.persistence.EntityManager;
+
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -27,8 +31,21 @@ import static java.util.stream.Collectors.toList;
 @RestController
 @RequestMapping("dashboard")
 @PreAuthorize("@security.isAdmin()")
+@SecurityRequirement(name = "bearerAuth")
 class DashboardController {
+
     private final EntityManager entityManager;
+    private final DashboardRepository dashboardRepository;
+
+    @GetMapping("users")
+    public UsersStats usersStats() {
+        return dashboardRepository.getUserStats();
+    }
+
+    @GetMapping("submissions")
+    public SubmittedStats submissionStats() {
+        return dashboardRepository.getSubmittedStats();
+    }
 
     @GetMapping("tshirts")
     public Object getTShirtSizes() {
@@ -163,4 +180,5 @@ class DashboardController {
         data.add(0, new Object[]{"date", "total"});
         return data;
     }
+
 }

@@ -1,12 +1,8 @@
 <script setup lang="ts">
 import DialogConfirm from '@/components/DialogConfirm.vue'
 import type {DataTableHeaders} from '@/plugins/vuetify'
-import {
-  adminPresentationApi,
-  adminUsersApi,
-  presentationApi
-} from "@/utils/api.ts";
-import type {FullPresentation, FullUser} from "@/utils/api-axios-client";
+import {adminUsersApi} from "@/utils/api.ts";
+import type {FullUser} from "@/utils/api-axios-client";
 
 
 definePage({
@@ -34,6 +30,7 @@ function dialogFlipAdmin(user: FullUser) {
         }
       })
 }
+
 function dialogFlipVolunteer(user: FullUser) {
   let message = user.isVolunteer
       ? `Are you sure you want to remove volunteer rights from ${user.name}?`
@@ -138,6 +135,16 @@ onMounted(() => {
                     />
                   </template>
                   <span>Flip Admin</span>
+                </v-tooltip>
+                <v-tooltip location="top">
+                  <template #activator="{ props }">
+                    <v-btn
+                        icon="mdi-magnify-expand"
+                        v-bind="props"
+                        :to="`/homepage/${item.id}`"
+                    />
+                  </template>
+                  <span>show user</span>
                 </v-tooltip>
 
 

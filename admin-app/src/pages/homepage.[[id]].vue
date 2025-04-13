@@ -6,6 +6,7 @@ import type {
   InlineWorkshop,
   User
 } from "@/utils/api-axios-client";
+import {useRoute} from "vue-router";
 
 
 function sayHi() {
@@ -25,6 +26,10 @@ definePage({
   },
 })
 
+
+const route = useRoute()
+const userId = route.params?.id
+
 let presentations = ref<InlinePresentation[]>([])
 let workshops = ref<InlineWorkshop[]>([])
 let profile = ref<User>()
@@ -32,17 +37,17 @@ let profile = ref<User>()
 let user = useAuthStore().user
 
 function loadPresentations() {
-  usersApi.getUserPresentations(user!.jti)
+  usersApi.getUserPresentations(userId || user!.jti)
     .then(res => res.data)
     .then(data => presentations.value = data)
 
-  usersApi.getUserWorkshops(user!.jti)
+  usersApi.getUserWorkshops(userId || user!.jti)
     .then(res => res.data)
     .then(data => workshops.value = data)
 }
 
 function loadUserProfile() {
-  usersApi.getCurrentUser()
+  usersApi.getById(userId || user!.jti)
     .then(res => res.data)
     .then(data => profile.value = data)
 }

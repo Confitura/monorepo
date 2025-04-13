@@ -1,10 +1,10 @@
-import Homepage from '@/pages/homepage.vue'
+import HomepageId from '@/pages/homepage.[[id]].vue'
 import { fireEvent } from '@testing-library/vue'
 import { renderWithVuetify } from '@/../test/helpers'
 
 describe('homepage', () => {
   it('Notify correctly', async () => {
-    const { getByText, getByLabelText } = renderWithVuetify(Homepage)
+    const { getByText, getByLabelText } = renderWithVuetify(HomepageId)
     getByText('Opinionated Starter Template')
     const input = getByLabelText("What's your name?")
     await fireEvent.update(input, 'kingyue')

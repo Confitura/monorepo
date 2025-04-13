@@ -3,11 +3,11 @@ package pl.confitura.jelatyna.infrastructure.fakedb;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import pl.confitura.jelatyna.api.model.PresentationRequest;
 import pl.confitura.jelatyna.api.model.WorkshopRequest;
+import pl.confitura.jelatyna.infrastructure.security.TokenService;
 import pl.confitura.jelatyna.login.facebook.FacebookService;
 import pl.confitura.jelatyna.login.github.GithubService;
 import pl.confitura.jelatyna.login.google.GoogleService;
@@ -38,6 +38,7 @@ public class FakeUsers {
 
     private final UserRepository userRepository;
     private final PresentationRepository presentationRepository;
+    private final TokenService tokenService;
 
     private static Map<String, User> mapBySystem(User... users) {
         Map<String, User> map = new HashMap<>();
@@ -66,6 +67,9 @@ public class FakeUsers {
             log.info("saved fake users {},{},{}", FAKE_ADMIN, FAKE_VOLUNTEER, FAKE_SPEAKER);
             presentationRepository.save(Presentation.from(new PresentationRequest("test", "test", "description", "begingner", "Polish", new String[]{"java"}), FAKE_SPEAKER, Set.of()));
             presentationRepository.save(Presentation.from(new WorkshopRequest("test", "test", "description", "begingner", "Polish", new String[]{"java"}, false, 12.20, 45, 21), FAKE_SPEAKER, Set.of()));
+
+            String token = tokenService.asToken(FAKE_ADMIN);
+            log.info("fake admin token ===================\n{}\n====================", token);
         } catch (Exception e) {
             log.warn("exception occured", e);
         }

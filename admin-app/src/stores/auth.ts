@@ -35,7 +35,11 @@ export const useAuthStore = defineStore('auth', {
       this.token = token;
       this.user = extractUser(token);
       api.defaults.headers.common['Authorization'] = token;
-      router.push("/homepage")
+      if (this.user?.isAdmin) {
+        router.push("/dashboard")
+      } else {
+        router.push("/homepage")
+      }
     },
     updateRegistered(name: string) {
       this.user = {

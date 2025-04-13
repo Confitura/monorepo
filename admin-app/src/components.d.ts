@@ -19,6 +19,8 @@ declare module 'vue' {
     ChartLine: typeof import('./components/demo-charts/ChartLine.vue')['default']
     ChartPie: typeof import('./components/demo-charts/ChartPie.vue')['default']
     ChartRadar: typeof import('./components/demo-charts/ChartRadar.vue')['default']
+    ChartSubmissionTypes: typeof import('./components/demo-charts/ChartSubmissionTypes.vue')['default']
+    ChartUserTypes: typeof import('./components/demo-charts/ChartUserTypes.vue')['default']
     DialogConfirm: typeof import('./components/DialogConfirm.vue')['default']
     RouterWrapper: typeof import('./components/layout/RouterWrapper.vue')['default']
     StatsCard: typeof import('./components/StatsCard.vue')['default']

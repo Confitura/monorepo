@@ -1,5 +1,6 @@
 package pl.confitura.jelatyna.user;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import static java.util.stream.Collectors.toList;
 @PreAuthorize("@security.isAdmin()")
 @RequiredArgsConstructor
 @Slf4j
+@SecurityRequirement(name = "bearerAuth")
 public class UserAdminController {
 
     private final UserRepository repository;
