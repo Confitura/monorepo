@@ -92,7 +92,7 @@ onMounted(() => {
 
               <v-list-item-title>{{ profile.name }}</v-list-item-title>
 
-              <v-list-item-subtitle>Vue Creator</v-list-item-subtitle>
+              <v-list-item-subtitle>{{ profile.email }}</v-list-item-subtitle>
 
               <template v-slot:append>
                 <div class="justify-self-end">
