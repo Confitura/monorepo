@@ -1,4 +1,4 @@
 package pl.confitura.jelatyna.dashboard.model;
 
-public record SubmittedStats(long total, long presentations, long workshops) {
+public record SubmittedStats(Long total, Long presentations, Long workshops) {
 }
