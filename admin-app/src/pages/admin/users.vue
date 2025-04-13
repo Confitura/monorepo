@@ -50,6 +50,7 @@ function dialogFlipVolunteer(user: FullUser) {
 
 const headers: DataTableHeaders = [
   {title: 'Name', key: 'name'},
+  {title: 'Email', key: 'email'},
   {title: 'Origin', key: 'origin'},
   {title: 'Admin', key: 'isAdmin'},
   {title: 'Volunteer', key: 'isVolunteer'},

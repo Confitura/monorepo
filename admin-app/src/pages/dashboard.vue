@@ -143,5 +143,7 @@ const stats = ref([
 </template>
 
 <style scoped>
-
+.v-card:not(.stats-card) {
+  height: 340px;
+}
 </style>

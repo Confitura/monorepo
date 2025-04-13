@@ -73,13 +73,6 @@ onMounted(() => {
 
       <v-col cols="12" md="4">
         <v-card v-if="profile" class="mx-auto">
-          <template v-slot:prepend>
-            <v-icon size="x-large"></v-icon>
-          </template>
-
-          <v-card-text class="text-h5 py-2">
-            {{ profile.bio }}
-          </v-card-text>
 
           <v-card-actions>
             <v-list-item class="w-100">
@@ -96,11 +89,15 @@ onMounted(() => {
 
               <template v-slot:append>
                 <div class="justify-self-end">
-                  <v-btn>edit</v-btn>
+                  <v-btn to="/profile-form">edit</v-btn>
                 </div>
               </template>
             </v-list-item>
           </v-card-actions>
+          <v-card-text class="py-2">
+            {{ profile.bio }}
+          </v-card-text>
+
 
           <v-list>
             <v-list-item>

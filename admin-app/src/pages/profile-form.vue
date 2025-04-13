@@ -15,14 +15,14 @@ const validationRules = {
 };
 
 interface UserForm {
-  id: string | undefined;
+  id?: string | undefined;
   name: string;
   email: string;
-  bio: string;
-  username: string;
-  twitter: string;
-  github: string;
-  www: string;
+  bio?: string;
+  username?: string;
+  twitter?: string;
+  github?: string;
+  www?: string;
   privacyPolicyAccepted: boolean;
 }
 

@@ -23,7 +23,7 @@ router.beforeEach((to, from, next) => {
     return to.name.startsWith('/login') ? next() : next('/login');
   }
   if (currentUser.isNew) {
-    return to.name === '/register' ? next() : next('/register');
+    return to.name === '/profile-form' ? next() : next('/profile-form');
   }
   if (pathMeta?.requiresAdmin && !currentUser.isAdmin) {
     Notify.warning(`You do not have the required permissions to access this page`)
