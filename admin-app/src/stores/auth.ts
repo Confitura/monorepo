@@ -41,14 +41,6 @@ export const useAuthStore = defineStore('auth', {
         router.push("/homepage")
       }
     },
-    updateRegistered(name: string) {
-      this.user = {
-        ...this.user,
-        isNew: false,
-        sub: name
-      };
-      router.push("/homepage")
-    },
     logout() {
       localStorage.removeItem('token')
       this.token = null;

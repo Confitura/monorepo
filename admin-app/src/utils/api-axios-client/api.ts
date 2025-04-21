@@ -61,16 +61,16 @@ export interface AgendaEntry {
     'presentation'?: Presentation;
     /**
      * 
-     * @type {Set<PublicUser>}
-     * @memberof AgendaEntry
-     */
-    'speakers'?: Set<PublicUser>;
-    /**
-     * 
      * @type {number}
      * @memberof AgendaEntry
      */
     'timeSlotOrder'?: number;
+    /**
+     * 
+     * @type {Set<PublicUser>}
+     * @memberof AgendaEntry
+     */
+    'speakers'?: Set<PublicUser>;
 }
 /**
  * 
@@ -1037,19 +1037,6 @@ export interface SendMailsRequest {
      * @memberof SendMailsRequest
      */
     'messageInfoList'?: Array<MessageInfo>;
-}
-/**
- * 
- * @export
- * @interface StoreRequest
- */
-export interface StoreRequest {
-    /**
-     * 
-     * @type {File}
-     * @memberof StoreRequest
-     */
-    'file': File;
 }
 /**
  * 
@@ -4212,50 +4199,13 @@ export class PresentationControllerApi extends BaseAPI {
 export const ResourceControllerApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
-         * @param {string} userId 
-         * @param {StoreRequest} [storeRequest] 
+         * Upload a Multipart file for the partner\'s logo
+         * @summary Store partner logo
+         * @param {string} id ID of the partner
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        store: async (userId: string, storeRequest?: StoreRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'userId' is not null or undefined
-            assertParamExists('store', 'userId', userId)
-            const localVarPath = `/resources/{userId}`
-                .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(storeRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {string} id 
-         * @param {StoreRequest} [storeRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        storePartnerLogo: async (id: string, storeRequest?: StoreRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        storePartnerLogo: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('storePartnerLogo', 'id', id)
             const localVarPath = `/resources/partners/{id}`
@@ -4273,12 +4223,43 @@ export const ResourceControllerApiAxiosParamCreator = function (configuration?: 
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(storeRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Upload a Multipart file for the speaker\'s photo
+         * @summary Store speaker photo
+         * @param {string} userId ID of the user
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        storeUserProfilePicture: async (userId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'userId' is not null or undefined
+            assertParamExists('storeUserProfilePicture', 'userId', userId)
+            const localVarPath = `/resources/{userId}`
+                .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4296,29 +4277,29 @@ export const ResourceControllerApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ResourceControllerApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
-         * @param {string} userId 
-         * @param {StoreRequest} [storeRequest] 
+         * Upload a Multipart file for the partner\'s logo
+         * @summary Store partner logo
+         * @param {string} id ID of the partner
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async store(userId: string, storeRequest?: StoreRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.store(userId, storeRequest, options);
+        async storePartnerLogo(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.storePartnerLogo(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ResourceControllerApi.store']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ResourceControllerApi.storePartnerLogo']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
-         * @param {string} id 
-         * @param {StoreRequest} [storeRequest] 
+         * Upload a Multipart file for the speaker\'s photo
+         * @summary Store speaker photo
+         * @param {string} userId ID of the user
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async storePartnerLogo(id: string, storeRequest?: StoreRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.storePartnerLogo(id, storeRequest, options);
+        async storeUserProfilePicture(userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.storeUserProfilePicture(userId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ResourceControllerApi.storePartnerLogo']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['ResourceControllerApi.storeUserProfilePicture']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -4332,24 +4313,24 @@ export const ResourceControllerApiFactory = function (configuration?: Configurat
     const localVarFp = ResourceControllerApiFp(configuration)
     return {
         /**
-         * 
-         * @param {string} userId 
-         * @param {StoreRequest} [storeRequest] 
+         * Upload a Multipart file for the partner\'s logo
+         * @summary Store partner logo
+         * @param {string} id ID of the partner
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        store(userId: string, storeRequest?: StoreRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.store(userId, storeRequest, options).then((request) => request(axios, basePath));
+        storePartnerLogo(id: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.storePartnerLogo(id, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @param {string} id 
-         * @param {StoreRequest} [storeRequest] 
+         * Upload a Multipart file for the speaker\'s photo
+         * @summary Store speaker photo
+         * @param {string} userId ID of the user
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        storePartnerLogo(id: string, storeRequest?: StoreRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.storePartnerLogo(id, storeRequest, options).then((request) => request(axios, basePath));
+        storeUserProfilePicture(userId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.storeUserProfilePicture(userId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -4362,27 +4343,27 @@ export const ResourceControllerApiFactory = function (configuration?: Configurat
  */
 export class ResourceControllerApi extends BaseAPI {
     /**
-     * 
-     * @param {string} userId 
-     * @param {StoreRequest} [storeRequest] 
+     * Upload a Multipart file for the partner\'s logo
+     * @summary Store partner logo
+     * @param {string} id ID of the partner
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ResourceControllerApi
      */
-    public store(userId: string, storeRequest?: StoreRequest, options?: RawAxiosRequestConfig) {
-        return ResourceControllerApiFp(this.configuration).store(userId, storeRequest, options).then((request) => request(this.axios, this.basePath));
+    public storePartnerLogo(id: string, options?: RawAxiosRequestConfig) {
+        return ResourceControllerApiFp(this.configuration).storePartnerLogo(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * 
-     * @param {string} id 
-     * @param {StoreRequest} [storeRequest] 
+     * Upload a Multipart file for the speaker\'s photo
+     * @summary Store speaker photo
+     * @param {string} userId ID of the user
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ResourceControllerApi
      */
-    public storePartnerLogo(id: string, storeRequest?: StoreRequest, options?: RawAxiosRequestConfig) {
-        return ResourceControllerApiFp(this.configuration).storePartnerLogo(id, storeRequest, options).then((request) => request(this.axios, this.basePath));
+    public storeUserProfilePicture(userId: string, options?: RawAxiosRequestConfig) {
+        return ResourceControllerApiFp(this.configuration).storeUserProfilePicture(userId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

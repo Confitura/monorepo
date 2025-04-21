@@ -3,7 +3,7 @@ import {
   AdminPresentationControllerApi,
   DashboardControllerApi,
   PageControllerApi,
-  PresentationControllerApi,
+  PresentationControllerApi, ResourceControllerApi,
   TokenControllerApi,
   UserAdminControllerApi,
   UserControllerApi
@@ -20,3 +20,4 @@ export let adminPresentationApi = new AdminPresentationControllerApi(undefined, 
 export let adminUsersApi = new UserAdminControllerApi(undefined, import.meta.env.VITE_API_URL, api)
 export let dashboardApi = new DashboardControllerApi(undefined, import.meta.env.VITE_API_URL, api)
 export let tokenAPi = new TokenControllerApi(undefined, import.meta.env.VITE_API_URL, api)
+export let resourcesApi = new ResourceControllerApi(undefined, import.meta.env.VITE_API_URL, api)

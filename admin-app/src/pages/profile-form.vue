@@ -1,6 +1,9 @@
 <script setup lang="ts">
 
-import {tokenAPi, usersApi} from "@/utils/api.ts";
+import {resourcesApi, tokenAPi, usersApi} from "@/utils/api.ts";
+import {ref, onMounted} from 'vue';
+import {storeToRefs} from 'pinia';
+import {useAuthStore} from '@/stores/auth';
 
 let store = useAuthStore();
 const {user} = storeToRefs(store)
@@ -27,6 +30,7 @@ interface UserForm {
 }
 
 const xForm = ref()
+const profilePhoto = ref<File | null>(null)
 
 const form = ref<UserForm>({
   id: undefined,
@@ -40,13 +44,36 @@ const form = ref<UserForm>({
   privacyPolicyAccepted: false
 });
 
+function uploadProfilePhoto() {
+  if (profilePhoto.value) {
+      const formData = new FormData();
+      formData.append('file', profilePhoto.value);
+      const storeRequest = {
+        data: formData,
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      };
+      return resourcesApi.storeUserProfilePicture(user?.value?.jti || '', storeRequest);
+  }
+}
+
 const onSubmit = async () => {
   let valid = await xForm.value.validate()
 
   if (valid.valid) {
     usersApi.save(form.value)
+      .then(() => uploadProfilePhoto())
       .then(() => tokenAPi.refreshToken())
-      .then((res) => store.login(res.data));
+      .then((res) => store.login(res.data))
+      .catch((error) => {
+        if(error.status == 413){
+          Notify.error('Profile photo too large')
+        }else {
+          Notify.error('Failed to save user')
+          console.error('Failed to save user:', error)
+        }
+      })
   }
 };
 
@@ -116,6 +143,15 @@ onMounted(() => {
         prefix="https://"
       ></v-text-field>
 
+      <v-file-input
+        v-model="profilePhoto"
+        label="Profile Photo"
+        accept="image/*"
+        prepend-icon="mdi-camera"
+        show-size
+        truncate-length="15"
+      ></v-file-input>
+
       <v-checkbox v-model="form.privacyPolicyAccepted"
                   :rules="validationRules.privacy"
                   required>
@@ -130,5 +166,3 @@ onMounted(() => {
     </v-container>
   </v-form>
 </template>
-
-

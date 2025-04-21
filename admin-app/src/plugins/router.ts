@@ -26,7 +26,7 @@ router.beforeEach((to, from, next) => {
   if (pathMeta?.requiresAdmin && !currentUser.isAdmin) {
     Notify.warning(`You do not have the required permissions to access this page`)
     console.log("You do not have the required permissions to access this page", to)
-    return null;
+    return next(false);
   }
   return next();
 });

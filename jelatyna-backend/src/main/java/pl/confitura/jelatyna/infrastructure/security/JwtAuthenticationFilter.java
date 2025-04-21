@@ -51,10 +51,9 @@ public class JwtAuthenticationFilter extends AuthenticationFilter {
     private void doAuthorize(HttpServletRequest request) {
         String authorization = request.getHeader("Authorization");
         if (authorization != null) {
-            JelatynaPrincipal principal = tokenService.toUser(authorization.replaceFirst("Bearer ", ""));
-            SecurityContextHolder.getContext().setAuthentication(
-                    new PreAuthenticatedAuthenticationToken(principal, "", getAuthorities(principal))
-            );
+            var principal = tokenService.toUser(authorization.replaceFirst("Bearer ", ""));
+            var authenticationToken = new PreAuthenticatedAuthenticationToken(principal, "", getAuthorities(principal));
+            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         }
     }
 

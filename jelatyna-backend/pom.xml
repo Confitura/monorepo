@@ -25,7 +25,7 @@
         <scribejava.version>8.3.3</scribejava.version>
         <expiringmap.version>0.5.7</expiringmap.version>
         <jjwt.version>0.12.6</jjwt.version>
-        <guava.version>22.0</guava.version>
+        <guava.version>33.4.8-jre</guava.version>
 
         <junit.jupiter.version>5.1.0</junit.jupiter.version>
         <junit.vintage.version>5.1.0</junit.vintage.version>
