@@ -61,16 +61,16 @@ export interface AgendaEntry {
     'presentation'?: Presentation;
     /**
      * 
-     * @type {number}
-     * @memberof AgendaEntry
-     */
-    'timeSlotOrder'?: number;
-    /**
-     * 
      * @type {Set<PublicUser>}
      * @memberof AgendaEntry
      */
     'speakers'?: Set<PublicUser>;
+    /**
+     * 
+     * @type {number}
+     * @memberof AgendaEntry
+     */
+    'timeSlotOrder'?: number;
 }
 /**
  * 
@@ -1318,12 +1318,6 @@ export interface User {
      * @type {boolean}
      * @memberof User
      */
-    'participant'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof User
-     */
     'admin'?: boolean;
     /**
      * 
@@ -1337,6 +1331,12 @@ export interface User {
      * @memberof User
      */
     'speaker'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof User
+     */
+    'participant'?: boolean;
 }
 /**
  * 
@@ -4677,6 +4677,103 @@ export class RoomControllerApi extends BaseAPI {
      */
     public saveRoom(room: Room, options?: RawAxiosRequestConfig) {
         return RoomControllerApiFp(this.configuration).saveRoom(room, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * TokenControllerApi - axios parameter creator
+ * @export
+ */
+export const TokenControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        refreshToken: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/tokens/refresh-token`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * TokenControllerApi - functional programming interface
+ * @export
+ */
+export const TokenControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = TokenControllerApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async refreshToken(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.refreshToken(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['TokenControllerApi.refreshToken']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * TokenControllerApi - factory interface
+ * @export
+ */
+export const TokenControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = TokenControllerApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        refreshToken(options?: RawAxiosRequestConfig): AxiosPromise<string> {
+            return localVarFp.refreshToken(options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * TokenControllerApi - object-oriented interface
+ * @export
+ * @class TokenControllerApi
+ * @extends {BaseAPI}
+ */
+export class TokenControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TokenControllerApi
+     */
+    public refreshToken(options?: RawAxiosRequestConfig) {
+        return TokenControllerApiFp(this.configuration).refreshToken(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

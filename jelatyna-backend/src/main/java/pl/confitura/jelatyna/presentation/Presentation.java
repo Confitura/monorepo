@@ -99,7 +99,7 @@ public class Presentation {
                 .setTags(tags)
                 .setWorkshop(true)
                 .setIsFree(workshopRequest.isFree())
-                .setExpectedPrice(workshopRequest.expectedPrice())
+                .setExpectedPrice(workshopRequest.isFree() ? 0 : workshopRequest.expectedPrice())
                 .setDurationInMinutes(workshopRequest.durationInMinutes())
                 .setMaxGroupSize(workshopRequest.maxGroupSize())
                 .setStatus(STATUS_REPORTED);

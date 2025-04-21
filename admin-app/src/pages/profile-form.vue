@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import {usersApi} from "@/utils/api.ts";
+import {tokenAPi, usersApi} from "@/utils/api.ts";
 
 let store = useAuthStore();
 const {user} = storeToRefs(store)
@@ -45,9 +45,8 @@ const onSubmit = async () => {
 
   if (valid.valid) {
     usersApi.save(form.value)
-      .then(
-        () => store.updateRegistered(form.value.name),
-        console.log);
+      .then(() => tokenAPi.refreshToken())
+      .then((res) => store.login(res.data));
   }
 };
 
@@ -74,14 +73,14 @@ onMounted(() => {
     <v-container>
       <v-text-field
         v-model="form.name"
-        label="Name"
+        label="* Name"
         required
         :rules="validationRules.name"
       ></v-text-field>
 
       <v-text-field
         v-model="form.email"
-        label="Email"
+        label="* Email"
         type="email"
         :rules="validationRules.email"
         required
@@ -122,7 +121,7 @@ onMounted(() => {
                   required>
         <template v-slot:label>
           <div>
-            I accept the <a href="/privacy-policy"> Privacy policy</a>
+            * I accept the <a href="/privacy-policy"> Privacy policy</a>
           </div>
         </template>
       </v-checkbox>

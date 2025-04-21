@@ -78,6 +78,7 @@ public class FakeUsers {
     private static User createFakeAdmin() {
 
         return new User()
+                .setId("00000000-0000-0000-0000-000000000001")
                 .setOrigin(GoogleService.SYSTEM)
                 .setName("Admin")
                 .setEmail("Admin@example.com")
@@ -89,6 +90,7 @@ public class FakeUsers {
 
     private static User createFakeVolunteer() {
         return new User()
+                .setId("00000000-0000-0000-0000-000000000002")
                 .setOrigin(FacebookService.SYSTEM)
                 .setName("volunteer")
                 .setEmail("volunteer@example.com")
@@ -100,6 +102,7 @@ public class FakeUsers {
 
     private static User createFakeSpeaker() {
         return new User()
+                .setId("00000000-0000-0000-0000-000000000003")
                 .setOrigin(GithubService.SYSTEM)
                 .setName("Speaker")
                 .setEmail("Speaker@example.com")

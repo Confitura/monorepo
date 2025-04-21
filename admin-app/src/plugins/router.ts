@@ -3,8 +3,6 @@ import {routes} from 'vue-router/auto-routes'
 import {setupLayouts} from 'virtual:meta-layouts'
 import type {RouteMeta} from "vue-router";
 
-let publicPaths = ['/privacy-policy']
-
 let router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: setupLayouts(routes),

@@ -3,10 +3,10 @@ package pl.confitura.jelatyna.user;
 import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 import jakarta.persistence.*;
 
-import org.hibernate.annotations.GenericGenerator;
 import org.springframework.beans.factory.annotation.Value;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -28,11 +28,9 @@ import pl.confitura.jelatyna.registration.ParticipationData;
 @Table(name = "users")
 public class User extends AuditedEntity {
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(columnDefinition = "varchar(255)")
     @ToString.Include
-    private String id;
+    private String id = UUID.randomUUID().toString();
     @ToString.Include
     private String origin;
     private String name;
