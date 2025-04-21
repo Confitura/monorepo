@@ -162,7 +162,7 @@ public class Presentation {
         this.level = workshopRequest.level();
         this.language = workshopRequest.language();
         this.isFree = workshopRequest.isFree();
-        this.expectedPrice = workshopRequest.expectedPrice();
+        this.expectedPrice = workshopRequest.isFree() ? 0 : workshopRequest.expectedPrice();
         this.durationInMinutes = workshopRequest.durationInMinutes();
         this.maxGroupSize = workshopRequest.maxGroupSize();
 
