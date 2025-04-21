@@ -10,7 +10,7 @@ dashboardApi.submissionStats()
     };
     option.value.series = [
       {
-        name: 'WEEKLY WRITE ARTICLES',
+        name: 'Submitted workshops/presentations count',
         type: 'pie',
         roseType: 'radius',
         radius: [15, 95],
@@ -36,7 +36,7 @@ const option = ref<ECOption>({
   },
   series: [
     {
-      name: 'WEEKLY WRITE ARTICLES',
+      name: 'Submitted workshops/presentations count',
       type: 'pie',
       roseType: 'radius',
       radius: [15, 95],

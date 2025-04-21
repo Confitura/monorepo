@@ -11,7 +11,7 @@ dashboardApi.usersStats()
     };
     option.value.series = [
       {
-        name: 'WEEKLY WRITE ARTICLES',
+        name: 'User types',
         type: 'pie',
         roseType: 'radius',
         radius: [15, 95],
@@ -38,7 +38,7 @@ const option = ref<ECOption>({
   },
   series: [
     {
-      name: 'WEEKLY WRITE ARTICLES',
+      name: 'User types',
       type: 'pie',
       roseType: 'radius',
       radius: [15, 95],
