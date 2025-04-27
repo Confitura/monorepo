@@ -38,7 +38,7 @@ public class TokenService {
                 .claim("isNew", !user.getPrivacyPolicyAccepted())
                 .id(user.getId())
                 .subject(user.getName())
-                .expiration(Date.from(LocalDateTime.now().plusHours(10).toInstant(ZoneOffset.UTC)))
+                .expiration(Date.from(LocalDateTime.now().plusMonths(12).toInstant(ZoneOffset.UTC)))
                 .signWith(getKey())
                 .compact();
     }
