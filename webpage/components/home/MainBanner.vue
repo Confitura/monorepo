@@ -4,7 +4,7 @@
     <div class="container">
       <div class="info">
         <div class="slogan">
-          <h1 class="h1">It is not rocket science!</h1>
+          <h1 class="h1">Confitura Revolution!</h1>
         </div>
         <!--        <TheTimer />-->
         <div class="info__live">
@@ -13,7 +13,7 @@
         </div>
 
         <div class="info__long">
-          We look forward to seeing you again!
+          We look forward to seeing you 19-20.09.2025!
         </div>
         <div class="info__long">
           If your company wants to join us for next year's edition, here is our contact mail:

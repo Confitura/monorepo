@@ -13,19 +13,19 @@
         <img class="page-image" src="../assets/planety_faq.svg" alt="planets" />
       </slot>
       <slot v-if="type === 'coder'">
-        <img
-          src="../assets/small_planet.svg"
-          class="header__planet"
-          alt="small planet"
-        />
-        <img
-          src="../assets/astronaut_comp.svg"
-          class="header-img"
-          alt="astronaut coder"
-        />
+<!--        <img-->
+<!--          src="../assets/small_planet.svg"-->
+<!--          class="header__planet"-->
+<!--          alt="small planet"-->
+<!--        />-->
+<!--        <img-->
+<!--          src="../assets/astronaut_comp.svg"-->
+<!--          class="header-img"-->
+<!--          alt="astronaut coder"-->
+<!--        />-->
       </slot>
       <slot v-if="type === 'peace'">
-        <img src="~/assets/astronaut.svg" class="header__peace" />
+<!--        <img src="~/assets/astronaut.svg" class="header__peace" />-->
       </slot>
     </div>
   </header>
