@@ -4,7 +4,7 @@
     <div class="container">
       <div class="info">
         <div class="slogan">
-          <h1 class="h1">Confitura Revolution!</h1>
+          <h1 class="h1">Confitura Revolutions!</h1>
         </div>
         <!--        <TheTimer />-->
         <div class="info__live">
