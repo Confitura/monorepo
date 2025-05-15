@@ -26,7 +26,10 @@
       </div>
       <HomeMainBannerIllustration/>
     </div>
-    <img class="rocket-icon" src="~/assets/rocket.svg" alt="rocket"/>
+    <!--    <img class="scroll-indicator-icon" src="~/assets/rocket.svg" alt="rocket"/>-->
+    <div class=" scroll-indicator-icon">
+      <i class="fa-solid fa-arrow-down"></i>
+    </div>
   </section>
 </template>
 
@@ -172,7 +175,10 @@ onBeforeUnmount(() => {
   color: #ffffff;
 }
 
-.rocket-icon {
+.scroll-indicator-icon {
+  font-size: 40px;
+  width: 1em;
+  color: white;
   display: none;
   @include md() {
     display: block;
