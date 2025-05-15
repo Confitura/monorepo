@@ -27,7 +27,7 @@ import { ref, onMounted, onBeforeUnmount } from 'vue'
 import dayjs from 'dayjs'
 
 // Target date for the countdown
-const start = ref(dayjs('2025-06-24T09:00:00')) // Using the date from MainBanner.vue (June 24, 2025)
+const start = ref(dayjs('2025-09-19T09:00:00')) // Using the date from MainBanner.vue (June 24, 2025)
 const now = ref(dayjs())
 const days = ref(0)
 const hours = ref(0)
