@@ -85,7 +85,6 @@ onBeforeUnmount(() => {
   background-image: url("~/assets/confitura tlo 2.png");
   background-repeat: no-repeat;
   background-size: cover;
-  backdrop-filter: blur(5px);
   box-sizing: border-box;
   min-height: calc(100vh - 15vh);
   padding-top: 15vh;
@@ -117,7 +116,7 @@ onBeforeUnmount(() => {
 }
 
 .info {
-  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
   padding: 2rem;
   z-index: 20;
   text-align: left;
