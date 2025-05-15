@@ -1,30 +1,32 @@
 <template>
   <section class="banner" id="home" ref="section">
-<!--    <HomeMainBannerStars />-->
+    <!--    <HomeMainBannerStars />-->
     <div class="container">
       <div class="info">
         <div class="slogan">
-          <h1 class="h1">Confitura Revolutions!</h1>
+          <h1 class="h1">Confitura 2025, Revolutions!</h1>
         </div>
-        <!--        <TheTimer />-->
-        <div class="info__live">
-          <div class="info__live-text">CONFITURA 2025</div>
-          <!--          <a class="info__live-link" href="https://2023.confitura.pl/v4p" target="_blank">vote here</a>-->
-        </div>
-
         <div class="info__long">
           We look forward to seeing you 19-20.09.2025!
+          <!--        <div class="info__live">-->
+          <!--          <div class="info__live-text">CONFITURA 2025</div>-->
+          <!--          <a class="info__live-link" href="https://2023.confitura.pl/v4p" target="_blank">vote here</a>-->
+          <!--        </div>-->
+          <TheTimer/>
+
         </div>
         <div class="info__long">
-          If your company wants to join us for next year's edition, here is our contact mail:
-          <a href="mailto:confitura[at]confitura[dot]pl"
-          >confitura[at]confitura[dot]pl</a
-          >; we will be happy to start a new friendship.
+          <small>
+            If your company wants to join us for next year's edition, here is our contact mail:
+            <a href="mailto:confitura[at]confitura[dot]pl"
+            >confitura[at]confitura[dot]pl</a
+            >; we will be happy to start a new friendship.
+          </small>
         </div>
       </div>
-      <HomeMainBannerIllustration />
+      <HomeMainBannerIllustration/>
     </div>
-    <img class="rocket-icon" src="~/assets/rocket.svg" alt="rocket" />
+    <img class="rocket-icon" src="~/assets/rocket.svg" alt="rocket"/>
   </section>
 </template>
 
@@ -112,6 +114,7 @@ onBeforeUnmount(() => {
 
 .info {
   background-color: rgba(0, 0, 0, 0.6);
+  padding: 2rem;
   z-index: 20;
   text-align: left;
   display: grid;
