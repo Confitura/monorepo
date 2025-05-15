@@ -78,6 +78,7 @@ onBeforeUnmount(() => {
 @use "~/assets/colors" as *;
 
 .banner {
+  background-color: #000000;
   background-image: url("~/assets/confitura tlo 2.png");
   background-repeat: no-repeat;
   background-size: cover;
