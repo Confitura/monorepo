@@ -74,6 +74,10 @@ onMounted(() => {
 .page-header__container {
   width: 100%;
   background-color: #000000;
+  
+  background-image: url("~/assets/tlo 3.png");
+  background-size: cover;
+  background-position: center;
 }
 
 .page-header--crop {
