@@ -28,6 +28,7 @@ declare module 'vue-router/auto-routes' {
     '/login': RouteRecordInfo<'/login', '/login', Record<never, never>, Record<never, never>>,
     '/login.[provider]': RouteRecordInfo<'/login.[provider]', '/login/:provider', { provider: ParamValue<true> }, { provider: ParamValue<false> }>,
     '/presentation-form.[[id]]': RouteRecordInfo<'/presentation-form.[[id]]', '/presentation-form/:id?', { id?: ParamValueZeroOrOne<true> }, { id?: ParamValueZeroOrOne<false> }>,
+    '/privacy-policy': RouteRecordInfo<'/privacy-policy', '/privacy-policy', Record<never, never>, Record<never, never>>,
     '/profile-form': RouteRecordInfo<'/profile-form', '/profile-form', Record<never, never>, Record<never, never>>,
     '/workshop-form.[[id]]': RouteRecordInfo<'/workshop-form.[[id]]', '/workshop-form/:id?', { id?: ParamValueZeroOrOne<true> }, { id?: ParamValueZeroOrOne<false> }>,
   }
