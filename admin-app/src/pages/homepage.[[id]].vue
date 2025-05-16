@@ -102,15 +102,15 @@ onMounted(() => {
           <v-list>
             <v-list-item>
               <template v-slot:prepend>
-                <v-icon icon="mdi-alpha-x"></v-icon>
+                <v-icon icon="mdi-account"></v-icon>
               </template>
-              <v-list-item-title v-text="profile.twitter"></v-list-item-title>
+              <v-list-item-title v-text="profile.username"></v-list-item-title>
             </v-list-item>
             <v-list-item>
               <template v-slot:prepend>
-                <v-icon icon="mdi-facebook"></v-icon>
+                <v-icon icon="mdi-alpha-x"></v-icon>
               </template>
-              <v-list-item-title v-text="profile.username"></v-list-item-title>
+              <v-list-item-title v-text="profile.twitter"></v-list-item-title>
             </v-list-item>
             <v-list-item>
               <template v-slot:prepend>
