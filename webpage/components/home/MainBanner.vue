@@ -126,6 +126,26 @@ onBeforeUnmount(() => {
     margin-left: 50px;
     grid-row-gap: 4rem;
   }
+  
+  @include sm-only() {
+    font-size: 0.8em;
+
+    .slogan {
+      font-size: 1.6rem;
+    }
+
+    .info__live-text {
+      font-size: 2rem;
+    }
+
+    .info__live-link {
+      font-size: 1.6rem;
+    }
+
+    .info__long {
+      font-size: 1.36rem;
+    }
+  }
 }
 
 .slogan {
