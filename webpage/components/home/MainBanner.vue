@@ -8,10 +8,6 @@
         </div>
         <div class="info__long">
           We look forward to seeing you 19-20.09.2025!
-          <!--        <div class="info__live">-->
-          <!--          <div class="info__live-text">CONFITURA 2025</div>-->
-          <!--          <a class="info__live-link" href="https://2023.confitura.pl/v4p" target="_blank">vote here</a>-->
-          <!--        </div>-->
           <TheTimer/>
 
         </div>
