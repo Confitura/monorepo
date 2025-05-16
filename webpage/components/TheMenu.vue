@@ -23,7 +23,7 @@ let items: MenuItem[] = [
   // { label: 'scanner', url: '/new-scanner', visible: () => isVolunteer() },
   { label: 'home', url: '/#home' },
   { label: 'about us', url: '/about' },
-  // { label: 'venue', url: '/venue' },
+  { label: 'call for papers', url: 'https://app.confitura.pl/' },
   // { label: 'tickets', url: '/tickets' },
   // { label: "vote", url: "/v4p" },
   // { label: 'partners', url: '/partners' },
