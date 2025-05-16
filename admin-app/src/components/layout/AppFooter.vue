@@ -5,7 +5,6 @@
       :defaults="{ VBtn: { variant: 'text', size: 'x-small' } }"
     >
       <AppNotification />
-      <ButtonSettings />
     </v-defaults-provider>
   </v-footer>
 </template>

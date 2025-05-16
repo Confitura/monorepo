@@ -30,7 +30,7 @@ const custom: IconSet = {
 }
 
 const theme = {
-  primary: localStorage.getItem('theme-primary') || '#1697f6',
+  primary: '#ED1C46FF',
 }
 
 export default createVuetify({
