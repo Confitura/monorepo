@@ -44,7 +44,7 @@ onMounted(async () => {
   <v-container fluid v-if="pageData">
     <v-row justify="center">
       <v-col cols="12" md="8" lg="6">
-        <v-card class="pa-4">
+        <v-card class="pa-4 markdown">
           <vue-markdown :source="pageData" :options="markdownOptions"/>
         </v-card>
       </v-col>
@@ -58,47 +58,57 @@ onMounted(async () => {
     icon="custom:confitura"
   />
 </template>
-<style>
 
-h1, h2, h3, h4, h5, h6 {
+<style >
+.markdown h1,
+.markdown h2,
+.markdown h3,
+.markdown h4,
+.markdown h5,
+.markdown h6 {
   margin: 1.5em 0 0.5em !important;
   padding-inline-start: 30px;
 }
 
-p {
+.markdown p {
   margin: 1em 0 !important;
   padding-inline-start: 30px;
 }
 
-blockquote {
+.markdown blockquote {
   margin: 1em 0 !important;
   padding: 0.5em 1em !important;
   border-left: 4px solid rgba(var(--v-theme-primary), 0.5) !important;
   background-color: rgba(var(--v-theme-primary), 0.05);
 }
 
-ul, ol {
+.markdown ul,
+.markdown ol {
   margin: 1em 0 !important;
   padding-left: 30px !important;
 }
 
-li {
+.markdown li {
   padding-inline-start: 10px !important;
   margin-bottom: 0.5em !important;
 }
 
-ul ul, ol ol, ul ol, ol ul {
+.markdown ul ul,
+.markdown ol ol,
+.markdown ul ol,
+.markdown ol ul {
   margin: 0.5em 0 !important;
 }
 
-pre, code {
+.markdown pre,
+.markdown code {
   background-color: rgba(var(--v-theme-surface), 0.12);
   padding: 0.2em 0.4em;
   border-radius: 4px;
   font-family: monospace;
 }
 
-pre code {
+.markdown pre code {
   padding: 1em;
   display: block;
   overflow-x: auto;
