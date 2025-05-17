@@ -48,7 +48,7 @@ public class Presentation {
     @NotBlank
     private String title;
     @NotBlank
-    @Column(length = 300)
+    @Column(columnDefinition = "text")
     private String shortDescription;
     @NotBlank()
     @Column(columnDefinition = "text")
