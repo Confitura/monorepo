@@ -51,7 +51,7 @@ public class Presentation {
     @Column(length = 300)
     private String shortDescription;
     @NotBlank()
-    @Column(length = 1000)
+    @Column(columnDefinition = "text")
     private String description;
     @NotBlank
     private String level;
