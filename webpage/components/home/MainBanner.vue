@@ -4,19 +4,24 @@
     <div class="container">
       <div class="info">
         <div class="slogan">
-          <h1 class="h1">Confitura 2025, Revolutions!</h1>
+          <h1 class="h1">Confitura 2025 - Escape the Loop. Join the Revolution.</h1>
+        </div>
+        <div class="info__live">
+          <div class="info__live-text">> Join as a speaker <</div>
+          <a class="info__live-link" href="https://app.confitura.pl/" target="_blank">submit here</a>
         </div>
         <div class="info__long">
-          We look forward to seeing you 19-20.09.2025!
+          <p> Warsaw | September 19–20, 2025 </p>
           <TheTimer/>
+          <p>ADN Conference Center, Grzybowska 5</p>
+
 
         </div>
         <div class="info__long">
           <small>
-            If your company wants to join us for next year's edition, here is our contact mail:
-            <a href="mailto:confitura[at]confitura[dot]pl"
-            >confitura[at]confitura[dot]pl</a
-            >; we will be happy to start a new friendship.
+            Want to sponsor Confitura? Drop us a line:
+            <a href="mailto:confitura[at]confitura[dot]pl">confitura[at]confitura[dot]pl</a>
+            - let’s team up!
           </small>
         </div>
       </div>
@@ -122,7 +127,7 @@ onBeforeUnmount(() => {
     margin-left: 50px;
     grid-row-gap: 4rem;
   }
-  
+
   @include sm-only() {
     font-size: 0.8em;
 
@@ -227,6 +232,7 @@ a {
 }
 
 .info__live-text {
+  color: white;
   text-transform: uppercase;
   font-weight: bold;
   font-size: 2.5rem;
