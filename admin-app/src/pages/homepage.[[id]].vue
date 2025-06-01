@@ -28,32 +28,32 @@ definePage({
 
 
 const route = useRoute()
-const userId = route.params?.id
 
 let presentations = ref<InlinePresentation[]>([])
 let workshops = ref<InlineWorkshop[]>([])
 let profile = ref<User>()
 
 let user = useAuthStore().user
+const userId = route.params?.id || user!.jti
 
 function loadPresentations() {
-  usersApi.getUserPresentations(userId || user!.jti)
+  usersApi.getUserPresentations(userId )
     .then(res => res.data)
     .then(data => presentations.value = data)
 
-  usersApi.getUserWorkshops(userId || user!.jti)
+  usersApi.getUserWorkshops(userId)
     .then(res => res.data)
     .then(data => workshops.value = data)
 }
 
 function loadUserProfile() {
-  usersApi.getById(userId || user!.jti)
+  usersApi.getById(userId)
     .then(res => res.data)
     .then(data => profile.value = data)
 }
 
 function deletePresentation(presentation: InlinePresentation) {
-  usersApi.deletePresentation(user!.jti, presentation.id!)
+  usersApi.deletePresentation(userId, presentation.id!)
     .then(_ => Notify.success(`"${presentation.title}" deleted`))
     .then(_ => loadPresentations())
 }

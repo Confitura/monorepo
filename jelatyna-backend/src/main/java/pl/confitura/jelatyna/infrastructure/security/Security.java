@@ -28,6 +28,9 @@ public class Security {
     }
 
     public boolean presentationOwnedByUser(String presentationId) {
+        if (isAdmin()) {
+            return true;
+        }
         Presentation presentation = presentationRepository.findById(presentationId);
         return presentation.getSpeakers().stream()
                 .anyMatch(owner -> owner.getId().equals(getUserId()));
