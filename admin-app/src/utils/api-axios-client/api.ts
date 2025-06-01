@@ -181,6 +181,12 @@ export interface FullPresentation {
      * @memberof FullPresentation
      */
     'status'?: string;
+    /**
+     * 
+     * @type {Array<Speaker>}
+     * @memberof FullPresentation
+     */
+    'speakers'?: Array<Speaker>;
 }
 /**
  * 
@@ -772,12 +778,6 @@ export interface Presentation {
      * @type {boolean}
      * @memberof Presentation
      */
-    'new'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Presentation
-     */
     'accepted'?: boolean;
     /**
      * 
@@ -785,6 +785,12 @@ export interface Presentation {
      * @memberof Presentation
      */
     'speaker'?: Presentation;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Presentation
+     */
+    'new'?: boolean;
 }
 /**
  * 
@@ -1037,6 +1043,19 @@ export interface SendMailsRequest {
      * @memberof SendMailsRequest
      */
     'messageInfoList'?: Array<MessageInfo>;
+}
+/**
+ * 
+ * @export
+ * @interface Speaker
+ */
+export interface Speaker {
+    /**
+     * 
+     * @type {string}
+     * @memberof Speaker
+     */
+    'name'?: string;
 }
 /**
  * 
@@ -4296,7 +4315,7 @@ export const ResourceControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async storeUserProfilePicture(userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async storeUserProfilePicture(userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.storeUserProfilePicture(userId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ResourceControllerApi.storeUserProfilePicture']?.[localVarOperationServerIndex]?.url;
@@ -4329,7 +4348,7 @@ export const ResourceControllerApiFactory = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        storeUserProfilePicture(userId: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        storeUserProfilePicture(userId: string, options?: RawAxiosRequestConfig): AxiosPromise<string> {
             return localVarFp.storeUserProfilePicture(userId, options).then((request) => request(axios, basePath));
         },
     };

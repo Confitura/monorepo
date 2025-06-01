@@ -32,8 +32,8 @@ import pl.confitura.jelatyna.user.User;
 
 @Entity
 @Data
-@ToString(exclude = {"speakers", "ratings", "publicSpeakers"})
-@EqualsAndHashCode(exclude = {"speakers", "ratings", "publicSpeakers"})
+@ToString(exclude = {"speakers", "ratings"})
+@EqualsAndHashCode(exclude = {"speakers", "ratings"})
 @Accessors(chain = true)
 public class Presentation {
 

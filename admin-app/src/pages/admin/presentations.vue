@@ -43,6 +43,7 @@ function showDialogReject(presentation: FullPresentation) {
 
 const headers: DataTableHeaders = [
   {title: 'Title', key: 'title'},
+  {title: 'Speakers', key: 'speakers'},
   {title: 'Level', key: 'level'},
   {title: 'Language', key: 'language'},
   {title: 'Tags', key: 'tags'},
@@ -96,6 +97,9 @@ onMounted(() => {
             item-value="name"
             :search="search"
           >
+            <template #item.speakers="{ item }">
+              {{ item.speakers?.map(speaker => speaker.name).join(', ') || '' }}
+            </template>
             <template #item.actions="{ item }">
               <v-defaults-provider
                 :defaults="{
