@@ -87,7 +87,7 @@ function loginUrl(provider: string) {
 
           <p>We accept both talks and workshops, so there are plenty of
             opportunities to share your knowledge.
-            Regular talks are 45 minutes long, and workshops can be 3 hours or
+            Regular talks are 60 minutes long, and workshops can be 3 hours or
             longer (just keep human limits in mind - please don’t send us a
             12-hour
             proposal, lol).
