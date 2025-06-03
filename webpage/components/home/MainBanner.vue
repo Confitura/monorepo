@@ -13,7 +13,7 @@
         <div class="info__long">
           <p> Warsaw | September 19–20, 2025 </p>
           <TheTimer/>
-          <p>ADN Conference Center, Grzybowska 5</p>
+          <p>ADN Conference Center, Grzybowska 56</p>
 
 
         </div>
