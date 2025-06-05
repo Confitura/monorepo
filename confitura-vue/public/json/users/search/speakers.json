@@ -26,7 +26,7 @@
         "twitter": "k_slusar",
         "github": "krzysztofslusarski",
         "www": "http://kś.pl/",
-        "photo": "/api/resources//photos/3c1887ad-2561-4678-abf8-17d9706c0d01.jpg"
+        "photo": "/api/resources/photos/3c1887ad-2561-4678-abf8-17d9706c0d01.jpg"
       },
       {
         "id": "8f834105-1585-4051-93d5-3ce6f61325ad",
@@ -44,7 +44,7 @@
         "twitter": "r_maciak",
         "github": "https://github.com/ramafasa",
         "www": null,
-        "photo": "/api/resources//photos/2f111a87-8d0f-4861-b378-cb9df8cb747c.jpg"
+        "photo": "/api/resources/photos/2f111a87-8d0f-4861-b378-cb9df8cb747c.jpg"
       },
       {
         "id": "216d8640-4387-4b00-80ef-11657eb3d44e",
@@ -53,7 +53,7 @@
         "twitter": null,
         "github": null,
         "www": null,
-        "photo": "/api/resources//photos/216d8640-4387-4b00-80ef-11657eb3d44e.jpeg"
+        "photo": "/api/resources/photos/216d8640-4387-4b00-80ef-11657eb3d44e.jpeg"
       },
       {
         "id": "23176155-4e7b-44f9-9d78-aff0c7dfe7a0",
@@ -62,7 +62,7 @@
         "twitter": null,
         "github": "https://github.com/PawelBogdan",
         "www": "https://www.linkedin.com/in/pawe%C5%82-bogdan-2166b869/",
-        "photo": "/api/resources//photos/23176155-4e7b-44f9-9d78-aff0c7dfe7a0.png"
+        "photo": "/api/resources/photos/23176155-4e7b-44f9-9d78-aff0c7dfe7a0.png"
       },
       {
         "id": "ab278e7c-e59a-4b6d-8c19-6a66e239f51f",
@@ -71,7 +71,7 @@
         "twitter": null,
         "github": null,
         "www": null,
-        "photo": "/api/resources//photos/ab278e7c-e59a-4b6d-8c19-6a66e239f51f.jpg"
+        "photo": "/api/resources/photos/ab278e7c-e59a-4b6d-8c19-6a66e239f51f.jpg"
       },
       {
         "id": "f868002d-5281-4747-a81c-2c4ff5ae46b4",
@@ -98,7 +98,7 @@
         "twitter": "https://twitter.com/dastin_it",
         "github": "https://github.com/dastin-sandura",
         "www": "https://dastin-sandura-software-developer.blogspot.com",
-        "photo": "/api/resources//photos/9a68de66-3c1a-4238-99ae-c8b19875b006.jpg"
+        "photo": "/api/resources/photos/9a68de66-3c1a-4238-99ae-c8b19875b006.jpg"
       },
       {
         "id": "6b8d6fd2-b835-4c51-a78d-4c988a80c58d",
@@ -125,7 +125,7 @@
         "twitter": "kriskudrynski",
         "github": "https://github.com/nv-kkudrynski",
         "www": "https://kkudrynski.wixsite.com/portfolio",
-        "photo": "/api/resources//photos/cc40066a-54af-4316-98c4-f14ad03076ba.jpg"
+        "photo": "/api/resources/photos/cc40066a-54af-4316-98c4-f14ad03076ba.jpg"
       },
       {
         "id": "2c9a8b37-411d-44ce-97e5-5b96150bcd16",
@@ -134,7 +134,7 @@
         "twitter": null,
         "github": null,
         "www": null,
-        "photo": "/api/resources//photos/2c9a8b37-411d-44ce-97e5-5b96150bcd16.jpeg"
+        "photo": "/api/resources/photos/2c9a8b37-411d-44ce-97e5-5b96150bcd16.jpeg"
       },
       {
         "id": "cd21c3b4-f80a-4927-b7f8-c286c3528370",
@@ -143,7 +143,7 @@
         "twitter": null,
         "github": "SilverSheep",
         "www": "https://mbaranowski.pl/",
-        "photo": "/api/resources//photos/cd21c3b4-f80a-4927-b7f8-c286c3528370.JPG"
+        "photo": "/api/resources/photos/cd21c3b4-f80a-4927-b7f8-c286c3528370.JPG"
       },
       {
         "id": "607747bd-f752-46ca-8c57-9a7a882b35ff",
@@ -179,7 +179,7 @@
         "twitter": null,
         "github": null,
         "www": null,
-        "photo": "/api/resources//photos/f15b5e90-42c9-42c3-b24c-82107041bdba.jpg"
+        "photo": "/api/resources/photos/f15b5e90-42c9-42c3-b24c-82107041bdba.jpg"
       },
       {
         "id": "91e488f9-a014-442c-91ae-a2f683b6f09a",
@@ -188,7 +188,7 @@
         "twitter": null,
         "github": "https://github.com/marwoj/",
         "www": null,
-        "photo": "/api/resources//photos/91e488f9-a014-442c-91ae-a2f683b6f09a.jpeg"
+        "photo": "/api/resources/photos/91e488f9-a014-442c-91ae-a2f683b6f09a.jpeg"
       },
       {
         "id": "4a1b8e56-3b16-4a7b-b43a-bfd303b30d1b",
@@ -206,7 +206,7 @@
         "twitter": "@GrzegorzKocur",
         "github": null,
         "www": null,
-        "photo": "/api/resources//photos/a772d893-6462-4423-a511-5fec2f0b82a8.jpg"
+        "photo": "/api/resources/photos/a772d893-6462-4423-a511-5fec2f0b82a8.jpg"
       },
       {
         "id": "862eaef6-32b7-48bb-b3ba-ba31ce19a495",
@@ -215,7 +215,7 @@
         "twitter": null,
         "github": null,
         "www": null,
-        "photo": "/api/resources//photos/862eaef6-32b7-48bb-b3ba-ba31ce19a495.jpeg"
+        "photo": "/api/resources/photos/862eaef6-32b7-48bb-b3ba-ba31ce19a495.jpeg"
       },
       {
         "id": "b443ab41-43fa-45a0-96bc-4ae4db51ecf2",
@@ -233,7 +233,7 @@
         "twitter": null,
         "github": "Delebrith",
         "www": null,
-        "photo": "/api/resources//photos/f953198e-9472-4301-b3e9-5f47bb336f0e.png"
+        "photo": "/api/resources/photos/f953198e-9472-4301-b3e9-5f47bb336f0e.png"
       },
       {
         "id": "a61d0fd1-27f8-47ef-8365-485cea8acce1",
@@ -260,7 +260,7 @@
         "twitter": null,
         "github": null,
         "www": null,
-        "photo": "/api/resources//photos/18bda3aa-2253-4f35-ac9f-7fb65370a59e.jpg"
+        "photo": "/api/resources/photos/18bda3aa-2253-4f35-ac9f-7fb65370a59e.jpg"
       },
       {
         "id": "a4f76848-872a-44e5-a95f-0468d1f4ea9a",
@@ -269,7 +269,7 @@
         "twitter": "https://twitter.com/ksidelta",
         "github": null,
         "www": "https://www.ksidelta.com/",
-        "photo": "/api/resources//photos/a4f76848-872a-44e5-a95f-0468d1f4ea9a.jpg"
+        "photo": "/api/resources/photos/a4f76848-872a-44e5-a95f-0468d1f4ea9a.jpg"
       },
       {
         "id": "76ee7373-420d-4c36-b51b-c720be1b5ed2",
@@ -278,7 +278,7 @@
         "twitter": null,
         "github": "https://github.com/texxas",
         "www": "texxas.io",
-        "photo": "/api/resources//photos/76ee7373-420d-4c36-b51b-c720be1b5ed2.jpeg"
+        "photo": "/api/resources/photos/76ee7373-420d-4c36-b51b-c720be1b5ed2.jpeg"
       },
       {
         "id": "b8badba8-89b9-4f30-a63b-55b566d119f8",
@@ -287,7 +287,7 @@
         "twitter": "@PaskSoftware",
         "github": "Pask423",
         "www": "https://medium.com/@PaskSoftware",
-        "photo": "/api/resources//photos/b8badba8-89b9-4f30-a63b-55b566d119f8.jpg"
+        "photo": "/api/resources/photos/b8badba8-89b9-4f30-a63b-55b566d119f8.jpg"
       }
     ]
   }

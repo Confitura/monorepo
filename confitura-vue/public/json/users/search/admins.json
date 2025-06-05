@@ -7,7 +7,7 @@
       "twitter" : null,
       "github" : "arturowczarek",
       "www" : null,
-      "photo" : "/api/resources//photos/cac0a8ac-4d45-11e8-aba0-fa163e406e6f.jpg"
+      "photo" : "/api/resources/photos/cac0a8ac-4d45-11e8-aba0-fa163e406e6f.jpg"
     }, {
       "id" : "cabe7d28-4d45-11e8-aba0-fa163e406e6f",
       "name" : "Michał Margiel",
@@ -15,7 +15,7 @@
       "twitter" : "margielm",
       "github" : "margielm",
       "www" : "",
-      "photo" : "/api/resources//photos/cabe7d28-4d45-11e8-aba0-fa163e406e6f.jpg"
+      "photo" : "/api/resources/photos/cabe7d28-4d45-11e8-aba0-fa163e406e6f.jpg"
     }, {
       "id" : "cac140fa-4d45-11e8-aba0-fa163e406e6f",
       "name" : "Bartek Zdanowski",
@@ -23,7 +23,7 @@
       "twitter" : "bartekzdanowski",
       "github" : "zdanek",
       "www" : "http://www.stickerscraft.com",
-      "photo" : "/api/resources//photos/cac140fa-4d45-11e8-aba0-fa163e406e6f.png"
+      "photo" : "/api/resources/photos/cac140fa-4d45-11e8-aba0-fa163e406e6f.png"
     }, {
       "id" : "cac03d65-4d45-11e8-aba0-fa163e406e6f",
       "name" : "Krzysiek Kozioł",
@@ -39,7 +39,7 @@
       "twitter" : null,
       "github" : "dmnk89",
       "www" : "",
-      "photo" : "/api/resources//photos/Z2l0aHViLzEyMTk2NTc=.jpg"
+      "photo" : "/api/resources/photos/Z2l0aHViLzEyMTk2NTc=.jpg"
     }, {
       "id" : "cac2a1fe-4d45-11e8-aba0-fa163e406e6f",
       "name" : "Ida Bzowska",
@@ -47,7 +47,7 @@
       "twitter" : "beatleida",
       "github" : "idabzo",
       "www" : null,
-      "photo" : "/api/resources//photos/cac2a1fe-4d45-11e8-aba0-fa163e406e6f.png"
+      "photo" : "/api/resources/photos/cac2a1fe-4d45-11e8-aba0-fa163e406e6f.png"
     }, {
       "id" : "cac3b223-4d45-11e8-aba0-fa163e406e6f",
       "name" : "Łukasz Lenart",
@@ -55,7 +55,7 @@
       "twitter" : "lukaszlenart",
       "github" : "lukaszlenart",
       "www" : "lenart.org.pl",
-      "photo" : "/api/resources//photos/cac3b223-4d45-11e8-aba0-fa163e406e6f.jpg"
+      "photo" : "/api/resources/photos/cac3b223-4d45-11e8-aba0-fa163e406e6f.jpg"
     } ]
   }
 }

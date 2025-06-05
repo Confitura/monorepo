@@ -7,7 +7,7 @@
       "twitter" : null,
       "github" : null,
       "www" : null,
-      "photo" : "/api/resources//photos/125dc698-8c72-4c2d-a2e1-3dbc90756550.jpg"
+      "photo" : "/api/resources/photos/125dc698-8c72-4c2d-a2e1-3dbc90756550.jpg"
     }, {
       "id" : "3c56d208-15a7-4e36-b462-c2effdf6da8e",
       "name" : "Tymek Lenart",
@@ -15,7 +15,7 @@
       "twitter" : null,
       "github" : null,
       "www" : null,
-      "photo" : "/api/resources//photos/3c56d208-15a7-4e36-b462-c2effdf6da8e.jpeg"
+      "photo" : "/api/resources/photos/3c56d208-15a7-4e36-b462-c2effdf6da8e.jpeg"
     }, {
       "id" : "01778581-76f2-41f1-833e-06932a6f88a5",
       "name" : "Angelika Bajor",
@@ -23,7 +23,7 @@
       "twitter" : null,
       "github" : null,
       "www" : null,
-      "photo" : "/api/resources//photos/01778581-76f2-41f1-833e-06932a6f88a5.jpeg"
+      "photo" : "/api/resources/photos/01778581-76f2-41f1-833e-06932a6f88a5.jpeg"
     }, {
       "id" : "0cc7ff41-ab9e-40cb-bde8-d25e9214c716",
       "name" : "Tomasz Janczewski ",
@@ -31,7 +31,7 @@
       "twitter" : null,
       "github" : null,
       "www" : null,
-      "photo" : "/api/resources//photos/18bda3aa-2253-4f35-ac9f-7fb65370a59e.jpg"
+      "photo" : "/api/resources/photos/18bda3aa-2253-4f35-ac9f-7fb65370a59e.jpg"
     }, {
       "id" : "a31f0a53-7278-4c89-a96f-89780a2fa0c0",
       "name" : "Grzegorz Król",
@@ -39,7 +39,7 @@
       "twitter" : null,
       "github" : null,
       "www" : null,
-      "photo" : "/api/resources//photos/a31f0a53-7278-4c89-a96f-89780a2fa0c0.jpeg"
+      "photo" : "/api/resources/photos/a31f0a53-7278-4c89-a96f-89780a2fa0c0.jpeg"
     }, {
       "id" : "86d8974a-1c13-40e3-9c4f-efd176b458a2",
       "name" : "Hubert Januszek",
@@ -47,7 +47,7 @@
       "twitter" : null,
       "github" : null,
       "www" : null,
-      "photo" : "/api/resources//photos/86d8974a-1c13-40e3-9c4f-efd176b458a2.png"
+      "photo" : "/api/resources/photos/86d8974a-1c13-40e3-9c4f-efd176b458a2.png"
     }, {
       "id" : "c111b30c-68dd-4aed-8476-2cb1a440fa1f",
       "name" : "Michał Zwierzyński",
@@ -55,7 +55,7 @@
       "twitter" : null,
       "github" : null,
       "www" : null,
-      "photo" : "/api/resources//photos/c111b30c-68dd-4aed-8476-2cb1a440fa1f.jpg"
+      "photo" : "/api/resources/photos/c111b30c-68dd-4aed-8476-2cb1a440fa1f.jpg"
     }, {
       "id" : "00596742-0064-4185-a677-cd83b29a08d0",
       "name" : "Łukasz Małek",
@@ -63,7 +63,7 @@
       "twitter" : null,
       "github" : null,
       "www" : null,
-      "photo" : "/api/resources//photos/00596742-0064-4185-a677-cd83b29a08d0.jpg"
+      "photo" : "/api/resources/photos/00596742-0064-4185-a677-cd83b29a08d0.jpg"
     }, {
       "id" : "52e2d077-51fc-4810-9f31-79c4cfab6349",
       "name" : "Bartłomiej Tucholski",
@@ -71,7 +71,7 @@
       "twitter" : null,
       "github" : "https://github.com/GitHub-BartekT",
       "www" : "https://www.linkedin.com/in/bartlomiejtucholski",
-      "photo" : "/api/resources//photos/52e2d077-51fc-4810-9f31-79c4cfab6349.jpg"
+      "photo" : "/api/resources/photos/52e2d077-51fc-4810-9f31-79c4cfab6349.jpg"
     }, {
       "id" : "84929f0c-c84c-4bca-86e9-6c9edffac631",
       "name" : "Patryk Siwiec",
@@ -79,7 +79,7 @@
       "twitter" : null,
       "github" : null,
       "www" : null,
-      "photo" : "/api/resources//photos/84929f0c-c84c-4bca-86e9-6c9edffac631.JPG"
+      "photo" : "/api/resources/photos/84929f0c-c84c-4bca-86e9-6c9edffac631.JPG"
     }, {
       "id" : "f95bcd5c-c5c7-471a-88e4-d84a12682e96",
       "name" : "Mariusz Przybylski",
@@ -87,7 +87,7 @@
       "twitter" : null,
       "github" : null,
       "www" : null,
-      "photo" : "/api/resources//photos/f95bcd5c-c5c7-471a-88e4-d84a12682e96.jpg"
+      "photo" : "/api/resources/photos/f95bcd5c-c5c7-471a-88e4-d84a12682e96.jpg"
     }, {
       "id" : "1756c4d7-ffc5-43cd-adee-03c79df1a74f",
       "name" : "Jarosław Pilzak",
@@ -103,7 +103,7 @@
       "twitter" : null,
       "github" : null,
       "www" : null,
-      "photo" : "/api/resources//photos/eaa1ac56-7254-447b-a535-8a2ffd48f9a3.jpg"
+      "photo" : "/api/resources/photos/eaa1ac56-7254-447b-a535-8a2ffd48f9a3.jpg"
     }, {
       "id" : "8d4e7573-ba21-436c-8b49-bdd89bf50a8e",
       "name" : "Maciej Marczuk",
@@ -111,7 +111,7 @@
       "twitter" : null,
       "github" : null,
       "www" : null,
-      "photo" : "/api/resources//photos/8d4e7573-ba21-436c-8b49-bdd89bf50a8e.jpg"
+      "photo" : "/api/resources/photos/8d4e7573-ba21-436c-8b49-bdd89bf50a8e.jpg"
     }, {
       "id" : "b3f0ce9a-65ca-4822-9fa4-7a919949275b",
       "name" : "Krzysztof Miksa",
@@ -119,7 +119,7 @@
       "twitter" : "https://twitter.com/KrzysztofMiksa",
       "github" : "https://github.com/dejewi",
       "www" : null,
-      "photo" : "/api/resources//photos/b3f0ce9a-65ca-4822-9fa4-7a919949275b.jpg"
+      "photo" : "/api/resources/photos/b3f0ce9a-65ca-4822-9fa4-7a919949275b.jpg"
     }, {
       "id" : "9c5c6c3d-e237-4e20-a7aa-93135ac58ab6",
       "name" : "Norbert Różyc",
@@ -127,7 +127,7 @@
       "twitter" : null,
       "github" : null,
       "www" : null,
-      "photo" : "/api/resources//photos/9c5c6c3d-e237-4e20-a7aa-93135ac58ab6.JPG"
+      "photo" : "/api/resources/photos/9c5c6c3d-e237-4e20-a7aa-93135ac58ab6.JPG"
     }, {
       "id" : "00fd52de-385d-46c5-bfd5-052029a09b8e",
       "name" : "Wojciech Pilzak",
@@ -135,7 +135,7 @@
       "twitter" : null,
       "github" : null,
       "www" : null,
-      "photo" : "/api/resources//photos/00fd52de-385d-46c5-bfd5-052029a09b8e.jpg"
+      "photo" : "/api/resources/photos/00fd52de-385d-46c5-bfd5-052029a09b8e.jpg"
     }, {
       "id" : "aba7a03d-8c65-468b-874e-3138e25f91d7",
       "name" : "Magdalena  Maciejak",
@@ -143,7 +143,7 @@
       "twitter" : null,
       "github" : null,
       "www" : null,
-      "photo" : "/api/resources//photos/aba7a03d-8c65-468b-874e-3138e25f91d7.jpg"
+      "photo" : "/api/resources/photos/aba7a03d-8c65-468b-874e-3138e25f91d7.jpg"
     }, {
       "id" : "3f2b6713-d480-491b-b01a-7ae58dd6ca72",
       "name" : "Jarek Pilzak",
@@ -151,7 +151,7 @@
       "twitter" : null,
       "github" : null,
       "www" : null,
-      "photo" : "/api/resources//photos/3f2b6713-d480-491b-b01a-7ae58dd6ca72.jpg"
+      "photo" : "/api/resources/photos/3f2b6713-d480-491b-b01a-7ae58dd6ca72.jpg"
     }, {
       "id" : "5d673b05-0b0e-4182-b6f0-a558617f1bf5",
       "name" : "Magdalena Bliźniuk",
@@ -167,7 +167,7 @@
       "twitter" : null,
       "github" : null,
       "www" : null,
-      "photo" : "/api/resources//photos/fe99ec8f-4518-454f-a1ec-dd89b0f6fa98.jpeg"
+      "photo" : "/api/resources/photos/fe99ec8f-4518-454f-a1ec-dd89b0f6fa98.jpeg"
     }, {
       "id" : "25dc622e-7a1c-4f21-acea-41510e7a2406",
       "name" : "Damian Zdulski",
@@ -175,7 +175,7 @@
       "twitter" : null,
       "github" : "https://github.com/zdulak",
       "www" : null,
-      "photo" : "/api/resources//photos/25dc622e-7a1c-4f21-acea-41510e7a2406.jpg"
+      "photo" : "/api/resources/photos/25dc622e-7a1c-4f21-acea-41510e7a2406.jpg"
     } ]
   }
 }
