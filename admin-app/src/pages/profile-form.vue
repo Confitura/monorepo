@@ -63,13 +63,13 @@ const onSubmit = async () => {
 
   if (valid.valid) {
     usersApi.save(form.value)
-      .then(() => uploadProfilePhoto())
       .then(() => tokenAPi.refreshToken())
       .then((res) => store.login(res.data))
+      .then(() => uploadProfilePhoto())
       .catch((error) => {
         if(error.status == 413){
           Notify.error('Profile photo too large')
-        }else {
+        } else {
           Notify.error('Failed to save user')
           console.error('Failed to save user:', error)
         }
