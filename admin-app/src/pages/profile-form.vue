@@ -68,7 +68,7 @@ const onSubmit = async () => {
       .then(() => uploadProfilePhoto())
       .catch((error) => {
         if(error.status == 413){
-          Notify.error('Profile photo too large')
+          Notify.error('Profile photo too large, max 3 MB')
         } else {
           Notify.error('Failed to save user')
           console.error('Failed to save user:', error)
