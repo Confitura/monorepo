@@ -39,8 +39,7 @@ function loginUrl(provider: string) {
 
     <v-row align="center" justify="center">
       <v-col cols="auto">
-        <p>By registering you accept our <a href="/privacy-policy">privacy
-          policy</a>:</p>
+        <p>To participate in Call for Papers register/login using buttons below:</p>
       </v-col>
     </v-row>
     <v-row align="center" justify="center">
@@ -61,6 +60,13 @@ function loginUrl(provider: string) {
                :href="loginUrl('twitter')"></v-btn>
       </v-col>
     </v-row>
+
+    <v-row align="center" justify="center">
+      <v-col cols="auto">
+        <p>By doing so you accept our <a href="/privacy-policy">privacy
+          policy</a></p>
+      </v-col>
+    </v-row>
     <v-row>
       <v-col>
         <v-container>
@@ -75,8 +81,8 @@ function loginUrl(provider: string) {
       </v-col>
     </v-row>
     <v-row class="mb-12" justify="center">
-      <v-col cols="12" xl="4" md="6" sm="12"  align-self="center">
-      <div class="info">
+      <v-col cols="12" xl="4" md="6" sm="12" align-self="center">
+        <div class="info">
           <p>Hey You,</p>
 
           <p>Thanks for deciding to join Confitura in 2025!</p>
@@ -103,6 +109,10 @@ function loginUrl(provider: string) {
             invite people to vote on the submissions, and based on the
             community’s
             picks, we shape the agenda.</p>
+
+          <p>To submit your proposal, sign in or sign up using one of the
+            available options (GitHub, Google, X, or Facebook). Just click the
+            icon above and let the magic happen. Poof!</p>
         </div>
       </v-col>
     </v-row>
