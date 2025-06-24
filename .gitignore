@@ -3,3 +3,6 @@
 /confitura-vue/dist.gz
 logs
 dump
+uploaded
+*.pid
+*.port
