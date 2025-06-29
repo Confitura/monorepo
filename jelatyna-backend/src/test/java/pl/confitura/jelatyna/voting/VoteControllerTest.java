@@ -1,6 +1,5 @@
 package pl.confitura.jelatyna.voting;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.web.servlet.ResultActions;
 import pl.confitura.jelatyna.BaseIntegrationTest;
@@ -11,7 +10,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class VoteControllerTest extends BaseIntegrationTest {
 
     @Test
-    @Disabled("TODO: implement")
     public void shouldStartVoting() throws Exception {
 
         //when
