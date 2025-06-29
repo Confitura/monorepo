@@ -2,6 +2,7 @@
 import {voteForPapersApi} from "@/utils/api.ts";
 import {v4 as uuidv4} from 'uuid';
 import type {InlineVote, InlineVoteSpeaker} from "@/utils/api-axios-client";
+import {useV4PStore} from "@/stores/v4p.ts";
 
 definePage({
   meta: {
@@ -12,9 +13,9 @@ definePage({
     layout: 'no-distractions',
   },
 })
+let store = useV4PStore()
+let {votes, currentPosition} = storeToRefs(store);
 
-let currentPosition = ref(-1);
-let votes: Ref<InlineVote[]> = ref([])
 let showShort = ref(true);
 let showSpeaker: Ref<InlineVoteSpeaker | null> = ref(null);
 
@@ -22,13 +23,7 @@ function showBio(speaker: InlineVoteSpeaker | null) {
   showSpeaker.value = speaker;
 }
 
-const currentVote: ComputedRef<InlineVote | null> = computed(() => {
-  if (currentPosition.value < 0 || currentPosition.value >= votes.value.length) {
-    return null;
-  } else {
-    return votes.value[currentPosition.value]
-  }
-})
+const currentVote = computed(() => store.currentVote)
 
 function getV4Ptoken(): string {
   let token = localStorage.getItem('v4p-token')
@@ -40,10 +35,8 @@ function getV4Ptoken(): string {
 }
 
 async function startVoting() {
-  console.log('voteForPapersApi', voteForPapersApi)
   let token = getV4Ptoken();
   let result = await voteForPapersApi.start(token)
-  console.log('result', result.data)
   votes.value = result.data
   currentPosition.value = 0;
 }
@@ -93,7 +86,8 @@ function toggleDescription() {
 }
 
 async function vote(vote: InlineVote, value: number) {
-  await voteForPapersApi.save({...vote, rate: value})
+  vote.rate = value;
+  await voteForPapersApi.save(vote)
   currentPosition.value += 1;
 }
 </script>
