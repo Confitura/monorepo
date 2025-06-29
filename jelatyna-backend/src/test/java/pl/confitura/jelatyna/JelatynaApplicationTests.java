@@ -15,7 +15,7 @@ class JelatynaApplicationTests extends BaseIntegrationTest {
 
     @Test
     void securityWorks() throws Exception {
-        Room room = new Room().setId("id").setLabel("room1").setDisplayOrder(1);
+        Room room = new Room().setLabel("room1").setDisplayOrder(1);
         mockMvc
                 .perform(
                         post("/rooms")

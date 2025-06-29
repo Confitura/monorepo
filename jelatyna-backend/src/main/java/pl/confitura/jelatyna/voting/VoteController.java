@@ -18,7 +18,9 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import pl.confitura.jelatyna.infrastructure.WebUtils;
 import pl.confitura.jelatyna.presentation.*;
+import pl.confitura.jelatyna.user.User;
 
+@RestController
 public class VoteController {
 
     private PresentationRepository presentationRepository;
@@ -42,15 +44,15 @@ public class VoteController {
 
     @RequestMapping(value = "/votes/start/{token}", method = RequestMethod.POST)
     @Transactional
-    public ResponseEntity<?> start(@PathVariable String token) {
-        Set<Vote> votes = voteRepository.findAllForToken(token);
+    public ResponseEntity<List<InlineVote>> start(@PathVariable String token) {
+        List<Vote> votes = voteRepository.findAllForToken(token);
         if (votes.isEmpty()) {
             votes = generateVotes(token);
         }
-        return ResponseEntity.ok(votes);
+        return ResponseEntity.ok(InlineVote.from(votes));
     }
 
-    private Set<Vote> generateVotes(@PathVariable String token) {
+    private List<Vote> generateVotes(String token) {
         List<Presentation> presentations = Lists.newArrayList(this.presentationRepository.findAllForV4p());
         Collections.shuffle(presentations);
         List<Vote> votes = IntStream.range(0, presentations.size())
@@ -60,16 +62,17 @@ public class VoteController {
                         .setPresentation(presentations.get(idx))
                         .setOrder(idx))
                 .collect(toList());
-        return this.voteRepository.saveAll(votes);
+        voteRepository.saveAll(votes);
+        return voteRepository.findAllForToken(token);
     }
 
     @PostMapping("/votes")
     @Transactional
-    public ResponseEntity<Vote> save(@RequestBody @Valid Vote vote) {
-        Vote loaded = voteRepository.findById(vote.getId());
-        loaded.setRate(vote.getRate());
+    public ResponseEntity<InlineVote> save(@RequestBody @Valid VoteController.VoteRequest vote) {
+        Vote loaded = voteRepository.findById(vote.id());
+        loaded.setRate(vote.rate);
         loaded.setVoteDate(LocalDateTime.now());
-        return ResponseEntity.ok(loaded);
+        return ResponseEntity.ok(InlineVote.from(loaded));
     }
 
 
@@ -92,5 +95,71 @@ public class VoteController {
                 .sorted(Comparator.comparing(PresentationStats::getPositiveVotes))
                 .collect(toList());
 
+    }
+
+    public record VoteRequest(
+            String id,
+            Integer rate
+    ) {
+
+    }
+
+    public record InlineVote(
+            String id,
+            Integer order,
+            InlineVotePresentation presentation,
+            Integer rate
+    ) {
+
+        public static InlineVote from(Vote loaded) {
+            return new InlineVote(
+                    loaded.getId(),
+                    loaded.getOrder(),
+                    InlineVotePresentation.from(loaded.getPresentation()),
+                    loaded.getRate()
+            );
+        }
+
+        public static List<InlineVote> from(List<Vote> votes) {
+            return votes.stream().map(InlineVote::from).toList();
+        }
+    }
+
+    public record InlineVotePresentation(
+            String id,
+            String title,
+            String longDescription,
+            String shortDescription,
+            List<InlineVoteSpeaker> speakers
+    ) {
+        public static InlineVotePresentation from(Presentation presentation) {
+            return new InlineVotePresentation(
+                    presentation.getId(),
+                    presentation.getTitle(),
+                    presentation.getDescription(),
+                    presentation.getShortDescription(),
+                    InlineVoteSpeaker.from(presentation.getSpeakers())
+            );
+        }
+    }
+
+    public record InlineVoteSpeaker(
+            String id,
+            String name,
+            String bio,
+            String photo
+    ) {
+        public static List<InlineVoteSpeaker> from(Set<User> speakers) {
+            return speakers.stream().map(InlineVoteSpeaker::from).toList();
+        }
+
+        public static InlineVoteSpeaker from(User speaker) {
+            return new InlineVoteSpeaker(
+                    speaker.getId(),
+                    speaker.getName(),
+                    speaker.getBio(),
+                    speaker.getPhoto()
+            );
+        }
     }
 }

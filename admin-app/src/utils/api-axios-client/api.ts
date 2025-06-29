@@ -61,16 +61,16 @@ export interface AgendaEntry {
     'presentation'?: Presentation;
     /**
      * 
-     * @type {number}
-     * @memberof AgendaEntry
-     */
-    'timeSlotOrder'?: number;
-    /**
-     * 
      * @type {Set<PublicUser>}
      * @memberof AgendaEntry
      */
     'speakers'?: Set<PublicUser>;
+    /**
+     * 
+     * @type {number}
+     * @memberof AgendaEntry
+     */
+    'timeSlotOrder'?: number;
 }
 /**
  * 
@@ -370,6 +370,105 @@ export interface InlinePresentation {
      * @memberof InlinePresentation
      */
     'tags'?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface InlineVote
+ */
+export interface InlineVote {
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineVote
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof InlineVote
+     */
+    'order'?: number;
+    /**
+     * 
+     * @type {InlineVotePresentation}
+     * @memberof InlineVote
+     */
+    'presentation'?: InlineVotePresentation;
+    /**
+     * 
+     * @type {number}
+     * @memberof InlineVote
+     */
+    'rate'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface InlineVotePresentation
+ */
+export interface InlineVotePresentation {
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineVotePresentation
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineVotePresentation
+     */
+    'title'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineVotePresentation
+     */
+    'longDescription'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineVotePresentation
+     */
+    'shortDescription'?: string;
+    /**
+     * 
+     * @type {Array<InlineVoteSpeaker>}
+     * @memberof InlineVotePresentation
+     */
+    'speakers'?: Array<InlineVoteSpeaker>;
+}
+/**
+ * 
+ * @export
+ * @interface InlineVoteSpeaker
+ */
+export interface InlineVoteSpeaker {
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineVoteSpeaker
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineVoteSpeaker
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineVoteSpeaker
+     */
+    'bio'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineVoteSpeaker
+     */
+    'photo'?: string;
 }
 /**
  * 
@@ -778,6 +877,12 @@ export interface Presentation {
      * @type {boolean}
      * @memberof Presentation
      */
+    'new'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Presentation
+     */
     'accepted'?: boolean;
     /**
      * 
@@ -785,12 +890,6 @@ export interface Presentation {
      * @memberof Presentation
      */
     'speaker'?: Presentation;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Presentation
-     */
-    'new'?: boolean;
 }
 /**
  * 
@@ -834,6 +933,55 @@ export interface PresentationRequest {
      * @memberof PresentationRequest
      */
     'tags'?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface PresentationStats
+ */
+export interface PresentationStats {
+    /**
+     * 
+     * @type {string}
+     * @memberof PresentationStats
+     */
+    'title'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PresentationStats
+     */
+    'presentationId'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof PresentationStats
+     */
+    'positiveVotes'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PresentationStats
+     */
+    'negativeVotes'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PresentationStats
+     */
+    'totalVotes'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PresentationStats
+     */
+    'rateOfPositive'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PresentationStats
+     */
+    'rateOfNegative'?: number;
 }
 /**
  * 
@@ -5654,9 +5802,9 @@ export const UserControllerApiAxiosParamCreator = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        save: async (user: User, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        save1: async (user: User, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'user' is not null or undefined
-            assertParamExists('save', 'user', user)
+            assertParamExists('save1', 'user', user)
             const localVarPath = `/users`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5968,10 +6116,10 @@ export const UserControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async save(user: User, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.save(user, options);
+        async save1(user: User, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.save1(user, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['UserControllerApi.save']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['UserControllerApi.save1']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -6156,8 +6304,8 @@ export const UserControllerApiFactory = function (configuration?: Configuration,
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        save(user: User, options?: RawAxiosRequestConfig): AxiosPromise<object> {
-            return localVarFp.save(user, options).then((request) => request(axios, basePath));
+        save1(user: User, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.save1(user, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -6366,8 +6514,8 @@ export class UserControllerApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof UserControllerApi
      */
-    public save(user: User, options?: RawAxiosRequestConfig) {
-        return UserControllerApiFp(this.configuration).save(user, options).then((request) => request(this.axios, this.basePath));
+    public save1(user: User, options?: RawAxiosRequestConfig) {
+        return UserControllerApiFp(this.configuration).save1(user, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -6394,6 +6542,235 @@ export class UserControllerApi extends BaseAPI {
      */
     public updateWorkshop(userId: string, workshopId: string, workshopRequest: WorkshopRequest, options?: RawAxiosRequestConfig) {
         return UserControllerApiFp(this.configuration).updateWorkshop(userId, workshopId, workshopRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * VoteControllerApi - axios parameter creator
+ * @export
+ */
+export const VoteControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {InlineVote} inlineVote 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        save: async (inlineVote: InlineVote, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'inlineVote' is not null or undefined
+            assertParamExists('save', 'inlineVote', inlineVote)
+            const localVarPath = `/votes`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(inlineVote, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} token 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        start: async (token: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'token' is not null or undefined
+            assertParamExists('start', 'token', token)
+            const localVarPath = `/votes/start/{token}`
+                .replace(`{${"token"}}`, encodeURIComponent(String(token)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        statistics: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/votes/statistics`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * VoteControllerApi - functional programming interface
+ * @export
+ */
+export const VoteControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = VoteControllerApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {InlineVote} inlineVote 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async save(inlineVote: InlineVote, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineVote>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.save(inlineVote, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['VoteControllerApi.save']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} token 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async start(token: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<InlineVote>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.start(token, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['VoteControllerApi.start']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async statistics(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<PresentationStats>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.statistics(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['VoteControllerApi.statistics']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * VoteControllerApi - factory interface
+ * @export
+ */
+export const VoteControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = VoteControllerApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {InlineVote} inlineVote 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        save(inlineVote: InlineVote, options?: RawAxiosRequestConfig): AxiosPromise<InlineVote> {
+            return localVarFp.save(inlineVote, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} token 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        start(token: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<InlineVote>> {
+            return localVarFp.start(token, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        statistics(options?: RawAxiosRequestConfig): AxiosPromise<Array<PresentationStats>> {
+            return localVarFp.statistics(options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * VoteControllerApi - object-oriented interface
+ * @export
+ * @class VoteControllerApi
+ * @extends {BaseAPI}
+ */
+export class VoteControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {InlineVote} inlineVote 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof VoteControllerApi
+     */
+    public save(inlineVote: InlineVote, options?: RawAxiosRequestConfig) {
+        return VoteControllerApiFp(this.configuration).save(inlineVote, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} token 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof VoteControllerApi
+     */
+    public start(token: string, options?: RawAxiosRequestConfig) {
+        return VoteControllerApiFp(this.configuration).start(token, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof VoteControllerApi
+     */
+    public statistics(options?: RawAxiosRequestConfig) {
+        return VoteControllerApiFp(this.configuration).statistics(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

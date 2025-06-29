@@ -30,6 +30,7 @@ declare module 'vue-router/auto-routes' {
     '/presentation-form.[[id]]': RouteRecordInfo<'/presentation-form.[[id]]', '/presentation-form/:id?', { id?: ParamValueZeroOrOne<true> }, { id?: ParamValueZeroOrOne<false> }>,
     '/privacy-policy': RouteRecordInfo<'/privacy-policy', '/privacy-policy', Record<never, never>, Record<never, never>>,
     '/profile-form': RouteRecordInfo<'/profile-form', '/profile-form', Record<never, never>, Record<never, never>>,
+    '/vote-for-papers': RouteRecordInfo<'/vote-for-papers', '/vote-for-papers', Record<never, never>, Record<never, never>>,
     '/workshop-form.[[id]]': RouteRecordInfo<'/workshop-form.[[id]]', '/workshop-form/:id?', { id?: ParamValueZeroOrOne<true> }, { id?: ParamValueZeroOrOne<false> }>,
   }
 }

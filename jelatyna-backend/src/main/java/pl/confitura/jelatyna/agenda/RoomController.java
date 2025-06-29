@@ -1,6 +1,5 @@
 package pl.confitura.jelatyna.agenda;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 

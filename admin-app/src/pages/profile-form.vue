@@ -62,7 +62,7 @@ const onSubmit = async () => {
   let valid = await xForm.value.validate()
 
   if (valid.valid) {
-    usersApi.save(form.value)
+    usersApi.save1(form.value)
       .then(() => tokenAPi.refreshToken())
       .then((res) => store.login(res.data))
       .then(() => uploadProfilePhoto())

@@ -22,3 +22,6 @@ mail:
   fromName: name
 
 spring.jpa.properties.hibernate.show_sql: true
+
+app.jwt.secret-key: c1c29b861174cd979e5bcd2dc1acf89ac2bc9a30d7307b6949dfd26f2bdc6fed
+resources.resources-base-url: "http://localhost:8080/api"
