@@ -13,17 +13,19 @@ definePage({
     layout: 'no-distractions',
   },
 })
-let store = useV4PStore()
-let {votes, currentPosition} = storeToRefs(store);
 
-let showShort = ref(true);
-let showSpeaker: Ref<InlineVoteSpeaker | null> = ref(null);
+const isMobile = ref(window.innerWidth < 600)
+
+const store = useV4PStore()
+const {votes, currentPosition} = storeToRefs(store);
+const currentVote = computed(() => store.currentVote)
+
+const showShort = ref(true);
+const showSpeaker: Ref<InlineVoteSpeaker | null> = ref(null);
 
 function showBio(speaker: InlineVoteSpeaker | null) {
   showSpeaker.value = speaker;
 }
-
-const currentVote = computed(() => store.currentVote)
 
 function getV4Ptoken(): string {
   let token = localStorage.getItem('v4p-token')
@@ -131,15 +133,15 @@ async function vote(vote: InlineVote, value: number) {
             <v-btn color="teal-accent-4" block @click="startVoting()">Start
             </v-btn>
           </div>
-          <div class="text-body-1	">
+          <v-divider></v-divider>
+          <div class="text-body-1	" v-if="!isMobile">
             <p>
-              btw. you can also vote with keyboard shortcuts. Press ? to list of
-              hotkeys.
+              btw. you can also vote with keyboard shortcuts.
             </p>
-            <div>
-              <pre>shortcuts:
+            <div><pre>
+shortcuts: <br/>
 
-enter     -&gt; start
+enter     -&gt; start<br/>
 space     -&gt; toggle description
 ?         -&gt; self
 
@@ -147,7 +149,6 @@ w | up    -&gt; +1
 s | down  -&gt; -1
 d | right -&gt; next
 a | left  -&gt; go back
-
 </pre>
             </div>
 

@@ -85,6 +85,7 @@ declare global {
   const useSlots: typeof import('vue')['useSlots']
   const useTemplateRef: typeof import('vue')['useTemplateRef']
   const useTheme: typeof import('vuetify')['useTheme']
+  const useV4PStore: typeof import('./stores/v4p')['useV4PStore']
   const watch: typeof import('vue')['watch']
   const watchEffect: typeof import('vue')['watchEffect']
   const watchPostEffect: typeof import('vue')['watchPostEffect']
