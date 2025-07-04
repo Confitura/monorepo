@@ -57,7 +57,6 @@ public abstract class AbstractOAuth20Service {
         final OAuthRequest request = new OAuthRequest(Verb.GET, getProtectedUserUrl());
         auth20Service.signRequest(accessToken, request);
         final Response response = auth20Service.execute(request);
-        log.info("getOAuthUserFor {}", response.getBody());
         return mapToUser(response.getBody());
     }
 
