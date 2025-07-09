@@ -123,6 +123,7 @@ public class UserController {
                                                                     @PathVariable String userId) {
 
         if (!canCreatePresentation()) {
+            log.info("User {} tried to add presentation after v4p is closed", userId);
             return ResponseEntity.status(UNAUTHORIZED).build();
         }
 
@@ -161,6 +162,7 @@ public class UserController {
                                                             @PathVariable String userId) {
 
         if (!canCreatePresentation()) {
+            log.info("User {} tried to add presentation after v4p is closed", userId);
             return ResponseEntity.status(UNAUTHORIZED).build();
         }
 
