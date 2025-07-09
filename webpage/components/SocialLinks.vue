@@ -22,9 +22,9 @@ const links = [
     url: 'https://www.youtube.com/confiturapl'
   },
   {
-    label: 'email us',
+    label: 'newsletter',
     icon: 'fas fa-envelope-square',
-    url: 'mailto:confitura@confitura.pl'
+    url: 'https://mailchi.mp/1811b15cffa4/confitura-newsletter'
   }
 ]
 </script>
