@@ -13,9 +13,11 @@
 
 <script setup lang="ts">
 
-const { type = 'twitter', id, theme = 'black' } = defineProps<{ type: string, id: string, theme?: string }>()
+const {type = 'twitter', id, theme = 'black'} = defineProps<{ type: SocialType, id: string, theme?: string }>()
 
-const social = {
+type SocialType = 'twitter' | 'facebook' | 'github' | 'www'
+
+const social: Record<SocialType, { icon: string; url: string }> = {
   twitter: {
     icon: 'fa-brands fa-square-x-twitter',
     url: 'https://x.com/'
