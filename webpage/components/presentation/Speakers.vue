@@ -6,7 +6,7 @@
       class="speaker"
       @click="show(speaker)"
     >
-      <LazyImage :src="speaker.photo" class="speaker__photo" />
+      <EventualImage :src="speaker.photo" class="speaker__photo" />
       <div class="speaker__name">
         <span>{{ firstName(speaker.name) }}</span>
         <span>{{ lastName(speaker.name) }}</span>
