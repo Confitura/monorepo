@@ -14,19 +14,19 @@
   "dependencies": {
     "@pinia/nuxt": "^0.8.0",
     "dayjs": "^1.11.13",
-    "marked": "^15.0.3",
+    "marked": "^15.0.12",
     "modern-normalize": "^3.0.1",
-    "nuxt": "^3.16.0",
-    "pinia": "^2.2.8",
-    "vue": "^3.5.13",
-    "vue-router": "^4.5.0"
+    "nuxt": "^3.17.6",
+    "pinia": "^2.3.1",
+    "vue": "^3.5.17",
+    "vue-router": "^4.5.1"
   },
   "devDependencies": {
-    "@nuxt/test-utils": "^3.15.4",
+    "@nuxt/test-utils": "^3.19.2",
     "@vue/test-utils": "^2.4.6",
-    "happy-dom": "^16.6.0",
-    "playwright-core": "^1.49.1",
-    "sass-embedded": "^1.81.0",
-    "vitest": "^3.0.8"
+    "happy-dom": "^16.8.1",
+    "playwright-core": "^1.53.2",
+    "sass-embedded": "^1.89.2",
+    "vitest": "^3.2.4"
   }
 }
