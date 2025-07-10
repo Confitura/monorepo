@@ -7,7 +7,7 @@
         <div class="contact__socials">
           <span>
             newsletter:
-          <a title="newsletter" href="https://mailchi.mp/1811b15cffa4/confitura-newsletter" target="_blank"
+          <a title="newsletter" href="https://newsletter.confitura.pl/subscription/form" target="_blank"
              rel="noopener" class="link"> <i
               class="fas fa-envelope-square"></i> </a>
             </span>

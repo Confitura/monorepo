@@ -24,7 +24,7 @@ const links = [
   {
     label: 'newsletter',
     icon: 'fas fa-envelope-square',
-    url: 'https://mailchi.mp/1811b15cffa4/confitura-newsletter'
+    url: 'https://newsletter.confitura.pl/subscription/form'
   }
 ]
 </script>
