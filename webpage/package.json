@@ -1,4 +1,7 @@
 {
+  "engines": {
+    "node": "20"
+  },
   "name": "nuxt-app",
   "private": true,
   "type": "module",
