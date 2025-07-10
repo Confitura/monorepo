@@ -40,7 +40,7 @@ onMounted(() => {
   >
     <template #prepend>
       <v-list>
-        <v-list-item class="pa-1">
+        <v-list-item class="pa-1" href="https://confitura.pl"  target="_blank" style="border-radius: 10px" >
           <template #prepend>
             <v-icon
               icon="custom:confitura"

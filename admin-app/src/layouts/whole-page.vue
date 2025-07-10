@@ -1,6 +1,6 @@
 <template>
   <v-main>
-    <AppBar />
+    <AppBarNoLinks />
     <router-view />
   </v-main>
   <AppFooter />
@@ -8,6 +8,7 @@
 
 <script setup lang="ts">
 import { useTitle } from '@vueuse/core'
+import AppBarNoLinks from "@/components/layout/AppBarNoLinks.vue";
 const route = useRoute()
 const title = computed(() => {
   const title = route.meta?.title || route.matched[0].meta?.title || ''
