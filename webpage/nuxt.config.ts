@@ -32,7 +32,7 @@ export default defineNuxtConfig({
     apiHost: 'https://plausible.confitura.pl/'
   },
   umami: {
-    id: 'e7943a9f-558b-43a1-b8c0-04b290b03e1c',
+    id: '1d7ee786-0bb8-4ae4-ac1d-928296b7b44c',
     host: 'https://umami.confitura.pl',
     autoTrack: true,
     // proxy: 'cloak',
