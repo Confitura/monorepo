@@ -31,5 +31,18 @@ export default defineNuxtConfig({
     ignoredHostnames: ['localhost'],
     apiHost: 'https://plausible.confitura.pl/'
   },
-  modules: ['@pinia/nuxt', '@nuxt/test-utils/module', '@nuxtjs/plausible']
+  umami: {
+    id: 'e7943a9f-558b-43a1-b8c0-04b290b03e1c',
+    host: 'https://umami.confitura.pl',
+    autoTrack: true,
+    // proxy: 'cloak',
+    // useDirective: true,
+    ignoreLocalhost: true,
+    // excludeQueryParams: false,
+    // domains: ['cool-site.app', 'my-space.site'],
+    // customEndpoint: '/my-custom-endpoint',
+    // enabled: false,
+    // logErrors: true,
+  },
+  modules: ['@pinia/nuxt', '@nuxt/test-utils/module', '@nuxtjs/plausible', 'nuxt-umami']
 })
