@@ -26,5 +26,10 @@ export default defineNuxtConfig({
       }]
     }
   },
-  modules: ['@pinia/nuxt', '@nuxt/test-utils/module']
+  plausible: {
+    // Prevent tracking on localhost
+    ignoredHostnames: ['localhost'],
+    apiHost: 'https://plausible.confitura.pl/'
+  },
+  modules: ['@pinia/nuxt', '@nuxt/test-utils/module', '@nuxtjs/plausible']
 })

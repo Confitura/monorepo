@@ -15,6 +15,7 @@
     "start": " node .output/server/index.mjs"
   },
   "dependencies": {
+    "@nuxtjs/plausible": "^1.2.0",
     "@pinia/nuxt": "^0.8.0",
     "dayjs": "^1.11.13",
     "marked": "^15.0.3",
