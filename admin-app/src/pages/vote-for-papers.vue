@@ -28,7 +28,11 @@ const snackbar = ref(false);
 const snackbarTimeout = ref(5000);
 
 function showBio(speaker: InlineVoteSpeaker | null) {
-  showSpeaker.value = speaker;
+  if (showSpeaker.value === speaker) {
+    showSpeaker.value = null;
+  } else {
+    showSpeaker.value = speaker;
+  }
 }
 
 function getV4Ptoken(): string {
@@ -230,26 +234,13 @@ async function vote(vote: InlineVote, value: number) {
         </v-card-actions>
 
         <v-expand-transition>
-          <v-card
-            v-if="showSpeaker"
-            class="position-absolute w-100"
-            height="100%"
-            style="bottom: 0;"
-            :title="showSpeaker.name "
-          >
+          <div v-if="showSpeaker">
+            <v-card-title class="pb-0">{{ showSpeaker.name }}</v-card-title>
             <v-card-text class="pb-0">
               <p class="text-medium-emphasis">
                 {{ showSpeaker.bio }}
               </p>
             </v-card-text>
-            <template v-slot:prepend>
-              <v-avatar color="blue-darken-2">
-                <v-img
-                  :alt="showSpeaker.name + ' photo'"
-                  :src="showSpeaker.photo"
-                ></v-img>
-              </v-avatar>
-            </template>
 
             <v-card-actions class="pt-0">
               <v-btn
@@ -259,7 +250,7 @@ async function vote(vote: InlineVote, value: number) {
                 @click="showBio(null)"
               ></v-btn>
             </v-card-actions>
-          </v-card>
+          </div>
         </v-expand-transition>
       </v-card>
     </v-container>
