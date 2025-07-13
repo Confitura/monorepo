@@ -10,7 +10,7 @@ definePage({
     title: 'Vote for papers',
     drawerIndex: 0,
     skipMenu: true,
-    layout: 'no-distractions',
+    layout: 'whole-page',
   },
 })
 
@@ -22,6 +22,10 @@ const currentVote = computed(() => store.currentVote)
 
 const showShort = ref(true);
 const showSpeaker: Ref<InlineVoteSpeaker | null> = ref(null);
+
+// Snackbar properties
+const snackbar = ref(false);
+const snackbarTimeout = ref(5000);
 
 function showBio(speaker: InlineVoteSpeaker | null) {
   showSpeaker.value = speaker;
@@ -54,30 +58,30 @@ onUnmounted(() => {
 
 function doc_keyUp(e: any) {
 
+  if (e.key == '?') {
+    snackbar.value = true;
+  }
+
   if (currentVote.value) {
-    if (e.code === 'ArrowDown' || e.code === 'KeyS') {
+    if (e.code === 'ArrowLeft' || e.code === 'KeyA') {
       let rate = currentVote.value.rate || 0;
-      if (rate > -1) {
-        currentVote.value.rate = rate - 1;
-      }
-    }
-    if (e.code === 'ArrowUp' || e.code === 'KeyW') {
-      let rate = currentVote.value.rate || 0;
-      if (rate < 1) {
-        currentVote.value.rate = rate + 1;
-      }
+      currentVote.value.rate = Math.max(rate - 1, -1);
     }
     if (e.code === 'ArrowRight' || e.code === 'KeyD') {
+      let rate = currentVote.value.rate || 0;
+      currentVote.value.rate = Math.min(rate + 1, 1);
+    }
+    if (e.code === 'Enter') {
       vote(currentVote.value, currentVote.value.rate || 0)
     }
-    if (e.code === 'ArrowLeft' || e.code === 'KeyA') {
+    if (e.code === 'Backspace') {
       currentPosition.value -= 1;
     }
     if (e.code === 'Space') {
       showShort.value = !showShort.value;
     }
   } else {
-    if (e.code === 'Enter' || e.code === 'ArrowRight' || e.code === 'KeyD') {
+    if (e.code === 'Enter') {
       startVoting()
     }
   }
@@ -97,7 +101,7 @@ async function vote(vote: InlineVote, value: number) {
 <template>
   <div class="content">
 
-    <v-container height="100vh">
+    <v-container class="mx-auto" style="max-width: 1200px;">
       <div v-if="currentPosition==-1">
         <div class="intro">
           <h2 class="text-h4">Vote 4 Papers</h2>
@@ -129,28 +133,17 @@ async function vote(vote: InlineVote, value: number) {
             <p>We are waiting for your votes till end of Wednesday, June 1st</p>
 
           </div>
+          <br/>
           <div>
             <v-btn color="teal-accent-4" block @click="startVoting()">Start
             </v-btn>
           </div>
-          <v-divider></v-divider>
+          <br/>
           <div class="text-body-1	" v-if="!isMobile">
             <p>
-              btw. you can also vote with keyboard shortcuts.
+              btw. you can also vote with keyboard shortcuts. press '?' to check
+              them out
             </p>
-            <div><pre>
-shortcuts: <br/>
-
-enter     -&gt; start<br/>
-space     -&gt; toggle description
-?         -&gt; self
-
-w | up    -&gt; +1
-s | down  -&gt; -1
-d | right -&gt; next
-a | left  -&gt; go back
-</pre>
-            </div>
 
           </div>
         </div>
@@ -270,6 +263,34 @@ a | left  -&gt; go back
         </v-expand-transition>
       </v-card>
     </v-container>
+    <v-snackbar
+      v-model="snackbar"
+      :timeout="snackbarTimeout"
+      color="info"
+      multi-line
+    >
+      Available shortcuts:
+      <pre>
+enter        -> start/next
+backspace    -> go back
+
+space        -> toggle description
+
+a | left     -> -1
+d | right    -> +1
+
+?            -> self
+      </pre>
+      <template v-slot:actions>
+        <v-btn
+          color="white"
+          variant="text"
+          @click="snackbar = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
 
@@ -277,16 +298,13 @@ a | left  -&gt; go back
 .content {
   width: 100%;
   height: 100%;
-  background-color: #0b0a0a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.speaker__bio {
-  overflow: hidden;
-  height: 1em;
+v-container {
+  max-width: 1200px;
+  margin: 0 auto;
 }
-
-.intro {
-  color: white;
-}
-
 </style>

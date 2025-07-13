@@ -53,15 +53,6 @@ function logout() {
         @update:model-value="toggleDark"
       />
     </div>
-    <v-btn
-      icon
-      @click="logout"
-      size="small"
-      class="ml-2"
-      target="_blank"
-    >
-      <v-icon size="30" icon="mdi-logout"/>
-    </v-btn>
   </v-app-bar>
 </template>
 
