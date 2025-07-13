@@ -10,6 +10,7 @@ import router from "@/plugins/router.ts";
 let user = useAuthStore().user
 const route = useRoute()
 const workshopId = route.params.id
+const formValid = ref(false)
 
 definePage({
   meta: {
@@ -34,6 +35,9 @@ const workshop = ref<WorkshopRequest>({
 })
 
 let availableTags = ref<Tag[]>([])
+
+// Validation rules
+const requiredRule = (value: string) => !!value.trim() || 'This field is required'
 
 onMounted(async () => {
   presentationApi.getAllTags()
@@ -60,6 +64,8 @@ function doSubmit() {
 }
 
 function handleSubmit() {
+  if (!formValid.value) return;
+
   doSubmit()
     .then(_ => Notify.success(`Workshop ${workshop.value.title} saved`))
     .then(_ => router.back())
@@ -70,12 +76,13 @@ function handleSubmit() {
 </script>
 <template>
 
-  <v-form @submit.prevent="handleSubmit">
+  <v-form @submit.prevent="handleSubmit" v-model="formValid">
     <v-text-field
       v-model="workshop.title"
       label="Title"
       outlined
       required
+      :rules="[requiredRule]"
     ></v-text-field>
 
     <v-text-field
@@ -83,6 +90,7 @@ function handleSubmit() {
       label="Short Description"
       outlined
       required
+      :rules="[requiredRule]"
     ></v-text-field>
 
     <v-textarea
@@ -91,6 +99,7 @@ function handleSubmit() {
       outlined
       rows="4"
       required
+      :rules="[requiredRule]"
     ></v-textarea>
 
     <v-select
@@ -99,6 +108,7 @@ function handleSubmit() {
       label="Level"
       outlined
       required
+      :rules="[requiredRule]"
     ></v-select>
 
     <v-select
@@ -107,6 +117,7 @@ function handleSubmit() {
       label="Language"
       outlined
       required
+      :rules="[requiredRule]"
     ></v-select>
 
 
@@ -152,7 +163,7 @@ function handleSubmit() {
       type="number"
     ></v-text-field>
 
-    <v-btn type="submit" color="primary" class="mt-4">
+    <v-btn type="submit" color="primary" class="mt-4" :disabled="!formValid">
       Submit
     </v-btn>
   </v-form>
