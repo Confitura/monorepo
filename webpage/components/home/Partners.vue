@@ -5,36 +5,36 @@
       <div class="partners-main">
         <div class="platinum">
           <a
-            v-for="item in partners.platinum"
-            :key="item.id"
-            :href="item.www"
-            class="link"
-            rel="noopener"
-            target="_blank"
+              v-for="item in partners.platinum"
+              :key="item.id"
+              :href="item.www"
+              class="link"
+              rel="noopener"
+              target="_blank"
           >
             <img
-              :src="resolveImage(item.logo)"
-              :alt="item.name"
-              class="logo__img--platinum"
-              :class="item.id"
+                :src="resolveImage(item.logo)"
+                :alt="item.name"
+                class="logo__img--platinum"
+                :class="item.id"
             />
           </a>
           <span class="type--platinum">Platinum</span>
         </div>
         <div class="path">
           <a
-            v-for="item in partners.path"
-            :key="item.id"
-            :href="item.www"
-            class="link"
-            rel="noopener"
-            target="_blank"
+              v-for="item in partners.path"
+              :key="item.id"
+              :href="item.www"
+              class="link"
+              rel="noopener"
+              target="_blank"
           >
             <img
-              :src="resolveImage(item.logo)"
-              :alt="item.name"
-              class="logo__img--platinum"
-              :class="item.id"
+                :src="resolveImage(item.logo)"
+                :alt="item.name"
+                class="logo__img--platinum"
+                :class="item.id"
             />
           </a>
           <!--          <span class="type&#45;&#45;path">Path</span>-->
@@ -42,8 +42,8 @@
       </div>
       <div class="other-types">
         <template v-for="type in types">
-            <div class="logos" v-if="type === active" :key="type">
-              <div
+          <div class="logos" v-if="type === active" :key="type">
+            <div
                 v-for="item in partners[type]"
                 :key="item.id"
                 class="logo"
@@ -51,28 +51,28 @@
                   [`logo--${item.orientation}`]: item.orientation,
                   [`logo--${active}`]: active
                 }"
-              >
-                <a :href="item.www" class="link" rel="noopener" target="_blank">
-                  <img
+            >
+              <a :href="item.www" class="link" rel="noopener" target="_blank">
+                <img
                     :src="resolveImage(item.logo)"
                     :alt="item.name"
                     class="logo__img"
                     :title="item.name"
-                  />
-                </a>
-              </div>
+                />
+              </a>
             </div>
+          </div>
         </template>
 
         <div class="type__selector">
           <div
-            class="type"
-            v-for="type in types"
-            :key="type"
-            @click="activate(type)"
-            @mouseenter="pauseIfActive(type)"
-            @mouseleave="startCarousel()"
-            :class="{
+              class="type"
+              v-for="type in types"
+              :key="type"
+              @click="activate(type)"
+              @mouseenter="pauseIfActive(type)"
+              @mouseleave="startCarousel()"
+              :class="{
               [`type--${type}`]: true,
               [`type--active`]: type === active
             }"
@@ -87,21 +87,14 @@
 
 <script setup lang="ts">
 
-import { usePartnersStore } from '~/stores/partnersStore'
+import {type PartnerType, usePartnersStore} from '~/stores/partnersStore'
 
 const types: PartnerType[] = ['gold', 'silver', 'tech']
-const active = useState('active', () => 'gold')
-const partnersStore = usePartnersStore()
-let partners: Partners = {
-  platinum: partnersStore.platinum,
-  path: partnersStore.path,
-  gold: partnersStore.gold,
-  silver: partnersStore.silver,
-  bronze: partnersStore.bronze,
-  tech: partnersStore.tech
-}
+const active: Ref<PartnerType> = useState('active', () => 'gold')
 
-let intervalId: number = 0
+let partners: Partners = usePartnersStore().partnersMap
+
+let intervalId: any | undefined = undefined
 
 function pauseIfActive(type: string) {
   if (active.value === type) {
@@ -115,7 +108,7 @@ function activate(type: PartnerType) {
 }
 
 function startCarousel() {
-  if (intervalId === 0) {
+  if (intervalId === undefined) {
     intervalId = setInterval(() => {
       const currentIdx = types.indexOf(active.value)
       const newIdx = (currentIdx + 1) % types.length
@@ -134,7 +127,7 @@ onDeactivated(() => {
 
 function stopCarousel() {
   clearInterval(intervalId)
-  intervalId = 0
+  intervalId = undefined
 }
 
 const imgUrls = import.meta.glob('~/assets/partners/2023/*', {
@@ -142,20 +135,10 @@ const imgUrls = import.meta.glob('~/assets/partners/2023/*', {
   eager: true
 })
 
-function resolveImage(path: string) {
-  return imgUrls[path]
+function resolveImage(path: string): string {
+  return `${imgUrls[path]}`
 }
 
-interface Partners {
-  platinum: Partner[];
-  path: Partner[];
-  gold: Partner[];
-  silver: Partner[];
-  bronze: Partner[];
-  tech: Partner[];
-}
-
-type PartnerType = 'gold' | 'silver' | 'bronze' | 'tech';
 </script>
 
 <style scoped lang="scss">

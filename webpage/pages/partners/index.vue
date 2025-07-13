@@ -1,24 +1,24 @@
 <template>
   <div class="partners">
-    <PageHeader title="Partners" type="peace"> </PageHeader>
+    <PageHeader title="Partners" type="peace"></PageHeader>
     <Box class="content" color="white">
       <template v-for="(items, type) in partners">
         <article v-if="items.length > 0" :key="type">
           <h2 class="type-header">
-            {{ type }} <br class="type-header__breaker" />partners
+            {{ type }} <br class="type-header__breaker"/>partners
           </h2>
           <div class="logos">
             <router-link
-              v-for="partner in items"
-              :key="partner.id"
-              :to="`/partners/${partner.id}`"
-              class="logo-link"
-              :class="`logo-link--${partner.type}`"
+                v-for="partner in items"
+                :key="partner.id"
+                :to="`/partners/${partner.id}`"
+                class="logo-link"
+                :class="`logo-link--${partner.type}`"
             >
               <img
-                :src="resolveImage(partner.logo)"
-                :alt="partner.name"
-                :class="{
+                  :src="resolveImage(partner.logo)"
+                  :alt="partner.name"
+                  :class="{
                   ['logo--' + partner.type]: true,
                   ['logo--' + partner.orientation]: partner.orientation,
                   [partner.id]: true
@@ -29,22 +29,14 @@
         </article>
       </template>
     </Box>
-    <Contact />
+    <Contact/>
   </div>
 </template>
 
 <script setup lang="ts">
-import { usePartnersStore } from '~/stores/partnersStore'
+import {type Partners, usePartnersStore} from '~/stores/partnersStore'
 
-const partnersStore = usePartnersStore()
-let partners: Partners = {
-  platinum: partnersStore.platinum,
-  path: partnersStore.path,
-  gold: partnersStore.gold,
-  silver: partnersStore.silver,
-  bronze: partnersStore.bronze,
-  tech: partnersStore.tech
-}
+let partners: Partners = usePartnersStore().partnersMap
 
 const imgUrls = import.meta.glob('~/assets/partners/2023/*', {
   import: 'default',
@@ -52,7 +44,7 @@ const imgUrls = import.meta.glob('~/assets/partners/2023/*', {
 })
 
 function resolveImage(path: string) {
-  return imgUrls[path]
+  return `${imgUrls[path]}`
 }
 </script>
 

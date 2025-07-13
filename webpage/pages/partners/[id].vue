@@ -1,62 +1,75 @@
-<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-  <div class="partners" v-if="partner">
-    <PageHeader class="header" type="peace">
-      <template v-slot:title>
+<template>
+  <div class="partners">
+    <PageFragment class="header" type="peace">
+      <template #title>
         <span class="header__partner-type">{{ partner.type }} partner</span>
         {{ partner.name }}
       </template>
-    </PageHeader>
+    </PageFragment>
     <Box class="content" color="white" :full="false">
       <article class="partner">
         <div class="partner__logo-container">
           <a :href="partner.www" target="_blank" rel="noopener">
             <img
-                class="partner__logo"
-                :class="{ [`partner__logo--${partner.orientation}`]: partner.orientation }"
-                :src="resolveImage(partner.logo)"
-                :alt="partner.name"
+              class="partner__logo"
+              :class="{
+                [`partner__logo--${partner.orientation}`]: partner.orientation
+              }"
+              :src="resolveImage(partner.logo)"
+              :alt="partner.name"
             />
           </a>
         </div>
         <div class="partner__description" v-html="description"></div>
       </article>
     </Box>
-    <Contact/>
+    <Contact />
   </div>
 </template>
 
 <script setup lang="ts">
-import {marked} from 'marked'
-import {usePartnersStore} from '~/stores/partnersStore'
+import { ref, onMounted, computed } from 'vue'
+import Box from '@/components/Box.vue'
+import Contact from '@/components/Contact.vue'
+import { usePartnersStore, type Partner } from '@/stores/partnersStore'
+import { useRoute } from 'vue-router'
+import { marked } from 'marked'
 
 const route = useRoute()
-const partnerStore = usePartnersStore()
-
-const partnerId = computed(() => route.params.partner as string)
-const partner = computed(() => partnerStore.getPartnerById(partnerId.value))
-const description = computed(() => partner?.value?.description ? marked(partner.value.description) : '')
-
-onMounted(() => {
-  window.scrollTo(0, 0)
+const partnersStore = usePartnersStore()
+const partner = ref<Partner>({
+  name: "",
+  description: "",
+  id: "",
+  logo: "",
+  type: "",
+  www: ""
 })
 
+const description = computed(() => {
+  return marked(partner.value.description)
+})
 
 const imgUrls = import.meta.glob('~/assets/partners/2023/*', {
   import: 'default',
   eager: true
 })
 
-function resolveImage(path: string) {
-  return `${imgUrls[path]}`
+function resolveImage(path: string): string {
+  return imgUrls[path]
 }
+
+onMounted(() => {
+  window.scrollTo(0, 0)
+  const id = route.params.id as string
+  const foundPartner = partnersStore.getPartnerById(id)
+  if (foundPartner) {
+    partner.value = foundPartner
+  }
+})
 </script>
 
 <style lang="scss" scoped>
-@use "~/assets/colors" as *;
-@use "~/assets/sizes" as *;
-@use "~/assets/media" as *;
-@use "~/assets/fonts" as *;
-
 .partners {
   overflow: hidden;
 }
@@ -79,7 +92,7 @@ function resolveImage(path: string) {
   left: 60px;
   transform: rotate(-10deg);
   position: absolute;
-  @include sm() {
+  @media (max-width: 576px) {
     width: 500px;
     top: 0;
     position: unset;
@@ -89,12 +102,12 @@ function resolveImage(path: string) {
 
 .type-header {
   font-size: 2.7rem;
-  color: $brand;
+  color: var(--brand-color);
   margin-bottom: 3rem;
   font-weight: bold;
 
   &__breaker {
-    @include sm() {
+    @media (max-width: 576px) {
       display: none;
     }
   }
@@ -108,7 +121,7 @@ function resolveImage(path: string) {
   display: grid;
   grid-template-columns: 1fr;
   grid-gap: 2rem;
-  @include md() {
+  @media (min-width: 768px) {
     grid-template-columns: 1fr 2fr;
   }
 
@@ -138,11 +151,9 @@ function resolveImage(path: string) {
 }
 </style>
 <style lang="scss">
-@use "~/assets/colors" as *;
-
 .partner {
   a {
-    color: $brand;
+    color: var(--brand-color);
   }
 }
 </style>
