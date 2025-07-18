@@ -8,7 +8,6 @@ import java.nio.file.Paths;
 import jakarta.transaction.Transactional;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,13 +22,8 @@ import static com.google.common.io.Files.*;
 @Service
 @RequiredArgsConstructor
 public class ResourceStorage {
-    @Value("${resources.path}")
-    private String rootPath;
-    @Value("${resources.folder}")
-    private String folder;
-    @Value("${resources.resources-base-url}")
-    private String resourcesBaseUrl;
 
+    private final ResourceConfigurationProperties properties;
     private final UserRepository repository;
     private final PartnerRepository partnerRepository;
 
@@ -52,9 +46,10 @@ public class ResourceStorage {
     }
 
     private String doStore(String fileName, MultipartFile file, String... paths) throws IOException {
-        Path path = Files.createDirectories(Paths.get(folder, paths));
+        Path path = Files.createDirectories(Paths.get(properties.folder(), paths));
         Path filePath = Paths.get(path.toString(), fileName + "." + getFileExtension(file.getOriginalFilename()));
         Files.write(filePath, file.getBytes());
-        return resourcesBaseUrl + "/" + rootPath  + filePath.toString().replace(folder, "");
+        return properties.resourcesBaseUrl() + "/" + properties.path() + filePath.toString().replace(properties.folder(), "");
     }
+
 }
