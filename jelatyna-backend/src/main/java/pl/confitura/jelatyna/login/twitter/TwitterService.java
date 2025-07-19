@@ -66,7 +66,6 @@ public class TwitterService {
     }
 
     private TwitterUser mapToUser(String body) throws java.io.IOException {
-        log.info("mapToUser {}", body);
         return mapper.readValue(body, TwitterUser.class);
     }
 }
