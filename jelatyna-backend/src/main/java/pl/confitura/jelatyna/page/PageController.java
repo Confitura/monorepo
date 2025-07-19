@@ -2,9 +2,11 @@ package pl.confitura.jelatyna.page;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,5 +19,43 @@ public class PageController {
                 .map(Page::getContent)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/pages")
+    public List<String> getPages() {
+        return pageRepository.findAll().stream()
+                .map(Page::getId)
+                .toList();
+    }
+    
+    @PreAuthorize("@security.isAdmin()")
+    @PostMapping("/pages/{id}")
+    @Transactional
+    public ResponseEntity<?> createPage(@PathVariable String id, @RequestBody String content) {
+        Page page = new Page();
+        page.setId(id);
+        page.setContent(content);
+        pageRepository.save(page);
+        return ResponseEntity.ok().build();
+    }
+    
+    @PreAuthorize("@security.isAdmin()")
+    @PutMapping("/pages/{id}")
+    @Transactional
+    public ResponseEntity<?> updatePage(@PathVariable String id, @RequestBody String content) {
+        return pageRepository.findById(id)
+                .map(page -> {
+                    page.setContent(content);
+                    pageRepository.save(page);
+                    return ResponseEntity.ok().build();
+                })
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PreAuthorize("@security.isAdmin()")
+    @DeleteMapping("/pages/{id}")
+    @Transactional
+    public void deletePage(@PathVariable String id) {
+        pageRepository.deleteById(id);
     }
 }

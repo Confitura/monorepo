@@ -61,16 +61,16 @@ export interface AgendaEntry {
     'presentation'?: Presentation;
     /**
      * 
-     * @type {Set<PublicUser>}
-     * @memberof AgendaEntry
-     */
-    'speakers'?: Set<PublicUser>;
-    /**
-     * 
      * @type {number}
      * @memberof AgendaEntry
      */
     'timeSlotOrder'?: number;
+    /**
+     * 
+     * @type {Set<PublicUser>}
+     * @memberof AgendaEntry
+     */
+    'speakers'?: Set<PublicUser>;
 }
 /**
  * 
@@ -877,12 +877,6 @@ export interface Presentation {
      * @type {boolean}
      * @memberof Presentation
      */
-    'new'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Presentation
-     */
     'accepted'?: boolean;
     /**
      * 
@@ -890,6 +884,12 @@ export interface Presentation {
      * @memberof Presentation
      */
     'speaker'?: Presentation;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Presentation
+     */
+    'new'?: boolean;
 }
 /**
  * 
@@ -1516,6 +1516,25 @@ export interface UsersStats {
      * @memberof UsersStats
      */
     'volunteers'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface VoteRequest
+ */
+export interface VoteRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof VoteRequest
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof VoteRequest
+     */
+    'rate'?: number;
 }
 /**
  * 
@@ -3745,6 +3764,86 @@ export const PageControllerApiAxiosParamCreator = function (configuration?: Conf
         /**
          * 
          * @param {string} id 
+         * @param {string} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createPage: async (id: string, body: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('createPage', 'id', id)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('createPage', 'body', body)
+            const localVarPath = `/pages/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deletePage: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('deletePage', 'id', id)
+            const localVarPath = `/pages/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3764,11 +3863,91 @@ export const PageControllerApiAxiosParamCreator = function (configuration?: Conf
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPages: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/pages`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {string} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updatePage: async (id: string, body: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('updatePage', 'id', id)
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('updatePage', 'body', body)
+            const localVarPath = `/pages/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3788,6 +3967,31 @@ export const PageControllerApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {string} id 
+         * @param {string} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createPage(id: string, body: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createPage(id, body, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PageControllerApi.createPage']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deletePage(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deletePage(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PageControllerApi.deletePage']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -3795,6 +3999,30 @@ export const PageControllerApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPage(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PageControllerApi.getPage']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getPages(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<string>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPages(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PageControllerApi.getPages']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {string} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updatePage(id: string, body: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updatePage(id, body, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PageControllerApi.updatePage']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -3810,11 +4038,48 @@ export const PageControllerApiFactory = function (configuration?: Configuration,
         /**
          * 
          * @param {string} id 
+         * @param {string} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createPage(id: string, body: string, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.createPage(id, body, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deletePage(id: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deletePage(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getPage(id: string, options?: RawAxiosRequestConfig): AxiosPromise<string> {
             return localVarFp.getPage(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getPages(options?: RawAxiosRequestConfig): AxiosPromise<Array<string>> {
+            return localVarFp.getPages(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {string} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updatePage(id: string, body: string, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.updatePage(id, body, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -3829,12 +4094,57 @@ export class PageControllerApi extends BaseAPI {
     /**
      * 
      * @param {string} id 
+     * @param {string} body 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PageControllerApi
+     */
+    public createPage(id: string, body: string, options?: RawAxiosRequestConfig) {
+        return PageControllerApiFp(this.configuration).createPage(id, body, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PageControllerApi
+     */
+    public deletePage(id: string, options?: RawAxiosRequestConfig) {
+        return PageControllerApiFp(this.configuration).deletePage(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PageControllerApi
      */
     public getPage(id: string, options?: RawAxiosRequestConfig) {
         return PageControllerApiFp(this.configuration).getPage(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PageControllerApi
+     */
+    public getPages(options?: RawAxiosRequestConfig) {
+        return PageControllerApiFp(this.configuration).getPages(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {string} body 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PageControllerApi
+     */
+    public updatePage(id: string, body: string, options?: RawAxiosRequestConfig) {
+        return PageControllerApiFp(this.configuration).updatePage(id, body, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -6555,13 +6865,13 @@ export const VoteControllerApiAxiosParamCreator = function (configuration?: Conf
     return {
         /**
          * 
-         * @param {InlineVote} inlineVote 
+         * @param {VoteRequest} voteRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        save: async (inlineVote: InlineVote, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'inlineVote' is not null or undefined
-            assertParamExists('save', 'inlineVote', inlineVote)
+        save: async (voteRequest: VoteRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'voteRequest' is not null or undefined
+            assertParamExists('save', 'voteRequest', voteRequest)
             const localVarPath = `/votes`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -6581,7 +6891,7 @@ export const VoteControllerApiAxiosParamCreator = function (configuration?: Conf
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(inlineVote, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(voteRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6662,12 +6972,12 @@ export const VoteControllerApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @param {InlineVote} inlineVote 
+         * @param {VoteRequest} voteRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async save(inlineVote: InlineVote, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineVote>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.save(inlineVote, options);
+        async save(voteRequest: VoteRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineVote>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.save(voteRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['VoteControllerApi.save']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -6707,12 +7017,12 @@ export const VoteControllerApiFactory = function (configuration?: Configuration,
     return {
         /**
          * 
-         * @param {InlineVote} inlineVote 
+         * @param {VoteRequest} voteRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        save(inlineVote: InlineVote, options?: RawAxiosRequestConfig): AxiosPromise<InlineVote> {
-            return localVarFp.save(inlineVote, options).then((request) => request(axios, basePath));
+        save(voteRequest: VoteRequest, options?: RawAxiosRequestConfig): AxiosPromise<InlineVote> {
+            return localVarFp.save(voteRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -6743,13 +7053,13 @@ export const VoteControllerApiFactory = function (configuration?: Configuration,
 export class VoteControllerApi extends BaseAPI {
     /**
      * 
-     * @param {InlineVote} inlineVote 
+     * @param {VoteRequest} voteRequest 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof VoteControllerApi
      */
-    public save(inlineVote: InlineVote, options?: RawAxiosRequestConfig) {
-        return VoteControllerApiFp(this.configuration).save(inlineVote, options).then((request) => request(this.axios, this.basePath));
+    public save(voteRequest: VoteRequest, options?: RawAxiosRequestConfig) {
+        return VoteControllerApiFp(this.configuration).save(voteRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
