@@ -74,16 +74,16 @@
 
 <script setup lang="ts">
 const config = useRuntimeConfig();
-import {useAPIFetch} from '~/composables/useAPIFetch'
+import {useAPIFetch, useArchiveFetch} from '~/composables/useAPIFetch'
 
 const {data: committee} = await fetchUsers('admins')
 const {data: volunteers} = await fetchUsers('volunteers')
 
 async function fetchUsers(type: string) {
-  return useAPIFetch('/users/search/' + type + '.json', {
+  return useArchiveFetch('/users/search/' + type + '.json', {
     key: type,
     transform: (response) => {
-      let users = response._embedded.publicUsers;
+      let users = response;
       users = users.map(user => {
         let photo = user.photo;
         if (photo.startsWith('/')) {
