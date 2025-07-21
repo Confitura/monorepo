@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.confitura.jelatyna.BaseIntegrationTest;
 import pl.confitura.jelatyna.agenda.UserUtils;
+import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
+import pl.confitura.jelatyna.page.PageController;
 import pl.confitura.jelatyna.user.UserController;
 
 import java.io.IOException;
@@ -26,6 +28,9 @@ class WebpageDataDumperTest extends BaseIntegrationTest {
     @Autowired
     private UserController userController;
 
+    @Autowired
+    private PageController pageController;
+
     private WebpageDataDumper webpageDataDumper;
 
     @BeforeEach
@@ -34,8 +39,9 @@ class WebpageDataDumperTest extends BaseIntegrationTest {
         super.setUp();
         webpageDataDumper = new WebpageDataDumper(
                 objectMapper,
+                "/tmp/confitura/2025",
                 userController,
-                "/tmp/confitura/2025"
+                pageController
         );
     }
 
@@ -50,7 +56,7 @@ class WebpageDataDumperTest extends BaseIntegrationTest {
         webpageDataDumper.dumpAdmins();
 
         //then
-        var content = Files.readString(Path.of("/tmp/confitura/2025/admins.json"));
+        var content = Files.readString(Path.of("/tmp/confitura/2025/users/search/admins.json"));
         var actual = objectMapper.readValue(content, List.class);
         var expected = objectMapper.readValue("""
                 [
@@ -74,6 +80,24 @@ class WebpageDataDumperTest extends BaseIntegrationTest {
                   }
                 ]""", List.class);
         assertThat(actual).isEqualTo(expected);
-
     }
+
+    @Test
+    void shouldDumpPages() throws IOException {
+        //given
+        SecurityHelper.asAdmin();
+        var pageName = "registration-info";
+        var pageContent = "# Registration\nWelcome to registration page";
+        pageController.createPage(pageName, pageContent);
+
+        //when
+        webpageDataDumper.dumpPages();
+
+        //then
+        var content = Files.readString(Path.of("/tmp/confitura/2025/pages/" + pageName + ".json"));
+        var actual = objectMapper.readValue(content, String.class);
+        assertThat(actual).isEqualTo(pageContent);
+    }
+
+
 }

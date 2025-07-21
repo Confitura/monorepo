@@ -27,7 +27,7 @@ public class PageController {
                 .map(Page::getId)
                 .toList();
     }
-    
+
     @PreAuthorize("@security.isAdmin()")
     @PostMapping("/pages/{id}")
     @Transactional
@@ -38,7 +38,7 @@ public class PageController {
         pageRepository.save(page);
         return ResponseEntity.ok().build();
     }
-    
+
     @PreAuthorize("@security.isAdmin()")
     @PutMapping("/pages/{id}")
     @Transactional
