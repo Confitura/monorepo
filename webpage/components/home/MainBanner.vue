@@ -6,16 +6,14 @@
         <div class="slogan">
           <h1 class="h1">Confitura 2025 - Escape the Loop. Join the Revolution.</h1>
         </div>
-        <div class="info__live">
-          <div class="info__live-text">> Join as a speaker <</div>
-          <a class="info__live-link" href="https://app.confitura.pl/" target="_blank">submit here</a>
-        </div>
+<!--        <div class="info__live">-->
+<!--          <div class="info__live-text">> Join as a speaker <</div>-->
+<!--          <a class="info__live-link" href="https://app.confitura.pl/" target="_blank">submit here</a>-->
+<!--        </div>-->
         <div class="info__long">
           <p> Warsaw | September 19–20, 2025 </p>
           <TheTimer/>
           <p>ADN Conference Center, Grzybowska 56</p>
-
-
         </div>
         <div class="info__long">
           <small>

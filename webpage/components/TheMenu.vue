@@ -22,9 +22,9 @@
 let items: MenuItem[] = [
   // { label: 'scanner', url: '/new-scanner', visible: () => isVolunteer() },
   { label: 'home', url: '/#home' },
-  { label: 'call for papers', url: 'https://app.confitura.pl/' },
   { label: 'about us', url: '/about' },
   { label: '2023', url: 'http://2023.confitura.pl/' },
+  { label: 'login', url: 'https://app.confitura.pl/' },
   // { label: 'tickets', url: '/tickets' },
   // { label: "vote", url: "/v4p" },
   // { label: 'partners', url: '/partners' },
