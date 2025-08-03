@@ -47,7 +47,12 @@ function getV4Ptoken(): string {
 async function startVoting() {
   let token = getV4Ptoken();
   let result = await voteForPapersApi.start(token)
-  votes.value = result.data
+  votes.value = result.data.map(it => {
+    if (it.rate == undefined) {
+      it.rate = 0
+    }
+    return it
+  })
   currentPosition.value = 0;
 }
 
