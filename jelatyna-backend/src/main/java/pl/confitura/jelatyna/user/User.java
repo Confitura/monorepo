@@ -32,22 +32,30 @@ public class User extends AuditedEntity {
     @ToString.Include
     private String id = UUID.randomUUID().toString();
     @ToString.Include
+    @Column(columnDefinition = "text")
     private String origin;
+    @Column(columnDefinition = "text")
     private String name;
+    @Column(columnDefinition = "text")
     private String email;
-    @Column(length = 1000)
+    @Column(columnDefinition = "text")
     private String bio;
+    @Column(columnDefinition = "text")
     private String username;
+    @Column(columnDefinition = "text")
     private String twitter;
+    @Column(columnDefinition = "text")
     private String github;
+    @Column(columnDefinition = "text")
     private String www;
+    @Column(columnDefinition = "text")
     @ToString.Include
     private String photo;
     @ToString.Include
     private boolean isAdmin;
     @ToString.Include
     private boolean isVolunteer;
-    @Column(name = "social_id")
+    @Column(columnDefinition = "text", name = "social_id")
     private String socialId;
 
     @ToString.Include
@@ -65,7 +73,7 @@ public class User extends AuditedEntity {
 
     public boolean isSpeaker() {
         return presentations != null
-                && !presentations.isEmpty();
+               && !presentations.isEmpty();
     }
 
     public boolean isParticipant() {
