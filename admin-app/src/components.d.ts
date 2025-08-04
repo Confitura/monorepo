@@ -8,6 +8,8 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    Agenda: typeof import('./components/admin/agenda.vue')['default']
+    AgendaEditor: typeof import('./components/admin/agenda-editor.vue')['default']
     AppBar: typeof import('./components/layout/AppBar.vue')['default']
     AppBarNoLinks: typeof import('./components/layout/AppBarNoLinks.vue')['default']
     AppDrawer: typeof import('./components/layout/AppDrawer.vue')['default']

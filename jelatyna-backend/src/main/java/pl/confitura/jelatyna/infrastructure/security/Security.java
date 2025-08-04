@@ -10,7 +10,7 @@ import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
 import pl.confitura.jelatyna.user.UserRepository;
 
-@Component
+@Component("security")
 @Slf4j
 public class Security {
 

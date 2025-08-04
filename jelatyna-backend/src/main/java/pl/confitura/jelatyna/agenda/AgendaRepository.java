@@ -21,4 +21,5 @@ public interface AgendaRepository extends Repository<AgendaEntry, String> {
     @Query("from AgendaEntry where timeSlot.forAllRooms = true")
     List<AgendaEntry> findEntriesForAllRooms();
 
+    Iterable<AgendaEntry> findByDay(Day day);
 }

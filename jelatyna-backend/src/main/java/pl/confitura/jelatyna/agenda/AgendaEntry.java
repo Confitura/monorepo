@@ -26,7 +26,7 @@ import static java.util.stream.Collectors.toSet;
 @Entity
 @Table(
         name = "agenda",
-        uniqueConstraints = @UniqueConstraint(columnNames = { "time_slot_id", "room_id" })
+        uniqueConstraints = @UniqueConstraint(columnNames = { "day_id", "time_slot_id", "room_id" })
 )
 @Data
 @Accessors(chain = true)
@@ -38,6 +38,11 @@ public class AgendaEntry {
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(columnDefinition = "varchar(100)")
     private String id;
+
+    @ManyToOne
+    @NotNull
+    @JoinColumn(name = "day_id")
+    private Day day;
 
     @ManyToOne
     @NotNull
