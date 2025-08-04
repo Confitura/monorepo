@@ -48,7 +48,6 @@ public class WebpageDataDumper {
     @SneakyThrows
     private void dumpData(String json, String targetPath) {
         Path filePath = Path.of(targetDirectory, targetPath);
-        log.info("Dumping data to {}", filePath);
         if (Files.notExists(filePath)) {
             Files.createDirectories(filePath.getParent());
             Files.createFile(filePath);
