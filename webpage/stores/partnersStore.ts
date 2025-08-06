@@ -84,9 +84,41 @@ function getPartners(): Partner[] {
         orientation: "box"
     }, {
         id: "join-us",
+        name: "",
+        description: "",
+        logo: "/assets/partners/2025/reserved.svg",
+        www: "/partners/join-us",
+        type: "gold",
+        orientation: "box"
+    }, {
+        id: "join-us",
         name: "waiting for you",
         description: "Join us!",
         logo: "/assets/partners/2025/join-us.svg",
+        www: "/partners/join-us",
+        type: "silver",
+        orientation: "box"
+    }, {
+        id: "join-us",
+        name: "",
+        description: "",
+        logo: "/assets/partners/2025/reserved.svg",
+        www: "/partners/join-us",
+        type: "silver",
+        orientation: "box"
+    }, {
+        id: "join-us",
+        name: "",
+        description: "",
+        logo: "/assets/partners/2025/reserved.svg",
+        www: "/partners/join-us",
+        type: "silver",
+        orientation: "box"
+    }, {
+        id: "join-us",
+        name: "",
+        description: "",
+        logo: "/assets/partners/2025/reserved.svg",
         www: "/partners/join-us",
         type: "silver",
         orientation: "box"
