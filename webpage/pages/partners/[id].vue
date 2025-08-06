@@ -50,13 +50,15 @@ const description = computed(() => {
   return marked(partner.value.description)
 })
 
-const imgUrls = import.meta.glob('~/assets/partners/2023/*', {
+const imgUrls = import.meta.glob('~/assets/partners/2025/*', {
   import: 'default',
   eager: true
 })
 
 function resolveImage(path: string): string {
-  return imgUrls[path]
+  let resolved = `${imgUrls[path]}`;
+  console.log('resolved path', resolved)
+  return resolved
 }
 
 onMounted(() => {

@@ -1,10 +1,10 @@
 <template>
   <div class="home__container">
-    <HomeMainBanner />
-    <HomeAbout />
-    <HomeNumbers />
-<!--    <HomePartners />-->
-    <Contact />
+    <HomeMainBanner/>
+    <HomeAbout/>
+    <HomeNumbers/>
+    <HomePartners/>
+    <Contact/>
   </div>
 </template>
 
