@@ -44,7 +44,7 @@ export interface PartnersState {
     partners: Partner[];
 }
 
-export type PartnerType = 'platinum' | 'gold' | 'silver' | 'bronze' | 'path';
+export type PartnerType = 'platinum' | 'gold' | 'silver' | 'media' | 'path';
 
 export interface Partner {
     id: string;
@@ -122,15 +122,7 @@ function getPartners(): Partner[] {
         www: "/partners/join-us",
         type: "silver",
         orientation: "box"
-    }, {
-        id: "join-us",
-        name: "",
-        description: "",
-        logo: "/assets/partners/2025/join-us.svg",
-        www: "",
-        type: "bronze",
-        orientation: "box"
-    }, {
+    },  {
         id: "join-us",
         name: "",
         description: "",
