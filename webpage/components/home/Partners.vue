@@ -7,7 +7,7 @@
           <a
               v-for="item in partners.platinum"
               :key="item.id"
-              :href="item.www"
+              :href="'/partners/' + item.id "
               class="link"
               rel="noopener"
               target="_blank"
@@ -25,10 +25,10 @@
           <a
               v-for="item in partners.path"
               :key="item.id"
-              :href="item.www"
+              :href="'/partners/' + item.id "
+              target="_blank"
               class="link"
               rel="noopener"
-              target="_blank"
           >
             <img
                 :src="resolveImage(item.logo)"
@@ -37,8 +37,9 @@
                 :class="item.id"
             />
           </a>
-          <!--          <span class="type&#45;&#45;path">Path</span>-->
+          <span class="type--path">Path</span>
         </div>
+
       </div>
       <div class="other-types">
         <template v-for="type in types">
@@ -52,7 +53,7 @@
                   [`logo--${active}`]: active
                 }"
             >
-              <a :href="item.www" class="link" rel="noopener" target="_blank">
+              <a :href="'/partners/' + item.id " class="link" rel="noopener" target="_blank">
                 <img
                     :src="resolveImage(item.logo)"
                     :alt="item.name"
@@ -89,7 +90,7 @@
 
 import {type PartnerType, usePartnersStore} from '~/stores/partnersStore'
 
-const types: PartnerType[] = ['gold', 'silver', 'tech']
+const types: PartnerType[] = ['gold', 'silver']
 const active: Ref<PartnerType> = useState('active', () => 'gold')
 
 let partners: Partners = usePartnersStore().partnersMap
@@ -130,7 +131,7 @@ function stopCarousel() {
   intervalId = undefined
 }
 
-const imgUrls = import.meta.glob('~/assets/partners/2023/*', {
+const imgUrls = import.meta.glob('~/assets/partners/2025/*', {
   import: 'default',
   eager: true
 })

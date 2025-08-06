@@ -38,13 +38,15 @@ import {type Partners, usePartnersStore} from '~/stores/partnersStore'
 
 let partners: Partners = usePartnersStore().partnersMap
 
-const imgUrls = import.meta.glob('~/assets/partners/2023/*', {
+const imgUrls = import.meta.glob('~/assets/partners/2025/*', {
   import: 'default',
   eager: true
 })
 
-function resolveImage(path: string) {
-  return `${imgUrls[path]}`
+function resolveImage(path: string): string {
+  let resolved = `${imgUrls[path]}`;
+  console.log('resolved path', path, resolved, imgUrls)
+  return resolved
 }
 </script>
 
@@ -105,7 +107,7 @@ function resolveImage(path: string) {
 }
 
 .logo--silver {
-  width: 80px;
+  width: 120px;
 
   &.logo--horizontal {
     width: 160px;
@@ -115,10 +117,10 @@ function resolveImage(path: string) {
 .logo--bronze,
 .logo--media,
 .logo--tech {
-  width: 120px;
+  width: 100px;
 
   &.logo--horizontal {
-    width: 160px;
+    width: 140px;
   }
 }
 
