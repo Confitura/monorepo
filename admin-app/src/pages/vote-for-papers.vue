@@ -173,8 +173,7 @@ async function vote(vote: InlineVote, value: number) {
           <br/>
           <div class="text-body-1	" v-if="!isMobile">
             <p>
-              btw. you can also vote with keyboard shortcuts. press '?' to check
-              them out
+              btw. you can also vote with keyboard shortcuts. <b>press '?'</b> to check them out
             </p>
 
           </div>
@@ -195,8 +194,7 @@ async function vote(vote: InlineVote, value: number) {
           </div>
 
           <div class="v4p__start-again-button">
-            <v-btn block color="teal-accent-4"
-                   @click="goToPosition(currentPosition = -1)">
+            <v-btn block color="teal-accent-4" @click="goToPosition(currentPosition = -1)">
               start again
             </v-btn>
           </div>
