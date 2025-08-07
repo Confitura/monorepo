@@ -162,7 +162,7 @@ async function vote(vote: InlineVote, value: number) {
           </div>
 
           <div class="text-body-1	">
-            <p>We are waiting for your votes till end of Wednesday, June 1st</p>
+            <p>We are waiting for your votes till end of Friday, August 15th</p>
 
           </div>
           <br/>
