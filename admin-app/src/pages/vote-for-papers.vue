@@ -53,17 +53,40 @@ async function startVoting() {
     }
     return it
   })
-  currentPosition.value = 0;
+
+  const savedPosition = localStorage.getItem('v4p-position');
+  if (savedPosition !== null && parseInt(savedPosition) >= 0 && parseInt(savedPosition) < result.data.length) {
+    currentPosition.value = parseInt(savedPosition);
+  } else {
+    currentPosition.value = 0;
+  }
 }
 
 
 onMounted(async () => {
   document.addEventListener('keyup', doc_keyUp, false);
+
+  const savedPosition = localStorage.getItem('v4p-position');
+  if (savedPosition !== null) {
+    const position = parseInt(savedPosition);
+    if (position >= -1) {
+      currentPosition.value = position;
+
+      if (position >= 0 && votes.value.length === 0) {
+        await startVoting();
+      }
+    }
+  }
 })
 
 onUnmounted(() => {
   document.removeEventListener('keyup', doc_keyUp, false);
 })
+
+function goToPosition(position: number) {
+  currentPosition.value = position;
+  localStorage.setItem('v4p-position', currentPosition.value.toString());
+}
 
 function doc_keyUp(e: any) {
 
@@ -84,7 +107,7 @@ function doc_keyUp(e: any) {
       vote(currentVote.value, currentVote.value.rate || 0)
     }
     if (e.code === 'Backspace') {
-      currentPosition.value -= 1;
+      goToPosition(currentPosition.value - 1);
     }
     if (e.code === 'Space') {
       showShort.value = !showShort.value;
@@ -103,7 +126,7 @@ function toggleDescription() {
 async function vote(vote: InlineVote, value: number) {
   vote.rate = value;
   await voteForPapersApi.save(vote)
-  currentPosition.value += 1;
+  goToPosition(currentPosition.value + 1);
 }
 </script>
 
@@ -172,7 +195,8 @@ async function vote(vote: InlineVote, value: number) {
           </div>
 
           <div class="v4p__start-again-button">
-            <v-btn block color="teal-accent-4" @click="currentPosition = -1">
+            <v-btn block color="teal-accent-4"
+                   @click="goToPosition(currentPosition = -1)">
               start again
             </v-btn>
           </div>
@@ -184,7 +208,6 @@ async function vote(vote: InlineVote, value: number) {
         v-if="currentVote"
         :title="currentVote?.presentation?.title"
       >
-
 
 
         <v-list-item
