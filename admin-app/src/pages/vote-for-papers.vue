@@ -118,7 +118,7 @@ async function vote(vote: InlineVote, value: number) {
           <div class="text-body-1	">
             The moment you were waiting for is here! Vote 4 Papers is open.
             You
-            have around 60 presentations to choose from.
+            Over 100 presentations to choose from!
           </div>
 
           <div class="text-body-1">
@@ -184,6 +184,7 @@ async function vote(vote: InlineVote, value: number) {
         v-if="currentVote"
         :title="currentVote?.presentation?.title"
       >
+
 
 
         <v-list-item
@@ -257,6 +258,17 @@ async function vote(vote: InlineVote, value: number) {
             </v-card-actions>
           </div>
         </v-expand-transition>
+
+        <v-progress-linear
+          :model-value="(currentPosition / votes.length) * 100"
+          color="teal-accent-4"
+          height="10"
+          striped
+        >
+          <template v-slot:default="{ value }">
+            <strong>{{ Math.ceil(value) }}%</strong>
+          </template>
+        </v-progress-linear>
       </v-card>
     </v-container>
     <v-snackbar
