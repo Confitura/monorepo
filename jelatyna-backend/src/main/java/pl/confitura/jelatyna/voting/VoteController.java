@@ -130,7 +130,8 @@ public class VoteController {
             String title,
             String longDescription,
             String shortDescription,
-            List<InlineVoteSpeaker> speakers
+            List<InlineVoteSpeaker> speakers,
+            boolean workshop
     ) {
         public static InlineVotePresentation from(Presentation presentation) {
             return new InlineVotePresentation(
@@ -138,7 +139,8 @@ public class VoteController {
                     presentation.getTitle(),
                     presentation.getDescription(),
                     presentation.getShortDescription(),
-                    InlineVoteSpeaker.from(presentation.getSpeakers())
+                    InlineVoteSpeaker.from(presentation.getSpeakers()),
+                    presentation.isWorkshop()
             );
         }
     }

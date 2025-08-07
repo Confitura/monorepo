@@ -206,6 +206,24 @@ async function vote(vote: InlineVote, value: number) {
         v-if="currentVote"
         :title="currentVote?.presentation?.title"
       >
+        <template v-slot:prepend>
+          <v-chip
+            v-if="currentVote?.presentation?.workshop"
+            color="purple"
+            class="ma-2"
+            label
+          >
+            Workshop
+          </v-chip>
+          <v-chip
+            v-else
+            color="blue"
+            class="ma-2"
+            label
+          >
+            Presentation
+          </v-chip>
+        </template>
 
 
         <v-list-item
