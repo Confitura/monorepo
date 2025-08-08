@@ -85,6 +85,7 @@ onUnmounted(() => {
 
 function goToPosition(position: number) {
   currentPosition.value = position;
+  showBio(null)
   localStorage.setItem('v4p-position', currentPosition.value.toString());
 }
 
