@@ -141,13 +141,11 @@ async function vote(vote: InlineVote, value: number) {
 
           <div class="text-body-1	">
             The moment you were waiting for is here! Vote 4 Papers is open.
-            You
-            Over 100 presentations to choose from!
+            You have over 100 presentations to choose from!
           </div>
 
           <div class="text-body-1">
             For each and every presentation you can either say that you are
-            very
             interested in seeing it (+1), not interested at all (-1), or you
             don't mind it (0).
           </div>
@@ -188,9 +186,8 @@ async function vote(vote: InlineVote, value: number) {
               For going through all presentations. We know it was not easy :)
             </p>
             <p>
-              If fore some reason you want to review your votes, just click a
-              button
-              below
+              If for some reason you want to review your votes, just click a
+              button below
             </p>
           </div>
 
