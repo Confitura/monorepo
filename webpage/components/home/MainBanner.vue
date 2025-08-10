@@ -23,7 +23,7 @@
           </small>
         </div>
       </div>
-      <HomeMainBannerIllustration/>
+      <HomeMainBannerYtVideo/>
     </div>
     <!--    <img class="scroll-indicator-icon" src="~/assets/rocket.svg" alt="rocket"/>-->
     <div class=" scroll-indicator-icon">
