@@ -6,10 +6,10 @@
         <div class="slogan">
           <h1 class="h1">Confitura 2025 - Escape the Loop. Join the Revolution.</h1>
         </div>
-<!--        <div class="info__live">-->
-<!--          <div class="info__live-text">> Join as a speaker <</div>-->
-<!--          <a class="info__live-link" href="https://app.confitura.pl/" target="_blank">submit here</a>-->
-<!--        </div>-->
+        <div class="info__live">
+          <div class="info__live-text">> Help us pick the presentations <</div>
+          <a class="info__live-link" href="https://app.confitura.pl/vote-for-papers" target="_blank">vote here</a>
+        </div>
         <div class="info__long">
           <p> Warsaw | September 19–20, 2025 </p>
           <TheTimer/>
@@ -23,7 +23,7 @@
           </small>
         </div>
       </div>
-      <HomeMainBannerIllustration/>
+      <HomeMainBannerYtVideo/>
     </div>
     <!--    <img class="scroll-indicator-icon" src="~/assets/rocket.svg" alt="rocket"/>-->
     <div class=" scroll-indicator-icon">
