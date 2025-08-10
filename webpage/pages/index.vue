@@ -2,6 +2,7 @@
   <div class="home__container">
     <HomeMainBanner/>
     <HomeAbout/>
+    <NlpDay/>
     <HomeNumbers/>
     <HomePartners/>
     <Contact/>
@@ -9,6 +10,7 @@
 </template>
 
 <script setup lang="ts">
+import NlpDay from "~/components/home/NlpDay.vue";
 </script>
 
 <style lang="scss">
