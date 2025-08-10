@@ -2,7 +2,7 @@
 import {ref, computed, onMounted} from 'vue';
 import {daysApi, agendaApi, presentationApi, roomsApi} from '@/utils/api';
 import type {
-  AssignAgendaEntryRequest,
+  AssignAgendaEntryRequest, FullPresentation,
   InlineAgendaEntry, InlineDay,
   InlinePresentation,
   InlineRoom,
@@ -17,12 +17,11 @@ const props = defineProps<{
 // Data for time slots, rooms, presentations, and agenda entries
 const timeSlots: Ref<InlineTimeSlot[]> = ref([]);
 const rooms: Ref<InlineRoom[]> = ref([]);
-const presentations: Ref<InlinePresentation[]> = ref([]);
+const presentations: Ref<FullPresentation[]> = ref([]);
 const agendaEntries: Ref<InlineAgendaEntry[]> = ref([]);
 const day: Ref<InlineDay | null> = ref(null);
 
-// Load data from API
-onMounted(async () => {
+async function refreshData() {
   try {
     // Load day information
     const dayResponse = await daysApi.getDayById(props.dayId);
@@ -47,6 +46,11 @@ onMounted(async () => {
     console.error('Error loading data:', error);
     Notify.error('Error loading data');
   }
+}
+
+// Load data from API
+onMounted(async () => {
+  await refreshData();
 });
 
 // Fallback to mock data if API calls fail
@@ -60,8 +64,14 @@ const roomDialog = ref(false);
 const agendaEntryDialog = ref(false);
 
 // Form data
-const editedTimeSlot = ref({id: '', start: '', end: '', displayOrder: 0});
-const editedRoom = ref({id: '', label: '', displayOrder: 0});
+const editedTimeSlot: Ref<InlineTimeSlot> = ref({
+  dayId: '',
+  displayOrder: -1,
+  label: '',
+  start: '',
+  end: ''
+});
+const editedRoom: Ref<InlineRoom> = ref({id: '', label: '', displayOrder: 0});
 const editedAgendaEntry: Ref<AssignAgendaEntryRequest> = ref({
   dayId: '',
   timeSlotIndex: -1,
@@ -73,15 +83,22 @@ const editedAgendaEntry: Ref<AssignAgendaEntryRequest> = ref({
 // Edit mode flag
 const editMode = ref(false);
 
-
+const findPresentation = (timeSlot: InlineTimeSlot, room: InlineRoom | null) => {
+  let entry = getAgendaEntry(timeSlot!, room);
+  if (!entry || !entry.presentationId) {
+    return null;
+  } else {
+    return getPresentation(entry.presentationId)
+  }
+}
 const getPresentation = (id: string | null) => {
   return presentations.value.find(presentation => presentation.id === id) || null;
 };
 
-const getAgendaEntry = (timeSlotIndex: number, roomId: string | null | undefined) => {
+const getAgendaEntry = (timeSlot: InlineTimeSlot, room: InlineRoom | null) => {
   return agendaEntries.value.find(entry =>
-    entry.timeSlotIndex === timeSlotIndex &&
-    (entry.roomId === roomId || (entry.roomId === null && roomId === null))
+    entry.timeSlotIndex === timeSlot.displayOrder &&
+    (entry.roomId === room?.id || (entry.roomId === null && room?.id === null))
   ) || null;
 };
 
@@ -96,17 +113,16 @@ const sortedRooms = computed(() => {
 
 // Add or update time slot
 const saveTimeSlot = () => {
-  if (editMode.value) {
-    const index = timeSlots.value.findIndex(slot => slot.id === editedTimeSlot.value.id);
-    if (index !== -1) {
-      timeSlots.value[index] = {...editedTimeSlot.value};
-    }
-  } else {
-    const newId = (Math.max(...timeSlots.value.map(slot => parseInt(slot.id)), 0) + 1).toString();
-    timeSlots.value.push({...editedTimeSlot.value, id: newId});
-  }
+  //TODO
+
   timeSlotDialog.value = false;
-  editedTimeSlot.value = {id: '', start: '', end: '', displayOrder: 0};
+  editedTimeSlot.value = {
+    dayId: '',
+    displayOrder: -1,
+    label: '',
+    start: '',
+    end: ''
+  };
   editMode.value = false;
 };
 
@@ -131,35 +147,11 @@ const saveAgendaEntry = async () => {
   try {
     // Make sure the day is set
     editedAgendaEntry.value.dayId = props.dayId;
-
-    if (editMode.value) {
-      // Update existing entry
-      const updateResponse = await agendaApi.saveAgendaEntry(editedAgendaEntry.value);
-      const index = agendaEntries.value.findIndex(entry => entry.id === editedAgendaEntry.value.id);
-      if (index !== -1) {
-        agendaEntries.value[index] = {...editedAgendaEntry.value};
-      }
-    } else {
-      // Create new entry
-      const response = await agendaApi.saveAgendaEntry(editedAgendaEntry.value);
-      agendaEntries.value.push(response.data);
-    }
+    await agendaApi.saveAgendaEntry(editedAgendaEntry.value);
+    await refreshData();
   } catch (error) {
     console.error('Error saving agenda entry:', error);
-    // Fallback to local update if API call fails
-    if (editMode.value) {
-      const index = agendaEntries.value.findIndex(entry => entry.id === editedAgendaEntry.value.id);
-      if (index !== -1) {
-        agendaEntries.value[index] = {...editedAgendaEntry.value};
-      }
-    } else {
-      const newId = (Math.max(...agendaEntries.value.map(entry => parseInt(entry.id) || 0), 0) + 1).toString();
-      agendaEntries.value.push({
-        ...editedAgendaEntry.value,
-        id: newId,
-        dayId: props.dayId
-      });
-    }
+    Notify.error('Error saving agenda entry');
   }
 
   agendaEntryDialog.value = false;
@@ -171,7 +163,7 @@ const saveAgendaEntry = async () => {
     presentationId: ''
   };
   editMode.value = false;
-};
+}
 
 // Edit time slot
 const editTimeSlot = (timeSlot: InlineTimeSlot) => {
@@ -181,58 +173,47 @@ const editTimeSlot = (timeSlot: InlineTimeSlot) => {
 };
 
 // Edit room
-const editRoom = (room) => {
+const editRoom = (room: InlineRoom) => {
   editedRoom.value = {...room};
   editMode.value = true;
   roomDialog.value = true;
 };
 
 // Edit agenda entry
-const editAgendaEntry = (entry) => {
+const editAgendaEntry = (entry: InlineAgendaEntry | null) => {
   // Make a copy of the entry and ensure dayId is set
   editedAgendaEntry.value = {
-    ...entry,
-    dayId: entry.dayId || props.dayId // Use entry's dayId if available, otherwise use the prop
+    dayId: entry?.dayId!,
+    timeSlotIndex: entry?.timeSlotIndex!,
+    roomId: entry?.roomId,
+    label: entry?.label || '',
+    presentationId: entry?.presentationId || ''
   };
   editMode.value = true;
   agendaEntryDialog.value = true;
 };
 
-// Delete time slot
-const deleteTimeSlot = (id) => {
-  const index = timeSlots.value.findIndex(slot => slot.id === id);
-  if (index !== -1) {
-    timeSlots.value.splice(index, 1);
-    // Also delete any agenda entries associated with this time slot
-    agendaEntries.value = agendaEntries.value.filter(entry => entry.timeSlotId !== id);
-  }
+
+const deleteTimeSlot = (timeSlot: InlineTimeSlot) => {
+  //TODO
 };
 
-// Delete room
-const deleteRoom = (id) => {
-  const index = rooms.value.findIndex(room => room.id === id);
-  if (index !== -1) {
-    rooms.value.splice(index, 1);
-    // Also delete any agenda entries associated with this room
-    agendaEntries.value = agendaEntries.value.filter(entry => entry.roomId !== id);
-  }
+const deleteRoom = (room: InlineRoom) => {
+  //TODO
 };
 
-// Delete agenda entry
-const deleteAgendaEntry = (id) => {
-  const index = agendaEntries.value.findIndex(entry => entry.id === id);
-  if (index !== -1) {
-    agendaEntries.value.splice(index, 1);
-  }
+const deleteAgendaEntry = (entry: InlineAgendaEntry) => {
+  //TODO
 };
 
 // Add new time slot
 const addTimeSlot = () => {
   editedTimeSlot.value = {
-    id: '',
+    dayId: '',
+    displayOrder: -1,
+    label: '',
     start: '',
-    end: '',
-    displayOrder: timeSlots.value.length + 1
+    end: ''
   };
   editMode.value = false;
   timeSlotDialog.value = true;
@@ -240,17 +221,20 @@ const addTimeSlot = () => {
 
 // Add new room
 const addRoom = () => {
-  editedRoom.value = {id: '', label: '', displayOrder: rooms.value.length + 1};
+  editedRoom.value = {
+    id: '',
+    label: '',
+    displayOrder: rooms.value.length + 1
+  };
   editMode.value = false;
   roomDialog.value = true;
 };
 
 // Add new agenda entry
-const addAgendaEntry = (timeSlotId, roomId) => {
+const addAgendaEntry = (timeSlotIndex: number, roomId: string | undefined) => {
   editedAgendaEntry.value = {
-    id: '',
     dayId: props.dayId,
-    timeSlotId: timeSlotId,
+    timeSlotIndex: timeSlotIndex,
     roomId: roomId,
     label: '',
     presentationId: ''
@@ -296,35 +280,32 @@ const addAgendaEntry = (timeSlotId, roomId) => {
                 <td>{{ timeSlot.start }} - {{ timeSlot.end }}</td>
                 <td v-for="room in rooms" :key="room.id">
                   <v-card
-                    v-if="getAgendaEntry(timeSlot.displayOrder!, room.id!)"
+                    v-if="getAgendaEntry(timeSlot, room)"
                     variant="outlined"
                     class="pa-2 mb-2"
-                    @click="editAgendaEntry(getAgendaEntry(timeSlot.displayOrder!, room.id))"
+                    @click="editAgendaEntry(getAgendaEntry(timeSlot, room))"
                   >
                     <div
-                      v-if="getAgendaEntry(timeSlot.displayOrder!, room.id)!.presentationId">
+                      v-if="getAgendaEntry(timeSlot, room)!.presentationId">
                       <div class="font-weight-bold">
                         {{
-                          getAgendaEntry(timeSlot.displayOrder!, room.id)!.presentationId
+                          findPresentation(timeSlot!, room)?.title
                         }}
-                        <!--                        {{
-                                                  getPresentation(getAgendaEntry(timeSlot.displayOrder!, room.id!)!.presentationId)?.title
-                                                }}-->
                       </div>
-                      <!--                      <div
-                                              v-for="speaker in getPresentation(getAgendaEntry(timeSlot.displayOrder, room.id).presentationId).speakers"
-                                              :key="speaker.name" class="d-flex align-center mt-2">
-                                              <v-avatar size="24" class="mr-2">
-                                                <v-img :src="speaker.photo"
-                                                       :alt="speaker.name"></v-img>
-                                              </v-avatar>
-                                              <span>{{ speaker.name }}</span>
-                                            </div>-->
+                      <div
+                        v-for="speaker in findPresentation(timeSlot!, room)!.speakers"
+                        :key="speaker.name" class="d-flex align-center mt-2">
+                        <v-avatar size="24" class="mr-2">
+                          <v-img :src="speaker.photo"
+                                 :alt="speaker.name"></v-img>
+                        </v-avatar>
+                        <span>{{ speaker.name }}</span>
+                      </div>
                     </div>
                     <div
-                      v-else-if="getAgendaEntry(timeSlot.displayOrder!, room.id)?.label">
+                      v-else-if="getAgendaEntry(timeSlot, room)?.label">
                       {{
-                        getAgendaEntry(timeSlot.displayOrder!, room.id)?.label
+                        getAgendaEntry(timeSlot, room)?.label
                       }}
                     </div>
                   </v-card>
@@ -340,19 +321,19 @@ const addAgendaEntry = (timeSlotId, roomId) => {
                 </td>
                 <td>
                   <v-card
-                    v-if="getAgendaEntry(timeSlot.displayOrder!, null)"
+                    v-if="getAgendaEntry(timeSlot, null)"
                     variant="outlined"
                     class="pa-2 mb-2"
-                    @click="editAgendaEntry(getAgendaEntry(timeSlot.displayOrder!, null))"
+                    @click="editAgendaEntry(getAgendaEntry(timeSlot, null))"
                   >
-                    {{ getAgendaEntry(timeSlot.displayOrder!, null)?.label }}
+                    {{ getAgendaEntry(timeSlot, null)?.label }}
                   </v-card>
                   <v-btn
                     v-else
                     variant="text"
                     size="small"
                     color="primary"
-                    @click="addAgendaEntry(timeSlot.displayOrder!, null)"
+                    @click="addAgendaEntry(timeSlot.displayOrder!, undefined)"
                   >
                     Add Entry
                   </v-btn>
@@ -383,7 +364,8 @@ const addAgendaEntry = (timeSlotId, roomId) => {
               </tr>
               </thead>
               <tbody>
-              <tr v-for="timeSlot in sortedTimeSlots" :key="timeSlot.id">
+              <tr v-for="timeSlot in sortedTimeSlots"
+                  :key="timeSlot.displayOrder">
                 <td>{{ timeSlot.start }}</td>
                 <td>{{ timeSlot.end }}</td>
                 <td>{{ timeSlot.displayOrder }}</td>
@@ -391,7 +373,7 @@ const addAgendaEntry = (timeSlotId, roomId) => {
                   <v-btn icon="mdi-pencil" size="small" class="mr-2"
                          @click="editTimeSlot(timeSlot)"></v-btn>
                   <v-btn icon="mdi-delete" size="small" color="error"
-                         @click="deleteTimeSlot(timeSlot.id)"></v-btn>
+                         @click="deleteTimeSlot(timeSlot)"></v-btn>
                 </td>
               </tr>
               </tbody>
@@ -425,7 +407,7 @@ const addAgendaEntry = (timeSlotId, roomId) => {
                   <v-btn icon="mdi-pencil" size="small" class="mr-2"
                          @click="editRoom(room)"></v-btn>
                   <v-btn icon="mdi-delete" size="small" color="error"
-                         @click="deleteRoom(room.id)"></v-btn>
+                         @click="deleteRoom(room)"></v-btn>
                 </td>
               </tr>
               </tbody>
@@ -548,7 +530,7 @@ const addAgendaEntry = (timeSlotId, roomId) => {
                 <v-text-field
                   v-model="editedAgendaEntry.label"
                   label="Label (for breaks, etc.)"
-                  :disabled="editedAgendaEntry.presentationId"
+                  :disabled="!!editedAgendaEntry.presentationId"
                 ></v-text-field>
               </v-col>
             </v-row>

@@ -9,6 +9,7 @@ import java.util.*;
 import java.util.stream.*;
 import jakarta.validation.Valid;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -105,9 +106,13 @@ public class VoteController {
     }
 
     public record InlineVote(
+            @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
             String id,
+            @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
             Integer order,
+            @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
             InlineVotePresentation presentation,
+            @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
             Integer rate
     ) {
 
@@ -126,11 +131,17 @@ public class VoteController {
     }
 
     public record InlineVotePresentation(
+            @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
             String id,
+            @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
             String title,
+            @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
             String longDescription,
+            @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
             String shortDescription,
+            @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
             List<InlineVoteSpeaker> speakers,
+            @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
             boolean workshop
     ) {
         public static InlineVotePresentation from(Presentation presentation) {
@@ -146,9 +157,13 @@ public class VoteController {
     }
 
     public record InlineVoteSpeaker(
+            @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
             String id,
+            @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
             String name,
+            @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
             String bio,
+            @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
             String photo
     ) {
         public static List<InlineVoteSpeaker> from(Set<User> speakers) {

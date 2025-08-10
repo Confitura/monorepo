@@ -47,7 +47,7 @@ public class AgendaController {
         var agendaEntry = agendaService.createAgendaEntry(
                 request.dayId(),
                 request.timeSlotIndex(),
-                request.roomId(),
+                request.roomId().orElse(null),
                 request.label(),
                 request.presentationId()
         );

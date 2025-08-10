@@ -126,13 +126,13 @@ export interface AssignAgendaEntryRequest {
      * @type {string}
      * @memberof AssignAgendaEntryRequest
      */
-    'dayId'?: string;
+    'dayId': string;
     /**
      * 
      * @type {number}
      * @memberof AssignAgendaEntryRequest
      */
-    'timeSlotIndex'?: number;
+    'timeSlotIndex': number;
     /**
      * 
      * @type {string}
@@ -144,13 +144,13 @@ export interface AssignAgendaEntryRequest {
      * @type {string}
      * @memberof AssignAgendaEntryRequest
      */
-    'label'?: string;
+    'label': string;
     /**
      * 
      * @type {string}
      * @memberof AssignAgendaEntryRequest
      */
-    'presentationId'?: string;
+    'presentationId': string;
 }
 /**
  * 
@@ -218,85 +218,85 @@ export interface FullPresentation {
      * @type {string}
      * @memberof FullPresentation
      */
-    'id'?: string;
+    'id': string;
     /**
      * 
      * @type {string}
      * @memberof FullPresentation
      */
-    'title'?: string;
+    'title': string;
     /**
      * 
      * @type {string}
      * @memberof FullPresentation
      */
-    'shortDescription'?: string;
+    'shortDescription': string;
     /**
      * 
      * @type {string}
      * @memberof FullPresentation
      */
-    'description'?: string;
+    'description': string;
     /**
      * 
      * @type {string}
      * @memberof FullPresentation
      */
-    'level'?: string;
+    'level': string;
     /**
      * 
      * @type {string}
      * @memberof FullPresentation
      */
-    'language'?: string;
+    'language': string;
     /**
      * 
      * @type {Array<string>}
      * @memberof FullPresentation
      */
-    'tags'?: Array<string>;
+    'tags': Array<string>;
     /**
      * 
      * @type {boolean}
      * @memberof FullPresentation
      */
-    'isWorkshop'?: boolean;
+    'isWorkshop': boolean;
     /**
      * 
      * @type {boolean}
      * @memberof FullPresentation
      */
-    'isFree'?: boolean;
+    'isFree': boolean;
     /**
      * 
      * @type {number}
      * @memberof FullPresentation
      */
-    'expectedPrice'?: number;
+    'expectedPrice': number;
     /**
      * 
      * @type {number}
      * @memberof FullPresentation
      */
-    'durationInMinutes'?: number;
+    'durationInMinutes': number;
     /**
      * 
      * @type {number}
      * @memberof FullPresentation
      */
-    'maxGroupSize'?: number;
+    'maxGroupSize': number;
     /**
      * 
      * @type {string}
      * @memberof FullPresentation
      */
-    'status'?: string;
+    'status': string;
     /**
      * 
      * @type {Array<Speaker>}
      * @memberof FullPresentation
      */
-    'speakers'?: Array<Speaker>;
+    'speakers': Array<Speaker>;
 }
 /**
  * 
@@ -443,19 +443,19 @@ export interface InlineAgendaEntry {
      * @type {string}
      * @memberof InlineAgendaEntry
      */
-    'id'?: string;
+    'id': string;
     /**
      * 
      * @type {string}
      * @memberof InlineAgendaEntry
      */
-    'dayId'?: string;
+    'dayId': string;
     /**
      * 
      * @type {number}
      * @memberof InlineAgendaEntry
      */
-    'timeSlotIndex'?: number;
+    'timeSlotIndex': number;
     /**
      * 
      * @type {string}
@@ -486,25 +486,25 @@ export interface InlineDay {
      * @type {string}
      * @memberof InlineDay
      */
-    'id'?: string;
+    'id': string;
     /**
      * 
      * @type {string}
      * @memberof InlineDay
      */
-    'date'?: string;
+    'date': string;
     /**
      * 
      * @type {string}
      * @memberof InlineDay
      */
-    'label'?: string;
+    'label': string;
     /**
      * 
      * @type {number}
      * @memberof InlineDay
      */
-    'displayOrder'?: number;
+    'displayOrder': number;
 }
 /**
  * 
@@ -517,43 +517,43 @@ export interface InlinePresentation {
      * @type {string}
      * @memberof InlinePresentation
      */
-    'id'?: string;
+    'id': string;
     /**
      * 
      * @type {string}
      * @memberof InlinePresentation
      */
-    'title'?: string;
+    'title': string;
     /**
      * 
      * @type {string}
      * @memberof InlinePresentation
      */
-    'shortDescription'?: string;
+    'shortDescription': string;
     /**
      * 
      * @type {string}
      * @memberof InlinePresentation
      */
-    'description'?: string;
+    'description': string;
     /**
      * 
      * @type {string}
      * @memberof InlinePresentation
      */
-    'level'?: string;
+    'level': string;
     /**
      * 
      * @type {string}
      * @memberof InlinePresentation
      */
-    'language'?: string;
+    'language': string;
     /**
      * 
      * @type {Array<string>}
      * @memberof InlinePresentation
      */
-    'tags'?: Array<string>;
+    'tags': Array<string>;
 }
 /**
  * 
@@ -566,19 +566,19 @@ export interface InlineRoom {
      * @type {string}
      * @memberof InlineRoom
      */
-    'id'?: string;
+    'id': string;
     /**
      * 
      * @type {string}
      * @memberof InlineRoom
      */
-    'label'?: string;
+    'label': string;
     /**
      * 
      * @type {number}
      * @memberof InlineRoom
      */
-    'displayOrder'?: number;
+    'displayOrder': number;
 }
 /**
  * 
@@ -587,35 +587,35 @@ export interface InlineRoom {
  */
 export interface InlineTimeSlot {
     /**
-     * 
+     * Day identifier
      * @type {string}
      * @memberof InlineTimeSlot
      */
-    'dayId'?: string;
+    'dayId': string;
     /**
      * 
      * @type {number}
      * @memberof InlineTimeSlot
      */
-    'displayOrder'?: number;
+    'displayOrder': number;
     /**
      * 
      * @type {string}
      * @memberof InlineTimeSlot
      */
-    'label'?: string;
+    'label': string;
     /**
      * 
      * @type {string}
      * @memberof InlineTimeSlot
      */
-    'start'?: string;
+    'start': string;
     /**
      * 
      * @type {string}
      * @memberof InlineTimeSlot
      */
-    'end'?: string;
+    'end': string;
 }
 /**
  * 
@@ -628,25 +628,25 @@ export interface InlineVote {
      * @type {string}
      * @memberof InlineVote
      */
-    'id'?: string;
+    'id': string;
     /**
      * 
      * @type {number}
      * @memberof InlineVote
      */
-    'order'?: number;
+    'order': number;
     /**
      * 
      * @type {InlineVotePresentation}
      * @memberof InlineVote
      */
-    'presentation'?: InlineVotePresentation;
+    'presentation': InlineVotePresentation;
     /**
      * 
      * @type {number}
      * @memberof InlineVote
      */
-    'rate'?: number;
+    'rate': number;
 }
 /**
  * 
@@ -659,37 +659,37 @@ export interface InlineVotePresentation {
      * @type {string}
      * @memberof InlineVotePresentation
      */
-    'id'?: string;
+    'id': string;
     /**
      * 
      * @type {string}
      * @memberof InlineVotePresentation
      */
-    'title'?: string;
+    'title': string;
     /**
      * 
      * @type {string}
      * @memberof InlineVotePresentation
      */
-    'longDescription'?: string;
+    'longDescription': string;
     /**
      * 
      * @type {string}
      * @memberof InlineVotePresentation
      */
-    'shortDescription'?: string;
+    'shortDescription': string;
     /**
      * 
      * @type {Array<InlineVoteSpeaker>}
      * @memberof InlineVotePresentation
      */
-    'speakers'?: Array<InlineVoteSpeaker>;
+    'speakers': Array<InlineVoteSpeaker>;
     /**
      * 
      * @type {boolean}
      * @memberof InlineVotePresentation
      */
-    'workshop'?: boolean;
+    'workshop': boolean;
 }
 /**
  * 
@@ -702,25 +702,25 @@ export interface InlineVoteSpeaker {
      * @type {string}
      * @memberof InlineVoteSpeaker
      */
-    'id'?: string;
+    'id': string;
     /**
      * 
      * @type {string}
      * @memberof InlineVoteSpeaker
      */
-    'name'?: string;
+    'name': string;
     /**
      * 
      * @type {string}
      * @memberof InlineVoteSpeaker
      */
-    'bio'?: string;
+    'bio': string;
     /**
      * 
      * @type {string}
      * @memberof InlineVoteSpeaker
      */
-    'photo'?: string;
+    'photo': string;
 }
 /**
  * 
@@ -733,67 +733,67 @@ export interface InlineWorkshop {
      * @type {string}
      * @memberof InlineWorkshop
      */
-    'id'?: string;
+    'id': string;
     /**
      * 
      * @type {string}
      * @memberof InlineWorkshop
      */
-    'title'?: string;
+    'title': string;
     /**
      * 
      * @type {string}
      * @memberof InlineWorkshop
      */
-    'shortDescription'?: string;
+    'shortDescription': string;
     /**
      * 
      * @type {string}
      * @memberof InlineWorkshop
      */
-    'description'?: string;
+    'description': string;
     /**
      * 
      * @type {string}
      * @memberof InlineWorkshop
      */
-    'level'?: string;
+    'level': string;
     /**
      * 
      * @type {string}
      * @memberof InlineWorkshop
      */
-    'language'?: string;
+    'language': string;
     /**
      * 
      * @type {Array<string>}
      * @memberof InlineWorkshop
      */
-    'tags'?: Array<string>;
+    'tags': Array<string>;
     /**
      * 
      * @type {boolean}
      * @memberof InlineWorkshop
      */
-    'isFree'?: boolean;
+    'isFree': boolean;
     /**
      * 
      * @type {number}
      * @memberof InlineWorkshop
      */
-    'expectedPrice'?: number;
+    'expectedPrice': number;
     /**
      * 
      * @type {number}
      * @memberof InlineWorkshop
      */
-    'durationInMinutes'?: number;
+    'durationInMinutes': number;
     /**
      * 
      * @type {number}
      * @memberof InlineWorkshop
      */
-    'maxGroupSize'?: number;
+    'maxGroupSize': number;
 }
 /**
  * 
@@ -1129,12 +1129,6 @@ export interface Presentation {
      * @type {boolean}
      * @memberof Presentation
      */
-    'new'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Presentation
-     */
     'accepted'?: boolean;
     /**
      * 
@@ -1142,6 +1136,12 @@ export interface Presentation {
      * @memberof Presentation
      */
     'speaker'?: Presentation;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Presentation
+     */
+    'new'?: boolean;
 }
 /**
  * 
@@ -1462,6 +1462,12 @@ export interface Speaker {
      * @memberof Speaker
      */
     'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Speaker
+     */
+    'photo'?: string;
 }
 /**
  * 
