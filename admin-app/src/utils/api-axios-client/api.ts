@@ -61,16 +61,16 @@ export interface AgendaEntry {
     'presentation'?: Presentation;
     /**
      * 
-     * @type {number}
-     * @memberof AgendaEntry
-     */
-    'timeSlotOrder'?: number;
-    /**
-     * 
      * @type {Set<PublicUser>}
      * @memberof AgendaEntry
      */
     'speakers'?: Set<PublicUser>;
+    /**
+     * 
+     * @type {number}
+     * @memberof AgendaEntry
+     */
+    'timeSlotOrder'?: number;
 }
 /**
  * 
@@ -438,6 +438,12 @@ export interface InlineVotePresentation {
      * @memberof InlineVotePresentation
      */
     'speakers'?: Array<InlineVoteSpeaker>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof InlineVotePresentation
+     */
+    'workshop'?: boolean;
 }
 /**
  * 
@@ -877,6 +883,12 @@ export interface Presentation {
      * @type {boolean}
      * @memberof Presentation
      */
+    'new'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Presentation
+     */
     'accepted'?: boolean;
     /**
      * 
@@ -884,12 +896,6 @@ export interface Presentation {
      * @memberof Presentation
      */
     'speaker'?: Presentation;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Presentation
-     */
-    'new'?: boolean;
 }
 /**
  * 
@@ -1472,6 +1478,12 @@ export interface User {
      * @type {boolean}
      * @memberof User
      */
+    'participant'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof User
+     */
     'admin'?: boolean;
     /**
      * 
@@ -1485,12 +1497,6 @@ export interface User {
      * @memberof User
      */
     'speaker'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof User
-     */
-    'participant'?: boolean;
 }
 /**
  * 
@@ -3786,10 +3792,6 @@ export const PageControllerApiAxiosParamCreator = function (configuration?: Conf
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
 
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
@@ -3826,10 +3828,6 @@ export const PageControllerApiAxiosParamCreator = function (configuration?: Conf
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -3863,10 +3861,6 @@ export const PageControllerApiAxiosParamCreator = function (configuration?: Conf
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -3895,10 +3889,6 @@ export const PageControllerApiAxiosParamCreator = function (configuration?: Conf
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -3935,10 +3925,6 @@ export const PageControllerApiAxiosParamCreator = function (configuration?: Conf
             const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     

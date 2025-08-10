@@ -53,17 +53,41 @@ async function startVoting() {
     }
     return it
   })
-  currentPosition.value = 0;
+
+  const savedPosition = localStorage.getItem('v4p-position');
+  if (savedPosition !== null && parseInt(savedPosition) >= 0 && parseInt(savedPosition) < result.data.length) {
+    currentPosition.value = parseInt(savedPosition);
+  } else {
+    currentPosition.value = 0;
+  }
 }
 
 
 onMounted(async () => {
   document.addEventListener('keyup', doc_keyUp, false);
+
+  const savedPosition = localStorage.getItem('v4p-position');
+  if (savedPosition !== null) {
+    const position = parseInt(savedPosition);
+    if (position >= -1) {
+      currentPosition.value = position;
+
+      if (position >= 0 && votes.value.length === 0) {
+        await startVoting();
+      }
+    }
+  }
 })
 
 onUnmounted(() => {
   document.removeEventListener('keyup', doc_keyUp, false);
 })
+
+function goToPosition(position: number) {
+  currentPosition.value = position;
+  showBio(null)
+  localStorage.setItem('v4p-position', currentPosition.value.toString());
+}
 
 function doc_keyUp(e: any) {
 
@@ -84,7 +108,7 @@ function doc_keyUp(e: any) {
       vote(currentVote.value, currentVote.value.rate || 0)
     }
     if (e.code === 'Backspace') {
-      currentPosition.value -= 1;
+      goToPosition(currentPosition.value - 1);
     }
     if (e.code === 'Space') {
       showShort.value = !showShort.value;
@@ -103,7 +127,7 @@ function toggleDescription() {
 async function vote(vote: InlineVote, value: number) {
   vote.rate = value;
   await voteForPapersApi.save(vote)
-  currentPosition.value += 1;
+  goToPosition(currentPosition.value + 1);
 }
 </script>
 
@@ -117,13 +141,11 @@ async function vote(vote: InlineVote, value: number) {
 
           <div class="text-body-1	">
             The moment you were waiting for is here! Vote 4 Papers is open.
-            You
-            have around 60 presentations to choose from.
+            You have over 100 presentations to choose from!
           </div>
 
           <div class="text-body-1">
             For each and every presentation you can either say that you are
-            very
             interested in seeing it (+1), not interested at all (-1), or you
             don't mind it (0).
           </div>
@@ -139,7 +161,7 @@ async function vote(vote: InlineVote, value: number) {
           </div>
 
           <div class="text-body-1	">
-            <p>We are waiting for your votes till end of Wednesday, June 1st</p>
+            <p>We are waiting for your votes till end of Friday, August 15th</p>
 
           </div>
           <br/>
@@ -150,8 +172,7 @@ async function vote(vote: InlineVote, value: number) {
           <br/>
           <div class="text-body-1	" v-if="!isMobile">
             <p>
-              btw. you can also vote with keyboard shortcuts. press '?' to check
-              them out
+              btw. you can also vote with keyboard shortcuts. <b>press '?'</b> to check them out
             </p>
 
           </div>
@@ -165,14 +186,13 @@ async function vote(vote: InlineVote, value: number) {
               For going through all presentations. We know it was not easy :)
             </p>
             <p>
-              If fore some reason you want to review your votes, just click a
-              button
-              below
+              If for some reason you want to review your votes, just click a
+              button below
             </p>
           </div>
 
           <div class="v4p__start-again-button">
-            <v-btn block color="teal-accent-4" @click="currentPosition = -1">
+            <v-btn block color="teal-accent-4" @click="goToPosition(currentPosition = -1)">
               start again
             </v-btn>
           </div>
@@ -184,6 +204,24 @@ async function vote(vote: InlineVote, value: number) {
         v-if="currentVote"
         :title="currentVote?.presentation?.title"
       >
+        <template v-slot:prepend>
+          <v-chip
+            v-if="currentVote?.presentation?.workshop"
+            color="purple"
+            class="ma-2"
+            label
+          >
+            Workshop
+          </v-chip>
+          <v-chip
+            v-else
+            color="blue"
+            class="ma-2"
+            label
+          >
+            Presentation
+          </v-chip>
+        </template>
 
 
         <v-list-item
@@ -257,6 +295,17 @@ async function vote(vote: InlineVote, value: number) {
             </v-card-actions>
           </div>
         </v-expand-transition>
+
+        <v-progress-linear
+          :model-value="(currentPosition / votes.length) * 100"
+          color="teal-accent-4"
+          height="10"
+          striped
+        >
+          <template v-slot:default="{ value }">
+            <strong>{{ Math.ceil(value) }}%</strong>
+          </template>
+        </v-progress-linear>
       </v-card>
     </v-container>
     <v-snackbar

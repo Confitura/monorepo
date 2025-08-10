@@ -8,7 +8,7 @@
         </div>
         <div class="info__live">
           <div class="info__live-text">> Help us pick the presentations <</div>
-          <a class="info__live-link" href="https://app.confitura.pl/vote-for-papers" target="_blank">submit here</a>
+          <a class="info__live-link" href="https://app.confitura.pl/vote-for-papers" target="_blank">vote here</a>
         </div>
         <div class="info__long">
           <p> Warsaw | September 19–20, 2025 </p>
