@@ -18,8 +18,6 @@ import java.time.LocalDate;
 @Accessors(chain = true)
 public class Day extends AuditedEntity {
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(columnDefinition = "varchar(100)")
     private String id;
 

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,9 +23,14 @@ public class TimeSlotUtils {
 
         for (int i = 0; i < timeSlotNames.size(); i++) {
             boolean allRoomsSlot = presentationNames.get(i).size() == 1;
+            var slotString = timeSlotNames.get(i).split("-");
+            var start = LocalTime.of(Integer.parseInt(slotString[0]), 0);
+            var end = LocalTime.of(Integer.parseInt(slotString[1]), 0);
+
             TimeSlot timeSlot = new TimeSlot()
-                    .setDisplayOrder(i)
-                    .setLabel(timeSlotNames.get(i))
+                    .setId("day-1", i)
+                    .setStart(start)
+                    .setEnd(end)
                     .setForAllRooms(allRoomsSlot);
             timeSlots.add(timeSlotsRepository.save(timeSlot));
         }

@@ -5,8 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.transaction.support.TransactionTemplate;
 import pl.confitura.jelatyna.BaseIntegrationTest;
-import pl.confitura.jelatyna.presentation.Presentation;
+import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
 
 import java.time.LocalDate;
@@ -35,6 +36,9 @@ class AgendaControllerTest extends BaseIntegrationTest {
     @Autowired
     private PresentationRepository presentationRepository;
 
+    @Autowired
+    private TransactionTemplate txTemplate;
+
     private Day day1;
     private Day day2;
     private TimeSlot timeSlot1;
@@ -44,12 +48,35 @@ class AgendaControllerTest extends BaseIntegrationTest {
     private AgendaEntry entry2;
 
     @BeforeEach
-    @WithMockUser(roles = "ADMIN")
     public void setUp() {
+        SecurityHelper.asAdmin();
+        
+        // Perform all setup within a single transaction
+        txTemplate.executeWithoutResult(status -> {
+            // Clear existing data
+            clearExistingData();
+            
+            // Create and save all entities within the same transaction
+            createTestData();
+        });
+    }
+
+    private void clearExistingData() {
         // Clear existing agenda entries
         Iterable<AgendaEntry> existingEntries = agendaRepository.findAll();
         for (AgendaEntry entry : existingEntries) {
             agendaRepository.deleteById(entry.getId());
+        }
+
+        var ts = timeSlotsRepository.findAll();
+        for (TimeSlot timeSlot : ts) {
+            timeSlotsRepository.deleteById(timeSlot.getId());
+        }
+
+        // Clear existing rooms
+        var rooms = roomRepository.findAll();
+        for (Room room : rooms) {
+            roomRepository.deleteById(room.getId());
         }
 
         // Clear existing days
@@ -57,14 +84,18 @@ class AgendaControllerTest extends BaseIntegrationTest {
         for (Day day : existingDays) {
             dayRepository.deleteById(day.getId());
         }
+    }
 
+    private void createTestData() {
         // Create test days
         day1 = new Day()
+                .setId("day-1")
                 .setLabel("Day 1")
                 .setDate(LocalDate.of(2025, 9, 1))
                 .setDisplayOrder(1);
 
         day2 = new Day()
+                .setId("day-2")
                 .setLabel("Day 2")
                 .setDate(LocalDate.of(2025, 9, 2))
                 .setDisplayOrder(2);
@@ -72,28 +103,30 @@ class AgendaControllerTest extends BaseIntegrationTest {
         day1 = dayRepository.save(day1);
         day2 = dayRepository.save(day2);
 
-        // Create test time slots
+        // Create test room
+        room1 = new Room()
+                .setId("room-1")
+                .setLabel("Main Hall")
+                .setDisplayOrder(1)
+                .setDay(day1); // Set the day relationship
+
+        room1 = roomRepository.save(room1);
+
+        // Create test time slots with proper day reference
         timeSlot1 = new TimeSlot()
                 .setStart(LocalTime.of(9, 0))
                 .setEnd(LocalTime.of(10, 0))
-                .setDisplayOrder(1);
+                .setId(new TimeSlot.TimeSlotId(day1.getId(), 1));
 
         timeSlot2 = new TimeSlot()
                 .setStart(LocalTime.of(10, 15))
                 .setEnd(LocalTime.of(11, 15))
-                .setDisplayOrder(2);
+                .setId(new TimeSlot.TimeSlotId(day1.getId(), 2));
 
         timeSlot1 = timeSlotsRepository.save(timeSlot1);
         timeSlot2 = timeSlotsRepository.save(timeSlot2);
 
-        // Create test room
-        room1 = new Room()
-                .setLabel("Main Hall")
-                .setDisplayOrder(1);
-
-        room1 = roomRepository.save(room1);
-
-        // Create test agenda entries
+        // Create test agenda entries with proper entity references
         entry1 = new AgendaEntry()
                 .setDay(day1)
                 .setTimeSlot(timeSlot1)
@@ -145,8 +178,8 @@ class AgendaControllerTest extends BaseIntegrationTest {
                 day1.getId(), timeSlot2.getId(), room1.getId());
 
         mockMvc.perform(post("/agenda")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(entryJson))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(entryJson))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.label", is("Workshop")));
 

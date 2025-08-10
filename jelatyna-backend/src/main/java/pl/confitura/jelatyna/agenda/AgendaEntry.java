@@ -24,10 +24,7 @@ import java.util.Set;
 import static java.util.stream.Collectors.toSet;
 
 @Entity
-@Table(
-        name = "agenda",
-        uniqueConstraints = @UniqueConstraint(columnNames = { "day_id", "time_slot_id", "room_id" })
-)
+@Table(name = "agenda")
 @Data
 @Accessors(chain = true)
 public class AgendaEntry {
@@ -46,7 +43,6 @@ public class AgendaEntry {
 
     @ManyToOne
     @NotNull
-    @JoinColumn(name = "time_slot_id")
     private TimeSlot timeSlot;
 
     @ManyToOne
@@ -58,8 +54,12 @@ public class AgendaEntry {
     @OneToOne
     private Presentation presentation;
 
-    public int getTimeSlotOrder(){
+    public int getTimeSlotOrder() {
         return timeSlot.getDisplayOrder();
+    }
+
+    public String getPresentationId() {
+        return presentation == null ? null : presentation.getId();
     }
 
 
@@ -71,5 +71,9 @@ public class AgendaEntry {
                     .map(PublicUser::new)
                     .collect(toSet());
         }
+    }
+
+    public String getRoomId() {
+        return room == null ? null : room.getId();
     }
 }

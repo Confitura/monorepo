@@ -1,17 +1,11 @@
 package pl.confitura.jelatyna.agenda;
 
-import jakarta.annotation.PostConstruct;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import pl.confitura.jelatyna.infrastructure.security.JelatynaPrincipal;
-import pl.confitura.jelatyna.infrastructure.security.Security;
-import pl.confitura.jelatyna.infrastructure.security.SecurityContextUtil;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -51,16 +45,16 @@ public class AgendaInitializer {
     }
 
     private void init() {
-        JelatynaPrincipal principal = new JelatynaPrincipal().setId("system").setName("system").setAdmin(true);
-        var token = new PreAuthenticatedAuthenticationToken(principal, "", emptyList());
-        SecurityContextHolder.getContext().setAuthentication(token);
+        loginAsAdmin();
         // Create two days
         Day day1 = new Day()
+                .setId("day-1")
                 .setLabel("Day 1")
                 .setDate(LocalDate.of(2025, 8, 1))
                 .setDisplayOrder(1);
 
         Day day2 = new Day()
+                .setId("day-2")
                 .setLabel("Day 2")
                 .setDate(LocalDate.of(2025, 8, 2))
                 .setDisplayOrder(2);
@@ -70,16 +64,22 @@ public class AgendaInitializer {
 
         // Create three rooms
         Room room1 = new Room()
+                .setId("room-1")
                 .setLabel("Main Hall")
-                .setDisplayOrder(1);
+                .setDisplayOrder(1)
+                .setDay(day1);
 
         Room room2 = new Room()
+                .setId("room-2")
                 .setLabel("Workshop Room")
-                .setDisplayOrder(2);
+                .setDisplayOrder(2)
+                .setDay(day1);
 
         Room room3 = new Room()
+                .setId("room-3")
                 .setLabel("Conference Room")
-                .setDisplayOrder(3);
+                .setDisplayOrder(3)
+                .setDay(day1);
 
         room1 = roomRepository.save(room1);
         room2 = roomRepository.save(room2);
@@ -89,38 +89,37 @@ public class AgendaInitializer {
         TimeSlot slot1 = new TimeSlot()
                 .setStart(LocalTime.of(9, 0))
                 .setEnd(LocalTime.of(10, 0))
-                .setDisplayOrder(1);
+                .setId(new TimeSlot.TimeSlotId("day-1", 1));
 
         TimeSlot slot2 = new TimeSlot()
                 .setStart(LocalTime.of(10, 15))
                 .setEnd(LocalTime.of(11, 15))
-                .setDisplayOrder(2);
+                .setId(new TimeSlot.TimeSlotId("day-1", 2));
 
         TimeSlot slot3 = new TimeSlot()
                 .setStart(LocalTime.of(11, 30))
                 .setEnd(LocalTime.of(12, 30))
-                .setDisplayOrder(3);
+                .setId(new TimeSlot.TimeSlotId("day-1", 3));
 
         TimeSlot lunchSlot = new TimeSlot()
                 .setStart(LocalTime.of(12, 30))
                 .setEnd(LocalTime.of(13, 30))
                 .setForAllRooms(true)
-                .setDisplayOrder(4);
+                .setId(new TimeSlot.TimeSlotId("day-1", 4));
 
         TimeSlot slot4 = new TimeSlot()
                 .setStart(LocalTime.of(13, 30))
                 .setEnd(LocalTime.of(14, 30))
-                .setDisplayOrder(5);
-
+                .setId(new TimeSlot.TimeSlotId("day-1", 5));
         TimeSlot slot5 = new TimeSlot()
                 .setStart(LocalTime.of(14, 45))
                 .setEnd(LocalTime.of(15, 45))
-                .setDisplayOrder(6);
+                .setId(new TimeSlot.TimeSlotId("day-1", 6));
 
         TimeSlot slot6 = new TimeSlot()
                 .setStart(LocalTime.of(16, 0))
                 .setEnd(LocalTime.of(17, 0))
-                .setDisplayOrder(7);
+                .setId(new TimeSlot.TimeSlotId("day-1", 7));
 
         slot1 = timeSlotsRepository.save(slot1);
         slot2 = timeSlotsRepository.save(slot2);
@@ -315,5 +314,11 @@ public class AgendaInitializer {
                 .setTimeSlot(slot6)
                 .setRoom(room1)
                 .setLabel("Conference Closing Remarks"));
+    }
+
+    private static void loginAsAdmin() {
+        JelatynaPrincipal principal = new JelatynaPrincipal().setId("system").setName("system").setAdmin(true);
+        var token = new PreAuthenticatedAuthenticationToken(principal, "", emptyList());
+        SecurityContextHolder.getContext().setAuthentication(token);
     }
 }

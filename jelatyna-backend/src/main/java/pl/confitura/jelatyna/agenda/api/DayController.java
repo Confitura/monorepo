@@ -1,7 +1,11 @@
-package pl.confitura.jelatyna.agenda;
+package pl.confitura.jelatyna.agenda.api;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.confitura.jelatyna.agenda.Day;
+import pl.confitura.jelatyna.agenda.DayRepository;
+
+import java.util.List;
 
 import static org.springframework.http.HttpStatus.CREATED;
 
@@ -16,23 +20,23 @@ public class DayController {
     }
 
     @GetMapping
-    public Iterable<Day> getAllDays() {
-        return dayRepository.findAll();
+    public List<InlineDay> getAllDays() {
+        return dayRepository.findAll().stream().map(InlineDay::from).toList();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Day> getDayById(@PathVariable String id) {
+    public ResponseEntity<InlineDay> getDayById(@PathVariable String id) {
         Day day = dayRepository.findById(id);
         if (day == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(day);
+        return ResponseEntity.ok(InlineDay.from(day));
     }
 
     @PostMapping
-    public ResponseEntity<Day> saveDay(@RequestBody Day day) {
+    public ResponseEntity<InlineDay> saveDay(@RequestBody Day day) {
         Day savedDay = dayRepository.save(day);
-        return ResponseEntity.status(CREATED).body(savedDay);
+        return ResponseEntity.status(CREATED).body(InlineDay.from(savedDay));
     }
 
     @DeleteMapping("/{id}")

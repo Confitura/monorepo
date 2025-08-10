@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import axios from 'axios';
+import {onMounted, ref} from 'vue';
 import AgendaEditor from "@/components/admin/agenda-editor.vue";
 import {daysApi} from "@/utils/api.ts";
+import type {InlineDay} from "@/utils/api-axios-client";
 
 definePage({
   meta: {
@@ -13,10 +13,10 @@ definePage({
 })
 
 // State for conference days
-const days = ref([]);
-const loading = ref(true);
-const error = ref(null);
-const tab = ref(null);
+const days: Ref<InlineDay[]> = ref([]);
+const loading: Ref<Boolean> = ref(true);
+const error: Ref<string | null> = ref(null);
+const tab: Ref<string | null> = ref(null);
 
 // Load conference days from API
 onMounted(async () => {
@@ -24,22 +24,10 @@ onMounted(async () => {
     const response = await daysApi.getAllDays();
     days.value = response.data;
 
-    // If no days exist yet, create default days
-    if (days.value.length === 0) {
-      days.value = [
-        { id: 'day1', label: 'Day 1', date: '2025-09-01', displayOrder: 1 },
-        { id: 'day2', label: 'Day 2', date: '2025-09-02', displayOrder: 2 }
-      ];
-    }
   } catch (err) {
     console.error('Error loading conference days:', err);
-    error.value = 'Failed to load conference days. Using default days instead.';
-
-    // Fallback to default days
-    days.value = [
-      { id: 'day1', label: 'Day 1', date: '2025-09-01', displayOrder: 1 },
-      { id: 'day2', label: 'Day 2', date: '2025-09-02', displayOrder: 2 }
-    ];
+    error.value = 'Failed to load conference days';
+    Notify.error('Failed to load conference days');
   } finally {
     loading.value = false;
 
@@ -67,9 +55,9 @@ onMounted(async () => {
       <v-window-item v-for="day in days" :key="day.id" :value="day.id">
         <v-card class="mt-4">
           <v-card-title>
-            {{ day.label }} - {{ new Date(day.date).toLocaleDateString() }}
+            {{ day.label }} - {{ day.date }}
           </v-card-title>
-          <v-card-text>
+          <v-card-text v-if="day.id">
             <agenda-editor :day-id="day.id"></agenda-editor>
           </v-card-text>
         </v-card>
