@@ -1,14 +1,16 @@
 <template>
   <div class="home__container">
-    <HomeMainBanner />
-    <HomeAbout />
-    <HomeNumbers />
-<!--    <HomePartners />-->
-    <Contact />
+    <HomeMainBanner/>
+    <HomeAbout/>
+    <NlpDay/>
+    <HomeNumbers/>
+    <HomePartners/>
+    <Contact/>
   </div>
 </template>
 
 <script setup lang="ts">
+import NlpDay from "~/components/home/NlpDay.vue";
 </script>
 
 <style lang="scss">

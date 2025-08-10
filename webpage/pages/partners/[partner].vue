@@ -41,13 +41,15 @@ onMounted(() => {
 })
 
 
-const imgUrls = import.meta.glob('~/assets/partners/2023/*', {
+const imgUrls = import.meta.glob('~/assets/partners/2025/*', {
   import: 'default',
   eager: true
 })
 
-function resolveImage(path: string) {
-  return `${imgUrls[path]}`
+function resolveImage(path: string): string {
+  let resolved = `${imgUrls[path]}`;
+  console.log('resolved path', resolved)
+  return resolved
 }
 </script>
 
