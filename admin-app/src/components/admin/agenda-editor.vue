@@ -96,9 +96,11 @@ const getPresentation = (id: string | null) => {
 };
 
 const getAgendaEntry = (timeSlot: InlineTimeSlot, room: InlineRoom | null) => {
+  let timeSlotIndex = timeSlot.displayOrder;
+  let roomId = room?.id || null;
+
   return agendaEntries.value.find(entry =>
-    entry.timeSlotIndex === timeSlot.displayOrder &&
-    (entry.roomId === room?.id || (entry.roomId === null && room?.id === null))
+    entry.timeSlotIndex === timeSlotIndex && entry.roomId === roomId
   ) || null;
 };
 
