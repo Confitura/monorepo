@@ -10,12 +10,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.confitura.jelatyna.dashboard.model.SubmittedStats;
 import pl.confitura.jelatyna.dashboard.model.UsersStats;
+import pl.confitura.jelatyna.news.NewsletterApi;
 import pl.confitura.jelatyna.registration.QParticipationData;
 import pl.confitura.jelatyna.registration.demographic.QDemographicData;
 import pl.confitura.jelatyna.registration.voucher.QVoucher;
 
 import jakarta.persistence.EntityManager;
 
+import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -36,6 +38,7 @@ class DashboardController {
 
     private final EntityManager entityManager;
     private final DashboardRepository dashboardRepository;
+    private final NewsletterApi newsletterApi;
 
     @GetMapping("users")
     public UsersStats usersStats() {
@@ -180,5 +183,15 @@ class DashboardController {
         data.add(0, new Object[]{"date", "total"});
         return data;
     }
+
+    @GetMapping("newsletter")
+    NewsletterStat newsletterStat() throws IOException {
+        var count = newsletterApi.getSubscribersCount();
+        return new NewsletterStat(count);
+    }
+
+    record NewsletterStat(int subscribersCount) {
+    }
+
 
 }

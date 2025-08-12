@@ -18,6 +18,8 @@ definePage({
 async function loadStats() {
   const {data: users} = await dashboardApi.usersStats();
   const {data: submissions} = await dashboardApi.submissionStats();
+  const {data: newsletter} = await dashboardApi.newsletterStat();
+
   stats.value = [
     {
       icon: 'mdi-account',
@@ -33,6 +35,12 @@ async function loadStats() {
       value: submissions.total!,
       color: 'primary',
       caption: `Workshops: ${submissions.workshops}, prestations: ${submissions.presentations}`,
+    }, {
+      icon: 'mdi-mail',
+      title: 'Newsletter',
+      value: newsletter.subscribersCount || 0,
+      color: 'primary',
+      caption: 'subscribers',
     }]
 
 }
@@ -55,6 +63,12 @@ const stats = ref([
     value: 0,
     color: 'primary',
     caption: 'Workshops: 0, prestations: 0',
+  }, {
+    icon: 'mdi-presentation',
+    title: 'Newsletter subscribers',
+    value: 0,
+    color: 'primary',
+    caption: '',
   },
   // {
   //   icon: 'mdi-send',

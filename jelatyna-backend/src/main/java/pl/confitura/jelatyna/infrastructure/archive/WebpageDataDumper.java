@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
-import pl.confitura.jelatyna.news.ListMonk;
+import pl.confitura.jelatyna.news.NewsletterApi;
 import pl.confitura.jelatyna.page.PageController;
 import pl.confitura.jelatyna.user.UserController;
 
@@ -22,7 +22,7 @@ public class WebpageDataDumper {
 
     private final UserController userController;
     private final PageController pageController;
-    private final ListMonk listMonk;
+    private final NewsletterApi newsletterApi;
 
     @Scheduled(fixedRate = 600000)
     public void dumpAll() {
@@ -46,7 +46,7 @@ public class WebpageDataDumper {
 
     private void dumpNews() {
         try {
-            dumbData(DumpedNews.from(listMonk.getWebpageNews()), "news.json");
+            dumbData(DumpedNews.from(newsletterApi.getWebpageNews()), "news.json");
         } catch (IOException e) {
             log.warn("Couldn't dump news", e);
         }

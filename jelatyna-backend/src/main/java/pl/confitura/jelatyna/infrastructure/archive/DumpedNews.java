@@ -1,6 +1,6 @@
 package pl.confitura.jelatyna.infrastructure.archive;
 
-import pl.confitura.jelatyna.news.ListMonk;
+import pl.confitura.jelatyna.news.ListmonkApi;
 
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -11,7 +11,7 @@ public record DumpedNews(
 
 ) {
 
-    public static DumpedNews from(List<ListMonk.NewsEntry> webpageNews) {
+    public static DumpedNews from(List<ListmonkApi.NewsEntry> webpageNews) {
         if (webpageNews.isEmpty()) {
             return new DumpedNews(null, List.of());
         } else {
@@ -25,7 +25,7 @@ public record DumpedNews(
             String title,
             String body,
             ZonedDateTime publishedAt) {
-        public static News from(ListMonk.NewsEntry newsEntry) {
+        public static News from(ListmonkApi.NewsEntry newsEntry) {
             return new News(newsEntry.title(), newsEntry.body(), newsEntry.publishedAt());
         }
     }

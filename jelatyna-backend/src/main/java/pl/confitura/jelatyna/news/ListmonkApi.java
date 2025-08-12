@@ -5,15 +5,15 @@ import com.eventuallycoding.listmonk.models.Campaign;
 import lombok.RequiredArgsConstructor;
 
 import java.io.IOException;
-import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class ListMonk {
+public class ListmonkApi implements NewsletterApi {
 
     private final ListmonkClient listmonkClient;
 
+    @Override
     public List<NewsEntry> getWebpageNews() throws IOException {
         var response = listmonkClient.getCampaignsApi().getCampaigns(0, 100).execute();
         List<Campaign> campaigns = response.body().getData().getResults();
@@ -23,10 +23,12 @@ public class ListMonk {
                 .toList();
     }
 
-    public record NewsEntry(
-            String title,
-            String body,
-            ZonedDateTime publishedAt
-    ) {
+    @Override
+    public int getSubscribersCount() throws IOException {
+        var response = listmonkClient.getSubscribersApi().getSubscribers(
+                0, 0, null, null, null, null, null
+        ).execute();
+        return response.body().getData().getTotal();
     }
+
 }

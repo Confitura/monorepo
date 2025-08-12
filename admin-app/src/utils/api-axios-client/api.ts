@@ -61,16 +61,16 @@ export interface AgendaEntry {
     'presentation'?: Presentation;
     /**
      * 
-     * @type {Set<PublicUser>}
-     * @memberof AgendaEntry
-     */
-    'speakers'?: Set<PublicUser>;
-    /**
-     * 
      * @type {number}
      * @memberof AgendaEntry
      */
     'timeSlotOrder'?: number;
+    /**
+     * 
+     * @type {Set<PublicUser>}
+     * @memberof AgendaEntry
+     */
+    'speakers'?: Set<PublicUser>;
 }
 /**
  * 
@@ -664,6 +664,19 @@ export interface MessageInfo {
 /**
  * 
  * @export
+ * @interface NewsletterStat
+ */
+export interface NewsletterStat {
+    /**
+     * 
+     * @type {number}
+     * @memberof NewsletterStat
+     */
+    'subscribersCount'?: number;
+}
+/**
+ * 
+ * @export
  * @interface ParticipationData
  */
 export interface ParticipationData {
@@ -880,10 +893,10 @@ export interface Presentation {
     'maxGroupSize'?: number;
     /**
      * 
-     * @type {boolean}
+     * @type {Presentation}
      * @memberof Presentation
      */
-    'new'?: boolean;
+    'speaker'?: Presentation;
     /**
      * 
      * @type {boolean}
@@ -892,10 +905,10 @@ export interface Presentation {
     'accepted'?: boolean;
     /**
      * 
-     * @type {Presentation}
+     * @type {boolean}
      * @memberof Presentation
      */
-    'speaker'?: Presentation;
+    'new'?: boolean;
 }
 /**
  * 
@@ -1478,12 +1491,6 @@ export interface User {
      * @type {boolean}
      * @memberof User
      */
-    'participant'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof User
-     */
     'admin'?: boolean;
     /**
      * 
@@ -1497,6 +1504,12 @@ export interface User {
      * @memberof User
      */
     'speaker'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof User
+     */
+    'participant'?: boolean;
 }
 /**
  * 
@@ -2465,6 +2478,39 @@ export const DashboardControllerApiAxiosParamCreator = function (configuration?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        newsletterStat: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/dashboard/newsletter`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         registrations: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/dashboard/registrations`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -2629,6 +2675,17 @@ export const DashboardControllerApiFp = function(configuration?: Configuration) 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        async newsletterStat(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NewsletterStat>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.newsletterStat(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DashboardControllerApi.newsletterStat']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         async registrations(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.registrations(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
@@ -2712,6 +2769,14 @@ export const DashboardControllerApiFactory = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        newsletterStat(options?: RawAxiosRequestConfig): AxiosPromise<NewsletterStat> {
+            return localVarFp.newsletterStat(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         registrations(options?: RawAxiosRequestConfig): AxiosPromise<object> {
             return localVarFp.registrations(options).then((request) => request(axios, basePath));
         },
@@ -2789,6 +2854,16 @@ export class DashboardControllerApi extends BaseAPI {
      */
     public getVoucherStats(options?: RawAxiosRequestConfig) {
         return DashboardControllerApiFp(this.configuration).getVoucherStats(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DashboardControllerApi
+     */
+    public newsletterStat(options?: RawAxiosRequestConfig) {
+        return DashboardControllerApiFp(this.configuration).newsletterStat(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

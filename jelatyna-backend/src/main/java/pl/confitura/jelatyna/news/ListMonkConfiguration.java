@@ -5,9 +5,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 @Configuration
 @RequiredArgsConstructor
+@Profile("!test")
 public class ListMonkConfiguration {
 
     private final ListMonkConfigurationProperties properties;
@@ -24,8 +26,8 @@ public class ListMonkConfiguration {
     }
 
     @Bean
-    ListMonk listMonk() {
-        return new ListMonk(listmonkClient());
+    NewsletterApi listMonk() {
+        return new ListmonkApi(listmonkClient());
     }
 
     @ConfigurationProperties(prefix = "listmonk")

@@ -2,12 +2,9 @@ package pl.confitura.jelatyna.user;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
+import pl.confitura.jelatyna.BaseIntegrationTest;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
 import pl.confitura.jelatyna.registration.ParticipationData;
 import pl.confitura.jelatyna.registration.ParticipationRepository;
@@ -15,15 +12,14 @@ import pl.confitura.jelatyna.registration.voucher.Voucher;
 import pl.confitura.jelatyna.registration.voucher.VoucherService;
 
 import jakarta.persistence.EntityManager;
+
 import java.util.List;
 
 import static java.time.LocalDateTime.now;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest
-@ActiveProfiles({"test", "fake-db"})
 @Transactional
-public class UserRepositoryTest {
+public class UserRepositoryTest extends BaseIntegrationTest {
     @Autowired
     private EntityManager em;
 
