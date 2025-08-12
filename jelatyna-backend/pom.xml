@@ -164,6 +164,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.eventuallycoding</groupId>
+            <artifactId>listmonk-japi</artifactId>
+            <version>1.1.0</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
@@ -264,7 +270,7 @@
                         <configuration>
                             <includes>
                                 <include>common.persistence.entity.**</include>
-                                <include> package.entity.**</include>
+                                <include>package.entity.**</include>
                             </includes>
                         </configuration>
                     </execution>
