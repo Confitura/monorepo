@@ -26,6 +26,7 @@ let items: MenuItem[] = [
   { label: 'partners', url: '/partners' },
   { label: 'about us', url: '/about' },
   { label: '2023', url: 'http://2023.confitura.pl/' },
+  { label: 'FAQ', url: '/faq' },
   { label: 'login', url: 'https://app.confitura.pl/' },
   // { label: 'tickets', url: '/tickets' },
   // { label: 'schedule', url: '/schedule' },
@@ -33,16 +34,6 @@ let items: MenuItem[] = [
   // { label: 'lean coffee', url: '/lean-coffee' },
   // { label: 'speakers', url: '/speakers' },
   // { label: "workshop day", url: "/workshops" },
-  // { label: 'FAQ', url: '/faq' },
-  // { label: 'my profile', url: '/profile', visible: () => isLogin() },
-  // { label: 'ADMIN', url: '/admin', visible: () => isAdmin() },
-  // {
-  //   label: 'logout',
-  //   action: () => logout(),
-  //   visible: () => isLogin()
-  // }
-  // { label: "C4P", url: "/c4p", visible: () => !this.isLogin },
-  // { label: "login", url: "/login", visible: () => !this.isLogin }
 ]
 
 function isVisible(item: MenuItem): boolean {
