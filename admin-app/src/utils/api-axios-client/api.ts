@@ -61,16 +61,16 @@ export interface AgendaEntry {
     'presentation'?: Presentation;
     /**
      * 
-     * @type {number}
-     * @memberof AgendaEntry
-     */
-    'timeSlotOrder'?: number;
-    /**
-     * 
      * @type {Set<PublicUser>}
      * @memberof AgendaEntry
      */
     'speakers'?: Set<PublicUser>;
+    /**
+     * 
+     * @type {number}
+     * @memberof AgendaEntry
+     */
+    'timeSlotOrder'?: number;
 }
 /**
  * 
@@ -677,6 +677,19 @@ export interface NewsletterStat {
 /**
  * 
  * @export
+ * @interface PageContent
+ */
+export interface PageContent {
+    /**
+     * 
+     * @type {string}
+     * @memberof PageContent
+     */
+    'content'?: string;
+}
+/**
+ * 
+ * @export
  * @interface ParticipationData
  */
 export interface ParticipationData {
@@ -893,6 +906,12 @@ export interface Presentation {
     'maxGroupSize'?: number;
     /**
      * 
+     * @type {boolean}
+     * @memberof Presentation
+     */
+    'new'?: boolean;
+    /**
+     * 
      * @type {Presentation}
      * @memberof Presentation
      */
@@ -903,12 +922,6 @@ export interface Presentation {
      * @memberof Presentation
      */
     'accepted'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Presentation
-     */
-    'new'?: boolean;
 }
 /**
  * 
@@ -1491,6 +1504,12 @@ export interface User {
      * @type {boolean}
      * @memberof User
      */
+    'participant'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof User
+     */
     'admin'?: boolean;
     /**
      * 
@@ -1504,12 +1523,6 @@ export interface User {
      * @memberof User
      */
     'speaker'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof User
-     */
-    'participant'?: boolean;
 }
 /**
  * 
@@ -3845,15 +3858,15 @@ export const PageControllerApiAxiosParamCreator = function (configuration?: Conf
         /**
          * 
          * @param {string} id 
-         * @param {string} body 
+         * @param {PageContent} pageContent 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createPage: async (id: string, body: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        createPage: async (id: string, pageContent: PageContent, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('createPage', 'id', id)
-            // verify required parameter 'body' is not null or undefined
-            assertParamExists('createPage', 'body', body)
+            // verify required parameter 'pageContent' is not null or undefined
+            assertParamExists('createPage', 'pageContent', pageContent)
             const localVarPath = `/pages/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -3874,7 +3887,7 @@ export const PageControllerApiAxiosParamCreator = function (configuration?: Conf
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(pageContent, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3979,15 +3992,15 @@ export const PageControllerApiAxiosParamCreator = function (configuration?: Conf
         /**
          * 
          * @param {string} id 
-         * @param {string} body 
+         * @param {PageContent} pageContent 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updatePage: async (id: string, body: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        updatePage: async (id: string, pageContent: PageContent, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('updatePage', 'id', id)
-            // verify required parameter 'body' is not null or undefined
-            assertParamExists('updatePage', 'body', body)
+            // verify required parameter 'pageContent' is not null or undefined
+            assertParamExists('updatePage', 'pageContent', pageContent)
             const localVarPath = `/pages/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -4008,7 +4021,7 @@ export const PageControllerApiAxiosParamCreator = function (configuration?: Conf
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(pageContent, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4028,12 +4041,12 @@ export const PageControllerApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {string} id 
-         * @param {string} body 
+         * @param {PageContent} pageContent 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createPage(id: string, body: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createPage(id, body, options);
+        async createPage(id: string, pageContent: PageContent, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createPage(id, pageContent, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PageControllerApi.createPage']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -4076,12 +4089,12 @@ export const PageControllerApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {string} id 
-         * @param {string} body 
+         * @param {PageContent} pageContent 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updatePage(id: string, body: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updatePage(id, body, options);
+        async updatePage(id: string, pageContent: PageContent, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updatePage(id, pageContent, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PageControllerApi.updatePage']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -4099,12 +4112,12 @@ export const PageControllerApiFactory = function (configuration?: Configuration,
         /**
          * 
          * @param {string} id 
-         * @param {string} body 
+         * @param {PageContent} pageContent 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createPage(id: string, body: string, options?: RawAxiosRequestConfig): AxiosPromise<object> {
-            return localVarFp.createPage(id, body, options).then((request) => request(axios, basePath));
+        createPage(id: string, pageContent: PageContent, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.createPage(id, pageContent, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -4135,12 +4148,12 @@ export const PageControllerApiFactory = function (configuration?: Configuration,
         /**
          * 
          * @param {string} id 
-         * @param {string} body 
+         * @param {PageContent} pageContent 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updatePage(id: string, body: string, options?: RawAxiosRequestConfig): AxiosPromise<object> {
-            return localVarFp.updatePage(id, body, options).then((request) => request(axios, basePath));
+        updatePage(id: string, pageContent: PageContent, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.updatePage(id, pageContent, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -4155,13 +4168,13 @@ export class PageControllerApi extends BaseAPI {
     /**
      * 
      * @param {string} id 
-     * @param {string} body 
+     * @param {PageContent} pageContent 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PageControllerApi
      */
-    public createPage(id: string, body: string, options?: RawAxiosRequestConfig) {
-        return PageControllerApiFp(this.configuration).createPage(id, body, options).then((request) => request(this.axios, this.basePath));
+    public createPage(id: string, pageContent: PageContent, options?: RawAxiosRequestConfig) {
+        return PageControllerApiFp(this.configuration).createPage(id, pageContent, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4199,13 +4212,13 @@ export class PageControllerApi extends BaseAPI {
     /**
      * 
      * @param {string} id 
-     * @param {string} body 
+     * @param {PageContent} pageContent 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PageControllerApi
      */
-    public updatePage(id: string, body: string, options?: RawAxiosRequestConfig) {
-        return PageControllerApiFp(this.configuration).updatePage(id, body, options).then((request) => request(this.axios, this.basePath));
+    public updatePage(id: string, pageContent: PageContent, options?: RawAxiosRequestConfig) {
+        return PageControllerApiFp(this.configuration).updatePage(id, pageContent, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

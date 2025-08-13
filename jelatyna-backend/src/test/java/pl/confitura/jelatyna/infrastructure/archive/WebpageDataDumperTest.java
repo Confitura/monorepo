@@ -93,7 +93,7 @@ class WebpageDataDumperTest extends BaseIntegrationTest {
         SecurityHelper.asAdmin();
         var pageName = "registration-info";
         var pageContent = "# Registration\nWelcome to registration page";
-        pageController.createPage(pageName, pageContent);
+        pageController.createPage(pageName, new PageController.PageContent(pageContent));
 
         //when
         webpageDataDumper.dumpPages();
