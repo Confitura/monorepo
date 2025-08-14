@@ -4,9 +4,7 @@
     <p class="foreword">
       This year's edition of Confitura will be held in conjunction with Al & NLP Day 2025 - a two-day conference
       featuring inspiring sessions and hands-on workshops dedicated to the most important advances and applications in
-      artificial intelligence, machine learning, and natural language processing. This collaboration offers
-      unique, two-in-one sponsorship opportunity that maximizes your brand's exposure and influence within both
-      the established Java community and Al-focused audience.
+      artificial intelligence, machine learning, and natural language processing.
     </p>
     <p class="foreword">
       <big class="main">EXPANDED PROGRAM:</big> Parallel to Confitura's main tracks, participants can attend specialized
