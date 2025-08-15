@@ -3,13 +3,13 @@
     <!--    <HomeMainBannerStars />-->
     <div class="container">
       <div class="info">
-<!--        <div class="slogan">-->
-<!--          <h1 class="h1">Confitura 2025 - Escape the Loop. Join the Revolution.</h1>-->
-<!--        </div>-->
-        <div class="info__live">
-          <div class="info__live-text">> Help us pick the presentations <</div>
-          <a class="info__live-link" href="https://app.confitura.pl/vote-for-papers" target="_blank">vote here</a>
+        <div class="slogan">
+          <h1 class="h1">Confitura 2025 - Escape the Loop. Join the Revolution.</h1>
         </div>
+<!--        <div class="info__live">-->
+<!--          <div class="info__live-text">> Help us pick the presentations <</div>-->
+<!--          <a class="info__live-link" href="https://app.confitura.pl/vote-for-papers" target="_blank">vote here</a>-->
+<!--        </div>-->
         <div class="info__long">
           <p> Warsaw | September 19–20, 2025 </p>
           <TheTimer/>
