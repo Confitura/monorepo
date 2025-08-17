@@ -1,5 +1,5 @@
 <template>
-  <div class="menu">
+  <div class="menu" :key="isLogin">
     <div v-for="item in items" :key="item.label" class="menu-item">
       <template v-if="isVisible(item)">
         <NuxtLink
@@ -22,10 +22,11 @@
 let items: MenuItem[] = [
   // { label: 'scanner', url: '/new-scanner', visible: () => isVolunteer() },
   { label: 'home', url: '/#home' },
-  { label: "vote", url: "https://app.confitura.pl/vote-for-papers" },
+  // { label: "vote", url: "https://app.confitura.pl/vote-for-papers" },
   { label: 'partners', url: '/partners' },
   { label: 'about us', url: '/about' },
   { label: '2023', url: 'http://2023.confitura.pl/' },
+  { label: 'FAQ', url: '/faq' },
   { label: 'login', url: 'https://app.confitura.pl/' },
   // { label: 'tickets', url: '/tickets' },
   // { label: 'schedule', url: '/schedule' },
@@ -33,9 +34,6 @@ let items: MenuItem[] = [
   // { label: 'lean coffee', url: '/lean-coffee' },
   // { label: 'speakers', url: '/speakers' },
   // { label: "workshop day", url: "/workshops" },
-  // { label: 'FAQ', url: '/faq' },
-  // { label: 'my profile', url: '/profile', visible: () => isLogin() },
-  // { label: 'ADMIN', url: '/admin', visible: () => isAdmin() },
 ]
 
 function isVisible(item: MenuItem): boolean {
@@ -45,6 +43,22 @@ function isVisible(item: MenuItem): boolean {
 const emit = defineEmits(['linkClicked'])
 function click() {
   emit('linkClicked')
+}
+
+function isLogin() {
+  return false//TODO this.$store.getters.isLogin;
+}
+
+function isAdmin() {
+  return false//TODOthis.$store.getters.isAdmin;
+}
+
+function isVolunteer() {
+  return false//TODO this.$store.getters.isVolunteer || this.isAdmin;
+}
+
+function logout() {
+  //TODO this.$store.dispatch(LOGOUT);
 }
 
 

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import pl.confitura.jelatyna.BaseIntegrationTest;
 import pl.confitura.jelatyna.agenda.UserUtils;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
+import pl.confitura.jelatyna.news.NewsletterApi;
 import pl.confitura.jelatyna.page.PageController;
 import pl.confitura.jelatyna.user.UserController;
 
@@ -31,6 +32,9 @@ class WebpageDataDumperTest extends BaseIntegrationTest {
     @Autowired
     private PageController pageController;
 
+    @Autowired
+    private NewsletterApi newsletterApi;
+
     private WebpageDataDumper webpageDataDumper;
 
     @BeforeEach
@@ -41,7 +45,8 @@ class WebpageDataDumperTest extends BaseIntegrationTest {
                 objectMapper,
                 "/tmp/confitura/2025",
                 userController,
-                pageController
+                pageController,
+                newsletterApi
         );
     }
 
@@ -88,7 +93,7 @@ class WebpageDataDumperTest extends BaseIntegrationTest {
         SecurityHelper.asAdmin();
         var pageName = "registration-info";
         var pageContent = "# Registration\nWelcome to registration page";
-        pageController.createPage(pageName, pageContent);
+        pageController.createPage(pageName, new PageController.PageContent(pageContent));
 
         //when
         webpageDataDumper.dumpPages();

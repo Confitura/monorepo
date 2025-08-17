@@ -9,12 +9,16 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create-drop
-resources.path: /tmp
-resources.folder: /tmp
-jwt.key: /tmp
+resources:
+  resources-base-url: "http://localhost:8080/api"
+  path: files
+  folder: /tmp/confitura
+
 mail.apiKey: 123
 
 app:
   cors:
     origins:
       - http://localhost:5173/
+  jwt:
+    secret-key: c1c29b861174cd979e5bcd2dc1acf89ac2bc9a30d7307b6949dfd26f2bdc6fed

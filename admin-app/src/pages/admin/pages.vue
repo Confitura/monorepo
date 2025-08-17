@@ -81,7 +81,7 @@ function showDeleteDialog(item: {id: string}) {
 function updatePage() {
   if (!formValid.value) return
 
-  pagesApi.updatePage(currentPage.value.id, currentPage.value.content)
+  pagesApi.updatePage(currentPage.value.id, {content: currentPage.value.content})
       .then(() => {
         Notify.success(`Page ${currentPage.value.id} updated`)
         editDialog.value = false
@@ -96,7 +96,7 @@ function updatePage() {
 function createPage() {
   if (!formValid.value) return
 
-  pagesApi.createPage(newPage.value.id, newPage.value.content)
+  pagesApi.createPage(newPage.value.id, {content: newPage.value.content})
       .then(() => {
         Notify.success(`Page ${newPage.value.id} created`)
         createDialog.value = false
