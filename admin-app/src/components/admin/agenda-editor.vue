@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import {ref, computed, onMounted} from 'vue';
-import {daysApi, agendaApi, presentationApi, roomsApi} from '@/utils/api';
+import { ref, computed, onMounted } from 'vue';
+import type { Ref } from 'vue';
+import { storeToRefs } from 'pinia';
+import { useAgendaStore } from '@/stores/agenda';
 import type {
-  AssignAgendaEntryRequest, FullPresentation,
-  InlineAgendaEntry, InlineDay,
-  InlinePresentation,
+  AssignAgendaEntryRequest,
+  InlineAgendaEntry,
+  InlineTimeSlot,
   InlineRoom,
-  InlineTimeSlot
 } from "@/utils/api-axios-client";
 
 // Define props
@@ -14,34 +15,21 @@ const props = defineProps<{
   dayId: string;
 }>();
 
-// Data for time slots, rooms, presentations, and agenda entries
-const timeSlots: Ref<InlineTimeSlot[]> = ref([]);
-const rooms: Ref<InlineRoom[]> = ref([]);
-const presentations: Ref<FullPresentation[]> = ref([]);
-const agendaEntries: Ref<InlineAgendaEntry[]> = ref([]);
-const day: Ref<InlineDay | null> = ref(null);
+// Store
+const agenda = useAgendaStore();
+const {
+  day,
+  timeSlots,
+  rooms,
+  presentations,
+  agendaEntries,
+  sortedTimeSlots,
+  sortedRooms,
+} = storeToRefs(agenda);
 
 async function refreshData() {
   try {
-    // Load day information
-    const dayResponse = await daysApi.getDayById(props.dayId);
-    day.value = dayResponse.data;
-
-    // Load time slots
-    const timeSlotsResponse = await agendaApi.getAllTimeSlots(props.dayId);
-    timeSlots.value = timeSlotsResponse.data;
-
-    // Load rooms
-    const roomsResponse = await agendaApi.getAllRooms1(props.dayId);
-    rooms.value = roomsResponse.data;
-
-    // Load presentations
-    const presentationsResponse = await presentationApi.getAllPresentations();
-    presentations.value = presentationsResponse.data;
-
-    // Load agenda entries for the specified day
-    const agendaEntriesResponse = await agendaApi.getAgendaEntriesByDay(props.dayId);
-    agendaEntries.value = agendaEntriesResponse.data;
+    await agenda.refreshData(props.dayId);
   } catch (error) {
     console.error('Error loading data:', error);
     Notify.error('Error loading data');
@@ -53,9 +41,7 @@ onMounted(async () => {
   await refreshData();
 });
 
-// Fallback to mock data if API calls fail
 
-// Tab control
 const tab = ref('agenda');
 
 // Dialog controls
@@ -71,7 +57,9 @@ const editedTimeSlot: Ref<InlineTimeSlot> = ref({
   start: '',
   end: ''
 });
-const editedRoom: Ref<InlineRoom> = ref({id: '', label: '', displayOrder: 0});
+
+const editedRoom: Ref<InlineRoom> = ref({ id: '', label: '', displayOrder: 0 });
+const editedAgendaEntryId: Ref<string | null> = ref(null);
 const editedAgendaEntry: Ref<AssignAgendaEntryRequest> = ref({
   dayId: '',
   timeSlotIndex: -1,
@@ -83,37 +71,11 @@ const editedAgendaEntry: Ref<AssignAgendaEntryRequest> = ref({
 // Edit mode flag
 const editMode = ref(false);
 
-const findPresentation = (timeSlot: InlineTimeSlot, room: InlineRoom | null) => {
-  let entry = getAgendaEntry(timeSlot!, room);
-  if (!entry || !entry.presentationId) {
-    return null;
-  } else {
-    return getPresentation(entry.presentationId)
-  }
-}
-const getPresentation = (id: string | null) => {
-  return presentations.value.find(presentation => presentation.id === id) || null;
-};
+// Delegated lookups
+const getAgendaEntry = agenda.getAgendaEntry;
+const getPresentation = agenda.getPresentation;
+const findPresentation = agenda.findPresentation;
 
-const getAgendaEntry = (timeSlot: InlineTimeSlot, room: InlineRoom | null) => {
-  let timeSlotIndex = timeSlot.displayOrder;
-  let roomId = room?.id || null;
-
-  return agendaEntries.value.find(entry =>
-    entry.timeSlotIndex === timeSlotIndex && entry.roomId === roomId
-  ) || null;
-};
-
-const sortedTimeSlots = computed(() => {
-  return timeSlots.value
-});
-
-// Sort rooms by display order
-const sortedRooms = computed(() => {
-  return rooms.value;
-});
-
-// Add or update time slot
 const saveTimeSlot = () => {
   //TODO
 
@@ -133,29 +95,18 @@ const saveRoom = () => {
   if (editMode.value) {
     const index = rooms.value.findIndex(room => room.id === editedRoom.value.id);
     if (index !== -1) {
-      rooms.value[index] = {...editedRoom.value};
+      rooms.value[index] = { ...editedRoom.value };
     }
   } else {
     const newId = (Math.max(...rooms.value.map(room => parseInt(room.id)), 0) + 1).toString();
-    rooms.value.push({...editedRoom.value, id: newId});
+    rooms.value.push({ ...editedRoom.value, id: newId });
   }
   roomDialog.value = false;
-  editedRoom.value = {id: '', label: '', displayOrder: 0};
+  editedRoom.value = { id: '', label: '', displayOrder: 0 };
   editMode.value = false;
 };
 
-// Add or update agenda entry
-const saveAgendaEntry = async () => {
-  try {
-    // Make sure the day is set
-    editedAgendaEntry.value.dayId = props.dayId;
-    await agendaApi.saveAgendaEntry(editedAgendaEntry.value);
-    await refreshData();
-  } catch (error) {
-    console.error('Error saving agenda entry:', error);
-    Notify.error('Error saving agenda entry');
-  }
-
+function closeAndCleanAgendaEntryEditor() {
   agendaEntryDialog.value = false;
   editedAgendaEntry.value = {
     dayId: '',
@@ -164,19 +115,54 @@ const saveAgendaEntry = async () => {
     label: '',
     presentationId: ''
   };
+  editedAgendaEntryId.value = null;
   editMode.value = false;
+}
+
+// Add or update agenda entry
+const saveAgendaEntry = async () => {
+  try {
+    // Make sure the day is set
+    editedAgendaEntry.value.dayId = props.dayId;
+
+    if (editMode.value && editedAgendaEntryId.value) {
+      await agenda.updateAgendaEntry(editedAgendaEntryId.value, {
+        label: editedAgendaEntry.value.label || undefined,
+        presentationId: editedAgendaEntry.value.presentationId || undefined,
+        roomId: editedAgendaEntry.value.roomId || undefined,
+      }, props.dayId);
+    } else {
+      await agenda.saveAgendaEntry(editedAgendaEntry.value, props.dayId);
+    }
+  } catch (error) {
+    console.error('Error saving agenda entry:', error);
+    Notify.error('Error saving agenda entry');
+  }
+  closeAndCleanAgendaEntryEditor();
+}
+
+const clearAgendaEntry = async () => {
+  try {
+    if (editedAgendaEntryId.value) {
+      await agenda.deleteAgendaEntry(editedAgendaEntryId.value, props.dayId);
+    }
+    closeAndCleanAgendaEntryEditor()
+  } catch (error) {
+    console.error('Error clearing agenda entry:', error);
+    Notify.error('Error clearing agenda entry');
+  }
 }
 
 // Edit time slot
 const editTimeSlot = (timeSlot: InlineTimeSlot) => {
-  editedTimeSlot.value = {...timeSlot};
+  editedTimeSlot.value = { ...timeSlot };
   editMode.value = true;
   timeSlotDialog.value = true;
 };
 
 // Edit room
 const editRoom = (room: InlineRoom) => {
-  editedRoom.value = {...room};
+  editedRoom.value = { ...room };
   editMode.value = true;
   roomDialog.value = true;
 };
@@ -184,6 +170,7 @@ const editRoom = (room: InlineRoom) => {
 // Edit agenda entry
 const editAgendaEntry = (entry: InlineAgendaEntry | null) => {
   // Make a copy of the entry and ensure dayId is set
+  editedAgendaEntryId.value = entry?.id || null;
   editedAgendaEntry.value = {
     dayId: entry?.dayId!,
     timeSlotIndex: entry?.timeSlotIndex!,
@@ -241,6 +228,7 @@ const addAgendaEntry = (timeSlotIndex: number, roomId: string | undefined) => {
     label: '',
     presentationId: ''
   };
+  editedAgendaEntryId.value = null;
   editMode.value = false;
   agendaEntryDialog.value = true;
 };
@@ -541,6 +529,9 @@ const addAgendaEntry = (timeSlotIndex: number, roomId: string | undefined) => {
 
         <v-card-actions>
           <v-spacer></v-spacer>
+          <v-btn color="blue-darken-1" variant="text"
+                 @click="clearAgendaEntry">Clear
+          </v-btn>
           <v-btn color="blue-darken-1" variant="text"
                  @click="agendaEntryDialog = false">Cancel
           </v-btn>

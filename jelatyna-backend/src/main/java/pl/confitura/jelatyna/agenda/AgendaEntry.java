@@ -1,14 +1,6 @@
 package pl.confitura.jelatyna.agenda;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import lombok.experimental.Accessors;
@@ -23,8 +15,14 @@ import java.util.Set;
 
 import static java.util.stream.Collectors.toSet;
 
+
 @Entity
-@Table(name = "agenda")
+@Table(
+        name = "agenda",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"room_id", "time_slot_day_id", "time_slot_display_order"})
+        }
+)
 @Data
 @Accessors(chain = true)
 public class AgendaEntry {
@@ -38,11 +36,10 @@ public class AgendaEntry {
 
     @ManyToOne
     @NotNull
-    @JoinColumn(name = "day_id")
-    private Day day;
-
-    @ManyToOne
-    @NotNull
+    @JoinColumns({
+            @JoinColumn(name = "time_slot_day_id"),
+            @JoinColumn(name = "time_slot_display_order"),
+    })
     private TimeSlot timeSlot;
 
     @ManyToOne

@@ -2,10 +2,7 @@ package pl.confitura.jelatyna.agenda;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.Mockito;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
 
@@ -16,23 +13,24 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
 class AgendaServiceTest {
 
-    @Mock
-    private DayRepository dayRepository;
+    private DayRepository dayRepository = Mockito.mock(DayRepository.class);
 
-    @Mock
-    private TimeSlotsRepository timeSlotsRepository;
+    private TimeSlotsRepository timeSlotsRepository = Mockito.mock(TimeSlotsRepository.class);
 
-    @Mock
-    private RoomRepository roomRepository;
+    private RoomRepository roomRepository = Mockito.mock(RoomRepository.class);
 
-    @Mock
-    private PresentationRepository presentationRepository;
+    private PresentationRepository presentationRepository = Mockito.mock(PresentationRepository.class);
 
-    @InjectMocks
-    private AgendaService agendaService;
+    private AgendaService agendaService = new AgendaService(dayRepository, timeSlotsRepository, roomRepository, presentationRepository);
+
+    // Given
+    private int timeSlotIndex = 0;
+    private String dayId = "day1";
+    private String roomId = "room1";
+    private String label = "Test Session";
+    private String presentationId = "presentation1";
 
     private Day day;
     private TimeSlot timeSlot;
@@ -61,27 +59,21 @@ class AgendaServiceTest {
 
         presentation = new Presentation();
         presentation.setId("presentation1");
-    }
 
-    @Test
-    void shouldCreateAgendaEntryWithAllFields() {
-        // Given
-        String dayId = "day1";
-        int timeSlotIndex = 0;
-        String roomId = "room1";
-        String label = "Test Session";
-        String presentationId = "presentation1";
 
         when(dayRepository.findById(dayId)).thenReturn(day);
         when(timeSlotsRepository.findById(new TimeSlot.TimeSlotId(dayId, timeSlotIndex))).thenReturn(timeSlot);
         when(roomRepository.findById(roomId)).thenReturn(room);
         when(presentationRepository.findById(presentationId)).thenReturn(presentation);
+    }
+
+    @Test
+    void shouldCreateAgendaEntryWithAllFields() {
 
         // When
         AgendaEntry result = agendaService.createAgendaEntry(dayId, timeSlotIndex, roomId, label, presentationId);
 
         // Then
-        assertEquals(day, result.getDay());
         assertEquals(timeSlot, result.getTimeSlot());
         assertEquals(room, result.getRoom());
         assertEquals(label, result.getLabel());
@@ -90,21 +82,11 @@ class AgendaServiceTest {
 
     @Test
     void shouldCreateAgendaEntryWithoutRoom() {
-        // Given
-        String dayId = "day1";
-        int timeSlotIndex = 0;
-        String label = "Test Session";
-        String presentationId = "presentation1";
-
-        when(dayRepository.findById(dayId)).thenReturn(day);
-        when(timeSlotsRepository.findById(new TimeSlot.TimeSlotId(dayId, timeSlotIndex))).thenReturn(timeSlot);
-        when(presentationRepository.findById(presentationId)).thenReturn(presentation);
 
         // When
         AgendaEntry result = agendaService.createAgendaEntry(dayId, timeSlotIndex, null, label, presentationId);
 
         // Then
-        assertEquals(day, result.getDay());
         assertEquals(timeSlot, result.getTimeSlot());
         assertNull(result.getRoom());
         assertEquals(label, result.getLabel());
@@ -113,21 +95,11 @@ class AgendaServiceTest {
 
     @Test
     void shouldCreateAgendaEntryWithoutPresentation() {
-        // Given
-        String dayId = "day1";
-        int timeSlotIndex = 0;
-        String roomId = "room1";
-        String label = "Test Session";
-
-        when(dayRepository.findById(dayId)).thenReturn(day);
-        when(timeSlotsRepository.findById(new TimeSlot.TimeSlotId(dayId,timeSlotIndex ))).thenReturn(timeSlot);
-        when(roomRepository.findById(roomId)).thenReturn(room);
 
         // When
         AgendaEntry result = agendaService.createAgendaEntry(dayId, timeSlotIndex, roomId, label, null);
 
         // Then
-        assertEquals(day, result.getDay());
         assertEquals(timeSlot, result.getTimeSlot());
         assertEquals(room, result.getRoom());
         assertEquals(label, result.getLabel());

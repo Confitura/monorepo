@@ -3,14 +3,12 @@ package pl.confitura.jelatyna.login;
 import static org.springframework.http.HttpStatus.PERMANENT_REDIRECT;
 import static pl.confitura.jelatyna.infrastructure.Profiles.FAKE_SECURITY;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import pl.confitura.jelatyna.infrastructure.fakedb.FakeUsers;
+import pl.confitura.jelatyna.infrastructure.fakedb.FakeLoginUsers;
 import pl.confitura.jelatyna.infrastructure.security.TokenService;
 import pl.confitura.jelatyna.user.User;
 
@@ -25,7 +23,7 @@ import java.nio.charset.StandardCharsets;
 public class FakeOAuth2LoginController {
 
     private final TokenService tokenService;
-    private final FakeUsers fakeUsers;
+    private final FakeLoginUsers fakeLoginUsers;
 
 
 
@@ -51,7 +49,7 @@ public class FakeOAuth2LoginController {
             @RequestParam("state") String state
     ) {
 
-        User user = fakeUsers.getBySystem(provider);
+        User user = fakeLoginUsers.getBySystem(provider);
         if (user == null) {
             user = new User()
                     .setId("dHdpdHRlci9tYXJnaWVsbQ==")

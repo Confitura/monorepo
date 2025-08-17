@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.confitura.jelatyna.agenda.*;
+import pl.confitura.jelatyna.presentation.Presentation;
+import pl.confitura.jelatyna.presentation.PresentationRepository;
 
 import java.util.List;
 
@@ -19,6 +21,7 @@ public class AgendaController {
     private final TimeSlotsRepository timeSlotsRepository;
     private final RoomRepository roomRepository;
     private final AgendaService agendaService;
+    private final PresentationRepository presentationRepository;
 
 
     @GetMapping("/{dayId}/entries")
@@ -27,7 +30,7 @@ public class AgendaController {
         if (day == null) {
             return ResponseEntity.notFound().build();
         }
-        var result = agendaRepository.findByDay(day).stream()
+        var result = agendaRepository.findByTimeSlotIdDayId(day.getId()).stream()
                 .map(InlineAgendaEntry::from)
                 .toList();
         return ResponseEntity.ok(result);
@@ -59,6 +62,38 @@ public class AgendaController {
     public ResponseEntity<Void> deleteAgendaEntry(@PathVariable String id) {
         agendaRepository.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/entries/{id}")
+    public ResponseEntity<InlineAgendaEntry> updateAgendaEntry(@PathVariable String id, @RequestBody UpdateAgendaEntryRequest request) {
+        AgendaEntry existing = agendaRepository.findById(id);
+        if (existing == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        // Update label if provided
+        if (request.label() != null) {
+            request.label().ifPresent(existing::setLabel);
+        }
+
+        // Update presentation if provided
+        if (request.presentationId() != null) {
+            request.presentationId().ifPresent(pId -> {
+                Presentation presentation = presentationRepository.findById(pId);
+                existing.setPresentation(presentation);
+            });
+        }
+
+        // Update room if provided
+        if (request.roomId() != null) {
+            request.roomId().ifPresent(rId -> {
+                Room room = roomRepository.findById(rId);
+                existing.setRoom(room);
+            });
+        }
+
+        AgendaEntry saved = agendaRepository.save(existing);
+        return ResponseEntity.ok(InlineAgendaEntry.from(saved));
     }
 
     @GetMapping("/days")

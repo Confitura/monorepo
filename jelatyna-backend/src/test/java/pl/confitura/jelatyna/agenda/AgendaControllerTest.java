@@ -112,30 +112,38 @@ class AgendaControllerTest extends BaseIntegrationTest {
 
         room1 = roomRepository.save(room1);
 
-        // Create test time slots with proper day reference
-        timeSlot1 = new TimeSlot()
+        // Create test time slots: two for day1 and one for day2
+        TimeSlot day1Slot1 = new TimeSlot()
                 .setStart(LocalTime.of(9, 0))
                 .setEnd(LocalTime.of(10, 0))
                 .setId(new TimeSlot.TimeSlotId(day1.getId(), 1));
 
-        timeSlot2 = new TimeSlot()
+        TimeSlot day1Slot2 = new TimeSlot()
                 .setStart(LocalTime.of(10, 15))
                 .setEnd(LocalTime.of(11, 15))
                 .setId(new TimeSlot.TimeSlotId(day1.getId(), 2));
 
-        timeSlot1 = timeSlotsRepository.save(timeSlot1);
-        timeSlot2 = timeSlotsRepository.save(timeSlot2);
+        TimeSlot day2Slot1 = new TimeSlot()
+                .setStart(LocalTime.of(9, 0))
+                .setEnd(LocalTime.of(10, 0))
+                .setId(new TimeSlot.TimeSlotId(day2.getId(), 1));
 
-        // Create test agenda entries with proper entity references
+        day1Slot1 = timeSlotsRepository.save(day1Slot1);
+        day1Slot2 = timeSlotsRepository.save(day1Slot2);
+        day2Slot1 = timeSlotsRepository.save(day2Slot1);
+
+        // Expose slots we need in other tests
+        timeSlot1 = day1Slot1;
+        timeSlot2 = day1Slot2;
+
+        // Create test agenda entries: one per day
         entry1 = new AgendaEntry()
-                .setDay(day1)
-                .setTimeSlot(timeSlot1)
+                .setTimeSlot(day1Slot1)
                 .setRoom(room1)
                 .setLabel("Opening Keynote");
 
         entry2 = new AgendaEntry()
-                .setDay(day2)
-                .setTimeSlot(timeSlot1)
+                .setTimeSlot(day2Slot1)
                 .setRoom(room1)
                 .setLabel("Closing Keynote");
 
@@ -145,19 +153,22 @@ class AgendaControllerTest extends BaseIntegrationTest {
 
     @Test
     void shouldReturnAllAgendaEntries() throws Exception {
-        mockMvc.perform(get("/agenda"))
+        mockMvc.perform(get("/agenda/" + day1.getId() + "/entries"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(2)));
+                .andExpect(jsonPath("$", hasSize(1)));
+        mockMvc.perform(get("/agenda/" + day2.getId() + "/entries"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(1)));
     }
 
     @Test
     void shouldReturnAgendaEntriesByDay() throws Exception {
-        mockMvc.perform(get("/agenda/day/" + day1.getId()))
+        mockMvc.perform(get("/agenda/" + day1.getId() + "/entries"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].label", is("Opening Keynote")));
 
-        mockMvc.perform(get("/agenda/day/" + day2.getId()))
+        mockMvc.perform(get("/agenda/" + day2.getId() + "/entries"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].label", is("Closing Keynote")));
@@ -165,7 +176,7 @@ class AgendaControllerTest extends BaseIntegrationTest {
 
     @Test
     void shouldReturnAgendaEntryById() throws Exception {
-        mockMvc.perform(get("/agenda/" + entry1.getId()))
+        mockMvc.perform(get("/agenda/entries/" + entry1.getId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.label", is("Opening Keynote")));
     }
@@ -174,17 +185,17 @@ class AgendaControllerTest extends BaseIntegrationTest {
     @WithMockUser(roles = "ADMIN")
     void shouldCreateAgendaEntry() throws Exception {
         String entryJson = String.format(
-                "{\"dayId\":\"%s\",\"timeSlotId\":\"%s\",\"roomId\":\"%s\",\"label\":\"Workshop\"}",
-                day1.getId(), timeSlot2.getId(), room1.getId());
+                "{\"dayId\":\"%s\",\"timeSlotIndex\":%d,\"roomId\":\"%s\",\"label\":\"Workshop\",\"presentationId\":null}",
+                day1.getId(), timeSlot2.getId().displayOrder(), room1.getId());
 
-        mockMvc.perform(post("/agenda")
+        mockMvc.perform(post("/agenda/entries")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(entryJson))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.label", is("Workshop")));
 
         // Verify that the entry was added to day1
-        mockMvc.perform(get("/agenda/day/" + day1.getId()))
+        mockMvc.perform(get("/agenda/" + day1.getId() + "/entries"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)));
     }
@@ -192,10 +203,10 @@ class AgendaControllerTest extends BaseIntegrationTest {
     @Test
     @WithMockUser(roles = "ADMIN")
     void shouldDeleteAgendaEntry() throws Exception {
-        mockMvc.perform(delete("/agenda/" + entry1.getId()))
+        mockMvc.perform(delete("/agenda/entries/" + entry1.getId()))
                 .andExpect(status().isNoContent());
 
-        mockMvc.perform(get("/agenda/day/" + day1.getId()))
+        mockMvc.perform(get("/agenda/" + day1.getId() + "/entries"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(0)));
     }

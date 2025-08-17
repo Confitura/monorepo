@@ -14,13 +14,11 @@ public class AgendaService {
     private final PresentationRepository presentationRepository;
 
     public AgendaEntry createAgendaEntry(String dayId, int timeSlotPosition, String roomId, String label, String presentationId) {
-        Day day = dayRepository.findById(dayId);
         TimeSlot timeSlot = timeSlotsRepository.findById(new TimeSlot.TimeSlotId(dayId, timeSlotPosition));
         Room room = roomId != null ? roomRepository.findById(roomId) : null;
         Presentation presentation = presentationId != null ? presentationRepository.findById(presentationId) : null;
 
         return new AgendaEntry()
-                .setDay(day)
                 .setTimeSlot(timeSlot)
                 .setRoom(room)
                 .setLabel(label)

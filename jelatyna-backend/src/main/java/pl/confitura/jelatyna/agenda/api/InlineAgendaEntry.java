@@ -18,6 +18,6 @@ public record InlineAgendaEntry(
         String presentationId
 ) {
     public static InlineAgendaEntry from(AgendaEntry it) {
-        return new InlineAgendaEntry(it.getId(), it.getDay().getId(), it.getTimeSlotOrder(), it.getRoomId(), it.getLabel(), it.getPresentationId());
+        return new InlineAgendaEntry(it.getId(), it.getTimeSlot().getId().dayId(), it.getTimeSlotOrder(), it.getRoomId(), it.getLabel(), it.getPresentationId());
     }
 }
