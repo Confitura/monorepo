@@ -1,6 +1,6 @@
 <template>
   <div class="faq">
-    <PageHeader title="Frequently Asked Questions" />
+    <PageHeader title="Frequently Asked Questions" type="peace" />
     <Box class="content" color="white">
       <p class="foreword">
         Here we have gathered the most common questions we are getting from the
