@@ -2,6 +2,7 @@
   <div class="home__container">
     <HomeMainBanner/>
     <HomeAbout/>
+    <HomeLatestNews></HomeLatestNews>
     <NlpDay/>
     <HomeNumbers/>
     <HomePartners/>
