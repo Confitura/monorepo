@@ -12,14 +12,14 @@ const route = useRoute()
 const presentationId = route.params.id
 const formValid = ref(false)
 
-definePage({
-  meta: {
-    icon: 'mdi-monitor-dashboard',
-    title: 'Submit Presentation',
-    drawerIndex: 5,
-    requiresAuth: true,
-  },
-})
+// definePage({
+//   meta: {
+//     icon: 'mdi-monitor-dashboard',
+//     title: 'Submit Presentation',
+//     drawerIndex: 5,
+//     requiresAuth: true,
+//   },
+// })
 
 const presentation = ref<PresentationRequest>({
   title: '',
