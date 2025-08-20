@@ -16,7 +16,7 @@ public record DumpedNews(
             return new DumpedNews(null, List.of());
         } else {
             var all = webpageNews.stream().map(News::from).toList();
-            var latest = all.getLast();
+            var latest = all.getFirst();
             return new DumpedNews(latest, all);
         }
     }
