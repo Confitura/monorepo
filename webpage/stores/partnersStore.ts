@@ -91,13 +91,13 @@ function getPartners(): Partner[] {
         type: "gold",
         orientation: "box"
     }, {
-        id: "join-us",
-        name: "waiting for you",
-        description: "Join us!",
-        logo: "/assets/partners/2025/join-us.svg",
-        www: "/partners/join-us",
+        id: "xtb",
+        name: "xtb",
+        description: "Naszą misją jest oferowanie rozwiązań, dzięki którym pieniądze naszych klientów mogą pracować dla nich na wiele sposobów. Wierzymy, że wszystkie te możliwości mogą być dostępne w jednej wygodnej aplikacji.",
+        logo: "/assets/partners/2025/xtb.svg",
+        www: "https://www.xtb.com/",
         type: "silver",
-        orientation: "box"
+        orientation: "horizontal"
     }, {
         id: "join-us",
         name: "",
