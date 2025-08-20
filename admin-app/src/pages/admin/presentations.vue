@@ -43,10 +43,10 @@ function showDialogReject(presentation: FullPresentation) {
 
 const headers: DataTableHeaders = [
   {title: 'Title', key: 'title'},
-  {title: 'Speakers', key: 'speakers'},
+  {title: 'Speakers', key: 'flatSpeakers'},
   {title: 'Level', key: 'level'},
   {title: 'Language', key: 'language'},
-  {title: 'Tags', key: 'tags'},
+  {title: 'Tags', key: 'flatTags'},
   {title: 'Workshop', key: 'isWorkshop'},
   {title: 'Free', key: 'isFree'},
   {title: 'Expected price [PLN]', key: 'expectedPrice'},
@@ -95,6 +95,7 @@ onMounted(() => {
             :headers="headers"
             :items="presentations"
             item-value="name"
+            :filter-keys="['title','flatSpeakers','flatTags']"
             :search="search"
           >
             <template #item.speakers="{ item }">

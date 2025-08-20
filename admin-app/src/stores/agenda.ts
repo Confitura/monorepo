@@ -29,7 +29,7 @@ export const useAgendaStore = defineStore('agenda', {
       try {
         const ids = Array.isArray(dayIds) ? [...new Set(dayIds)] : [dayIds]
 
-        // Load presentations once (global)
+        // Load presentations at once (global)
         const presentationsResponse = await presentationApi.getAllPresentations()
         this.presentations = presentationsResponse.data
 
