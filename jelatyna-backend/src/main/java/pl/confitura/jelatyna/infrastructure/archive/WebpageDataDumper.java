@@ -12,6 +12,8 @@ import pl.confitura.jelatyna.user.UserController;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Instant;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -24,13 +26,19 @@ public class WebpageDataDumper {
     private final PageController pageController;
     private final NewsletterApi newsletterApi;
 
+    private final AtomicReference<Instant> lastDumpAt = new AtomicReference<>();
+
     @Scheduled(fixedRate = 600000)
     public void dumpAll() {
         dumpAdmins();
         dumpPages();
         dumpNews();
+        lastDumpAt.set(Instant.now());
     }
 
+    public Instant getLastDumpAt() {
+        return lastDumpAt.get();
+    }
 
     void dumpPages() {
         for (String page : pageController.getPages()) {

@@ -6,7 +6,9 @@ import {
   PresentationControllerApi, ResourceControllerApi,
   TokenControllerApi,
   UserAdminControllerApi,
-  UserControllerApi, VoteControllerApi
+  UserControllerApi,
+  VoteControllerApi,
+  AdminTaskControllerApi
 } from "./api-axios-client";
 
 export let api = axios.create({
@@ -22,3 +24,4 @@ export let dashboardApi = new DashboardControllerApi(undefined, import.meta.env.
 export let tokenAPi = new TokenControllerApi(undefined, import.meta.env.VITE_API_URL, api)
 export let resourcesApi = new ResourceControllerApi(undefined, import.meta.env.VITE_API_URL, api)
 export let voteForPapersApi = new VoteControllerApi(undefined, import.meta.env.VITE_API_URL)
+export let adminTasksApi = new AdminTaskControllerApi(undefined, import.meta.env.VITE_API_URL, api)

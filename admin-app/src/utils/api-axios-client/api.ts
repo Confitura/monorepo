@@ -61,16 +61,16 @@ export interface AgendaEntry {
     'presentation'?: Presentation;
     /**
      * 
-     * @type {Set<PublicUser>}
-     * @memberof AgendaEntry
-     */
-    'speakers'?: Set<PublicUser>;
-    /**
-     * 
      * @type {number}
      * @memberof AgendaEntry
      */
     'timeSlotOrder'?: number;
+    /**
+     * 
+     * @type {Set<PublicUser>}
+     * @memberof AgendaEntry
+     */
+    'speakers'?: Set<PublicUser>;
 }
 /**
  * 
@@ -96,6 +96,32 @@ export interface AllegroContext {
      * @memberof AllegroContext
      */
     'buyerLogin'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface DumpResponse
+ */
+export interface DumpResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof DumpResponse
+     */
+    'triggeredAt'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface DumpStatus
+ */
+export interface DumpStatus {
+    /**
+     * 
+     * @type {string}
+     * @memberof DumpStatus
+     */
+    'lastDumpAt'?: string;
 }
 /**
  * 
@@ -912,16 +938,16 @@ export interface Presentation {
     'new'?: boolean;
     /**
      * 
-     * @type {Presentation}
-     * @memberof Presentation
-     */
-    'speaker'?: Presentation;
-    /**
-     * 
      * @type {boolean}
      * @memberof Presentation
      */
     'accepted'?: boolean;
+    /**
+     * 
+     * @type {Presentation}
+     * @memberof Presentation
+     */
+    'speaker'?: Presentation;
 }
 /**
  * 
@@ -1961,6 +1987,161 @@ export class AdminPresentationControllerApi extends BaseAPI {
      */
     public saveTags(body: object, options?: RawAxiosRequestConfig) {
         return AdminPresentationControllerApiFp(this.configuration).saveTags(body, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * AdminTaskControllerApi - axios parameter creator
+ * @export
+ */
+export const AdminTaskControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getLastWebpageDump: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/admin-tasks/webpage/last-dump`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        triggerWebpageDump: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/admin-tasks/webpage/dump`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * AdminTaskControllerApi - functional programming interface
+ * @export
+ */
+export const AdminTaskControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = AdminTaskControllerApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getLastWebpageDump(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DumpStatus>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getLastWebpageDump(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminTaskControllerApi.getLastWebpageDump']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async triggerWebpageDump(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DumpResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.triggerWebpageDump(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminTaskControllerApi.triggerWebpageDump']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * AdminTaskControllerApi - factory interface
+ * @export
+ */
+export const AdminTaskControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = AdminTaskControllerApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getLastWebpageDump(options?: RawAxiosRequestConfig): AxiosPromise<DumpStatus> {
+            return localVarFp.getLastWebpageDump(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        triggerWebpageDump(options?: RawAxiosRequestConfig): AxiosPromise<DumpResponse> {
+            return localVarFp.triggerWebpageDump(options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * AdminTaskControllerApi - object-oriented interface
+ * @export
+ * @class AdminTaskControllerApi
+ * @extends {BaseAPI}
+ */
+export class AdminTaskControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminTaskControllerApi
+     */
+    public getLastWebpageDump(options?: RawAxiosRequestConfig) {
+        return AdminTaskControllerApiFp(this.configuration).getLastWebpageDump(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminTaskControllerApi
+     */
+    public triggerWebpageDump(options?: RawAxiosRequestConfig) {
+        return AdminTaskControllerApiFp(this.configuration).triggerWebpageDump(options).then((request) => request(this.axios, this.basePath));
     }
 }
 
