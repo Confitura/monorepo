@@ -11,33 +11,58 @@ import type {
 
 export const useAgendaStore = defineStore('agenda', {
   state: () => ({
-    day: null as InlineDay | null,
-    timeSlots: [] as InlineTimeSlot[],
-    rooms: [] as InlineRoom[],
     presentations: [] as FullPresentation[],
-    agendaEntries: [] as InlineAgendaEntry[],
+
+    // New multi-day support
+    days: [] as InlineDay[],
+    timeSlotsByDay: {} as Record<string, InlineTimeSlot[]>,
+    roomsByDay: {} as Record<string, InlineRoom[]>,
+    agendaEntriesByDay: {} as Record<string, InlineAgendaEntry[]>,
   }),
   getters: {
-    sortedTimeSlots: (state) => state.timeSlots,
-    sortedRooms: (state) => state.rooms,
+    // New helpers for multi-day access
+    timeSlotsForDay: (state) => (dayId: string) => state.timeSlotsByDay[dayId] || [],
+    roomsForDay: (state) => (dayId: string) => state.roomsByDay[dayId] || [],
   },
   actions: {
-    async refreshData(dayId: string) {
+    async refreshData(dayIds: string | string[]) {
       try {
-        const dayResponse = await daysApi.getDayById(dayId)
-        this.day = dayResponse.data
+        const ids = Array.isArray(dayIds) ? [...new Set(dayIds)] : [dayIds]
 
-        const timeSlotsResponse = await agendaApi.getAllTimeSlots(dayId)
-        this.timeSlots = timeSlotsResponse.data
-
-        const roomsResponse = await agendaApi.getAllRooms1(dayId)
-        this.rooms = roomsResponse.data
-
+        // Load presentations once (global)
         const presentationsResponse = await presentationApi.getAllPresentations()
         this.presentations = presentationsResponse.data
 
-        const agendaEntriesResponse = await agendaApi.getAgendaEntriesByDay(dayId)
-        this.agendaEntries = agendaEntriesResponse.data
+        // Fetch all requested days in parallel
+        const results = await Promise.all(
+          ids.map(async (dayId) => {
+            const [dayResponse, timeSlotsResponse, roomsResponse, agendaEntriesResponse] = await Promise.all([
+              daysApi.getDayById(dayId),
+              agendaApi.getAllTimeSlots(dayId),
+              agendaApi.getAllRooms1(dayId),
+              agendaApi.getAgendaEntriesByDay(dayId),
+            ])
+
+            return {
+              day: dayResponse.data as InlineDay,
+              timeSlots: timeSlotsResponse.data as InlineTimeSlot[],
+              rooms: roomsResponse.data as InlineRoom[],
+              agendaEntries: agendaEntriesResponse.data as InlineAgendaEntry[],
+            }
+          }),
+        )
+
+        // Update maps and arrays
+        const fetchedDays: InlineDay[] = []
+        for (const r of results) {
+          const dayId = (r.day as any).id as string
+          fetchedDays.push(r.day)
+          this.timeSlotsByDay[dayId] = r.timeSlots
+          this.roomsByDay[dayId] = r.rooms
+          this.agendaEntriesByDay[dayId] = r.agendaEntries
+        }
+        this.days = fetchedDays
+
       } catch (e) {
         console.error('AgendaStore.refreshData error', e)
         throw e
@@ -47,51 +72,50 @@ export const useAgendaStore = defineStore('agenda', {
       if (!id) return null
       return this.presentations.find((p) => p.id === id) || null
     },
-    getAgendaEntry(timeSlot: InlineTimeSlot, room: InlineRoom | null) {
-      const timeSlotIndex = timeSlot.displayOrder
+    getAgendaEntry(timeSlot: InlineTimeSlot, room: InlineRoom | null, dayId: string) {
+      const timeSlotIndex = (timeSlot as any).displayOrder
       const roomId = room?.id || null
+      const source = this.agendaEntriesByDay[dayId] || []
       return (
-        this.agendaEntries.find(
+        source.find(
           (entry) => entry.timeSlotIndex === timeSlotIndex && entry.roomId === roomId,
         ) || null
       )
     },
-    findPresentation(timeSlot: InlineTimeSlot, room: InlineRoom | null) {
-      const entry = this.getAgendaEntry(timeSlot, room)
+    findPresentation(timeSlot: InlineTimeSlot, room: InlineRoom | null, dayId: string) {
+      const entry = this.getAgendaEntry(timeSlot, room, dayId)
       if (!entry || !entry.presentationId) return null
       return this.getPresentation(entry.presentationId)
     },
-    async saveAgendaEntry(request: AssignAgendaEntryRequest, dayId?: string) {
+    async saveAgendaEntry(request: AssignAgendaEntryRequest, dayId: string) {
       try {
-        if (!request.dayId && dayId) {
+        if (!request.dayId) {
           request.dayId = dayId
         }
         await agendaApi.saveAgendaEntry(request)
-        await this.refreshData(request.dayId || dayId!)
+        await this.refreshData(dayId)
       } catch (e) {
         console.error('AgendaStore.saveAgendaEntry error', e)
         throw e
       }
     },
-    async updateAgendaEntry(id: string, request: { label?: string; presentationId?: string; roomId?: string }, dayId?: string) {
+    async updateAgendaEntry(
+      id: string,
+      request: { label?: string; presentationId?: string; roomId?: string },
+      dayId: string,
+    ) {
       try {
         await agendaApi.updateAgendaEntry(id, request)
-        const refreshDayId = dayId || this.day?.id
-        if (refreshDayId) {
-          await this.refreshData(refreshDayId)
-        }
+        await this.refreshData(dayId)
       } catch (e) {
         console.error('AgendaStore.updateAgendaEntry error', e)
         throw e
       }
     },
-    async deleteAgendaEntry(id: string, dayId?: string) {
+    async deleteAgendaEntry(id: string, dayId: string) {
       try {
         await agendaApi.deleteAgendaEntry(id)
-        const refreshDayId = dayId || this.day?.id
-        if (refreshDayId) {
-          await this.refreshData(refreshDayId)
-        }
+        await this.refreshData(dayId)
       } catch (e) {
         console.error('AgendaStore.deleteAgendaEntry error', e)
         throw e

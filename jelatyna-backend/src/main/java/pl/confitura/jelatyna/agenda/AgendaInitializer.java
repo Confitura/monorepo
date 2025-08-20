@@ -1,10 +1,14 @@
 package pl.confitura.jelatyna.agenda;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
+import org.springframework.stereotype.Component;
+import pl.confitura.jelatyna.agenda.TimeSlot.TimeSlotId;
 import pl.confitura.jelatyna.infrastructure.security.JelatynaPrincipal;
 
 import java.time.LocalDate;
@@ -12,40 +16,28 @@ import java.time.LocalTime;
 
 import static java.util.Collections.emptyList;
 
-@Configuration
+@Component
+@Slf4j
+@RequiredArgsConstructor
 public class AgendaInitializer {
 
     private final DayRepository dayRepository;
     private final RoomRepository roomRepository;
     private final TimeSlotsRepository timeSlotsRepository;
-    private final AgendaRepository agendaRepository;
 
-    public AgendaInitializer(DayRepository dayRepository,
-                             RoomRepository roomRepository,
-                             TimeSlotsRepository timeSlotsRepository,
-                             AgendaRepository agendaRepository) {
-        this.dayRepository = dayRepository;
-        this.roomRepository = roomRepository;
-        this.timeSlotsRepository = timeSlotsRepository;
-        this.agendaRepository = agendaRepository;
-    }
-
-    //    @Bean
-//    @Profile("!test")
-//    InitializingBean initAgenda(Security security) {
-//        return () -> {
-//            init();
-//        };
-//    }
     @EventListener
     public void onApplicationReady(ApplicationReadyEvent event) {
-        // This code runs after all Spring initialization is complete
-        // including SpEL, beans, security, etc.
         init();
     }
 
     private void init() {
         loginAsAdmin();
+        if (!dayRepository.findAll().isEmpty()) {
+            log.info("Agenda already initialized");
+            return;
+        }
+        log.info("Initializing agenda");
+
         // Create two days
         Day day1 = new Day()
                 .setId("day-1")
@@ -81,253 +73,105 @@ public class AgendaInitializer {
                 .setDisplayOrder(3)
                 .setDay(day1);
 
-        room1 = roomRepository.save(room1);
-        room2 = roomRepository.save(room2);
-        room3 = roomRepository.save(room3);
+        roomRepository.save(room1);
+        roomRepository.save(room2);
+        roomRepository.save(room3);
 
         // Create time slots
         TimeSlot slot1 = new TimeSlot()
                 .setStart(LocalTime.of(9, 0))
                 .setEnd(LocalTime.of(10, 0))
-                .setId(new TimeSlot.TimeSlotId("day-1", 1));
+                .setId(getTimeSlotId(day1, 1));
 
         TimeSlot slot2 = new TimeSlot()
                 .setStart(LocalTime.of(10, 15))
                 .setEnd(LocalTime.of(11, 15))
-                .setId(new TimeSlot.TimeSlotId("day-1", 2));
+                .setId(getTimeSlotId(day1, 2));
 
         TimeSlot slot3 = new TimeSlot()
                 .setStart(LocalTime.of(11, 30))
                 .setEnd(LocalTime.of(12, 30))
-                .setId(new TimeSlot.TimeSlotId("day-1", 3));
+                .setId(getTimeSlotId(day1, 3));
 
         TimeSlot lunchSlot = new TimeSlot()
                 .setStart(LocalTime.of(12, 30))
                 .setEnd(LocalTime.of(13, 30))
                 .setForAllRooms(true)
-                .setId(new TimeSlot.TimeSlotId("day-1", 4));
+                .setId(getTimeSlotId(day1, 4));
 
         TimeSlot slot4 = new TimeSlot()
                 .setStart(LocalTime.of(13, 30))
                 .setEnd(LocalTime.of(14, 30))
-                .setId(new TimeSlot.TimeSlotId("day-1", 5));
+                .setId(getTimeSlotId(day1, 5));
         TimeSlot slot5 = new TimeSlot()
                 .setStart(LocalTime.of(14, 45))
                 .setEnd(LocalTime.of(15, 45))
-                .setId(new TimeSlot.TimeSlotId("day-1", 6));
+                .setId(getTimeSlotId(day1, 6));
 
         TimeSlot slot6 = new TimeSlot()
                 .setStart(LocalTime.of(16, 0))
                 .setEnd(LocalTime.of(17, 0))
-                .setId(new TimeSlot.TimeSlotId("day-1", 7));
+                .setId(getTimeSlotId(day1, 7));
 
-        slot1 = timeSlotsRepository.save(slot1);
-        slot2 = timeSlotsRepository.save(slot2);
-        slot3 = timeSlotsRepository.save(slot3);
-        lunchSlot = timeSlotsRepository.save(lunchSlot);
-        slot4 = timeSlotsRepository.save(slot4);
-        slot5 = timeSlotsRepository.save(slot5);
-        slot6 = timeSlotsRepository.save(slot6);
+        timeSlotsRepository.save(slot1);
+        timeSlotsRepository.save(slot2);
+        timeSlotsRepository.save(slot3);
+        timeSlotsRepository.save(lunchSlot);
+        timeSlotsRepository.save(slot4);
+        timeSlotsRepository.save(slot5);
+        timeSlotsRepository.save(slot6);
 
-        // Create agenda entries for Day 1
-        // Morning sessions
-        agendaRepository.save(new AgendaEntry()
-                .setTimeSlot(slot1)
-                .setRoom(room1)
-                .setLabel("Opening Keynote"));
-
-        agendaRepository.save(new AgendaEntry()
-                .setTimeSlot(slot2)
-                .setRoom(room1)
-                .setLabel("Technical Session 1"));
-
-        agendaRepository.save(new AgendaEntry()
-                .setTimeSlot(slot2)
-                .setRoom(room2)
-                .setLabel("Workshop 1"));
-
-        agendaRepository.save(new AgendaEntry()
-                .setTimeSlot(slot2)
-                .setRoom(room3)
-                .setLabel("Panel Discussion 1"));
-
-        agendaRepository.save(new AgendaEntry()
-                .setTimeSlot(slot3)
-                .setRoom(room1)
-                .setLabel("Technical Session 2"));
-
-        agendaRepository.save(new AgendaEntry()
-                .setTimeSlot(slot3)
-                .setRoom(room2)
-                .setLabel("Workshop 2"));
-
-        agendaRepository.save(new AgendaEntry()
-                .setTimeSlot(slot3)
-                .setRoom(room3)
-                .setLabel("Panel Discussion 2"));
-
-        // Lunch break
-        agendaRepository.save(new AgendaEntry()
-                .setTimeSlot(lunchSlot)
-                .setLabel("Lunch Break"));
-
-        // Afternoon sessions
-        agendaRepository.save(new AgendaEntry()
-                .setTimeSlot(slot4)
-                .setRoom(room1)
-                .setLabel("Technical Session 3"));
-
-        agendaRepository.save(new AgendaEntry()
-                .setTimeSlot(slot4)
-                .setRoom(room2)
-                .setLabel("Workshop 3"));
-
-        agendaRepository.save(new AgendaEntry()
-                .setTimeSlot(slot4)
-                .setRoom(room3)
-                .setLabel("Panel Discussion 3"));
-
-        agendaRepository.save(new AgendaEntry()
-                .setTimeSlot(slot5)
-                .setRoom(room1)
-                .setLabel("Technical Session 4"));
-
-        agendaRepository.save(new AgendaEntry()
-                .setTimeSlot(slot5)
-                .setRoom(room2)
-                .setLabel("Workshop 4"));
-
-        agendaRepository.save(new AgendaEntry()
-                .setTimeSlot(slot5)
-                .setRoom(room3)
-                .setLabel("Panel Discussion 4"));
-
-        agendaRepository.save(new AgendaEntry()
-                .setTimeSlot(slot6)
-                .setRoom(room1)
-                .setLabel("Day 1 Closing Remarks"));
 
         // Create time slots for Day 2
         TimeSlot d2slot1 = new TimeSlot()
                 .setStart(LocalTime.of(9, 0))
                 .setEnd(LocalTime.of(10, 0))
-                .setId(new TimeSlot.TimeSlotId("day-2", 1));
+                .setId(getTimeSlotId(day2, 1));
 
         TimeSlot d2slot2 = new TimeSlot()
                 .setStart(LocalTime.of(10, 15))
                 .setEnd(LocalTime.of(11, 15))
-                .setId(new TimeSlot.TimeSlotId("day-2", 2));
+                .setId(getTimeSlotId(day2, 2));
 
         TimeSlot d2slot3 = new TimeSlot()
                 .setStart(LocalTime.of(11, 30))
                 .setEnd(LocalTime.of(12, 30))
-                .setId(new TimeSlot.TimeSlotId("day-2", 3));
+                .setId(getTimeSlotId(day2, 3));
 
         TimeSlot d2lunchSlot = new TimeSlot()
                 .setStart(LocalTime.of(12, 30))
                 .setEnd(LocalTime.of(13, 30))
                 .setForAllRooms(true)
-                .setId(new TimeSlot.TimeSlotId("day-2", 4));
+                .setId(getTimeSlotId(day2, 4));
 
         TimeSlot d2slot4 = new TimeSlot()
                 .setStart(LocalTime.of(13, 30))
                 .setEnd(LocalTime.of(14, 30))
-                .setId(new TimeSlot.TimeSlotId("day-2", 5));
+                .setId(getTimeSlotId(day2, 5));
         TimeSlot d2slot5 = new TimeSlot()
                 .setStart(LocalTime.of(14, 45))
                 .setEnd(LocalTime.of(15, 45))
-                .setId(new TimeSlot.TimeSlotId("day-2", 6));
+                .setId(getTimeSlotId(day2, 6));
 
         TimeSlot d2slot6 = new TimeSlot()
                 .setStart(LocalTime.of(16, 0))
                 .setEnd(LocalTime.of(17, 0))
-                .setId(new TimeSlot.TimeSlotId("day-2", 7));
+                .setId(getTimeSlotId(day2, 7));
 
-        d2slot1 = timeSlotsRepository.save(d2slot1);
-        d2slot2 = timeSlotsRepository.save(d2slot2);
-        d2slot3 = timeSlotsRepository.save(d2slot3);
-        d2lunchSlot = timeSlotsRepository.save(d2lunchSlot);
-        d2slot4 = timeSlotsRepository.save(d2slot4);
-        d2slot5 = timeSlotsRepository.save(d2slot5);
-        d2slot6 = timeSlotsRepository.save(d2slot6);
+        timeSlotsRepository.save(d2slot1);
+        timeSlotsRepository.save(d2slot2);
+        timeSlotsRepository.save(d2slot3);
+        timeSlotsRepository.save(d2lunchSlot);
+        timeSlotsRepository.save(d2slot4);
+        timeSlotsRepository.save(d2slot5);
+        timeSlotsRepository.save(d2slot6);
 
-        // Create agenda entries for Day 2
-        // Morning sessions
-        agendaRepository.save(new AgendaEntry()
-                .setTimeSlot(d2slot1)
-                .setRoom(room1)
-                .setLabel("Day 2 Keynote"));
 
-        agendaRepository.save(new AgendaEntry()
-                .setTimeSlot(d2slot2)
-                .setRoom(room1)
-                .setLabel("Technical Session 5"));
+    }
 
-        agendaRepository.save(new AgendaEntry()
-                .setTimeSlot(d2slot2)
-                .setRoom(room2)
-                .setLabel("Workshop 5"));
-
-        agendaRepository.save(new AgendaEntry()
-                .setTimeSlot(d2slot2)
-                .setRoom(room3)
-                .setLabel("Panel Discussion 5"));
-
-        agendaRepository.save(new AgendaEntry()
-                .setTimeSlot(d2slot3)
-                .setRoom(room1)
-                .setLabel("Technical Session 6"));
-
-        agendaRepository.save(new AgendaEntry()
-                .setTimeSlot(d2slot3)
-                .setRoom(room2)
-                .setLabel("Workshop 6"));
-
-        agendaRepository.save(new AgendaEntry()
-                .setTimeSlot(d2slot3)
-                .setRoom(room3)
-                .setLabel("Panel Discussion 6"));
-
-        // Lunch break
-        agendaRepository.save(new AgendaEntry()
-                .setTimeSlot(d2lunchSlot)
-                .setLabel("Lunch Break"));
-
-        // Afternoon sessions
-        agendaRepository.save(new AgendaEntry()
-                .setTimeSlot(d2slot4)
-                .setRoom(room1)
-                .setLabel("Technical Session 7"));
-
-        agendaRepository.save(new AgendaEntry()
-                .setTimeSlot(d2slot4)
-                .setRoom(room2)
-                .setLabel("Workshop 7"));
-
-        agendaRepository.save(new AgendaEntry()
-                .setTimeSlot(d2slot4)
-                .setRoom(room3)
-                .setLabel("Panel Discussion 7"));
-
-        agendaRepository.save(new AgendaEntry()
-                .setTimeSlot(d2slot5)
-                .setRoom(room1)
-                .setLabel("Technical Session 8"));
-
-        agendaRepository.save(new AgendaEntry()
-                .setTimeSlot(d2slot5)
-                .setRoom(room2)
-                .setLabel("Workshop 8"));
-
-        agendaRepository.save(new AgendaEntry()
-                .setTimeSlot(d2slot5)
-                .setRoom(room3)
-                .setLabel("Panel Discussion 8"));
-
-        agendaRepository.save(new AgendaEntry()
-                .setTimeSlot(d2slot6)
-                .setRoom(room1)
-                .setLabel("Conference Closing Remarks"));
+    @NotNull
+    private static TimeSlotId getTimeSlotId(Day day, int displayOrder) {
+        return new TimeSlotId(day.getId(), displayOrder);
     }
 
     private static void loginAsAdmin() {

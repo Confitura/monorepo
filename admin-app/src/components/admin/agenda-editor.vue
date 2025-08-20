@@ -17,15 +17,12 @@ const props = defineProps<{
 
 // Store
 const agenda = useAgendaStore();
-const {
-  day,
-  timeSlots,
-  rooms,
-  presentations,
-  agendaEntries,
-  sortedTimeSlots,
-  sortedRooms,
-} = storeToRefs(agenda);
+const { presentations } = storeToRefs(agenda);
+const timeSlots = computed(() => agenda.timeSlotsForDay(props.dayId));
+const rooms = computed(() => agenda.roomsForDay(props.dayId));
+// Local sorted aliases for template compatibility
+const sortedTimeSlots = computed(() => timeSlots.value);
+const sortedRooms = computed(() => rooms.value);
 
 async function refreshData() {
   try {
@@ -72,9 +69,11 @@ const editedAgendaEntry: Ref<AssignAgendaEntryRequest> = ref({
 const editMode = ref(false);
 
 // Delegated lookups
-const getAgendaEntry = agenda.getAgendaEntry;
+const getAgendaEntry = (timeSlot: InlineTimeSlot, room: InlineRoom | null) =>
+  agenda.getAgendaEntry(timeSlot, room, props.dayId);
 const getPresentation = agenda.getPresentation;
-const findPresentation = agenda.findPresentation;
+const findPresentation = (timeSlot: InlineTimeSlot, room: InlineRoom | null) =>
+  agenda.findPresentation(timeSlot, room, props.dayId);
 
 const saveTimeSlot = () => {
   //TODO
