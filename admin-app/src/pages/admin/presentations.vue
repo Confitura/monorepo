@@ -154,6 +154,18 @@ onMounted(() => {
                   </template>
                   <span>Edit</span>
                 </v-tooltip>
+
+                <v-tooltip location="top">
+                  <template #activator="{ props }">
+                    <v-btn
+                      icon="mdi-eye-outline"
+                      v-bind="props"
+                      :href="`/admin/presentation-preview/${item.id}`"
+                      target="_blank"
+                    />
+                  </template>
+                  <span>Preview</span>
+                </v-tooltip>
               </v-defaults-provider>
             </template>
           </v-data-table>
