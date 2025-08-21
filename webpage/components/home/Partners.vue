@@ -90,7 +90,7 @@
 
 import {type PartnerType, usePartnersStore} from '~/stores/partnersStore'
 
-const types: PartnerType[] = ['gold', 'silver']
+const types: PartnerType[] = ['gold', 'silver', 'bronze']
 const active: Ref<PartnerType> = useState('active', () => 'gold')
 
 let partners: Partners = usePartnersStore().partnersMap

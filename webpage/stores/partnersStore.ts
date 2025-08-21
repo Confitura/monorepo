@@ -44,7 +44,7 @@ export interface PartnersState {
     partners: Partner[];
 }
 
-export type PartnerType = 'platinum' | 'gold' | 'silver' | 'media' | 'path';
+export type PartnerType = 'platinum' | 'gold' | 'silver' | 'media' | 'path' | 'bronze';
 
 export interface Partner {
     id: string;
@@ -147,5 +147,13 @@ function getPartners(): Partner[] {
         www: "https://www.sages.pl/",
         type: "path",
         orientation: "horizontal"
+    }, {
+        id: "join-us",
+        name: "",
+        description: "",
+        logo: "/assets/partners/2025/join-us.svg",
+        www: "",
+        type: "bronze",
+        orientation: "box"
     }];
 }
