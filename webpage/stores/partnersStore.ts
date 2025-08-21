@@ -93,8 +93,17 @@ function getPartners(): Partner[] {
     }, {
         id: "xtb",
         name: "xtb",
-        description: "Naszą misją jest oferowanie rozwiązań, dzięki którym pieniądze naszych klientów mogą pracować dla nich na wiele sposobów. Wierzymy, że wszystkie te możliwości mogą być dostępne w jednej wygodnej aplikacji.",
-        logo: "/assets/partners/2025/xtb.svg",
+        description:
+            "We are a global fintech company that provides investors instant access to financial markets worldwide through an online investing platform and the XTB mobile app 📲\n" +
+            "\n" +
+            "Over the past two decades, we have grown our presence in the financial markets and now have more than 1,400 employees, with over 600 working in the Technology and Product Department.\n" +
+            "\n" +
+            "We’re a team of experts who love what we do – creating innovative solutions that make a real impact worldwide enabling our clients (over 1,7 million! ✨) to put their money to work 🚀 We take pride in our app, which boasts an impressive rating of 4.7 on the App Store. \n" +
+            "\n" +
+            "Our culture is built on trust, technology, and support. We work in dynamic, interdisciplinary teams where every voice is heard and valued. We embrace cutting-edge technologies to fuel our creativity and innovation, ensuring that collaboration is at the heart of everything we do. Whether you’re writing code, designing features, or solving problems, you’ll have the chance to see your ideas come to life and make a difference.\n" +
+            "\n" +
+            "Join us in shaping the future of finance!",
+        logo: "/assets/partners/2025/XTB logo color_RGB.svg",
         www: "https://www.xtb.com/",
         type: "silver",
         orientation: "horizontal"
@@ -122,7 +131,7 @@ function getPartners(): Partner[] {
         www: "/partners/join-us",
         type: "silver",
         orientation: "box"
-    },  {
+    }, {
         id: "join-us",
         name: "",
         description: "",
