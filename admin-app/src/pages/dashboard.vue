@@ -130,6 +130,37 @@ const stats = ref([
   //   caption: 'Upper Limit: 2000 ￥',
   // },
 ])
+const v4pToken = ref<string | null>(null);
+const displayV4PToken = computed(() => v4pToken.value ?? 'N/A');
+const copySnackbar = ref(false);
+
+onMounted(() => {
+  v4pToken.value = localStorage.getItem('v4p-token');
+});
+
+async function copyV4PToken() {
+  const token = v4pToken.value;
+  if (!token) return;
+  try {
+    await navigator.clipboard.writeText(token);
+    copySnackbar.value = true;
+  } catch (e) {
+    try {
+      const ta = document.createElement('textarea');
+      ta.value = token;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      copySnackbar.value = true;
+    } catch (e2) {
+      console.error('Failed to copy token', e2);
+    }
+  }
+}
 </script>
 
 <template>
@@ -186,6 +217,25 @@ const stats = ref([
           <div class="mt-4">
             <v-btn color="primary" @click="triggerWebpageUpdate" prepend-icon="mdi-reload">
               Trigger update
+            </v-btn>
+          </div>
+        </v-card>
+      </v-col>
+      <v-col cols="12" md="6" lg="4">
+        <v-card class="pa-4">
+          <div class="text-subtitle-1 font-weight-medium mb-2">Vote-for-papers token</div>
+          <div
+            class="text-body-2"
+            style="word-break: break-all; font-family: monospace; cursor: pointer;"
+            @click="copyV4PToken"
+            title="Click to copy to clipboard"
+          >{{ displayV4PToken }}</div>
+          <v-snackbar v-model="copySnackbar" timeout="2000" color="success">
+            Token copied to clipboard
+          </v-snackbar>
+          <div class="mt-4">
+            <v-btn color="primary" to="/vote-for-papers" prepend-icon="mdi-arrow-right-bold">
+              Go to Vote for Papers
             </v-btn>
           </div>
         </v-card>
