@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
-import { presentationApi } from '@/utils/api.ts'
+import { presentationApi, adminPresentationApi } from '@/utils/api.ts'
 import type { FullPresentation, User } from '@/utils/api-axios-client'
+import { Notify } from '@/stores/notification'
 
 const route = useRoute()
 const presentationId = route.params.id as string
 
 const loading = ref(true)
+const actionLoading = ref(false)
 const presentation = ref<FullPresentation | null>(null)
 const cospeakers = ref<User[]>([])
 
@@ -28,6 +30,36 @@ async function loadData() {
     console.warn('Failed to load cospeakers', e)
   } finally {
     loading.value = false
+  }
+}
+
+async function acceptPresentation() {
+  if (!presentation.value?.id) return
+  actionLoading.value = true
+  try {
+    await adminPresentationApi.accept(presentation.value.id)
+    Notify.success(`Approved ${presentation.value.title}`)
+    await loadData()
+  } catch (e) {
+    console.error(e)
+    Notify.error('Failed to approve')
+  } finally {
+    actionLoading.value = false
+  }
+}
+
+async function rejectPresentation() {
+  if (!presentation.value?.id) return
+  actionLoading.value = true
+  try {
+    await adminPresentationApi.reject(presentation.value.id)
+    Notify.success(`Rejected ${presentation.value.title}`)
+    await loadData()
+  } catch (e) {
+    console.error(e)
+    Notify.error('Failed to reject')
+  } finally {
+    actionLoading.value = false
   }
 }
 
@@ -55,6 +87,34 @@ onMounted(() => {
                 {{ presentation.shortDescription }}
               </div>
               <div class="mb-6" style="white-space: pre-wrap">{{ presentation.description }}</div>
+
+              <v-row class="mb-4" dense>
+                <v-col cols="12" md="6">
+                  <strong>Status:</strong>
+                  <v-chip
+                    size="small"
+                    class="ml-2"
+                    :color="presentation.status === 'accepted' ? 'green' : (presentation.status === 'rejected' ? 'red' : 'grey')"
+                    variant="tonal"
+                  >{{ presentation.status || '-' }}</v-chip>
+                </v-col>
+                <v-col cols="12" md="6" class="d-flex align-center justify-end">
+                  <v-btn
+                    v-if="presentation.status !== 'accepted'"
+                    :loading="actionLoading"
+                    color="primary"
+                    prepend-icon="mdi-check-outline"
+                    @click="acceptPresentation"
+                  >Accept</v-btn>
+                  <v-btn
+                    v-else
+                    :loading="actionLoading"
+                    color="error"
+                    prepend-icon="mdi-close"
+                    @click="rejectPresentation"
+                  >Remove acceptance</v-btn>
+                </v-col>
+              </v-row>
 
               <v-row class="mb-4" dense>
                 <v-col cols="12" md="6">
