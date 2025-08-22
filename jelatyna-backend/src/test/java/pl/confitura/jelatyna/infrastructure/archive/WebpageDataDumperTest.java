@@ -9,7 +9,9 @@ import pl.confitura.jelatyna.agenda.UserUtils;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
 import pl.confitura.jelatyna.news.NewsletterApi;
 import pl.confitura.jelatyna.page.PageController;
+import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
+import pl.confitura.jelatyna.user.PublicProfile;
 import pl.confitura.jelatyna.user.UserController;
 
 import java.io.IOException;
@@ -109,5 +111,35 @@ class WebpageDataDumperTest extends BaseIntegrationTest {
         assertThat(actual).isEqualTo(pageContent);
     }
 
+    @Test
+    void shouldDumpEachSpeakerPublicProfile() throws IOException {
+        // given: two users with accepted presentations
+        var alice = utils.createUser("Alice");
+        var bob = utils.createUser("Bob");
 
+        var p1 = new Presentation()
+                .setTitle("T1").setShortDescription("S1").setDescription("D1").setLevel("L1").setLanguage("EN")
+                .setSpeaker(alice);
+        p1.setAccepted(true);
+        presentationRepository.save(p1);
+
+        var p2 = new Presentation()
+                .setTitle("T2").setShortDescription("S2").setDescription("D2").setLevel("L2").setLanguage("EN")
+                .setSpeaker(bob);
+        p2.setAccepted(true);
+        presentationRepository.save(p2);
+
+        // when
+        webpageDataDumper.dumpEachSpeaker((java.util.Collection<PublicProfile>) webpageDataDumper.userController.getSpeakers().getBody());
+
+        // then
+        var aliceContent = Files.readString(Path.of("/tmp/confitura/2025/users/" + alice.getId() + "/public.json"));
+        var bobContent = Files.readString(Path.of("/tmp/confitura/2025/users/" + bob.getId() + "/public.json"));
+
+        var alicePublic = objectMapper.readValue(aliceContent, PublicProfile.class);
+        var bobPublic = objectMapper.readValue(bobContent, PublicProfile.class);
+
+        assertThat(alicePublic).isEqualTo(new PublicProfile(alice));
+        assertThat(bobPublic).isEqualTo(new PublicProfile(bob));
+    }
 }

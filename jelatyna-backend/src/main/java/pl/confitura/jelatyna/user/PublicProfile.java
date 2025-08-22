@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class PublicUser {
+public class PublicProfile {
     private String id;
     private String name;
     private String bio;
@@ -14,7 +14,7 @@ public class PublicUser {
     private String www;
     private String photo;
 
-    public PublicUser(User user) {
+    public PublicProfile(User user) {
         this.id = user.getId();
         this.name = user.getName();
         this.bio = user.getBio();

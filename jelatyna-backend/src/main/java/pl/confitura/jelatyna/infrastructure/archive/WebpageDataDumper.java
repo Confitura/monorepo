@@ -11,11 +11,13 @@ import pl.confitura.jelatyna.page.PageController;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
 import pl.confitura.jelatyna.user.UserController;
+import pl.confitura.jelatyna.user.PublicProfile;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Instant;
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.StreamSupport;
@@ -64,7 +66,17 @@ public class WebpageDataDumper {
 
     public void dumpSpeakers() {
         var speakers = userController.getSpeakers().getBody();
+        dumpEachSpeaker(speakers);
         dumbData(speakers, "/users/search/speakers.json");
+    }
+
+    public void dumpEachSpeaker(Collection<PublicProfile> speakers) {
+        if (speakers == null) {
+            return;
+        }
+        for (PublicProfile speaker : speakers) {
+            dumbData(speaker, "/users/" + speaker.getId() + "/public.json");
+        }
     }
 
     public void dumpAcceptedPresentations() {

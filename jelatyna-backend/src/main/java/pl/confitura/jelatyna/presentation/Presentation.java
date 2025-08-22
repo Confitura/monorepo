@@ -13,7 +13,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -27,7 +26,7 @@ import lombok.experimental.Accessors;
 import pl.confitura.jelatyna.api.model.WorkshopRequest;
 import pl.confitura.jelatyna.presentation.rating.Rate;
 import pl.confitura.jelatyna.api.model.PresentationRequest;
-import pl.confitura.jelatyna.user.PublicUser;
+import pl.confitura.jelatyna.user.PublicProfile;
 import pl.confitura.jelatyna.user.User;
 
 @Entity
@@ -135,12 +134,12 @@ public class Presentation {
     }
 
     @JsonIgnore
-    public Set<PublicUser> getPublicSpeakers() {
+    public Set<PublicProfile> getPublicSpeakers() {
         if (getSpeakers().isEmpty()) {
             return Collections.emptySet();
         } else {
             return getSpeakers().stream()
-                    .map(PublicUser::new)
+                    .map(PublicProfile::new)
                     .collect(toSet());
         }
     }
