@@ -83,13 +83,15 @@ function getPartners(): Partner[] {
         type: "gold",
         orientation: "box"
     }, {
-        id: "join-us",
-        name: "",
-        description: "",
-        logo: "/assets/partners/2025/reserved.svg",
-        www: "/partners/join-us",
+        id: "datalinks",
+        name: "DataLinks",
+        description: `We aim to bring the unicity of human understanding to the core of your data and AI value chain. Our Knowledge Map technology allows for fast interconnection of your most valuable data assets atop a common semantic layer.
+
+You deliver use cases faster and - most importantly - you turbocharge your AI applications and give them the data structure and query language they need to deliver more accurate answers.`,
+        logo: "/assets/partners/2025/datalinks.svg",
+        www: "https://datalinks.com/",
         type: "gold",
-        orientation: "box"
+        orientation: "horizontal"
     }, {
         id: "xtb",
         name: "xtb",
