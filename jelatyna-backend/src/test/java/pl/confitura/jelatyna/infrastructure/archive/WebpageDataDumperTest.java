@@ -130,7 +130,7 @@ class WebpageDataDumperTest extends BaseIntegrationTest {
         presentationRepository.save(p2);
 
         // when
-        webpageDataDumper.dumpEachSpeaker((java.util.Collection<PublicProfile>) webpageDataDumper.userController.getSpeakers().getBody());
+        webpageDataDumper.dumpSpeakers();
 
         // then
         var aliceContent = Files.readString(Path.of("/tmp/confitura/2025/users/" + alice.getId() + "/public.json"));
