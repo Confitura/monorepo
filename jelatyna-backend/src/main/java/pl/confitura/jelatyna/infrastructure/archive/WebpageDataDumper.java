@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.transaction.annotation.Transactional;
 import pl.confitura.jelatyna.api.model.InlinePresentationWithSpeakers;
 import pl.confitura.jelatyna.news.NewsletterApi;
 import pl.confitura.jelatyna.page.PageController;
@@ -39,6 +40,7 @@ public class WebpageDataDumper {
     private final AtomicReference<Instant> lastDumpAt = new AtomicReference<>();
 
     @Scheduled(fixedRate = 600000)
+    @Transactional
     public void dumpAll() {
         dumpAdmins();
         dumpSpeakers();
@@ -64,6 +66,7 @@ public class WebpageDataDumper {
         dumbData(admins, "/users/search/admins.json");
     }
 
+    @Transactional
     public void dumpSpeakers() {
         var speakers = userController.getSpeakers().getBody();
         dumpEachSpeaker(speakers);
