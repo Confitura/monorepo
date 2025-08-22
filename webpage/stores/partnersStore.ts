@@ -150,8 +150,12 @@ function getPartners(): Partner[] {
     }, {
         id: "bottega",
         name: "Bottega",
-        description: "W Bottega nawiązujemy do renesansowej idei pracowni, w której pod okiem mentora swoje umiejętności rozwijają przyszli eksperci.",
-        logo: "/assets/partners/2025/bottega_logo.png",
+        description: `Bottega IT Minds to społeczność ekspertów, którzy wspierają
+programistów na każdym etapie kariery – od pierwszych kroków po rozwój
+specjalistycznych kompetencji. Wspólnie z naszymi klientami
+projektujemy racjonalne architektury, dzieląc się wiedzą,
+doświadczeniem i najlepszymi praktykami.`,
+        logo: "/assets/partners/2025/bottega-black.png",
         www: "https://bottega.com.pl/",
         type: "bronze",
         orientation: "horizontal"
