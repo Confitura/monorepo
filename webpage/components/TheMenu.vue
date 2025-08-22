@@ -24,6 +24,7 @@ let items: MenuItem[] = [
   { label: 'home', url: '/#home' },
   // { label: "vote", url: "https://app.confitura.pl/vote-for-papers" },
   { label: 'partners', url: '/partners' },
+  { label: 'speakers', url: '/speakers' },
   { label: 'about us', url: '/about' },
   { label: '2023', url: 'http://2023.confitura.pl/' },
   { label: 'FAQ', url: '/faq' },
@@ -32,7 +33,6 @@ let items: MenuItem[] = [
   // { label: 'schedule', url: '/schedule' },
   // { label: 'presentations', url: '/presentations' },
   // { label: 'lean coffee', url: '/lean-coffee' },
-  // { label: 'speakers', url: '/speakers' },
   // { label: "workshop day", url: "/workshops" },
 ]
 

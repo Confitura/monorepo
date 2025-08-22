@@ -1,30 +1,30 @@
 <template>
   <div class="speaker">
-    <PageHeader title="Speakers" type="coder"> </PageHeader>
+    <PageHeader title="Speakers" type="coder"></PageHeader>
     <Box class="content" color="white" :full="false">
       <div v-if="speaker" class="speaker__container">
         <div class="speaker__left">
-          <img :src="speaker.photo" class="speaker__photo" />
+          <img :src="speaker.photo" class="speaker__photo"/>
           <div class="speaker__social">
             <SocialLink
-              class="speaker__social-link"
-              type="twitter"
-              :id="speaker.twitter"
+                class="speaker__social-link"
+                type="twitter"
+                :id="speaker.twitter"
             ></SocialLink>
             <SocialLink
-              class="speaker__social-link"
-              type="facebook"
-              :id="speaker.facebook"
+                class="speaker__social-link"
+                type="facebook"
+                :id="speaker.facebook"
             ></SocialLink>
             <SocialLink
-              class="speaker__social-link"
-              type="github"
-              :id="speaker.github"
+                class="speaker__social-link"
+                type="github"
+                :id="speaker.github"
             ></SocialLink>
             <SocialLink
-              class="speaker__social-link"
-              type="www"
-              :id="speaker.www"
+                class="speaker__social-link"
+                type="www"
+                :id="speaker.www"
             ></SocialLink>
           </div>
         </div>
@@ -36,15 +36,15 @@
         </div>
       </div>
     </Box>
-    <Contact />
+    <Contact/>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useAPIFetch } from '~/composables/useAPIFetch'
+import {useArchiveFetch} from '~/composables/useAPIFetch'
 
 let route = useRoute()
-let { data: speaker } = useAPIFetch(`/users/${route.params.id}/public.json`)
+let {data: speaker} = useArchiveFetch(`/users/${route.params.id}/public.json`)
 </script>
 
 <style lang="scss" scoped>
@@ -64,9 +64,11 @@ let { data: speaker } = useAPIFetch(`/users/${route.params.id}/public.json`)
     flex-direction: row;
   }
 }
+
 .speaker__left {
   flex-shrink: 0;
 }
+
 .speaker__right {
   @include md() {
     margin-left: 3rem;

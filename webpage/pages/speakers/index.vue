@@ -1,17 +1,17 @@
 <template>
   <div class="speakers">
-    <PageHeader title="Our speakers" type="coder" />
+    <PageHeader title="Our speakers" type="coder"/>
     <Box class="content no-padding" color="white">
-      <UsersGrid :users="speakers" class="speakers__grid" />
+      <UsersGrid :users="speakers" class="speakers__grid"/>
     </Box>
-    <Contact />
+    <Contact/>
   </div>
 </template>
 
 <script setup lang="ts">
 
-let { data: speakers } = useAPIFetch('/api/users/search/speakers', {
-  transform: (data) => data._embedded.publicUsers
+let {data: speakers} = useArchiveFetch('/users/search/speakers.json', {
+  transform: (data) => data
 })
 
 

@@ -1,7 +1,12 @@
 <template>
   <div class="usersGrid">
-    <div class="user" v-for="user in users" :key="user.id" @click="show(user)">
-      <img :src="user.photo " alt="" class="user__photo" />
+    <div
+      class="user"
+      v-for="user in users"
+      :key="user.id"
+      @click="show(user)"
+    >
+      <img :src="user.photo" alt="" class="user__photo" />
       <div class="user__name">
         <span>{{ firstName(user.name) }}</span>
         <span>{{ lastName(user.name) }}</span>
@@ -9,28 +14,35 @@
     </div>
   </div>
 </template>
+
 <script setup lang="ts">
+interface UserProfile {
+  id?: string | number
+  name: string
+  photo?: string
+}
 
-const { users = [] } = defineProps<{ users?: [] }>()
+const { users = [] } = defineProps<{ users: UserProfile[] }>()
 
-function show({ id }) {
-  if (id) {
-    navigateTo({ path: `speakers/${id}` })
+function show({ id }: UserProfile) {
+  if (id !== undefined && id !== null && id !== '') {
+    navigateTo({ path: `/speakers/${id}` })
   }
 }
 
 function firstName(value: string) {
   const name = value || ''
   const idx = name.indexOf(' ')
-  return name.substring(0, idx)
+  return idx === -1 ? name : name.substring(0, idx)
 }
 
 function lastName(value: string) {
   const name = value || ''
   const idx = name.indexOf(' ')
-  return name.substring(idx)
+  return idx === -1 ? '' : name.substring(idx + 1)
 }
 </script>
+
 <style lang="scss" scoped>
 @use "~/assets/colors" as *;
 @use "~/assets/sizes" as *;
