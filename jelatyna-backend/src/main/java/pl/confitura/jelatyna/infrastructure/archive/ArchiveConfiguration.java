@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import pl.confitura.jelatyna.news.NewsletterApi;
 import pl.confitura.jelatyna.page.PageController;
+import pl.confitura.jelatyna.presentation.PresentationRepository;
 import pl.confitura.jelatyna.resource.ResourceConfigurationProperties;
 import pl.confitura.jelatyna.user.UserController;
 
@@ -20,6 +21,7 @@ public class ArchiveConfiguration {
     private final PageController pageController;
     private final ResourceConfigurationProperties resourceConfigurationProperties;
     private final NewsletterApi newsletterApi;
+    private final PresentationRepository presentationRepository;
 
 
     @Bean
@@ -29,7 +31,8 @@ public class ArchiveConfiguration {
                 resourceConfigurationProperties.folder() + "/edition-2025",
                 userController,
                 pageController,
-                newsletterApi
+                newsletterApi,
+                presentationRepository
         );
     }
 }

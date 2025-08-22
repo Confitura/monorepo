@@ -9,6 +9,7 @@ import pl.confitura.jelatyna.agenda.UserUtils;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
 import pl.confitura.jelatyna.news.NewsletterApi;
 import pl.confitura.jelatyna.page.PageController;
+import pl.confitura.jelatyna.presentation.PresentationRepository;
 import pl.confitura.jelatyna.user.UserController;
 
 import java.io.IOException;
@@ -35,6 +36,9 @@ class WebpageDataDumperTest extends BaseIntegrationTest {
     @Autowired
     private NewsletterApi newsletterApi;
 
+    @Autowired
+    private PresentationRepository presentationRepository;
+
     private WebpageDataDumper webpageDataDumper;
 
     @BeforeEach
@@ -46,7 +50,8 @@ class WebpageDataDumperTest extends BaseIntegrationTest {
                 "/tmp/confitura/2025",
                 userController,
                 pageController,
-                newsletterApi
+                newsletterApi,
+                presentationRepository
         );
     }
 
