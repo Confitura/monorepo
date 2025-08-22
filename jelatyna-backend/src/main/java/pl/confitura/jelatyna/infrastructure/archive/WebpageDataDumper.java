@@ -31,6 +31,7 @@ public class WebpageDataDumper {
     @Scheduled(fixedRate = 600000)
     public void dumpAll() {
         dumpAdmins();
+        dumpSpeakers();
         dumpPages();
         dumpNews();
         lastDumpAt.set(Instant.now());
@@ -50,6 +51,11 @@ public class WebpageDataDumper {
     public void dumpAdmins() {
         var admins = userController.getAdmins().getBody();
         dumbData(admins, "/users/search/admins.json");
+    }
+
+    public void dumpSpeakers() {
+        var speakers = userController.getSpeakers().getBody();
+        dumbData(speakers, "/users/search/speakers.json");
     }
 
     private void dumpNews() {
