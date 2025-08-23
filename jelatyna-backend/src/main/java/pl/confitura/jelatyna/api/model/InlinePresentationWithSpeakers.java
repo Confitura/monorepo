@@ -12,6 +12,7 @@ public record InlinePresentationWithSpeakers(
         String description,
         String level,
         String language,
+        Boolean workshop,
         List<Tag> tags,
         List<Speaker> speakers
 ) {
@@ -23,6 +24,7 @@ public record InlinePresentationWithSpeakers(
                 presentation.getDescription(),
                 presentation.getLevel(),
                 presentation.getLanguage(),
+                presentation.isWorkshop(),
                 presentation.getTags().stream().map(Tag::from).toList(),
                 presentation.getSpeakers().stream().map(Speaker::from).toList()
         );
