@@ -85,7 +85,6 @@ public class WebpageDataDumper {
     public void dumpAcceptedPresentations() {
         Iterable<Presentation> accepted = presentationRepository.findAccepted();
         List<InlinePresentationWithSpeakers> presentations = StreamSupport.stream(accepted.spliterator(), false)
-                .filter(p -> !p.isWorkshop())
                 .map(InlinePresentationWithSpeakers::new)
                 .collect(toList());
         dumbData(presentations, "/presentations/accepted.json");
