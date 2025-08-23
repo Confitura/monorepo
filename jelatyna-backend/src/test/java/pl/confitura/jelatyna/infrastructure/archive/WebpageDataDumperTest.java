@@ -58,6 +58,11 @@ class WebpageDataDumperTest extends BaseIntegrationTest {
     }
 
     @Test
+    void shouldBumpAllWithoutErrors() {
+        webpageDataDumper.dumpAll();
+    }
+
+    @Test
     void shouldBumpAdminsList() throws IOException {
         //given
         utils.createUser("some random");

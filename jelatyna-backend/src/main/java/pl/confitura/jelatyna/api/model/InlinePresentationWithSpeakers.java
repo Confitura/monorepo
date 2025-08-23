@@ -12,7 +12,7 @@ public record InlinePresentationWithSpeakers(
         String description,
         String level,
         String language,
-        List<String> tags,
+        List<Tag> tags,
         List<Speaker> speakers
 ) {
     public InlinePresentationWithSpeakers(Presentation presentation) {
@@ -23,9 +23,15 @@ public record InlinePresentationWithSpeakers(
                 presentation.getDescription(),
                 presentation.getLevel(),
                 presentation.getLanguage(),
-                presentation.getTags().stream().map(Tag::getId).toList(),
+                presentation.getTags().stream().map(Tag::from).toList(),
                 presentation.getSpeakers().stream().map(Speaker::from).toList()
         );
+    }
+
+    public record Tag(String id, String name) {
+        static Tag from(pl.confitura.jelatyna.presentation.Tag tag) {
+            return new Tag(tag.getId(), tag.getName());
+        }
     }
 
     public record Speaker(
