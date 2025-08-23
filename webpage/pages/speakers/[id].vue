@@ -1,6 +1,6 @@
 <template>
   <div class="speaker">
-    <PageHeader title="Speakers" type="coder"></PageHeader>
+    <PageHeader :title="speaker?.name" type="coder"></PageHeader>
     <Box class="content" color="white" :full="false">
       <div v-if="speaker" class="speaker__container">
         <div class="speaker__left">
@@ -51,9 +51,39 @@
 
 <script setup lang="ts">
 import {useArchiveFetch} from '~/composables/useAPIFetch'
+import { computed } from 'vue'
 
 let route = useRoute()
 let {data: speaker} = useArchiveFetch(`/users/${route.params.id}/public.json`)
+
+// SEO: Dynamic head tags based on speaker data
+const title = computed(() => {
+  const name = (speaker as any)?.value?.name
+  return name ? `${name} — Confitura 2025 Speaker` : 'Speaker — Confitura 2025'
+})
+
+const description = computed(() => {
+  const base = ((speaker as any)?.value?.bio || 'Discover speakers and sessions at Confitura 2025.') as string
+  const text = String(base)
+  return text.length > 160 ? `${text.slice(0, 157)}...` : text
+})
+
+const image = computed(() => (speaker as any)?.value?.photo || '')
+
+useHead({
+  title,
+  meta: [
+    { name: 'description', content: description },
+    { property: 'og:title', content: title },
+    { property: 'og:description', content: description },
+    { property: 'og:type', content: 'profile' },
+    { property: 'og:image', content: image },
+    { name: 'twitter:card', content: 'summary_large_image' },
+    { name: 'twitter:title', content: title },
+    { name: 'twitter:description', content: description },
+    { name: 'twitter:image', content: image },
+  ]
+})
 </script>
 
 <style lang="scss" scoped>
