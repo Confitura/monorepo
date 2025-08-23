@@ -34,7 +34,7 @@
             {{ speaker.bio }}
           </div>
           <div class="speaker__presentation" v-for="presentation in speaker.presentations">
-            <nuxt-link :to="`/presentations#${presentation.id}`">
+            <nuxt-link :to="presentation.isWorkshop ? `/workshops#${presentation.id}` : `/presentations#${presentation.id}`">
               <h2>
                 <i class=" fas fa-hammer" title="workshop" v-if="presentation.isWorkshop"></i>
                 <i class=" fas fa-microphone" title="presentation" v-else></i>

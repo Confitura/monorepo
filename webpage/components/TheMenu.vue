@@ -26,6 +26,7 @@ let items: MenuItem[] = [
   { label: 'partners', url: '/partners' },
   { label: 'speakers', url: '/speakers' },
   { label: 'presentations', url: '/presentations' },
+  { label: 'workshops', url: '/workshops' },
   { label: 'about us', url: '/about' },
   { label: '2023', url: 'http://2023.confitura.pl/' },
   { label: 'FAQ', url: '/faq' },
