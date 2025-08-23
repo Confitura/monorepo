@@ -2,11 +2,10 @@
   <div class="speakers">
     <div
       v-for="speaker in speakers"
-      :key="speaker.id"
       class="speaker"
       @click="show(speaker)"
     >
-      <EventualImage :src="speaker.photo" class="speaker__photo" />
+      <EventualImage :src="speaker.photoUrl" class="speaker__photo" />
       <div class="speaker__name">
         <span>{{ firstName(speaker.name) }}</span>
         <span>{{ lastName(speaker.name) }}</span>
@@ -18,7 +17,7 @@
 <script setup lang="ts">
 const { speakers = [] } = defineProps<{ speakers: [] }>()
 
-function show({ id }: UserProfile) {
+function show({ id }) {
   if (id) {
     navigateTo({ path: `speakers/${id}` })
   }

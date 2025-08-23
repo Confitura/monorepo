@@ -33,6 +33,15 @@
           <div class="speaker__bio">
             {{ speaker.bio }}
           </div>
+          <div class="speaker__presentation" v-for="presentation in speaker.presentations">
+            <nuxt-link :to="`/presentations#${presentation.id}`">
+              <h2>
+                <i class=" fas fa-hammer" title="workshop" v-if="presentation.isWorkshop"></i>
+                <i class=" fas fa-microphone" title="presentation" v-else></i>
+                {{ presentation.name }}
+              </h2>
+            </nuxt-link>
+          </div>
         </div>
       </div>
     </Box>
@@ -52,6 +61,19 @@ let {data: speaker} = useArchiveFetch(`/users/${route.params.id}/public.json`)
 @use "~/assets/sizes" as *;
 @use "~/assets/media" as *;
 @use "~/assets/fonts" as *;
+
+.speaker__presentation {
+  margin-top: 2rem;
+
+  a {
+    text-decoration: none;
+    color: inherit;
+
+    &:hover {
+      color: $brand;
+    }
+  }
+}
 
 .speaker {
   overflow: hidden;

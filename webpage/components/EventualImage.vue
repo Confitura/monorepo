@@ -14,7 +14,7 @@ let thumbnailSrc = computed(() => resizeTo(5))
 
 function resizeTo(size: number) {
   if (src.includes('/photos/')) {
-    return src.replace('/photos/', `/photos/${size}/`)
+    return src//.replace('/photos/', `/photos/${size}/`) TODO
   } else if (src.includes('githubusercontent.com')) {
     return `${src}&s=${size}`
   } else if (src.includes('gravatar.com')) {

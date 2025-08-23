@@ -3,23 +3,18 @@
     <div class="presentationBox__header">
       <h2 class="presentationBox__title">{{ presentation.title }}</h2>
       <div class="presentationBox__infoGroup">
-        <PresentationSpeakers
-          :speakers="presentation.speakers"
-        ></PresentationSpeakers>
-        <PresentationMetadata
-          :presentation="presentation"
-        ></PresentationMetadata>
+        <PresentationSpeakers :speakers="presentation.speakers"></PresentationSpeakers>
+        <PresentationMetadata :presentation="presentation"></PresentationMetadata>
       </div>
     </div>
-    <div class="presentationBox__description" v-html="description">
-    </div>
+    <div class="presentationBox__description" v-html="description"></div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { marked } from 'marked'
+import {marked} from 'marked'
 
-const { presentation } = defineProps<{ presentation }>()
+const {presentation} = defineProps<{ presentation }>()
 let description = computed(() => marked(presentation.description))
 
 </script>
