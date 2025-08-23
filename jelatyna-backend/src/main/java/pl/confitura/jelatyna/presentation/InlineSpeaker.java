@@ -4,7 +4,7 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Value;
 
-import pl.confitura.jelatyna.user.PublicUser;
+import pl.confitura.jelatyna.user.PublicProfile;
 
 interface InlineSpeaker {
     String getId();
@@ -22,7 +22,7 @@ interface InlineSpeaker {
     Set<Tag> getTags();
 
     @Value("#{target.getPublicSpeakers()}")
-    Set<PublicUser> getSpeakers();
+    Set<PublicProfile> getSpeakers();
 
     String getStatus();
 

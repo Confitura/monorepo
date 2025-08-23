@@ -1,5 +1,6 @@
 <template>
   <div class="partners">
+    <PageHeader :title="partner.name" type="peace"></PageHeader>
     <PageFragment class="header" type="peace">
       <template #title>
         <span class="header__partner-type">{{ partner.type }} partner</span>

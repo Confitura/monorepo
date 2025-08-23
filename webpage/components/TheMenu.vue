@@ -3,10 +3,10 @@
     <div v-for="item in items" :key="item.label" class="menu-item">
       <template v-if="isVisible(item)">
         <NuxtLink
-          v-if="item.url"
-          :to="item.url"
-          class="menu-link"
-          @click.native="click()"
+            v-if="item.url"
+            :to="item.url"
+            class="menu-link"
+            @click.native="click()"
         >{{ item.label }}
         </NuxtLink>
         <span v-else class="menu-link" @click="item.action()">{{
@@ -24,15 +24,15 @@ let items: MenuItem[] = [
   { label: 'home', url: '/#home' },
   // { label: "vote", url: "https://app.confitura.pl/vote-for-papers" },
   { label: 'partners', url: '/partners' },
+  { label: 'speakers', url: '/speakers' },
+  { label: 'presentations', url: '/presentations' },
   { label: 'about us', url: '/about' },
   { label: '2023', url: 'http://2023.confitura.pl/' },
   { label: 'FAQ', url: '/faq' },
   { label: 'login', url: 'https://app.confitura.pl/' },
   // { label: 'tickets', url: '/tickets' },
   // { label: 'schedule', url: '/schedule' },
-  // { label: 'presentations', url: '/presentations' },
   // { label: 'lean coffee', url: '/lean-coffee' },
-  // { label: 'speakers', url: '/speakers' },
   // { label: "workshop day", url: "/workshops" },
 ]
 

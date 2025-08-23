@@ -12,14 +12,14 @@ const route = useRoute()
 const workshopId = route.params.id
 const formValid = ref(false)
 
-definePage({
-  meta: {
-    icon: 'mdi-monitor-dashboard',
-    title: 'Submit Workshop',
-    drawerIndex: 5,
-    requiresAuth: true,
-  },
-})
+// definePage({
+//   meta: {
+//     icon: 'mdi-monitor-dashboard',
+//     title: 'Submit Workshop',
+//     drawerIndex: 5,
+//     requiresAuth: true,
+//   },
+// })
 
 const workshop = ref<WorkshopRequest>({
   title: '',

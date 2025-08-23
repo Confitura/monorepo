@@ -5,15 +5,26 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.transaction.annotation.Transactional;
+import pl.confitura.jelatyna.api.model.InlinePresentationWithSpeakers;
 import pl.confitura.jelatyna.news.NewsletterApi;
 import pl.confitura.jelatyna.page.PageController;
+import pl.confitura.jelatyna.presentation.Presentation;
+import pl.confitura.jelatyna.presentation.PresentationRepository;
+import pl.confitura.jelatyna.user.PublicSpeaker;
 import pl.confitura.jelatyna.user.UserController;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Instant;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.StreamSupport;
+
+import static java.util.stream.Collectors.toList;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -25,12 +36,16 @@ public class WebpageDataDumper {
     private final UserController userController;
     private final PageController pageController;
     private final NewsletterApi newsletterApi;
+    private final PresentationRepository presentationRepository;
 
     private final AtomicReference<Instant> lastDumpAt = new AtomicReference<>();
 
     @Scheduled(fixedRate = 600000)
+    @Transactional
     public void dumpAll() {
         dumpAdmins();
+        dumpSpeakers();
+        dumpAcceptedPresentations();
         dumpPages();
         dumpNews();
         lastDumpAt.set(Instant.now());
@@ -50,6 +65,31 @@ public class WebpageDataDumper {
     public void dumpAdmins() {
         var admins = userController.getAdmins().getBody();
         dumbData(admins, "/users/search/admins.json");
+    }
+
+    @Transactional
+    public void dumpSpeakers() {
+        var speakers = userController.getSpeakers().getBody();
+        dumpEachSpeaker(speakers);
+        dumbData(speakers, "/users/search/speakers.json");
+    }
+
+    public void dumpEachSpeaker(Collection<PublicSpeaker> speakers) {
+        if (speakers == null) {
+            return;
+        }
+        for (PublicSpeaker speaker : speakers) {
+            dumbData(speaker, "/users/" + speaker.id() + "/public.json");
+        }
+    }
+
+    public void dumpAcceptedPresentations() {
+        List<Presentation> accepted = presentationRepository.findAccepted();
+        List<InlinePresentationWithSpeakers> presentations = accepted.stream()
+                .map(InlinePresentationWithSpeakers::new)
+                .sorted(Comparator.comparing(InlinePresentationWithSpeakers::title))
+                .collect(toList());
+        dumbData(presentations, "/presentations/accepted.json");
     }
 
     private void dumpNews() {

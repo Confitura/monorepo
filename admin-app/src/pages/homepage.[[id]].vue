@@ -201,7 +201,7 @@ onMounted(() => {
           <v-row>
             <h2> Workshops </h2>
 
-            <v-btn size="large" class="submit-new" to="/workshop-form">submit new
+            <v-btn size="large" class="submit-new" to="/workshop-form" v-if="user?.isAdmin">submit new
               workshop
             </v-btn>
           </v-row>
@@ -225,6 +225,7 @@ onMounted(() => {
                     color="medium-emphasis"
                     icon="mdi-delete"
                     size="small"
+                    v-if="user?.isAdmin"
                   >
                     <v-icon icon="mdi-delete"></v-icon>
 
@@ -255,7 +256,7 @@ onMounted(() => {
           <v-row>
             <h2> Presentations </h2>
 
-            <v-btn size="large" class="submit-new" to="/presentation-form">submit
+            <v-btn size="large" class="submit-new" to="/presentation-form" v-if="user?.isAdmin">submit
               new presentation
             </v-btn>
           </v-row>
@@ -272,14 +273,14 @@ onMounted(() => {
                   <v-chip> {{ presentation.level }}</v-chip>
                   <v-chip v-for="tag in presentation.tags"> {{ tag }}</v-chip>
                   <v-spacer></v-spacer>
-                  <v-btn
+                  <v-btn v-if="user?.isAdmin"
                     color="medium-emphasis"
                     icon="mdi-delete"
                     size="small"
                   >
                     <v-icon icon="mdi-delete"></v-icon>
 
-                    <v-menu activator="parent">
+                    <v-menu activator="parent" >
                       <v-btn @click="deleteItem(presentation)"> YES,
                         DELETE
                       </v-btn>

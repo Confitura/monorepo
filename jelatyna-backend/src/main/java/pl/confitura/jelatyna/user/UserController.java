@@ -4,12 +4,10 @@ import static com.timgroup.jgravatar.GravatarDefaultImage.BLANK;
 import static com.timgroup.jgravatar.GravatarRating.GENERAL_AUDIENCES;
 import static java.util.function.Predicate.not;
 import static java.util.stream.Collectors.toSet;
-import static java.util.stream.Collectors.toUnmodifiableSet;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static org.springframework.util.StringUtils.hasText;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -22,7 +20,6 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import com.timgroup.jgravatar.Gravatar;
@@ -83,7 +80,7 @@ public class UserController {
     @GetMapping("/users/{id}/public")
     public ResponseEntity<?> getPublicById(@PathVariable String id) {
         User user = repository.findById(id);
-        return ResponseEntity.ok(new PublicUser(user));
+        return ResponseEntity.ok(PublicSpeaker.from(user));
     }
 
     @GetMapping("/users/{id}/presentations")
@@ -107,13 +104,13 @@ public class UserController {
 
     @GetMapping("/users/search/admins")
     public ResponseEntity<?> getAdmins() {
-        Set<PublicUser> admins = repository.findAdmins().stream().map(PublicUser::new).collect(toSet());
+        Set<PublicProfile> admins = repository.findAdmins().stream().map(PublicProfile::from).collect(toSet());
         return ResponseEntity.ok(admins);
     }
 
     @GetMapping("/users/search/volunteers")
     public ResponseEntity<?> getVolunteers() {
-        Set<PublicUser> volunteers = repository.findVolunteers().stream().map(PublicUser::new).collect(toSet());
+        Set<PublicProfile> volunteers = repository.findVolunteers().stream().map(PublicProfile::from).collect(toSet());
         return ResponseEntity.ok(volunteers);
     }
 
@@ -223,9 +220,9 @@ public class UserController {
 
 
     @GetMapping("/users/search/speakers")
-    public ResponseEntity<?> getSpeakers() {
-        Set<?> speakers = repository.findAllAccepted().stream()
-                .map(PublicUser::new)
+    public ResponseEntity<Set<PublicSpeaker>> getSpeakers() {
+        var speakers = repository.findAllAccepted().stream()
+                .map(PublicSpeaker::from)
                 .collect(toSet());
         return ResponseEntity.ok(speakers);
     }

@@ -1,36 +1,86 @@
 <template>
   <div class="presentations">
-    <PageHeader title="Presentations" type="coder" />
-    <Box
-      v-for="(presentation, $index) in presentations"
-      :key="presentation.id"
-      class="presentation"
-      :class="{ 'presentation--odd': odd($index) }"
-      color="white"
-      :full="false"
+    <PageHeader title="Presentations and Workshops" type="coder"/>
+    <div
+        v-for="(presentation, $index) in presentations"
+        :key="presentation.id"
+        :id="presentation.id"
     >
-      <PresentationBox
-        :presentation="presentation"
-        :class="{ 'presentationBox--odd': odd($index) }"
-      ></PresentationBox>
-    </Box>
+      <Box
+          class="presentation"
+          :class="{ 'presentation--odd': odd($index) }"
+          color="white"
+          :full="false"
+      >
+        <PresentationBox
+            :presentation="presentation"
+            :class="{ 'presentationBox--odd': odd($index) }"
+        ></PresentationBox>
+      </Box>
+    </div>
 
-    <Contact />
+    <Contact/>
   </div>
 </template>
 
 <script setup lang="ts">
 
-import { useAPIFetch } from '~/composables/useAPIFetch'
+import {useArchiveFetch} from '~/composables/useAPIFetch'
+import {onMounted, watch, nextTick, onBeforeUnmount} from 'vue'
+import {useRoute} from '#imports'
 
-let { data: presentations } = useAPIFetch('/api/presentations/search/accepted', {
-  params: { projection: 'inlineSpeaker' },
-  transform: (data) => data._embedded.presentations
+let {data: presentations} = await useArchiveFetch('/presentations/accepted.json', {
+  transform: (data) => data
 })
 
 function odd($index: number) {
   return $index % 2 !== 0
 }
+
+const route = useRoute()
+
+function scrollToHashIfAny() {
+  if (typeof window === 'undefined') return
+  const hash = route.hash
+  if (!hash) return
+  const id = decodeURIComponent(hash.substring(1))
+  const el = document.getElementById(id)
+  if (el) {
+    setTimeout(() => {
+      el.scrollIntoView({ behavior: 'smooth' })
+    }, 200)
+  }
+}
+
+// Watch for hash changes
+watch(() => route.hash, (newHash) => {
+  if (newHash) {
+    nextTick(() => scrollToHashIfAny())
+  }
+}, { immediate: true })
+
+// Watch for path changes (navigating from other pages)
+watch(() => route.path, () => {
+  nextTick(() => scrollToHashIfAny())
+})
+
+onMounted(() => {
+  nextTick(() => scrollToHashIfAny())
+  const handleHashChange = () => nextTick(() => scrollToHashIfAny())
+  if (typeof window !== 'undefined') {
+    window.addEventListener('hashchange', handleHashChange)
+  }
+  onBeforeUnmount(() => {
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('hashchange', handleHashChange)
+    }
+  })
+})
+
+// If presentations are (re)loaded async, try again after render
+watch(presentations, () => {
+  nextTick(() => scrollToHashIfAny())
+})
 
 </script>
 

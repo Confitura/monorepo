@@ -1,17 +1,26 @@
 <template>
   <div class="speakers">
-    <PageHeader title="Our speakers" type="coder" />
+    <PageHeader title="Our speakers" type="coder"/>
     <Box class="content no-padding" color="white">
-      <UsersGrid :users="speakers" class="speakers__grid" />
+      <UsersGrid :users="speakers" class="speakers__grid"/>
     </Box>
-    <Contact />
+    <Contact/>
   </div>
 </template>
 
 <script setup lang="ts">
 
-let { data: speakers } = useAPIFetch('/api/users/search/speakers', {
-  transform: (data) => data._embedded.publicUsers
+let {data: speakers} = useArchiveFetch('/users/search/speakers.json', {
+  transform: (data) => {
+    const shuffleArray = (array) => {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+    return shuffleArray([...data]);
+  }
 })
 
 

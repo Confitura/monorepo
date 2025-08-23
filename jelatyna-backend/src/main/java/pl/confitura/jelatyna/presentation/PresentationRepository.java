@@ -25,8 +25,10 @@ public interface PresentationRepository extends Repository<Presentation, String>
     @Query("FROM Presentation ")
     Iterable<Presentation> findAllForV4p();
 
-    @Query("FROM Presentation WHERE status ='accepted'")
-    Iterable<Presentation> findAccepted();
+    @Query("FROM Presentation p " +
+           " left join fetch p.tags " +
+           " WHERE p.status ='accepted' ")
+    List<Presentation> findAccepted();
 
     Long count();
 

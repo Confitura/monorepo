@@ -40,10 +40,10 @@ public interface UserRepository extends Repository<User, String> {
     @PreAuthorize("@security.isAdmin()")
     Iterable<User> find(@Param("query") String query);
 
-    @Query("Select co FROM Presentation p  " +
-           "LEFT JOIN p.speakers co " +
+    @Query("select distinct s FROM User s " +
+           "JOIN FETCH s.presentations p " +
            "WHERE p.status ='accepted'")
-    Set<User> findAllAccepted();
+    List<User> findAllAccepted();
 
     User findByEmail(String email);
 
