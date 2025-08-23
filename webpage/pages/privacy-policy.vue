@@ -9,7 +9,20 @@
 </template>
 
 <script setup lang="ts">
-
+const title = 'Privacy Policy — Confitura';
+const description = 'Read the Confitura privacy policy to learn how we collect, use, and protect your personal data.';
+useHead({
+  title,
+  meta: [
+    { name: 'description', content: description },
+    { property: 'og:title', content: title },
+    { property: 'og:description', content: description },
+    { property: 'og:type', content: 'website' },
+    { name: 'twitter:card', content: 'summary' },
+    { name: 'twitter:title', content: title },
+    { name: 'twitter:description', content: description }
+  ]
+})
 </script>
 
 <style lang="scss" scoped>

@@ -96,6 +96,23 @@ async function fetchUsers(type: string) {
   })
 }
 
+
+
+const title = 'About Confitura — Java Community Conference';
+const description = 'Learn about Confitura: our mission, organizers, volunteers, and history. Brewing Java excellence since 2007.';
+useHead({
+  title,
+  meta: [
+    { name: 'description', content: description },
+    { property: 'og:title', content: title },
+    { property: 'og:description', content: description },
+    { property: 'og:type', content: 'website' },
+    { name: 'twitter:card', content: 'summary' },
+    { name: 'twitter:title', content: title },
+    { name: 'twitter:description', content: description }
+  ]
+})
+
 </script>
 
 <style lang="scss" scoped>

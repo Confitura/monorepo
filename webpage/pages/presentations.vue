@@ -82,6 +82,23 @@ watch(presentations, () => {
   nextTick(() => scrollToHashIfAny())
 })
 
+
+
+const title = 'Presentations & Workshops — Confitura 2025';
+const description = 'Browse all accepted talks and workshops for Confitura 2025. Find sessions by topic, level, and format.';
+useHead({
+  title,
+  meta: [
+    { name: 'description', content: description },
+    { property: 'og:title', content: title },
+    { property: 'og:description', content: description },
+    { property: 'og:type', content: 'website' },
+    { name: 'twitter:card', content: 'summary' },
+    { name: 'twitter:title', content: title },
+    { name: 'twitter:description', content: description }
+  ]
+})
+
 </script>
 
 <style lang="scss" scoped>

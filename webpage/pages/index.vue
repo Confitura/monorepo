@@ -3,7 +3,7 @@
     <HomeMainBanner/>
     <HomeAbout/>
     <HomeLatestNews></HomeLatestNews>
-    <NlpDay/>
+    <HomeNlpDay/>
     <HomeNumbers/>
     <HomePartners/>
     <Contact/>
@@ -11,7 +11,22 @@
 </template>
 
 <script setup lang="ts">
-import NlpDay from "~/components/home/NlpDay.vue";
+
+const title = 'Confitura 2025 — Java Conference in Warsaw';
+const description = 'Join the largest Java community conference in Poland. Talks, workshops, and networking in Warsaw — Confitura 2025.';
+
+useHead({
+  title,
+  meta: [
+    { name: 'description', content: description },
+    { property: 'og:title', content: title },
+    { property: 'og:description', content: description },
+    { property: 'og:type', content: 'website' },
+    { name: 'twitter:card', content: 'summary' },
+    { name: 'twitter:title', content: title },
+    { name: 'twitter:description', content: description }
+  ]
+});
 </script>
 
 <style lang="scss">
