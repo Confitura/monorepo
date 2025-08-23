@@ -25,9 +25,9 @@ public record PublicSpeaker(
         );
     }
 
-    record Presentation(String id, String name) {
+    record Presentation(String id, String name, Boolean isWorkshop) {
         static Presentation from(pl.confitura.jelatyna.presentation.Presentation presentation) {
-            return new Presentation(presentation.getId(), presentation.getTitle());
+            return new Presentation(presentation.getId(), presentation.getTitle(), presentation.isWorkshop());
         }
     }
 }
