@@ -63,7 +63,7 @@ public class AgendaEntry {
             return Collections.emptySet();
         } else {
             return presentation.getSpeakers().stream()
-                    .map(PublicProfile::new)
+                    .map(PublicProfile::from)
                     .collect(toSet());
         }
     }

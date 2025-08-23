@@ -1,26 +1,23 @@
 package pl.confitura.jelatyna.user;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+public record PublicProfile(
+        String id,
+        String name,
+        String bio,
+        String twitter,
+        String github,
+        String www,
+        String photo) {
 
-@Data
-@NoArgsConstructor
-public class PublicProfile {
-    private String id;
-    private String name;
-    private String bio;
-    private String twitter;
-    private String github;
-    private String www;
-    private String photo;
-
-    public PublicProfile(User user) {
-        this.id = user.getId();
-        this.name = user.getName();
-        this.bio = user.getBio();
-        this.twitter = user.getTwitter();
-        this.github = user.getGithub();
-        this.www = user.getWww();
-        this.photo = user.getPhoto();
+    public static PublicProfile from(User user) {
+        return new PublicProfile(
+                user.getId(),
+                user.getName(),
+                user.getBio(),
+                user.getTwitter(),
+                user.getGithub(),
+                user.getWww(),
+                user.getPhoto()
+        );
     }
 }

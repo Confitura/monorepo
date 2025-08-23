@@ -1,8 +1,5 @@
 package pl.confitura.jelatyna.presentation;
 
-import static java.util.stream.Collectors.toSet;
-
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,7 +15,6 @@ import jakarta.validation.constraints.NotNull;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -26,7 +22,6 @@ import lombok.experimental.Accessors;
 import pl.confitura.jelatyna.api.model.WorkshopRequest;
 import pl.confitura.jelatyna.presentation.rating.Rate;
 import pl.confitura.jelatyna.api.model.PresentationRequest;
-import pl.confitura.jelatyna.user.PublicProfile;
 import pl.confitura.jelatyna.user.User;
 
 @Entity
@@ -131,17 +126,6 @@ public class Presentation {
     public Presentation setSpeaker(User speaker) {
         speakers.add(speaker);
         return this;
-    }
-
-    @JsonIgnore
-    public Set<PublicProfile> getPublicSpeakers() {
-        if (getSpeakers().isEmpty()) {
-            return Collections.emptySet();
-        } else {
-            return getSpeakers().stream()
-                    .map(PublicProfile::new)
-                    .collect(toSet());
-        }
     }
 
     public void update(PresentationRequest presentationRequest, Set<Tag> tags) {

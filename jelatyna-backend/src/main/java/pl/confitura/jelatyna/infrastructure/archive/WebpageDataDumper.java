@@ -11,8 +11,8 @@ import pl.confitura.jelatyna.news.NewsletterApi;
 import pl.confitura.jelatyna.page.PageController;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
+import pl.confitura.jelatyna.user.PublicSpeaker;
 import pl.confitura.jelatyna.user.UserController;
-import pl.confitura.jelatyna.user.PublicProfile;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -73,12 +73,12 @@ public class WebpageDataDumper {
         dumbData(speakers, "/users/search/speakers.json");
     }
 
-    public void dumpEachSpeaker(Collection<PublicProfile> speakers) {
+    public void dumpEachSpeaker(Collection<PublicSpeaker> speakers) {
         if (speakers == null) {
             return;
         }
-        for (PublicProfile speaker : speakers) {
-            dumbData(speaker, "/users/" + speaker.getId() + "/public.json");
+        for (PublicSpeaker speaker : speakers) {
+            dumbData(speaker, "/users/" + speaker.id() + "/public.json");
         }
     }
 

@@ -144,7 +144,7 @@ class WebpageDataDumperTest extends BaseIntegrationTest {
         var alicePublic = objectMapper.readValue(aliceContent, PublicProfile.class);
         var bobPublic = objectMapper.readValue(bobContent, PublicProfile.class);
 
-        assertThat(alicePublic).isEqualTo(new PublicProfile(alice));
-        assertThat(bobPublic).isEqualTo(new PublicProfile(bob));
+        assertThat(alicePublic).isEqualTo(PublicProfile.from(alice));
+        assertThat(bobPublic).isEqualTo(PublicProfile.from(bob));
     }
 }
