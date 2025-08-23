@@ -100,6 +100,7 @@ onMounted(() => {
               :headers="headers"
               :items="users"
               item-value="name"
+              :filter-keys="['name','email']"
               :search="search"
           >
             <template #item.actions="{ item }">
