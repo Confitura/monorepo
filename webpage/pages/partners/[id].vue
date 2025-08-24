@@ -46,6 +46,13 @@ const partner = ref<Partner>({
   type: "",
   www: ""
 })
+await callOnce('partner', () => {
+  const id = route.params.id as string
+  const foundPartner = partnersStore.getPartnerById(id)
+  if (foundPartner) {
+    partner.value = foundPartner
+  }
+})
 
 const description = computed(() => {
   return marked(partner.value.description)
@@ -64,11 +71,52 @@ function resolveImage(path: string): string {
 
 onMounted(() => {
   window.scrollTo(0, 0)
-  const id = route.params.id as string
-  const foundPartner = partnersStore.getPartnerById(id)
-  if (foundPartner) {
-    partner.value = foundPartner
-  }
+
+})
+
+// --- SEO: Dynamic head tags for partner detail page ---
+function capitalizeFirst(s: string): string {
+  if (!s) return s
+  return s.charAt(0).toUpperCase() + s.slice(1)
+}
+
+function plainText(input: string): string {
+  if (!input) return ''
+  // Basic markdown cleanup: links, emphasis, headers, images
+  return input
+    .replace(/!\[[^\]]*\]\([^\)]*\)/g, ' ')
+    .replace(/\[([^\]]+)\]\([^\)]*\)/g, '$1')
+    .replace(/[#>*_`~>-]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
+const seoTitle = computed(() => {
+  const name = partner.value?.name
+  const type = capitalizeFirst(partner.value?.type || '')
+  return name ? `${name} — ${type ? type + ' ' : ''}Partner — Confitura 2025` : 'Partner — Confitura 2025'
+})
+
+const seoDescription = computed(() => {
+  const base = plainText(partner.value?.description || 'Learn more about our partners and sponsors at Confitura 2025.')
+  return base.length > 160 ? base.slice(0, 157) + '...' : base
+})
+
+const seoImage = computed(() => partner.value?.logo ? resolveImage(partner.value.logo) : '')
+
+useHead({
+  title: seoTitle,
+  meta: [
+    { name: 'description', content: seoDescription },
+    { property: 'og:title', content: seoTitle },
+    { property: 'og:description', content: seoDescription },
+    { property: 'og:type', content: 'website' },
+    { property: 'og:image', content: seoImage },
+    { name: 'twitter:card', content: 'summary' },
+    { name: 'twitter:title', content: seoTitle },
+    { name: 'twitter:description', content: seoDescription },
+    { name: 'twitter:image', content: seoImage }
+  ]
 })
 </script>
 

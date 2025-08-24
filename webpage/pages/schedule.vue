@@ -153,6 +153,23 @@ export interface AgendaEntry {
   timeSlotId?: string;
   timeSlotLabel?: string;
 }
+
+
+const title = 'Schedule — Confitura 2025 Agenda';
+const description = 'Explore the full Confitura 2025 agenda: time slots, rooms, and sessions. Plan your conference day in Warsaw.';
+useHead({
+  title,
+  meta: [
+    { name: 'description', content: description },
+    { property: 'og:title', content: title },
+    { property: 'og:description', content: description },
+    { property: 'og:type', content: 'website' },
+    { name: 'twitter:card', content: 'summary' },
+    { name: 'twitter:title', content: title },
+    { name: 'twitter:description', content: description }
+  ]
+})
+
 </script>
 
 <style lang="scss" scoped>

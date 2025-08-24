@@ -1,11 +1,20 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import {computed} from 'vue'
 
-interface Tag { id: string | number; name: string }
+interface Tag {
+  id: string | number;
+  name: string
+}
+
 interface Presentation {
   language?: string
   level?: string
   workshop?: boolean
+  // workshop details
+  isFree?: boolean | null
+  expectedPrice?: number | null
+  durationInMinutes?: number | null
+  maxGroupSize?: number | null
   tags?: Tag[]
 }
 
@@ -35,7 +44,11 @@ const language = computed(() => {
       <i class="presentationMetadata__icon fas fa-hammer" title="workshop"></i>
       <div class="presentationMetadata__workshop">workshop</div>
     </div>
-    <div class="presentationMetadata__group" v-else>
+    <div class="presentationMetadata__group" v-if="props.presentation.workshop">
+      <i class="presentationMetadata__icon fas fa-clock" title="workshop duration"></i>
+      <div class="presentationMetadata__duration">{{ props.presentation.durationInMinutes }} min</div>
+    </div>
+    <div class="presentationMetadata__group" v-if="!props.presentation.workshop">
       <i class="presentationMetadata__icon fas fa-microphone" title="presentation"></i>
       <div class="presentationMetadata__presentation">presentation</div>
     </div>
@@ -43,7 +56,8 @@ const language = computed(() => {
       <template v-if="hasTags">
         <i class="presentationMetadata__icon  fas fa-tags" title="tags"></i>
         <div class="presentationMetadata__tags">
-          <span class="presentationMetadata__tag" v-for="tag in props.presentation.tags" :key="tag.id">{{ tag.name }}</span>
+          <span class="presentationMetadata__tag" v-for="tag in props.presentation.tags"
+                :key="tag.id">{{ tag.name }}</span>
         </div>
       </template>
     </div>
@@ -78,6 +92,7 @@ const language = computed(() => {
 
   &__language,
   &__level,
+  &__duration,
   &__workshop,
   &__presentation {
     margin-right: 1rem;

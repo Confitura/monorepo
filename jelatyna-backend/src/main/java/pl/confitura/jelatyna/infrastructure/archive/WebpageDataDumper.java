@@ -46,6 +46,7 @@ public class WebpageDataDumper {
         dumpAdmins();
         dumpSpeakers();
         dumpAcceptedPresentations();
+        dumpAcceptedWorkshops();
         dumpPages();
         dumpNews();
         lastDumpAt.set(Instant.now());
@@ -86,10 +87,21 @@ public class WebpageDataDumper {
     public void dumpAcceptedPresentations() {
         List<Presentation> accepted = presentationRepository.findAccepted();
         List<InlinePresentationWithSpeakers> presentations = accepted.stream()
+                .filter(p -> !p.isWorkshop())
                 .map(InlinePresentationWithSpeakers::new)
                 .sorted(Comparator.comparing(InlinePresentationWithSpeakers::title))
                 .collect(toList());
         dumbData(presentations, "/presentations/accepted.json");
+    }
+
+    public void dumpAcceptedWorkshops() {
+        List<Presentation> accepted = presentationRepository.findAccepted();
+        List<InlinePresentationWithSpeakers> workshops = accepted.stream()
+                .filter(Presentation::isWorkshop)
+                .map(InlinePresentationWithSpeakers::new)
+                .sorted(Comparator.comparing(InlinePresentationWithSpeakers::title))
+                .collect(toList());
+        dumbData(workshops, "/workshops/accepted.json");
     }
 
     private void dumpNews() {

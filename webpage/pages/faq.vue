@@ -19,7 +19,20 @@
 </template>
 
 <script setup lang="ts">
-
+const title = 'FAQ — Confitura 2025';
+const description = 'Find answers to frequently asked questions about Confitura 2025: tickets, schedule, venue, and more.';
+useHead({
+  title,
+  meta: [
+    { name: 'description', content: description },
+    { property: 'og:title', content: title },
+    { property: 'og:description', content: description },
+    { property: 'og:type', content: 'website' },
+    { name: 'twitter:card', content: 'summary' },
+    { name: 'twitter:title', content: title },
+    { name: 'twitter:description', content: description }
+  ]
+})
 </script>
 
 <style lang="scss" scoped>

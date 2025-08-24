@@ -13,6 +13,10 @@ public record InlinePresentationWithSpeakers(
         String level,
         String language,
         Boolean workshop,
+        Boolean isFree,
+        Double expectedPrice,
+        Integer durationInMinutes,
+        Integer maxGroupSize,
         List<Tag> tags,
         List<Speaker> speakers
 ) {
@@ -25,6 +29,10 @@ public record InlinePresentationWithSpeakers(
                 presentation.getLevel(),
                 presentation.getLanguage(),
                 presentation.isWorkshop(),
+                presentation.getIsFree(),
+                presentation.getExpectedPrice(),
+                presentation.getDurationInMinutes(),
+                presentation.getMaxGroupSize(),
                 presentation.getTags().stream().map(Tag::from).toList(),
                 presentation.getSpeakers().stream().map(Speaker::from).toList()
         );

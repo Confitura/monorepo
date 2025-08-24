@@ -48,6 +48,22 @@ function resolveImage(path: string): string {
   console.log('resolved path', path, resolved, imgUrls)
   return resolved
 }
+
+// SEO for partners listing page
+const title = 'Partners — Confitura 2025 Sponsors & Supporters';
+const description = 'Meet the partners and sponsors supporting Confitura 2025: platinum, gold, silver, and community partners.';
+useHead({
+  title,
+  meta: [
+    { name: 'description', content: description },
+    { property: 'og:title', content: title },
+    { property: 'og:description', content: description },
+    { property: 'og:type', content: 'website' },
+    { name: 'twitter:card', content: 'summary' },
+    { name: 'twitter:title', content: title },
+    { name: 'twitter:description', content: description }
+  ]
+})
 </script>
 
 <style lang="scss" scoped>

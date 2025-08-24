@@ -199,6 +199,23 @@ let mapOptions = {
     }
   ]
 }
+
+
+const title = 'Venue — Confitura 2025 Location & Directions';
+const description = 'Find all information about the Confitura 2025 venue: location, directions, and logistics for your visit.';
+useHead({
+  title,
+  meta: [
+    { name: 'description', content: description },
+    { property: 'og:title', content: title },
+    { property: 'og:description', content: description },
+    { property: 'og:type', content: 'website' },
+    { name: 'twitter:card', content: 'summary' },
+    { name: 'twitter:title', content: title },
+    { name: 'twitter:description', content: description }
+  ]
+})
+
 </script>
 
 <style lang="scss" scoped>

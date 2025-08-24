@@ -1,19 +1,19 @@
 <template>
-  <div class="presentations">
-    <PageHeader title="Presentations" type="coder"/>
+  <div class="workshops">
+    <PageHeader title="Workshops" type="coder"/>
     <div
-        v-for="(presentation, $index) in presentations"
-        :key="presentation.id"
-        :id="presentation.id"
+        v-for="(workshop, $index) in workshops"
+        :key="workshop.id"
+        :id="workshop.id"
     >
       <Box
-          class="presentation"
-          :class="{ 'presentation--odd': odd($index) }"
+          class="workshop"
+          :class="{ 'workshop--odd': odd($index) }"
           color="white"
           :full="false"
       >
         <PresentationBox
-            :presentation="presentation"
+            :presentation="workshop"
             :class="{ 'presentationBox--odd': odd($index) }"
         ></PresentationBox>
       </Box>
@@ -29,7 +29,7 @@ import {useArchiveFetch} from '~/composables/useAPIFetch'
 import {onMounted, watch, nextTick, onBeforeUnmount} from 'vue'
 import {useRoute} from '#imports'
 
-let {data: presentations} = await useArchiveFetch('/presentations/accepted.json', {
+let {data: workshops} = await useArchiveFetch('/workshops/accepted.json', {
   transform: (data) => data
 })
 
@@ -77,15 +77,15 @@ onMounted(() => {
   })
 })
 
-// If presentations are (re)loaded async, try again after render
-watch(presentations, () => {
+// If workshops are (re)loaded async, try again after render
+watch(workshops, () => {
   nextTick(() => scrollToHashIfAny())
 })
 
 
 
-const title = 'Presentations — Confitura 2025';
-const description = 'Browse all accepted talks for Confitura 2025. Find sessions by topic, level, and format.';
+const title = 'Workshops — Confitura 2025';
+const description = 'Browse all accepted workshops for Confitura 2025. Find sessions by topic, level, and format.';
 useHead({
   title,
   meta: [
@@ -107,11 +107,11 @@ useHead({
 @use "~/assets/media" as *;
 @use "~/assets/fonts" as *;
 
-.presentations {
+.workshops {
   overflow: hidden;
 }
 
-.presentation {
+.workshop {
   &--odd {
     background-color: $brand;
     color: #ffffff;
