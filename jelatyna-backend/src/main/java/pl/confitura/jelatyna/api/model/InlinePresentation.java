@@ -10,7 +10,8 @@ public record InlinePresentation(
         String description,
         String level,
         String language,
-        String[] tags
+        String[] tags,
+        String status
 ) {
     public InlinePresentation(Presentation presentation) {
         this(
@@ -20,7 +21,8 @@ public record InlinePresentation(
                 presentation.getDescription(),
                 presentation.getLevel(),
                 presentation.getLanguage(),
-                presentation.getTags().stream().map(Tag::getId).toArray(String[]::new)
+                presentation.getTags().stream().map(Tag::getId).toArray(String[]::new),
+                presentation.getStatus()
         );
     }
 }

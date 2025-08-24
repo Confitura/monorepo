@@ -67,10 +67,10 @@ export interface AgendaEntry {
     'timeSlotOrder'?: number;
     /**
      * 
-     * @type {Set<PublicUser>}
+     * @type {Set<PublicProfile>}
      * @memberof AgendaEntry
      */
-    'speakers'?: Set<PublicUser>;
+    'speakers'?: Set<PublicProfile>;
 }
 /**
  * 
@@ -173,6 +173,12 @@ export interface FullPresentation {
     'tags'?: Array<string>;
     /**
      * 
+     * @type {string}
+     * @memberof FullPresentation
+     */
+    'flatTags'?: string;
+    /**
+     * 
      * @type {boolean}
      * @memberof FullPresentation
      */
@@ -213,6 +219,12 @@ export interface FullPresentation {
      * @memberof FullPresentation
      */
     'speakers'?: Array<Speaker>;
+    /**
+     * 
+     * @type {string}
+     * @memberof FullPresentation
+     */
+    'flatSpeakers'?: string;
 }
 /**
  * 
@@ -396,6 +408,12 @@ export interface InlinePresentation {
      * @memberof InlinePresentation
      */
     'tags'?: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlinePresentation
+     */
+    'status'?: string;
 }
 /**
  * 
@@ -574,6 +592,12 @@ export interface InlineWorkshop {
      * @memberof InlineWorkshop
      */
     'maxGroupSize'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineWorkshop
+     */
+    'status'?: string;
 }
 /**
  * 
@@ -932,10 +956,10 @@ export interface Presentation {
     'maxGroupSize'?: number;
     /**
      * 
-     * @type {boolean}
+     * @type {Presentation}
      * @memberof Presentation
      */
-    'new'?: boolean;
+    'speaker'?: Presentation;
     /**
      * 
      * @type {boolean}
@@ -944,10 +968,10 @@ export interface Presentation {
     'accepted'?: boolean;
     /**
      * 
-     * @type {Presentation}
+     * @type {boolean}
      * @memberof Presentation
      */
-    'speaker'?: Presentation;
+    'new'?: boolean;
 }
 /**
  * 
@@ -1044,51 +1068,106 @@ export interface PresentationStats {
 /**
  * 
  * @export
- * @interface PublicUser
+ * @interface PublicProfile
  */
-export interface PublicUser {
+export interface PublicProfile {
     /**
      * 
      * @type {string}
-     * @memberof PublicUser
+     * @memberof PublicProfile
      */
     'id'?: string;
     /**
      * 
      * @type {string}
-     * @memberof PublicUser
+     * @memberof PublicProfile
      */
     'name'?: string;
     /**
      * 
      * @type {string}
-     * @memberof PublicUser
+     * @memberof PublicProfile
      */
     'bio'?: string;
     /**
      * 
      * @type {string}
-     * @memberof PublicUser
+     * @memberof PublicProfile
      */
     'twitter'?: string;
     /**
      * 
      * @type {string}
-     * @memberof PublicUser
+     * @memberof PublicProfile
      */
     'github'?: string;
     /**
      * 
      * @type {string}
-     * @memberof PublicUser
+     * @memberof PublicProfile
      */
     'www'?: string;
     /**
      * 
      * @type {string}
-     * @memberof PublicUser
+     * @memberof PublicProfile
      */
     'photo'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface PublicSpeaker
+ */
+export interface PublicSpeaker {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicSpeaker
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicSpeaker
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicSpeaker
+     */
+    'bio'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicSpeaker
+     */
+    'twitter'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicSpeaker
+     */
+    'github'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicSpeaker
+     */
+    'www'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicSpeaker
+     */
+    'photo'?: string;
+    /**
+     * 
+     * @type {Array<Presentation>}
+     * @memberof PublicSpeaker
+     */
+    'presentations'?: Array<Presentation>;
 }
 /**
  * 
@@ -1262,6 +1341,12 @@ export interface Speaker {
      * @memberof Speaker
      */
     'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Speaker
+     */
+    'photo'?: string;
 }
 /**
  * 
@@ -1530,12 +1615,6 @@ export interface User {
      * @type {boolean}
      * @memberof User
      */
-    'participant'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof User
-     */
     'admin'?: boolean;
     /**
      * 
@@ -1549,6 +1628,12 @@ export interface User {
      * @memberof User
      */
     'speaker'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof User
+     */
+    'participant'?: boolean;
 }
 /**
  * 
@@ -5597,6 +5682,45 @@ export const UserAdminControllerApiAxiosParamCreator = function (configuration?:
     return {
         /**
          * 
+         * @param {User} user 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createManual: async (user: User, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'user' is not null or undefined
+            assertParamExists('createManual', 'user', user)
+            const localVarPath = `/users/manual`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(user, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5722,6 +5846,18 @@ export const UserAdminControllerApiFp = function(configuration?: Configuration) 
     return {
         /**
          * 
+         * @param {User} user 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createManual(user: User, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FullUser>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createManual(user, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UserAdminControllerApi.createManual']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5769,6 +5905,15 @@ export const UserAdminControllerApiFactory = function (configuration?: Configura
     return {
         /**
          * 
+         * @param {User} user 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createManual(user: User, options?: RawAxiosRequestConfig): AxiosPromise<FullUser> {
+            return localVarFp.createManual(user, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5805,6 +5950,17 @@ export const UserAdminControllerApiFactory = function (configuration?: Configura
  * @extends {BaseAPI}
  */
 export class UserAdminControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {User} user 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserAdminControllerApi
+     */
+    public createManual(user: User, options?: RawAxiosRequestConfig) {
+        return UserAdminControllerApiFp(this.configuration).createManual(user, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @param {*} [options] Override http request option.
@@ -6621,7 +6777,7 @@ export const UserControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getSpeakers(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+        async getSpeakers(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Set<PublicSpeaker>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getSpeakers(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UserControllerApi.getSpeakers']?.[localVarOperationServerIndex]?.url;
@@ -6824,7 +6980,7 @@ export const UserControllerApiFactory = function (configuration?: Configuration,
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSpeakers(options?: RawAxiosRequestConfig): AxiosPromise<object> {
+        getSpeakers(options?: RawAxiosRequestConfig): AxiosPromise<Set<PublicSpeaker>> {
             return localVarFp.getSpeakers(options).then((request) => request(axios, basePath));
         },
         /**

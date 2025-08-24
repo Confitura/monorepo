@@ -132,6 +132,14 @@ onMounted(() => {
     loadUserProfile();
   }
 })
+
+function getColor(item: InlinePresentation | InlineWorkshop) {
+  if (item.status == 'accepted') {
+    return 'green'
+  } else {
+    return undefined
+  }
+}
 </script>
 
 <template>
@@ -209,6 +217,7 @@ onMounted(() => {
           <v-row v-for="workshop in workshops" :key="workshop.id">
             <v-col>
               <v-card
+                :color="getColor(workshop)"
                 :title="workshop.title"
                 :subtitle="workshop.shortDescription"
                 :text="workshop.description"
@@ -267,6 +276,7 @@ onMounted(() => {
             <v-col>
 
               <v-card
+                :color="getColor(presentation)"
                 :title="presentation.title"
                 :subtitle="presentation.shortDescription"
                 :text="presentation.description"

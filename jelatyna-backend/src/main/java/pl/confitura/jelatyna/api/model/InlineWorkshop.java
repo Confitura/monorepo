@@ -14,7 +14,8 @@ public record InlineWorkshop(
         Boolean isFree,
         Double expectedPrice,
         Integer durationInMinutes,
-        Integer maxGroupSize
+        Integer maxGroupSize,
+        String status
 ) {
     public InlineWorkshop(Presentation presentation) {
         this(
@@ -28,7 +29,8 @@ public record InlineWorkshop(
                 presentation.getIsFree(),
                 presentation.getExpectedPrice(),
                 presentation.getDurationInMinutes(),
-                presentation.getMaxGroupSize()
+                presentation.getMaxGroupSize(),
+                presentation.getStatus()
         );
     }
 }
