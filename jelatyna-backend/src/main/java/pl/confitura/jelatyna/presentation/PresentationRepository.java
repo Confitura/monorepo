@@ -27,6 +27,7 @@ public interface PresentationRepository extends Repository<Presentation, String>
 
     @Query("FROM Presentation p " +
            " left join fetch p.tags " +
+           " left join fetch p.speakers " +
            " WHERE p.status ='accepted' ")
     List<Presentation> findAccepted();
 
