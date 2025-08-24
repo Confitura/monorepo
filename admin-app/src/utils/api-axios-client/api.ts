@@ -61,16 +61,28 @@ export interface AgendaEntry {
     'presentation'?: Presentation;
     /**
      * 
-     * @type {number}
-     * @memberof AgendaEntry
-     */
-    'timeSlotOrder'?: number;
-    /**
-     * 
      * @type {Set<PublicProfile>}
      * @memberof AgendaEntry
      */
     'speakers'?: Set<PublicProfile>;
+    /**
+     * 
+     * @type {string}
+     * @memberof AgendaEntry
+     */
+    'roomId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AgendaEntry
+     */
+    'presentationId'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof AgendaEntry
+     */
+    'timeSlotOrder'?: number;
 }
 /**
  * 
@@ -96,6 +108,98 @@ export interface AllegroContext {
      * @memberof AllegroContext
      */
     'buyerLogin'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface AssignAgendaEntryRequest
+ */
+export interface AssignAgendaEntryRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AssignAgendaEntryRequest
+     */
+    'dayId': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof AssignAgendaEntryRequest
+     */
+    'timeSlotIndex': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof AssignAgendaEntryRequest
+     */
+    'roomId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AssignAgendaEntryRequest
+     */
+    'label': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AssignAgendaEntryRequest
+     */
+    'presentationId': string;
+}
+/**
+ * 
+ * @export
+ * @interface Day
+ */
+export interface Day {
+    /**
+     * 
+     * @type {string}
+     * @memberof Day
+     */
+    'createdBy'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Day
+     */
+    'createdDate'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Day
+     */
+    'lastModifiedBy'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Day
+     */
+    'lastModifiedDate'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Day
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Day
+     */
+    'date': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Day
+     */
+    'label': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof Day
+     */
+    'displayOrder': number;
 }
 /**
  * 
@@ -134,97 +238,97 @@ export interface FullPresentation {
      * @type {string}
      * @memberof FullPresentation
      */
-    'id'?: string;
+    'id': string;
     /**
      * 
      * @type {string}
      * @memberof FullPresentation
      */
-    'title'?: string;
+    'title': string;
     /**
      * 
      * @type {string}
      * @memberof FullPresentation
      */
-    'shortDescription'?: string;
+    'shortDescription': string;
     /**
      * 
      * @type {string}
      * @memberof FullPresentation
      */
-    'description'?: string;
+    'description': string;
     /**
      * 
      * @type {string}
      * @memberof FullPresentation
      */
-    'level'?: string;
+    'level': string;
     /**
      * 
      * @type {string}
      * @memberof FullPresentation
      */
-    'language'?: string;
+    'language': string;
     /**
      * 
      * @type {Array<string>}
      * @memberof FullPresentation
      */
-    'tags'?: Array<string>;
+    'tags': Array<string>;
     /**
      * 
      * @type {string}
      * @memberof FullPresentation
      */
-    'flatTags'?: string;
+    'flatTags': string;
     /**
      * 
      * @type {boolean}
      * @memberof FullPresentation
      */
-    'isWorkshop'?: boolean;
+    'isWorkshop': boolean;
     /**
      * 
      * @type {boolean}
      * @memberof FullPresentation
      */
-    'isFree'?: boolean;
+    'isFree': boolean;
     /**
      * 
      * @type {number}
      * @memberof FullPresentation
      */
-    'expectedPrice'?: number;
+    'expectedPrice': number;
     /**
      * 
      * @type {number}
      * @memberof FullPresentation
      */
-    'durationInMinutes'?: number;
+    'durationInMinutes': number;
     /**
      * 
      * @type {number}
      * @memberof FullPresentation
      */
-    'maxGroupSize'?: number;
+    'maxGroupSize': number;
     /**
      * 
      * @type {string}
      * @memberof FullPresentation
      */
-    'status'?: string;
+    'status': string;
     /**
      * 
      * @type {Array<Speaker>}
      * @memberof FullPresentation
      */
-    'speakers'?: Array<Speaker>;
+    'speakers': Array<Speaker>;
     /**
      * 
      * @type {string}
      * @memberof FullPresentation
      */
-    'flatSpeakers'?: string;
+    'flatSpeakers': string;
 }
 /**
  * 
@@ -363,6 +467,80 @@ export interface GenerateVouchersRequest {
 /**
  * 
  * @export
+ * @interface InlineAgendaEntry
+ */
+export interface InlineAgendaEntry {
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineAgendaEntry
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineAgendaEntry
+     */
+    'dayId': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof InlineAgendaEntry
+     */
+    'timeSlotIndex': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineAgendaEntry
+     */
+    'roomId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineAgendaEntry
+     */
+    'label'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineAgendaEntry
+     */
+    'presentationId'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface InlineDay
+ */
+export interface InlineDay {
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineDay
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineDay
+     */
+    'date': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineDay
+     */
+    'label': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof InlineDay
+     */
+    'displayOrder': number;
+}
+/**
+ * 
+ * @export
  * @interface InlinePresentation
  */
 export interface InlinePresentation {
@@ -371,49 +549,111 @@ export interface InlinePresentation {
      * @type {string}
      * @memberof InlinePresentation
      */
-    'id'?: string;
+    'id': string;
     /**
      * 
      * @type {string}
      * @memberof InlinePresentation
      */
-    'title'?: string;
+    'title': string;
     /**
      * 
      * @type {string}
      * @memberof InlinePresentation
      */
-    'shortDescription'?: string;
+    'shortDescription': string;
     /**
      * 
      * @type {string}
      * @memberof InlinePresentation
      */
-    'description'?: string;
+    'description': string;
     /**
      * 
      * @type {string}
      * @memberof InlinePresentation
      */
-    'level'?: string;
+    'level': string;
     /**
      * 
      * @type {string}
      * @memberof InlinePresentation
      */
-    'language'?: string;
+    'language': string;
     /**
      * 
      * @type {Array<string>}
      * @memberof InlinePresentation
      */
-    'tags'?: Array<string>;
+    'tags': Array<string>;
     /**
      * 
      * @type {string}
      * @memberof InlinePresentation
      */
-    'status'?: string;
+    'status': string;
+}
+/**
+ * 
+ * @export
+ * @interface InlineRoom
+ */
+export interface InlineRoom {
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineRoom
+     */
+    'id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineRoom
+     */
+    'label': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof InlineRoom
+     */
+    'displayOrder': number;
+}
+/**
+ * 
+ * @export
+ * @interface InlineTimeSlot
+ */
+export interface InlineTimeSlot {
+    /**
+     * Day identifier
+     * @type {string}
+     * @memberof InlineTimeSlot
+     */
+    'dayId': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof InlineTimeSlot
+     */
+    'displayOrder': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineTimeSlot
+     */
+    'label': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineTimeSlot
+     */
+    'start': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineTimeSlot
+     */
+    'end': string;
 }
 /**
  * 
@@ -426,25 +666,25 @@ export interface InlineVote {
      * @type {string}
      * @memberof InlineVote
      */
-    'id'?: string;
+    'id': string;
     /**
      * 
      * @type {number}
      * @memberof InlineVote
      */
-    'order'?: number;
+    'order': number;
     /**
      * 
      * @type {InlineVotePresentation}
      * @memberof InlineVote
      */
-    'presentation'?: InlineVotePresentation;
+    'presentation': InlineVotePresentation;
     /**
      * 
      * @type {number}
      * @memberof InlineVote
      */
-    'rate'?: number;
+    'rate': number;
 }
 /**
  * 
@@ -457,37 +697,37 @@ export interface InlineVotePresentation {
      * @type {string}
      * @memberof InlineVotePresentation
      */
-    'id'?: string;
+    'id': string;
     /**
      * 
      * @type {string}
      * @memberof InlineVotePresentation
      */
-    'title'?: string;
+    'title': string;
     /**
      * 
      * @type {string}
      * @memberof InlineVotePresentation
      */
-    'longDescription'?: string;
+    'longDescription': string;
     /**
      * 
      * @type {string}
      * @memberof InlineVotePresentation
      */
-    'shortDescription'?: string;
+    'shortDescription': string;
     /**
      * 
      * @type {Array<InlineVoteSpeaker>}
      * @memberof InlineVotePresentation
      */
-    'speakers'?: Array<InlineVoteSpeaker>;
+    'speakers': Array<InlineVoteSpeaker>;
     /**
      * 
      * @type {boolean}
      * @memberof InlineVotePresentation
      */
-    'workshop'?: boolean;
+    'workshop': boolean;
 }
 /**
  * 
@@ -500,25 +740,25 @@ export interface InlineVoteSpeaker {
      * @type {string}
      * @memberof InlineVoteSpeaker
      */
-    'id'?: string;
+    'id': string;
     /**
      * 
      * @type {string}
      * @memberof InlineVoteSpeaker
      */
-    'name'?: string;
+    'name': string;
     /**
      * 
      * @type {string}
      * @memberof InlineVoteSpeaker
      */
-    'bio'?: string;
+    'bio': string;
     /**
      * 
      * @type {string}
      * @memberof InlineVoteSpeaker
      */
-    'photo'?: string;
+    'photo': string;
 }
 /**
  * 
@@ -531,73 +771,73 @@ export interface InlineWorkshop {
      * @type {string}
      * @memberof InlineWorkshop
      */
-    'id'?: string;
+    'id': string;
     /**
      * 
      * @type {string}
      * @memberof InlineWorkshop
      */
-    'title'?: string;
+    'title': string;
     /**
      * 
      * @type {string}
      * @memberof InlineWorkshop
      */
-    'shortDescription'?: string;
+    'shortDescription': string;
     /**
      * 
      * @type {string}
      * @memberof InlineWorkshop
      */
-    'description'?: string;
+    'description': string;
     /**
      * 
      * @type {string}
      * @memberof InlineWorkshop
      */
-    'level'?: string;
+    'level': string;
     /**
      * 
      * @type {string}
      * @memberof InlineWorkshop
      */
-    'language'?: string;
+    'language': string;
     /**
      * 
      * @type {Array<string>}
      * @memberof InlineWorkshop
      */
-    'tags'?: Array<string>;
+    'tags': Array<string>;
     /**
      * 
      * @type {boolean}
      * @memberof InlineWorkshop
      */
-    'isFree'?: boolean;
+    'isFree': boolean;
     /**
      * 
      * @type {number}
      * @memberof InlineWorkshop
      */
-    'expectedPrice'?: number;
+    'expectedPrice': number;
     /**
      * 
      * @type {number}
      * @memberof InlineWorkshop
      */
-    'durationInMinutes'?: number;
+    'durationInMinutes': number;
     /**
      * 
      * @type {number}
      * @memberof InlineWorkshop
      */
-    'maxGroupSize'?: number;
+    'maxGroupSize': number;
     /**
      * 
      * @type {string}
      * @memberof InlineWorkshop
      */
-    'status'?: string;
+    'status': string;
 }
 /**
  * 
@@ -956,6 +1196,12 @@ export interface Presentation {
     'maxGroupSize'?: number;
     /**
      * 
+     * @type {boolean}
+     * @memberof Presentation
+     */
+    'new'?: boolean;
+    /**
+     * 
      * @type {Presentation}
      * @memberof Presentation
      */
@@ -966,12 +1212,6 @@ export interface Presentation {
      * @memberof Presentation
      */
     'accepted'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Presentation
-     */
-    'new'?: boolean;
 }
 /**
  * 
@@ -1309,6 +1549,12 @@ export interface Room {
      * @memberof Room
      */
     'displayOrder': number;
+    /**
+     * 
+     * @type {Day}
+     * @memberof Room
+     */
+    'day': Day;
 }
 /**
  * 
@@ -1424,16 +1670,10 @@ export interface TimeSlot {
     'lastModifiedDate'?: string;
     /**
      * 
-     * @type {string}
+     * @type {TimeSlotId}
      * @memberof TimeSlot
      */
-    'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TimeSlot
-     */
-    'label'?: string;
+    'id': TimeSlotId;
     /**
      * 
      * @type {LocalTime}
@@ -1454,8 +1694,33 @@ export interface TimeSlot {
     'forAllRooms'?: boolean;
     /**
      * 
+     * @type {string}
+     * @memberof TimeSlot
+     */
+    'label'?: string;
+    /**
+     * 
      * @type {number}
      * @memberof TimeSlot
+     */
+    'displayOrder'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface TimeSlotId
+ */
+export interface TimeSlotId {
+    /**
+     * 
+     * @type {string}
+     * @memberof TimeSlotId
+     */
+    'dayId': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof TimeSlotId
      */
     'displayOrder': number;
 }
@@ -1495,6 +1760,69 @@ export interface Tweet {
      * @memberof Tweet
      */
     'time'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface UpdateAgendaEntryRequest
+ */
+export interface UpdateAgendaEntryRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateAgendaEntryRequest
+     */
+    'label'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateAgendaEntryRequest
+     */
+    'presentationId'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateAgendaEntryRequest
+     */
+    'roomId'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface UpdateRoomRequest
+ */
+export interface UpdateRoomRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateRoomRequest
+     */
+    'label': string;
+}
+/**
+ * 
+ * @export
+ * @interface UpdateTimeSlotRequest
+ */
+export interface UpdateTimeSlotRequest {
+    /**
+     * Start time, e.g. 09:00
+     * @type {string}
+     * @memberof UpdateTimeSlotRequest
+     */
+    'start'?: string;
+    /**
+     * End time, e.g. 10:00
+     * @type {string}
+     * @memberof UpdateTimeSlotRequest
+     */
+    'end'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UpdateTimeSlotRequest
+     */
+    'forAllRooms'?: boolean;
 }
 /**
  * 
@@ -2227,6 +2555,724 @@ export class AdminTaskControllerApi extends BaseAPI {
      */
     public triggerWebpageDump(options?: RawAxiosRequestConfig) {
         return AdminTaskControllerApiFp(this.configuration).triggerWebpageDump(options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * AgendaControllerApi - axios parameter creator
+ * @export
+ */
+export const AgendaControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteAgendaEntry: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('deleteAgendaEntry', 'id', id)
+            const localVarPath = `/agenda/entries/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} dayId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAgendaEntriesByDay: async (dayId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'dayId' is not null or undefined
+            assertParamExists('getAgendaEntriesByDay', 'dayId', dayId)
+            const localVarPath = `/agenda/{dayId}/entries`
+                .replace(`{${"dayId"}}`, encodeURIComponent(String(dayId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAgendaEntryById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getAgendaEntryById', 'id', id)
+            const localVarPath = `/agenda/entries/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllDays1: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/agenda/days`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} dayId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllRooms1: async (dayId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'dayId' is not null or undefined
+            assertParamExists('getAllRooms1', 'dayId', dayId)
+            const localVarPath = `/agenda/{dayId}/rooms`
+                .replace(`{${"dayId"}}`, encodeURIComponent(String(dayId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} dayId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllTimeSlots: async (dayId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'dayId' is not null or undefined
+            assertParamExists('getAllTimeSlots', 'dayId', dayId)
+            const localVarPath = `/agenda/{dayId}/time-slots`
+                .replace(`{${"dayId"}}`, encodeURIComponent(String(dayId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {AssignAgendaEntryRequest} assignAgendaEntryRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        saveAgendaEntry: async (assignAgendaEntryRequest: AssignAgendaEntryRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'assignAgendaEntryRequest' is not null or undefined
+            assertParamExists('saveAgendaEntry', 'assignAgendaEntryRequest', assignAgendaEntryRequest)
+            const localVarPath = `/agenda/entries`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(assignAgendaEntryRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {UpdateAgendaEntryRequest} updateAgendaEntryRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateAgendaEntry: async (id: string, updateAgendaEntryRequest: UpdateAgendaEntryRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('updateAgendaEntry', 'id', id)
+            // verify required parameter 'updateAgendaEntryRequest' is not null or undefined
+            assertParamExists('updateAgendaEntry', 'updateAgendaEntryRequest', updateAgendaEntryRequest)
+            const localVarPath = `/agenda/entries/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updateAgendaEntryRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {UpdateRoomRequest} updateRoomRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateRoom: async (id: string, updateRoomRequest: UpdateRoomRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('updateRoom', 'id', id)
+            // verify required parameter 'updateRoomRequest' is not null or undefined
+            assertParamExists('updateRoom', 'updateRoomRequest', updateRoomRequest)
+            const localVarPath = `/agenda/rooms/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updateRoomRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} dayId 
+         * @param {number} displayOrder 
+         * @param {UpdateTimeSlotRequest} updateTimeSlotRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateTimeSlot: async (dayId: string, displayOrder: number, updateTimeSlotRequest: UpdateTimeSlotRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'dayId' is not null or undefined
+            assertParamExists('updateTimeSlot', 'dayId', dayId)
+            // verify required parameter 'displayOrder' is not null or undefined
+            assertParamExists('updateTimeSlot', 'displayOrder', displayOrder)
+            // verify required parameter 'updateTimeSlotRequest' is not null or undefined
+            assertParamExists('updateTimeSlot', 'updateTimeSlotRequest', updateTimeSlotRequest)
+            const localVarPath = `/agenda/{dayId}/time-slots/{displayOrder}`
+                .replace(`{${"dayId"}}`, encodeURIComponent(String(dayId)))
+                .replace(`{${"displayOrder"}}`, encodeURIComponent(String(displayOrder)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updateTimeSlotRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * AgendaControllerApi - functional programming interface
+ * @export
+ */
+export const AgendaControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = AgendaControllerApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteAgendaEntry(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAgendaEntry(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgendaControllerApi.deleteAgendaEntry']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} dayId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAgendaEntriesByDay(dayId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<InlineAgendaEntry>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAgendaEntriesByDay(dayId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgendaControllerApi.getAgendaEntriesByDay']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAgendaEntryById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineAgendaEntry>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAgendaEntryById(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgendaControllerApi.getAgendaEntryById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAllDays1(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<InlineDay>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAllDays1(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgendaControllerApi.getAllDays1']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} dayId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAllRooms1(dayId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<InlineRoom>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAllRooms1(dayId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgendaControllerApi.getAllRooms1']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} dayId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAllTimeSlots(dayId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<InlineTimeSlot>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAllTimeSlots(dayId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgendaControllerApi.getAllTimeSlots']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {AssignAgendaEntryRequest} assignAgendaEntryRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async saveAgendaEntry(assignAgendaEntryRequest: AssignAgendaEntryRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineAgendaEntry>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.saveAgendaEntry(assignAgendaEntryRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgendaControllerApi.saveAgendaEntry']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {UpdateAgendaEntryRequest} updateAgendaEntryRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateAgendaEntry(id: string, updateAgendaEntryRequest: UpdateAgendaEntryRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineAgendaEntry>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateAgendaEntry(id, updateAgendaEntryRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgendaControllerApi.updateAgendaEntry']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {UpdateRoomRequest} updateRoomRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateRoom(id: string, updateRoomRequest: UpdateRoomRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineRoom>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateRoom(id, updateRoomRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgendaControllerApi.updateRoom']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} dayId 
+         * @param {number} displayOrder 
+         * @param {UpdateTimeSlotRequest} updateTimeSlotRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateTimeSlot(dayId: string, displayOrder: number, updateTimeSlotRequest: UpdateTimeSlotRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineTimeSlot>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateTimeSlot(dayId, displayOrder, updateTimeSlotRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgendaControllerApi.updateTimeSlot']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * AgendaControllerApi - factory interface
+ * @export
+ */
+export const AgendaControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = AgendaControllerApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteAgendaEntry(id: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteAgendaEntry(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} dayId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAgendaEntriesByDay(dayId: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<InlineAgendaEntry>> {
+            return localVarFp.getAgendaEntriesByDay(dayId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAgendaEntryById(id: string, options?: RawAxiosRequestConfig): AxiosPromise<InlineAgendaEntry> {
+            return localVarFp.getAgendaEntryById(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllDays1(options?: RawAxiosRequestConfig): AxiosPromise<Array<InlineDay>> {
+            return localVarFp.getAllDays1(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} dayId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllRooms1(dayId: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<InlineRoom>> {
+            return localVarFp.getAllRooms1(dayId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} dayId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllTimeSlots(dayId: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<InlineTimeSlot>> {
+            return localVarFp.getAllTimeSlots(dayId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {AssignAgendaEntryRequest} assignAgendaEntryRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        saveAgendaEntry(assignAgendaEntryRequest: AssignAgendaEntryRequest, options?: RawAxiosRequestConfig): AxiosPromise<InlineAgendaEntry> {
+            return localVarFp.saveAgendaEntry(assignAgendaEntryRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {UpdateAgendaEntryRequest} updateAgendaEntryRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateAgendaEntry(id: string, updateAgendaEntryRequest: UpdateAgendaEntryRequest, options?: RawAxiosRequestConfig): AxiosPromise<InlineAgendaEntry> {
+            return localVarFp.updateAgendaEntry(id, updateAgendaEntryRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {UpdateRoomRequest} updateRoomRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateRoom(id: string, updateRoomRequest: UpdateRoomRequest, options?: RawAxiosRequestConfig): AxiosPromise<InlineRoom> {
+            return localVarFp.updateRoom(id, updateRoomRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} dayId 
+         * @param {number} displayOrder 
+         * @param {UpdateTimeSlotRequest} updateTimeSlotRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateTimeSlot(dayId: string, displayOrder: number, updateTimeSlotRequest: UpdateTimeSlotRequest, options?: RawAxiosRequestConfig): AxiosPromise<InlineTimeSlot> {
+            return localVarFp.updateTimeSlot(dayId, displayOrder, updateTimeSlotRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * AgendaControllerApi - object-oriented interface
+ * @export
+ * @class AgendaControllerApi
+ * @extends {BaseAPI}
+ */
+export class AgendaControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgendaControllerApi
+     */
+    public deleteAgendaEntry(id: string, options?: RawAxiosRequestConfig) {
+        return AgendaControllerApiFp(this.configuration).deleteAgendaEntry(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} dayId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgendaControllerApi
+     */
+    public getAgendaEntriesByDay(dayId: string, options?: RawAxiosRequestConfig) {
+        return AgendaControllerApiFp(this.configuration).getAgendaEntriesByDay(dayId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgendaControllerApi
+     */
+    public getAgendaEntryById(id: string, options?: RawAxiosRequestConfig) {
+        return AgendaControllerApiFp(this.configuration).getAgendaEntryById(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgendaControllerApi
+     */
+    public getAllDays1(options?: RawAxiosRequestConfig) {
+        return AgendaControllerApiFp(this.configuration).getAllDays1(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} dayId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgendaControllerApi
+     */
+    public getAllRooms1(dayId: string, options?: RawAxiosRequestConfig) {
+        return AgendaControllerApiFp(this.configuration).getAllRooms1(dayId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} dayId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgendaControllerApi
+     */
+    public getAllTimeSlots(dayId: string, options?: RawAxiosRequestConfig) {
+        return AgendaControllerApiFp(this.configuration).getAllTimeSlots(dayId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {AssignAgendaEntryRequest} assignAgendaEntryRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgendaControllerApi
+     */
+    public saveAgendaEntry(assignAgendaEntryRequest: AssignAgendaEntryRequest, options?: RawAxiosRequestConfig) {
+        return AgendaControllerApiFp(this.configuration).saveAgendaEntry(assignAgendaEntryRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {UpdateAgendaEntryRequest} updateAgendaEntryRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgendaControllerApi
+     */
+    public updateAgendaEntry(id: string, updateAgendaEntryRequest: UpdateAgendaEntryRequest, options?: RawAxiosRequestConfig) {
+        return AgendaControllerApiFp(this.configuration).updateAgendaEntry(id, updateAgendaEntryRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {UpdateRoomRequest} updateRoomRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgendaControllerApi
+     */
+    public updateRoom(id: string, updateRoomRequest: UpdateRoomRequest, options?: RawAxiosRequestConfig) {
+        return AgendaControllerApiFp(this.configuration).updateRoom(id, updateRoomRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} dayId 
+     * @param {number} displayOrder 
+     * @param {UpdateTimeSlotRequest} updateTimeSlotRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgendaControllerApi
+     */
+    public updateTimeSlot(dayId: string, displayOrder: number, updateTimeSlotRequest: UpdateTimeSlotRequest, options?: RawAxiosRequestConfig) {
+        return AgendaControllerApiFp(this.configuration).updateTimeSlot(dayId, displayOrder, updateTimeSlotRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -3173,6 +4219,300 @@ export class DashboardControllerApi extends BaseAPI {
      */
     public usersStats(options?: RawAxiosRequestConfig) {
         return DashboardControllerApiFp(this.configuration).usersStats(options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * DayControllerApi - axios parameter creator
+ * @export
+ */
+export const DayControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteDay: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('deleteDay', 'id', id)
+            const localVarPath = `/days/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllDays: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/days`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDayById: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getDayById', 'id', id)
+            const localVarPath = `/days/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {Day} day 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        saveDay: async (day: Day, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'day' is not null or undefined
+            assertParamExists('saveDay', 'day', day)
+            const localVarPath = `/days`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(day, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * DayControllerApi - functional programming interface
+ * @export
+ */
+export const DayControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = DayControllerApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteDay(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteDay(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DayControllerApi.deleteDay']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAllDays(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<InlineDay>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAllDays(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DayControllerApi.getAllDays']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getDayById(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineDay>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDayById(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DayControllerApi.getDayById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {Day} day 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async saveDay(day: Day, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineDay>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.saveDay(day, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DayControllerApi.saveDay']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * DayControllerApi - factory interface
+ * @export
+ */
+export const DayControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = DayControllerApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteDay(id: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteDay(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllDays(options?: RawAxiosRequestConfig): AxiosPromise<Array<InlineDay>> {
+            return localVarFp.getAllDays(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDayById(id: string, options?: RawAxiosRequestConfig): AxiosPromise<InlineDay> {
+            return localVarFp.getDayById(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {Day} day 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        saveDay(day: Day, options?: RawAxiosRequestConfig): AxiosPromise<InlineDay> {
+            return localVarFp.saveDay(day, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * DayControllerApi - object-oriented interface
+ * @export
+ * @class DayControllerApi
+ * @extends {BaseAPI}
+ */
+export class DayControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DayControllerApi
+     */
+    public deleteDay(id: string, options?: RawAxiosRequestConfig) {
+        return DayControllerApiFp(this.configuration).deleteDay(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DayControllerApi
+     */
+    public getAllDays(options?: RawAxiosRequestConfig) {
+        return DayControllerApiFp(this.configuration).getAllDays(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DayControllerApi
+     */
+    public getDayById(id: string, options?: RawAxiosRequestConfig) {
+        return DayControllerApiFp(this.configuration).getDayById(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {Day} day 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DayControllerApi
+     */
+    public saveDay(day: Day, options?: RawAxiosRequestConfig) {
+        return DayControllerApiFp(this.configuration).saveDay(day, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

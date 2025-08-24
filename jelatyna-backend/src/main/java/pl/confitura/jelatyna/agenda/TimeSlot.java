@@ -1,15 +1,10 @@
 package pl.confitura.jelatyna.agenda;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import org.hibernate.annotations.GenericGenerator;
 
 import lombok.Data;
 import pl.confitura.jelatyna.infrastructure.db.AuditedEntity;
@@ -26,12 +21,9 @@ public class TimeSlot extends AuditedEntity {
 
     private static final DateTimeFormatter HOUR_FORMAT = DateTimeFormatter.ofPattern("HH:mm");
 
-    @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(columnDefinition = "varchar(100)")
-    private String id;
-    String label; //fallback for already created slots - to be removed after fixing data in db
+    @NotNull
+    @EmbeddedId
+    private TimeSlotId id;
 
     @Column(name = "start_time")
     LocalTime start;
@@ -40,15 +32,23 @@ public class TimeSlot extends AuditedEntity {
 
     private boolean forAllRooms = false;
 
-    @NotNull
-    private int displayOrder;
 
     public String getLabel() {
-        if (start == null || end == null) {
-            return label;
-        } else {
-            return start.format(HOUR_FORMAT) + " - " + end.format(HOUR_FORMAT);
-        }
+        return start.format(HOUR_FORMAT) + " - " + end.format(HOUR_FORMAT);
+    }
 
+    public int getDisplayOrder() {
+        return id.displayOrder;
+    }
+
+    public TimeSlot setId(String dayId, int displayOrder) {
+        this.id = new TimeSlotId(dayId, displayOrder);
+        return this;
+    }
+
+    @Embeddable
+    public record TimeSlotId(
+            @NotNull String dayId,
+            @NotNull int displayOrder) {
     }
 }

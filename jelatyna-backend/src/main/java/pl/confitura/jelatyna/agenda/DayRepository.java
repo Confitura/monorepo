@@ -6,19 +6,16 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 
-public interface RoomRepository extends Repository<Room, String> {
+public interface DayRepository extends Repository<Day, String> {
 
     @PreAuthorize("@security.isAdmin()")
-    Room save(Room room);
+    Day save(Day day);
 
-    Room findById(String id);
+    Day findById(String id);
 
-    @Query("select room from Room room order by displayOrder")
-    List<Room> findAll();
-
-    List<Room> findByDayId(String dayId);
+    @Query("select day from Day day order by day.displayOrder")
+    List<Day> findAll();
 
     @PreAuthorize("@security.isAdmin()")
     void deleteById(String id);
-
 }

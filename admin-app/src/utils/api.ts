@@ -1,9 +1,11 @@
 import axios from "axios";
 import {
   AdminPresentationControllerApi,
-  DashboardControllerApi,
+  AgendaControllerApi,
+  DashboardControllerApi, DayControllerApi,
   PageControllerApi,
   PresentationControllerApi, ResourceControllerApi,
+  RoomControllerApi,
   TokenControllerApi,
   UserAdminControllerApi,
   UserControllerApi,
@@ -25,3 +27,6 @@ export let tokenAPi = new TokenControllerApi(undefined, import.meta.env.VITE_API
 export let resourcesApi = new ResourceControllerApi(undefined, import.meta.env.VITE_API_URL, api)
 export let voteForPapersApi = new VoteControllerApi(undefined, import.meta.env.VITE_API_URL)
 export let adminTasksApi = new AdminTaskControllerApi(undefined, import.meta.env.VITE_API_URL, api)
+export let daysApi = new DayControllerApi(undefined, import.meta.env.VITE_API_URL)
+export let agendaApi = new AgendaControllerApi(undefined, import.meta.env.VITE_API_URL, api)
+export let roomsApi = new RoomControllerApi(undefined, import.meta.env.VITE_API_URL, api)

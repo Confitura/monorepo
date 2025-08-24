@@ -26,7 +26,7 @@ import static pl.confitura.jelatyna.infrastructure.Profiles.FAKE_SECURITY;
 @Configuration
 @Profile(FAKE_SECURITY)
 @RequiredArgsConstructor
-public class FakeUsers {
+public class FakeLoginUsers {
 
     private static final User FAKE_ADMIN = createFakeAdmin();
     private static final User FAKE_VOLUNTEER = createFakeVolunteer();

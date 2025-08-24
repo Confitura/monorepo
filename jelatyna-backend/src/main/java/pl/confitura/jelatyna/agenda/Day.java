@@ -3,27 +3,30 @@ package pl.confitura.jelatyna.agenda;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.hibernate.annotations.GenericGenerator;
 import pl.confitura.jelatyna.infrastructure.db.AuditedEntity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.LocalDate;
+
 @Entity
 @EqualsAndHashCode(callSuper = false)
-@Table(name = "agenda_room")
+@Table(name = "agenda_day")
 @Data
 @Accessors(chain = true)
-public class Room extends AuditedEntity {
+public class Day extends AuditedEntity {
     @Id
     @Column(columnDefinition = "varchar(100)")
     private String id;
 
-    String label;
+    @NotNull
+    private LocalDate date;
+
+    @NotNull
+    private String label;
 
     @NotNull
     private int displayOrder;
-
-    @ManyToOne
-    @NotNull
-    private Day day;
 }

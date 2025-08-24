@@ -1,16 +1,25 @@
 package pl.confitura.jelatyna.api.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.Tag;
 
 public record InlinePresentation(
+        @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
         String id,
+        @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
         String title,
+        @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
         String shortDescription,
+        @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
         String description,
+        @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
         String level,
+        @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
         String language,
+        @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
         String[] tags,
+        @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
         String status
 ) {
     public InlinePresentation(Presentation presentation) {

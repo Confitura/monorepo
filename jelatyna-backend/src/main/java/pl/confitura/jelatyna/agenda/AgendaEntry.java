@@ -1,14 +1,6 @@
 package pl.confitura.jelatyna.agenda;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import lombok.experimental.Accessors;
@@ -23,10 +15,13 @@ import java.util.Set;
 
 import static java.util.stream.Collectors.toSet;
 
+
 @Entity
 @Table(
         name = "agenda",
-        uniqueConstraints = @UniqueConstraint(columnNames = { "time_slot_id", "room_id" })
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"room_id", "time_slot_day_id", "time_slot_display_order"})
+        }
 )
 @Data
 @Accessors(chain = true)
@@ -41,7 +36,10 @@ public class AgendaEntry {
 
     @ManyToOne
     @NotNull
-    @JoinColumn(name = "time_slot_id")
+    @JoinColumns({
+            @JoinColumn(name = "time_slot_day_id"),
+            @JoinColumn(name = "time_slot_display_order"),
+    })
     private TimeSlot timeSlot;
 
     @ManyToOne
@@ -53,8 +51,12 @@ public class AgendaEntry {
     @OneToOne
     private Presentation presentation;
 
-    public int getTimeSlotOrder(){
+    public int getTimeSlotOrder() {
         return timeSlot.getDisplayOrder();
+    }
+
+    public String getPresentationId() {
+        return presentation == null ? null : presentation.getId();
     }
 
 
@@ -66,5 +68,9 @@ public class AgendaEntry {
                     .map(PublicProfile::from)
                     .collect(toSet());
         }
+    }
+
+    public String getRoomId() {
+        return room == null ? null : room.getId();
     }
 }
