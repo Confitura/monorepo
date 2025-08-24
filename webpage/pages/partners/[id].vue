@@ -46,6 +46,13 @@ const partner = ref<Partner>({
   type: "",
   www: ""
 })
+await callOnce('partner', () => {
+  const id = route.params.id as string
+  const foundPartner = partnersStore.getPartnerById(id)
+  if (foundPartner) {
+    partner.value = foundPartner
+  }
+})
 
 const description = computed(() => {
   return marked(partner.value.description)
@@ -64,11 +71,7 @@ function resolveImage(path: string): string {
 
 onMounted(() => {
   window.scrollTo(0, 0)
-  const id = route.params.id as string
-  const foundPartner = partnersStore.getPartnerById(id)
-  if (foundPartner) {
-    partner.value = foundPartner
-  }
+
 })
 
 // --- SEO: Dynamic head tags for partner detail page ---
