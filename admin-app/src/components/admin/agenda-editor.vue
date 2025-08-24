@@ -9,6 +9,7 @@ import type {
   InlineTimeSlot,
   InlineRoom,
 } from "@/utils/api-axios-client";
+import { agendaApi } from '@/utils/api';
 
 // Define props
 const props = defineProps<{
@@ -75,34 +76,61 @@ const getPresentation = agenda.getPresentation;
 const findPresentation = (timeSlot: InlineTimeSlot, room: InlineRoom | null) =>
   agenda.findPresentation(timeSlot, room, props.dayId);
 
-const saveTimeSlot = () => {
-  //TODO
-
-  timeSlotDialog.value = false;
-  editedTimeSlot.value = {
-    dayId: '',
-    displayOrder: -1,
-    label: '',
-    start: '',
-    end: ''
-  };
-  editMode.value = false;
+const saveTimeSlot = async () => {
+  try {
+    if (!editMode.value) {
+      // Creation of time slots is not handled by this issue
+      Notify && (Notify as any).error ? (Notify as any).error('Creating time slots is not supported yet') : console.warn('Creating time slots is not supported yet');
+      return;
+    }
+    // Use new endpoint to update the time slot
+    await agendaApi.updateTimeSlot(
+      props.dayId,
+      editedTimeSlot.value.displayOrder!,
+      {
+        start: editedTimeSlot.value.start || undefined,
+        end: editedTimeSlot.value.end || undefined,
+      }
+    );
+    await refreshData();
+  } catch (error) {
+    console.error('Error saving time slot:', error);
+    Notify.error && Notify.error('Error saving time slot');
+  } finally {
+    timeSlotDialog.value = false;
+    editedTimeSlot.value = {
+      dayId: '',
+      displayOrder: -1,
+      label: '',
+      start: '',
+      end: ''
+    };
+    editMode.value = false;
+  }
 };
 
 // Add or update room
-const saveRoom = () => {
-  if (editMode.value) {
-    const index = rooms.value.findIndex(room => room.id === editedRoom.value.id);
-    if (index !== -1) {
-      rooms.value[index] = { ...editedRoom.value };
+const saveRoom = async () => {
+  try {
+    if (!editMode.value) {
+      // Creating rooms is not covered by this task
+      Notify && (Notify as any).error ? (Notify as any).error('Creating rooms is not supported yet') : console.warn('Creating rooms is not supported yet');
+      return;
     }
-  } else {
-    const newId = (Math.max(...rooms.value.map(room => parseInt(room.id)), 0) + 1).toString();
-    rooms.value.push({ ...editedRoom.value, id: newId });
+    // Use new endpoint to update the room
+    await agendaApi.updateRoom(editedRoom.value.id!, {
+      label: editedRoom.value.label || undefined,
+      displayOrder: editedRoom.value.displayOrder ?? undefined,
+    });
+    await refreshData();
+  } catch (error) {
+    console.error('Error saving room:', error);
+    Notify.error && Notify.error('Error saving room');
+  } finally {
+    roomDialog.value = false;
+    editedRoom.value = { id: '', label: '', displayOrder: 0 };
+    editMode.value = false;
   }
-  roomDialog.value = false;
-  editedRoom.value = { id: '', label: '', displayOrder: 0 };
-  editMode.value = false;
 };
 
 function closeAndCleanAgendaEntryEditor() {
@@ -157,6 +185,7 @@ const editTimeSlot = (timeSlot: InlineTimeSlot) => {
   editedTimeSlot.value = { ...timeSlot };
   editMode.value = true;
   timeSlotDialog.value = true;
+
 };
 
 // Edit room

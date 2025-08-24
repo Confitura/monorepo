@@ -61,16 +61,16 @@ export interface AgendaEntry {
     'presentation'?: Presentation;
     /**
      * 
-     * @type {Set<PublicUser>}
-     * @memberof AgendaEntry
-     */
-    'speakers'?: Set<PublicUser>;
-    /**
-     * 
      * @type {string}
      * @memberof AgendaEntry
      */
     'roomId'?: string;
+    /**
+     * 
+     * @type {Set<PublicProfile>}
+     * @memberof AgendaEntry
+     */
+    'speakers'?: Set<PublicProfile>;
     /**
      * 
      * @type {number}
@@ -1296,51 +1296,106 @@ export interface PresentationStats {
 /**
  * 
  * @export
- * @interface PublicUser
+ * @interface PublicProfile
  */
-export interface PublicUser {
+export interface PublicProfile {
     /**
      * 
      * @type {string}
-     * @memberof PublicUser
+     * @memberof PublicProfile
      */
     'id'?: string;
     /**
      * 
      * @type {string}
-     * @memberof PublicUser
+     * @memberof PublicProfile
      */
     'name'?: string;
     /**
      * 
      * @type {string}
-     * @memberof PublicUser
+     * @memberof PublicProfile
      */
     'bio'?: string;
     /**
      * 
      * @type {string}
-     * @memberof PublicUser
+     * @memberof PublicProfile
      */
     'twitter'?: string;
     /**
      * 
      * @type {string}
-     * @memberof PublicUser
+     * @memberof PublicProfile
      */
     'github'?: string;
     /**
      * 
      * @type {string}
-     * @memberof PublicUser
+     * @memberof PublicProfile
      */
     'www'?: string;
     /**
      * 
      * @type {string}
-     * @memberof PublicUser
+     * @memberof PublicProfile
      */
     'photo'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface PublicSpeaker
+ */
+export interface PublicSpeaker {
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicSpeaker
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicSpeaker
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicSpeaker
+     */
+    'bio'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicSpeaker
+     */
+    'twitter'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicSpeaker
+     */
+    'github'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicSpeaker
+     */
+    'www'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PublicSpeaker
+     */
+    'photo'?: string;
+    /**
+     * 
+     * @type {Array<Presentation>}
+     * @memberof PublicSpeaker
+     */
+    'presentations'?: Array<Presentation>;
 }
 /**
  * 
@@ -1722,6 +1777,44 @@ export interface UpdateAgendaEntryRequest {
 /**
  * 
  * @export
+ * @interface UpdateRoomRequest
+ */
+export interface UpdateRoomRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateRoomRequest
+     */
+    'label': string;
+}
+/**
+ * 
+ * @export
+ * @interface UpdateTimeSlotRequest
+ */
+export interface UpdateTimeSlotRequest {
+    /**
+     * Start time, e.g. 09:00
+     * @type {string}
+     * @memberof UpdateTimeSlotRequest
+     */
+    'start'?: string;
+    /**
+     * End time, e.g. 10:00
+     * @type {string}
+     * @memberof UpdateTimeSlotRequest
+     */
+    'end'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UpdateTimeSlotRequest
+     */
+    'forAllRooms'?: boolean;
+}
+/**
+ * 
+ * @export
  * @interface User
  */
 export interface User {
@@ -1838,13 +1931,13 @@ export interface User {
      * @type {boolean}
      * @memberof User
      */
-    'volunteer'?: boolean;
+    'admin'?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof User
      */
-    'admin'?: boolean;
+    'volunteer'?: boolean;
     /**
      * 
      * @type {boolean}
@@ -2729,6 +2822,88 @@ export const AgendaControllerApiAxiosParamCreator = function (configuration?: Co
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {string} id 
+         * @param {UpdateRoomRequest} updateRoomRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateRoom: async (id: string, updateRoomRequest: UpdateRoomRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('updateRoom', 'id', id)
+            // verify required parameter 'updateRoomRequest' is not null or undefined
+            assertParamExists('updateRoom', 'updateRoomRequest', updateRoomRequest)
+            const localVarPath = `/agenda/rooms/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updateRoomRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} dayId 
+         * @param {number} displayOrder 
+         * @param {UpdateTimeSlotRequest} updateTimeSlotRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateTimeSlot: async (dayId: string, displayOrder: number, updateTimeSlotRequest: UpdateTimeSlotRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'dayId' is not null or undefined
+            assertParamExists('updateTimeSlot', 'dayId', dayId)
+            // verify required parameter 'displayOrder' is not null or undefined
+            assertParamExists('updateTimeSlot', 'displayOrder', displayOrder)
+            // verify required parameter 'updateTimeSlotRequest' is not null or undefined
+            assertParamExists('updateTimeSlot', 'updateTimeSlotRequest', updateTimeSlotRequest)
+            const localVarPath = `/agenda/{dayId}/time-slots/{displayOrder}`
+                .replace(`{${"dayId"}}`, encodeURIComponent(String(dayId)))
+                .replace(`{${"displayOrder"}}`, encodeURIComponent(String(displayOrder)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updateTimeSlotRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -2835,6 +3010,33 @@ export const AgendaControllerApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['AgendaControllerApi.updateAgendaEntry']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * 
+         * @param {string} id 
+         * @param {UpdateRoomRequest} updateRoomRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateRoom(id: string, updateRoomRequest: UpdateRoomRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineRoom>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateRoom(id, updateRoomRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgendaControllerApi.updateRoom']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} dayId 
+         * @param {number} displayOrder 
+         * @param {UpdateTimeSlotRequest} updateTimeSlotRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateTimeSlot(dayId: string, displayOrder: number, updateTimeSlotRequest: UpdateTimeSlotRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineTimeSlot>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateTimeSlot(dayId, displayOrder, updateTimeSlotRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgendaControllerApi.updateTimeSlot']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -2916,6 +3118,27 @@ export const AgendaControllerApiFactory = function (configuration?: Configuratio
          */
         updateAgendaEntry(id: string, updateAgendaEntryRequest: UpdateAgendaEntryRequest, options?: RawAxiosRequestConfig): AxiosPromise<InlineAgendaEntry> {
             return localVarFp.updateAgendaEntry(id, updateAgendaEntryRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {UpdateRoomRequest} updateRoomRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateRoom(id: string, updateRoomRequest: UpdateRoomRequest, options?: RawAxiosRequestConfig): AxiosPromise<InlineRoom> {
+            return localVarFp.updateRoom(id, updateRoomRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} dayId 
+         * @param {number} displayOrder 
+         * @param {UpdateTimeSlotRequest} updateTimeSlotRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateTimeSlot(dayId: string, displayOrder: number, updateTimeSlotRequest: UpdateTimeSlotRequest, options?: RawAxiosRequestConfig): AxiosPromise<InlineTimeSlot> {
+            return localVarFp.updateTimeSlot(dayId, displayOrder, updateTimeSlotRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -3013,6 +3236,31 @@ export class AgendaControllerApi extends BaseAPI {
      */
     public updateAgendaEntry(id: string, updateAgendaEntryRequest: UpdateAgendaEntryRequest, options?: RawAxiosRequestConfig) {
         return AgendaControllerApiFp(this.configuration).updateAgendaEntry(id, updateAgendaEntryRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {UpdateRoomRequest} updateRoomRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgendaControllerApi
+     */
+    public updateRoom(id: string, updateRoomRequest: UpdateRoomRequest, options?: RawAxiosRequestConfig) {
+        return AgendaControllerApiFp(this.configuration).updateRoom(id, updateRoomRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} dayId 
+     * @param {number} displayOrder 
+     * @param {UpdateTimeSlotRequest} updateTimeSlotRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgendaControllerApi
+     */
+    public updateTimeSlot(dayId: string, displayOrder: number, updateTimeSlotRequest: UpdateTimeSlotRequest, options?: RawAxiosRequestConfig) {
+        return AgendaControllerApiFp(this.configuration).updateTimeSlot(dayId, displayOrder, updateTimeSlotRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -7786,7 +8034,7 @@ export const UserControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getSpeakers(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+        async getSpeakers(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Set<PublicSpeaker>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getSpeakers(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UserControllerApi.getSpeakers']?.[localVarOperationServerIndex]?.url;
@@ -7989,7 +8237,7 @@ export const UserControllerApiFactory = function (configuration?: Configuration,
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSpeakers(options?: RawAxiosRequestConfig): AxiosPromise<object> {
+        getSpeakers(options?: RawAxiosRequestConfig): AxiosPromise<Set<PublicSpeaker>> {
             return localVarFp.getSpeakers(options).then((request) => request(axios, basePath));
         },
         /**

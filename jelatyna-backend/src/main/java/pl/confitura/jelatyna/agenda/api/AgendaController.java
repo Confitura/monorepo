@@ -7,8 +7,12 @@ import pl.confitura.jelatyna.agenda.*;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
+import java.util.Comparator;
 import java.util.List;
 
+import static java.util.Comparator.comparing;
 import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
@@ -98,20 +102,66 @@ public class AgendaController {
 
     @GetMapping("/days")
     public List<InlineDay> getAllDays() {
-        return dayRepository.findAll().stream().map(InlineDay::from).toList();
+        return dayRepository.findAll().stream()
+                .sorted(comparing(Day::getDisplayOrder))
+                .map(InlineDay::from)
+                .toList();
     }
 
     @GetMapping("/{dayId}/time-slots")
     public List<InlineTimeSlot> getAllTimeSlots(@PathVariable String dayId) {
         return timeSlotsRepository.findByIdDayId(dayId).stream()
+                .sorted(Comparator.comparing(TimeSlot::getDisplayOrder))
                 .map(InlineTimeSlot::from)
                 .toList();
     }
 
     @GetMapping("/{dayId}/rooms")
     public List<InlineRoom> getAllRooms(@PathVariable String dayId) {
-        return roomRepository.findByDayId(dayId).stream().map(InlineRoom::from).toList();
+        return roomRepository.findByDayId(dayId).stream()
+                .sorted(Comparator.comparing(Room::getDisplayOrder))
+                .map(InlineRoom::from)
+                .toList();
     }
 
+    // New endpoint: update Room
+    @PutMapping("/rooms/{id}")
+    public ResponseEntity<InlineRoom> updateRoom(@PathVariable String id, @RequestBody UpdateRoomRequest request) {
+        Room room = roomRepository.findById(id);
+        if (room == null) {
+            return ResponseEntity.notFound().build();
+        }
+        room.setLabel(request.label());
+        Room saved = roomRepository.save(room);
+        return ResponseEntity.ok(InlineRoom.from(saved));
+    }
+
+    // New endpoint: update TimeSlot (by composite id)
+    @PutMapping("/{dayId}/time-slots/{displayOrder}")
+    public ResponseEntity<InlineTimeSlot> updateTimeSlot(@PathVariable String dayId,
+                                                         @PathVariable int displayOrder,
+                                                         @RequestBody UpdateTimeSlotRequest request) {
+        TimeSlot.TimeSlotId timeSlotId = new TimeSlot.TimeSlotId(dayId, displayOrder);
+        TimeSlot slot = timeSlotsRepository.findById(timeSlotId);
+        if (slot == null) {
+            return ResponseEntity.notFound().build();
+        }
+        // parse and update times if provided
+        try {
+            if (request.start() != null) {
+                request.start().ifPresent(s -> slot.setStart(LocalTime.parse(s)));
+            }
+            if (request.end() != null) {
+                request.end().ifPresent(e -> slot.setEnd(LocalTime.parse(e)));
+            }
+        } catch (DateTimeParseException e) {
+            return ResponseEntity.badRequest().build();
+        }
+        if (request.forAllRooms() != null) {
+            request.forAllRooms().ifPresent(slot::setForAllRooms);
+        }
+        TimeSlot saved = timeSlotsRepository.save(slot);
+        return ResponseEntity.ok(InlineTimeSlot.from(saved));
+    }
 
 }
