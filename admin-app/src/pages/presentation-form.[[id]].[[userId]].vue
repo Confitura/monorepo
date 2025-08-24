@@ -10,8 +10,12 @@ import router from "@/plugins/router.ts";
 let user = useAuthStore().user
 const route = useRoute()
 const presentationId = route.params.id
+const userId = route.params.userId
 const formValid = ref(false)
 
+const actualUserId = computed(() => {
+  return userId || user?.jti;
+})
 // definePage({
 //   meta: {
 //     icon: 'mdi-monitor-dashboard',
@@ -41,8 +45,8 @@ onMounted(async () => {
     .then(data => availableTags.value = data)
     .catch(error => console.error(error))
 
-  if (presentationId) {
-    usersApi.getPresentation(user!.jti, presentationId)
+  if (presentationId && presentationId != 'new') {
+    usersApi.getPresentation(actualUserId.value, presentationId)
       .then(response => response.data)
       .then(data => presentation.value = data)
   } else {
@@ -52,10 +56,10 @@ onMounted(async () => {
 })
 
 function doSubmit() {
-  if (presentationId) {
-    return usersApi.updatePresentation(user!.jti, presentationId, presentation.value)
+  if (presentationId && presentationId != 'new') {
+    return usersApi.updatePresentation(actualUserId.value, presentationId, presentation.value)
   } else {
-    return usersApi.addPresentationToUser(user!.jti, presentation.value);
+    return usersApi.addPresentationToUser(actualUserId.value, presentation.value);
   }
 }
 

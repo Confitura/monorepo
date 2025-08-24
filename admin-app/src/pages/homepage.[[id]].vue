@@ -43,7 +43,7 @@ let user = useAuthStore().user
 const userId = route.params?.id || user!.jti
 
 function loadPresentations() {
-  usersApi.getUserPresentations(userId )
+  usersApi.getUserPresentations(userId)
     .then(res => res.data)
     .then(data => presentations.value = data)
 
@@ -157,7 +157,7 @@ onMounted(() => {
 
               <template v-slot:append>
                 <div class="justify-self-end">
-                  <v-btn to="/profile-form">edit</v-btn>
+                  <v-btn :to="'/profile-form/'+ profile.id ">edit</v-btn>
                 </div>
               </template>
             </v-list-item>
@@ -201,8 +201,9 @@ onMounted(() => {
           <v-row>
             <h2> Workshops </h2>
 
-            <v-btn size="large" class="submit-new" to="/workshop-form" v-if="user?.isAdmin">submit new
-              workshop
+            <v-btn size="large" class="submit-new"
+                   :to="'/workshop-form/new/'+userId"
+                   v-if="user?.isAdmin">submit new workshop
             </v-btn>
           </v-row>
           <v-row v-for="workshop in workshops" :key="workshop.id">
@@ -256,7 +257,9 @@ onMounted(() => {
           <v-row>
             <h2> Presentations </h2>
 
-            <v-btn size="large" class="submit-new" to="/presentation-form" v-if="user?.isAdmin">submit
+            <v-btn size="large" class="submit-new"
+                   :to="'/presentation-form/new/'+userId"
+                   v-if="user?.isAdmin">submit
               new presentation
             </v-btn>
           </v-row>
@@ -274,13 +277,13 @@ onMounted(() => {
                   <v-chip v-for="tag in presentation.tags"> {{ tag }}</v-chip>
                   <v-spacer></v-spacer>
                   <v-btn v-if="user?.isAdmin"
-                    color="medium-emphasis"
-                    icon="mdi-delete"
-                    size="small"
+                         color="medium-emphasis"
+                         icon="mdi-delete"
+                         size="small"
                   >
                     <v-icon icon="mdi-delete"></v-icon>
 
-                    <v-menu activator="parent" >
+                    <v-menu activator="parent">
                       <v-btn @click="deleteItem(presentation)"> YES,
                         DELETE
                       </v-btn>
@@ -313,14 +316,19 @@ onMounted(() => {
   <v-dialog v-model="cospeakersDialogVisible" max-width="600px">
     <v-card v-if="selectedPresentation || selectedWorkshop">
       <v-card-title>
-        Manage Speakers for "{{ isWorkshop ? selectedWorkshop?.title : selectedPresentation?.title }}"
+        Manage Speakers for "{{
+          isWorkshop ? selectedWorkshop?.title : selectedPresentation?.title
+        }}"
       </v-card-title>
 
       <v-card-text>
         <v-list>
           <v-list-subheader>Current Speakers</v-list-subheader>
           <v-list-item v-for="cospeaker in cospeakers" :key="cospeaker.id">
-            <v-list-item-title>{{ cospeaker.name }} ({{ cospeaker.email }})</v-list-item-title>
+            <v-list-item-title>{{ cospeaker.name }} ({{
+                cospeaker.email
+              }})
+            </v-list-item-title>
             <template v-slot:append>
               <v-btn
                 color="error"
@@ -334,7 +342,8 @@ onMounted(() => {
           <v-divider class="my-4"></v-divider>
 
           <v-list-subheader>Add New Speaker</v-list-subheader>
-          <v-form @submit.prevent="addCospeaker(isWorkshop ? selectedWorkshop!.id! : selectedPresentation!.id!)">
+          <v-form
+            @submit.prevent="addCospeaker(isWorkshop ? selectedWorkshop!.id! : selectedPresentation!.id!)">
             <v-text-field
               v-model="newCospeakerEmail"
               label="Cospeaker Email"
@@ -354,7 +363,8 @@ onMounted(() => {
 
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="primary" @click="cospeakersDialogVisible = false">Close</v-btn>
+        <v-btn color="primary" @click="cospeakersDialogVisible = false">Close
+        </v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
