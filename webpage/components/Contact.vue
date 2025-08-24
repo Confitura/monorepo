@@ -25,6 +25,7 @@
             </span>
         </div>
         <router-link to="privacy-policy" class="contact__privacy">Privacy policy</router-link>
+        <a href="https://api.confitura.pl/api/resources/edition-2025/docs/Regulamin%20Confitura%2025.pdf" class="contact__regulamin" target="_blank">Regulamin wydarzenia</a>
         <SocialLinks class="mobile"/>
       </div>
     </div>
@@ -87,6 +88,7 @@
     }
   }
 
+  .contact__regulamin,
   .contact__privacy {
     margin-top: 2rem;
     color: #ffffff;
