@@ -43,7 +43,7 @@ public class AgendaEntry {
 
     private String label;
 
-    @OneToOne
+    @ManyToOne
     private Presentation presentation;
 
     public int getTimeSlotOrder() {
