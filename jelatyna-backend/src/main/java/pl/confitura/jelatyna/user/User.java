@@ -111,7 +111,7 @@ public class User extends AuditedEntity {
     }
 
     public boolean hasAcceptedPresentation() {
-        return presentations.stream().anyMatch(Presentation::isAccepted);
+        return presentations != null && presentations.stream().anyMatch(Presentation::isAccepted);
     }
 
     public boolean hasArrived() {

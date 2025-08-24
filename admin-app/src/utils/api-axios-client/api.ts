@@ -61,28 +61,28 @@ export interface AgendaEntry {
     'presentation'?: Presentation;
     /**
      * 
-     * @type {string}
-     * @memberof AgendaEntry
-     */
-    'roomId'?: string;
-    /**
-     * 
      * @type {Set<PublicProfile>}
      * @memberof AgendaEntry
      */
     'speakers'?: Set<PublicProfile>;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof AgendaEntry
      */
-    'timeSlotOrder'?: number;
+    'roomId'?: string;
     /**
      * 
      * @type {string}
      * @memberof AgendaEntry
      */
     'presentationId'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof AgendaEntry
+     */
+    'timeSlotOrder'?: number;
 }
 /**
  * 
@@ -586,6 +586,12 @@ export interface InlinePresentation {
      * @memberof InlinePresentation
      */
     'tags': Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlinePresentation
+     */
+    'status': string;
 }
 /**
  * 
@@ -826,6 +832,12 @@ export interface InlineWorkshop {
      * @memberof InlineWorkshop
      */
     'maxGroupSize': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineWorkshop
+     */
+    'status': string;
 }
 /**
  * 
@@ -1187,7 +1199,7 @@ export interface Presentation {
      * @type {boolean}
      * @memberof Presentation
      */
-    'accepted'?: boolean;
+    'new'?: boolean;
     /**
      * 
      * @type {Presentation}
@@ -1199,7 +1211,7 @@ export interface Presentation {
      * @type {boolean}
      * @memberof Presentation
      */
-    'new'?: boolean;
+    'accepted'?: boolean;
 }
 /**
  * 
@@ -7010,6 +7022,45 @@ export const UserAdminControllerApiAxiosParamCreator = function (configuration?:
     return {
         /**
          * 
+         * @param {User} user 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createManual: async (user: User, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'user' is not null or undefined
+            assertParamExists('createManual', 'user', user)
+            const localVarPath = `/users/manual`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(user, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -7135,6 +7186,18 @@ export const UserAdminControllerApiFp = function(configuration?: Configuration) 
     return {
         /**
          * 
+         * @param {User} user 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createManual(user: User, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FullUser>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createManual(user, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['UserAdminControllerApi.createManual']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -7182,6 +7245,15 @@ export const UserAdminControllerApiFactory = function (configuration?: Configura
     return {
         /**
          * 
+         * @param {User} user 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createManual(user: User, options?: RawAxiosRequestConfig): AxiosPromise<FullUser> {
+            return localVarFp.createManual(user, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -7218,6 +7290,17 @@ export const UserAdminControllerApiFactory = function (configuration?: Configura
  * @extends {BaseAPI}
  */
 export class UserAdminControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {User} user 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserAdminControllerApi
+     */
+    public createManual(user: User, options?: RawAxiosRequestConfig) {
+        return UserAdminControllerApiFp(this.configuration).createManual(user, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @param {*} [options] Override http request option.

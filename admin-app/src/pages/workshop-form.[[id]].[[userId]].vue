@@ -10,8 +10,12 @@ import router from "@/plugins/router.ts";
 let user = useAuthStore().user
 const route = useRoute()
 const workshopId = route.params.id
+const userId = route.params.userId
 const formValid = ref(false)
 
+const actualUserId = computed(() => {
+  return userId || user?.jti;
+})
 // definePage({
 //   meta: {
 //     icon: 'mdi-monitor-dashboard',
@@ -45,8 +49,8 @@ onMounted(async () => {
     .then(data => availableTags.value = data)
     .catch(error => console.error(error))
 
-  if (workshopId) {
-    usersApi.getWorkshop(user!.jti, workshopId)
+  if (workshopId && workshopId != 'new') {
+    usersApi.getWorkshop(actualUserId.value, workshopId)
       .then(response => response.data)
       .then(data => workshop.value = data)
   } else {
@@ -56,10 +60,10 @@ onMounted(async () => {
 })
 
 function doSubmit() {
-  if (workshopId) {
-    return usersApi.updateWorkshop(user!.jti, workshopId, workshop.value)
+  if (workshopId && workshopId != 'new') {
+    return usersApi.updateWorkshop(actualUserId.value, workshopId, workshop.value)
   } else {
-    return usersApi.addWorkshopToUser(user!.jti, workshop.value);
+    return usersApi.addWorkshopToUser(actualUserId.value, workshop.value);
   }
 }
 

@@ -18,7 +18,9 @@ public record InlinePresentation(
         @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
         String language,
         @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
-        String[] tags
+        String[] tags,
+        @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
+        String status
 ) {
     public InlinePresentation(Presentation presentation) {
         this(
@@ -28,7 +30,8 @@ public record InlinePresentation(
                 presentation.getDescription(),
                 presentation.getLevel(),
                 presentation.getLanguage(),
-                presentation.getTags().stream().map(Tag::getId).toArray(String[]::new)
+                presentation.getTags().stream().map(Tag::getId).toArray(String[]::new),
+                presentation.getStatus()
         );
     }
 }

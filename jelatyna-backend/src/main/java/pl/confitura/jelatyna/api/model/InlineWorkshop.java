@@ -26,7 +26,9 @@ public record InlineWorkshop(
         @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
         Integer durationInMinutes,
         @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
-        Integer maxGroupSize
+        Integer maxGroupSize,
+        @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
+        String status
 ) {
     public InlineWorkshop(Presentation presentation) {
         this(
@@ -40,7 +42,8 @@ public record InlineWorkshop(
                 presentation.getIsFree(),
                 presentation.getExpectedPrice(),
                 presentation.getDurationInMinutes(),
-                presentation.getMaxGroupSize()
+                presentation.getMaxGroupSize(),
+                presentation.getStatus()
         );
     }
 }

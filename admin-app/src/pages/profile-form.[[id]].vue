@@ -1,12 +1,19 @@
 <script setup lang="ts">
 
 import {resourcesApi, tokenAPi, usersApi} from "@/utils/api.ts";
-import {ref, onMounted} from 'vue';
+import {ref, onMounted, computed} from 'vue';
 import {storeToRefs} from 'pinia';
 import {useAuthStore} from '@/stores/auth';
+import { useRoute } from 'vue-router';
 
 let store = useAuthStore();
 const {user} = storeToRefs(store)
+const route = useRoute()
+
+const effectiveUserId = computed(() => {
+  const routeId = route.params?.id as string | undefined
+  return routeId || user.value?.jti
+})
 
 const validationRules = {
   name: [(v: string) => !!v || 'Name is required'],
@@ -45,7 +52,7 @@ const form = ref<UserForm>({
 });
 
 function uploadProfilePhoto() {
-  if (profilePhoto.value) {
+  if (profilePhoto.value && effectiveUserId.value) {
       const formData = new FormData();
       formData.append('file', profilePhoto.value);
       const storeRequest = {
@@ -54,7 +61,7 @@ function uploadProfilePhoto() {
           'Content-Type': 'multipart/form-data'
         }
       };
-      return resourcesApi.storeUserProfilePicture(user?.value?.jti || '', storeRequest);
+      return resourcesApi.storeUserProfilePicture(effectiveUserId.value, storeRequest);
   }
 }
 
@@ -62,6 +69,10 @@ const onSubmit = async () => {
   let valid = await xForm.value.validate()
 
   if (valid.valid) {
+    // ensure id is set to the effective user id before save
+    if (!form.value.id && effectiveUserId.value) {
+      form.value.id = effectiveUserId.value
+    }
     usersApi.save1(form.value)
       .then(() => tokenAPi.refreshToken())
       .then((res) => store.login(res.data))
@@ -88,8 +99,8 @@ const fetchUserData = async (userId: string) => {
 
 
 onMounted(() => {
-  if (user.value?.jti) {
-    fetchUserData(user.value.jti);
+  if (effectiveUserId.value) {
+    fetchUserData(effectiveUserId.value);
   }
 });
 
