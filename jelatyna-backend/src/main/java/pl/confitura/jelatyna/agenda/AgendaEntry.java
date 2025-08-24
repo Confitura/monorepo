@@ -17,12 +17,7 @@ import static java.util.stream.Collectors.toSet;
 
 
 @Entity
-@Table(
-        name = "agenda",
-        uniqueConstraints = {
-                @UniqueConstraint(columnNames = {"room_id", "time_slot_day_id", "time_slot_display_order"})
-        }
-)
+@Table(name = "agenda")
 @Data
 @Accessors(chain = true)
 public class AgendaEntry {
