@@ -34,7 +34,7 @@ const language = computed(() => {
   <div class="presentationMetadata">
     <div class="presentationMetadata__group">
       <i class="presentationMetadata__icon fas fa-flag" title="language"></i>
-      <div class="presentationMetadata__language">{{ language }}</div>
+      <div class="presentationMetadata__language">{{ props.presentation.language }}</div>
     </div>
     <div class="presentationMetadata__group">
       <i class="presentationMetadata__icon fas fa-graduation-cap" title="level"></i>
