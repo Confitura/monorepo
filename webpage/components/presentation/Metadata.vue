@@ -41,16 +41,8 @@ const language = computed(() => {
       <div class="presentationMetadata__level">{{ props.presentation.level }}</div>
     </div>
     <div class="presentationMetadata__group" v-if="props.presentation.workshop">
-      <i class="presentationMetadata__icon fas fa-hammer" title="workshop"></i>
-      <div class="presentationMetadata__workshop">workshop</div>
-    </div>
-    <div class="presentationMetadata__group" v-if="props.presentation.workshop">
       <i class="presentationMetadata__icon fas fa-clock" title="workshop duration"></i>
       <div class="presentationMetadata__duration">{{ props.presentation.durationInMinutes }} min</div>
-    </div>
-    <div class="presentationMetadata__group" v-if="!props.presentation.workshop">
-      <i class="presentationMetadata__icon fas fa-microphone" title="presentation"></i>
-      <div class="presentationMetadata__presentation">presentation</div>
     </div>
     <div class="presentationMetadata__group" v-if="props.showTags">
       <template v-if="hasTags">
