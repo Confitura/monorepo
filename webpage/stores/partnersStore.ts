@@ -179,5 +179,13 @@ We hope to achieve this by providing a complete overview of Polish AI scene whic
         www: "https://digitalpoland.org/",
         type: "media",
         orientation: "vertical"
+    }, {
+        id: "stacja-it",
+        name: "Stacja IT",
+        description: "Stacja IT to miejsce spotkań osób, dla których rozwój kompetencji i ciągłe doskonalenie umiejętności są bardzo ważne. W trakcie praktycznych szkoleń nasi Eksperci dzielą się swoją wiedzą z tymi, którzy tej wiedzy potrzebują. Nie masz czasu samodzielnie szukać materiałów, przykładów i zastanawiać się jaki warsztat pracy jest optymalny dla danej technologii? Jeśli szukałeś miejsca, w którym możesz się wiele nauczyć, świetnie trafiłeś!",
+        logo: "/assets/partners/2025/stacja-it.png",
+        www: "https://stacja.it/",
+        type: "media",
+        orientation: "vertical"
     }];
 }
