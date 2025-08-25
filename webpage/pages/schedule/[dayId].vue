@@ -291,7 +291,7 @@ useHead({
   border-bottom: 2px solid #000000;
   padding-top: 0.7rem;
   padding-bottom: 0.7rem;
-  grid-row: auto / span 5;
+  grid-row: auto / span 3;
   @include lg() {
     grid-row: unset;
     padding-top: 1.5rem;
