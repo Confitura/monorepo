@@ -90,7 +90,7 @@
 
 import {type PartnerType, usePartnersStore} from '~/stores/partnersStore'
 
-const types: PartnerType[] = ['gold', 'silver', 'bronze']
+const types: PartnerType[] = ['gold', 'silver', 'bronze', 'media']
 const active: Ref<PartnerType> = useState('active', () => 'gold')
 
 let partners: Partners = usePartnersStore().partnersMap
@@ -308,6 +308,7 @@ function resolveImage(path: string): string {
   .type--gold,
   .type--silver,
   .type--bronze,
+  .type--media,
   .type--tech {
     font-size: 1.5rem;
     color: #eaeaea;

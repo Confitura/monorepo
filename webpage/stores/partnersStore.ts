@@ -161,5 +161,23 @@ doświadczeniem i najlepszymi praktykami.`,
         www: "https://bottega.com.pl/",
         type: "bronze",
         orientation: "horizontal"
+    }, {
+        id: "ai-poland",
+        name: "AI Poland",
+        description: `AIPoland is an initiative of Digital Poland Foundation with aim to promote Polish AI ecosystem and enable collaboration between Polish and foreign entities in various areas including business cooperation, co-development of new initiatives and raising funds.
+
+We hope to achieve this by providing a complete overview of Polish AI scene which includes key facts, events, the database of Poland-based companies, R&D centres, Universities as well as Public Policy and support for AI development.`,
+        logo: "/assets/partners/2025/aipoland_logo-2025_horizontal_rgb-kolor.svg",
+        www: "https://aipoland.org/",
+        type: "media",
+        orientation: "horizontal"
+    }, {
+        id: "digitalpoland",
+        name: "Digital Poland",
+        description: "Fundacja Digital Poland zamienia cyfrowe wyzwania w szanse dla polskiej gospodarki. Pozycjonujemy Polskę jako wiodący ośrodek innowacji cyfrowych na świecie, promując międzynarodową i międzybranżową inicjatywę, łącząc siły, tematy i tworząc sieć kontaktów i relacji.",
+        logo: "/assets/partners/2025/digital poland_logo_kolor+czarny.svg",
+        www: "https://digitalpoland.org/",
+        type: "media",
+        orientation: "vertical"
     }];
 }
