@@ -33,10 +33,12 @@ public class AgendaInitializer {
     }
 
     private void init() {
-        log.info("Initializing agenda");
-        loginAsAdmin();
-        createDayOne();
-        createDayTwo();
+        if (dayRepository.findAll().isEmpty()) {
+            log.info("Initializing agenda");
+            loginAsAdmin();
+            createDayOne();
+            createDayTwo();
+        }
 
     }
 
@@ -77,7 +79,7 @@ public class AgendaInitializer {
                 "08:00", "09:00", "09:10", "10:00",
                 "10:15", "10:45", "11:15", "11:30",
                 "12:00", "12:30", "12:45", "13:15",
-                "13:45", "14:45", "15:15",
+                "13:45",  "14:45", "15:15",
                 "15:45", "16:00", "16:30", "17:00",
                 "17:15", "17:45", "18:15"
         ));

@@ -46,12 +46,17 @@ const partner = ref<Partner>({
   type: "",
   www: ""
 })
-await callOnce('partner', () => {
+
+function loadPartner() {
   const id = route.params.id as string
   const foundPartner = partnersStore.getPartnerById(id)
   if (foundPartner) {
     partner.value = foundPartner
   }
+}
+
+await callOnce('partner', () => {
+  loadPartner();
 })
 
 const description = computed(() => {
@@ -70,6 +75,7 @@ function resolveImage(path: string): string {
 }
 
 onMounted(() => {
+  loadPartner();
   window.scrollTo(0, 0)
 
 })
