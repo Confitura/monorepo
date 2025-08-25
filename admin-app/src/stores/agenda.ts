@@ -31,7 +31,10 @@ export const useAgendaStore = defineStore('agenda', {
 
         // Load presentations at once (global)
         const presentationsResponse = await presentationApi.getAllPresentations()
-        this.presentations = presentationsResponse.data
+
+        this.presentations = presentationsResponse.data.sort((a, b) =>
+          a.title.localeCompare(b.title)
+        )
 
         // Fetch all requested days in parallel
         const results = await Promise.all(

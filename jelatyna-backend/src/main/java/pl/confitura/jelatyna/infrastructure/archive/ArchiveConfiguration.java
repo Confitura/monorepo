@@ -10,6 +10,10 @@ import pl.confitura.jelatyna.page.PageController;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
 import pl.confitura.jelatyna.resource.ResourceConfigurationProperties;
 import pl.confitura.jelatyna.user.UserController;
+import pl.confitura.jelatyna.agenda.AgendaRepository;
+import pl.confitura.jelatyna.agenda.DayRepository;
+import pl.confitura.jelatyna.agenda.TimeSlotsRepository;
+import pl.confitura.jelatyna.agenda.RoomRepository;
 
 @Configuration
 @RequiredArgsConstructor
@@ -22,7 +26,10 @@ public class ArchiveConfiguration {
     private final ResourceConfigurationProperties resourceConfigurationProperties;
     private final NewsletterApi newsletterApi;
     private final PresentationRepository presentationRepository;
-
+    private final AgendaRepository agendaRepository;
+    private final DayRepository dayRepository;
+    private final TimeSlotsRepository timeSlotsRepository;
+    private final RoomRepository roomRepository;
 
     @Bean
     WebpageDataDumper webpageDataDumper() {
@@ -32,7 +39,11 @@ public class ArchiveConfiguration {
                 userController,
                 pageController,
                 newsletterApi,
-                presentationRepository
+                presentationRepository,
+                agendaRepository,
+                dayRepository,
+                timeSlotsRepository,
+                roomRepository
         );
     }
 }

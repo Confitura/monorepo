@@ -6,6 +6,13 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.transaction.annotation.Transactional;
+import pl.confitura.jelatyna.agenda.AgendaRepository;
+import pl.confitura.jelatyna.agenda.DayRepository;
+import pl.confitura.jelatyna.agenda.RoomRepository;
+import pl.confitura.jelatyna.agenda.TimeSlotsRepository;
+import pl.confitura.jelatyna.agenda.api.InlineAgendaEntry;
+import pl.confitura.jelatyna.agenda.api.InlineRoom;
+import pl.confitura.jelatyna.agenda.api.InlineTimeSlot;
 import pl.confitura.jelatyna.api.model.InlinePresentationWithSpeakers;
 import pl.confitura.jelatyna.news.NewsletterApi;
 import pl.confitura.jelatyna.page.PageController;
@@ -22,13 +29,30 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.stream.StreamSupport;
 
 import static java.util.stream.Collectors.toList;
 
 @Slf4j
 @RequiredArgsConstructor
 public class WebpageDataDumper {
+
+    public WebpageDataDumper(ObjectMapper objectMapper,
+                             String targetDirectory,
+                             UserController userController,
+                             PageController pageController,
+                             NewsletterApi newsletterApi,
+                             PresentationRepository presentationRepository) {
+        this.objectMapper = objectMapper;
+        this.targetDirectory = targetDirectory;
+        this.userController = userController;
+        this.pageController = pageController;
+        this.newsletterApi = newsletterApi;
+        this.presentationRepository = presentationRepository;
+        this.agendaRepository = null;
+        this.dayRepository = null;
+        this.timeSlotsRepository = null;
+        this.roomRepository = null;
+    }
 
     private final ObjectMapper objectMapper;
     private final String targetDirectory;
@@ -37,6 +61,12 @@ public class WebpageDataDumper {
     private final PageController pageController;
     private final NewsletterApi newsletterApi;
     private final PresentationRepository presentationRepository;
+
+    // Agenda-related repositories
+    private final AgendaRepository agendaRepository;
+    private final DayRepository dayRepository;
+    private final TimeSlotsRepository timeSlotsRepository;
+    private final RoomRepository roomRepository;
 
     private final AtomicReference<Instant> lastDumpAt = new AtomicReference<>();
 
@@ -49,6 +79,7 @@ public class WebpageDataDumper {
         dumpAcceptedWorkshops();
         dumpPages();
         dumpNews();
+        dumpAgendaByDay();
         lastDumpAt.set(Instant.now());
     }
 
@@ -109,6 +140,38 @@ public class WebpageDataDumper {
             dumbData(DumpedNews.from(newsletterApi.getWebpageNews()), "news.json");
         } catch (IOException e) {
             log.warn("Couldn't dump news", e);
+        }
+    }
+
+    public void dumpAgendaByDay() {
+        if (dayRepository == null || timeSlotsRepository == null || roomRepository == null || agendaRepository == null) {
+            // Agenda repositories not wired (e.g., in tests using legacy constructor) - skip dumping agenda.
+            return;
+        }
+        var days = dayRepository.findAll();
+        if (days == null || days.isEmpty()) {
+            return;
+        }
+        for (var day : days) {
+            String dayId = day.getId();
+            var timeSlots = timeSlotsRepository.findByIdDayId(dayId).stream()
+                    .sorted(Comparator.comparing(pl.confitura.jelatyna.agenda.TimeSlot::getDisplayOrder))
+                    .map(InlineTimeSlot::from)
+                    .toList();
+            var rooms = roomRepository.findByDayId(dayId).stream()
+                    .sorted(Comparator.comparing(pl.confitura.jelatyna.agenda.Room::getDisplayOrder))
+                    .map(InlineRoom::from)
+                    .toList();
+            var entries = agendaRepository.findByTimeSlotIdDayId(dayId).stream()
+                    .map(InlineAgendaEntry::from)
+                    .toList();
+
+            var presentations = presentationRepository.findAccepted()
+                    .stream()
+                    .map(InlinePresentationWithSpeakers::new)
+                    .toList();
+            InlineAgenda agenda = new InlineAgenda(timeSlots, rooms, presentations, entries);
+            dumbData(agenda, "/agenda/" + dayId + ".json");
         }
     }
 
