@@ -1,6 +1,6 @@
 <template>
   <div class="agendaPage">
-    <PageHeader title="Schedule" type="peace" />
+    <PageHeader title="Schedule" type="peace"/>
 
     <Box color="white" class="min-padding">
       <div class="agenda">
@@ -11,20 +11,18 @@
         </div>
         <template v-for="slot in slots"
                   :key="slot.id">
-          <div
-            class="agendaItem__slot"
-            :class="{ 'agendaItem__slot--all': hasSingleEntryFor(slot) }"
+          <div class="agendaItem__slot"
+               :class="{ 'agendaItem__slot--all': hasSingleEntryFor(slot) }"
           >
             <span>{{ slot.label }}</span>
           </div>
           <AgendaItem
-            v-for="currentRoom in rooms"
-            :key="`${currentRoom.id}-${slot.id}`"
-            :entry="getEntryFor(currentRoom, slot)"
-            @select="selectPresentation"
-            @start-rating="startRatingPresentation"
-            class="agendaItem__entry "
-            :class="{
+              v-for="currentRoom in rooms"
+              :key="`${currentRoom.id}-${slot.id}`"
+              :entry="getEntryFor(currentRoom, slot)"
+              @select="selectPresentation"
+              class="agendaItem__entry "
+              :class="{
                       [`agendaItem__entry--${currentRoom.displayOrder}`]: true,
                       'agendaItem__entry--all': hasSingleEntryFor(slot)
                     }"
@@ -33,21 +31,17 @@
       </div>
     </Box>
 
-    <Contact />
-        <PresentationModal
-          :presentationId="selectedPresentationId"
-          @close="modalClosed()"
-        ></PresentationModal>
-    <!--    <PresentationRateModal-->
-    <!--      :presentationRate="presentationRate"-->
-    <!--      @close="modalClosed()"-->
-    <!--    ></PresentationRateModal>-->
+    <Contact/>
+    <PresentationModal
+        :presentationId="selectedPresentationId"
+        @close="modalClosed()"
+    ></PresentationModal>
   </div>
 </template>
 
 <script setup lang="ts">
 
-import { useAPIFetch } from '~/composables/useAPIFetch'
+import {useArchiveFetch} from '~/composables/useAPIFetch'
 
 function name(room: string) {
   if (room.includes(' ')) {
@@ -63,28 +57,75 @@ function subname(room: string) {
   return null
 }
 
-let { data: rooms } = useAPIFetch('/rooms.json', {
+let dayPath = '/agenda/' + useRoute().params.dayId + '.json';
+let {data: rooms} = useArchiveFetch(dayPath, {
   key: 'rooms',
-  transform: (data: EmbeddedRooms) => data._embedded.rooms.sort(sortByOrder)
+  transform: (data: DayAgenda) => data.rooms.sort(sortByOrder)
 })
-let { data: slots } = useAPIFetch('/time-slots.json', {
+let {data: slots} = useArchiveFetch(dayPath, {
   key: 'timeSlots',
-  transform: (data: EmbeddedTimeSlots) => data._embedded.timeSlots.sort(sortByOrder)
+  transform: (data: DayAgenda) => data.timeSlots
+      .map((slot: DayTimeSlot) => ({
+        id: String(slot.displayOrder),
+        label: slot.label,
+        displayOrder: slot.displayOrder,
+        forAllRooms: false,
+        start: slot.start,
+        end: slot.end
+      }))
+      .sort(sortByOrder)
 })
-let { data: agenda } = useAPIFetch('/agenda.json', {
+let {data: agenda} = useArchiveFetch(dayPath, {
   key: 'agenda',
-  transform: (data: EmbeddedAgenda) => data._embedded.agendaEntries
+  transform: (data: DayAgenda) => data.agendaEntries
+      .map((entry: DayAgendaEntry) => ({
+        ...entry,
+        timeSlotId: String(entry.timeSlotIndex)
+      }))
+})
+let {data: presentations} = useArchiveFetch(dayPath, {
+  key: 'presentations',
+  transform: (data: DayAgenda) => data.presentations
 })
 const selectedPresentationId = useState('selectedPresentationId', () => null)
-let presentationRate: PresentationRate | null = null
 
-function getEntryFor(room: Room, slot: TimeSlot): AgendaEntry {
-  const entry = agenda.value.find(
-    it =>
-      it.timeSlotId === slot.id &&
-      (it.roomId === null || it.roomId === room.id)
+function getEntryFor(room: Room | null, slot: TimeSlot): AgendaEntry {
+  const entry = agenda.value?.find(
+      it =>
+          it.timeSlotId === slot.id &&
+          (it.roomId === null || it.roomId === room?.id)
   )
-  return entry || { id: 'empty', label: 'empty' }
+  if (!entry) {
+    return {id: 'empty', label: 'empty'}
+  }
+
+  // Build enriched entry with presentation and labels when available
+  const enriched: any = {...entry}
+
+  // Add labels
+  const slotObj = slots.value?.find((s: any) => s.id === entry.timeSlotId)
+  if (slotObj) {
+    enriched.timeSlotLabel = slotObj.label
+  }
+  const roomObj = entry.roomId ? rooms.value?.find((r: any) => r.id === entry.roomId) : null
+  if (roomObj) {
+    enriched.roomLabel = roomObj.label
+  }
+
+  // Attach presentation details if presentationId present
+  if (entry.presentationId) {
+    const pres = presentations.value?.find((p: any) => p.id === entry.presentationId)
+    if (pres) {
+      enriched.presentation = pres
+      enriched.presentationId = pres.id
+      // AgendaItem expects `speaker` (singular property) listing speakers
+      enriched.speaker = pres.speakers || []
+      // Optional: provide tags for PresentationMetadata
+      enriched.tags = pres.tags || []
+    }
+  }
+
+  return enriched
 }
 
 function hasSingleEntryFor(slot: TimeSlot): boolean {
@@ -99,14 +140,9 @@ function selectPresentation(presentation: Presentation) {
   }
 }
 
-function startRatingPresentation(newRate: PresentationRate) {
-  //TODO this.$store.commit(SET_PRESENTATION_UNDER_RATE, { presentationRate })
-  // presentationRate = newRate;
-}
 
 function modalClosed() {
   selectedPresentationId.value = null
-  presentationRate = null
 }
 
 let sortByOrder = (a: WithOrder, b: WithOrder) => a.displayOrder - b.displayOrder
@@ -154,19 +190,44 @@ export interface AgendaEntry {
   timeSlotLabel?: string;
 }
 
+// Day agenda archive format (edition-2025)
+interface DayTimeSlot {
+  dayId: string;
+  displayOrder: number;
+  label: string;
+  start: string;
+  end: string;
+}
+
+interface DayAgendaEntry {
+  id: string;
+  dayId: string;
+  timeSlotIndex: number;
+  roomId: string | null;
+  label: string | null;
+  presentationId: string | null;
+}
+
+interface DayAgenda {
+  timeSlots: DayTimeSlot[];
+  rooms: Room[];
+  presentations: Presentation[];
+  agendaEntries: DayAgendaEntry[];
+}
+
 
 const title = 'Schedule — Confitura 2025 Agenda';
 const description = 'Explore the full Confitura 2025 agenda: time slots, rooms, and sessions. Plan your conference day in Warsaw.';
 useHead({
   title,
   meta: [
-    { name: 'description', content: description },
-    { property: 'og:title', content: title },
-    { property: 'og:description', content: description },
-    { property: 'og:type', content: 'website' },
-    { name: 'twitter:card', content: 'summary' },
-    { name: 'twitter:title', content: title },
-    { name: 'twitter:description', content: description }
+    {name: 'description', content: description},
+    {property: 'og:title', content: title},
+    {property: 'og:description', content: description},
+    {property: 'og:type', content: 'website'},
+    {name: 'twitter:card', content: 'summary'},
+    {name: 'twitter:title', content: title},
+    {name: 'twitter:description', content: description}
   ]
 })
 
@@ -182,7 +243,7 @@ useHead({
   display: grid;
   grid-template-columns: 60px 1fr;
   @include lg() {
-    grid-template-columns: 120px 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 120px 1fr 1fr 1fr;
     margin-bottom: 5rem;
   }
 }
@@ -255,7 +316,7 @@ useHead({
 .agendaItem__entry--all {
   grid-column: 2 / -1;
 
-  &:not(.agendaItem__entry--0) {
+  &:not(.agendaItem__entry--1) {
     display: none;
   }
 }

@@ -1,85 +1,40 @@
 <template>
   <div
-    class="agendaItem"
-    :class="{ 'agendaItem--withPresentation': entry.presentationId }"
-    :key="rates.length"
+      class="agendaItem"
+      :class="{ 'agendaItem--withPresentation': entry.presentationId }"
   >
     <div v-if="entry.roomLabel" class="agendaItem__room">
       {{ entry.roomLabel }}
     </div>
     <div
-      class="agendaItem__presentation"
-      v-if="entry.presentationId"
-      @click="$emit('select',entry.presentation)"
+        class="agendaItem__presentation"
+        v-if="entry.presentationId"
+        @click="$emit('select',entry.presentation)"
     >
-      <div class="agendaItem__title">{{ entry.presentation.title }}</div>
+      <div class="agendaItem__title">{{ entry.presentation?.title }}</div>
       <div class="agendaItem__speakers">
         <span
-          class="agendaItem__speaker"
-          v-for="speaker in entry.speaker"
-          :key="speaker.id"
+            class="agendaItem__speaker"
+            v-for="speaker in entry.speaker"
+            :key="speaker.id"
         >{{ speaker.name }}</span
         >
       </div>
       <PresentationMetadata
-        :presentation="entry.presentation"
-        :showTags="false"
-        class="agendaItem__metadata"
+          :presentation="entry.presentation"
+          :showTags="false"
+          class="agendaItem__metadata"
       ></PresentationMetadata>
       <div class="agendaItem__separator"></div>
-      <!--      <div class="agendaItem__rate" @click.stop="">-->
-      <!--        <template v-if="isRated(entry.presentation)">-->
-      <!--          already rated!-->
-      <!--        </template>-->
-      <!--        <template v-else-->
-      <!--          >rate it!-->
-      <!--          <div :key="rate">-->
-      <!--            <PresentationRateStars-->
-      <!--              v-model="rate"-->
-      <!--              @input="startRating(entry.presentation)"-->
-      <!--            ></PresentationRateStars>-->
-      <!--          </div>-->
-      <!--        </template>-->
-      <!--      </div>-->
     </div>
     <div v-else class="agendaItem__label">
-      <span v-if="!!entry.label.match(/\[(.+)\]\((.+)\)/)">
-        <a :href="entry.label.match(/\[(.+)\]\((.+)\)/)[2]">{{
-            entry.label.match(/\[(.+)\]\((.+)\)/)[1]
-          }}</a>
-      </span>
-      <span v-else>{{ entry.label }}</span>
+      <span>{{ entry.label }}</span>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-const { entry } = defineProps<{ entry: AgendaEntry }>()
-
-let rate: number = 0
-
-//TODO @Emit()
-function select(presentation: Presentation) {
-  return presentation
-}
-
-//
-// @Emit()
-function startRating(presentation: WithTitle): PresentationRate {
-  const newRate = { presentation, rate }
-  rate = 0
-  return newRate
-}
-
-function isRated(presentation): boolean {
-  return true
-  //TODO return this.$store.getters.isRated(presentation.id);
-}
-
-let rates = []
-//TODO public get rates() {
-//   return this.$store.state.presentations.rates;
-// }
+const {entry} = defineProps<{ entry: AgendaEntry }>()
 
 interface AgendaEntry {
   id: string;
