@@ -4,31 +4,22 @@
 
     <Box color="white" class="min-padding">
       <ScheduleHeader :day-id="dayId"></ScheduleHeader>
-      <div class="agenda">
-        <div class="agendaItem--empty"></div>
-        <div v-for="room in rooms" :key="room.id" class="agendaItem__room">
-          <span>{{ name(room.label) }}</span>
-          <span class="room__subname">{{ subname(room.label) }}</span>
-        </div>
-        <template v-for="slot in slots"
-                  :key="slot.id">
-          <div class="agendaItem__slot"
-               :class="{ 'agendaItem__slot--all': hasSingleEntryFor(slot) }"
-          >
-            <span>{{ slot.label }}</span>
+      <div class="workshopList">
+        <div
+          v-for="entry in enrichedAgenda"
+          :key="entry.id"
+          class="workshopList__item"
+        >
+          <div class="workshopList__meta">
+            <span class="workshopList__time">{{ entry.timeSlotLabel }}</span>
+            <span v-if="entry.roomLabel" class="workshopList__sep"> · </span>
+            <span v-if="entry.roomLabel" class="workshopList__room">{{ entry.roomLabel }}</span>
           </div>
           <AgendaItem
-              v-for="currentRoom in rooms"
-              :key="`${currentRoom.id}-${slot.id}`"
-              :entry="getEntryFor(currentRoom, slot)"
-              @select="selectPresentation"
-              class="agendaItem__entry "
-              :class="{
-                      [`agendaItem__entry--${currentRoom.displayOrder}`]: true,
-                      'agendaItem__entry--all': hasSingleEntryFor(slot)
-                    }"
-          ></AgendaItem>
-        </template>
+            :entry="entry"
+            @select="selectPresentation"
+          />
+        </div>
       </div>
     </Box>
 
@@ -61,7 +52,7 @@ function subname(room: string) {
 let sortByOrder = (a: WithOrder, b: WithOrder) => a.displayOrder - b.displayOrder
 
 let days = ['day-1', 'day-2']
-let dayId = useRoute().params.dayId || 'day-1';
+let dayId = (useRoute().params.dayId || 'day-1') + '-workshops';
 let dayPath = '/agenda/' + dayId + '.json';
 
 // Separate variable declarations from assignment
@@ -111,6 +102,59 @@ function loadDayAgenda() {
 loadDayAgenda()
 
 const selectedPresentationId = useState('selectedPresentationId', () => null)
+
+// Build a flat, enriched list of agenda entries for simplified list rendering
+const enrichedAgenda = computed(() => {
+  const list = (agenda.value || []).map((entry: any) => {
+    const enriched: any = {...entry}
+
+    // Ensure label is at least empty string when no presentation and label is null
+    if (!enriched.presentationId && (enriched.label === null || enriched.label === undefined)) {
+      enriched.label = ''
+    }
+
+    // Attach time slot label (and keep start/end if needed later)
+    const slotObj: any = (slots.value || []).find((s: any) => String(s.id) === String(entry.timeSlotId))
+    if (slotObj) {
+      enriched.timeSlotLabel = slotObj.label
+      enriched.start = slotObj.start
+      enriched.end = slotObj.end
+      enriched._slotOrder = slotObj.displayOrder
+    } else {
+      enriched.timeSlotLabel = ''
+      enriched._slotOrder = Number.MAX_SAFE_INTEGER
+    }
+
+    // Attach room label
+    const roomObj: any = entry.roomId ? (rooms.value || []).find((r: any) => r.id === entry.roomId) : null
+    if (roomObj) {
+      enriched.roomLabel = roomObj.label
+      enriched._roomOrder = roomObj.displayOrder
+    } else {
+      enriched.roomLabel = ''
+      enriched._roomOrder = Number.MAX_SAFE_INTEGER
+    }
+
+    // Attach presentation details if available
+    if (entry.presentationId) {
+      const pres: any = (presentations.value || []).find((p: any) => p.id === entry.presentationId)
+      if (pres) {
+        enriched.presentation = pres
+        enriched.presentationId = pres.id
+        enriched.speaker = pres.speakers || []
+        enriched.tags = pres.tags || []
+      }
+    }
+
+    return enriched
+  })
+
+  // Sort by slot order, then room order to make it readable
+  return list.sort((a: any, b: any) => {
+    if (a._slotOrder !== b._slotOrder) return a._slotOrder - b._slotOrder
+    return a._roomOrder - b._roomOrder
+  })
+})
 
 function getEntryFor(room: Room | null, slot: TimeSlot): AgendaEntry {
   const entry = agenda.value?.find(
@@ -343,5 +387,32 @@ useHead({
   }
 }
 
+
+.workshopList {
+  display: flex;
+  flex-direction: column;
+}
+
+.workshopList__item {
+  padding: 0.7rem 0.7rem 1rem;
+  border-bottom: 2px solid #000000;
+  @include md() {
+    padding: 1rem 1.5rem 1.5rem;
+  }
+}
+
+.workshopList__meta {
+  font-size: 0.9rem;
+  color: #767676;
+  margin-bottom: 0.3rem;
+}
+
+.workshopList__time {
+  font-weight: 600;
+}
+
+.workshopList__room {
+  color: $brand;
+}
 
 </style>
