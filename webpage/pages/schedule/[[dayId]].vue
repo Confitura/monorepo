@@ -3,6 +3,15 @@
     <PageHeader title="Schedule" type="peace"/>
 
     <Box color="white" class="min-padding">
+      <div class="agendaHeader">
+
+        <RouterLink to="/schedule/day-1" class="agendaHeader__day"
+                    :class="{'selected':'day-1' == dayId}">Friday
+        </RouterLink>
+        <RouterLink to="/schedule/day-2" class="agendaHeader__day"
+                    :class="{'selected':'day-2' == dayId}">Saturday
+        </RouterLink>
+      </div>
       <div class="agenda">
         <div class="agendaItem--empty"></div>
         <div v-for="room in rooms" :key="room.id" class="agendaItem__room">
@@ -57,36 +66,58 @@ function subname(room: string) {
   return null
 }
 
-let dayPath = '/agenda/' + useRoute().params.dayId + '.json';
-let {data: rooms} = useArchiveFetch(dayPath, {
-  key: 'rooms',
-  transform: (data: DayAgenda) => data.rooms.sort(sortByOrder)
-})
-let {data: slots} = useArchiveFetch(dayPath, {
-  key: 'timeSlots',
-  transform: (data: DayAgenda) => data.timeSlots
-      .map((slot: DayTimeSlot) => ({
-        id: String(slot.displayOrder),
-        label: slot.label,
-        displayOrder: slot.displayOrder,
-        forAllRooms: false,
-        start: slot.start,
-        end: slot.end
-      }))
-      .sort(sortByOrder)
-})
-let {data: agenda} = useArchiveFetch(dayPath, {
-  key: 'agenda',
-  transform: (data: DayAgenda) => data.agendaEntries
-      .map((entry: DayAgendaEntry) => ({
-        ...entry,
-        timeSlotId: String(entry.timeSlotIndex)
-      }))
-})
-let {data: presentations} = useArchiveFetch(dayPath, {
-  key: 'presentations',
-  transform: (data: DayAgenda) => data.presentations
-})
+let sortByOrder = (a: WithOrder, b: WithOrder) => a.displayOrder - b.displayOrder
+
+let days = ['day-1', 'day-2']
+let dayId = useRoute().params.dayId || 'day-1';
+let dayPath = '/agenda/' + dayId + '.json';
+
+// Separate variable declarations from assignment
+const rooms = ref<Room[]>([])
+const slots = ref<TimeSlot[]>([])
+const agenda = ref<AgendaEntry[]>([])
+const presentations = ref<Presentation[]>([])
+
+// Single call to useArchiveFetch to populate all variables
+function loadDayAgenda() {
+  const {data} = useArchiveFetch(dayPath, {
+    key: `day-agenda-${dayId}`,
+    transform: (data: DayAgenda) => data
+  })
+
+  watch(data, (value) => {
+    if (!value) return
+
+    // rooms
+    rooms.value = (value.rooms || []).slice().sort(sortByOrder)
+
+    // slots
+    slots.value = (value.timeSlots || [])
+        .map((slot: DayTimeSlot) => ({
+          id: String(slot.displayOrder),
+          label: slot.label,
+          displayOrder: slot.displayOrder,
+          forAllRooms: false,
+          start: slot.start,
+          end: slot.end
+        }))
+        .sort(sortByOrder) as any
+
+    // agenda
+    agenda.value = (value.agendaEntries || [])
+        .map((entry: DayAgendaEntry) => ({
+          ...entry,
+          timeSlotId: String(entry.timeSlotIndex)
+        })) as any
+
+    // presentations
+    presentations.value = (value.presentations || []) as any
+  }, {immediate: true})
+}
+
+// initial load
+loadDayAgenda()
+
 const selectedPresentationId = useState('selectedPresentationId', () => null)
 
 function getEntryFor(room: Room | null, slot: TimeSlot): AgendaEntry {
@@ -144,8 +175,6 @@ function selectPresentation(presentation: Presentation) {
 function modalClosed() {
   selectedPresentationId.value = null
 }
-
-let sortByOrder = (a: WithOrder, b: WithOrder) => a.displayOrder - b.displayOrder
 
 
 export interface EmbeddedRooms {
@@ -283,6 +312,33 @@ useHead({
   border-left: none;
 }
 
+.agendaHeader {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  width: 100%;
+  gap: 1rem;
+  margin-bottom: 1rem;
+
+  .agendaHeader__day {
+    text-align: center;
+    padding: 0.5rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .agendaHeader__day:hover {
+    background-color: #ffb1bc;
+    cursor: pointer;
+  }
+
+  .selected {
+    background-color: $brand;
+    color: white;
+  }
+}
+
+
 .agendaItem__slot {
   display: flex;
   justify-content: left;
@@ -320,4 +376,6 @@ useHead({
     display: none;
   }
 }
+
+
 </style>
