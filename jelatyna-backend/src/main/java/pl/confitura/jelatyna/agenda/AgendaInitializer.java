@@ -39,7 +39,48 @@ public class AgendaInitializer {
             createDayOne();
             createDayTwo();
         }
+        createDayOneWorkshops();
+        createDayTwoWorkshops();
 
+    }
+
+    private void createDayOneWorkshops() {
+        Day day = dayRepository.save(new Day()
+                .setId("day-1-workshops")
+                .setLabel("Day 1 Workshops")
+                .setDate(LocalDate.of(2025, 9, 19))
+                .setDisplayOrder(3));
+
+        createRoom("6-1", "6", 1, day);
+        createRoom("18-1", "18", 2, day);
+        createRoom("16-1", "16", 3, day);
+
+        createTimeSlotsForDay(day, List.of("09:10", "18:15"), 0);
+        createTimeSlotsForDay(day, List.of("09:10", "12:30"), 1);
+        createTimeSlotsForDay(day, List.of("10:15", "13:45"), 2);
+        createTimeSlotsForDay(day, List.of("14:45", "17:00"), 3);
+        createTimeSlotsForDay(day, List.of("14:45", "17:00"), 4);
+        createTimeSlotsForDay(day, List.of("14:45", "17:00"), 5);
+    }
+
+    private void createDayTwoWorkshops() {
+        Day day = dayRepository.save(new Day()
+                .setId("day-2-workshops")
+                .setLabel("Day 2 Workshops")
+                .setDate(LocalDate.of(2025, 9, 20))
+                .setDisplayOrder(4));
+
+        createRoom("6-2", "Room 6", 1, day);
+        createRoom("18-2", "Room 18", 2, day);
+        createRoom("16-2", "Room 16", 3, day);
+        createRoom("4-2", "Room 4", 4, day);
+
+        createTimeSlotsForDay(day, List.of("09:10", "12:30"), 0);
+        createTimeSlotsForDay(day, List.of("14:45", "18:15"), 1);
+        createTimeSlotsForDay(day, List.of("11:30", "13:45"), 2);
+        createTimeSlotsForDay(day, List.of("09:10", "12:30"), 3);
+        createTimeSlotsForDay(day, List.of("12:45", "15:45"), 4);
+        createTimeSlotsForDay(day, List.of("16:00", "18:15"), 5);
     }
 
     private void createDayTwo() {
@@ -61,7 +102,7 @@ public class AgendaInitializer {
                 "12:45", "13:45", "14:45",
                 "15:45", "16:00", "17:00", "17:15",
                 "18:10"
-        ));
+        ), 0);
     }
 
     private void createDayOne() {
@@ -82,10 +123,10 @@ public class AgendaInitializer {
                 "13:45", "14:45", "15:15",
                 "15:45", "16:00", "16:30", "17:00",
                 "17:15", "17:45", "18:15"
-        ));
+        ), 0);
     }
 
-    private void createTimeSlotsForDay(Day day, List<String> times) {
+    private void createTimeSlotsForDay(Day day, List<String> times, int n) {
         List<StringTimeSlot> schedule = StringTimeSlot.createFromTimes(times);
 
         for (int i = 0; i < schedule.size(); i++) {
@@ -93,7 +134,7 @@ public class AgendaInitializer {
             TimeSlot slot = new TimeSlot()
                     .setStart(timeSlot.getStart())
                     .setEnd(timeSlot.getEnd())
-                    .setId(getTimeSlotId(day, i));
+                    .setId(getTimeSlotId(day, i + n));
             timeSlotsRepository.save(slot);
         }
     }
