@@ -33,9 +33,9 @@ public class AgendaInitializer {
     }
 
     private void init() {
+        loginAsAdmin();
         if (dayRepository.findAll().isEmpty()) {
             log.info("Initializing agenda");
-            loginAsAdmin();
             createDayOne();
             createDayTwo();
         }
