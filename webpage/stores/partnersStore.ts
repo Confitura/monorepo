@@ -161,6 +161,15 @@ Whether you’re a startup struggling with precedent problems or an enterprise j
             orientation: "horizontal"
         },
         {
+            id: "ipipan",
+            name: "Instytut Podstaw Informatyki PAN",
+            description: "The Institute of Computer Science of the Polish Academy of Sciences (ICS PAS) is one of the select few leading CS research centres in Poland. According to the parametric evaluation carried out by the Polish Ministry of Science and Education, ICS PAS has been ranked among the Category A entities in Group N13 (Mathematics and Computer Science), similarly as 5 years ago and earlier. In all the directions of CS research conducted in the Institute, ICS PAS holds original results on the world level. All those directions are compliant with the program for desirable development of information technology. To put it shortly, that program coincides with the information society development program in the sense of EU Framework Programs, as well as the UE and national strategic programs.",
+            logo: "/assets/partners/2025/ipi.svg",
+            www: "https://ipipan.waw.pl/",
+            type: "path",
+            orientation: "box"
+        },
+        {
             id: "bottega",
             name: "Bottega",
             description: `Bottega IT Minds to społeczność ekspertów, którzy wspierają

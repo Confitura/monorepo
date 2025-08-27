@@ -4,6 +4,7 @@
     <div class="partners-grid">
       <div class="partners-main">
         <div class="platinum">
+          <span class="type--platinum">Platinum</span>
           <a
               v-for="item in partners.platinum"
               :key="item.id"
@@ -19,9 +20,9 @@
                 :class="item.id"
             />
           </a>
-          <span class="type--platinum">Platinum</span>
         </div>
         <div class="path">
+          <span class="type--path">Path</span>
           <a
               v-for="item in partners.path"
               :key="item.id"
@@ -37,7 +38,6 @@
                 :class="item.id"
             />
           </a>
-          <span class="type--path">Path</span>
         </div>
 
       </div>
