@@ -225,6 +225,6 @@ We hope to achieve this by providing a complete overview of Polish AI scene whic
             logo: "/assets/partners/2025/match-trade.png",
             www: "https://match-trade.com/",
             type: "silver",
-            orientation: "vertical"
+            orientation: "horizontal"
         }];
 }
