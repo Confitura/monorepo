@@ -1,8 +1,8 @@
 <template>
   <div class="home__container">
     <HomeMainBanner/>
-    <HomeAbout/>
     <HomeLatestNews></HomeLatestNews>
+    <HomeAbout/>
     <HomeNlpDay/>
     <HomeNumbers/>
     <HomePartners/>
