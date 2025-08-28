@@ -44,6 +44,10 @@ const language = computed(() => {
       <i class="presentationMetadata__icon fas fa-clock" title="workshop duration"></i>
       <div class="presentationMetadata__duration">{{ props.presentation.durationInMinutes }} min</div>
     </div>
+    <div class="presentationMetadata__group" v-if="props.presentation.workshop">
+      <i class="presentationMetadata__icon fas fa-users" title="participants limit"></i>
+      <div class="presentationMetadata__maxGroupSize">max {{ props.presentation.maxGroupSize }}</div>
+    </div>
     <div class="presentationMetadata__group" v-if="props.showTags">
       <template v-if="hasTags">
         <i class="presentationMetadata__icon  fas fa-tags" title="tags"></i>
@@ -85,6 +89,7 @@ const language = computed(() => {
   &__language,
   &__level,
   &__duration,
+  &__maxGroupSize,
   &__workshop,
   &__presentation {
     margin-right: 1rem;
