@@ -224,5 +224,23 @@ We hope to achieve this by providing a complete overview of Polish AI scene whic
             www: "https://match-trade.com/",
             type: "silver",
             orientation: "horizontal"
+        },
+        {
+            id: "it-wiz",
+            name: "ITwiz",
+            description: "ITwiz powstał po to, aby dostarczyć jak najlepszych narzędzi do komunikacji z osobami podejmującymi decyzje o zakupie rozwiązań informatycznych. ITwiz to miesięcznik dostępny w wersji drukowanej i cyfrowej, serwis internetowy, komunikacja przez social media, a także spotkania networkingowe i konferencje prowadzone przez najlepszych ekspertów specjalizujących się w nowoczesnych technologiach.",
+            logo: "/assets/partners/2025/itwiz logo_czarne.png",
+            www: "https://itwiz.pl",
+            type: "media",
+            orientation: "box"
+        },
+        {
+            id: "kodolamacz",
+            name: "Kodołamacz",
+            description: "Specjalizujemy się w rozwoju kompetencji w obszarze sztucznej inteligencji i nowoczesnych technologii IT. Oferujemy intensywne kursy rozwojowe oraz kompleksowe ścieżki edukacyjne, takie jak AI & Data Science czy Machine Learning Engineering, które przygotowują do najbardziej poszukiwanych zawodów na rynku. Dzięki ofercie kursów w formule blended learning uczestnicy łączą elastyczną naukę online z praktycznymi warsztatami na żywo, a szeroka oferta szkoleń wieczorowych i weekendowych z AI pozwala rozwijać się w tempie dopasowanym do indywidualnych potrzeb. Stawiamy na praktykę i rozwój w AI, wspierając zarówno osoby przebranżawiające się, jak i specjalistów, którzy chcą wejść na wyższy poziom pracy z nowymi technologiami.",
+            logo: "/assets/partners/2025/kodolamacz_dark_sages.svg",
+            www: "https://www.kodolamacz.pl",
+            type: "media",
+            orientation: "horizontal"
         }];
 }
