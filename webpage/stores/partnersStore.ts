@@ -87,11 +87,9 @@ function getPartners(): Partner[] {
         {
             id: "datalinks",
             name: "DataLinks",
-            description: `We believe AI is only as powerful as the data it understands. That’s why we built the technology that connects unstructured and structured data into one semantic layer, giving organizations a clear, unified view of their most valuable assets.
-        
-With our approach, your data doesn’t just sit in silos, it talks. Our Entity Resolution Assistant automatically links and enriches your datasets with industry models. The Semantics Editor lets you choose and refine the connections that matter to your business. And with our Semantic Query Language, you can finally query your tabular data in a way that improves LLM accuracy and powers next-generation data apps.
+            description: `We believe AI is only as powerful as the data it understands. That’s why we built the technology that connects unstructured and structured data into one semantic layer, giving organizations a clear, unified view of their data. With our approach, your data doesn’t just sit in silos, it talks. Our Entity Resolution Assistant automatically links and enriches your datasets with industry models. The Semantics Editor lets you choose and refine the connections that matter to your business. And with our Semantic Query Language, you can finally query your tabular data in a way that improves LLM accuracy and powers next-generation data apps. 
 
-Whether you’re a startup struggling with precedent problems or an enterprise juggling thousands of reports, the result is the same: cleaner, interconnected data that accelerates use cases and gives AI the structure it needs to deliver accurate, trustworthy answers - all without writing a single line of code.`,
+Whether you’re an individual developer struggling with complex problems or your enterprise is juggling thousands of reports, the result is the same: cleaner, interconnected data that accelerates use cases and gives AI the structure it needs to deliver accurate, trustworthy answers - all without writing a single line of code.`,
             logo: "/assets/partners/2025/datalinks.svg",
             www: "https://datalinks.com/",
             type: "gold",
