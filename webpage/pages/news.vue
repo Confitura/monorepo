@@ -5,7 +5,10 @@
          :class="{'latest-news-odd' : $index % 2 === 0}"
          v-for="(content, $index) in content.all">
       <div class="latest-news-container">
-        <h2 class="header">{{ content.title }}</h2>
+        <div class="header">
+          <h2>{{ content.title }}</h2>
+          <small>{{ formatDate(content.publishedAt) }}</small>
+        </div>
         <div class="main-info">
           <div class="body" v-html="content.body"></div>
         </div>
@@ -18,6 +21,15 @@
 <script setup lang="ts">
 const content = await useArchiveFetch(`/news.json`)
     .then(response => response.data.value)
+
+function formatDate(date: string) {
+  const options: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  };
+  return new Date(date).toLocaleDateString('en-US', options);
+}
 
 const title = 'News — Confitura 2025';
 const description = 'Follow the latest news about Confitura 2025: tickets, schedule, venue, and more.';
@@ -82,6 +94,23 @@ useHead({
 
 .header {
   grid-area: h;
+  font-family: $font-bold;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+
+  h2 {
+    font-size: 3rem;
+    color: $brand;
+  }
+
+  small {
+    font-size: 1.5rem;
+  }
+}
+
+.formatDate {
+  grid-area: t;
   font-family: $font-bold;
   font-size: 3rem;
   color: $brand;
