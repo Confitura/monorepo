@@ -26,6 +26,7 @@ public class AgendaController {
     private final RoomRepository roomRepository;
     private final AgendaService agendaService;
     private final PresentationRepository presentationRepository;
+        private final pl.confitura.jelatyna.agenda.IcalExportService icalExportService;
 
 
     @GetMapping("/{dayId}/entries")
@@ -162,6 +163,22 @@ public class AgendaController {
         }
         TimeSlot saved = timeSlotsRepository.save(slot);
         return ResponseEntity.ok(InlineTimeSlot.from(saved));
+    }
+
+    @GetMapping(value = "/ical", produces = "text/calendar")
+    public ResponseEntity<byte[]> exportIcal() {
+        byte[] body = icalExportService.generateIcs();
+        return ResponseEntity.ok()
+                .header("Content-Disposition", "attachment; filename=agenda.ics")
+                .body(body);
+    }
+
+    @GetMapping(value = "/ical/subscribe", produces = "text/calendar")
+    public ResponseEntity<byte[]> subscribeIcal() {
+        byte[] body = icalExportService.generateIcs();
+        return ResponseEntity.ok()
+                .header("Cache-Control", "public, max-age=3000")
+                .body(body);
     }
 
 }
