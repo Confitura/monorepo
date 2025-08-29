@@ -38,9 +38,9 @@ public class AgendaInitializer {
             log.info("Initializing agenda");
             createDayOne();
             createDayTwo();
+            createDayOneWorkshops();
+            createDayTwoWorkshops();
         }
-        createDayOneWorkshops();
-        createDayTwoWorkshops();
 
     }
 
