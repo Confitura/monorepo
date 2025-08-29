@@ -24,6 +24,7 @@ let items: MenuItem[] = [
   { label: 'home', url: '/#home' },
   // { label: "vote", url: "https://app.confitura.pl/vote-for-papers" },
   { label: 'partners', url: '/partners' },
+  { label: 'news', url: '/news' },
   { label: 'schedule', url: '/schedule' },
   { label: 'speakers', url: '/speakers' },
   { label: 'presentations', url: '/presentations' },
