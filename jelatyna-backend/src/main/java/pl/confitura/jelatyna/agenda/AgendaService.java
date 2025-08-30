@@ -8,10 +8,10 @@ import pl.confitura.jelatyna.presentation.PresentationRepository;
 @Service
 @RequiredArgsConstructor
 public class AgendaService {
-    private final DayRepository dayRepository;
     private final TimeSlotsRepository timeSlotsRepository;
     private final RoomRepository roomRepository;
     private final PresentationRepository presentationRepository;
+    private final AgendaRepository agendaRepository;
 
     public AgendaEntry createAgendaEntry(String dayId, int timeSlotPosition, String roomId, String label, String presentationId) {
         TimeSlot timeSlot = timeSlotsRepository.findById(new TimeSlot.TimeSlotId(dayId, timeSlotPosition));
@@ -23,5 +23,9 @@ public class AgendaService {
                 .setRoom(room)
                 .setLabel(label)
                 .setPresentation(presentation);
+    }
+
+    public Iterable<AgendaEntry> findAllAndMerge() {
+        return agendaRepository.findAll();
     }
 }

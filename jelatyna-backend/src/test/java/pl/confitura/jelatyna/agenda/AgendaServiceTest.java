@@ -2,7 +2,10 @@ package pl.confitura.jelatyna.agenda;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
 
@@ -11,36 +14,40 @@ import java.time.LocalTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.lenient;
 
+@ExtendWith(MockitoExtension.class)
 class AgendaServiceTest {
 
-    private DayRepository dayRepository = Mockito.mock(DayRepository.class);
+    @Mock
+    private DayRepository dayRepository;
 
-    private TimeSlotsRepository timeSlotsRepository = Mockito.mock(TimeSlotsRepository.class);
+    @Mock
+    private TimeSlotsRepository timeSlotsRepository;
 
-    private RoomRepository roomRepository = Mockito.mock(RoomRepository.class);
+    @Mock
+    private RoomRepository roomRepository;
 
-    private PresentationRepository presentationRepository = Mockito.mock(PresentationRepository.class);
+    @Mock
+    private PresentationRepository presentationRepository;
 
-    private AgendaService agendaService = new AgendaService(dayRepository, timeSlotsRepository, roomRepository, presentationRepository);
+    @InjectMocks
+    private AgendaService agendaService;
 
     // Given
-    private int timeSlotIndex = 0;
-    private String dayId = "day1";
-    private String roomId = "room1";
-    private String label = "Test Session";
-    private String presentationId = "presentation1";
+    private final int timeSlotIndex = 0;
+    private final String dayId = "day1";
+    private final String roomId = "room1";
+    private final String label = "Test Session";
+    private final String presentationId = "presentation1";
 
-    private Day day;
     private TimeSlot timeSlot;
     private Room room;
     private Presentation presentation;
 
     @BeforeEach
     void setUp() {
-        // Create test data
-        day = new Day()
+        var day = new Day()
                 .setId("day1")
                 .setLabel("Day 1")
                 .setDate(LocalDate.of(2025, 9, 1))
@@ -60,11 +67,10 @@ class AgendaServiceTest {
         presentation = new Presentation();
         presentation.setId("presentation1");
 
-
-        when(dayRepository.findById(dayId)).thenReturn(day);
-        when(timeSlotsRepository.findById(new TimeSlot.TimeSlotId(dayId, timeSlotIndex))).thenReturn(timeSlot);
-        when(roomRepository.findById(roomId)).thenReturn(room);
-        when(presentationRepository.findById(presentationId)).thenReturn(presentation);
+        lenient().when(dayRepository.findById(dayId)).thenReturn(day);
+        lenient().when(timeSlotsRepository.findById(new TimeSlot.TimeSlotId(dayId, timeSlotIndex))).thenReturn(timeSlot);
+        lenient().when(roomRepository.findById(roomId)).thenReturn(room);
+        lenient().when(presentationRepository.findById(presentationId)).thenReturn(presentation);
     }
 
     @Test

@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.fortuna.ical4j.data.CalendarOutputter;
 import net.fortuna.ical4j.model.Calendar;
-import net.fortuna.ical4j.model.DateTime;
 import net.fortuna.ical4j.model.component.VEvent;
 import net.fortuna.ical4j.model.property.Description;
 import net.fortuna.ical4j.model.property.DtEnd;
@@ -13,7 +12,6 @@ import net.fortuna.ical4j.model.property.Location;
 import net.fortuna.ical4j.model.property.ProdId;
 import net.fortuna.ical4j.model.property.Summary;
 import net.fortuna.ical4j.model.property.Uid;
-import net.fortuna.ical4j.model.property.Version;
 import org.springframework.stereotype.Service;
 import pl.confitura.jelatyna.presentation.Presentation;
 
@@ -30,11 +28,11 @@ import java.util.UUID;
 @Slf4j
 public class IcalExportService {
 
-    private final AgendaRepository agendaRepository;
+    private final AgendaService agendaService;
     private final DayRepository dayRepository;
 
     public byte[] generateIcs() {
-        Iterable<AgendaEntry> entries = agendaRepository.findAll();
+        Iterable<AgendaEntry> entries = agendaService.findAllAndMerge();
         Calendar calendar = buildCalendar(entries);
         try {
             ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -83,7 +81,7 @@ public class IcalExportService {
                 event.withProperty(new Description(description));
             }
 
-            event.withProperty(new Uid(UUID.nameUUIDFromBytes((entry.getId() == null ? (summary + start.toString()) : entry.getId()).getBytes(StandardCharsets.UTF_8)).toString()));
+            event.withProperty(new Uid(UUID.nameUUIDFromBytes((entry.getId() == null ? (summary + start) : entry.getId()).getBytes(StandardCharsets.UTF_8)).toString()));
 
             calendar.withComponent(event);
         }
