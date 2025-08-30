@@ -5,15 +5,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import pl.confitura.jelatyna.agenda.*;
 import pl.confitura.jelatyna.news.NewsletterApi;
 import pl.confitura.jelatyna.page.PageController;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
 import pl.confitura.jelatyna.resource.ResourceConfigurationProperties;
 import pl.confitura.jelatyna.user.UserController;
-import pl.confitura.jelatyna.agenda.AgendaRepository;
-import pl.confitura.jelatyna.agenda.DayRepository;
-import pl.confitura.jelatyna.agenda.TimeSlotsRepository;
-import pl.confitura.jelatyna.agenda.RoomRepository;
 
 @Configuration
 @RequiredArgsConstructor
@@ -26,7 +23,7 @@ public class ArchiveConfiguration {
     private final ResourceConfigurationProperties resourceConfigurationProperties;
     private final NewsletterApi newsletterApi;
     private final PresentationRepository presentationRepository;
-    private final AgendaRepository agendaRepository;
+    private final AgendaService agendaService;
     private final DayRepository dayRepository;
     private final TimeSlotsRepository timeSlotsRepository;
     private final RoomRepository roomRepository;
@@ -40,7 +37,7 @@ public class ArchiveConfiguration {
                 pageController,
                 newsletterApi,
                 presentationRepository,
-                agendaRepository,
+                agendaService,
                 dayRepository,
                 timeSlotsRepository,
                 roomRepository

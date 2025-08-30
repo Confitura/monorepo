@@ -13,21 +13,23 @@
         <template v-for="slot in slots"
                   :key="slot.id">
           <div class="agendaItem__slot"
-               :class="{ 'agendaItem__slot--all': hasSingleEntryFor(slot) }"
+               :class="{ 'agendaItem__slot--all': isForAllRooms(slot) }"
           >
             <span>{{ slot.label }}</span>
           </div>
-          <AgendaItem
-              v-for="currentRoom in rooms"
-              :key="`${currentRoom.id}-${slot.id}`"
-              :entry="getEntryFor(currentRoom, slot)"
-              @select="selectPresentation"
-              class="agendaItem__entry "
-              :class="{
+          <template v-for="currentRoom in rooms" :key="`${currentRoom.id}-${slot.id}`">
+            <AgendaItem
+                v-if="getEntryFor(currentRoom, slot).id !== 'empty'"
+                :entry="getEntryFor(currentRoom, slot)"
+                @select="selectPresentation"
+                class="agendaItem__entry "
+                :class="{
                       [`agendaItem__entry--${currentRoom.displayOrder}`]: true,
-                      'agendaItem__entry--all': hasSingleEntryFor(slot)
+                      [`agendaItem__entry--span-${getEntryFor(currentRoom, slot)?.timeSlotSpan}`]: true,
+                      'agendaItem__entry--all': isForAllRooms(slot)
                     }"
-          ></AgendaItem>
+            ></AgendaItem>
+          </template>
         </template>
       </div>
     </Box>
@@ -151,9 +153,13 @@ function getEntryFor(room: Room | null, slot: TimeSlot): AgendaEntry {
   return enriched
 }
 
-function hasSingleEntryFor(slot: TimeSlot): boolean {
+function isForAllRooms(slot: TimeSlot): boolean {
   const entry = agenda.value.find(it => it.timeSlotId === slot.id)
-  return entry !== undefined && entry.roomId === null
+  let forAllRooms = entry !== undefined && entry.roomId === null;
+  if (forAllRooms) {
+    console.log('slot', slot.label, 'isForAllRooms', forAllRooms)
+  }
+  return forAllRooms
 }
 
 function selectPresentation(presentation: Presentation) {
@@ -209,6 +215,7 @@ export interface AgendaEntry {
   roomLabel?: string;
   timeSlotId?: string;
   timeSlotLabel?: string;
+  timeSlotSpan: number;
 }
 
 // Day agenda archive format (edition-2025)
@@ -341,6 +348,14 @@ useHead({
   &:not(.agendaItem__entry--1) {
     display: none;
   }
+}
+
+.agendaItem__entry--span-3 {
+  grid-row: auto / span 3;
+}
+
+.agendaItem__entry--span-2 {
+  grid-row: auto / span 2;
 }
 
 

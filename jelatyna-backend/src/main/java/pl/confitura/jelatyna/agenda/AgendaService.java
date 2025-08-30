@@ -1,6 +1,7 @@
 package pl.confitura.jelatyna.agenda;
 
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
@@ -30,6 +31,16 @@ public class AgendaService {
 
     public List<AgendaEntry> findAllAndMerge() {
         List<AgendaEntry> entries = agendaRepository.findAll();
+        return mergeTimeSlots(entries);
+    }
+
+    public List<AgendaEntry> findByTimeSlotIdDayIdAndMerge(String dayId) {
+        List<AgendaEntry> entries = agendaRepository.findByTimeSlotIdDayId(dayId);
+        return mergeTimeSlots(entries);
+    }
+
+    @NotNull
+    private static ArrayList<AgendaEntry> mergeTimeSlots(List<AgendaEntry> entries) {
         Map<Boolean, List<AgendaEntry>> partitioned = entries.stream().collect(Collectors.partitioningBy(AgendaEntry::hasPresentation));
 
         Map<String, List<AgendaEntry>> byPresentation = partitioned.get(true).stream().collect(Collectors.groupingBy(AgendaEntry::getPresentationId));

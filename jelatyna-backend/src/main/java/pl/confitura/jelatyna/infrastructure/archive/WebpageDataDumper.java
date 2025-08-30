@@ -4,12 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.transaction.annotation.Transactional;
-import pl.confitura.jelatyna.agenda.AgendaRepository;
-import pl.confitura.jelatyna.agenda.DayRepository;
-import pl.confitura.jelatyna.agenda.RoomRepository;
-import pl.confitura.jelatyna.agenda.TimeSlotsRepository;
+import pl.confitura.jelatyna.agenda.*;
 import pl.confitura.jelatyna.agenda.api.InlineAgendaEntry;
 import pl.confitura.jelatyna.agenda.api.InlineRoom;
 import pl.confitura.jelatyna.agenda.api.InlineTimeSlot;
@@ -28,31 +26,16 @@ import java.time.Instant;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
 
 @Slf4j
 @RequiredArgsConstructor
 public class WebpageDataDumper {
-
-    public WebpageDataDumper(ObjectMapper objectMapper,
-                             String targetDirectory,
-                             UserController userController,
-                             PageController pageController,
-                             NewsletterApi newsletterApi,
-                             PresentationRepository presentationRepository) {
-        this.objectMapper = objectMapper;
-        this.targetDirectory = targetDirectory;
-        this.userController = userController;
-        this.pageController = pageController;
-        this.newsletterApi = newsletterApi;
-        this.presentationRepository = presentationRepository;
-        this.agendaRepository = null;
-        this.dayRepository = null;
-        this.timeSlotsRepository = null;
-        this.roomRepository = null;
-    }
 
     private final ObjectMapper objectMapper;
     private final String targetDirectory;
@@ -63,7 +46,7 @@ public class WebpageDataDumper {
     private final PresentationRepository presentationRepository;
 
     // Agenda-related repositories
-    private final AgendaRepository agendaRepository;
+    private final AgendaService agendaService;
     private final DayRepository dayRepository;
     private final TimeSlotsRepository timeSlotsRepository;
     private final RoomRepository roomRepository;
@@ -144,7 +127,7 @@ public class WebpageDataDumper {
     }
 
     public void dumpAgendaByDay() {
-        if (dayRepository == null || timeSlotsRepository == null || roomRepository == null || agendaRepository == null) {
+        if (dayRepository == null || timeSlotsRepository == null || roomRepository == null || agendaService == null) {
             // Agenda repositories not wired (e.g., in tests using legacy constructor) - skip dumping agenda.
             return;
         }
@@ -162,7 +145,7 @@ public class WebpageDataDumper {
                     .sorted(Comparator.comparing(pl.confitura.jelatyna.agenda.Room::getDisplayOrder))
                     .map(InlineRoom::from)
                     .toList();
-            var entries = agendaRepository.findByTimeSlotIdDayId(dayId).stream()
+            var entries = agendaService.findByTimeSlotIdDayIdAndMerge(dayId).stream()
                     .map(InlineAgendaEntry::from)
                     .toList();
 
@@ -170,7 +153,9 @@ public class WebpageDataDumper {
                     .stream()
                     .map(InlinePresentationWithSpeakers::new)
                     .toList();
-            InlineAgenda agenda = new InlineAgenda(timeSlots, rooms, presentations, entries);
+
+            Map<Integer, List<InlineAgendaEntry>> byTimeSlot = entries.stream().collect(groupingBy(InlineAgendaEntry::timeSlotIndex));
+            InlineAgenda agenda = new InlineAgenda(timeSlots, rooms, presentations, entries, byTimeSlot);
             dumbData(agenda, "/agenda/" + dayId + ".json");
         }
     }

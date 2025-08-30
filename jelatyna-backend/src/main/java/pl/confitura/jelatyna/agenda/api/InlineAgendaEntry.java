@@ -15,9 +15,18 @@ public record InlineAgendaEntry(
         @Schema(requiredMode = Schema.RequiredMode.NOT_REQUIRED)
         String label,
         @Schema(requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-        String presentationId
+        String presentationId,
+        @Schema(requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+        int timeSlotSpan
 ) {
     public static InlineAgendaEntry from(AgendaEntry it) {
-        return new InlineAgendaEntry(it.getId(), it.getTimeSlot().getId().dayId(), it.getTimeSlotOrder(), it.getRoomId(), it.getLabel(), it.getPresentationId());
+        return new InlineAgendaEntry(
+                it.getId(),
+                it.getTimeSlot().getId().dayId(),
+                it.getTimeSlotOrder(),
+                it.getRoomId(),
+                it.getLabel(),
+                it.getPresentationId(),
+                it.getTimeSlot().getTimeSlotSpan());
     }
 }

@@ -41,21 +41,9 @@ class WebpageDataDumperTest extends BaseIntegrationTest {
     @Autowired
     private PresentationRepository presentationRepository;
 
+    @Autowired
     private WebpageDataDumper webpageDataDumper;
 
-    @BeforeEach
-    @Override
-    public void setUp() {
-        super.setUp();
-        webpageDataDumper = new WebpageDataDumper(
-                objectMapper,
-                "/tmp/confitura/2025",
-                userController,
-                pageController,
-                newsletterApi,
-                presentationRepository
-        );
-    }
 
     @Test
     void shouldBumpAllWithoutErrors() {
