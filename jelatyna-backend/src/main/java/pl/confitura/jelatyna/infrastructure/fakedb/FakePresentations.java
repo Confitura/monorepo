@@ -106,6 +106,9 @@ public class FakePresentations {
                 faker.brooklynNineNine().quotes(),
                 "begingner",
                 "Polish", new String[]{"java"}), user, Set.of());
+        if (user.getId().contains("-40-")) {
+            presentation.setTitle("000000000000");
+        }
         return presentationRepository.save(presentation);
     }
 

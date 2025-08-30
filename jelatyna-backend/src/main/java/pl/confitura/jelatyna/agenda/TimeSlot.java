@@ -32,6 +32,9 @@ public class TimeSlot extends AuditedEntity {
 
     private boolean forAllRooms = false;
 
+    @Transient
+    private int timeSlotSpan = 1;
+
 
     public String getLabel() {
         return start.format(HOUR_FORMAT) + " - " + end.format(HOUR_FORMAT);
@@ -44,6 +47,15 @@ public class TimeSlot extends AuditedEntity {
     public TimeSlot setId(String dayId, int displayOrder) {
         this.id = new TimeSlotId(dayId, displayOrder);
         return this;
+    }
+
+    public TimeSlot mergeWith(TimeSlot that) {
+
+        return new TimeSlot()
+                .setId(new TimeSlot.TimeSlotId(this.getId().dayId(), this.getDisplayOrder()))
+                .setStart(this.getStart())
+                .setEnd(that.getEnd())
+                .setTimeSlotSpan(this.getTimeSlotSpan() + that.getTimeSlotSpan());
     }
 
     @Embeddable

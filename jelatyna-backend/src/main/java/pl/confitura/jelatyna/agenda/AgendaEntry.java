@@ -68,4 +68,8 @@ public class AgendaEntry {
     public String getRoomId() {
         return room == null ? null : room.getId();
     }
+
+    public boolean hasPresentation() {
+        return presentation != null;
+    }
 }

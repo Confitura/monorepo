@@ -11,7 +11,7 @@ public interface AgendaRepository extends Repository<AgendaEntry, String> {
     @PreAuthorize("@security.isAdmin()")
     AgendaEntry save(AgendaEntry agendaEntry);
 
-    Iterable<AgendaEntry> findAll();
+    List<AgendaEntry> findAll();
 
     AgendaEntry findById(String id);
 

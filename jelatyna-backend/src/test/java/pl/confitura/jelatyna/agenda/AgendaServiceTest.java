@@ -11,10 +11,13 @@ import pl.confitura.jelatyna.presentation.PresentationRepository;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class AgendaServiceTest {
@@ -30,6 +33,9 @@ class AgendaServiceTest {
 
     @Mock
     private PresentationRepository presentationRepository;
+
+    @Mock
+    private AgendaRepository agendaRepository;
 
     @InjectMocks
     private AgendaService agendaService;
@@ -110,5 +116,46 @@ class AgendaServiceTest {
         assertEquals(room, result.getRoom());
         assertEquals(label, result.getLabel());
         assertNull(result.getPresentation());
+    }
+
+    @Test
+    void inlineEntriesForMultipleTimeSlots() {
+        var ts1 = new TimeSlot()
+                .setStart(LocalTime.of(9, 0))
+                .setEnd(LocalTime.of(10, 0))
+                .setId(new TimeSlot.TimeSlotId("day-1", 1));
+        var ts2 = new TimeSlot()
+                .setStart(LocalTime.of(10, 0))
+                .setEnd(LocalTime.of(11, 0))
+                .setId(new TimeSlot.TimeSlotId("day-1", 2));
+        AgendaEntry a1 = new AgendaEntry().setTimeSlot(ts1).setRoom(room).setPresentation(presentation);
+        AgendaEntry a2 = new AgendaEntry().setTimeSlot(ts2).setRoom(room).setPresentation(presentation);
+        when(agendaRepository.findAll()).thenReturn(List.of(a1, a2));
+
+        var merged = agendaService.findAllAndMerge();
+        assertThat(merged.size()).isEqualTo(1);
+
+        TimeSlot mergedSlot = merged.getFirst().getTimeSlot();
+        assertThat(mergedSlot.getStart()).isEqualTo(LocalTime.of(9, 0));
+        assertThat(mergedSlot.getEnd()).isEqualTo(LocalTime.of(11, 0));
+        assertThat(mergedSlot.getId().displayOrder()).isEqualTo(1);
+    }
+
+    @Test
+    void notMergeLabels() {
+        var ts1 = new TimeSlot()
+                .setStart(LocalTime.of(9, 0))
+                .setEnd(LocalTime.of(10, 0))
+                .setId(new TimeSlot.TimeSlotId("day-1", 1));
+        var ts2 = new TimeSlot()
+                .setStart(LocalTime.of(10, 0))
+                .setEnd(LocalTime.of(11, 0))
+                .setId(new TimeSlot.TimeSlotId("day-1", 2));
+        AgendaEntry a1 = new AgendaEntry().setTimeSlot(ts1).setRoom(room).setLabel("break");
+        AgendaEntry a2 = new AgendaEntry().setTimeSlot(ts2).setRoom(room).setLabel("break");
+        when(agendaRepository.findAll()).thenReturn(List.of(a1, a2));
+
+        var merged = agendaService.findAllAndMerge();
+        assertThat(merged.size()).isEqualTo(2);
     }
 }
