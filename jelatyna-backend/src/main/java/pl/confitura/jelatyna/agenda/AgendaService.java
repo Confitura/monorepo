@@ -77,6 +77,7 @@ public class AgendaService {
 
                     TimeSlot mergedSlot = ts1.mergeWith(ts2);
                     AgendaEntry mergedEntry = new AgendaEntry()
+                            .setRoom(last.getRoom())
                             .setTimeSlot(mergedSlot)
                             .setId(last.getId())
                             .setLabel(last.getLabel())
