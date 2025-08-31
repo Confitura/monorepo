@@ -19,14 +19,14 @@
           </div>
           <template v-for="currentRoom in rooms" :key="`${currentRoom.id}-${slot.id}`">
             <AgendaItem
-                v-if="getEntryFor(currentRoom, slot).id !== 'empty'"
                 :entry="getEntryFor(currentRoom, slot)"
                 @select="selectPresentation"
                 class="agendaItem__entry "
                 :class="{
                       [`agendaItem__entry--${currentRoom.displayOrder}`]: true,
                       [`agendaItem__entry--span-${getEntryFor(currentRoom, slot)?.timeSlotSpan}`]: true,
-                      'agendaItem__entry--all': isForAllRooms(slot)
+                      'agendaItem__entry--all': isForAllRooms(slot),
+                      'agendaItem__entry--empty': getEntryFor(currentRoom, slot).id === 'empty'
                     }"
             ></AgendaItem>
           </template>
@@ -350,12 +350,22 @@ useHead({
   }
 }
 
+.agendaItem__entry--empty {
+  @include lg() {
+    display: none;
+  }
+}
+
 .agendaItem__entry--span-3 {
-  grid-row: auto / span 3;
+  @include lg() {
+    grid-row: auto / span 3;
+  }
 }
 
 .agendaItem__entry--span-2 {
-  grid-row: auto / span 2;
+  @include lg() {
+    grid-row: auto / span 2;
+  }
 }
 
 
