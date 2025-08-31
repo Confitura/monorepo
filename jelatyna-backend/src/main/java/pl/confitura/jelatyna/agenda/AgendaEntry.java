@@ -72,4 +72,8 @@ public class AgendaEntry {
     public boolean hasPresentation() {
         return presentation != null;
     }
+
+    public String getRoomLabel() {
+        return room == null ? null : room.getLabel();
+    }
 }

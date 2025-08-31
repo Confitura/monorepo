@@ -13,6 +13,8 @@ public record InlineAgendaEntry(
         @Schema(requiredMode = Schema.RequiredMode.NOT_REQUIRED)
         String roomId,
         @Schema(requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+        String roomLabel,
+        @Schema(requiredMode = Schema.RequiredMode.NOT_REQUIRED)
         String label,
         @Schema(requiredMode = Schema.RequiredMode.NOT_REQUIRED)
         String presentationId,
@@ -27,6 +29,7 @@ public record InlineAgendaEntry(
                 it.getTimeSlot().getId().dayId(),
                 it.getTimeSlotOrder(),
                 it.getRoomId(),
+                it.getRoomLabel(),
                 it.getLabel(),
                 it.getPresentationId(),
                 it.getTimeSlot().getTimeSlotSpan(),
