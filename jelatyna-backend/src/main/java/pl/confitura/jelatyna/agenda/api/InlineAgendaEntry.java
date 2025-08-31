@@ -17,7 +17,9 @@ public record InlineAgendaEntry(
         @Schema(requiredMode = Schema.RequiredMode.NOT_REQUIRED)
         String presentationId,
         @Schema(requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-        int timeSlotSpan
+        int timeSlotSpan,
+        @Schema(requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+        String timeSlotLabel
 ) {
     public static InlineAgendaEntry from(AgendaEntry it) {
         return new InlineAgendaEntry(
@@ -27,6 +29,7 @@ public record InlineAgendaEntry(
                 it.getRoomId(),
                 it.getLabel(),
                 it.getPresentationId(),
-                it.getTimeSlot().getTimeSlotSpan());
+                it.getTimeSlot().getTimeSlotSpan(),
+                it.getTimeSlot().getLabel());
     }
 }
