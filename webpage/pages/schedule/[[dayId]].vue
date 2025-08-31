@@ -302,6 +302,15 @@ useHead({
   }
 }
 
+.agendaItem__timeSlot {
+  @include lg() {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+}
+
 .room__subname {
   font-size: 1.1rem;
   font-weight: normal;

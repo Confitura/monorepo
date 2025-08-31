@@ -3,8 +3,11 @@
       class="agendaItem"
       :class="{ 'agendaItem--withPresentation': entry.presentationId }"
   >
+    <div v-if="entry.timeSlotSpan > 1" class="agendaItem__timeSlot">
+      {{ entry.timeSlotLabel }}
+    </div>
     <div v-if="entry.roomLabel" class="agendaItem__room">
-      {{ entry.roomLabel }}
+      Room: {{ entry.roomLabel }}
     </div>
     <div
         class="agendaItem__presentation"
@@ -38,6 +41,7 @@ const {entry} = defineProps<{ entry: AgendaEntry }>()
 
 interface AgendaEntry {
   id: string;
+  timeSlotSpan: number;
   timeSlotId: string;
   timeSlotLabel: string;
   roomId: string;
@@ -78,7 +82,17 @@ interface AgendaEntry {
     color: $brand;
     font-size: 0.8rem;
     margin-bottom: 0.5rem;
-    @include md() {
+    @include lg() {
+      display: none;
+    }
+  }
+
+  &__timeSlot {
+    color: $brand;
+    font-weight: bold;
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+    @include lg() {
       display: none;
     }
   }
