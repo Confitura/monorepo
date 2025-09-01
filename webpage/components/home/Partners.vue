@@ -191,6 +191,7 @@ function resolveImage(path: string): string {
   }
 
   .logos {
+    column-gap: 1em;
     display: flex;
     flex-wrap: wrap;
     padding-bottom: 1rem;
