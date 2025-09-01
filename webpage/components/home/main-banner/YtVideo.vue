@@ -1,9 +1,17 @@
 <template>
   <div class="video">
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/beXgWsLBgUM?si=6BVWntvEUMKCh4W5"
-            title="YouTube video player" frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <video
+      class="video__player"
+      src="/assets/videos/confitura_2025.mp4"
+      title="Confitura 2025 teaser"
+      autoplay
+      muted
+      loop
+      playsinline
+      controls
+    >
+      Sorry, your browser doesn't support embedded videos.
+    </video>
   </div>
 </template>
 <style scoped lang="scss">
@@ -12,7 +20,9 @@
 @use "~/assets/media" as *;
 @use "~/assets/colors" as *;
 
-.video iframe{
+.video .video__player{
+  width: 100%;
+  height: auto;
   @include md() {
     max-width: 40vw;
   }
