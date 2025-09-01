@@ -2,7 +2,7 @@
   <div class="video">
     <video
       class="video__player"
-      src="/assets/videos/confitura_2025.mp4"
+      src="/assets/videos/confitura_2025_promo.mp4"
       title="Confitura 2025 teaser"
       autoplay
       muted
