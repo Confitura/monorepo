@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.infrastructure.archive;
+package pl.confitura.jelatyna.infrastructure.published;
 
 import pl.confitura.jelatyna.agenda.api.InlineAgendaEntry;
 import pl.confitura.jelatyna.agenda.api.InlineRoom;

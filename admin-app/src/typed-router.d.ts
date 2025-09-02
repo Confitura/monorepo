@@ -33,6 +33,7 @@ declare module 'vue-router/auto-routes' {
     '/presentation-form.[[id]].[[userId]]': RouteRecordInfo<'/presentation-form.[[id]].[[userId]]', '/presentation-form/:id?/:userId?', { id?: ParamValueZeroOrOne<true>, userId?: ParamValueZeroOrOne<true> }, { id?: ParamValueZeroOrOne<false>, userId?: ParamValueZeroOrOne<false> }>,
     '/privacy-policy': RouteRecordInfo<'/privacy-policy', '/privacy-policy', Record<never, never>, Record<never, never>>,
     '/profile-form.[[id]]': RouteRecordInfo<'/profile-form.[[id]]', '/profile-form/:id?', { id?: ParamValueZeroOrOne<true> }, { id?: ParamValueZeroOrOne<false> }>,
+    '/rate.[[entryId]]': RouteRecordInfo<'/rate.[[entryId]]', '/rate/:entryId?', { entryId?: ParamValueZeroOrOne<true> }, { entryId?: ParamValueZeroOrOne<false> }>,
     '/vote-for-papers': RouteRecordInfo<'/vote-for-papers', '/vote-for-papers', Record<never, never>, Record<never, never>>,
     '/workshop-form.[[id]].[[userId]]': RouteRecordInfo<'/workshop-form.[[id]].[[userId]]', '/workshop-form/:id?/:userId?', { id?: ParamValueZeroOrOne<true>, userId?: ParamValueZeroOrOne<true> }, { id?: ParamValueZeroOrOne<false>, userId?: ParamValueZeroOrOne<false> }>,
   }

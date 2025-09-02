@@ -61,10 +61,16 @@ export interface AgendaEntry {
     'presentation'?: Presentation;
     /**
      * 
-     * @type {Set<PublicProfile>}
+     * @type {string}
      * @memberof AgendaEntry
      */
-    'speakers'?: Set<PublicProfile>;
+    'presentationId'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof AgendaEntry
+     */
+    'timeSlotOrder'?: number;
     /**
      * 
      * @type {string}
@@ -76,13 +82,13 @@ export interface AgendaEntry {
      * @type {string}
      * @memberof AgendaEntry
      */
-    'presentationId'?: string;
+    'roomLabel'?: string;
     /**
      * 
-     * @type {number}
+     * @type {Set<PublicProfile>}
      * @memberof AgendaEntry
      */
-    'timeSlotOrder'?: number;
+    'speakers'?: Set<PublicProfile>;
 }
 /**
  * 
@@ -499,6 +505,12 @@ export interface InlineAgendaEntry {
      * @type {string}
      * @memberof InlineAgendaEntry
      */
+    'roomLabel'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineAgendaEntry
+     */
     'label'?: string;
     /**
      * 
@@ -506,6 +518,18 @@ export interface InlineAgendaEntry {
      * @memberof InlineAgendaEntry
      */
     'presentationId'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof InlineAgendaEntry
+     */
+    'timeSlotSpan'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineAgendaEntry
+     */
+    'timeSlotLabel'?: string;
 }
 /**
  * 
@@ -592,6 +616,91 @@ export interface InlinePresentation {
      * @memberof InlinePresentation
      */
     'status': string;
+}
+/**
+ * 
+ * @export
+ * @interface InlinePresentationWithSpeakers
+ */
+export interface InlinePresentationWithSpeakers {
+    /**
+     * 
+     * @type {string}
+     * @memberof InlinePresentationWithSpeakers
+     */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlinePresentationWithSpeakers
+     */
+    'title'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlinePresentationWithSpeakers
+     */
+    'shortDescription'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlinePresentationWithSpeakers
+     */
+    'description'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlinePresentationWithSpeakers
+     */
+    'level'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlinePresentationWithSpeakers
+     */
+    'language'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof InlinePresentationWithSpeakers
+     */
+    'workshop'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof InlinePresentationWithSpeakers
+     */
+    'isFree'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof InlinePresentationWithSpeakers
+     */
+    'expectedPrice'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof InlinePresentationWithSpeakers
+     */
+    'durationInMinutes'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof InlinePresentationWithSpeakers
+     */
+    'maxGroupSize'?: number;
+    /**
+     * 
+     * @type {Array<Tag>}
+     * @memberof InlinePresentationWithSpeakers
+     */
+    'tags'?: Array<Tag>;
+    /**
+     * 
+     * @type {Array<Speaker>}
+     * @memberof InlinePresentationWithSpeakers
+     */
+    'speakers'?: Array<Speaker>;
 }
 /**
  * 
@@ -1196,12 +1305,6 @@ export interface Presentation {
     'maxGroupSize'?: number;
     /**
      * 
-     * @type {boolean}
-     * @memberof Presentation
-     */
-    'new'?: boolean;
-    /**
-     * 
      * @type {Presentation}
      * @memberof Presentation
      */
@@ -1212,6 +1315,12 @@ export interface Presentation {
      * @memberof Presentation
      */
     'accepted'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Presentation
+     */
+    'new'?: boolean;
 }
 /**
  * 
@@ -1586,13 +1695,19 @@ export interface Speaker {
      * @type {string}
      * @memberof Speaker
      */
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Speaker
+     */
     'name'?: string;
     /**
      * 
      * @type {string}
      * @memberof Speaker
      */
-    'photo'?: string;
+    'photoUrl'?: string;
 }
 /**
  * 
@@ -1692,6 +1807,12 @@ export interface TimeSlot {
      * @memberof TimeSlot
      */
     'forAllRooms'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof TimeSlot
+     */
+    'timeSlotSpan'?: number;
     /**
      * 
      * @type {string}
@@ -1943,7 +2064,7 @@ export interface User {
      * @type {boolean}
      * @memberof User
      */
-    'admin'?: boolean;
+    'participant'?: boolean;
     /**
      * 
      * @type {boolean}
@@ -1955,13 +2076,13 @@ export interface User {
      * @type {boolean}
      * @memberof User
      */
-    'speaker'?: boolean;
+    'admin'?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof User
      */
-    'participant'?: boolean;
+    'speaker'?: boolean;
 }
 /**
  * 
@@ -2601,6 +2722,35 @@ export const AgendaControllerApiAxiosParamCreator = function (configuration?: Co
         },
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        exportIcal: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/agenda/ical`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {string} dayId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2797,6 +2947,35 @@ export const AgendaControllerApiAxiosParamCreator = function (configuration?: Co
         },
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        subscribeIcal: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/agenda/ical/subscribe`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {string} id 
          * @param {UpdateAgendaEntryRequest} updateAgendaEntryRequest 
          * @param {*} [options] Override http request option.
@@ -2940,6 +3119,17 @@ export const AgendaControllerApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async exportIcal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<string>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.exportIcal(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgendaControllerApi.exportIcal']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @param {string} dayId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3011,6 +3201,17 @@ export const AgendaControllerApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async subscribeIcal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<string>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.subscribeIcal(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgendaControllerApi.subscribeIcal']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @param {string} id 
          * @param {UpdateAgendaEntryRequest} updateAgendaEntryRequest 
          * @param {*} [options] Override http request option.
@@ -3070,6 +3271,14 @@ export const AgendaControllerApiFactory = function (configuration?: Configuratio
         },
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        exportIcal(options?: RawAxiosRequestConfig): AxiosPromise<Array<string>> {
+            return localVarFp.exportIcal(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {string} dayId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3123,6 +3332,14 @@ export const AgendaControllerApiFactory = function (configuration?: Configuratio
         },
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        subscribeIcal(options?: RawAxiosRequestConfig): AxiosPromise<Array<string>> {
+            return localVarFp.subscribeIcal(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {string} id 
          * @param {UpdateAgendaEntryRequest} updateAgendaEntryRequest 
          * @param {*} [options] Override http request option.
@@ -3171,6 +3388,16 @@ export class AgendaControllerApi extends BaseAPI {
      */
     public deleteAgendaEntry(id: string, options?: RawAxiosRequestConfig) {
         return AgendaControllerApiFp(this.configuration).deleteAgendaEntry(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgendaControllerApi
+     */
+    public exportIcal(options?: RawAxiosRequestConfig) {
+        return AgendaControllerApiFp(this.configuration).exportIcal(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3236,6 +3463,16 @@ export class AgendaControllerApi extends BaseAPI {
      */
     public saveAgendaEntry(assignAgendaEntryRequest: AssignAgendaEntryRequest, options?: RawAxiosRequestConfig) {
         return AgendaControllerApiFp(this.configuration).saveAgendaEntry(assignAgendaEntryRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgendaControllerApi
+     */
+    public subscribeIcal(options?: RawAxiosRequestConfig) {
+        return AgendaControllerApiFp(this.configuration).subscribeIcal(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -6344,6 +6581,530 @@ export class PresentationControllerApi extends BaseAPI {
      */
     public updateRating(presentationId: string, ratingId: string, rate: Rate, options?: RawAxiosRequestConfig) {
         return PresentationControllerApiFp(this.configuration).updateRating(presentationId, ratingId, rate, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * PublishedControllerApi - axios parameter creator
+ * @export
+ */
+export const PublishedControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        acceptedPresentations: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/published/presentations/accepted`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        acceptedWorkshops: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/published/workshops/accepted`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        admins: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/published/users/search/admins`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} dayId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        agenda: async (dayId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'dayId' is not null or undefined
+            assertParamExists('agenda', 'dayId', dayId)
+            const localVarPath = `/published/agenda/{dayId}`
+                .replace(`{${"dayId"}}`, encodeURIComponent(String(dayId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        news: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/published/news`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} page 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        page: async (page: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'page' is not null or undefined
+            assertParamExists('page', 'page', page)
+            const localVarPath = `/published/pages/{page}`
+                .replace(`{${"page"}}`, encodeURIComponent(String(page)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        speaker: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('speaker', 'id', id)
+            const localVarPath = `/published/users/{id}/public`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        speakers: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/published/users/search/speakers`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * PublishedControllerApi - functional programming interface
+ * @export
+ */
+export const PublishedControllerApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = PublishedControllerApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async acceptedPresentations(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<InlinePresentationWithSpeakers>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.acceptedPresentations(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PublishedControllerApi.acceptedPresentations']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async acceptedWorkshops(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<InlinePresentationWithSpeakers>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.acceptedWorkshops(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PublishedControllerApi.acceptedWorkshops']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async admins(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.admins(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PublishedControllerApi.admins']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} dayId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async agenda(dayId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.agenda(dayId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PublishedControllerApi.agenda']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async news(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.news(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PublishedControllerApi.news']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} page 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async page(page: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.page(page, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PublishedControllerApi.page']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async speaker(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PublicSpeaker>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.speaker(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PublishedControllerApi.speaker']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async speakers(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.speakers(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PublishedControllerApi.speakers']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * PublishedControllerApi - factory interface
+ * @export
+ */
+export const PublishedControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = PublishedControllerApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        acceptedPresentations(options?: RawAxiosRequestConfig): AxiosPromise<Array<InlinePresentationWithSpeakers>> {
+            return localVarFp.acceptedPresentations(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        acceptedWorkshops(options?: RawAxiosRequestConfig): AxiosPromise<Array<InlinePresentationWithSpeakers>> {
+            return localVarFp.acceptedWorkshops(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        admins(options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.admins(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} dayId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        agenda(dayId: string, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.agenda(dayId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        news(options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.news(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} page 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        page(page: string, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.page(page, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        speaker(id: string, options?: RawAxiosRequestConfig): AxiosPromise<PublicSpeaker> {
+            return localVarFp.speaker(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        speakers(options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.speakers(options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * PublishedControllerApi - object-oriented interface
+ * @export
+ * @class PublishedControllerApi
+ * @extends {BaseAPI}
+ */
+export class PublishedControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublishedControllerApi
+     */
+    public acceptedPresentations(options?: RawAxiosRequestConfig) {
+        return PublishedControllerApiFp(this.configuration).acceptedPresentations(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublishedControllerApi
+     */
+    public acceptedWorkshops(options?: RawAxiosRequestConfig) {
+        return PublishedControllerApiFp(this.configuration).acceptedWorkshops(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublishedControllerApi
+     */
+    public admins(options?: RawAxiosRequestConfig) {
+        return PublishedControllerApiFp(this.configuration).admins(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} dayId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublishedControllerApi
+     */
+    public agenda(dayId: string, options?: RawAxiosRequestConfig) {
+        return PublishedControllerApiFp(this.configuration).agenda(dayId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublishedControllerApi
+     */
+    public news(options?: RawAxiosRequestConfig) {
+        return PublishedControllerApiFp(this.configuration).news(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} page 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublishedControllerApi
+     */
+    public page(page: string, options?: RawAxiosRequestConfig) {
+        return PublishedControllerApiFp(this.configuration).page(page, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublishedControllerApi
+     */
+    public speaker(id: string, options?: RawAxiosRequestConfig) {
+        return PublishedControllerApiFp(this.configuration).speaker(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublishedControllerApi
+     */
+    public speakers(options?: RawAxiosRequestConfig) {
+        return PublishedControllerApiFp(this.configuration).speakers(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

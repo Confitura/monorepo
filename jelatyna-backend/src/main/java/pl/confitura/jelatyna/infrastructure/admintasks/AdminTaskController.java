@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.confitura.jelatyna.infrastructure.archive.WebpageDataDumper;
+import pl.confitura.jelatyna.infrastructure.published.WebpageDataDumper;
 
 import java.time.Instant;
 

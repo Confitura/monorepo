@@ -10,7 +10,8 @@ import {
   UserAdminControllerApi,
   UserControllerApi,
   VoteControllerApi,
-  AdminTaskControllerApi
+  AdminTaskControllerApi,
+  PublishedControllerApi
 } from "./api-axios-client";
 
 export let api = axios.create({
@@ -30,3 +31,4 @@ export let adminTasksApi = new AdminTaskControllerApi(undefined, import.meta.env
 export let daysApi = new DayControllerApi(undefined, import.meta.env.VITE_API_URL)
 export let agendaApi = new AgendaControllerApi(undefined, import.meta.env.VITE_API_URL, api)
 export let roomsApi = new RoomControllerApi(undefined, import.meta.env.VITE_API_URL, api)
+export let publishedApi = new PublishedControllerApi(undefined, import.meta.env.VITE_API_URL, api)

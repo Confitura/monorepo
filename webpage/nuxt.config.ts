@@ -10,7 +10,8 @@ export default defineNuxtConfig({
         public: {
             apiServer: "https://api.confitura.pl/api/resources/archive/2025/",
             archiveServer: "https://api.confitura.pl/api/resources/edition-2025/",
-            fileServer: "https://api.confitura.pl"
+            fileServer: "https://api.confitura.pl",
+            appUrl: "https://app.confitura.pl"
         }
     },
     app: {
