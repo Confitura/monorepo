@@ -127,16 +127,6 @@ function getEntryFor(room: Room | null, slot: TimeSlot): AgendaEntry {
   // Build enriched entry with presentation and labels when available
   const enriched: any = {...entry}
 
-  // Add labels
-  const slotObj = slots.value?.find((s: any) => s.id === entry.timeSlotId)
-  if (slotObj) {
-    enriched.timeSlotLabel = slotObj.label
-  }
-  const roomObj = entry.roomId ? rooms.value?.find((r: any) => r.id === entry.roomId) : null
-  if (roomObj) {
-    enriched.roomLabel = roomObj.label
-  }
-
   // Attach presentation details if presentationId present
   if (entry.presentationId) {
     const pres = presentations.value?.find((p: any) => p.id === entry.presentationId)

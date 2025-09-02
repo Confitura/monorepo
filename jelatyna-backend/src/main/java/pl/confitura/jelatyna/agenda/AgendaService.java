@@ -42,8 +42,10 @@ public class AgendaService {
     @NotNull
     private static ArrayList<AgendaEntry> mergeTimeSlots(List<AgendaEntry> entries) {
         Map<Boolean, List<AgendaEntry>> partitioned = entries.stream().collect(Collectors.partitioningBy(AgendaEntry::hasPresentation));
+        List<AgendaEntry> withoutPresentation = partitioned.get(false);
+        List<AgendaEntry> withPresentation = partitioned.get(true);
 
-        Map<String, List<AgendaEntry>> byPresentation = partitioned.get(true).stream().collect(Collectors.groupingBy(AgendaEntry::getPresentationId));
+        Map<String, List<AgendaEntry>> byPresentation = withPresentation.stream().collect(Collectors.groupingBy(AgendaEntry::getPresentationId));
         var merged = byPresentation.entrySet().stream()
                 .flatMap(it -> {
                     TimeSlotMerger reducer = TimeSlotMerger.empty();
@@ -56,7 +58,7 @@ public class AgendaService {
                 })
                 .toList();
         var result = new ArrayList<>(merged);
-        result.addAll(partitioned.get(false));
+        result.addAll(withoutPresentation);
         return result;
     }
 
