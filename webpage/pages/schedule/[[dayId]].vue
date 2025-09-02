@@ -35,10 +35,10 @@
     </Box>
 
     <Contact/>
-    <PresentationModal
+    <PresentationRateModal
         :presentationId="selectedPresentationId"
         @close="modalClosed()"
-    ></PresentationModal>
+    ></PresentationRateModal>
   </div>
 </template>
 

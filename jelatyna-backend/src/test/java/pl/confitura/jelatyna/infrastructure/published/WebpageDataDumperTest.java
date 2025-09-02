@@ -1,7 +1,6 @@
-package pl.confitura.jelatyna.infrastructure.archive;
+package pl.confitura.jelatyna.infrastructure.published;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.confitura.jelatyna.BaseIntegrationTest;

@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.infrastructure.archive;
+package pl.confitura.jelatyna.infrastructure.published;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
