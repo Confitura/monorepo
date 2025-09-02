@@ -125,8 +125,8 @@ let votingEnabled = false
                 </div>
                 <div>
                   <v-chip v-for="tag in (presentation.tags || [])"
-                          :key="String(tag)" class="ma-1" size="x-small"
-                          color="primary" variant="tonal">{{ String(tag) }}
+                          :key="tag.id" class="ma-1" size="x-small"
+                          color="primary" variant="tonal">{{ tag.name }}
                   </v-chip>
                 </div>
               </div>
