@@ -242,5 +242,14 @@ We hope to achieve this by providing a complete overview of Polish AI scene whic
             www: "https://www.kodolamacz.pl",
             type: "media",
             orientation: "horizontal"
+        },
+        {
+            id: "revolut",
+            name: "Revolut",
+            description: "",
+            logo: "/assets/partners/2025/Revolut.svg",
+            www: "https://www.revolut.com/",
+            type: "gold",
+            orientation: "horizontal"
         }];
 }

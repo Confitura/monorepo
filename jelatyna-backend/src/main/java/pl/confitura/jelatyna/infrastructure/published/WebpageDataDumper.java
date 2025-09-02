@@ -101,7 +101,7 @@ public class WebpageDataDumper {
         List<InlinePresentationWithSpeakers> presentations = accepted.stream()
                 .filter(p -> !p.isWorkshop())
                 .map(InlinePresentationWithSpeakers::new)
-                .sorted(Comparator.comparing(InlinePresentationWithSpeakers::title))
+                .sorted(Comparator.comparing(InlinePresentationWithSpeakers::sortableTitle))
                 .collect(toList());
         dumbData(presentations, "/presentations/accepted.json");
     }
@@ -111,7 +111,7 @@ public class WebpageDataDumper {
         List<InlinePresentationWithSpeakers> workshops = accepted.stream()
                 .filter(Presentation::isWorkshop)
                 .map(InlinePresentationWithSpeakers::new)
-                .sorted(Comparator.comparing(InlinePresentationWithSpeakers::title))
+                .sorted(Comparator.comparing(InlinePresentationWithSpeakers::sortableTitle))
                 .collect(toList());
         dumbData(workshops, "/workshops/accepted.json");
     }

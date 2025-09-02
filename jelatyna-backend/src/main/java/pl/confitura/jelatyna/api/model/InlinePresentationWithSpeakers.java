@@ -1,13 +1,13 @@
 package pl.confitura.jelatyna.api.model;
 
 import pl.confitura.jelatyna.presentation.Presentation;
-import pl.confitura.jelatyna.presentation.Tag;
 
 import java.util.List;
 
 public record InlinePresentationWithSpeakers(
         String id,
         String title,
+        String sortableTitle,
         String shortDescription,
         String description,
         String level,
@@ -24,6 +24,7 @@ public record InlinePresentationWithSpeakers(
         this(
                 presentation.getId(),
                 presentation.getTitle(),
+                presentation.getTitle().trim().toLowerCase(),
                 presentation.getShortDescription(),
                 presentation.getDescription(),
                 presentation.getLevel(),
