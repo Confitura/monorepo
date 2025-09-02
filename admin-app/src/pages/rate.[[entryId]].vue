@@ -81,13 +81,15 @@ onMounted(() => {
     loadPresentation()
   }
 })
+
+let votingEnabled = false
 </script>
 
 <template>
   <v-app :theme="'light'">
-    <v-main>
-      <v-container class="pa-4" style="max-width: 700px">
-        <v-card>
+    <v-main style="height: 100%">
+      <v-container style="padding: 0; height: 100%">
+        <v-card style="height: 100%">
           <v-toolbar density="comfortable" color="primary"
                      :title="presentation?.title || ''"/>
           <v-card-text>
@@ -130,28 +132,35 @@ onMounted(() => {
               </div>
 
               <div class="text-medium-emphasis mb-4">
-                {{presentation?.description}}
+                {{ presentation?.description }}
               </div>
 
-              <div class="mb-6">
-                <div class="mb-2">Your rating</div>
-                <v-rating v-model="rating" :length="5" color="amber" hover
-                          clearable size="32"/>
-              </div>
+              <v-banner text="Rating will be enabled on conference day"
+                        v-if="!votingEnabled">
+              </v-banner>
+              <v-container v-if="votingEnabled">
+                <div class="mb-6">
+                  <div class="mb-2">Your rating</div>
+                  <v-rating v-model="rating" :length="5" color="amber" hover
+                            disabled
+                            clearable size="32"/>
+                </div>
 
-              <div class="mb-6">
-                <div class="mb-2">Comment (optional)</div>
-                <v-textarea v-model="comment" auto-grow rows="3"
-                            placeholder="What did you like? What can be improved?"/>
-              </div>
+                <div class="mb-6">
+                  <div class="mb-2">Comment (optional)</div>
+                  <v-textarea v-model="comment" auto-grow rows="3"
+                              disabled
+                              placeholder="What did you like? What can be improved?"/>
+                </div>
 
-              <v-alert v-if="submitted" type="success" variant="tonal"
-                       class="mb-4" text="Thanks for your feedback!"/>
+                <v-alert v-if="submitted" type="success" variant="tonal"
+                         class="mb-4" text="Thanks for your feedback!"/>
 
-              <v-btn color="primary" :disabled="!rating || loading"
-                     :loading="loading" @click="submit">
-                Submit
-              </v-btn>
+                <v-btn color="primary" :disabled="!rating || loading"
+                       :loading="loading" @click="submit">
+                  Submit
+                </v-btn>
+              </v-container>
             </div>
           </v-card-text>
         </v-card>

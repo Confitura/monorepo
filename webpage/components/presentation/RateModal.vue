@@ -1,6 +1,8 @@
 <script setup lang="ts">
-const { presentationId } = defineProps<{ presentationId: string }>()
-const url = computed(() => presentationId ? `http://localhost:5173/rate?entryId=${encodeURIComponent(presentationId)}` : null)
+const {presentationId} = defineProps<{ presentationId: string | null }>()
+const config = useRuntimeConfig();
+const appUrl = config.public.appUrl
+const url = computed(() => presentationId ? `${appUrl}/rate?entryId=${encodeURIComponent(presentationId)}` : null)
 </script>
 
 <template>
@@ -17,11 +19,13 @@ const url = computed(() => presentationId ? `http://localhost:5173/rate?entryId=
   display: flex;
   flex-grow: 1;
 }
+
 .rateModal__iframe {
   width: 100%;
   height: 70vh;
   border: none;
 }
+
 .rateModal__error {
   padding: 2rem;
 }

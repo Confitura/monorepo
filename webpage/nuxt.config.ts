@@ -10,7 +10,8 @@ export default defineNuxtConfig({
         public: {
             apiServer: "http://localhost:8080/api/resources/archive/2025/",
             archiveServer: "http://localhost:8080/api/resources/edition-2025/",
-            fileServer: "http://localhost:8080"
+            fileServer: "http://localhost:8080",
+            appUrl: "http://localhost:5173"
         }
     },
     app: {
