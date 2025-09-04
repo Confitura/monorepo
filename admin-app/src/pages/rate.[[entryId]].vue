@@ -131,7 +131,8 @@ let votingEnabled = false
                 </div>
               </div>
 
-              <div class="text-medium-emphasis mb-4">
+
+              <div class="" style="white-space: pre-wrap">
                 {{ presentation?.description }}
               </div>
 
