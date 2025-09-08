@@ -1,6 +1,6 @@
 <template>
-  <div class="modal__container">
-    <div class="modal">
+  <div class="modal__container" @click.self="$emit('close')">
+    <div class="modal" @keydown.esc.stop.prevent="$emit('close')" tabindex="-1" ref="modalRef">
       <div class="modal__header">
         <span class="closeButton" @click="$emit('close')">
           <i class="fas fa-times"></i>
@@ -14,7 +14,33 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted, onBeforeUnmount, ref, nextTick } from 'vue'
 
+const modalRef = ref<HTMLElement | null>(null)
+
+const onKeydown = (e: KeyboardEvent) => {
+  if (e.key === 'Escape' || e.key === 'Esc') {
+    e.preventDefault()
+    e.stopPropagation()
+    // emit close
+    // In <script setup>, use `defineEmits`
+    emitClose()
+  }
+}
+
+const emit = defineEmits<{ (e: 'close'): void }>()
+const emitClose = () => emit('close')
+
+onMounted(async () => {
+  document.addEventListener('keydown', onKeydown)
+  await nextTick()
+  // Focus the modal so keydown works even without global listener
+  modalRef.value?.focus()
+})
+
+onBeforeUnmount(() => {
+  document.removeEventListener('keydown', onKeydown)
+})
 </script>
 
 <style scoped lang="scss">
