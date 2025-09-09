@@ -69,22 +69,6 @@ export interface Partners {
 function getPartners(): Partner[] {
     return [
         {
-            id: "join-us",
-            name: "waiting for you",
-            description: "If you're building something cool, hiring, or just want to connect with the crème de la crème of the Polish IT scene - we’re still accepting sponsors!\n" +
-                "\n" +
-                "We’ve got:\n" +
-                "* a few sponsor spots available\n" +
-                "* some workshop time slots\n" +
-                "* and yes, a full-color PDF offer listing every single possibility we’ve imagined for partner visibility\n" +
-                "\n" +
-                "Interested? Ping Magda or the entire team at confitura [at] confitura.pl and we’ll send you the details. It’s fun, it’s creative, and it helps keep Confitura thriving and independent.",
-            logo: "/assets/partners/2025/join-us.svg",
-            www: "https://confitura.pl",
-            type: "gold",
-            orientation: "box"
-        },
-        {
             id: "datalinks",
             name: "DataLinks",
             description: `We believe AI is only as powerful as the data it understands. That’s why we built the technology that connects unstructured and structured data into one semantic layer, giving organizations a clear, unified view of their data. With our approach, your data doesn’t just sit in silos, it talks. Our Entity Resolution Assistant automatically links and enriches your datasets with industry models. The Semantics Editor lets you choose and refine the connections that matter to your business. And with our Semantic Query Language, you can finally query your tabular data in a way that improves LLM accuracy and powers next-generation data apps. 
@@ -112,42 +96,6 @@ Whether you’re an individual developer struggling with complex problems or you
             www: "https://www.xtb.com/",
             type: "silver",
             orientation: "horizontal"
-        },
-        {
-            id: "join-us",
-            name: "",
-            description: "",
-            logo: "/assets/partners/2025/reserved.svg",
-            www: "/partners/join-us",
-            type: "silver",
-            orientation: "box"
-        },
-        {
-            id: "join-us",
-            name: "",
-            description: "",
-            logo: "/assets/partners/2025/reserved.svg",
-            www: "/partners/join-us",
-            type: "silver",
-            orientation: "box"
-        },
-        {
-            id: "join-us",
-            name: "",
-            description: "",
-            logo: "/assets/partners/2025/reserved.svg",
-            www: "/partners/join-us",
-            type: "silver",
-            orientation: "box"
-        },
-        {
-            id: "join-us",
-            name: "",
-            description: "",
-            logo: "/assets/partners/2025/join-us.svg",
-            www: "",
-            type: "platinum",
-            orientation: "box"
         },
         {
             id: "sages",
@@ -249,6 +197,32 @@ We hope to achieve this by providing a complete overview of Polish AI scene whic
             description: "",
             logo: "/assets/partners/2025/Revolut.svg",
             www: "https://www.revolut.com/",
+            type: "gold",
+            orientation: "horizontal"
+        },
+        {
+            id: "decerto",
+            name: "Decerto",
+            description: "Decerto od 19 lat realizuje projekty informatyczne, które zmieniają oblicze branży ubezpieczeniowej – w Polsce, Wielkiej Brytanii oraz w USA. Obecnie 80% rodzimego rynku insurance obsługiwane jest przez Decerto. Do naszych flagowych produktów należą: Agent Portal (kompleksowe narzędzie dla agentów ubezpieczeniowych) oraz autorskie rozwiązanie Higson (Business Rules Engine).\n" +
+                "\n" +
+                " \n" +
+                "\n" +
+                "W 2024 r. firma otrzymała certyfikat Great Place to Work, z imponującym wynikiem ankiet, w których 91% pracowników oceniło Decerto jako doskonałe miejsce pracy. Zadowolenie pracowników odzwierciedla nieustanne wysiłki firmy na rzecz tworzenia kultury pracy, która promuje szacunek, współpracę oraz ciągłe doskonalenie.\n" +
+                "\n" +
+                " \n" +
+                "\n" +
+                "Po więcej zapraszamy na naszą stronę: [https://www.decerto.com/](https://www.decerto.com/)",
+            logo: "/assets/partners/2025/decerto.png",
+            www: "https://www.decerto.com/",
+            type: "gold",
+            orientation: "horizontal"
+        },
+        {
+            id: "netcompany",
+            name: "Netcompany",
+            description: "Netcompany is an international IT Consultancy with 8,000+ employees spread across 10+ countries, with its headquarters located in Copenhagen, Denmark. We deliver business-critical strategic IT projects that accelerate the digital transformation, with customers from a wide array of industries, including the public and private sectors. Our goal is to empower societies and citizens of Europe to stand independently and strongly, and to lead the way in shaping a better future for all.",
+            logo: "/assets/partners/2025/netcompany.png",
+            www: "https://netcompany.com/",
             type: "gold",
             orientation: "horizontal"
         }];

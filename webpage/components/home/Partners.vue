@@ -3,7 +3,7 @@
     <h1 class="header">our partners</h1>
     <div class="partners-grid">
       <div class="partners-main">
-        <div class="platinum">
+<!--        <div class="platinum">
           <span class="type--platinum">Platinum</span>
           <a
               v-for="item in partners.platinum"
@@ -20,7 +20,7 @@
                 :class="item.id"
             />
           </a>
-        </div>
+        </div>-->
         <div class="path">
           <span class="type--path">Path</span>
           <a
