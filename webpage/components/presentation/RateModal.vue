@@ -5,27 +5,28 @@ import { watch } from 'vue'
 const { presentationId } = defineProps<{ presentationId: string | null }>()
 const presentation = useState('rate_presentation', () => null as any)
 
-// Load all accepted presentations and filter by id
+// Load all accepted presentations and workshops
 const { data: presentations } = await useArchiveFetch('/presentations/accepted.json', {
+  transform: (data) => data
+})
+const { data: workshops } = await useArchiveFetch('/workshops/accepted.json', {
   transform: (data) => data
 })
 
 const findById = (id?: string | null) => {
-  if (!id || !presentations?.value) return null
-  return presentations.value.find((p: any) => p.id === id) || null
+  if (!id) return null
+  const inPresentations = presentations?.value?.find((p: any) => p.id === id) || null
+  if (inPresentations) return inPresentations
+  return workshops?.value?.find((w: any) => w.id === id) || null
 }
 
 watch(
-  () => [presentationId, presentations?.value],
+  () => [presentationId, presentations?.value, workshops?.value],
   () => {
     presentation.value = findById(presentationId)
   },
   { immediate: true }
 )
-
-const config = useRuntimeConfig();
-const appUrl = config.public.appUrl
-const url = computed(() => presentationId ? `${appUrl}/rate?entryId=${encodeURIComponent(presentationId)}` : null)
 </script>
 
 <template>

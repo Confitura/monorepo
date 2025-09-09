@@ -9,19 +9,24 @@
 const {presentationId} = defineProps<{ presentationId: string }>()
 const presentation = useState('presentation', () => null as any)
 
-// Load all accepted presentations (same source as pages/presentations.vue)
+// Load all accepted presentations and workshops
 const {data: presentations} = await useArchiveFetch('/presentations/accepted.json', {
+  transform: (data) => data
+})
+const {data: workshops} = await useArchiveFetch('/workshops/accepted.json', {
   transform: (data) => data
 })
 
 const findById = (id?: string | null) => {
-  if (!id || !presentations?.value) return null
-  return presentations.value.find((p: any) => p.id === id) || null
+  if (!id) return null
+  const inPresentations = presentations?.value?.find((p: any) => p.id === id) || null
+  if (inPresentations) return inPresentations
+  return workshops?.value?.find((w: any) => w.id === id) || null
 }
 
 // Initialize and react to changes
 watch(
-    () => [presentationId, presentations?.value],
+    () => [presentationId, presentations?.value, workshops?.value],
     () => {
       presentation.value = findById(presentationId)
     },
