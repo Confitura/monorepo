@@ -4,7 +4,11 @@
 
     <Box color="white" class="min-padding">
       <ScheduleHeader :day-id="dayId"></ScheduleHeader>
-      <div class="agenda">
+      <div class="agenda"
+           v-if="rooms.length > 0"
+           :class="{
+           [`agenda--rooms-${rooms.length}`]: true
+           }">
         <div class="agendaItem--empty"></div>
         <div v-for="room in rooms" :key="room.id" class="agendaItem__room">
           <span>{{ name(room.label) }}</span>
@@ -23,6 +27,7 @@
                 @select="selectPresentation"
                 class="agendaItem__entry "
                 :class="{
+
                       [`agendaItem__entry--${currentRoom.displayOrder}`]: true,
                       [`agendaItem__entry--span-${getEntryFor(currentRoom, slot)?.timeSlotSpan}`]: true,
                       'agendaItem__entry--all': isForAllRooms(slot),
@@ -257,12 +262,19 @@ useHead({
 @use "~/assets/media" as *;
 @use "~/assets/fonts" as *;
 
+
 .agenda {
   display: grid;
   grid-template-columns: 60px 1fr;
   @include lg() {
     grid-template-columns: 120px 1fr 1fr 1fr;
     margin-bottom: 5rem;
+  }
+}
+
+.agenda--rooms-4 {
+  @include lg() {
+    grid-template-columns: 120px 1fr 1fr 1fr 1fr;
   }
 }
 
