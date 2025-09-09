@@ -6,28 +6,27 @@
 
 <script setup lang="ts">
 
-const { presentationId } = defineProps<{ presentationId: string }>()
-const presentation = useState('presentation', () => null)
+const {presentationId} = defineProps<{ presentationId: string }>()
+const presentation = useState('presentation', () => null as any)
 
-watch(() => presentationId, async () => {
-  if (presentationId) {
-    presentation.value = await $fetch(`/json/presentations/${presentationId}.json`)
-  } else {
-    presentation.value = null
-  }
+// Load all accepted presentations (same source as pages/presentations.vue)
+const {data: presentations} = await useArchiveFetch('/presentations/accepted.json', {
+  transform: (data) => data
 })
-// @Watch("presentationId")
-// function onChildChanged() {
-//   if (this.presentationId) {
-//     axios
-//       .get<Presentation>(
-//         `/json/presentations/${this.presentationId}.json`
-//       )
-//       .then(result => (this.presentation = result.data));
-//   } else {
-//     this.presentation = null;
-//   }
-// }
+
+const findById = (id?: string | null) => {
+  if (!id || !presentations?.value) return null
+  return presentations.value.find((p: any) => p.id === id) || null
+}
+
+// Initialize and react to changes
+watch(
+    () => [presentationId, presentations?.value],
+    () => {
+      presentation.value = findById(presentationId)
+    },
+    {immediate: true}
+)
 </script>
 
 <style scoped lang="scss"></style>

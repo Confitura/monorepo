@@ -1,5 +1,28 @@
 <script setup lang="ts">
-const {presentationId} = defineProps<{ presentationId: string | null }>()
+import { useArchiveFetch } from '~/composables/useAPIFetch'
+import { watch } from 'vue'
+
+const { presentationId } = defineProps<{ presentationId: string | null }>()
+const presentation = useState('rate_presentation', () => null as any)
+
+// Load all accepted presentations and filter by id
+const { data: presentations } = await useArchiveFetch('/presentations/accepted.json', {
+  transform: (data) => data
+})
+
+const findById = (id?: string | null) => {
+  if (!id || !presentations?.value) return null
+  return presentations.value.find((p: any) => p.id === id) || null
+}
+
+watch(
+  () => [presentationId, presentations?.value],
+  () => {
+    presentation.value = findById(presentationId)
+  },
+  { immediate: true }
+)
+
 const config = useRuntimeConfig();
 const appUrl = config.public.appUrl
 const url = computed(() => presentationId ? `${appUrl}/rate?entryId=${encodeURIComponent(presentationId)}` : null)
@@ -8,8 +31,9 @@ const url = computed(() => presentationId ? `${appUrl}/rate?entryId=${encodeURIC
 <template>
   <Modal v-if="presentationId" @close="$emit('close')">
     <div class="rateModal">
-      <iframe v-if="url" class="rateModal__iframe" :src="url" frameborder="0" allowfullscreen></iframe>
-      <div v-else class="rateModal__error">Missing presentation id</div>
+      <PresentationBox v-if="presentation" :presentation="presentation" />
+      <div v-else class="rateModal__error">Missing presentation details</div>
+<!--      <iframe v-if="url" class="rateModal__iframe" :src="url" frameborder="0" allowfullscreen></iframe>-->
     </div>
   </Modal>
 </template>

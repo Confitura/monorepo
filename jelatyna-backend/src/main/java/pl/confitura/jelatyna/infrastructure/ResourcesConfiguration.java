@@ -4,12 +4,15 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.CacheControl;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.io.File;
+
+import static java.util.concurrent.TimeUnit.DAYS;
 
 @Slf4j
 @Configuration
@@ -27,6 +30,7 @@ public class ResourcesConfiguration implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry
                 .addResourceHandler(rootPath + "/**")
+                .setCacheControl(CacheControl.maxAge(1, DAYS).cachePublic())
                 .addResourceLocations("file:///" + folder.getCanonicalPath() + "/");
         log.info("Resource path: {}", rootPath);
         log.info("Resource folder: {}", folder.getCanonicalPath());
