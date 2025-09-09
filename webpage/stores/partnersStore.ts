@@ -199,6 +199,14 @@ We hope to achieve this by providing a complete overview of Polish AI scene whic
             www: "https://www.revolut.com/",
             type: "gold",
             orientation: "horizontal"
+        }, {
+            id: "inpost",
+            name: "InPost",
+            description: "",
+            logo: "/assets/partners/2025/inpost.png",
+            www: "https://inpost.pl/",
+            type: "gold",
+            orientation: "horizontal"
         },
         {
             id: "decerto",
