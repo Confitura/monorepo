@@ -99,7 +99,6 @@ defineProps<{
   }
 
   .agendaHeader__calendar {
-    grid-column: 1 / -1;
     text-align: center;
     padding: 0.5rem;
     font-size: 1.5rem;

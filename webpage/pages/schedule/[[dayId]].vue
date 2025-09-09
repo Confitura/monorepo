@@ -17,7 +17,7 @@
           >
             <span>{{ slot.label }}</span>
           </div>
-          <template v-for="currentRoom in rooms" :key="`${currentRoom.id}-${slot.id}`">
+          <template v-for=" currentRoom in rooms" :key="`${currentRoom.id}-${slot.id}`">
             <AgendaItem
                 :entry="getEntryFor(currentRoom, slot)"
                 @select="selectPresentation"

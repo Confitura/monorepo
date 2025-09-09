@@ -31,7 +31,11 @@
       <div class="agendaItem__separator"></div>
     </div>
     <div v-else class="agendaItem__label">
-      <span>{{ entry.label }}</span>
+
+      <span v-if="entry.label === 'SPOINA'">
+        <RouterLink to="/spoina" class="agendaItem__link">SPOINA</RouterLink>
+      </span>
+      <span v-else>{{ entry.label }}</span>
     </div>
   </div>
 </template>
@@ -85,6 +89,10 @@ interface AgendaEntry {
     @include lg() {
       display: none;
     }
+  }
+
+  &__link {
+    color: $brand;
   }
 
   &__timeSlot {
