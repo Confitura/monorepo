@@ -6,7 +6,7 @@
       :key="user.id"
       @click="show(user)"
     >
-      <img :src="user.photo" alt="" class="user__photo" />
+      <img :src="user.photo" alt="" class="user__photo" loading="lazy"/>
       <div class="user__name">
         <span>{{ firstName(user.name) }}</span>
         <span>{{ lastName(user.name) }}</span>

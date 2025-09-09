@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <img :src="fullSizeSrc" ref="image" class="image" />
+    <img :src="fullSizeSrc" ref="image" class="image" loading="lazy"/>
   </div>
 </template>
 
