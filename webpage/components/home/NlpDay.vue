@@ -1,6 +1,8 @@
 <template>
   <Box class="content" color="white">
-    <img class="nlp-logo" src="~/assets/partners/2025/nlpday.svg">
+    <a href="https://nlpday.pl/" target="_blank">
+      <img class="nlp-logo" src="~/assets/partners/2025/nlpday.svg" alt="Al & NLP Day 2025" loading="lazy">
+    </a>
     <p class="foreword">
       This year's edition of Confitura will be held in conjunction with Al & NLP Day 2025 - a two-day conference
       featuring inspiring sessions and hands-on workshops dedicated to the most important advances and applications in
@@ -18,6 +20,9 @@
       ra and leading Al experts, academic researchers, and PolEval competition winners gathered for Al & NLP Day.
       This unique format offers even greater scope for knowledge sharing, recruitment, and brand visibility across
       intersecting sectors of IT, Al, and data science.
+    </p>
+    <p class="foreword">
+      <big class="main"> <a href="https://nlpday.pl/" target="_blank" class="foreword__link">check them out</a></big>
     </p>
 
   </Box>
