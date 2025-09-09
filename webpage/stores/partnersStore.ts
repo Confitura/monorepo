@@ -233,5 +233,23 @@ We hope to achieve this by providing a complete overview of Polish AI scene whic
             www: "https://netcompany.com/",
             type: "gold",
             orientation: "horizontal"
+        },
+        {
+            id: "starburst",
+            name: "Starburst",
+            description: "",
+            logo: "/assets/partners/2025/starburst-dark.jpg",
+            www: "https://www.starburst.io/",
+            type: "bronze",
+            orientation: "horizontal"
+        },
+        {
+            id: "best-warsaw",
+            name: "BEST Warsaw",
+            description: "",
+            logo: "/assets/partners/2025/BEST_warsaw.png",
+            www: "https://www.facebook.com/BEST.WARSAW/",
+            type: "media",
+            orientation: "horizontal"
         }];
 }
