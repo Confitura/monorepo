@@ -22,6 +22,11 @@ defineProps<{
     <RouterLink to="/schedule/workshops/day-2" class="agendaHeader__button"
                 :class="{'selected':'day-2-workshops' == dayId}">Workshops
     </RouterLink>
+    <a class="agendaHeader__calendar"
+       title="Use this url to add to your calendar"
+       href="webcal://api.confitura.pl/api/agenda/ical/subscribe">
+      <i class="fas fa-calendar-alt"></i>
+    </a>
   </div>
 </template>
 
@@ -35,10 +40,10 @@ defineProps<{
   display: grid;
 
   grid-template-columns: 1fr 1fr;
-  grid-template-areas: "day1 day1"
-                        "pres1 work1"
-                        "day2 day2"
-                        "pres2 work2";
+  grid-template-areas: "day1 day1 cal"
+                        "pres1 work1 cal"
+                        "day2 day2 cal"
+                        "pres2 work2 cal";
   width: 100%;
   gap: 0.5rem;
   margin-bottom: 1rem;
@@ -93,10 +98,25 @@ defineProps<{
     color: white;
   }
 
+  .agendaHeader__calendar {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 0.5rem;
+    font-size: 1.5rem;
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+    grid-area: cal;
+
+    &:hover {
+      color: $brand;
+    }
+  }
+
   @include lg() {
     grid-template-columns: repeat(4, 1fr);
-    grid-template-areas: "day1 day1 day2 day2"
-                       "pres1 work1 pres2 work2";
+    grid-template-areas: "day1 day1 day2 day2 cal"
+                       "pres1 work1 pres2 work2 cal";
   }
 }
 
