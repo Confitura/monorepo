@@ -272,12 +272,6 @@ useHead({
   }
 }
 
-.agenda--rooms-4 {
-  @include lg() {
-    grid-template-columns: 120px 1fr 1fr 1fr 1fr;
-  }
-}
-
 .agendaItem__room,
 .agendaItem--empty {
   display: none;
@@ -355,6 +349,31 @@ useHead({
 
 .agendaItem__entry--all {
   grid-column: 2 / -1;
+
+  &:not(.agendaItem__entry--1) {
+    display: none;
+  }
+}
+
+
+.agenda--rooms-4 {
+  @include lg() {
+    grid-template-columns: 120px 1fr 1fr 1fr 1fr;
+  }
+}
+
+.agenda--rooms-4 > .agendaItem__slot {
+  grid-row: auto / span 4;
+
+  @include lg() {
+    grid-row: unset;
+  }
+
+}
+
+.agenda--rooms-4 > .agendaItem__entry--all {
+  //grid-column: 2 / -1;
+  grid-row: auto / span 4;
 
   &:not(.agendaItem__entry--1) {
     display: none;
