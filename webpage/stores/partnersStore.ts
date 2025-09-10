@@ -237,7 +237,7 @@ We hope to achieve this by providing a complete overview of Polish AI scene whic
         {
             id: "starburst",
             name: "Starburst",
-            description: "",
+            description: "Starburst is the flexible data platform that delivers fast, secure access to all your data wherever it lives. Built on an open data stack with Trino and Apache Iceberg, Starburst unifies distributed data, across clouds, on-premises, and in hybrid environments, without complex or costly migrations, unleashing the full power of the data lakehouse for analytics and AI.\n\nWith our Lakeside AI architecture, organizations gain federated access, governed collaboration, and full data lineage, empowering compliant, scalable AI. Trusted by global leaders, Starburst helps enterprises turn data into business value.\n\nFrom insights to action to AI, Starburst fuels innovation at every level. Learn more at [https://starburst.ai](https://starburst.ai)",
             logo: "/assets/partners/2025/starburst-dark.jpg",
             www: "https://www.starburst.io/",
             type: "bronze",
