@@ -202,7 +202,7 @@ We hope to achieve this by providing a complete overview of Polish AI scene whic
         }, {
             id: "inpost",
             name: "InPost",
-            description: "",
+            description: "InPost has revolutionised e-commerce parcel delivery in Poland and is now __one of Europe’s leading OOH e-commerce enablement platforms__. Founded in 1999 by Rafał Brzoska, InPost provides delivery services through our network of over 50,000 Automated Parcel Machines (APMs) and almost 35,000 pick-up drop-off points (PUDO) in nine countries across Europe, as well as to-door courier and fulfilment services to e-commerce merchants. InPost’s lockers provide consumers with a cheaper and more flexible, convenient, environmentally friendly and contactless delivery option.\n",
             logo: "/assets/partners/2025/inpost.png",
             www: "https://inpost.pl/",
             type: "gold",
