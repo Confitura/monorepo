@@ -378,6 +378,10 @@ useHead({
   &:not(.agendaItem__entry--1) {
     display: none;
   }
+
+  @include lg() {
+    grid-row: unset;
+  }
 }
 
 .agendaItem__entry--empty {
