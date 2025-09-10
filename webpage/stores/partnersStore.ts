@@ -246,7 +246,7 @@ We hope to achieve this by providing a complete overview of Polish AI scene whic
         {
             id: "best-warsaw",
             name: "BEST Warsaw",
-            description: "",
+            description: "BEST (Board of European Students of Technology) is an international, apolitical and non-profit association founded in 1989, and present in 83 of the best European universities, spread across 30 countries. Composed of more than 6,000 members, our activities reach more than 850 000 European students annually.We fulfill this mission by holding different events on a variety of topics such as scientific courses, design workshops,  job fairs  or hackathons, giving students the opportunity to develop their skills, gain knowledge and broaden their horizons.\n",
             logo: "/assets/partners/2025/BEST_warsaw.png",
             www: "https://www.facebook.com/BEST.WARSAW/",
             type: "media",
