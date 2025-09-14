@@ -55,6 +55,7 @@ public class WebpageDataDumper {
     @Transactional
     public void dumpAll() {
         dumpAdmins();
+        dumpVolunteers();
         dumpSpeakers();
         dumpAcceptedPresentations();
         dumpAcceptedWorkshops();
@@ -76,8 +77,13 @@ public class WebpageDataDumper {
     }
 
     public void dumpAdmins() {
-        var admins = userController.getAdmins().getBody();
-        dumbData(admins, "/users/search/admins.json");
+        var users = userController.getAdmins().getBody();
+        dumbData(users, "/users/search/admins.json");
+    }
+
+    public void dumpVolunteers() {
+        var users = userController.getVolunteers().getBody();
+        dumbData(users, "/users/search/volunteers.json");
     }
 
     @Transactional
