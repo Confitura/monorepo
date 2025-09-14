@@ -15,36 +15,28 @@ public class RatingService {
 
     private PresentationRepository repository;
     private RateRepository rateRepository;
-    private UsersPerformedRateRepository usersPerformedRateRepository;
 
     @Transactional
-    public Rate rate(String presentationId, String reviewerToken,  Rate rate) {
-        verifyPresentationNotRatedByReviewer(presentationId, reviewerToken);
+    public Rate rate(String presentationId, Rate rate) {
         Presentation presentation = repository.findById(presentationId);
-        markUserRated(presentation, reviewerToken);
+        rate.setPresentation(presentation);
         rate = saveRate(rate, presentation);
         return rate;
     }
 
-    private void verifyPresentationNotRatedByReviewer(String presentationId, String reviewerToken) {
-        if(usersPerformedRateRepository.existsByReviewerTokenAndPresentationId(reviewerToken, presentationId)){
-            throw new UserAlreadyRatedPresentation(reviewerToken, presentationId);
-        }
-    }
+    private Rate saveRate(final Rate newRate, Presentation presentation) {
+        var r = rateRepository.findByReviewerTokenAndPresentationId(newRate.getReviewerToken(), presentation.getId())
+                .map(it -> it.update(newRate))
+                .orElse(newRate);
 
-    private Rate saveRate(Rate rate, Presentation presentation) {
-        rate = rateRepository.save(rate);
+        var rate = rateRepository.save(r);
         presentation.getRatings().add(rate);
         repository.save(presentation);
         return rate;
     }
 
-    private void markUserRated(Presentation presentation, String reviewerToken) {
-        usersPerformedRateRepository.save(new UsersPerformedRate(reviewerToken, presentation));
-    }
-
     public void updateRating(Rate rate) {
-        if(rate.getId() == null || !rateRepository.existsById(rate.getId())){
+        if (rate.getId() == null || !rateRepository.existsById(rate.getId())) {
             throw new EntityNotFoundException();
         }
         rateRepository.save(rate);

@@ -15,10 +15,11 @@ public class RateRequest {
     private int value;
     private String comment;
 
-    public Rate toRate() {
+    public Rate toRate(String reviewerToken) {
         return new Rate()
                 .setId(id)
                 .setValue(RateValue.from(value))
-                .setComment(comment);
+                .setComment(comment)
+                .setReviewerToken(reviewerToken);
     }
 }

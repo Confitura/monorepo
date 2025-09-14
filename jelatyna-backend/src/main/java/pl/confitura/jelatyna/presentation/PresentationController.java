@@ -14,7 +14,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import lombok.AllArgsConstructor;
 import pl.confitura.jelatyna.api.model.FullPresentation;
 import pl.confitura.jelatyna.presentation.rating.Rate;
 import pl.confitura.jelatyna.presentation.rating.RatingService;
@@ -84,7 +83,7 @@ public class PresentationController {
         if (rate.getReviewerToken() == null) {
             return ResponseEntity.badRequest().body("Reviewer token is required");
         }
-        Rate createdRate = ratingService.rate(presentationId, rate.getReviewerToken(), rate.toRate());
+        Rate createdRate = ratingService.rate(presentationId, rate.toRate(rate.getReviewerToken()));
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(createdRate);

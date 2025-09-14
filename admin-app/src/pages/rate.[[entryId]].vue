@@ -6,13 +6,13 @@ definePage({
     layout: 'no-distractions',
   },
 })
-
+import {v4 as uuidv4} from 'uuid';
 import {ref, computed, onMounted} from 'vue'
 import {useRoute} from 'vue-router'
-import {publishedApi} from '@/utils/api.ts'
-import type {
-  InlinePresentationWithSpeakers,
-  PublicSpeaker
+import {presentationApi, publishedApi} from '@/utils/api.ts'
+import {
+  type InlinePresentationWithSpeakers,
+  type PublicSpeaker, RateValueEnum
 } from '@/utils/api-axios-client'
 
 // Accept either path param or query param for flexibility: /rate/123 or /rate?entryId=123
@@ -68,6 +68,27 @@ async function loadPresentation() {
 
 function submit() {
   if (!entryId.value) return
+
+  let ratingToken = localStorage.getItem('ratingToken') || uuidv4()
+  localStorage.setItem('ratingToken', ratingToken)
+
+  loading.value = true
+  presentationApi.addRating(entryId.value, {
+    reviewerToken: ratingToken,
+    value: rating.value,
+    comment: comment.value
+  })
+    .then((response) => {
+      if (response.status >= 200 && response.status <= 300) {
+        submitted.value = true
+      } else {
+        presError.value = 'Failed to submit rating. Please try again later.'
+      }
+    })
+    .finally(() => {
+      loading.value = false
+    })
+
   loading.value = true
   // For now, just simulate submit as backend API is not specified in the task
   setTimeout(() => {
@@ -83,6 +104,8 @@ onMounted(() => {
 })
 
 let votingEnabled = false
+
+const labels = ref(['bad', 'so so', 'ok', 'good', 'great'])
 </script>
 
 <template>
@@ -90,8 +113,6 @@ let votingEnabled = false
     <v-main style="height: 100%">
       <v-container style="padding: 0; height: 100%">
         <v-card style="height: 100%">
-          <v-toolbar density="comfortable" color="primary"
-                     :title="presentation?.title || ''"/>
           <v-card-text>
             <div v-if="!entryId" class="pa-4">
               <v-alert type="error" title="Missing entryId"
@@ -105,36 +126,6 @@ let votingEnabled = false
               <div v-else-if="presError">
                 <v-alert type="warning" :text="presError" class="mb-4"/>
               </div>
-              <div v-else-if="presentation" class="mb-6">
-                <div class="d-flex align-center flex-wrap mb-2"
-                     v-if="(cospeakers && cospeakers.length) || (presentation.speakers && presentation.speakers.length)">
-                  <template v-if="cospeakers && cospeakers.length">
-                    <div v-for="sp in cospeakers" :key="sp.id"
-                         class="d-flex align-center mr-4 mb-2">
-                      <v-avatar v-if="sp.photo" size="28" class="mr-2">
-                        <v-img :src="sp.photo" alt=""/>
-                      </v-avatar>
-                      <span class="text-body-2">{{ sp.name }}</span>
-                    </div>
-                  </template>
-                  <template v-else>
-                    <span class="text-body-2">{{
-                        presentation.speakers.map(s => s.name).join(', ')
-                      }}</span>
-                  </template>
-                </div>
-                <div>
-                  <v-chip v-for="tag in (presentation.tags || [])"
-                          :key="tag.id" class="ma-1" size="x-small"
-                          color="primary" variant="tonal">{{ tag.name }}
-                  </v-chip>
-                </div>
-              </div>
-
-
-              <div class="" style="white-space: pre-wrap">
-                {{ presentation?.description }}
-              </div>
 
               <v-banner text="Rating will be enabled on conference day"
                         v-if="!votingEnabled">
@@ -142,15 +133,18 @@ let votingEnabled = false
               <v-container v-if="votingEnabled">
                 <div class="mb-6">
                   <div class="mb-2">Your rating</div>
-                  <v-rating v-model="rating" :length="5" color="amber" hover
-                            disabled
-                            clearable size="32"/>
+                  <v-rating v-model="rating"
+                            length="5"
+                            color="amber"
+                            hover
+                            :item-labels="labels"
+                            clearable size="50">
+                  </v-rating>
                 </div>
 
                 <div class="mb-6">
                   <div class="mb-2">Comment (optional)</div>
                   <v-textarea v-model="comment" auto-grow rows="3"
-                              disabled
                               placeholder="What did you like? What can be improved?"/>
                 </div>
 
@@ -159,7 +153,7 @@ let votingEnabled = false
 
                 <v-btn color="primary" :disabled="!rating || loading"
                        :loading="loading" @click="submit">
-                  Submit
+                  Submit {{ rating }}
                 </v-btn>
               </v-container>
             </div>

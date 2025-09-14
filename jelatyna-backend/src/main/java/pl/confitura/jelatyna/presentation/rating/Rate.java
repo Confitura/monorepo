@@ -24,7 +24,16 @@ public class Rate {
 
     private String comment;
 
+    private String reviewerToken;
+
     @ManyToOne
     @JoinColumn(name = "presentation_id")
     private Presentation presentation;
+
+    public Rate update(Rate rate) {
+        assert reviewerToken.equals(rate.getReviewerToken());
+        value = rate.getValue();
+        comment = rate.getComment();
+        return this;
+    }
 }

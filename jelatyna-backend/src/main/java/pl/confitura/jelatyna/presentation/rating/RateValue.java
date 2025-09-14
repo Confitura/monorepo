@@ -1,11 +1,11 @@
 package pl.confitura.jelatyna.presentation.rating;
 
 public enum RateValue {
-    AWESOME(4),
-    GREAT(3),
-    IT_WAS_FINE(2),
-    BAD(1),
-    TERRIBLE(0);
+    AWESOME(5),
+    GREAT(4),
+    IT_WAS_FINE(3),
+    BAD(2),
+    TERRIBLE(1);
 
     int numericValue;
 
