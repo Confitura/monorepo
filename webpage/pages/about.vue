@@ -9,45 +9,11 @@
         <PageFragment name="about-page" class="about__infoContent"/>
       </div>
     </Box>
-    <Box color="red" class="about__committee no-padding">
-      <h3 class="committee__header">organizers</h3>
-      <div class="committee__members">
-        <div
-            class="committee__member"
-            v-for="member in committee"
-            :key="member.id"
-        >
-          <img
-              :src="member.photo "
-              :alt="member.name"
-              class="member__photo"
-          />
-          <div class="member__info">
-            <div class="member__name">{{ member.name }}</div>
-            <div class="member__bio">{{ member.bio }}</div>
-            <div class="member__social">
-              <SocialLink
-                  type="twitter"
-                  :id="member.twitter"
-                  theme="white"
-                  class="member__socialLink"
-              ></SocialLink>
-              <SocialLink
-                  type="github"
-                  :id="member.github"
-                  theme="white"
-                  class="member__socialLink"
-              ></SocialLink>
-              <SocialLink
-                  type="www"
-                  :id="member.www"
-                  theme="white"
-                  class="member__socialLink"
-              ></SocialLink>
-            </div>
-          </div>
-        </div>
-      </div>
+    <AboutCommittee :committee="committee"></AboutCommittee>
+
+    <Box color="white" class="about__volunteers no-padding">
+      <h3 class="volunteers__header">volunteers</h3>
+      <AboutVolunteersGrid :users="volunteers"></AboutVolunteersGrid>
     </Box>
 
     <Box color="white">

@@ -13,7 +13,11 @@
 
 <script setup lang="ts">
 
-const {type = 'twitter', id, theme = 'black'} = defineProps<{ type: SocialType, id: string, theme?: string }>()
+const {type = 'twitter', id, theme = 'black'} = defineProps<{
+  type: SocialType,
+  id: string | undefined,
+  theme?: string
+}>()
 
 type SocialType = 'twitter' | 'facebook' | 'github' | 'www'
 
