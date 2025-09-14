@@ -105,7 +105,7 @@ onMounted(() => {
 
 let votingEnabled = false
 
-const labels = ref(['bad', 'so so', 'ok', 'good', 'great'])
+const labels = ref(['terrible', 'bad', 'it was fine', 'great', 'awesome'])
 </script>
 
 <template>
@@ -113,51 +113,49 @@ const labels = ref(['bad', 'so so', 'ok', 'good', 'great'])
     <v-main style="height: 100%">
       <v-container style="padding: 0; height: 100%">
         <v-card style="height: 100%">
-          <v-card-text>
-            <div v-if="!entryId" class="pa-4">
-              <v-alert type="error" title="Missing entryId"
-                       text="No presentation/workshop identifier provided."/>
+          <div v-if="!entryId" class="pa-4">
+            <v-alert type="error" title="Missing entryId"
+                     text="No presentation/workshop identifier provided."/>
+          </div>
+          <div v-else>
+            <!-- Presentation details -->
+            <div class="mb-4" v-if="presLoading">
+              <v-progress-circular indeterminate color="primary" size="24"/>
             </div>
-            <div v-else>
-              <!-- Presentation details -->
-              <div class="mb-4" v-if="presLoading">
-                <v-progress-circular indeterminate color="primary" size="24"/>
-              </div>
-              <div v-else-if="presError">
-                <v-alert type="warning" :text="presError" class="mb-4"/>
-              </div>
-
-              <v-banner text="Rating will be enabled on conference day"
-                        v-if="!votingEnabled">
-              </v-banner>
-              <v-container v-if="votingEnabled">
-                <div class="mb-6">
-                  <div class="mb-2">Your rating</div>
-                  <v-rating v-model="rating"
-                            length="5"
-                            color="amber"
-                            hover
-                            :item-labels="labels"
-                            clearable size="50">
-                  </v-rating>
-                </div>
-
-                <div class="mb-6">
-                  <div class="mb-2">Comment (optional)</div>
-                  <v-textarea v-model="comment" auto-grow rows="3"
-                              placeholder="What did you like? What can be improved?"/>
-                </div>
-
-                <v-alert v-if="submitted" type="success" variant="tonal"
-                         class="mb-4" text="Thanks for your feedback!"/>
-
-                <v-btn color="primary" :disabled="!rating || loading"
-                       :loading="loading" @click="submit">
-                  Submit {{ rating }}
-                </v-btn>
-              </v-container>
+            <div v-else-if="presError">
+              <v-alert type="warning" :text="presError" class="mb-4"/>
             </div>
-          </v-card-text>
+
+            <v-banner text="Rating will be enabled on conference day"
+                      v-if="!votingEnabled">
+            </v-banner>
+            <v-container v-if="votingEnabled">
+              <div class="mb-6">
+                <div class="mb-2">Your rating</div>
+                <v-rating v-model="rating"
+                          length="5"
+                          color="amber"
+                          hover
+                          :item-labels="labels"
+                          clearable size="50">
+                </v-rating>
+              </div>
+
+              <div class="mb-6">
+                <div class="mb-2">Comment (optional)</div>
+                <v-textarea v-model="comment" auto-grow rows="3"
+                            placeholder="What did you like? What can be improved?"/>
+              </div>
+
+              <v-alert v-if="submitted" type="success" variant="tonal"
+                       class="mb-4" text="Thanks for your feedback!"/>
+
+              <v-btn color="primary" :disabled="!rating || loading"
+                     :loading="loading" @click="submit">
+                Submit {{ rating }}
+              </v-btn>
+            </v-container>
+          </div>
         </v-card>
       </v-container>
     </v-main>
