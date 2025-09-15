@@ -19,7 +19,7 @@ const { speakers = [] } = defineProps<{ speakers: [] }>()
 
 function show({ id }) {
   if (id) {
-    navigateTo({ path: `speakers/${id}` })
+    navigateTo({ path: `/speakers/${id}` })
   }
 }
 
