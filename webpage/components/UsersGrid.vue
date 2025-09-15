@@ -75,6 +75,10 @@ function lastName(value: string) {
 
       .user__name {
         align-items: flex-end;
+        text-align: right;
+        span {
+            text-align: right;
+        }
       }
     }
   }
@@ -85,6 +89,10 @@ function lastName(value: string) {
 
       .user__name {
         align-items: flex-end;
+        text-align: right;
+        span {
+          text-align: right;
+        }
       }
     }
   }
@@ -96,6 +104,10 @@ function lastName(value: string) {
 
       .user__name {
         align-items: flex-end;
+        text-align: right;
+        span {
+          text-align: right;
+        }
       }
     }
   }
