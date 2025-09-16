@@ -254,7 +254,7 @@ We hope to achieve this by providing a complete overview of Polish AI scene whic
         },
         {
             id: "probrand",
-            name: "probrand.pl",
+            name: "PRObrand",
             description: "",
             logo: "/assets/partners/2025/probrand.png",
             www: "https://probrand.pl/",
