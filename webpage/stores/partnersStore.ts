@@ -44,7 +44,7 @@ export interface PartnersState {
     partners: Partner[];
 }
 
-export type PartnerType = 'platinum' | 'gold' | 'silver' | 'media' | 'path' | 'bronze';
+export type PartnerType = 'platinum' | 'gold' | 'silver' | 'media' | 'path' | 'bronze' | 'tech';
 
 export interface Partner {
     id: string;
@@ -250,6 +250,15 @@ We hope to achieve this by providing a complete overview of Polish AI scene whic
             logo: "/assets/partners/2025/BEST_warsaw.png",
             www: "https://www.facebook.com/BEST.WARSAW/",
             type: "media",
+            orientation: "horizontal"
+        },
+        {
+            id: "probrand",
+            name: "probrand.pl",
+            description: "",
+            logo: "/assets/partners/2025/probrand.png",
+            www: "https://probrand.pl/",
+            type: "tech",
             orientation: "horizontal"
         },
         {

@@ -3,24 +3,24 @@
     <h1 class="header">our partners</h1>
     <div class="partners-grid">
       <div class="partners-main">
-<!--        <div class="platinum">
-          <span class="type--platinum">Platinum</span>
-          <a
-              v-for="item in partners.platinum"
-              :key="item.id"
-              :href="'/partners/' + item.id "
-              class="link"
-              rel="noopener"
-              target="_blank"
-          >
-            <img
-                :src="resolveImage(item.logo)"
-                :alt="item.name"
-                class="logo__img--platinum"
-                :class="item.id"
-            />
-          </a>
-        </div>-->
+        <!--        <div class="platinum">
+                  <span class="type--platinum">Platinum</span>
+                  <a
+                      v-for="item in partners.platinum"
+                      :key="item.id"
+                      :href="'/partners/' + item.id "
+                      class="link"
+                      rel="noopener"
+                      target="_blank"
+                  >
+                    <img
+                        :src="resolveImage(item.logo)"
+                        :alt="item.name"
+                        class="logo__img--platinum"
+                        :class="item.id"
+                    />
+                  </a>
+                </div>-->
         <div class="path">
           <span class="type--path">Path</span>
           <a
@@ -90,7 +90,7 @@
 
 import {type PartnerType, usePartnersStore} from '~/stores/partnersStore'
 
-const types: PartnerType[] = ['gold', 'silver', 'bronze', 'media']
+const types: PartnerType[] = ['gold', 'silver', 'bronze', 'media', 'tech']
 const active: Ref<PartnerType> = useState('active', () => 'gold')
 
 let partners: Partners = usePartnersStore().partnersMap
