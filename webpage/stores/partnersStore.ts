@@ -251,5 +251,26 @@ We hope to achieve this by providing a complete overview of Polish AI scene whic
             www: "https://www.facebook.com/BEST.WARSAW/",
             type: "media",
             orientation: "horizontal"
+        },
+        {
+            id: "TPConnects",
+            name: "TPConnects",
+            description: "TPConnects (TPC) is a leading SaaS Travel Technology company head quartered in Dubai, UAE, with a second office in Warsaw, Poland. Since our founding in 2014 we’ve been at the forefront of revolutionizing airline retailing and distribution, empowering airlines and travel agencies to offer seamless booking and servicing experiences with dynamic personalization capabilities.\n" +
+                "\n" +
+                " \n" +
+                "\n" +
+                "We are proud to support the industry’s shift toward Modern Airline Retailing through solutions built on IATA’s New Distribution Capability (NDC), One Order, ARM, and IFG standards. Our mission is to deliver flexible, innovative technology that adds value and accelerates time to market—free from the limitations of legacy systems.\n" +
+                "\n" +
+                " \n" +
+                "\n" +
+                "With over 160+ team members representing more than 20 nationalities across 14 countries, we foster a vibrant, multicultural environment where talent is recognized and celebrated.\n" +
+                "\n" +
+                " \n" +
+                "\n" +
+                "Join us to be part of a fast-growing, future-focused company shaping the next generation of travel technology.",
+            logo: "/assets/partners/2025/NewTechLogo-Jul'25-colour.png",
+            www: "https://tpconnects.com/",
+            type: "silver",
+            orientation: "horizontal"
         }];
 }
