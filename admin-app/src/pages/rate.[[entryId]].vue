@@ -6,14 +6,12 @@ definePage({
     layout: 'no-distractions',
   },
 })
+
+
 import {v4 as uuidv4} from 'uuid';
 import {ref, computed, onMounted} from 'vue'
 import {useRoute} from 'vue-router'
-import {presentationApi, publishedApi} from '@/utils/api.ts'
-import {
-  type InlinePresentationWithSpeakers,
-  type PublicSpeaker, RateValueEnum
-} from '@/utils/api-axios-client'
+import {presentationApi} from '@/utils/api.ts'
 
 // Accept either path param or query param for flexibility: /rate/123 or /rate?entryId=123
 const route = useRoute()
@@ -24,46 +22,10 @@ const comment = ref('')
 const submitted = ref(false)
 const loading = ref(false)
 
-const presLoading = ref(false)
 const presError = ref<string | null>(null)
-const presentation = ref<InlinePresentationWithSpeakers | null>(null)
-const cospeakers = ref<PublicSpeaker[]>([])
 
 async function loadPresentation() {
-  presLoading.value = true
   presError.value = null
-  presentation.value = null
-  cospeakers.value = []
-  try {
-    const list = await publishedApi.acceptedPresentations()
-    const ws = await publishedApi.acceptedWorkshops()
-    const items = [...(list.data || []), ...(ws.data || [])] as InlinePresentationWithSpeakers[]
-    presentation.value = items.find(p => p.id === entryId.value) || null
-  } catch (e) {
-    console.error(e)
-    presError.value = 'Failed to load presentation details.'
-  }
-  try {
-    if (entryId.value) {
-      // PublishedController exposes /published/users/{id}/public for a single speaker id.
-      // Our InlinePresentationWithSpeakers has speakers array with id/name. Fetch detailed public profiles for avatars if needed.
-      const sps = presentation.value?.speakers || []
-      const results: PublicSpeaker[] = []
-      for (const s of sps) {
-        try {
-          const res = await publishedApi.speaker(String(s.id))
-          if (res.data) results.push(res.data as unknown as PublicSpeaker)
-        } catch (e) {
-          // ignore missing
-        }
-      }
-      cospeakers.value = results
-    }
-  } catch (e) {
-    console.warn('Cospeakers not available', e)
-  } finally {
-    presLoading.value = false
-  }
 }
 
 function submit() {
@@ -119,10 +81,7 @@ const labels = ref(['terrible', 'bad', 'it was fine', 'great', 'awesome'])
           </div>
           <div v-else>
             <!-- Presentation details -->
-            <div class="mb-4" v-if="presLoading">
-              <v-progress-circular indeterminate color="primary" size="24"/>
-            </div>
-            <div v-else-if="presError">
+            <div v-if="presError">
               <v-alert type="warning" :text="presError" class="mb-4"/>
             </div>
 
