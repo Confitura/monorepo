@@ -262,6 +262,15 @@ We hope to achieve this by providing a complete overview of Polish AI scene whic
             orientation: "horizontal"
         },
         {
+            id: "filmcloud",
+            name: "filmcloud",
+            description: "",
+            logo: "/assets/partners/2025/filmcloud.svg",
+            www: "https://filmcloud.pl/",
+            type: "tech",
+            orientation: "horizontal"
+        },
+        {
             id: "TPConnects",
             name: "TPConnects",
             description: "TPConnects (TPC) is a leading SaaS Travel Technology company head quartered in Dubai, UAE, with a second office in Warsaw, Poland. Since our founding in 2014 we’ve been at the forefront of revolutionizing airline retailing and distribution, empowering airlines and travel agencies to offer seamless booking and servicing experiences with dynamic personalization capabilities.\n" +
