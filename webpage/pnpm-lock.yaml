@@ -25,7 +25,7 @@ importers:
         version: 3.0.1
       nuxt:
         specifier: ^3.17.6
-        version: 3.17.6(@parcel/watcher@2.5.1)(@types/node@24.0.10)(@vue/compiler-sfc@3.5.17)(db0@0.3.2)(ioredis@5.6.1)(magicast@0.3.5)(rollup@4.44.1)(sass-embedded@1.89.2)(terser@5.43.1)(typescript@5.8.3)(vite@7.0.2(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0))(yaml@2.8.0)
+        version: 3.17.6(@parcel/watcher@2.5.1)(@types/node@24.0.10)(@vue/compiler-sfc@3.5.17)(db0@0.3.2)(ioredis@5.6.1)(magicast@0.3.5)(rollup@4.44.1)(sass-embedded@1.89.2)(terser@5.43.1)(typescript@5.8.3)(vite@6.3.5(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0))(yaml@2.8.0)
       nuxt-umami:
         specifier: ^3.2.0
         version: 3.2.0(magicast@0.3.5)
@@ -38,6 +38,9 @@ importers:
       vue-router:
         specifier: ^4.5.0
         version: 4.5.1(vue@3.5.17(typescript@5.8.3))
+      vue3-google-map:
+        specifier: ^0.24.1
+        version: 0.24.1(vue@3.5.17(typescript@5.8.3))
     devDependencies:
       '@nuxt/test-utils':
         specifier: ^3.15.4
@@ -367,6 +370,12 @@ packages:
 
   '@fastify/busboy@3.1.1':
     resolution: {integrity: sha512-5DGmA8FTdB2XbDeEwc/5ZXBl6UbBAyBOOLlPuBnZ/N1SwdH9Ii+cOX3tBROlDgcTXxjOYnLMVoKk9+FXAw0CJw==}
+
+  '@googlemaps/js-api-loader@1.16.10':
+    resolution: {integrity: sha512-c2erv2k7P2ilYzMmtYcMgAR21AULosQuUHJbStnrvRk2dG93k5cqptDrh9A8p+ZNlyhiqEOgHW7N9PAizdUM7Q==}
+
+  '@googlemaps/markerclusterer@2.6.2':
+    resolution: {integrity: sha512-U6uVhq8iWhiIckA89sgRu8OK35mjd6/3CuoZKWakKEf0QmRRWpatlsPb3kqXkoWSmbcZkopRiI4dnW6DQSd7bQ==}
 
   '@ioredis/commands@1.2.0':
     resolution: {integrity: sha512-Sx1pU8EM64o2BrqNpEO1CNLtKQwyhuXuqyfH7oGKCk+1a33d2r5saW8zNwm3j6BTExtjrv2BxTgzzkMwts6vGg==}
@@ -944,6 +953,9 @@ packages:
   '@types/estree@1.0.8':
     resolution: {integrity: sha512-dWHzHa2WqEXI/O1E9OjrocMTKJl2mSrEolh1Iomrv6U+JuNwaHXsXx9bLu5gG7BUWFIN0skIQJQ/L1rIex4X6w==}
 
+  '@types/geojson@7946.0.16':
+    resolution: {integrity: sha512-6C8nqWur3j98U6+lXDfTUWIfgvZU+EumvpHKcYjujKH7woYyLj2sUmff0tRhrqM7BohUw7Pz3ZB1jj2gW9Fvmg==}
+
   '@types/node@24.0.10':
     resolution: {integrity: sha512-ENHwaH+JIRTDIEEbDK6QSQntAYGtbvdDXnMXnZaZ6k13Du1dPMmprkEHIL7ok2Wl2aZevetwTAb5S+7yIF+enA==}
 
@@ -956,6 +968,9 @@ packages:
 
   '@types/resolve@1.20.2':
     resolution: {integrity: sha512-60BCwRFOZCQhDncwQdxxeOEEkbc5dIMccYLwbxsS4TUNeVECQ/pBJ0j09mrHOl/JJvpRPGwO9SvE4nR2Nb/a4Q==}
+
+  '@types/supercluster@7.1.3':
+    resolution: {integrity: sha512-Z0pOY34GDFl3Q6hUFYf3HkTwKEE02e7QgtJppBt+beEAxnyOpJua+voGFvxINBHa06GwLFFym7gRPY2SiKIfIA==}
 
   '@types/triple-beam@1.3.5':
     resolution: {integrity: sha512-6WaYesThRMCl19iryMYP7/x2OVgCtbIVflDGFpWnb9irXI3UjYE4AzmYuiUKY1AJstGijoY+MgUszMgRxIYTYw==}
@@ -1814,6 +1829,13 @@ packages:
     resolution: {integrity: sha512-He2AjQGHe46svIFq5+L2Nx/eHDTI1oKgoevBP+TthnjymXiKkeJQ3+ITeWey99Y5+2OaPFbI1qEsx/5RsGtWnQ==}
     engines: {node: '>=18'}
 
+  fast-deep-equal@3.1.3:
+    resolution: {integrity: sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==}
+
+  fast-equals@5.2.2:
+    resolution: {integrity: sha512-V7/RktU11J3I36Nwq2JnZEM7tNm17eBJz+u25qdxBZeCKiX6BkVSZQjwWIr+IobgnZy+ag73tTZgZi7tr0LrBw==}
+    engines: {node: '>=6.0.0'}
+
   fast-fifo@1.3.2:
     resolution: {integrity: sha512-/d9sfos4yxzpwkDkuN7k2SqFKtYNmCTzgfEpz82x34IM9/zc8KGxQoXg1liNC/izpRM/MBdt44Nmx41ZWqk+FQ==}
 
@@ -2200,6 +2222,9 @@ packages:
   jwt-decode@4.0.0:
     resolution: {integrity: sha512-+KJGIyHgkGuIq3IEBNftfhW/LfWhXUIY6OmyVWjliu5KH1y0fw7VQ8YndE2O4qZdMSd9SqbnC8GOcZEy0Om7sA==}
     engines: {node: '>=18'}
+
+  kdbush@4.0.2:
+    resolution: {integrity: sha512-WbCVYJ27Sz8zi9Q7Q0xHC+05iwkm3Znipc2XTlrnJbsHMYktW4hPhXUE8Ys1engBrvffoSCqbil1JQAa7clRpA==}
 
   kleur@3.0.3:
     resolution: {integrity: sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==}
@@ -3305,6 +3330,9 @@ packages:
     peerDependencies:
       postcss: ^8.4.32
 
+  supercluster@8.0.1:
+    resolution: {integrity: sha512-IiOea5kJ9iqzD2t7QJq/cREyLHTtSmUT6gQsweojg9WH2sYJqZK9SswTu6jrscO6D1G5v5vYZ9ru/eq85lXeZQ==}
+
   superjson@2.2.2:
     resolution: {integrity: sha512-5JRxVqC8I8NuOUjzBbvVJAKNM8qoVuH0O77h4WInc/qC2q5IreqKxYwgkga3PfA22OayK2ikceb/B26dztPl+Q==}
     engines: {node: '>=16'}
@@ -3795,6 +3823,12 @@ packages:
     peerDependencies:
       vue: ^3.2.0
 
+  vue3-google-map@0.24.1:
+    resolution: {integrity: sha512-3v96LJ+2+Fwlp5OXA26Kw0ogkiP6kc1vW/V8IpW13ju2LgFbxkIIvZeb8fJ7WgMRDtncbLuZLOU1zwiyWcnifw==}
+    engines: {node: '>=18.12.0'}
+    peerDependencies:
+      vue: ^3
+
   vue@3.5.17:
     resolution: {integrity: sha512-LbHV3xPN9BeljML+Xctq4lbz2lVHCR6DtbpTf5XIO6gugpXUN49j2QQPcMj086r9+AkJ0FfUT8xjulKKBkkr9g==}
     peerDependencies:
@@ -4215,6 +4249,14 @@ snapshots:
 
   '@fastify/busboy@3.1.1': {}
 
+  '@googlemaps/js-api-loader@1.16.10': {}
+
+  '@googlemaps/markerclusterer@2.6.2':
+    dependencies:
+      '@types/supercluster': 7.1.3
+      fast-equals: 5.2.2
+      supercluster: 8.0.1
+
   '@ioredis/commands@1.2.0': {}
 
   '@isaacs/cliui@8.0.2':
@@ -4408,11 +4450,11 @@ snapshots:
 
   '@nuxt/devalue@2.0.2': {}
 
-  '@nuxt/devtools-kit@2.6.2(magicast@0.3.5)(vite@7.0.2(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0))':
+  '@nuxt/devtools-kit@2.6.2(magicast@0.3.5)(vite@6.3.5(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0))':
     dependencies:
       '@nuxt/kit': 3.17.6(magicast@0.3.5)
       execa: 8.0.1
-      vite: 7.0.2(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0)
+      vite: 6.3.5(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0)
     transitivePeerDependencies:
       - magicast
 
@@ -4427,12 +4469,12 @@ snapshots:
       prompts: 2.4.2
       semver: 7.7.2
 
-  '@nuxt/devtools@2.6.2(vite@7.0.2(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0))(vue@3.5.17(typescript@5.8.3))':
+  '@nuxt/devtools@2.6.2(vite@6.3.5(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0))(vue@3.5.17(typescript@5.8.3))':
     dependencies:
-      '@nuxt/devtools-kit': 2.6.2(magicast@0.3.5)(vite@7.0.2(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0))
+      '@nuxt/devtools-kit': 2.6.2(magicast@0.3.5)(vite@6.3.5(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0))
       '@nuxt/devtools-wizard': 2.6.2
       '@nuxt/kit': 3.17.6(magicast@0.3.5)
-      '@vue/devtools-core': 7.7.7(vite@7.0.2(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0))(vue@3.5.17(typescript@5.8.3))
+      '@vue/devtools-core': 7.7.7(vite@6.3.5(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0))(vue@3.5.17(typescript@5.8.3))
       '@vue/devtools-kit': 7.7.7
       birpc: 2.4.0
       consola: 3.4.2
@@ -4457,9 +4499,9 @@ snapshots:
       sirv: 3.0.1
       structured-clone-es: 1.0.0
       tinyglobby: 0.2.14
-      vite: 7.0.2(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0)
-      vite-plugin-inspect: 11.3.0(@nuxt/kit@3.17.6(magicast@0.3.5))(vite@7.0.2(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0))
-      vite-plugin-vue-tracer: 1.0.0(vite@7.0.2(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0))(vue@3.5.17(typescript@5.8.3))
+      vite: 6.3.5(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0)
+      vite-plugin-inspect: 11.3.0(@nuxt/kit@3.17.6(magicast@0.3.5))(vite@6.3.5(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0))
+      vite-plugin-vue-tracer: 1.0.0(vite@6.3.5(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0))(vue@3.5.17(typescript@5.8.3))
       which: 5.0.0
       ws: 8.18.3
     transitivePeerDependencies:
@@ -4910,6 +4952,8 @@ snapshots:
 
   '@types/estree@1.0.8': {}
 
+  '@types/geojson@7946.0.16': {}
+
   '@types/node@24.0.10':
     dependencies:
       undici-types: 7.8.0
@@ -4922,6 +4966,10 @@ snapshots:
       parse-path: 7.1.0
 
   '@types/resolve@1.20.2': {}
+
+  '@types/supercluster@7.1.3':
+    dependencies:
+      '@types/geojson': 7946.0.16
 
   '@types/triple-beam@1.3.5': {}
 
@@ -5120,14 +5168,14 @@ snapshots:
 
   '@vue/devtools-api@6.6.4': {}
 
-  '@vue/devtools-core@7.7.7(vite@7.0.2(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0))(vue@3.5.17(typescript@5.8.3))':
+  '@vue/devtools-core@7.7.7(vite@6.3.5(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0))(vue@3.5.17(typescript@5.8.3))':
     dependencies:
       '@vue/devtools-kit': 7.7.7
       '@vue/devtools-shared': 7.7.7
       mitt: 3.0.1
       nanoid: 5.1.5
       pathe: 2.0.3
-      vite-hot-client: 2.1.0(vite@7.0.2(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0))
+      vite-hot-client: 2.1.0(vite@6.3.5(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0))
       vue: 3.5.17(typescript@5.8.3)
     transitivePeerDependencies:
       - vite
@@ -5869,6 +5917,10 @@ snapshots:
 
   fake-indexeddb@6.0.1: {}
 
+  fast-deep-equal@3.1.3: {}
+
+  fast-equals@5.2.2: {}
+
   fast-fifo@1.3.2: {}
 
   fast-glob@3.3.3:
@@ -6229,6 +6281,8 @@ snapshots:
   junk@4.0.1: {}
 
   jwt-decode@4.0.0: {}
+
+  kdbush@4.0.2: {}
 
   kleur@3.0.3: {}
 
@@ -6599,11 +6653,11 @@ snapshots:
     transitivePeerDependencies:
       - magicast
 
-  nuxt@3.17.6(@parcel/watcher@2.5.1)(@types/node@24.0.10)(@vue/compiler-sfc@3.5.17)(db0@0.3.2)(ioredis@5.6.1)(magicast@0.3.5)(rollup@4.44.1)(sass-embedded@1.89.2)(terser@5.43.1)(typescript@5.8.3)(vite@7.0.2(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0))(yaml@2.8.0):
+  nuxt@3.17.6(@parcel/watcher@2.5.1)(@types/node@24.0.10)(@vue/compiler-sfc@3.5.17)(db0@0.3.2)(ioredis@5.6.1)(magicast@0.3.5)(rollup@4.44.1)(sass-embedded@1.89.2)(terser@5.43.1)(typescript@5.8.3)(vite@6.3.5(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0))(yaml@2.8.0):
     dependencies:
       '@nuxt/cli': 3.25.1(magicast@0.3.5)
       '@nuxt/devalue': 2.0.2
-      '@nuxt/devtools': 2.6.2(vite@7.0.2(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0))(vue@3.5.17(typescript@5.8.3))
+      '@nuxt/devtools': 2.6.2(vite@6.3.5(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0))(vue@3.5.17(typescript@5.8.3))
       '@nuxt/kit': 3.17.6(magicast@0.3.5)
       '@nuxt/schema': 3.17.6
       '@nuxt/telemetry': 2.6.6(magicast@0.3.5)
@@ -7514,6 +7568,10 @@ snapshots:
       postcss: 8.5.6
       postcss-selector-parser: 7.1.0
 
+  supercluster@8.0.1:
+    dependencies:
+      kdbush: 4.0.2
+
   superjson@2.2.2:
     dependencies:
       copy-anything: 3.0.5
@@ -7774,15 +7832,15 @@ snapshots:
 
   varint@6.0.0: {}
 
-  vite-dev-rpc@1.1.0(vite@7.0.2(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0)):
+  vite-dev-rpc@1.1.0(vite@6.3.5(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0)):
     dependencies:
       birpc: 2.4.0
-      vite: 7.0.2(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0)
-      vite-hot-client: 2.1.0(vite@7.0.2(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0))
+      vite: 6.3.5(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0)
+      vite-hot-client: 2.1.0(vite@6.3.5(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0))
 
-  vite-hot-client@2.1.0(vite@7.0.2(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0)):
+  vite-hot-client@2.1.0(vite@6.3.5(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0)):
     dependencies:
-      vite: 7.0.2(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0)
+      vite: 6.3.5(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0)
 
   vite-node@3.2.4(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0):
     dependencies:
@@ -7820,7 +7878,7 @@ snapshots:
     optionalDependencies:
       typescript: 5.8.3
 
-  vite-plugin-inspect@11.3.0(@nuxt/kit@3.17.6(magicast@0.3.5))(vite@7.0.2(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0)):
+  vite-plugin-inspect@11.3.0(@nuxt/kit@3.17.6(magicast@0.3.5))(vite@6.3.5(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0)):
     dependencies:
       ansis: 4.1.0
       debug: 4.4.1
@@ -7830,21 +7888,21 @@ snapshots:
       perfect-debounce: 1.0.0
       sirv: 3.0.1
       unplugin-utils: 0.2.4
-      vite: 7.0.2(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0)
-      vite-dev-rpc: 1.1.0(vite@7.0.2(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0))
+      vite: 6.3.5(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0)
+      vite-dev-rpc: 1.1.0(vite@6.3.5(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0))
     optionalDependencies:
       '@nuxt/kit': 3.17.6(magicast@0.3.5)
     transitivePeerDependencies:
       - supports-color
 
-  vite-plugin-vue-tracer@1.0.0(vite@7.0.2(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0))(vue@3.5.17(typescript@5.8.3)):
+  vite-plugin-vue-tracer@1.0.0(vite@6.3.5(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0))(vue@3.5.17(typescript@5.8.3)):
     dependencies:
       estree-walker: 3.0.3
       exsolve: 1.0.7
       magic-string: 0.30.17
       pathe: 2.0.3
       source-map-js: 1.2.1
-      vite: 7.0.2(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0)
+      vite: 6.3.5(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0)
       vue: 3.5.17(typescript@5.8.3)
 
   vite@6.3.5(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)(terser@5.43.1)(yaml@2.8.0):
@@ -7955,6 +8013,13 @@ snapshots:
   vue-router@4.5.1(vue@3.5.17(typescript@5.8.3)):
     dependencies:
       '@vue/devtools-api': 6.6.4
+      vue: 3.5.17(typescript@5.8.3)
+
+  vue3-google-map@0.24.1(vue@3.5.17(typescript@5.8.3)):
+    dependencies:
+      '@googlemaps/js-api-loader': 1.16.10
+      '@googlemaps/markerclusterer': 2.6.2
+      fast-deep-equal: 3.1.3
       vue: 3.5.17(typescript@5.8.3)
 
   vue@3.5.17(typescript@5.8.3):

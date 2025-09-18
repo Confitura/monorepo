@@ -24,7 +24,8 @@
     "nuxt-umami": "^3.2.0",
     "pinia": "^2.2.8",
     "vue": "^3.5.13",
-    "vue-router": "^4.5.0"
+    "vue-router": "^4.5.0",
+    "vue3-google-map": "^0.24.1"
   },
   "devDependencies": {
     "@nuxt/test-utils": "^3.15.4",

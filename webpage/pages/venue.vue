@@ -1,218 +1,56 @@
 <template>
   <div class="venue__page">
-    <PageHeader title="Venue" type="coder" />
+    <PageHeader title="Venue" type="coder"/>
     <Box color="white" :full="false">
-      <PageFragment class="questions" name="venue-page" />
+      <PageFragment class="questions" name="venue-page"/>
     </Box>
     <Box color="white">
-<!--      <GmapMap-->
-<!--        :center="center"-->
-<!--        :zoom="16"-->
-<!--        :options="mapOptions"-->
-<!--        class="venue__map"-->
-<!--      >-->
-<!--        <GmapMarker-->
-<!--          :position="center"-->
-<!--          :clickable="true"-->
-<!--          :draggable="false"-->
-<!--          icon="~/assets/marker.svg" />-->
-<!--      </GmapMap>-->
+      <GoogleMap
+          :center="center"
+          :zoom="16"
+          class="venue__map"
+          :api-key="mapApiKey"
+          map-id="9b409aff2a4005d9633060b5"
+      >
+        <AdvancedMarker :options="markerOptions">
+          <template #content>
+            <img src="~/assets/marker.svg" alt="marker" class="marker__image"/>
+          </template>
+        </AdvancedMarker>
+
+      </GoogleMap>
 
     </Box>
-    <Contact />
+    <Contact/>
   </div>
 </template>
 
 <script setup lang="ts">
-let center= {lat: 51.093048, lng: 6.842120}
-let markers= [
-  {
-    position: {
-      lat: 51.093048, lng: 6.842120
-    },
-  }
-]
-// let center = { lat: 52.2248963, lng: 20.9599152 }
-let mapOptions = {
-  zoomControl: true,
-  mapTypeControl: false,
-  styles: [
-    {
-      featureType: 'all',
-      elementType: 'labels.text.fill',
-      stylers: [
-        {
-          color: '#ffffff'
-        }
-      ]
-    },
 
-    {
-      featureType: 'all',
-      elementType: 'labels.icon',
-      stylers: [
-        {
-          visibility: 'off'
-        }
-      ]
-    },
-    {
-      featureType: 'administrative',
-      elementType: 'geometry.fill',
-      stylers: [
-        {
-          color: '#ee1f46'
-        }
-      ]
-    },
-    {
-      featureType: 'administrative',
-      elementType: 'geometry.stroke',
-      stylers: [
-        {
-          color: '#c9323b'
-        },
-        {
-          weight: 1.2
-        }
-      ]
-    },
-    {
-      featureType: 'administrative.locality',
-      elementType: 'geometry.fill',
-      stylers: [
-        {
-          lightness: '-1'
-        }
-      ]
-    },
-    {
-      featureType: 'administrative.neighborhood',
-      elementType: 'labels.text.fill',
-      stylers: [
-        {
-          lightness: '0'
-        },
-        {
-          saturation: '0'
-        }
-      ]
-    },
-    {
-      featureType: 'administrative.neighborhood',
-      elementType: 'labels.text.stroke',
-      stylers: [
-        {
-          weight: '0.01'
-        }
-      ]
-    },
-    {
-      featureType: 'administrative.land_parcel',
-      elementType: 'labels.text.stroke',
-      stylers: [
-        {
-          weight: '0.01'
-        }
-      ]
-    },
-    {
-      featureType: 'landscape',
-      elementType: 'geometry',
-      stylers: [
-        {
-          color: '#ee1f46'
-        }
-      ]
-    },
-    {
-      featureType: 'poi',
-      elementType: 'geometry',
-      stylers: [
-        {
-          color: '#99282f'
-        }
-      ]
-    },
-    {
-      featureType: 'road',
-      elementType: 'geometry.stroke',
-      stylers: [
-        {
-          visibility: 'off'
-        }
-      ]
-    },
-    {
-      featureType: 'road.highway',
-      elementType: 'geometry.fill',
-      stylers: [
-        {
-          color: '#99282f'
-        }
-      ]
-    },
-    {
-      featureType: 'road.highway.controlled_access',
-      elementType: 'geometry.stroke',
-      stylers: [
-        {
-          color: '#99282f'
-        }
-      ]
-    },
-    {
-      featureType: 'road.arterial',
-      elementType: 'geometry',
-      stylers: [
-        {
-          color: '#99282f'
-        }
-      ]
-    },
-    {
-      featureType: 'road.local',
-      elementType: 'geometry',
-      stylers: [
-        {
-          color: '#99282f'
-        }
-      ]
-    },
-    {
-      featureType: 'transit',
-      elementType: 'geometry',
-      stylers: [
-        {
-          color: '#99282f'
-        }
-      ]
-    },
-    {
-      featureType: 'water',
-      elementType: 'geometry',
-      stylers: [
-        {
-          color: '#090228'
-        }
-      ]
-    }
-  ]
+import {GoogleMap, AdvancedMarker} from 'vue3-google-map'
+
+let center = {lat: 52.23522478133525, lng: 20.987968556704143}
+
+let markerOptions = {
+  position: center,
 }
 
+
+const config = useRuntimeConfig();
+const mapApiKey = config.public.googleMapsApiKey;
 
 const title = 'Venue — Confitura 2025 Location & Directions';
 const description = 'Find all information about the Confitura 2025 venue: location, directions, and logistics for your visit.';
 useHead({
   title,
   meta: [
-    { name: 'description', content: description },
-    { property: 'og:title', content: title },
-    { property: 'og:description', content: description },
-    { property: 'og:type', content: 'website' },
-    { name: 'twitter:card', content: 'summary' },
-    { name: 'twitter:title', content: title },
-    { name: 'twitter:description', content: description }
+    {name: 'description', content: description},
+    {property: 'og:title', content: title},
+    {property: 'og:description', content: description},
+    {property: 'og:type', content: 'website'},
+    {name: 'twitter:card', content: 'summary'},
+    {name: 'twitter:title', content: title},
+    {name: 'twitter:description', content: description}
   ]
 })
 
