@@ -273,7 +273,7 @@ We hope to achieve this by providing a complete overview of Polish AI scene whic
         {
             id: "chillivision",
             name: "ChilliVision",
-            description: "",
+            description: "Chillivision tworzą ludzie posiadający kilkunastoletnie doświadczenie w produkcji wszelkich materiałów filmowych, animacji a także w postprodukcji filmowej. Produkujemy wszelkie formy filmowe: filmy promocyjne, reklamowe, naukowo-badawcze, popularnonaukowe, reportaże oraz relacje z wydarzeń, a także zapewniamy kompleksową rejestrację filmową konferencji wraz z streamingiem do Internetu.",
             logo: "/assets/partners/2025/ChilliVision.png",
             www: "https://chillivision.com.pl/",
             type: "tech",
