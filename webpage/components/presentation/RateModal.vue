@@ -49,6 +49,7 @@ watch(
 
 .rateModal__iframe {
   width: 100%;
+  min-height: 400px;
   border: none;
 }
 
