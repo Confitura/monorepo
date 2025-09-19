@@ -7,12 +7,11 @@
 <!--          <h1 class="h1">Confitura 2025 - Escape the Loop. Join the Revolution.</h1>-->
 <!--        </div>-->
         <div class="info__live">
-          <div class="info__live-text">> The tickets are <a class="" href="https://www.ebilet.pl/biznes/konferencje/confitura-25?partner=bcc" target="_blank"> here</a> <</div>
-
+          <div class="info__live-text">> tickets for saturday? <a class="" href="https://www.ebilet.pl/biznes/konferencje/confitura-25?partner=bcc" target="_blank"> here</a> <</div>
         </div>
         <div class="info__long">
           <p> Warsaw | September 19–20, 2025 </p>
-          <TheTimer/>
+<!--          <TheTimer/>-->
           <p>ADN Conference Center, Grzybowska 56</p>
         </div>
         <div class="info__long">
