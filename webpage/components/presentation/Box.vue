@@ -7,6 +7,7 @@
         <PresentationMetadata class="presentationBox__metadata" :presentation="presentation"></PresentationMetadata>
       </div>
     </div>
+    <slot></slot>
     <div class="presentationBox__description" v-html="description"></div>
   </div>
 </template>

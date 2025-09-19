@@ -36,9 +36,10 @@ watch(
 <template>
   <Modal v-if="presentationId" @close="$emit('close')">
     <div class="rateModal">
-      <PresentationBox v-if="presentation" :presentation="presentation" />
-      <div v-else class="rateModal__error">Missing presentation details</div>
-      <iframe v-if="url" class="rateModal__iframe" :src="url" frameborder="0" allowfullscreen></iframe>
+      <PresentationBox v-if="presentation" :presentation="presentation">
+        <iframe v-if="url" class="rateModal__iframe" :src="url" frameborder="0" allowfullscreen></iframe>
+        <div v-else class="rateModal__error">Missing presentation details</div>
+      </PresentationBox>
     </div>
   </Modal>
 </template>
