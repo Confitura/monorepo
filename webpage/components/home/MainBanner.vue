@@ -3,17 +3,19 @@
     <!--    <HomeMainBannerStars />-->
     <div class="container">
       <div class="info">
-<!--        <div class="slogan">-->
-<!--          <h1 class="h1">Confitura 2025 - Escape the Loop. Join the Revolution.</h1>-->
-<!--        </div>-->
         <div class="info__live">
-          <div class="info__live-text">> tickets for saturday? <a class="" href="https://www.ebilet.pl/biznes/konferencje/confitura-25?partner=bcc" target="_blank"> here</a> <</div>
+          <div class="info__live-text">Thank you, and see you next time!</div>
         </div>
-        <div class="info__long">
-          <p> Warsaw | September 19–20, 2025 </p>
-<!--          <TheTimer/>-->
-          <p>ADN Conference Center, Grzybowska 56</p>
+        <div class="slogan">
+          don't want to miss next edition?
+          <p>subscribe to our <a href="https://newsletter.confitura.pl/subscription/form">newsletter</a> or follow as on
+            socials</p>
         </div>
+        <!--        <div class="info__long">-->
+        <!--&lt;!&ndash;          <TheTimer/>&ndash;&gt;-->
+        <!--          <p> Warsaw | September 19–20, 2025 </p>-->
+        <!--          <p>ADN Conference Center, Grzybowska 56</p>-->
+        <!--        </div>-->
         <div class="info__long">
           <small>
             Want to sponsor Confitura? Drop us a line:
