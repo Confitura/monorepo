@@ -186,6 +186,9 @@ onMounted(() => {
                 </div>
               </div>
               <div v-else class="text-medium-emphasis">No speakers assigned.</div>
+              <div>
+                <Rating :presentation="presentation"></Rating>
+              </div>
             </div>
           </v-card-text>
         </v-card>
