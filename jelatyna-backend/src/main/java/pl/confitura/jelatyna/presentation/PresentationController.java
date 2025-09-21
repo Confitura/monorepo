@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 import pl.confitura.jelatyna.api.model.FullPresentation;
 import pl.confitura.jelatyna.presentation.rating.Rate;
 import pl.confitura.jelatyna.presentation.rating.RatingService;
+import pl.confitura.jelatyna.presentation.rating.ViewPresentationRate;
+import pl.confitura.jelatyna.presentation.rating.ViewPresentationRateRepository;
 import pl.confitura.jelatyna.user.User;
 import pl.confitura.jelatyna.user.UserRepository;
 
@@ -24,12 +27,14 @@ import static java.util.stream.Collectors.toList;
 
 @RequiredArgsConstructor
 @RestController
+@SecurityRequirement(name = "bearerAuth")
 public class PresentationController {
 
     private final PresentationRepository repository;
     private final UserRepository userRepository;
     private final RatingService ratingService;
     private final TagRepository tagRepository;
+    private final ViewPresentationRateRepository ratesRepository;
 
 
     @PreAuthorize("@security.presentationOwnedByUser(#presentationId) || @security.isAdmin()")
@@ -99,6 +104,14 @@ public class PresentationController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .build();
+    }
+
+    @PreAuthorize("@security.isAdmin()")
+    @GetMapping("/presentations/{presentationId}/ratings")
+    public ResponseEntity<ViewPresentationRate> rates(@PathVariable String presentationId) {
+        return this.ratesRepository.findByPresentationId(presentationId)
+                .map(ResponseEntity::ok)
+                .orElseGet(ResponseEntity.notFound()::build);
     }
 
 

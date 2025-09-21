@@ -24,6 +24,8 @@ declare module 'vue' {
     ChartSubmissionTypes: typeof import('./components/demo-charts/ChartSubmissionTypes.vue')['default']
     ChartUserTypes: typeof import('./components/demo-charts/ChartUserTypes.vue')['default']
     DialogConfirm: typeof import('./components/DialogConfirm.vue')['default']
+    Presentation: typeof import('./components/homepage/Presentation.vue')['default']
+    Rating: typeof import('./components/homepage/rating.vue')['default']
     RouterWrapper: typeof import('./components/layout/RouterWrapper.vue')['default']
     StatsCard: typeof import('./components/StatsCard.vue')['default']
   }

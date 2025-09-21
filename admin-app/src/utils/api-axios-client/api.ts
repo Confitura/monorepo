@@ -26,73 +26,6 @@ import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError, operationServerM
 /**
  * 
  * @export
- * @interface AgendaEntry
- */
-export interface AgendaEntry {
-    /**
-     * 
-     * @type {string}
-     * @memberof AgendaEntry
-     */
-    'id'?: string;
-    /**
-     * 
-     * @type {TimeSlot}
-     * @memberof AgendaEntry
-     */
-    'timeSlot': TimeSlot;
-    /**
-     * 
-     * @type {Room}
-     * @memberof AgendaEntry
-     */
-    'room'?: Room;
-    /**
-     * 
-     * @type {string}
-     * @memberof AgendaEntry
-     */
-    'label'?: string;
-    /**
-     * 
-     * @type {Presentation}
-     * @memberof AgendaEntry
-     */
-    'presentation'?: Presentation;
-    /**
-     * 
-     * @type {string}
-     * @memberof AgendaEntry
-     */
-    'presentationId'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof AgendaEntry
-     */
-    'timeSlotOrder'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof AgendaEntry
-     */
-    'roomId'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AgendaEntry
-     */
-    'roomLabel'?: string;
-    /**
-     * 
-     * @type {Set<PublicProfile>}
-     * @memberof AgendaEntry
-     */
-    'speakers'?: Set<PublicProfile>;
-}
-/**
- * 
- * @export
  * @interface AllegroContext
  */
 export interface AllegroContext {
@@ -640,6 +573,12 @@ export interface InlinePresentationWithSpeakers {
      * @type {string}
      * @memberof InlinePresentationWithSpeakers
      */
+    'sortableTitle'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlinePresentationWithSpeakers
+     */
     'shortDescription'?: string;
     /**
      * 
@@ -991,37 +930,6 @@ export interface LikeResponse {
      * @memberof LikeResponse
      */
     'presentationId'?: string;
-}
-/**
- * 
- * @export
- * @interface LocalTime
- */
-export interface LocalTime {
-    /**
-     * 
-     * @type {number}
-     * @memberof LocalTime
-     */
-    'hour'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof LocalTime
-     */
-    'minute'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof LocalTime
-     */
-    'second'?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof LocalTime
-     */
-    'nano'?: number;
 }
 /**
  * 
@@ -1417,55 +1325,6 @@ export interface PresentationStats {
 /**
  * 
  * @export
- * @interface PublicProfile
- */
-export interface PublicProfile {
-    /**
-     * 
-     * @type {string}
-     * @memberof PublicProfile
-     */
-    'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PublicProfile
-     */
-    'name'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PublicProfile
-     */
-    'bio'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PublicProfile
-     */
-    'twitter'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PublicProfile
-     */
-    'github'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PublicProfile
-     */
-    'www'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PublicProfile
-     */
-    'photo'?: string;
-}
-/**
- * 
- * @export
  * @interface PublicSpeaker
  */
 export interface PublicSpeaker {
@@ -1542,6 +1401,12 @@ export interface Rate {
      * @memberof Rate
      */
     'comment'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Rate
+     */
+    'reviewerToken'?: string;
     /**
      * 
      * @type {Presentation}
@@ -1702,12 +1567,6 @@ export interface Speaker {
      * @memberof Speaker
      */
     'name'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Speaker
-     */
-    'photoUrl'?: string;
 }
 /**
  * 
@@ -1752,98 +1611,6 @@ export interface Tag {
      * @memberof Tag
      */
     'name'?: string;
-}
-/**
- * 
- * @export
- * @interface TimeSlot
- */
-export interface TimeSlot {
-    /**
-     * 
-     * @type {string}
-     * @memberof TimeSlot
-     */
-    'createdBy'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TimeSlot
-     */
-    'createdDate'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TimeSlot
-     */
-    'lastModifiedBy'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TimeSlot
-     */
-    'lastModifiedDate'?: string;
-    /**
-     * 
-     * @type {TimeSlotId}
-     * @memberof TimeSlot
-     */
-    'id': TimeSlotId;
-    /**
-     * 
-     * @type {LocalTime}
-     * @memberof TimeSlot
-     */
-    'start'?: LocalTime;
-    /**
-     * 
-     * @type {LocalTime}
-     * @memberof TimeSlot
-     */
-    'end'?: LocalTime;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof TimeSlot
-     */
-    'forAllRooms'?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof TimeSlot
-     */
-    'timeSlotSpan'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof TimeSlot
-     */
-    'label'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof TimeSlot
-     */
-    'displayOrder'?: number;
-}
-/**
- * 
- * @export
- * @interface TimeSlotId
- */
-export interface TimeSlotId {
-    /**
-     * 
-     * @type {string}
-     * @memberof TimeSlotId
-     */
-    'dayId': string;
-    /**
-     * 
-     * @type {number}
-     * @memberof TimeSlotId
-     */
-    'displayOrder': number;
 }
 /**
  * 
@@ -2049,12 +1816,6 @@ export interface User {
     'privacyPolicyAccepted'?: boolean;
     /**
      * 
-     * @type {Set<AgendaEntry>}
-     * @memberof User
-     */
-    'personalAgenda'?: Set<AgendaEntry>;
-    /**
-     * 
      * @type {ParticipationData}
      * @memberof User
      */
@@ -2070,13 +1831,13 @@ export interface User {
      * @type {boolean}
      * @memberof User
      */
-    'volunteer'?: boolean;
+    'admin'?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof User
      */
-    'admin'?: boolean;
+    'volunteer'?: boolean;
     /**
      * 
      * @type {boolean}
@@ -2108,6 +1869,79 @@ export interface UsersStats {
      * @memberof UsersStats
      */
     'volunteers'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface ViewPresentationRate
+ */
+export interface ViewPresentationRate {
+    /**
+     * 
+     * @type {string}
+     * @memberof ViewPresentationRate
+     */
+    'presentationId'?: string;
+    /**
+     * 
+     * @type {Array<Rate>}
+     * @memberof ViewPresentationRate
+     */
+    'ratings'?: Array<Rate>;
+    /**
+     * 
+     * @type {Array<Speaker>}
+     * @memberof ViewPresentationRate
+     */
+    'speakers'?: Array<Speaker>;
+    /**
+     * 
+     * @type {string}
+     * @memberof ViewPresentationRate
+     */
+    'title'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ViewPresentationRate
+     */
+    'ratingCount'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ViewPresentationRate
+     */
+    'avgRating'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ViewPresentationRate
+     */
+    'ratingCountAwesome'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ViewPresentationRate
+     */
+    'ratingCountGreat'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ViewPresentationRate
+     */
+    'ratingCountItWasFine'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ViewPresentationRate
+     */
+    'ratingCountBad'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ViewPresentationRate
+     */
+    'ratingCountTerrible'?: number;
 }
 /**
  * 
@@ -2323,6 +2157,39 @@ export const AdminPresentationControllerApiAxiosParamCreator = function (configu
         },
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        rates: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/ratings`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {string} presentationId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2421,6 +2288,17 @@ export const AdminPresentationControllerApiFp = function(configuration?: Configu
         },
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async rates(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ViewPresentationRate>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.rates(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminPresentationControllerApi.rates']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @param {string} presentationId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2464,6 +2342,14 @@ export const AdminPresentationControllerApiFactory = function (configuration?: C
         },
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        rates(options?: RawAxiosRequestConfig): AxiosPromise<Array<ViewPresentationRate>> {
+            return localVarFp.rates(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {string} presentationId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2499,6 +2385,16 @@ export class AdminPresentationControllerApi extends BaseAPI {
      */
     public accept(presentationId: string, options?: RawAxiosRequestConfig) {
         return AdminPresentationControllerApiFp(this.configuration).accept(presentationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminPresentationControllerApi
+     */
+    public rates(options?: RawAxiosRequestConfig) {
+        return AdminPresentationControllerApiFp(this.configuration).rates(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -6099,6 +5995,10 @@ export const PresentationControllerApiAxiosParamCreator = function (configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -6135,6 +6035,10 @@ export const PresentationControllerApiAxiosParamCreator = function (configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
 
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
@@ -6167,6 +6071,10 @@ export const PresentationControllerApiAxiosParamCreator = function (configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -6195,6 +6103,10 @@ export const PresentationControllerApiAxiosParamCreator = function (configuratio
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -6228,6 +6140,47 @@ export const PresentationControllerApiAxiosParamCreator = function (configuratio
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} presentationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        rates1: async (presentationId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'presentationId' is not null or undefined
+            assertParamExists('rates1', 'presentationId', presentationId)
+            const localVarPath = `/presentations/{presentationId}/ratings`
+                .replace(`{${"presentationId"}}`, encodeURIComponent(String(presentationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -6265,6 +6218,10 @@ export const PresentationControllerApiAxiosParamCreator = function (configuratio
             const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -6305,6 +6262,10 @@ export const PresentationControllerApiAxiosParamCreator = function (configuratio
             const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -6393,6 +6354,18 @@ export const PresentationControllerApiFp = function(configuration?: Configuratio
         /**
          * 
          * @param {string} presentationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async rates1(presentationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ViewPresentationRate>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.rates1(presentationId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PresentationControllerApi.rates1']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} presentationId 
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -6471,6 +6444,15 @@ export const PresentationControllerApiFactory = function (configuration?: Config
          */
         getCospeakers(presentationId: string, options?: RawAxiosRequestConfig): AxiosPromise<Set<User>> {
             return localVarFp.getCospeakers(presentationId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} presentationId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        rates1(presentationId: string, options?: RawAxiosRequestConfig): AxiosPromise<ViewPresentationRate> {
+            return localVarFp.rates1(presentationId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -6556,6 +6538,17 @@ export class PresentationControllerApi extends BaseAPI {
      */
     public getCospeakers(presentationId: string, options?: RawAxiosRequestConfig) {
         return PresentationControllerApiFp(this.configuration).getCospeakers(presentationId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} presentationId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PresentationControllerApi
+     */
+    public rates1(presentationId: string, options?: RawAxiosRequestConfig) {
+        return PresentationControllerApiFp(this.configuration).rates1(presentationId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

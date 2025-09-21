@@ -65,9 +65,6 @@ public class User extends AuditedEntity {
     @JsonIgnore
     private Set<Presentation> presentations;
 
-    @ManyToMany
-    private Set<AgendaEntry> personalAgenda = new LinkedHashSet<>();
-
     @OneToOne(fetch = FetchType.LAZY)
     private ParticipationData participationData = null;
 
@@ -80,23 +77,6 @@ public class User extends AuditedEntity {
         return participationData != null;
     }
 
-    public void addToPersonalAgenda(AgendaEntry agendaEntry) {
-        personalAgenda.add(agendaEntry);
-    }
-
-    public boolean personalAgendaContainsTimeSlot(TimeSlot timeSlot) {
-        return personalAgenda.stream().anyMatch(it -> it.getTimeSlot().equals(timeSlot));
-    }
-
-    public Optional<AgendaEntry> getFromPersonalAgendaWithTimeSlot(TimeSlot timeSlot) {
-        return personalAgenda.stream()
-                .filter(it -> it.getTimeSlot().equals(timeSlot))
-                .findAny();
-    }
-
-    public void removeFromPersonalAgenda(AgendaEntry entry) {
-        personalAgenda.remove(entry);
-    }
 
     void updateFields(User user) {
         name = user.name;

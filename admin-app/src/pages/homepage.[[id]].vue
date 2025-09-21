@@ -7,15 +7,8 @@ import type {
   User
 } from "@/utils/api-axios-client";
 import {useRoute} from "vue-router";
+import Rating from "@/components/homepage/rating.vue";
 
-
-function sayHi() {
-  Notify.success(`Hi!`)
-}
-
-function warning() {
-  Notify.warning(`How dare you refuse me.`)
-}
 
 definePage({
   meta: {
@@ -260,6 +253,8 @@ function getColor(item: InlinePresentation | InlineWorkshop) {
                     @click="loadCospeakers(workshop.id!, true)"
                   ></v-btn>
                 </v-card-actions>
+                <HomepageRating></HomepageRating>
+                <Rating :presentation="workshop"></Rating>
               </v-card>
             </v-col>
           </v-row>
@@ -314,6 +309,7 @@ function getColor(item: InlinePresentation | InlineWorkshop) {
                     @click="loadCospeakers(presentation.id!)"
                   ></v-btn>
                 </v-card-actions>
+                <Rating :presentation="presentation"></Rating>
               </v-card>
             </v-col>
           </v-row>

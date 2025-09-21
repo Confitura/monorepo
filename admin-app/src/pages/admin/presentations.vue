@@ -159,6 +159,17 @@ onMounted(() => {
                 <v-tooltip location="top">
                   <template #activator="{ props }">
                     <v-btn
+                      icon="mdi-star"
+                      v-bind="props"
+                      :to="`/rate/${item.id}`"
+                    />
+                  </template>
+                  <span>Rate</span>
+                </v-tooltip>
+
+                <v-tooltip location="top">
+                  <template #activator="{ props }">
+                    <v-btn
                       icon="mdi-eye-outline"
                       v-bind="props"
                       :href="`/admin/presentation-preview/${item.id}`"
