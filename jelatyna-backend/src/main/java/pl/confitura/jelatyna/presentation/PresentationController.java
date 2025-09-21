@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
@@ -27,7 +26,6 @@ import static java.util.stream.Collectors.toList;
 
 @RequiredArgsConstructor
 @RestController
-@SecurityRequirement(name = "bearerAuth")
 public class PresentationController {
 
     private final PresentationRepository repository;
@@ -106,7 +104,7 @@ public class PresentationController {
                 .build();
     }
 
-    @PreAuthorize("@security.isAdmin()")
+    @PreAuthorize("@security.presentationOwnedByUser(#presentationId) || @security.isAdmin()")
     @GetMapping("/presentations/{presentationId}/ratings")
     public ResponseEntity<ViewPresentationRate> rates(@PathVariable String presentationId) {
         return this.ratesRepository.findByPresentationId(presentationId)
