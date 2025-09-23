@@ -1,17 +1,7 @@
 <template>
   <div class="video">
-    <video
-      class="video__player"
-      src="/assets/videos/confitura_2025_promo.mp4"
-      title="Confitura 2025 teaser"
-      autoplay
-      muted
-      loop
-      playsinline
-      controls
-    >
-      Sorry, your browser doesn't support embedded videos.
-    </video>
+
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/FBbxbLVqlrQ?si=XEy5X0t1yhhNKROr" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
   </div>
 </template>
 <style scoped lang="scss">
