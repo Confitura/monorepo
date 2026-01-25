@@ -124,7 +124,7 @@ $small-menu-padding: 10px;
   &__logo {
     width: 150px;
     height: 30px;
-    background-image: url("../assets/_logo_white_x_nlpday.svg");
+    background-image: url("../assets/logo_white.svg");
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
