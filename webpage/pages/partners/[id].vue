@@ -63,7 +63,7 @@ const description = computed(() => {
   return marked(partner.value.description)
 })
 
-const imgUrls = import.meta.glob('~/assets/partners/2025/*', {
+const imgUrls = import.meta.glob('~/assets/partners/2026/*', {
   import: 'default',
   eager: true
 })

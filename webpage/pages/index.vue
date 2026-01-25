@@ -3,7 +3,6 @@
     <HomeMainBanner/>
     <HomeLatestNews></HomeLatestNews>
     <HomeAbout/>
-    <HomeNlpDay/>
     <HomeNumbers/>
     <HomePartners/>
     <Contact/>

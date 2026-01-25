@@ -38,7 +38,7 @@ import {type Partners, usePartnersStore} from '~/stores/partnersStore'
 
 let partners: Partners = usePartnersStore().partnersMap
 
-const imgUrls = import.meta.glob('~/assets/partners/2025/*', {
+const imgUrls = import.meta.glob('~/assets/partners/2026/*', {
   import: 'default',
   eager: true
 })
