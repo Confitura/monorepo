@@ -3,34 +3,31 @@
     <div class="numbers-container">
       <div class="info">
         <h1 class="header">
-          <span>confitura'23</span>
+          <span>confitura'25</span>
           <span> in numbers</span>
         </h1>
         <div class="subinfo">
-          Everything has started in 2007, when the group of passionate Java
-          developers decided to create a programming event for the community.
-          Today we're running the conference for more than 1000 attendees. 30
-          talks in 4 parallel sessions give an opportunity to learn new things
-          to everyone! Our live streams and recordings of talks gain enormous
-          popularity on the web. That's why organizing this event gives
-          satisfaction to more than 30 people from Confitura's team. That eagers
-          us to organize another Confitura, this year it will be the 15th.
+          Everything started in 2007, when a group of passionate Java developers created a programming event for their local community.
+<br />
+          Today, Confitura brings together people from across Poland and beyond, with content in both Polish and English. We proudly mix talks from experienced experts and industry rockstars with presentations from new speakers who are just starting their journey and want to share something meaningful.
+<br />
+          We run Confitura as a non-profit, working year-round to deliver the best experience possible for our software community, because we believe it truly matters.
         </div>
       </div>
       <HomeNumbersPictogram
+          :src="sessions"
+          value="47"
+          unit="presentations"
+      />
+      <HomeNumbersPictogram
         :src="speakers"
-        value="32"
+        value="65"
         unit="speakers"
       />
       <HomeNumbersPictogram
-        :src="sessions"
-        value="4"
-        unit="tracks"
-      />
-      <HomeNumbersPictogram
         :src="presentations"
-        value="30"
-        unit="presentations"
+        value="12"
+        unit="workshops"
       />
       <HomeNumbersPictogram
         :src="views"
@@ -39,12 +36,12 @@
       />
       <HomeNumbersPictogram
         :src="videos"
-        value="338"
+        value="386"
         unit="youtube videos"
       />
       <HomeNumbersPictogram
         :src="participants"
-        value="1300"
+        value="450"
         unit="participants"
       />
     </div>

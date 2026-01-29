@@ -2,17 +2,17 @@
   <div class="home__container">
     <HomeMainBanner/>
     <HomeLatestNews></HomeLatestNews>
-    <HomeAbout/>
     <HomeNumbers/>
-    <HomePartners/>
+    <HomeAbout/>
+    <HomeInvitePartners/>
     <Contact/>
   </div>
 </template>
 
 <script setup lang="ts">
 
-const title = 'Confitura 2025 — Java Conference in Warsaw';
-const description = 'Join the largest Java community conference in Poland. Talks, workshops, and networking in Warsaw — Confitura 2025.';
+const title = 'Confitura 2026 — Java Conference in Warsaw';
+const description = 'Join the largest Java community conference in Poland. Talks, workshops, and networking in Warsaw — Confitura 2026.';
 
 useHead({
   title,

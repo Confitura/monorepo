@@ -31,8 +31,8 @@ function formatDate(date: string) {
   return new Date(date).toLocaleDateString('en-US', options);
 }
 
-const title = 'News — Confitura 2025';
-const description = 'Follow the latest news about Confitura 2025: tickets, schedule, venue, and more.';
+const title = 'News — Confitura 2026';
+const description = 'Follow the latest news about Confitura 2026: tickets, schedule, venue, and more.';
 useHead({
   title,
   meta: [

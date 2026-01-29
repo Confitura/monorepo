@@ -9,8 +9,8 @@
 </template>
 
 <script setup>
-const title = 'Tickets — Confitura 2025 Registration';
-const description = 'Registration details and ticket information for Confitura 2025. Learn about pricing and important dates.';
+const title = 'Tickets — Confitura 2026 Registration';
+const description = 'Registration details and ticket information for Confitura 2026. Learn about pricing and important dates.';
 useHead({
   title,
   meta: [

@@ -59,11 +59,11 @@ let {data: speaker} = useArchiveFetch(`/users/${route.params.id}/public.json`)
 // SEO: Dynamic head tags based on speaker data
 const title = computed(() => {
   const name = (speaker as any)?.value?.name
-  return name ? `${name} — Confitura 2025 Speaker` : 'Speaker — Confitura 2025'
+  return name ? `${name} — Confitura 2026 Speaker` : 'Speaker — Confitura 2026'
 })
 
 const description = computed(() => {
-  const base = ((speaker as any)?.value?.bio || 'Discover speakers and sessions at Confitura 2025.') as string
+  const base = ((speaker as any)?.value?.bio || 'Discover speakers and sessions at Confitura 2026.') as string
   const text = String(base)
   return text.length > 160 ? `${text.slice(0, 157)}...` : text
 })

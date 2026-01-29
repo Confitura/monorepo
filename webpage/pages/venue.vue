@@ -39,8 +39,8 @@ let markerOptions = {
 const config = useRuntimeConfig();
 const mapApiKey = config.public.googleMapsApiKey;
 
-const title = 'Venue — Confitura 2025 Location & Directions';
-const description = 'Find all information about the Confitura 2025 venue: location, directions, and logistics for your visit.';
+const title = 'Venue — Confitura 2026 Location & Directions';
+const description = 'Find all information about the Confitura 2026 venue: location, directions, and logistics for your visit.';
 useHead({
   title,
   meta: [

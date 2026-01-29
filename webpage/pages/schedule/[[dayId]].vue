@@ -239,8 +239,8 @@ interface DayAgenda {
 }
 
 
-const title = 'Schedule — Confitura 2025 Agenda';
-const description = 'Explore the full Confitura 2025 agenda: time slots, rooms, and sessions. Plan your conference day in Warsaw.';
+const title = 'Schedule — Confitura 2026 Agenda';
+const description = 'Explore the full Confitura 2026 agenda: time slots, rooms, and sessions. Plan your conference day in Warsaw.';
 useHead({
   title,
   meta: [

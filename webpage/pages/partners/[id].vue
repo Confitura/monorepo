@@ -100,11 +100,11 @@ function plainText(input: string): string {
 const seoTitle = computed(() => {
   const name = partner.value?.name
   const type = capitalizeFirst(partner.value?.type || '')
-  return name ? `${name} — ${type ? type + ' ' : ''}Partner — Confitura 2025` : 'Partner — Confitura 2025'
+  return name ? `${name} — ${type ? type + ' ' : ''}Partner — Confitura 2026` : 'Partner — Confitura 2026'
 })
 
 const seoDescription = computed(() => {
-  const base = plainText(partner.value?.description || 'Learn more about our partners and sponsors at Confitura 2025.')
+  const base = plainText(partner.value?.description || 'Learn more about our partners and sponsors at Confitura 2026.')
   return base.length > 160 ? base.slice(0, 157) + '...' : base
 })
 

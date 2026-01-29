@@ -13,7 +13,7 @@
 <!--        </div>-->
                 <div class="info__long">
                   <TheTimer/>
-                  <p> Warsaw | September 35–26, 2026 </p>
+                  <p> Warsaw | September 25–26, 2026 </p>
                   <p>ADN Conference Center, Grzybowska 56</p>
                 </div>
         <div class="info__long">
