@@ -204,7 +204,7 @@ function getColor(item: InlinePresentation | InlineWorkshop) {
 
             <v-btn size="large" class="submit-new"
                    :to="'/workshop-form/new/'+userId"
-                   v-if="user?.isAdmin">submit new workshop
+                   >submit new workshop
             </v-btn>
           </v-row>
           <v-row v-for="workshop in workshops" :key="workshop.id">
@@ -228,7 +228,7 @@ function getColor(item: InlinePresentation | InlineWorkshop) {
                     color="medium-emphasis"
                     icon="mdi-delete"
                     size="small"
-                    v-if="user?.isAdmin"
+
                   >
                     <v-icon icon="mdi-delete"></v-icon>
 
@@ -263,7 +263,7 @@ function getColor(item: InlinePresentation | InlineWorkshop) {
 
             <v-btn size="large" class="submit-new"
                    :to="'/presentation-form/new/'+userId"
-                   v-if="user?.isAdmin">submit
+                   >submit
               new presentation
             </v-btn>
           </v-row>
@@ -281,7 +281,7 @@ function getColor(item: InlinePresentation | InlineWorkshop) {
                   <v-chip> {{ presentation.level }}</v-chip>
                   <v-chip v-for="tag in presentation.tags"> {{ tag }}</v-chip>
                   <v-spacer></v-spacer>
-                  <v-btn v-if="user?.isAdmin"
+                  <v-btn
                          color="medium-emphasis"
                          icon="mdi-delete"
                          size="small"
