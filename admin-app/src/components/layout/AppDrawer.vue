@@ -66,7 +66,7 @@ onMounted(() => {
     <template #append>
       <v-list-item class="drawer-footer px-0 d-flex flex-column justify-center">
         <div class="text-caption pt-6 pb-1 pt-md-0 text-center text-no-wrap">
-          &copy; Confitura 2025
+          &copy; Confitura 2026
         </div>
       </v-list-item>
     </template>
