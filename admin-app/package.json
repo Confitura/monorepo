@@ -52,5 +52,16 @@
     "vite-plugin-vuetify": "^2.1.3",
     "vitest": "^3.2.4",
     "vue-tsc": "^2.2.4"
+  },
+  "pnpm": {
+    "ignoredBuiltDependencies": [
+      "unrs-resolver",
+      "vue-demi"
+    ],
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "unrs-resolver",
+      "vue-demi"
+    ]
   }
 }
