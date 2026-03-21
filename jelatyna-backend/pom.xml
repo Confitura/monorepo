@@ -119,6 +119,12 @@
             <groupId>com.github.kenglxn.QRGen</groupId>
             <artifactId>javase</artifactId>
             <version>2.7.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>xml-apis</groupId>
+                    <artifactId>xml-apis-ext</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.querydsl</groupId>

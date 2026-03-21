@@ -5,7 +5,8 @@ import {
 import playwright from 'eslint-plugin-playwright'
 import {} from 'eslint-flat-config-utils'
 
-export default defineFlatConfigs(
+/** @type {import('eslint').Linter.Config[]} */
+const config = defineFlatConfigs(
   createConfigForNuxt({
     dirs: {
       // components: ['src/components'], // this will turn off multi-word component name
@@ -28,3 +29,5 @@ export default defineFlatConfigs(
     },
   },
 )
+
+export default config

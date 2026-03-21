@@ -23,12 +23,9 @@ function extractUser(token: string | null): User | null {
 export const useAuthStore = defineStore('auth', {
   state: () => {
     const token = localStorage.getItem('token')
-    const user = extractUser(token)
+    const user: User | null = extractUser(token)
     api.defaults.headers.common['Authorization'] = token
-    return {
-      user,
-      token,
-    }
+    return { user, token }
   },
   actions: {
     login(token: string) {
