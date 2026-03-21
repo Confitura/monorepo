@@ -28,9 +28,9 @@ jobs:
       - name: run Maven
         run: mvn -B package
 
-      - name: Publish Test Report
-        if: success() || failure()
-        uses: scacap/action-surefire-report@v3
+#      - name: Publish Test Report
+#        if: success() || failure()
+#        uses: scacap/action-surefire-report@v3
 
   test-frontend:
     runs-on: ubuntu-latest
