@@ -11,7 +11,7 @@ const {user} = storeToRefs(store)
 const route = useRoute()
 
 const effectiveUserId = computed(() => {
-  const routeId = route.params?.id as string | undefined
+  const routeId = (route.params as { id?: string })?.id
   return routeId || user.value?.jti
 })
 
@@ -91,7 +91,7 @@ const onSubmit = async () => {
 const fetchUserData = async (userId: string) => {
   try {
     const response = await usersApi.getById(userId);
-    form.value = response.data;
+    form.value = { ...response.data, name: response.data.name ?? '', email: response.data.email ?? '', privacyPolicyAccepted: response.data.privacyPolicyAccepted ?? false };
   } catch (error) {
     console.error('Failed to fetch user data:', error);
   }
