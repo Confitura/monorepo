@@ -13,6 +13,9 @@ on:
 jobs:
   test-backend:
     runs-on: ubuntu-latest
+    permissions:
+      checks: write
+      contents: read
     defaults:
       run:
         working-directory: jelatyna-backend
