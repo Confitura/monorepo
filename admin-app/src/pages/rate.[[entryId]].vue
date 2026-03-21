@@ -15,9 +15,9 @@ import {presentationApi} from '@/utils/api.ts'
 
 // Accept either path param or query param for flexibility: /rate/123 or /rate?entryId=123
 const route = useRoute()
-const entryId = computed(() => (route.params.entryId as string) || (route.query.entryId as string) || '')
+const entryId = computed(() => ((route.params as { entryId?: string }).entryId as string) || (route.query.entryId as string) || '')
 
-const rating = ref<number | null>(null)
+const rating = ref<number | undefined>(undefined)
 const comment = ref('')
 const submitted = ref(false)
 const loading = ref(false)
@@ -37,7 +37,7 @@ function submit() {
   loading.value = true
   presentationApi.addRating(entryId.value, {
     reviewerToken: ratingToken,
-    value: rating.value,
+    value: rating.value ?? undefined,
     comment: comment.value
   })
     .then((response) => {

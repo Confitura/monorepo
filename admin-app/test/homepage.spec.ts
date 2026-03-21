@@ -1,18 +1,21 @@
 import HomepageId from '@/pages/homepage.[[id]].vue'
-import { fireEvent } from '@testing-library/vue'
 import { renderWithVuetify } from '@/../test/helpers'
+import { createRouter, createWebHistory } from 'vue-router'
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes: [{ path: '/:pathMatch(.*)*', component: HomepageId }],
+})
 
 describe('homepage', () => {
-  it('Notify correctly', async () => {
-    const { getByText, getByLabelText } = renderWithVuetify(HomepageId)
-    getByText('Opinionated Starter Template')
-    const input = getByLabelText("What's your name?")
-    await fireEvent.update(input, 'kingyue')
+  it('renders workshops and presentations sections', async () => {
+    const { getByText } = renderWithVuetify(HomepageId, {
+      global: {
+        plugins: [router],
+      },
+    })
 
-    const button = getByText('Confirm')
-    await fireEvent.click(button)
-
-    const store = useNotificationStore()
-    expect(store.addNotification).toBeCalledWith('Hi, kingyue!', 'success')
+    getByText('Workshops')
+    getByText('Presentations')
   })
 })

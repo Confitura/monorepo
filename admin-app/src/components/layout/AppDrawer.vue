@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {routes} from 'vue-router/auto-routes'
-import type {RouteRecordRaw} from "vue-router/auto";
+import type {RouteRecordRaw} from "vue-router";
 import type {UnwrapRef} from "vue";
 
 const appStore = useAppStore()
@@ -16,7 +16,7 @@ const drawer = computed({
   },
 })
 const rail = computed(() => !drawerStored.value && !mobile.value)
-routes.sort((a, b) => (a.meta?.drawerIndex ?? 99) - (b.meta?.drawerIndex ?? 98))
+const sortedRoutes = [...routes].sort((a: RouteRecordRaw, b: RouteRecordRaw) => (a.meta?.drawerIndex ?? 99) - (b.meta?.drawerIndex ?? 98))
 
 drawerStored.value = lgAndUp.value && width.value !== 1280
 
@@ -24,7 +24,7 @@ let filteredRoutes: Ref<UnwrapRef<RouteRecordRaw[]>, UnwrapRef<RouteRecordRaw[]>
 
 onMounted(() => {
   const currentUser = useAuthStore().user;
-  filteredRoutes.value = routes
+  filteredRoutes.value = sortedRoutes
     .filter((r) => r.meta?.skipMenu !== true)
     .filter((r) => r.meta?.requireAuth !== true || currentUser != null)
     .filter((r) => r.meta?.requiresAdmin !== true || currentUser?.isAdmin)
@@ -66,7 +66,7 @@ onMounted(() => {
     <template #append>
       <v-list-item class="drawer-footer px-0 d-flex flex-column justify-center">
         <div class="text-caption pt-6 pb-1 pt-md-0 text-center text-no-wrap">
-          &copy; Confitura 2025
+          &copy; Confitura 2026
         </div>
       </v-list-item>
     </template>

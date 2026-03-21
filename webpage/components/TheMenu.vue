@@ -33,7 +33,7 @@ let items: MenuItem[] = [
   // { label: 'about us', url: '/about' },
   { label: '2025', url: 'http://2025.confitura.pl/' },
   { label: 'FAQ', url: '/faq' },
-  { label: 'login', url: 'https://app.confitura.pl/' },
+  { label: 'C4P', url: 'https://app.confitura.pl/' },
   // { label: 'tickets', url: '/tickets' },
   // { label: 'lean coffee', url: '/lean-coffee' },
   // { label: "workshop day", url: "/workshops" },

@@ -85,11 +85,11 @@ function loginUrl(provider: string) {
         <div class="info">
           <p>Hey You,</p>
 
-          <p>Thanks for deciding to join Confitura in 2025!</p>
+          <p>Thanks for deciding to join Confitura in 2026!</p>
 
           <p>First things first: this year, the conference will be two days long
             -
-            Friday and Saturday (19th and 20th of September, 2025).</p>
+            Friday and Saturday (25th and 26th of September, 2026).</p>
 
           <p>We accept both talks and workshops, so there are plenty of
             opportunities to share your knowledge.
