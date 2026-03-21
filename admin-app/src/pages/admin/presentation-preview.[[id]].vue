@@ -6,7 +6,7 @@ import type { FullPresentation, User } from '@/utils/api-axios-client'
 import { Notify } from '@/stores/notification'
 
 const route = useRoute()
-const presentationId = route.params.id as string
+const presentationId = (route.params as { id?: string }).id as string
 
 const loading = ref(true)
 const actionLoading = ref(false)

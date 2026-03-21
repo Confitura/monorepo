@@ -33,7 +33,7 @@ let cospeakersDialogVisible = ref(false)
 let isWorkshop = ref(false)
 
 let user = useAuthStore().user
-const userId = route.params?.id || user!.jti
+const userId = (route.params as { id?: string })?.id || user!.jti
 
 function loadPresentations() {
   usersApi.getUserPresentations(userId)
@@ -65,7 +65,7 @@ function loadCospeakers(id: string, workshop: boolean = false) {
   presentationApi.getCospeakers(id)
     .then(res => res.data)
     .then(data => {
-      cospeakers.value = data
+      cospeakers.value = Array.from(data)
       cospeakersDialogVisible.value = true
     })
     .catch(error => {
@@ -340,7 +340,7 @@ function getColor(item: InlinePresentation | InlineWorkshop) {
                 color="error"
                 icon="mdi-delete"
                 size="small"
-                @click="removeCospeaker(isWorkshop ? selectedWorkshop!.id! : selectedPresentation!.id!, cospeaker.id)"
+                @click="removeCospeaker(isWorkshop ? selectedWorkshop!.id! : selectedPresentation!.id!, cospeaker.id!)"
               ></v-btn>
             </template>
           </v-list-item>

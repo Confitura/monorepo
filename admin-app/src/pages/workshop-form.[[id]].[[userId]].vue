@@ -9,8 +9,8 @@ import router from "@/plugins/router.ts";
 
 let user = useAuthStore().user
 const route = useRoute()
-const workshopId = route.params.id
-const userId = route.params.userId
+const workshopId = (route.params as { id?: string; userId?: string }).id
+const userId = (route.params as { id?: string; userId?: string }).userId
 const formValid = ref(false)
 
 const actualUserId = computed(() => {
@@ -50,7 +50,7 @@ onMounted(async () => {
     .catch(error => console.error(error))
 
   if (workshopId && workshopId != 'new') {
-    usersApi.getWorkshop(actualUserId.value, workshopId)
+    usersApi.getWorkshop(actualUserId.value!, workshopId!)
       .then(response => response.data)
       .then(data => workshop.value = data)
   } else {
@@ -61,9 +61,9 @@ onMounted(async () => {
 
 function doSubmit() {
   if (workshopId && workshopId != 'new') {
-    return usersApi.updateWorkshop(actualUserId.value, workshopId, workshop.value)
+    return usersApi.updateWorkshop(actualUserId.value!, workshopId!, workshop.value)
   } else {
-    return usersApi.addWorkshopToUser(actualUserId.value, workshop.value);
+    return usersApi.addWorkshopToUser(actualUserId.value!, workshop.value);
   }
 }
 

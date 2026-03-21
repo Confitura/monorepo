@@ -119,8 +119,7 @@ const saveRoom = async () => {
     }
     // Use new endpoint to update the room
     await agendaApi.updateRoom(editedRoom.value.id!, {
-      label: editedRoom.value.label || undefined,
-      displayOrder: editedRoom.value.displayOrder ?? undefined,
+      label: editedRoom.value.label!,
     });
     await refreshData();
   } catch (error) {
@@ -314,7 +313,7 @@ const addAgendaEntry = (timeSlotIndex: number, roomId: string | undefined) => {
                         v-for="speaker in findPresentation(timeSlot!, room)!.speakers"
                         :key="speaker.name" class="d-flex align-center mt-2">
                         <v-avatar size="24" class="mr-2">
-                          <v-img :src="speaker.photo"
+                          <v-img :src="(speaker as any).photo"
                                  :alt="speaker.name"></v-img>
                         </v-avatar>
                         <span>{{ speaker.name }}</span>
