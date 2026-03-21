@@ -21,24 +21,24 @@
                     />
                   </a>
                 </div>-->
-        <div class="path">
-          <span class="type--path">Path</span>
-          <a
-              v-for="item in partners.path"
-              :key="item.id"
-              :href="'/partners/' + item.id "
-              target="_blank"
-              class="link"
-              rel="noopener"
-          >
-            <img
-                :src="resolveImage(item.logo)"
-                :alt="item.name"
-                class="logo__img--platinum"
-                :class="item.id"
-            />
-          </a>
-        </div>
+        <!--        <div class="path">-->
+        <!--          <span class="type&#45;&#45;path">Path</span>-->
+        <!--          <a-->
+        <!--              v-for="item in partners.path"-->
+        <!--              :key="item.id"-->
+        <!--              :href="'/partners/' + item.id "-->
+        <!--              target="_blank"-->
+        <!--              class="link"-->
+        <!--              rel="noopener"-->
+        <!--          >-->
+        <!--            <img-->
+        <!--                :src="resolveImage(item.logo)"-->
+        <!--                :alt="item.name"-->
+        <!--                class="logo__img&#45;&#45;platinum"-->
+        <!--                :class="item.id"-->
+        <!--            />-->
+        <!--          </a>-->
+        <!--        </div>-->
 
       </div>
       <div class="other-types">
@@ -90,7 +90,7 @@
 
 import {type PartnerType, usePartnersStore} from '~/stores/partnersStore'
 
-const types: PartnerType[] = ['gold', 'silver', 'bronze', 'media', 'tech']
+const types: PartnerType[] = ['gold', 'silver']
 const active: Ref<PartnerType> = useState('active', () => 'gold')
 
 let partners: Partners = usePartnersStore().partnersMap
@@ -120,6 +120,7 @@ function startCarousel() {
 
 onMounted(() => {
   startCarousel()
+  console.log(partners)
 })
 
 onDeactivated(() => {
@@ -131,7 +132,7 @@ function stopCarousel() {
   intervalId = undefined
 }
 
-const imgUrls = import.meta.glob('~/assets/partners/2025/*', {
+const imgUrls = import.meta.glob('~/assets/partners/2026/*', {
   import: 'default',
   eager: true
 })

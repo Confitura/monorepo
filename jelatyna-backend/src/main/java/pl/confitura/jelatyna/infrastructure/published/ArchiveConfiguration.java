@@ -32,7 +32,7 @@ public class ArchiveConfiguration {
     WebpageDataDumper webpageDataDumper() {
         return new WebpageDataDumper(
                 objectMapper,
-                resourceConfigurationProperties.folder() + "/edition-2025",
+                resourceConfigurationProperties.folder() + "/edition-2026",
                 userController,
                 pageController,
                 newsletterApi,

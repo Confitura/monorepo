@@ -19,7 +19,7 @@ console.log('Current route:', route);
 import {ref, onMounted} from 'vue';
 import {pagesApi} from "@/utils/api.ts";
 
-const pageData = ref(null);
+const pageData = ref<string | null>(null);
 
 const markdownOptions = {
   html: true,
