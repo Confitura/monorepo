@@ -25,6 +25,8 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
           cache: maven
+      - name: Remove corrupted jars from cache
+        run: find ~/.m2/repository -name "*.jar" -size 0 -delete
       - name: run Maven
         run: mvn -B package
 
