@@ -26,7 +26,7 @@ jobs:
           distribution: 'temurin'
           cache: maven
       - name: Remove corrupted jars from cache
-        run: find ~/.m2/repository -name "*.jar" -size 0 -delete || true
+        run: rm -f ~/.m2/repository/xml-apis/xml-apis-ext/1.3.04/xml-apis-ext-1.3.04.jar
       - name: run Maven
         run: mvn -B package
 
