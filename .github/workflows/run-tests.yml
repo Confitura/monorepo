@@ -11,7 +11,28 @@ on:
     branches: [ master ]
 
 jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      backend: ${{ steps.filter.outputs.backend }}
+      frontend: ${{ steps.filter.outputs.frontend }}
+      admin-app: ${{ steps.filter.outputs.admin-app }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            backend:
+              - 'jelatyna-backend/**'
+            frontend:
+              - 'webpage/**'
+            admin-app:
+              - 'admin-app/**'
+
   test-backend:
+    needs: changes
+    if: needs.changes.outputs.backend == 'true'
     runs-on: ubuntu-latest
     permissions:
       checks: write
@@ -36,6 +57,8 @@ jobs:
 #        uses: scacap/action-surefire-report@v3
 
   test-frontend:
+    needs: changes
+    if: needs.changes.outputs.frontend == 'true'
     runs-on: ubuntu-latest
 
     defaults:
@@ -56,6 +79,8 @@ jobs:
       - run: npm test
 
   test-admin-app:
+    needs: changes
+    if: needs.changes.outputs.admin-app == 'true'
     runs-on: ubuntu-latest
 
     defaults:
