@@ -9,8 +9,8 @@ import router from "@/plugins/router.ts";
 
 let user = useAuthStore().user
 const route = useRoute()
-const presentationId = route.params.id
-const userId = route.params.userId
+const presentationId = (route.params as { id?: string; userId?: string }).id
+const userId = (route.params as { id?: string; userId?: string }).userId
 const formValid = ref(false)
 
 const actualUserId = computed(() => {
@@ -46,7 +46,7 @@ onMounted(async () => {
     .catch(error => console.error(error))
 
   if (presentationId && presentationId != 'new') {
-    usersApi.getPresentation(actualUserId.value, presentationId)
+    usersApi.getPresentation(actualUserId.value!, presentationId!)
       .then(response => response.data)
       .then(data => presentation.value = data)
   } else {
@@ -57,9 +57,9 @@ onMounted(async () => {
 
 function doSubmit() {
   if (presentationId && presentationId != 'new') {
-    return usersApi.updatePresentation(actualUserId.value, presentationId, presentation.value)
+    return usersApi.updatePresentation(actualUserId.value!, presentationId!, presentation.value)
   } else {
-    return usersApi.addPresentationToUser(actualUserId.value, presentation.value);
+    return usersApi.addPresentationToUser(actualUserId.value!, presentation.value);
   }
 }
 

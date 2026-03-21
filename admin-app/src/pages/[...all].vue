@@ -9,11 +9,11 @@ console.log('Current route:', route);
 import {ref, onMounted} from 'vue';
 import {pagesApi} from "@/utils/api.ts";
 
-const pageData = ref(null);
+const pageData = ref<string | null>(null);
 
 onMounted(async () => {
   try {
-    const routePath = route.params["all"];
+    const routePath = (route.params as { all: string })["all"];
     const response = await pagesApi.getPage(routePath);
     pageData.value = response.data || "";
   } catch (error) {

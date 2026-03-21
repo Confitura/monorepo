@@ -38,7 +38,7 @@ import {type Partners, usePartnersStore} from '~/stores/partnersStore'
 
 let partners: Partners = usePartnersStore().partnersMap
 
-const imgUrls = import.meta.glob('~/assets/partners/2025/*', {
+const imgUrls = import.meta.glob('~/assets/partners/2026/*', {
   import: 'default',
   eager: true
 })
@@ -50,8 +50,8 @@ function resolveImage(path: string): string {
 }
 
 // SEO for partners listing page
-const title = 'Partners — Confitura 2025 Sponsors & Supporters';
-const description = 'Meet the partners and sponsors supporting Confitura 2025: platinum, gold, silver, and community partners.';
+const title = 'Partners — Confitura 2026 Sponsors & Supporters';
+const description = 'Meet the partners and sponsors supporting Confitura 2026: platinum, gold, silver, and community partners.';
 useHead({
   title,
   meta: [

@@ -19,8 +19,8 @@
 </template>
 
 <script setup lang="ts">
-const title = 'FAQ — Confitura 2025';
-const description = 'Find answers to frequently asked questions about Confitura 2025: tickets, schedule, venue, and more.';
+const title = 'FAQ — Confitura 2026';
+const description = 'Find answers to frequently asked questions about Confitura 2026: tickets, schedule, venue, and more.';
 useHead({
   title,
   meta: [

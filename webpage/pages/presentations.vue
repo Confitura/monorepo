@@ -84,8 +84,8 @@ watch(presentations, () => {
 
 
 
-const title = 'Presentations — Confitura 2025';
-const description = 'Browse all accepted talks for Confitura 2025. Find sessions by topic, level, and format.';
+const title = 'Presentations — Confitura 2026';
+const description = 'Browse all accepted talks for Confitura 2026. Find sessions by topic, level, and format.';
 useHead({
   title,
   meta: [
