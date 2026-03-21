@@ -31,7 +31,7 @@ const cospeakersDialogVisible = ref(false)
 const isWorkshop = ref(false)
 
 const user = useAuthStore().user
-const userId = (route?.params as { id?: string })?.id || user!.jti
+const userId = (route?.params as { id?: string })?.id || user?.jti || ''
 
 function loadPresentations() {
   usersApi
