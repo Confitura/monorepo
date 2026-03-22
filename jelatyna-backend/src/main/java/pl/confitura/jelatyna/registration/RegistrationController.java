@@ -1,6 +1,7 @@
 package pl.confitura.jelatyna.registration;
 
 import static java.util.stream.Collectors.toList;
+import static pl.confitura.jelatyna.mail.MailSender.MailType.*;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -188,7 +189,7 @@ public class RegistrationController {
                         MessageInfo info = new MessageInfo()
                                 .setEmail(voucher.getOriginalBuyer())
                                 .setToken(voucher.getId());
-                        sender.send("registration-reminder", info);
+                        sender.send(REGISTRATION_REMINDER, info);
                     } catch (Exception e) {
                         log.error("Error on sending reminder user to {}", voucher.getOriginalBuyer());
                     }
@@ -216,7 +217,7 @@ public class RegistrationController {
                 .setEmail(user.getEmail())
                 .setName(user.getFullName())
                 .setTicket(generator.generateFor(user.getId()));
-        sender.send("registration-ticket", info);
+        sender.send(TICKET, info);
         repository.save(user.setTicketSendDate(LocalDateTime.now()));
     }
 
@@ -242,7 +243,7 @@ public class RegistrationController {
         MessageInfo info = new MessageInfo()
                 .setEmail(user.getEmail())
                 .setName(user.getFullName());
-        sender.send("survey", info);
+        sender.send(SURVEY, info);
         repository.save(user.setSurveySendDate(LocalDateTime.now()));
     }
 }

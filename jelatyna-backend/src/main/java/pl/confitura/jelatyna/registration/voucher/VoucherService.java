@@ -7,11 +7,11 @@ import pl.confitura.jelatyna.mail.MailSender;
 import pl.confitura.jelatyna.mail.MessageInfo;
 import pl.confitura.jelatyna.registration.ParticipationData;
 import pl.confitura.jelatyna.registration.ParticipationRepository;
-import pl.confitura.jelatyna.user.UserRepository;
 
 import java.util.List;
 
 import static java.time.LocalDateTime.now;
+import static pl.confitura.jelatyna.mail.MailSender.MailType.VOUCHER;
 
 @Service
 @RequiredArgsConstructor
@@ -102,7 +102,7 @@ public class VoucherService {
 
     public void sendVoucher(Voucher voucher) {
         try {
-            sender.send("pre-registration", new MessageInfo().setEmail(voucher.getOriginalBuyer()).setToken(voucher.getId()));
+            sender.send(VOUCHER, new MessageInfo().setEmail(voucher.getOriginalBuyer()).setToken(voucher.getId()));
             voucher.setTicketSendDate(now());
             voucherRepository.save(voucher);
         } catch (Exception ex) {
