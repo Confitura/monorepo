@@ -1,0 +1,11 @@
+[phases.setup]
+nixPkgs = ["jdk21"]
+
+[phases.install]
+cmds = ["./mvnw dependency:go-offline -q"]
+
+[phases.build]
+cmds = ["./mvnw package -DskipTests -q"]
+
+[start]
+cmd = "java -jar target/jelatyna-0.0.1-SNAPSHOT.jar"
