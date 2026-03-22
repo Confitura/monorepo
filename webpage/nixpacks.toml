@@ -1,10 +1,15 @@
-[build]
-builder = "nodejs"
-command = "npm run build"
+[phases.setup]
+nixPkgs = ["nodejs_20"]
+
+[phases.install]
+cmds = ["npm install"]
+
+[phases.build]
+cmds = ["npm run build"]
 
 [start]
-command = "node .output/server/index.mjs"
+cmd = "node .output/server/index.mjs"
 
 [variables]
-NUXT_PUBLIC_API_SERVER="https://api.confitura.pl/api/resources/archive/2025/"
-NUXT_PUBLIC_FILE_SERVER="https://api.confitura.pl"
+NUXT_PUBLIC_API_SERVER = "https://api.confitura.pl/api/resources/archive/2025/"
+NUXT_PUBLIC_FILE_SERVER = "https://api.confitura.pl"

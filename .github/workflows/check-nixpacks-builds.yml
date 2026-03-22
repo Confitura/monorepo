@@ -1,0 +1,73 @@
+name: check nixpacks builds
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      backend: ${{ steps.filter.outputs.backend }}
+      frontend: ${{ steps.filter.outputs.frontend }}
+      admin-app: ${{ steps.filter.outputs.admin-app }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: dorny/paths-filter@v4
+        id: filter
+        with:
+          filters: |
+            backend:
+              - 'jelatyna-backend/**'
+            frontend:
+              - 'webpage/**'
+            admin-app:
+              - 'admin-app/**'
+
+  build-webpage:
+    needs: changes
+    if: needs.changes.outputs.frontend == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Install nixpacks
+        run: curl -sSL https://nixpacks.com/install.sh | bash
+      - name: Build webpage
+        run: nixpacks build webpage --name confitura-webpage
+
+  build-admin-app:
+    needs: changes
+    if: needs.changes.outputs.admin-app == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Install nixpacks
+        run: curl -sSL https://nixpacks.com/install.sh | bash
+      - name: Build admin-app
+        run: nixpacks build admin-app --name confitura-admin-app
+
+  build-backend:
+    needs: changes
+    if: needs.changes.outputs.backend == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Install nixpacks
+        run: curl -sSL https://nixpacks.com/install.sh | bash
+      - name: Build backend
+        run: nixpacks build jelatyna-backend --name confitura-backend
+
+  all-builds-passed:
+    runs-on: ubuntu-latest
+    needs: [build-webpage, build-admin-app, build-backend]
+    if: always()
+    steps:
+      - name: Check all jobs
+        run: |
+          if [[ "${{ contains(needs.*.result, 'failure') }}" == "true" ]]; then
+            echo "One or more builds failed"
+            exit 1
+          fi
+          echo "All builds passed or were skipped"
