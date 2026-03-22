@@ -1,21 +1,26 @@
 package pl.confitura.jelatyna.registration.voucher;
 
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import pl.confitura.jelatyna.mail.MailSender;
+import pl.confitura.jelatyna.mail.MessageInfo;
 import pl.confitura.jelatyna.registration.ParticipationData;
 import pl.confitura.jelatyna.registration.ParticipationRepository;
 import pl.confitura.jelatyna.user.UserRepository;
 
+import java.util.List;
+
+import static java.time.LocalDateTime.now;
+
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class VoucherService {
 
     private final VoucherRepository voucherRepository;
     private final ParticipationRepository participationRepository;
-    private final UserRepository userRepository;
+    private final MailSender sender;
 
     public Voucher generateVoucher(String originalBuyer) {
         return generateVoucher(originalBuyer, Voucher.VoucherType.PARTICIPANT, null);
@@ -26,6 +31,19 @@ public class VoucherService {
                 .setOriginalBuyer(originalBuyer)
                 .setComment(comment)
                 .setType(type));
+    }
+
+    public Voucher generateVoucherFromAllegro(String originalBuyer,
+                                              String comment,
+                                              String buyerLogin,
+                                              String auctionId,
+                                              String auctionName) {
+        return voucherRepository.save(new Voucher()
+                .setOriginalBuyer(originalBuyer)
+                .setComment(comment)
+                .setType(Voucher.VoucherType.PARTICIPANT)
+                .setAllegro(new Voucher.AllegroContext(auctionId, auctionName, buyerLogin))
+        );
     }
 
     public boolean isValid(Voucher voucher) {
@@ -61,10 +79,6 @@ public class VoucherService {
         return owner == null || owner.getId().equals(participationDataId);
     }
 
-    public void save(Voucher voucher) {
-        voucherRepository.save(voucher);
-    }
-
     public boolean isUsed(Voucher voucher) {
         return participationRepository.findByVoucher(voucher) != null;
     }
@@ -80,5 +94,24 @@ public class VoucherService {
 
     public List<Voucher> findAll() {
         return voucherRepository.findAll();
+    }
+
+    public void sendVouchers() {
+        voucherRepository.findNotSent().forEach(this::sendVoucher);
+    }
+
+    public void sendVoucher(Voucher voucher) {
+        try {
+            sender.send("pre-registration", new MessageInfo().setEmail(voucher.getOriginalBuyer()).setToken(voucher.getId()));
+            voucher.setTicketSendDate(now());
+            voucherRepository.save(voucher);
+        } catch (Exception ex) {
+            log.error("Error on sending email", ex);
+        }
+    }
+
+    void resend(String voucherId) {
+        Voucher voucher = voucherRepository.findById(voucherId);
+        sendVoucher(voucher);
     }
 }

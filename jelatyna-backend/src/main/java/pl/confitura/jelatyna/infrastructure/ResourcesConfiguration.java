@@ -1,33 +1,45 @@
 package pl.confitura.jelatyna.infrastructure;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.stereotype.Component;
+import org.springframework.http.CacheControl;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import java.util.List;
+import java.io.File;
 
+import static java.util.concurrent.TimeUnit.DAYS;
+
+@Slf4j
 @Configuration
-public class ResourcesConfiguration {
-    @Component
-    class WebConfigurer implements WebMvcConfigurer {
-        @Value("${resources.path}")
-        private String rootPath;
-        @Value("${resources.folder}")
-        private String folder;
+@EnableWebMvc
+public class ResourcesConfiguration implements WebMvcConfigurer {
+
+    @Value("${resources.path}")
+    private String rootPath;
+    @Value("${resources.folder}")
+    private File folder;
 
 
-        @Override
-        public void addResourceHandlers(ResourceHandlerRegistry registry) {
-            registry
-                    .addResourceHandler(rootPath + "/**/*")
-                    .addResourceLocations("file:///" + folder + "/");
-        }
+    @SneakyThrows
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry
+                .addResourceHandler(rootPath + "/**")
+                .setCacheControl(CacheControl.maxAge(1, DAYS).cachePublic())
+                .addResourceLocations("file:///" + folder.getCanonicalPath() + "/");
+        log.info("Resource path: {}", rootPath);
+        log.info("Resource folder: {}", folder.getCanonicalPath());
 
     }
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**").allowedOrigins("*");
+    }
+
 }

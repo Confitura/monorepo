@@ -1,0 +1,39 @@
+{
+  "level" : "intermediate",
+  "shortDescription" : "Sztuczna inteligencja - z czasopism naukowych i podbiurkowych stacji roboczych - wkracza dziś do świata wielkich korporacji, zastępując masowo tradycyjne rozwiązania samooptymalizującymi się modelami.",
+  "tags" : [ ],
+  "description" : "Sztuczna inteligencja - z czasopism naukowych i podbiurkowych stacji roboczych - wkracza dziś do świata wielkich korporacji, zastępując masowo tradycyjne rozwiązania samooptymalizującymi się modelami.\nChoć pod maską są to wciąż znane z poprzedniego wieku algorytmy oparte na wstecznej propagacji gradientu, ich rozwój na skalę przemysłową przynosi wiele nowych wyzwań. Podczas spotkania rozpoczniemy od przypomnienia podstaw sieci neuronowych by poprzez ciekawe przykłady ich zastosowań pokazać z czym zmagają się dzisiaj najwięksi gracze na rynku.\n",
+  "title" : "Od perceptronu do głębokiego uczenia na skalę przemysłową",
+  "status" : "accepted",
+  "workshop" : false,
+  "speakers" : [ {
+    "id" : "cc40066a-54af-4316-98c4-f14ad03076ba",
+    "name" : "Krzysztof Kudryński",
+    "bio" : "Projektant rozwiązań inżynieryjnych dla sztucznej inteligencji, wizji komputerowej, pojazdów autonomicznych i robotyki. Trener głębokiego uczenia. W NVIDIA odpowiedzialny za integrację rozwiązań głębokiego uczenia na skalę przemysłową.",
+    "twitter" : "kriskudrynski",
+    "github" : "https://github.com/nv-kkudrynski",
+    "www" : "https://kkudrynski.wixsite.com/portfolio",
+    "photo" : "/api/resources//photos/cc40066a-54af-4316-98c4-f14ad03076ba.jpg"
+  } ],
+  "language" : "pl",
+  "id" : "8d9bc146-4dee-48f2-9325-053ad1c5dbe3",
+  "_links" : {
+    "self" : {
+      "href" : "https://2023.confitura.pl/api/presentations/8d9bc146-4dee-48f2-9325-053ad1c5dbe3"
+    },
+    "presentation" : {
+      "href" : "https://2023.confitura.pl/api/presentations/8d9bc146-4dee-48f2-9325-053ad1c5dbe3{?projection}",
+      "templated" : true
+    },
+    "tags" : {
+      "href" : "https://2023.confitura.pl/api/presentations/8d9bc146-4dee-48f2-9325-053ad1c5dbe3/tags"
+    },
+    "speakers" : {
+      "href" : "https://2023.confitura.pl/api/presentations/8d9bc146-4dee-48f2-9325-053ad1c5dbe3/speakers{?projection}",
+      "templated" : true
+    },
+    "ratings" : {
+      "href" : "https://2023.confitura.pl/api/presentations/8d9bc146-4dee-48f2-9325-053ad1c5dbe3/ratings"
+    }
+  }
+}

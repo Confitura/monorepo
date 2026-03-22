@@ -1,0 +1,42 @@
+{
+  "level" : "novice",
+  "shortDescription" : "We wrześniu tego roku pojawi się Java 21. Której wersji Ty używasz? Co ciekawego pojawiło się w Javie od czasu JDK11? \nTa prezentacja jest doskonałą okazją do nadrobienia zaległości i przygotowania się do przesiadki na nowsze wydanie",
+  "tags" : [ {
+    "id" : "java",
+    "name" : "Java"
+  } ],
+  "description" : "Kilka lat temu Java weszła w tryb częstszych aktualizacji, kolejne wydania są udostępniane co sześć miesięcy.\nWe wrześniu tego roku pojawi się Java 21. Której wersji Ty używasz? Co ciekawego pojawiło się w Javie od czasu JDK11?  \nTa prezentacja jest doskonałą okazją do nadrobienia zaległości i przygotowania się do przesiadki na nowsze wydanie",
+  "title" : "Jakie zJavy są wśród nas? Czyli co musisz nadrobić przed JDK 21",
+  "status" : "accepted",
+  "workshop" : false,
+  "speakers" : [ {
+    "id" : "cd21c3b4-f80a-4927-b7f8-c286c3528370",
+    "name" : "Marcin Baranowski",
+    "bio" : "Programista od kiedy sięgnąć pamięcią - programuje zawsze i wszędzie, chyba że akurat śpi lub musi wyjść za potrzebą. Zawodowy programista Java. Lubi optymalizować procesy i dzielić się wiedzą. Uważa, że porządek musi być i na biurku, i w kodzie (a przynajmniej w tym drugim). Uwielbia zieloną herbatę, przez całe życie nie wypił nawet filiżanki kawy.",
+    "twitter" : null,
+    "github" : "SilverSheep",
+    "www" : "https://mbaranowski.pl/",
+    "photo" : "/api/resources//photos/cd21c3b4-f80a-4927-b7f8-c286c3528370.JPG"
+  } ],
+  "language" : "pl",
+  "id" : "92c5cd07-b998-4b2e-a5b6-e56ae3b17365",
+  "_links" : {
+    "self" : {
+      "href" : "https://2023.confitura.pl/api/presentations/92c5cd07-b998-4b2e-a5b6-e56ae3b17365"
+    },
+    "presentation" : {
+      "href" : "https://2023.confitura.pl/api/presentations/92c5cd07-b998-4b2e-a5b6-e56ae3b17365{?projection}",
+      "templated" : true
+    },
+    "tags" : {
+      "href" : "https://2023.confitura.pl/api/presentations/92c5cd07-b998-4b2e-a5b6-e56ae3b17365/tags"
+    },
+    "speakers" : {
+      "href" : "https://2023.confitura.pl/api/presentations/92c5cd07-b998-4b2e-a5b6-e56ae3b17365/speakers{?projection}",
+      "templated" : true
+    },
+    "ratings" : {
+      "href" : "https://2023.confitura.pl/api/presentations/92c5cd07-b998-4b2e-a5b6-e56ae3b17365/ratings"
+    }
+  }
+}

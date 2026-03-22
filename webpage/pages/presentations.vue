@@ -1,0 +1,154 @@
+<template>
+  <div class="presentations">
+    <PageHeader title="Presentations" type="coder"/>
+    <div
+        v-for="(presentation, $index) in presentations"
+        :key="presentation.id"
+        :id="presentation.id"
+    >
+      <Box
+          class="presentation"
+          :class="{ 'presentation--odd': odd($index) }"
+          color="white"
+          :full="false"
+      >
+        <PresentationBox
+            :presentation="presentation"
+            :class="{ 'presentationBox--odd': odd($index) }"
+        ></PresentationBox>
+      </Box>
+    </div>
+
+    <Contact/>
+  </div>
+</template>
+
+<script setup lang="ts">
+
+import {useArchiveFetch} from '~/composables/useAPIFetch'
+import {onMounted, watch, nextTick, onBeforeUnmount} from 'vue'
+import {useRoute} from '#imports'
+
+let {data: presentations} = await useArchiveFetch('/presentations/accepted.json', {
+  transform: (data) => data
+})
+
+function odd($index: number) {
+  return $index % 2 !== 0
+}
+
+const route = useRoute()
+
+function scrollToHashIfAny() {
+  if (typeof window === 'undefined') return
+  const hash = route.hash
+  if (!hash) return
+  const id = decodeURIComponent(hash.substring(1))
+  const el = document.getElementById(id)
+  if (el) {
+    setTimeout(() => {
+      el.scrollIntoView({ behavior: 'smooth' })
+    }, 200)
+  }
+}
+
+// Watch for hash changes
+watch(() => route.hash, (newHash) => {
+  if (newHash) {
+    nextTick(() => scrollToHashIfAny())
+  }
+}, { immediate: true })
+
+// Watch for path changes (navigating from other pages)
+watch(() => route.path, () => {
+  nextTick(() => scrollToHashIfAny())
+})
+
+onMounted(() => {
+  nextTick(() => scrollToHashIfAny())
+  const handleHashChange = () => nextTick(() => scrollToHashIfAny())
+  if (typeof window !== 'undefined') {
+    window.addEventListener('hashchange', handleHashChange)
+  }
+  onBeforeUnmount(() => {
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('hashchange', handleHashChange)
+    }
+  })
+})
+
+// If presentations are (re)loaded async, try again after render
+watch(presentations, () => {
+  nextTick(() => scrollToHashIfAny())
+})
+
+
+
+const title = 'Presentations — Confitura 2026';
+const description = 'Browse all accepted talks for Confitura 2026. Find sessions by topic, level, and format.';
+useHead({
+  title,
+  meta: [
+    { name: 'description', content: description },
+    { property: 'og:title', content: title },
+    { property: 'og:description', content: description },
+    { property: 'og:type', content: 'website' },
+    { name: 'twitter:card', content: 'summary' },
+    { name: 'twitter:title', content: title },
+    { name: 'twitter:description', content: description }
+  ]
+})
+
+</script>
+
+<style lang="scss" scoped>
+@use "~/assets/colors" as *;
+@use "~/assets/sizes" as *;
+@use "~/assets/media" as *;
+@use "~/assets/fonts" as *;
+
+.presentations {
+  overflow: hidden;
+}
+
+.presentation {
+  &--odd {
+    background-color: $brand;
+    color: #ffffff;
+  }
+
+  &__header {
+    color: $brand;
+
+    &--odd {
+      color: #ffffff;
+    }
+  }
+
+  &__infoGroup {
+    display: flex;
+    flex-direction: column;
+    @include md() {
+      align-items: center;
+      flex-direction: row;
+    }
+  }
+
+  &__title {
+    font-weight: bold;
+    font-size: 2rem;
+    margin-top: 0;
+  }
+
+  &__description {
+    font-size: 1.2rem;
+    line-height: 1.5rem;
+    word-wrap: break-word;
+    @include md() {
+      font-size: 1.5rem;
+      line-height: 1.7rem;
+      padding-left: 4rem;
+    }
+  }
+}
+</style>

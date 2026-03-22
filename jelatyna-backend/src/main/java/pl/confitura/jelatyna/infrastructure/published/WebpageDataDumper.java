@@ -1,0 +1,183 @@
+package pl.confitura.jelatyna.infrastructure.published;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.transaction.annotation.Transactional;
+import pl.confitura.jelatyna.agenda.*;
+import pl.confitura.jelatyna.agenda.api.InlineAgendaEntry;
+import pl.confitura.jelatyna.agenda.api.InlineRoom;
+import pl.confitura.jelatyna.agenda.api.InlineTimeSlot;
+import pl.confitura.jelatyna.api.model.InlinePresentationWithSpeakers;
+import pl.confitura.jelatyna.news.NewsletterApi;
+import pl.confitura.jelatyna.page.PageController;
+import pl.confitura.jelatyna.presentation.Presentation;
+import pl.confitura.jelatyna.presentation.PresentationRepository;
+import pl.confitura.jelatyna.user.PublicSpeaker;
+import pl.confitura.jelatyna.user.UserController;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.time.Instant;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
+
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toList;
+
+@Slf4j
+@RequiredArgsConstructor
+public class WebpageDataDumper {
+
+    private final ObjectMapper objectMapper;
+    private final String targetDirectory;
+
+    private final UserController userController;
+    private final PageController pageController;
+    private final NewsletterApi newsletterApi;
+    private final PresentationRepository presentationRepository;
+
+    // Agenda-related repositories
+    private final AgendaService agendaService;
+    private final DayRepository dayRepository;
+    private final TimeSlotsRepository timeSlotsRepository;
+    private final RoomRepository roomRepository;
+
+    private final AtomicReference<Instant> lastDumpAt = new AtomicReference<>();
+
+    @Scheduled(fixedRate = 600000)
+    @Transactional
+    public void dumpAll() {
+        dumpAdmins();
+        dumpVolunteers();
+        dumpSpeakers();
+        dumpAcceptedPresentations();
+        dumpAcceptedWorkshops();
+        dumpPages();
+        dumpNews();
+        dumpAgendaByDay();
+        lastDumpAt.set(Instant.now());
+    }
+
+    public Instant getLastDumpAt() {
+        return lastDumpAt.get();
+    }
+
+    void dumpPages() {
+        for (String page : pageController.getPages()) {
+            var content = pageController.getPage(page);
+            dumbData(content.getBody(), "/pages/" + page + ".json");
+        }
+    }
+
+    public void dumpAdmins() {
+        var users = userController.getAdmins().getBody();
+        dumbData(users, "/users/search/admins.json");
+    }
+
+    public void dumpVolunteers() {
+        var users = userController.getVolunteers().getBody();
+        dumbData(users, "/users/search/volunteers.json");
+    }
+
+    @Transactional
+    public void dumpSpeakers() {
+        var speakers = userController.getSpeakers().getBody();
+        dumpEachSpeaker(speakers);
+        dumbData(speakers, "/users/search/speakers.json");
+    }
+
+    public void dumpEachSpeaker(Collection<PublicSpeaker> speakers) {
+        if (speakers == null) {
+            return;
+        }
+        for (PublicSpeaker speaker : speakers) {
+            dumbData(speaker, "/users/" + speaker.id() + "/public.json");
+        }
+    }
+
+    public void dumpAcceptedPresentations() {
+        List<Presentation> accepted = presentationRepository.findAccepted();
+        List<InlinePresentationWithSpeakers> presentations = accepted.stream()
+                .filter(p -> !p.isWorkshop())
+                .map(InlinePresentationWithSpeakers::new)
+                .sorted(Comparator.comparing(InlinePresentationWithSpeakers::sortableTitle))
+                .collect(toList());
+        dumbData(presentations, "/presentations/accepted.json");
+    }
+
+    public void dumpAcceptedWorkshops() {
+        List<Presentation> accepted = presentationRepository.findAccepted();
+        List<InlinePresentationWithSpeakers> workshops = accepted.stream()
+                .filter(Presentation::isWorkshop)
+                .map(InlinePresentationWithSpeakers::new)
+                .sorted(Comparator.comparing(InlinePresentationWithSpeakers::sortableTitle))
+                .collect(toList());
+        dumbData(workshops, "/workshops/accepted.json");
+    }
+
+    private void dumpNews() {
+        try {
+            dumbData(DumpedNews.from(newsletterApi.getWebpageNews()), "news.json");
+        } catch (IOException e) {
+            log.warn("Couldn't dump news", e);
+        }
+    }
+
+    public void dumpAgendaByDay() {
+        if (dayRepository == null || timeSlotsRepository == null || roomRepository == null || agendaService == null) {
+            // Agenda repositories not wired (e.g., in tests using legacy constructor) - skip dumping agenda.
+            return;
+        }
+        var days = dayRepository.findAll();
+        if (days == null || days.isEmpty()) {
+            return;
+        }
+        for (var day : days) {
+            String dayId = day.getId();
+            var timeSlots = timeSlotsRepository.findByIdDayId(dayId).stream()
+                    .sorted(Comparator.comparing(pl.confitura.jelatyna.agenda.TimeSlot::getDisplayOrder))
+                    .map(InlineTimeSlot::from)
+                    .toList();
+            var rooms = roomRepository.findByDayId(dayId).stream()
+                    .sorted(Comparator.comparing(pl.confitura.jelatyna.agenda.Room::getDisplayOrder))
+                    .map(InlineRoom::from)
+                    .toList();
+            var entries = agendaService.findByTimeSlotIdDayIdAndMerge(dayId).stream()
+                    .map(InlineAgendaEntry::from)
+                    .toList();
+
+            var presentations = presentationRepository.findAccepted()
+                    .stream()
+                    .map(InlinePresentationWithSpeakers::new)
+                    .toList();
+
+            Map<Integer, List<InlineAgendaEntry>> byTimeSlot = entries.stream().collect(groupingBy(InlineAgendaEntry::timeSlotIndex));
+            InlineAgenda agenda = new InlineAgenda(timeSlots, rooms, presentations, entries, byTimeSlot);
+            dumbData(agenda, "/agenda/" + dayId + ".json");
+        }
+    }
+
+    @SneakyThrows
+    private void dumbData(Object data, String targetPath) {
+        String json = objectMapper.writeValueAsString(data);
+        dumpData(json, targetPath);
+    }
+
+
+    @SneakyThrows
+    private void dumpData(String json, String targetPath) {
+        Path filePath = Path.of(targetDirectory, targetPath);
+        if (Files.notExists(filePath)) {
+            Files.createDirectories(filePath.getParent());
+            Files.createFile(filePath);
+        }
+        Files.writeString(filePath, json);
+    }
+}

@@ -1,0 +1,45 @@
+{
+  "level" : "novice",
+  "shortDescription" : "Opowiem o komunikacji asynchronicznej z zachowaniem spójności końcowej z użyciem wzorca integracji Outbox. Sprawdza się gdy zmiana musi się zakomitować w kilku systemach które pojedynczo może i są transakcyjne, ale jako całość nie są. A gdy trzeba zagwarantować dostarczenie?",
+  "tags" : [ {
+    "id" : "sc",
+    "name" : "Software Craftsmanship"
+  }, {
+    "id" : "microservices",
+    "name" : "Microservices"
+  } ],
+  "description" : "I znowu ten moment: w swoim procesie wywołujesz API zewnętrznego systemu. Co robisz? Jeśli jest piątek popołudniu - wołasz synchronicznego POSTa i super :) Implementacja prosta, szybka, testy implementujesz błyskawicznie. \n\nAle w weekend nie odpoczniesz. Bo przecież co jak POST nie dojdzie bo sieć zawodna. A Ty już po swojej stronie zrobiłeś commit nowego rekordu w bazie. A jak POST dojdzie, ale będzie długo? User będzie czekał na UI a przecież co go interesuje że pod spodem jakiś zewnętrzny system jest powolny. No chyba w poniedziałek trzeba będzie doczytać o tych rozproszonych transakcjach i Two-phase commit. I już wiesz że kawa się będzie lała strumieniami.\n\nOpowiem o komunikacji asynchronicznej z zachowaniem spójności końcowej z użyciem wzorca integracji Outbox. Sprawdza się gdy zmiana musi się zakomitować w kilku systemach które pojedynczo może i są transakcyjne, ale jako całość nie są. ",
+  "title" : "Outbox Pattern: kiedy ten strzał do API to jednak za mało",
+  "status" : "accepted",
+  "workshop" : false,
+  "speakers" : [ {
+    "id" : "52aa43f9-03e6-4c37-89ed-8dc9d645d2f8",
+    "name" : "Jacek Milewski",
+    "bio" : "No tak... Jakoś ta moja historia dotarła aż dotąd! Pewien czas kodowałem nie rozumiejąc jak skomplikowane to zajęcie... Teraz modeluję ze świadomością jak zmienny jest software oraz jak ładny i bezpieczny może być gdy tylko pragmatycznie podejść do projektowania, kodowania i testowania. Zadaję pytania aby wyłuskać to co istotne, a odfiltrować szum. Z tego buduję backend, frontend, infrastrukturę i zespół.\n\nTa droga zaprowadziła mnie też do Bottega IT Minds, gdzie mogę uczyć innych, na najwyższym poziomie, wśród tych od których sam uczyłem się wcześniej. Niewiarygodny fikołek!",
+    "twitter" : "@jacek_mil",
+    "github" : "yacekmm",
+    "www" : "Looksok.wordpress.com",
+    "photo" : "https://avatars.githubusercontent.com/u/7893442?v=4"
+  } ],
+  "language" : "pl",
+  "id" : "4d757797-956c-44c8-b60d-4d6d674d4c14",
+  "_links" : {
+    "self" : {
+      "href" : "https://2023.confitura.pl/api/presentations/4d757797-956c-44c8-b60d-4d6d674d4c14"
+    },
+    "presentation" : {
+      "href" : "https://2023.confitura.pl/api/presentations/4d757797-956c-44c8-b60d-4d6d674d4c14{?projection}",
+      "templated" : true
+    },
+    "tags" : {
+      "href" : "https://2023.confitura.pl/api/presentations/4d757797-956c-44c8-b60d-4d6d674d4c14/tags"
+    },
+    "speakers" : {
+      "href" : "https://2023.confitura.pl/api/presentations/4d757797-956c-44c8-b60d-4d6d674d4c14/speakers{?projection}",
+      "templated" : true
+    },
+    "ratings" : {
+      "href" : "https://2023.confitura.pl/api/presentations/4d757797-956c-44c8-b60d-4d6d674d4c14/ratings"
+    }
+  }
+}

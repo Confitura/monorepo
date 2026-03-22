@@ -3,11 +3,10 @@ package pl.confitura.jelatyna.agenda;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import org.hibernate.annotations.GenericGenerator;
 import pl.confitura.jelatyna.infrastructure.db.AuditedEntity;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @EqualsAndHashCode(callSuper = false)
@@ -16,8 +15,6 @@ import javax.validation.constraints.NotNull;
 @Accessors(chain = true)
 public class Room extends AuditedEntity {
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(columnDefinition = "varchar(100)")
     private String id;
 
@@ -25,4 +22,8 @@ public class Room extends AuditedEntity {
 
     @NotNull
     private int displayOrder;
+
+    @ManyToOne
+    @NotNull
+    private Day day;
 }

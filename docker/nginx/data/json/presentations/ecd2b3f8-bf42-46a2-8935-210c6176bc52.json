@@ -1,0 +1,48 @@
+{
+  "level" : "intermediate",
+  "shortDescription" : "Reading about EventSourcing, or maybe just getting your feet wet with it? Let me show you few aspects of this approach which I learned over time (sometimes the hard way) I wish I had known before so that you could either better understand where it fits or simply avoid some mistakes I made. ",
+  "tags" : [ {
+    "id" : "jvm",
+    "name" : "JVM"
+  }, {
+    "id" : "sc",
+    "name" : "Software Craftsmanship"
+  }, {
+    "id" : "microservices",
+    "name" : "Microservices"
+  } ],
+  "description" : "So, you've heard about this event sourcing thing and eager to try it? Looks great, gives you events history, auditing, read models you can build for given use case and rebuild at any time and so on. It has it's pros indeed (a lot), it also has some cons (well, there is no silver bullet), but there are things that you can only learn and truly understand when you hit the problem and experience it for real. How it all works and how it fits in the real world systems? There are few gems and tricks in all this event sourcing world that I learned over time that I'd like to show you. What to watch for when choosing that architecture, what to avoid and how to do certain things in an event-sourced way for successful long running project. I hope this talk will either save you from making few of the mistakes I did (or was close to doing so) or at least shed some more light on event sourcing in practical aspect.",
+  "title" : "Things I wish I knew before I started with event sourcing",
+  "status" : "accepted",
+  "workshop" : false,
+  "speakers" : [ {
+    "id" : "d374d03f-5122-4f02-9ac3-fa8df669c43f",
+    "name" : "Michał Ostruszka",
+    "bio" : "Seasoned software engineer, solution architect of production-running systems across various domains. Working remotely for 10+ years now, experienced in building distributed, event-driven, and event-sourced solutions. 10+ years long track of record writing Scala commercially, with prior solid Java/JVM background and knowledge of other languages and platforms (e.g. node.js). A keen advocate of practical functional programming approach, Domain Driven Design, domain modelling and event-based architectures",
+    "twitter" : "mostruszka",
+    "github" : null,
+    "www" : null,
+    "photo" : "https://www.gravatar.com/avatar/3bf8ac59830d9faf75c79c82d62f5776.jpg?s=300&d=blank"
+  } ],
+  "language" : "en",
+  "id" : "ecd2b3f8-bf42-46a2-8935-210c6176bc52",
+  "_links" : {
+    "self" : {
+      "href" : "https://2023.confitura.pl/api/presentations/ecd2b3f8-bf42-46a2-8935-210c6176bc52"
+    },
+    "presentation" : {
+      "href" : "https://2023.confitura.pl/api/presentations/ecd2b3f8-bf42-46a2-8935-210c6176bc52{?projection}",
+      "templated" : true
+    },
+    "tags" : {
+      "href" : "https://2023.confitura.pl/api/presentations/ecd2b3f8-bf42-46a2-8935-210c6176bc52/tags"
+    },
+    "speakers" : {
+      "href" : "https://2023.confitura.pl/api/presentations/ecd2b3f8-bf42-46a2-8935-210c6176bc52/speakers{?projection}",
+      "templated" : true
+    },
+    "ratings" : {
+      "href" : "https://2023.confitura.pl/api/presentations/ecd2b3f8-bf42-46a2-8935-210c6176bc52/ratings"
+    }
+  }
+}

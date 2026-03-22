@@ -7,7 +7,7 @@ import pl.confitura.jelatyna.user.UserRepository;
 
 @Service
 public class OAuthUserService {
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public OAuthUserService(UserRepository userRepository) {
         this.userRepository = userRepository;

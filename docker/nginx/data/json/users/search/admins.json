@@ -1,0 +1,61 @@
+{
+  "_embedded" : {
+    "publicUsers" : [ {
+      "id" : "cac0a8ac-4d45-11e8-aba0-fa163e406e6f",
+      "name" : "Artur Owczarek",
+      "bio" : "Spends his days developing great software. Does backend, frontend, devops, administration, big data and data science stuff. Puts a high value on good-quality and automation. Interested in business, finance and many others.",
+      "twitter" : null,
+      "github" : "arturowczarek",
+      "www" : null,
+      "photo" : "/api/resources//photos/cac0a8ac-4d45-11e8-aba0-fa163e406e6f.jpg"
+    }, {
+      "id" : "cabe7d28-4d45-11e8-aba0-fa163e406e6f",
+      "name" : "Michał Margiel",
+      "bio" : "Solutions architect at Syniverse. Full stack developer, and a bit of DevOps. Husband, father, runner, and a board gamer. \n\nWith Confitura since 2008.",
+      "twitter" : "margielm",
+      "github" : "margielm",
+      "www" : "",
+      "photo" : "/api/resources//photos/cabe7d28-4d45-11e8-aba0-fa163e406e6f.jpg"
+    }, {
+      "id" : "cac140fa-4d45-11e8-aba0-fa163e406e6f",
+      "name" : "Bartek Zdanowski",
+      "bio" : "UAV (drone) on-board systems engineer @Pelixar, co-org @Confitura, main crafter @StickersCraft  :)",
+      "twitter" : "bartekzdanowski",
+      "github" : "zdanek",
+      "www" : "http://www.stickerscraft.com",
+      "photo" : "/api/resources//photos/cac140fa-4d45-11e8-aba0-fa163e406e6f.png"
+    }, {
+      "id" : "cac03d65-4d45-11e8-aba0-fa163e406e6f",
+      "name" : "Krzysiek Kozioł",
+      "bio" : "Aktualnie architekt java i pl/sql. Swoją przygodę zaczynał od BASIC'a na Elwro junior, poprzez Pascal na Amidze, a na studiach już na PC i maszynach SUN: asembler, C, C++, perl,..., Java, która zaczynała wtedy raczkować i spodobała się najbardziej. Ciągle się uczy i nadal jest przekonany, że wie, że nic nie wie. ;)",
+      "twitter" : null,
+      "github" : "kkoziol",
+      "www" : null,
+      "photo" : "https://avatars0.githubusercontent.com/u/1230191?v=3"
+    }, {
+      "id" : "cac038ce-4d45-11e8-aba0-fa163e406e6f",
+      "name" : "Dominik Wiernicki",
+      "bio" : "Was attending confitura/javarsovia even before started working as programmer. Proudly doing support for Confitura since first edition after the name change. Now satisfying the world’s appetite at Kitopi and in free time playing computer and/or board games.",
+      "twitter" : null,
+      "github" : "dmnk89",
+      "www" : "",
+      "photo" : "/api/resources//photos/Z2l0aHViLzEyMTk2NTc=.jpg"
+    }, {
+      "id" : "cac2a1fe-4d45-11e8-aba0-fa163e406e6f",
+      "name" : "Ida Bzowska",
+      "bio" : "A part of the community for some time now. Loves people, events, and tech buzzwords. Marketing kiddo by day & 'I have no idea what I'm doing' by night.",
+      "twitter" : "beatleida",
+      "github" : "idabzo",
+      "www" : null,
+      "photo" : "/api/resources//photos/cac2a1fe-4d45-11e8-aba0-fa163e406e6f.png"
+    }, {
+      "id" : "cac3b223-4d45-11e8-aba0-fa163e406e6f",
+      "name" : "Łukasz Lenart",
+      "bio" : "Programista z zamiłowania, tworzenie programów od zawsze było jego hobby, aż przerodziło się w zajęcie komercyjne. Uważa, że dobry programista nie powinien być uzależniony od języka, w którym tworzy, a raczej patrzeć w przyszłość i próbować różnych języków i technologii w zależności od wymagań - dzisiaj jest to Java, a co będzie za 10 lat? Równie dobrze może pisać w PHP, C#, Borland Delphi, etc. Ważne, aby przynosiło mu to przyjemność.\nPrywatnie mąż i ojciec, domator, który lubi czytać i ceni sobie święty spokój! Z przekonań socjalista, z działania kapitalista ;-)",
+      "twitter" : "lukaszlenart",
+      "github" : "lukaszlenart",
+      "www" : "lenart.org.pl",
+      "photo" : "/api/resources//photos/cac3b223-4d45-11e8-aba0-fa163e406e6f.jpg"
+    } ]
+  }
+}

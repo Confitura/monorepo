@@ -1,0 +1,39 @@
+{
+  "level" : "intermediate",
+  "shortDescription" : "Syjamska modularyzacja - niby na diagramach mamy prostokąty ale wciąż robimy JOINY po mikroserwisach zamiast po tabelkach jak dawniej. Podczas prezentacji pokażę jak destylować niezależne konteksty, czyli takie, których zmiana lub awaria nie pociąga za sobą kolejnych.",
+  "tags" : [ ],
+  "description" : "Z jednej strony mamy Event Stormingi na różnych poziomach jako techniki komunikacji i zbierania informacji. Z drugiej strony mamy C4 do skupiania uwagi na odpowiednich driverach architektonicznych. Niestety intuicyjne przejście z jednego do drugiego wychodzi rzadziej niż częściej. W trakcie prezentacji dowiesz się jak przekładać informacji ze stormingu na decyzje architektoniczne dzięki strategicznym narzędziom DDD: destylacji kontekstów i mapowaniu kontekstów. Skupimy się na kilku konkretnych heurystykach, które podpowiadają jak dążyć do modularnego monolitu lub microservices, które mają realną autonomię dzięki: projektowani single source of truth i unikaniu single point of failure.",
+  "title" : "Modularyzacja - miało być tak pięknie a wyszło jak zwykle:(",
+  "status" : "accepted",
+  "workshop" : false,
+  "speakers" : [ {
+    "id" : "8f834105-1585-4051-93d5-3ce6f61325ad",
+    "name" : "Sławomir Sobótka",
+    "bio" : "Od 13 lat jestem właścicielem firmy szkoleniowo doradczej Bottega IT Minds zrzeszającej 60 ekspertów technicznych.\nRównolegle współpracuję jako inwestor i CTO z kilkoma startupami:\nCortivision - obrazowanie pracy mózgu w bliskiej podczerwieni i sceny VR dla dzieci z deficytami uwagi\nAugmented Neural Systems - sceny VR wspomagające system hormonalno-odpornościowy w walce z rakiem\nAugmented Reality Training Systems - rzeczywistość dopełniona w treningach strzeleckich\noraz Devskiller - automatyzacja rekrutacji i zarządzanie kompetencjami w organizacjach IT",
+    "twitter" : null,
+    "github" : null,
+    "www" : "bottega.com.pl",
+    "photo" : "https://www.gravatar.com/avatar/dae6d35b89426bd954889860c4b2b6e1.jpg?s=300&d=blank"
+  } ],
+  "language" : "pl",
+  "id" : "f2eced3e-c6b3-4df5-9753-3ad24d9d5354",
+  "_links" : {
+    "self" : {
+      "href" : "https://2023.confitura.pl/api/presentations/f2eced3e-c6b3-4df5-9753-3ad24d9d5354"
+    },
+    "presentation" : {
+      "href" : "https://2023.confitura.pl/api/presentations/f2eced3e-c6b3-4df5-9753-3ad24d9d5354{?projection}",
+      "templated" : true
+    },
+    "tags" : {
+      "href" : "https://2023.confitura.pl/api/presentations/f2eced3e-c6b3-4df5-9753-3ad24d9d5354/tags"
+    },
+    "speakers" : {
+      "href" : "https://2023.confitura.pl/api/presentations/f2eced3e-c6b3-4df5-9753-3ad24d9d5354/speakers{?projection}",
+      "templated" : true
+    },
+    "ratings" : {
+      "href" : "https://2023.confitura.pl/api/presentations/f2eced3e-c6b3-4df5-9753-3ad24d9d5354/ratings"
+    }
+  }
+}

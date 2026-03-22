@@ -1,0 +1,45 @@
+{
+  "level" : "intermediate",
+  "shortDescription" : "Konfiguracja klastra to zawsze jest jakieś wyzwanie, szczególnie gdy mówimy o klastrze postawionym w formie on-premises. To będzie 45 minut technicznej wyprawy w głąb świata Kubernetesa i poznawania jego zakamarków, ukrytych tricków i nieoczywistych rozwiązań. Więc zapinamy pasy i lecimy!",
+  "tags" : [ {
+    "id" : "devops",
+    "name" : "DevOps"
+  }, {
+    "id" : "could",
+    "name" : "Cloud"
+  } ],
+  "description" : "Konfiguracja klastra to zawsze jest jakieś wyzwanie, szczególnie gdy mówimy o klastrze postawionym w formie on-premises. Zaprezentuję krok po kroku jak przygotować klaster Kubernetesowy do formy produkcyjnej. Pokażę przykładowe rozwiązania problemów niewystępujących w środowiskach cloudowych lub rozwiązanych już przez dostawcę. Zaczniemy od tego jak w ogóle wystawić jakąkolwiek usługę na świat, w tej części omówię konfigurację MetalLB, cert-managera i nginx ingress controllera. Następnie weźmiemy na tapet konfigurację wolumenów, a skończymy konfiguracją prometheusa. Co da nam nieco uproszczony, ale jednak gotowy klaster produkcyjny, który mógłby być używany w organizacji.\nDodatkowo opowiem, jak zarządzać takim klastrem w przyszłości, jak planować jego maintenance i upgrade. To będzie 45 minut technicznej wyprawy w głąb świata Kubernetesa i poznawania jego zakamarków, ukrytych tricków i nieoczywistych rozwiązań. Więc zapinamy pasy i lecimy!",
+  "title" : "Kubernetes on-premises, dlaczego nie chcesz tego robić?",
+  "status" : "accepted",
+  "workshop" : false,
+  "speakers" : [ {
+    "id" : "f15b5e90-42c9-42c3-b24c-82107041bdba",
+    "name" : "Juliusz Marciniak",
+    "bio" : "Programista Java z 9 letnim stażem. W codziennej pracy zajmuję się tematami cloudowymi i Kubernetesowymi. Oprócz tego doglądam architektury aplikacji w swoich projektach. Jestem entuzjastą nowych rozwiązań i technologii. Zwracam duża uwagę, by rzeczy wdrażane przeze mnie były przemyślane i spójne. Czasami też programuję… i rekrutuję.",
+    "twitter" : null,
+    "github" : null,
+    "www" : null,
+    "photo" : "/api/resources//photos/f15b5e90-42c9-42c3-b24c-82107041bdba.jpg"
+  } ],
+  "language" : "pl",
+  "id" : "f9bc0e70-c045-4dea-8227-dcc0df7b3918",
+  "_links" : {
+    "self" : {
+      "href" : "https://2023.confitura.pl/api/presentations/f9bc0e70-c045-4dea-8227-dcc0df7b3918"
+    },
+    "presentation" : {
+      "href" : "https://2023.confitura.pl/api/presentations/f9bc0e70-c045-4dea-8227-dcc0df7b3918{?projection}",
+      "templated" : true
+    },
+    "tags" : {
+      "href" : "https://2023.confitura.pl/api/presentations/f9bc0e70-c045-4dea-8227-dcc0df7b3918/tags"
+    },
+    "speakers" : {
+      "href" : "https://2023.confitura.pl/api/presentations/f9bc0e70-c045-4dea-8227-dcc0df7b3918/speakers{?projection}",
+      "templated" : true
+    },
+    "ratings" : {
+      "href" : "https://2023.confitura.pl/api/presentations/f9bc0e70-c045-4dea-8227-dcc0df7b3918/ratings"
+    }
+  }
+}

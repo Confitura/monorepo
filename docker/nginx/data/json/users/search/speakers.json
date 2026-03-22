@@ -1,0 +1,294 @@
+{
+  "_embedded": {
+    "publicUsers": [
+      {
+        "id": "7622844c-4065-4272-a661-90da99cc1a8c",
+        "name": "Jakub Nabrdalik",
+        "bio": "20 years of designing, building, coding, and operating systems on production. 200+ workshops and lectures. More at nabrdalik.dev",
+        "twitter": "https://twitter.com/jnabrdalik",
+        "github": "https://github.com/jakubnabrdalik/",
+        "www": "nabrdalik.dev",
+        "photo": "https://www.gravatar.com/avatar/49f4023a979fe8e47c7b639697f86f00.jpg?s=300&d=blank"
+      },
+      {
+        "id": "191f9c04-72b4-4f59-8f55-cd2e23f5c732",
+        "name": "ags",
+        "bio": "ags likes distributed systems in all shapes and form. Coding since the age of 8, loves simplicity and continuous delivery. While he has written in many languages, he favours the JVM. Since \"most software problems are people problems”, he stirs communities, organizes and speaks at conferences. And he is a Java Champion!",
+        "twitter": "ags313",
+        "github": null,
+        "www": null,
+        "photo": "https://www.gravatar.com/avatar/498838b88051c5a4c8a20b8499bd1b19.jpg?s=300&d=blank"
+      },
+      {
+        "id": "3c1887ad-2561-4678-abf8-17d9706c0d01",
+        "name": "Krzysztof Ślusarski",
+        "bio": "Jestem programistą z prawie pełnoletnim doświadczeniem w Javie. Mój konik to profiling.",
+        "twitter": "k_slusar",
+        "github": "krzysztofslusarski",
+        "www": "http://kś.pl/",
+        "photo": "/api/resources//photos/3c1887ad-2561-4678-abf8-17d9706c0d01.jpg"
+      },
+      {
+        "id": "8f834105-1585-4051-93d5-3ce6f61325ad",
+        "name": "Sławomir Sobótka",
+        "bio": "Od 13 lat jestem właścicielem firmy szkoleniowo doradczej Bottega IT Minds zrzeszającej 60 ekspertów technicznych.\nRównolegle współpracuję jako inwestor i CTO z kilkoma startupami:\nCortivision - obrazowanie pracy mózgu w bliskiej podczerwieni i sceny VR dla dzieci z deficytami uwagi\nAugmented Neural Systems - sceny VR wspomagające system hormonalno-odpornościowy w walce z rakiem\nAugmented Reality Training Systems - rzeczywistość dopełniona w treningach strzeleckich\noraz Devskiller - automatyzacja rekrutacji i zarządzanie kompetencjami w organizacjach IT",
+        "twitter": null,
+        "github": null,
+        "www": "bottega.com.pl",
+        "photo": "https://www.gravatar.com/avatar/dae6d35b89426bd954889860c4b2b6e1.jpg?s=300&d=blank"
+      },
+      {
+        "id": "2f111a87-8d0f-4861-b378-cb9df8cb747c",
+        "name": "Rafał Maciak",
+        "bio": "Programista pasjonat i pragmatyk z doświadczeniem głównie w technologiach około JVMowych. Wierzy w koncepcje stojące za trzyliterowymi skrótami - TDD, DDD i tym podobnymi. Lubi od czasu do czasu wyjść z piwnicy i porozmawiać z ludźmi. Często możecie go spotkać przy ścianie przyklejającego karteczki.\n",
+        "twitter": "r_maciak",
+        "github": "https://github.com/ramafasa",
+        "www": null,
+        "photo": "/api/resources//photos/2f111a87-8d0f-4861-b378-cb9df8cb747c.jpg"
+      },
+      {
+        "id": "216d8640-4387-4b00-80ef-11657eb3d44e",
+        "name": "Paweł Warczyński",
+        "bio": "fun main() {\n    val me = SoftwareDeveloper()\n    while(me.isActive()) {\n        val result = me.doYourJob()\n        if (result is Mistake) {\n            me.improveMyself(result)\n        } else {\n            println(\"result = $result\")\n        }\n    }\n}",
+        "twitter": null,
+        "github": null,
+        "www": null,
+        "photo": "/api/resources//photos/216d8640-4387-4b00-80ef-11657eb3d44e.jpeg"
+      },
+      {
+        "id": "23176155-4e7b-44f9-9d78-aff0c7dfe7a0",
+        "name": "Paweł Bogdan",
+        "bio": "Scala&Java developer with ~10 years of experience. PhD in mathematics. Heavy metal lover. Weight loss expert. Bookworm. Cryptography&blockchain padawan",
+        "twitter": null,
+        "github": "https://github.com/PawelBogdan",
+        "www": "https://www.linkedin.com/in/pawe%C5%82-bogdan-2166b869/",
+        "photo": "/api/resources//photos/23176155-4e7b-44f9-9d78-aff0c7dfe7a0.png"
+      },
+      {
+        "id": "ab278e7c-e59a-4b6d-8c19-6a66e239f51f",
+        "name": "Piotr Kaczor",
+        "bio": "Piotr, Senior Technical Architect, IQVIA, has around 15 years experience in data warehousing. For the past 8 years Piotr remains responsible for end-to-end healthcare data warehouse design for local IQVIA teams around the world. Before IQVIA switched entirely to BigData in 2016, he was involved in data onboarding, curation & reporting processes on IBM PureData for Analytics (Netezza) technology. He originated from Oracle, had a chance to work with Teradata as well. Currently helping to transition Electronic Medical Records data solutions towards the cloud (DataBricks and/or SnowFlake). Personally more data-oriented, less interested in deep-programming topics.",
+        "twitter": null,
+        "github": null,
+        "www": null,
+        "photo": "/api/resources//photos/ab278e7c-e59a-4b6d-8c19-6a66e239f51f.jpg"
+      },
+      {
+        "id": "f868002d-5281-4747-a81c-2c4ff5ae46b4",
+        "name": "Mateusz \"Serafin\" Gajewski",
+        "bio": "Time isn’t slowing,\r\njust speed,\r\nit’s all we’re knowing.",
+        "twitter": "wendigo",
+        "github": "wendigo",
+        "www": "https://wendigo.pl",
+        "photo": "https://avatars.githubusercontent.com/u/66972?v=4"
+      },
+      {
+        "id": "d374d03f-5122-4f02-9ac3-fa8df669c43f",
+        "name": "Michał Ostruszka",
+        "bio": "Seasoned software engineer, solution architect of production-running systems across various domains. Working remotely for 10+ years now, experienced in building distributed, event-driven, and event-sourced solutions. 10+ years long track of record writing Scala commercially, with prior solid Java/JVM background and knowledge of other languages and platforms (e.g. node.js). A keen advocate of practical functional programming approach, Domain Driven Design, domain modelling and event-based architectures",
+        "twitter": "mostruszka",
+        "github": null,
+        "www": null,
+        "photo": "https://www.gravatar.com/avatar/3bf8ac59830d9faf75c79c82d62f5776.jpg?s=300&d=blank"
+      },
+      {
+        "id": "9a68de66-3c1a-4238-99ae-c8b19875b006",
+        "name": "Dastin Sandura",
+        "bio": "Inżynier oprogramowania działający w branży IT od 2015 roku. Obenie pracuje w roli Doświadczonego Konsultanta w GFT Poland. Przez 5 lat pracował w startupie w rolach, między innymi: front-end i back-end developera, konsultanta, dowódcy zespołu konsultantów, dowódcy działu wsparcia klienta oraz międzynarodowego trenera prowadzącego w języku angielskim szkolenia między innymi dla klientów takich jak SONY Interactive Entertainment i Tom Tom między innymi w biurach San Mateo - California, Las Vegas - Nevada, Monachium, Estonii oraz U.K. Współorganizator spotkań Domain Driven Design Gdańsk.",
+        "twitter": "https://twitter.com/dastin_it",
+        "github": "https://github.com/dastin-sandura",
+        "www": "https://dastin-sandura-software-developer.blogspot.com",
+        "photo": "/api/resources//photos/9a68de66-3c1a-4238-99ae-c8b19875b006.jpg"
+      },
+      {
+        "id": "6b8d6fd2-b835-4c51-a78d-4c988a80c58d",
+        "name": "Tomasz Nurkiewicz",
+        "bio": "Spent half of his life on programming, for the last decade professionally in Java land. Loves back-end and data visualization. Passionate about alternative JVM languages. Disappointed with the quality of software written these days (so often by himself!), hates long methods and hidden side effects. Interested in charting, data analysis, and reactive programming. Believes that computers were invented so that developers can automate boring and repetitive tasks. Also their own.\n\nOn a daily basis works in the e-commerce sector. Involved in open-source, DZone’s Most Valuable Blogger, used to be very active on StackOverflow. Author, trainer, conference speaker, technical reviewer, runner. Claims that code not tested automatically is not a feature but just a rumour. Wrote a book on RxJava for O'Reilly.\n\nhttps://nurkiewicz.com/talks - almost 100 public speaking engagements",
+        "twitter": "https://twitter.com/tnurkiewicz",
+        "github": "https://github.com/nurkiewicz/",
+        "www": "https://nurkiewicz.com/",
+        "photo": "https://www.gravatar.com/avatar/a0a3a4200899708103f7430d87d56e24.jpg?s=300&d=blank"
+      },
+      {
+        "id": "49c15baa-bdd6-4d62-b928-c9b7f7360ca9",
+        "name": "Łukasz Wojtach",
+        "bio": "Programista androida, historyk i tata. Często w odwrotnej kolejności. Pijam herbatę zamiast kawy, a zamiast łatwych problemów lubię te trudne. Stąd też zainteresowanie programowaniem współbieżnym i korutynami w szczególności.",
+        "twitter": null,
+        "github": "circusmagnus",
+        "www": null,
+        "photo": "https://avatars.githubusercontent.com/u/22617780?v=4"
+      },
+      {
+        "id": "cc40066a-54af-4316-98c4-f14ad03076ba",
+        "name": "Krzysztof Kudryński",
+        "bio": "Projektant rozwiązań inżynieryjnych dla sztucznej inteligencji, wizji komputerowej, pojazdów autonomicznych i robotyki. Trener głębokiego uczenia. W NVIDIA odpowiedzialny za integrację rozwiązań głębokiego uczenia na skalę przemysłową.",
+        "twitter": "kriskudrynski",
+        "github": "https://github.com/nv-kkudrynski",
+        "www": "https://kkudrynski.wixsite.com/portfolio",
+        "photo": "/api/resources//photos/cc40066a-54af-4316-98c4-f14ad03076ba.jpg"
+      },
+      {
+        "id": "2c9a8b37-411d-44ce-97e5-5b96150bcd16",
+        "name": "Paul Clark",
+        "bio": "Paul has worked across multiple sectors helping to deliver digital products used by millions of customers. At Channel 4 in 2006 as one of the first hires onto 4oD he helped to deliver the first truly end to end video on demand platform. Moving from there to the BBC he managed Customer Facing Products, all the reusable parts of the BBC shared across iPlayer, News, Weather, Worldwide etc. and helped deliver v3 of iPlayer. As CTO of Online at ITV Paul stripped back and rebuilt the failing platform leading to the ITV Hub rebrand and relaunch. Moving into digital banking Paul spent a brief time at HSBC as Head of Engineering for Digital before moving to Tandem Bank to launch savings, credit card and mortgage products delivered via a digital experience. This involved migrating Tandem from the legacy Fiserv platform onto Mambu. Paul joined JPMorgan in August 2021, to help them integrate their new businesses, roll out across Europe and improve their agile ways of working and delivery predictability. When not playing with computers at home Paul likes playing golf and watching cricket.",
+        "twitter": null,
+        "github": null,
+        "www": null,
+        "photo": "/api/resources//photos/2c9a8b37-411d-44ce-97e5-5b96150bcd16.jpeg"
+      },
+      {
+        "id": "cd21c3b4-f80a-4927-b7f8-c286c3528370",
+        "name": "Marcin Baranowski",
+        "bio": "Programista od kiedy sięgnąć pamięcią - programuje zawsze i wszędzie, chyba że akurat śpi lub musi wyjść za potrzebą. Zawodowy programista Java. Lubi optymalizować procesy i dzielić się wiedzą. Uważa, że porządek musi być i na biurku, i w kodzie (a przynajmniej w tym drugim). Uwielbia zieloną herbatę, przez całe życie nie wypił nawet filiżanki kawy.",
+        "twitter": null,
+        "github": "SilverSheep",
+        "www": "https://mbaranowski.pl/",
+        "photo": "/api/resources//photos/cd21c3b4-f80a-4927-b7f8-c286c3528370.JPG"
+      },
+      {
+        "id": "607747bd-f752-46ca-8c57-9a7a882b35ff",
+        "name": "Marek Chrapek",
+        "bio": "Tech Lead w Onwelo. Pragmatyk z obsesją czystego kodu oraz strażnik profesjonalizmu w każdym aspekcie pracy, lider techniczny, od początku blisko związany z językami JVM i z przygodami na front-endzie. Jest fanem i uczestnikiem wielu konferencji i hackathonów. Aktywnie bierze udział w życiu śląskiej społeczności IT. Kolekcjonuje książki i artykuły z myślą o przeczytaniu ich w przyszłości.",
+        "twitter": null,
+        "github": "mchrapek",
+        "www": "https://www.linkedin.com/in/marek-chrapek/",
+        "photo": "https://www.gravatar.com/avatar/d118a0cb30c4162cfb0f101172dfe0b8.jpg?s=300&d=blank"
+      },
+      {
+        "id": "52aa43f9-03e6-4c37-89ed-8dc9d645d2f8",
+        "name": "Jacek Milewski",
+        "bio": "No tak... Jakoś ta moja historia dotarła aż dotąd! Pewien czas kodowałem nie rozumiejąc jak skomplikowane to zajęcie... Teraz modeluję ze świadomością jak zmienny jest software oraz jak ładny i bezpieczny może być gdy tylko pragmatycznie podejść do projektowania, kodowania i testowania. Zadaję pytania aby wyłuskać to co istotne, a odfiltrować szum. Z tego buduję backend, frontend, infrastrukturę i zespół.\n\nTa droga zaprowadziła mnie też do Bottega IT Minds, gdzie mogę uczyć innych, na najwyższym poziomie, wśród tych od których sam uczyłem się wcześniej. Niewiarygodny fikołek!",
+        "twitter": "@jacek_mil",
+        "github": "yacekmm",
+        "www": "Looksok.wordpress.com",
+        "photo": "https://avatars.githubusercontent.com/u/7893442?v=4"
+      },
+      {
+        "id": "a859937f-a1b2-4af3-b60a-5925888f0224",
+        "name": "Wojtek Ptak",
+        "bio": "Wojtek works as an Engineering Executive and a Head of Product Engineering at Revolut. Before, he worked as CTO for several companies, provided consulting, training, and assisted in building various data collecting, analytics, and applied ML/AI solutions, including Big Data implementations, data stream processing systems, and data insight projects. He worked with multiple Forbes 500 brands in the US, UK, and the Netherlands, including The Coca-Cola Company, the American Bankers Association, Macy’s, Bloomingdales, Heineken, Saks 5th Avenue, BP, Boots, Polo Ralph Lauren, Porsche, HSBC, and others.",
+        "twitter": "https://twitter.com/wjptak",
+        "github": null,
+        "www": "https://www.linkedin.com/in/wojtekptak/",
+        "photo": "https://www.gravatar.com/avatar/686f3acc8cdf8073d9fa8763d24f77ea.jpg?s=300&d=blank"
+      },
+      {
+        "id": "f15b5e90-42c9-42c3-b24c-82107041bdba",
+        "name": "Juliusz Marciniak",
+        "bio": "Programista Java z 9 letnim stażem. W codziennej pracy zajmuję się tematami cloudowymi i Kubernetesowymi. Oprócz tego doglądam architektury aplikacji w swoich projektach. Jestem entuzjastą nowych rozwiązań i technologii. Zwracam duża uwagę, by rzeczy wdrażane przeze mnie były przemyślane i spójne. Czasami też programuję… i rekrutuję.",
+        "twitter": null,
+        "github": null,
+        "www": null,
+        "photo": "/api/resources//photos/f15b5e90-42c9-42c3-b24c-82107041bdba.jpg"
+      },
+      {
+        "id": "91e488f9-a014-442c-91ae-a2f683b6f09a",
+        "name": "Wojciech Marusarz",
+        "bio": "Lubię pracować w zespołach, gdzie jakość kodu i ukierunkowany rozwój projektu są kluczowe. W dłuższej perspektywie pozwala mi to na dogłębne zrozumienie tematu, rozwój osobisty i szukanie wyzwań. Zajmuje się programowaniem w Javie i Kotlinie. Dodatkowo interesuję się narzędziami Big Data oraz Data-Intensive.",
+        "twitter": null,
+        "github": "https://github.com/marwoj/",
+        "www": null,
+        "photo": "/api/resources//photos/91e488f9-a014-442c-91ae-a2f683b6f09a.jpeg"
+      },
+      {
+        "id": "4a1b8e56-3b16-4a7b-b43a-bfd303b30d1b",
+        "name": "Chris Suszynski",
+        "bio": "I work at Red Hat as a Senior Software Engineer on the OpenShift Serverless team. I can describe myself as a software craftsman with over 15 years of experience in various technologies such as Golang, Java, Ruby, Python and Rust. My main interests are hybrid cloud technologies, especially Kubernetes and WASI technologies, and clear architecture for applications. I work on open-source software and strongly believe in its success.",
+        "twitter": "@ksuszynski",
+        "github": "cardil",
+        "www": null,
+        "photo": "https://avatars.githubusercontent.com/u/540893?v=4"
+      },
+      {
+        "id": "a772d893-6462-4423-a511-5fec2f0b82a8",
+        "name": "Grzegorz Kocur",
+        "bio": "I'm an experienced DevOps Engineer and the leader of SoftwareMill's DevOps Team. Some refer to my position as 'YAML developer' :-). Over the past 20 years, I have been helping create amazing software for multiple organizations. I'm an avid user of Kubernetes and Cloud Computing, and, obviously, an enthusiast of the DevOps culture. In my free time, I like running and I regenerate while working in my garden.\n",
+        "twitter": "@GrzegorzKocur",
+        "github": null,
+        "www": null,
+        "photo": "/api/resources//photos/a772d893-6462-4423-a511-5fec2f0b82a8.jpg"
+      },
+      {
+        "id": "862eaef6-32b7-48bb-b3ba-ba31ce19a495",
+        "name": "Mateusz Parada",
+        "bio": null,
+        "twitter": null,
+        "github": null,
+        "www": null,
+        "photo": "/api/resources//photos/862eaef6-32b7-48bb-b3ba-ba31ce19a495.jpeg"
+      },
+      {
+        "id": "b443ab41-43fa-45a0-96bc-4ae4db51ecf2",
+        "name": "Wojciech Seliga",
+        "bio": "Zacząłem programować prawie 40 lat temu, jak miałem jakieś 6 czy 7 lat. Widziałem przez te lata różne technologie, metodologie, trendy, mody, buzzwordy. Pokochałem C++, ale większość życia programistycznego kodowałem w Javie.\nOd prawie 20 lat krzewię ideały i praktyki metodologii zwinnych, a przede wszystkim otwartość i uczciwość we wszystkich relacjach.\nW 2007 roku założyłem z kolegami Spartez, która po latach rozrosła się we dwie firmy – software house obsługujący przede wszystkim Atlassiana i osobną firmę produktową z kilkoma tysiącami klientów z całego świata. Przez wiele lat byłem ich CEO. Zatrudnialiśmy ponad 250 fantastycznych osób z kilkunastu krajów świata i wszystkich kontynentów, razem stworzyliśmy dużo dobrych produktów.\nW latach 2020 – 2021 sprzedaliśmy obie firmy. Teraz więcej odpoczywam, spędzam sporo czasu z rodziną, uprawiam sport (tenis, narty, rower), inwestuję (także sporo poza IT), buduję (fizycznie), doradzam oraz nadal staram się dzielić wiedzą.\n \nPrezentowałem na wielu uznanych, a także mniej znanych eventach w Polsce i za granicą: np. Devoxx, Agile, Agile EE, Confitura, GeeCon, InfoSHARE, Atlassian Summit, Atlascamp, COOLuary, JUGi, JDD, itd.",
+        "twitter": "wseliga",
+        "github": null,
+        "www": null,
+        "photo": "https://www.gravatar.com/avatar/d998f46456336526118740b5e7f658df.jpg?s=300&d=blank"
+      },
+      {
+        "id": "f953198e-9472-4301-b3e9-5f47bb336f0e",
+        "name": "Paulina Szwed",
+        "bio": "Software engineer at Allegro. Backend dev with strong interests in software architecture. Soft skills and cognitive sciences enthusiast.",
+        "twitter": null,
+        "github": "Delebrith",
+        "www": null,
+        "photo": "/api/resources//photos/f953198e-9472-4301-b3e9-5f47bb336f0e.png"
+      },
+      {
+        "id": "a61d0fd1-27f8-47ef-8365-485cea8acce1",
+        "name": "Jakub Kubrynski",
+        "bio": null,
+        "twitter": "jkubrynski",
+        "github": null,
+        "www": null,
+        "photo": "https://www.gravatar.com/avatar/13962ee99d2c07e7b7a7776222532f1d.jpg?s=300&d=blank"
+      },
+      {
+        "id": "428bddd6-2c35-478a-a255-7db5b428c8d4",
+        "name": " Piotr Stawirej",
+        "bio": "Expert Software Engineer",
+        "twitter": "p_stawirej",
+        "github": "stawirej",
+        "www": "https://amazingcode.pl/",
+        "photo": "https://avatars.githubusercontent.com/u/52084106?v=4"
+      },
+      {
+        "id": "0cc7ff41-ab9e-40cb-bde8-d25e9214c716",
+        "name": "Tomasz Janczewski ",
+        "bio": null,
+        "twitter": null,
+        "github": null,
+        "www": null,
+        "photo": "/api/resources//photos/18bda3aa-2253-4f35-ac9f-7fb65370a59e.jpg"
+      },
+      {
+        "id": "a4f76848-872a-44e5-a95f-0468d1f4ea9a",
+        "name": "Piotr Suwała",
+        "bio": "I'm a programmer with several years experience in enterprise systems.\nTackling code debt made me appreciate well structurised and easy to change systems.\nI augment my experience with knowledge from the books which I apply to commercial projects and open source ones.\nCurrently I am working at Kinguin as architect and leading Domain Driven Design meetup in Gdańsk.",
+        "twitter": "https://twitter.com/ksidelta",
+        "github": null,
+        "www": "https://www.ksidelta.com/",
+        "photo": "/api/resources//photos/a4f76848-872a-44e5-a95f-0468d1f4ea9a.jpg"
+      },
+      {
+        "id": "76ee7373-420d-4c36-b51b-c720be1b5ed2",
+        "name": "Michał Zaborowski",
+        "bio": "Inżynier z wykształcenia i przekonania, do 25 lat zarabia na tworzeniu kodu, od nastu lat - JVM. Lubi szczegóły, niebanalne problemy, rozwiązania, które działają. ",
+        "twitter": null,
+        "github": "https://github.com/texxas",
+        "www": "texxas.io",
+        "photo": "/api/resources//photos/76ee7373-420d-4c36-b51b-c720be1b5ed2.jpeg"
+      },
+      {
+        "id": "b8badba8-89b9-4f30-a63b-55b566d119f8",
+        "name": "Bartłomiej Żyliński",
+        "bio": "I'm a Software Engineer with industry experience in designing and implementing complex applications and systems, mostly where it's not visible to users - at the backend.\nI'm a self-taught developer and a hands-on learner, constantly working towards expanding my knowledge further.\n\nI contribute to several open source projects, my main focus being sttp (where you can see my contributions on the project's Github). \n\nI appreciate the exchange of technical know-how - which is expressed by my various publications found on Medium and DZone, and appearances at top tech conferences and meetups, including Devoxx Belgium. I enjoy exploring topics that combine software engineering and mathematics.\n\nIn my free time, I like to read a good book.",
+        "twitter": "@PaskSoftware",
+        "github": "Pask423",
+        "www": "https://medium.com/@PaskSoftware",
+        "photo": "/api/resources//photos/b8badba8-89b9-4f30-a63b-55b566d119f8.jpg"
+      }
+    ]
+  }
+}

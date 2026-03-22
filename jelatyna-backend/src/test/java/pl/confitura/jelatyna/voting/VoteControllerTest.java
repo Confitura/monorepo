@@ -13,7 +13,7 @@ public class VoteControllerTest extends BaseIntegrationTest {
     public void shouldStartVoting() throws Exception {
 
         //when
-        ResultActions $ = mockMvc.perform(post("/votes/start/token" ));
+        ResultActions $ = mockMvc.perform(post("/votes/start/token"));
 
         //then
         $.andExpect(status().isOk());

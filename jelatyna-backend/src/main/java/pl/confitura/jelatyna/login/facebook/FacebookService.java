@@ -9,7 +9,6 @@ import pl.confitura.jelatyna.login.OAuthConfiguration;
 import pl.confitura.jelatyna.login.OAuthUserService;
 
 import java.io.IOException;
-import java.util.Random;
 
 public class FacebookService extends AbstractOAuth20Service{
     public static final String SYSTEM = "facebook";
@@ -21,10 +20,8 @@ public class FacebookService extends AbstractOAuth20Service{
 
     @Override
     protected OAuth20Service createService(OAuthConfiguration.OAuthProviderProperties config) {
-        final String secretState = "secret" + new Random().nextInt(999_999);
         return new ServiceBuilder(config.getApiKey())
                 .apiSecret(config.getApiSecret())
-                .state(secretState)
                 .callback(config.getCallback())
                 .build(FacebookApi.instance());
     }

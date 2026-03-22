@@ -40,7 +40,11 @@ class VoucherController {
         } else {
             return ResponseEntity.status(HttpStatus.OK).build();
         }
+    }
 
+    @PostMapping("/vouchers/{id}/re-send")
+    void resendVoucher(@PathVariable("id") String voucherId) {
+        voucherService.resend(voucherId);
     }
 
     @GetMapping("/vouchers")
@@ -56,6 +60,12 @@ class VoucherController {
         Stream<Voucher> participantVouchers = generateVouchers(request.participantVouchers, Voucher.VoucherType.PARTICIPANT, request);
         return Stream.concat(sponsorVouchers, participantVouchers)
                 .collect(Collectors.toList());
+    }
+
+    @PostMapping("/vouchers/send")
+    @PreAuthorize("@security.isAdmin()")
+    void sendVouchers() {
+        voucherService.sendVouchers();
     }
 
     private Stream<Voucher> generateVouchers(

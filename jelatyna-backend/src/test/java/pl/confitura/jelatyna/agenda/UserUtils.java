@@ -21,13 +21,26 @@ public class UserUtils {
     private final VoucherService voucherService;
 
 
-    public User createUser(String title) {
-        return userRepository.save(new User().setId(title).setName(title));
+    public User createUser(String name) {
+        return userRepository.save(new User().setId(name).setName(name));
     }
 
     public User markArrived(User user) {
         Voucher voucher = voucherService.generateVoucher("");
         ParticipationData data = participationRepository.save(new ParticipationData().setArrivalDate(now()).setVoucher(voucher));
         return userRepository.save(user.setParticipationData(data));
+    }
+
+    public void createAdmin(String name) {
+        userRepository.save(new User()
+                .setId(name + "'s id")
+                .setName(name)
+                .setBio(name + "'s bio")
+                .setTwitter(name + "'s twitter")
+                .setGithub(name + "'s github")
+                .setWww(name + "'s www")
+                .setPhoto(name + ".png")
+                .setAdmin(true));
+
     }
 }

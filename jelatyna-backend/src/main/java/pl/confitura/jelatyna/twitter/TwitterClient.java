@@ -17,6 +17,14 @@ public class TwitterClient {
     private final Twitter twitter;
 
     List<Tweet> getTweets() {
+        return Collections.emptyList();
+    }
+
+    /**
+     * it costs 5k$ per month
+     */
+    @Deprecated
+    List<Tweet> useTwitterPremiumFeatureToFetchTweets() {
         try {
             ResponseList<Status> timelines = twitter.getUserTimeline("confiturapl");
             return timelines.stream().map(this::mapTweet).collect(Collectors.toList());

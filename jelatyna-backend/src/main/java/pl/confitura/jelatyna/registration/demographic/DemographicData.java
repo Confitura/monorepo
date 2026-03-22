@@ -4,9 +4,11 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import java.util.Set;
 
 @Data
 @Entity
@@ -21,5 +23,8 @@ public class DemographicData {
     private String experience;
     private String role;
     private String mealOption;
+
+    @ElementCollection
+    private Set<String> technologies;
 
 }

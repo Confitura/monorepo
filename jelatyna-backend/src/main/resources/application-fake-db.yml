@@ -1,10 +1,24 @@
+server:
+  port: 8080
 spring:
   datasource:
-    url: jdbc:h2:mem:jelatyna
-    username: confitura
-    password: confitura
+    url: jdbc:postgresql://localhost:5432/jelatyna
+    username: jelatyna
+    password: password
 
-resources.path: /tmp
-resources.folder: /tmp
-jwt.key: /tmp
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+resources:
+  resources-base-url: "http://localhost:8080/api"
+  path: files
+  folder: /tmp/confitura
+
 mail.apiKey: 123
+
+app:
+  cors:
+    origins:
+      - http://localhost:5173/
+  jwt:
+    secret-key: c1c29b861174cd979e5bcd2dc1acf89ac2bc9a30d7307b6949dfd26f2bdc6fed

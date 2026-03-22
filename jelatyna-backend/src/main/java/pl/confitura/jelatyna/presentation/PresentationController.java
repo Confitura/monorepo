@@ -1,59 +1,45 @@
 package pl.confitura.jelatyna.presentation;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 
-import org.springframework.data.rest.webmvc.RepositoryRestController;
-import org.springframework.hateoas.Resources;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
-import lombok.AllArgsConstructor;
+import pl.confitura.jelatyna.api.model.FullPresentation;
 import pl.confitura.jelatyna.presentation.rating.Rate;
 import pl.confitura.jelatyna.presentation.rating.RatingService;
+import pl.confitura.jelatyna.presentation.rating.ViewPresentationRate;
+import pl.confitura.jelatyna.presentation.rating.ViewPresentationRateRepository;
 import pl.confitura.jelatyna.user.User;
 import pl.confitura.jelatyna.user.UserRepository;
 
-@RepositoryRestController
-@AllArgsConstructor
+import static java.util.stream.Collectors.toList;
+
+@RequiredArgsConstructor
+@RestController
 public class PresentationController {
 
-    private PresentationRepository repository;
-    private UserRepository userRepository;
-    private RatingService ratingService;
+    private final PresentationRepository repository;
+    private final UserRepository userRepository;
+    private final RatingService ratingService;
+    private final TagRepository tagRepository;
+    private final ViewPresentationRateRepository ratesRepository;
 
-    @PreAuthorize("@security.isAdmin()")
-    @PostMapping("/presentations/{presentationId}/accept")
-    @Transactional
-    public ResponseEntity<?> accept(@PathVariable String presentationId) {
-        this.repository.findById(presentationId).setAccepted(true);
-        return ResponseEntity.ok().build();
-    }
-
-    @PreAuthorize("@security.isAdmin()")
-    @PostMapping("/presentations/{presentationId}/unaccept")
-    @Transactional
-    public ResponseEntity<?> unaccept(@PathVariable String presentationId) {
-        this.repository.findById(presentationId).setAccepted(false);
-        return ResponseEntity.ok().build();
-
-    }
 
     @PreAuthorize("@security.presentationOwnedByUser(#presentationId) || @security.isAdmin()")
     @GetMapping("/presentations/{presentationId}/cospeakers")
-    public ResponseEntity<Resources<User>> getCospeakers(@PathVariable String presentationId) {
+    public ResponseEntity<Set<User>> getCospeakers(@PathVariable String presentationId) {
         Set<User> cospeakers = this.repository.findById(presentationId).getSpeakers();
-        return ResponseEntity.ok(new Resources<>(cospeakers));
+        return ResponseEntity.ok(cospeakers);
     }
 
     @PreAuthorize("@security.presentationOwnedByUser(#presentationId) || @security.isAdmin()")
@@ -88,32 +74,52 @@ public class PresentationController {
         return ResponseEntity.ok(user);
     }
 
-    private Set<User> removeCospeakerByEmail(String email, Set<User> cospeakers) {
-        return cospeakers.stream().filter(it -> !it.getEmail().equalsIgnoreCase(email)).collect(Collectors.toSet());
-    }
-
     private Set<User> removeCospeakerById(String id, Set<User> cospeakers) {
         return cospeakers.stream().filter(it -> !it.getId().equalsIgnoreCase(id)).collect(Collectors.toSet());
     }
 
     @PostMapping("/presentations/{presentationId}/ratings")
-    @PreAuthorize("@security.isAuthenticated()")
     @Transactional
-    public ResponseEntity<?>  addRating(@PathVariable String presentationId, @RequestBody @Valid Rate rate){
-        Rate createdRate = ratingService.rate(presentationId, rate);
+    public ResponseEntity<?> addRating(
+            @PathVariable String presentationId,
+            @RequestBody @Valid @NotNull RateRequest rate) {
+        if (rate.getReviewerToken() == null) {
+            return ResponseEntity.badRequest().body("Reviewer token is required");
+        }
+        Rate createdRate = ratingService.rate(presentationId, rate.toRate(rate.getReviewerToken()));
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(createdRate);
     }
 
     @PutMapping("/presentations/{presentationId}/ratings/{ratingId}")
-    @PreAuthorize("@security.isAuthenticated()")
     @Transactional
-    public ResponseEntity<?> updateRating(@PathVariable("ratingId") String ratingId, @RequestBody @Valid Rate rate) {
+    public ResponseEntity<?> updateRating(
+            @PathVariable("presentationId") String presentationId,
+            @PathVariable("ratingId") String ratingId,
+            @RequestBody @Valid Rate rate) {
         ratingService.updateRating(rate.setId(ratingId));
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .build();
     }
 
+    @PreAuthorize("@security.presentationOwnedByUser(#presentationId) || @security.isAdmin()")
+    @GetMapping("/presentations/{presentationId}/ratings")
+    public ResponseEntity<ViewPresentationRate> rates(@PathVariable String presentationId) {
+        return this.ratesRepository.findByPresentationId(presentationId)
+                .map(ResponseEntity::ok)
+                .orElseGet(ResponseEntity.notFound()::build);
+    }
+
+
+    @GetMapping("/tags")
+    public ResponseEntity<List<Tag>> getAllTags() {
+        return ResponseEntity.ok(tagRepository.findAll());
+    }
+
+    @GetMapping("/presentations")
+    public ResponseEntity<List<FullPresentation>> getAllPresentations() {
+        return ResponseEntity.ok(repository.findAll().stream().map(FullPresentation::new).collect(toList()));
+    }
 }

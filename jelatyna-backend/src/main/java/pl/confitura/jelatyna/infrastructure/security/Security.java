@@ -10,7 +10,7 @@ import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
 import pl.confitura.jelatyna.user.UserRepository;
 
-@Component
+@Component("security")
 @Slf4j
 public class Security {
 
@@ -28,6 +28,9 @@ public class Security {
     }
 
     public boolean presentationOwnedByUser(String presentationId) {
+        if (isAdmin()) {
+            return true;
+        }
         Presentation presentation = presentationRepository.findById(presentationId);
         return presentation.getSpeakers().stream()
                 .anyMatch(owner -> owner.getId().equals(getUserId()));

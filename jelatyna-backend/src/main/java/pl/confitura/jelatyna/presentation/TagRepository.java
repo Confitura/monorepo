@@ -1,13 +1,16 @@
 package pl.confitura.jelatyna.presentation;
 
 import org.springframework.data.repository.Repository;
-import org.springframework.data.rest.core.annotation.RestResource;
 
-@RestResource(path = "tags")
+import java.util.List;
+import java.util.Optional;
+
 public interface TagRepository extends Repository<Tag, String> {
-    @RestResource(exported = false)
     Iterable<Tag> saveAll(Iterable<Tag> iterable);
 
-    Iterable<Tag> findAll();
+    List<Tag> findAll();
 
+    Optional<Tag> findById(String id);
+
+    Tag getReferenceById(String id);
 }

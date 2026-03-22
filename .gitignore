@@ -1,3 +1,11 @@
 .idea
 *.iml
 /confitura-vue/dist.gz
+logs
+dump
+uploaded
+*.pid
+*.port
+
+confitura-vue
+confitura-page

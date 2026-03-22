@@ -1,0 +1,45 @@
+{
+  "level" : "intermediate",
+  "shortDescription" : "In the presentation I'll show you Clean Architecture and Hexagonal Architecture in practice based on opensource application for templating prints. You will also experience how those approaches interact with Event Storming, Spring Boot and Kotlin.",
+  "tags" : [ {
+    "id" : "jvm",
+    "name" : "JVM"
+  }, {
+    "id" : "sc",
+    "name" : "Software Craftsmanship"
+  } ],
+  "description" : "In IT industry we have a repeatable problem of code debt, which steals happiness from our work, inducing horrible stress and frustration.\nOn the other hand frameworks, architectural approaches, tests cost us supposedly wasted time and they seem not to deliver their promises.\n\nIn the presentation I'll show you Clean Architecture and Hexagonal Architecture in practice. You will also experience how those approaches interact with Event Storming, Spring Boot and Kotlin.\n\nUsing Open Source Labella application I'll show you:\n- what potential problems I wanted to solve using those techniques\n- what real problems were solved and what challenges arised from them\n- and summarise, what in my opinion, these practices are meant for\n\nSpoiler Alert:\nThese techniques deliver their promises, just not in the way we expect.",
+  "title" : "Clean & Hexagonal Architecture - it really works!",
+  "status" : "accepted",
+  "workshop" : false,
+  "speakers" : [ {
+    "id" : "a4f76848-872a-44e5-a95f-0468d1f4ea9a",
+    "name" : "Piotr Suwała",
+    "bio" : "I'm a programmer with several years experience in enterprise systems.\nTackling code debt made me appreciate well structurised and easy to change systems.\nI augment my experience with knowledge from the books which I apply to commercial projects and open source ones.\nCurrently I am working at Kinguin as architect and leading Domain Driven Design meetup in Gdańsk.",
+    "twitter" : "https://twitter.com/ksidelta",
+    "github" : null,
+    "www" : "https://www.ksidelta.com/",
+    "photo" : "/api/resources//photos/a4f76848-872a-44e5-a95f-0468d1f4ea9a.jpg"
+  } ],
+  "language" : "pl",
+  "id" : "1dee35aa-aac3-4727-b568-1429da549dd5",
+  "_links" : {
+    "self" : {
+      "href" : "https://2023.confitura.pl/api/presentations/1dee35aa-aac3-4727-b568-1429da549dd5"
+    },
+    "presentation" : {
+      "href" : "https://2023.confitura.pl/api/presentations/1dee35aa-aac3-4727-b568-1429da549dd5{?projection}",
+      "templated" : true
+    },
+    "tags" : {
+      "href" : "https://2023.confitura.pl/api/presentations/1dee35aa-aac3-4727-b568-1429da549dd5/tags"
+    },
+    "speakers" : {
+      "href" : "https://2023.confitura.pl/api/presentations/1dee35aa-aac3-4727-b568-1429da549dd5/speakers{?projection}",
+      "templated" : true
+    },
+    "ratings" : {
+      "href" : "https://2023.confitura.pl/api/presentations/1dee35aa-aac3-4727-b568-1429da549dd5/ratings"
+    }
+  }
+}

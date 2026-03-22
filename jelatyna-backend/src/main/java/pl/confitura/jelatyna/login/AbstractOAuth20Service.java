@@ -6,32 +6,37 @@ import com.github.scribejava.core.model.OAuthRequest;
 import com.github.scribejava.core.model.Response;
 import com.github.scribejava.core.model.Verb;
 import com.github.scribejava.core.oauth.OAuth20Service;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import pl.confitura.jelatyna.user.User;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+@Slf4j
 public abstract class AbstractOAuth20Service {
 
-    protected OAuth20Service auth20Service;
-    private OAuthUserService oauthUserService;
-    protected ObjectMapper mapper;
+    protected final OAuth20Service auth20Service;
+    private final OAuthUserService oauthUserService;
+    protected final ObjectMapper mapper;
+    private final String callback;
 
-    @Autowired
     public AbstractOAuth20Service(
             OAuthUserService oauthUserService,
             OAuthConfiguration.OAuthProviderProperties properties,
             ObjectMapper mapper) {
-        this.oauthUserService = oauthUserService;
         this.auth20Service = createService(properties);
+        this.oauthUserService = oauthUserService;
         this.mapper = mapper;
+        this.callback = properties.getCallback();
     }
 
     protected abstract OAuth20Service createService(OAuthConfiguration.OAuthProviderProperties properties);
 
-    String getAuthorizationUrl() {
-        return auth20Service.getAuthorizationUrl();
+    protected String getAuthorizationUrl(String state) {
+        Map<String, String> additionalParams = Map.of(
+                "state", state);
+        return auth20Service.getAuthorizationUrl(additionalParams);
     }
 
     User getUserFor(String code) {
@@ -57,6 +62,9 @@ public abstract class AbstractOAuth20Service {
 
     protected abstract String getProtectedUserUrl();
 
-    protected abstract OAuthUserBase mapToUser(String body) throws IOException ;
+    protected abstract OAuthUserBase mapToUser(String body) throws IOException;
 
+    public String buildCallbackUri(String redirectUri) {
+        return callback;
+    }
 }

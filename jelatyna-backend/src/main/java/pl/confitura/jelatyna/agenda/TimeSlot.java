@@ -1,15 +1,10 @@
 package pl.confitura.jelatyna.agenda;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import org.hibernate.annotations.GenericGenerator;
 
 import lombok.Data;
 import pl.confitura.jelatyna.infrastructure.db.AuditedEntity;
@@ -26,27 +21,46 @@ public class TimeSlot extends AuditedEntity {
 
     private static final DateTimeFormatter HOUR_FORMAT = DateTimeFormatter.ofPattern("HH:mm");
 
-    @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(columnDefinition = "varchar(100)")
-    private String id;
-    String label; //fallback for already created slots - to be removed after fixing data in db
+    @NotNull
+    @EmbeddedId
+    private TimeSlotId id;
 
+    @Column(name = "start_time")
     LocalTime start;
+    @Column(name = "end_time")
     LocalTime end;
 
     private boolean forAllRooms = false;
 
-    @NotNull
-    private int displayOrder;
+    @Transient
+    private int timeSlotSpan = 1;
+
 
     public String getLabel() {
-        if (start == null || end == null) {
-            return label;
-        } else {
-            return start.format(HOUR_FORMAT) + " - " + end.format(HOUR_FORMAT);
-        }
+        return start.format(HOUR_FORMAT) + " - " + end.format(HOUR_FORMAT);
+    }
 
+    public int getDisplayOrder() {
+        return id.displayOrder;
+    }
+
+    public TimeSlot setId(String dayId, int displayOrder) {
+        this.id = new TimeSlotId(dayId, displayOrder);
+        return this;
+    }
+
+    public TimeSlot mergeWith(TimeSlot that) {
+
+        return new TimeSlot()
+                .setId(new TimeSlot.TimeSlotId(this.getId().dayId(), this.getDisplayOrder()))
+                .setStart(this.getStart())
+                .setEnd(that.getEnd())
+                .setTimeSlotSpan(this.getTimeSlotSpan() + that.getTimeSlotSpan());
+    }
+
+    @Embeddable
+    public record TimeSlotId(
+            @NotNull String dayId,
+            @NotNull int displayOrder) {
     }
 }

@@ -2,14 +2,15 @@ package pl.confitura.jelatyna.registration;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
+import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -22,6 +23,7 @@ import pl.confitura.jelatyna.registration.voucher.Voucher;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = false)
+@ToString(onlyExplicitlyIncluded = true)
 @Accessors(chain = true)
 @Table(uniqueConstraints = {
         @UniqueConstraint(name = "unique_voucher", columnNames = {"voucher_id"})
@@ -32,23 +34,35 @@ public class ParticipationData extends AuditedEntity {
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(columnDefinition = "varchar(100)")
+    @ToString.Include
     private String id;
 
     @OneToOne(optional = false)
+    @ToString.Include
     private Voucher voucher;
 
     private String lastName;
     private String firstName;
     private String email;
+    @ToString.Include
     private boolean privacyPolicyAccepted;
 
+    @ToString.Include
     private String gender;
+    @ToString.Include
     private String size;
+    @ToString.Include
     private String info;
 
+    @ToString.Include
     private LocalDateTime arrivalDate;
+    @ToString.Include
+    private LocalDateTime registrationDate;
+    @ToString.Include
     private String registeredBy;
+    @ToString.Include
     private LocalDateTime ticketSendDate;
+    @ToString.Include
     private LocalDateTime surveySendDate;
 
     boolean alreadyArrived() {

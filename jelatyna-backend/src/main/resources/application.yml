@@ -1,9 +1,7 @@
-
 server:
-  port: 3000
+  port: 8080
   servlet:
-    context-path:
-
+    context-path: /api
 
 twitter:
   api-key: KEY
@@ -25,4 +23,7 @@ management.endpoints.web.exposure.include: "*"
 
 conference.c4p:
   start: "2019-01-01T00:00:00.0+02:00[Europe/Warsaw]"
-  end: "2019-01-01T00:00:00.0+02:00[Europe/Warsaw]"
+  end: "2027-01-01T00:00:00.0+02:00[Europe/Warsaw]"
+
+
+ui.origin: "https://2025.confitura.pl/"

@@ -1,0 +1,39 @@
+{
+  "level" : "intermediate",
+  "shortDescription" : "I've been designing and building software for the last 20 years, and in that time I've lost a lot of friends due to burnout and depression. A lot of others have moved to management, become POs, Scrum Masters or full-time celebrities. ",
+  "tags" : [ ],
+  "description" : "I've been designing and building software for the last 20 years, and in that time I've lost a lot of friends due to burnout and depression. A lot of others have moved to management, become POs, Scrum Masters or full-time celebrities. When talking with them most say that writing software became too difficult for them. Which is strange, because from my perspective, programming is much easier than 20 years ago.\n\nI'm not a psychologist, I have no proper education or skills to help you out, but I've survived 20 years, and I'm no more insane than I was back then, so maybe I can tell you what have helped me survive, and be even more happy in a software dev job. If it helps one person not become a manager, I'll consider my job done.",
+  "title" : "How to NOT get insane when working for 20 years as a dev - personal mental health tricks.",
+  "status" : "accepted",
+  "workshop" : false,
+  "speakers" : [ {
+    "id" : "7622844c-4065-4272-a661-90da99cc1a8c",
+    "name" : "Jakub Nabrdalik",
+    "bio" : "20 years of designing, building, coding, and operating systems on production. 200+ workshops and lectures. More at nabrdalik.dev",
+    "twitter" : "https://twitter.com/jnabrdalik",
+    "github" : "https://github.com/jakubnabrdalik/",
+    "www" : "nabrdalik.dev",
+    "photo" : "https://www.gravatar.com/avatar/49f4023a979fe8e47c7b639697f86f00.jpg?s=300&d=blank"
+  } ],
+  "language" : "pl",
+  "id" : "16ee6605-4da6-4dfe-bf7f-f5204e522741",
+  "_links" : {
+    "self" : {
+      "href" : "https://2023.confitura.pl/api/presentations/16ee6605-4da6-4dfe-bf7f-f5204e522741"
+    },
+    "presentation" : {
+      "href" : "https://2023.confitura.pl/api/presentations/16ee6605-4da6-4dfe-bf7f-f5204e522741{?projection}",
+      "templated" : true
+    },
+    "tags" : {
+      "href" : "https://2023.confitura.pl/api/presentations/16ee6605-4da6-4dfe-bf7f-f5204e522741/tags"
+    },
+    "speakers" : {
+      "href" : "https://2023.confitura.pl/api/presentations/16ee6605-4da6-4dfe-bf7f-f5204e522741/speakers{?projection}",
+      "templated" : true
+    },
+    "ratings" : {
+      "href" : "https://2023.confitura.pl/api/presentations/16ee6605-4da6-4dfe-bf7f-f5204e522741/ratings"
+    }
+  }
+}

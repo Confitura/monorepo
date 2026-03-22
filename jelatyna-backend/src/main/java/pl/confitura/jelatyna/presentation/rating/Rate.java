@@ -3,12 +3,14 @@ package pl.confitura.jelatyna.presentation.rating;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.GenericGenerator;
+import pl.confitura.jelatyna.presentation.Presentation;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Data
 @Accessors(chain = true)
+@Table(name = "presentation_rate")
 public class Rate {
 
     @Id
@@ -21,4 +23,17 @@ public class Rate {
     private RateValue value;
 
     private String comment;
+
+    private String reviewerToken;
+
+    @ManyToOne
+    @JoinColumn(name = "presentation_id")
+    private Presentation presentation;
+
+    public Rate update(Rate rate) {
+        assert reviewerToken.equals(rate.getReviewerToken());
+        value = rate.getValue();
+        comment = rate.getComment();
+        return this;
+    }
 }

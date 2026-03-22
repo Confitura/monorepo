@@ -1,0 +1,2512 @@
+{
+  "_embedded" : {
+    "agendaEntries" : [ {
+      "label" : null,
+      "roomId" : "c1fd821c-5615-4518-8aaa-19fd191d0c10",
+      "roomLabel" : "long",
+      "speaker" : [ {
+        "id" : "7622844c-4065-4272-a661-90da99cc1a8c",
+        "name" : "Jakub Nabrdalik",
+        "bio" : "20 years of designing, building, coding, and operating systems on production. 200+ workshops and lectures. More at nabrdalik.dev",
+        "twitter" : "https://twitter.com/jnabrdalik",
+        "github" : "https://github.com/jakubnabrdalik/",
+        "www" : "nabrdalik.dev",
+        "photo" : "https://www.gravatar.com/avatar/49f4023a979fe8e47c7b639697f86f00.jpg?s=300&d=blank"
+      } ],
+      "timeSlotId" : "4ed4e411-c21b-4f46-9bd5-988d711cfe1f",
+      "timeSlotLabel" : "10:05 - 10:50",
+      "presentationId" : "16ee6605-4da6-4dfe-bf7f-f5204e522741",
+      "presentation" : {
+        "id" : "16ee6605-4da6-4dfe-bf7f-f5204e522741",
+        "title" : "How to NOT get insane when working for 20 years as a dev - personal mental health tricks.",
+        "shortDescription" : "I've been designing and building software for the last 20 years, and in that time I've lost a lot of friends due to burnout and depression. A lot of others have moved to management, become POs, Scrum Masters or full-time celebrities. ",
+        "description" : "I've been designing and building software for the last 20 years, and in that time I've lost a lot of friends due to burnout and depression. A lot of others have moved to management, become POs, Scrum Masters or full-time celebrities. When talking with them most say that writing software became too difficult for them. Which is strange, because from my perspective, programming is much easier than 20 years ago.\n\nI'm not a psychologist, I have no proper education or skills to help you out, but I've survived 20 years, and I'm no more insane than I was back then, so maybe I can tell you what have helped me survive, and be even more happy in a software dev job. If it helps one person not become a manager, I'll consider my job done.",
+        "level" : "intermediate",
+        "language" : "pl",
+        "status" : "accepted",
+        "workshop" : false,
+        "new" : false,
+        "accepted" : true
+      },
+      "id" : "012d0989-d985-4f5c-96c9-946c6a3da7fb",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/012d0989-d985-4f5c-96c9-946c6a3da7fb"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/012d0989-d985-4f5c-96c9-946c6a3da7fb{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/012d0989-d985-4f5c-96c9-946c6a3da7fb/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/012d0989-d985-4f5c-96c9-946c6a3da7fb/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/012d0989-d985-4f5c-96c9-946c6a3da7fb/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : null,
+      "roomId" : "d20b2ac4-4d2a-40a4-a0d9-63b3decb55e8",
+      "roomLabel" : "double",
+      "speaker" : [ {
+        "id" : "52aa43f9-03e6-4c37-89ed-8dc9d645d2f8",
+        "name" : "Jacek Milewski",
+        "bio" : "No tak... Jakoś ta moja historia dotarła aż dotąd! Pewien czas kodowałem nie rozumiejąc jak skomplikowane to zajęcie... Teraz modeluję ze świadomością jak zmienny jest software oraz jak ładny i bezpieczny może być gdy tylko pragmatycznie podejść do projektowania, kodowania i testowania. Zadaję pytania aby wyłuskać to co istotne, a odfiltrować szum. Z tego buduję backend, frontend, infrastrukturę i zespół.\n\nTa droga zaprowadziła mnie też do Bottega IT Minds, gdzie mogę uczyć innych, na najwyższym poziomie, wśród tych od których sam uczyłem się wcześniej. Niewiarygodny fikołek!",
+        "twitter" : "@jacek_mil",
+        "github" : "yacekmm",
+        "www" : "Looksok.wordpress.com",
+        "photo" : "https://avatars.githubusercontent.com/u/7893442?v=4"
+      } ],
+      "timeSlotId" : "407c811e-f0bd-496f-b7cd-1919ff10e032",
+      "timeSlotLabel" : "15:05 - 15:50",
+      "presentationId" : "4d757797-956c-44c8-b60d-4d6d674d4c14",
+      "presentation" : {
+        "id" : "4d757797-956c-44c8-b60d-4d6d674d4c14",
+        "title" : "Outbox Pattern: kiedy ten strzał do API to jednak za mało",
+        "shortDescription" : "Opowiem o komunikacji asynchronicznej z zachowaniem spójności końcowej z użyciem wzorca integracji Outbox. Sprawdza się gdy zmiana musi się zakomitować w kilku systemach które pojedynczo może i są transakcyjne, ale jako całość nie są. A gdy trzeba zagwarantować dostarczenie?",
+        "description" : "I znowu ten moment: w swoim procesie wywołujesz API zewnętrznego systemu. Co robisz? Jeśli jest piątek popołudniu - wołasz synchronicznego POSTa i super :) Implementacja prosta, szybka, testy implementujesz błyskawicznie. \n\nAle w weekend nie odpoczniesz. Bo przecież co jak POST nie dojdzie bo sieć zawodna. A Ty już po swojej stronie zrobiłeś commit nowego rekordu w bazie. A jak POST dojdzie, ale będzie długo? User będzie czekał na UI a przecież co go interesuje że pod spodem jakiś zewnętrzny system jest powolny. No chyba w poniedziałek trzeba będzie doczytać o tych rozproszonych transakcjach i Two-phase commit. I już wiesz że kawa się będzie lała strumieniami.\n\nOpowiem o komunikacji asynchronicznej z zachowaniem spójności końcowej z użyciem wzorca integracji Outbox. Sprawdza się gdy zmiana musi się zakomitować w kilku systemach które pojedynczo może i są transakcyjne, ale jako całość nie są. ",
+        "level" : "novice",
+        "language" : "pl",
+        "status" : "accepted",
+        "workshop" : false,
+        "new" : false,
+        "accepted" : true
+      },
+      "id" : "044825c9-ab1c-4e96-aac9-4ce3d9b45b39",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/044825c9-ab1c-4e96-aac9-4ce3d9b45b39"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/044825c9-ab1c-4e96-aac9-4ce3d9b45b39{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/044825c9-ab1c-4e96-aac9-4ce3d9b45b39/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/044825c9-ab1c-4e96-aac9-4ce3d9b45b39/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/044825c9-ab1c-4e96-aac9-4ce3d9b45b39/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : "SPOINa",
+      "roomId" : null,
+      "roomLabel" : null,
+      "speaker" : [ ],
+      "timeSlotId" : "a31435e4-d83b-434a-802a-e4c168bc1687",
+      "timeSlotLabel" : "19:00 - 00:00",
+      "presentationId" : null,
+      "presentation" : null,
+      "id" : "056377cb-417b-4612-af55-eeecf5e06358",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/056377cb-417b-4612-af55-eeecf5e06358"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/056377cb-417b-4612-af55-eeecf5e06358{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/056377cb-417b-4612-af55-eeecf5e06358/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/056377cb-417b-4612-af55-eeecf5e06358/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/056377cb-417b-4612-af55-eeecf5e06358/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : "Coffee break",
+      "roomId" : null,
+      "roomLabel" : null,
+      "speaker" : [ ],
+      "timeSlotId" : "8dcf82c9-36bc-438c-a0af-378363fa6fdb",
+      "timeSlotLabel" : "14:45 - 15:05",
+      "presentationId" : null,
+      "presentation" : null,
+      "id" : "0a185583-9cc4-4779-89a7-48eca9a10785",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/0a185583-9cc4-4779-89a7-48eca9a10785"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/0a185583-9cc4-4779-89a7-48eca9a10785{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/0a185583-9cc4-4779-89a7-48eca9a10785/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/0a185583-9cc4-4779-89a7-48eca9a10785/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/0a185583-9cc4-4779-89a7-48eca9a10785/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : "-",
+      "roomId" : "6c1af97a-ee93-4a18-9fa1-32e1f4c14a4c",
+      "roomLabel" : "int",
+      "speaker" : [ ],
+      "timeSlotId" : "183c3cb0-4d7d-4945-9b6e-122b9c796605",
+      "timeSlotLabel" : "09:10 - 09:55",
+      "presentationId" : null,
+      "presentation" : null,
+      "id" : "0e6f62f4-91ff-47c3-92c0-f3b920265879",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/0e6f62f4-91ff-47c3-92c0-f3b920265879"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/0e6f62f4-91ff-47c3-92c0-f3b920265879{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/0e6f62f4-91ff-47c3-92c0-f3b920265879/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/0e6f62f4-91ff-47c3-92c0-f3b920265879/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/0e6f62f4-91ff-47c3-92c0-f3b920265879/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : null,
+      "roomId" : "db1e8898-2c34-44ab-9a90-3a453c06e04c",
+      "roomLabel" : "Lean Coffee",
+      "speaker" : [ {
+        "id" : "a4f76848-872a-44e5-a95f-0468d1f4ea9a",
+        "name" : "Piotr Suwała",
+        "bio" : "I'm a programmer with several years experience in enterprise systems.\nTackling code debt made me appreciate well structurised and easy to change systems.\nI augment my experience with knowledge from the books which I apply to commercial projects and open source ones.\nCurrently I am working at Kinguin as architect and leading Domain Driven Design meetup in Gdańsk.",
+        "twitter" : "https://twitter.com/ksidelta",
+        "github" : null,
+        "www" : "https://www.ksidelta.com/",
+        "photo" : "/api/resources//photos/a4f76848-872a-44e5-a95f-0468d1f4ea9a.jpg"
+      }, {
+        "id" : "9a68de66-3c1a-4238-99ae-c8b19875b006",
+        "name" : "Dastin Sandura",
+        "bio" : "Inżynier oprogramowania działający w branży IT od 2015 roku. Obenie pracuje w roli Doświadczonego Konsultanta w GFT Poland. Przez 5 lat pracował w startupie w rolach, między innymi: front-end i back-end developera, konsultanta, dowódcy zespołu konsultantów, dowódcy działu wsparcia klienta oraz międzynarodowego trenera prowadzącego w języku angielskim szkolenia między innymi dla klientów takich jak SONY Interactive Entertainment i Tom Tom między innymi w biurach San Mateo - California, Las Vegas - Nevada, Monachium, Estonii oraz U.K. Współorganizator spotkań Domain Driven Design Gdańsk.",
+        "twitter" : "https://twitter.com/dastin_it",
+        "github" : "https://github.com/dastin-sandura",
+        "www" : "https://dastin-sandura-software-developer.blogspot.com",
+        "photo" : "/api/resources//photos/9a68de66-3c1a-4238-99ae-c8b19875b006.jpg"
+      } ],
+      "timeSlotId" : "1a710d3d-7e43-420c-a702-82a5b07703b5",
+      "timeSlotLabel" : "14:00 - 14:45",
+      "presentationId" : "7edf1184-f4c9-4e8f-a992-2e769a56ce91",
+      "presentation" : {
+        "id" : "7edf1184-f4c9-4e8f-a992-2e769a56ce91",
+        "title" : "Lean Coffee - Sesja I, Sesja II",
+        "shortDescription" : "Pierwsze dwa bloki dyskusji na tematy zebrane podczas \"Zbierania tematów\" z godziny 13:30",
+        "description" : "Tutaj pojawią się tematy sesji w trakcie konferencji.\nWięcej Info: [Lean Coffee](https://2023.confitura.pl/lean-coffee)",
+        "level" : "novice",
+        "language" : "pl",
+        "status" : "accepted",
+        "workshop" : false,
+        "new" : false,
+        "accepted" : true
+      },
+      "id" : "153c9e40-67f1-4bf8-9795-5745f0dfd129",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/153c9e40-67f1-4bf8-9795-5745f0dfd129"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/153c9e40-67f1-4bf8-9795-5745f0dfd129{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/153c9e40-67f1-4bf8-9795-5745f0dfd129/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/153c9e40-67f1-4bf8-9795-5745f0dfd129/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/153c9e40-67f1-4bf8-9795-5745f0dfd129/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : null,
+      "roomId" : "6c1af97a-ee93-4a18-9fa1-32e1f4c14a4c",
+      "roomLabel" : "int",
+      "speaker" : [ {
+        "id" : "49c15baa-bdd6-4d62-b928-c9b7f7360ca9",
+        "name" : "Łukasz Wojtach",
+        "bio" : "Programista androida, historyk i tata. Często w odwrotnej kolejności. Pijam herbatę zamiast kawy, a zamiast łatwych problemów lubię te trudne. Stąd też zainteresowanie programowaniem współbieżnym i korutynami w szczególności.",
+        "twitter" : null,
+        "github" : "circusmagnus",
+        "www" : null,
+        "photo" : "https://avatars.githubusercontent.com/u/22617780?v=4"
+      } ],
+      "timeSlotId" : "109a5c0c-70b9-4c55-b84a-e98dc5207d5e",
+      "timeSlotLabel" : "17:15 - 18:00",
+      "presentationId" : "8de02165-3d97-42bb-9aae-1e0207216da8",
+      "presentation" : {
+        "id" : "8de02165-3d97-42bb-9aae-1e0207216da8",
+        "title" : "Królewna Śnieżka i siedmiu współbieżnych krasnoludków ",
+        "shortDescription" : "Krótka historia o tym, jak zabezpieczyć shared mutable state w świecie kotlinowych korutyn. Czy operowanie na jednym wątku zabezpieczy nas przed wszystkimi niespodziankami? Co to znaczy atomic update? Sprawdzimy na żywo najciekawsze przypadki wyjątkowo współbieżnych krasnoludków.",
+        "description" : "Współbieżne programowanie i współdzielony, zmienny stan - to byty, które nie współpracują zbyt dobrze ze sobą. Czasem jednak muszą. I co wtedy? \n\nOpowiemy sobie, jaki efekt wywierają na korutyny “stare dobre sposoby”, takie jak volatile i synchronized. Zobaczymy też, na ile typowo korutynowe byty - Mutex i MutableStateFlow - są w stanie pomóc nam w okiełznaniu shared mutable state. \n\nA może po prostu trzeba zmienić znane nam podejścia?\n\n\n",
+        "level" : "intermediate",
+        "language" : "pl",
+        "status" : "accepted",
+        "workshop" : false,
+        "new" : false,
+        "accepted" : true
+      },
+      "id" : "16faeb40-c192-408e-891d-c94481d72c94",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/16faeb40-c192-408e-891d-c94481d72c94"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/16faeb40-c192-408e-891d-c94481d72c94{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/16faeb40-c192-408e-891d-c94481d72c94/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/16faeb40-c192-408e-891d-c94481d72c94/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/16faeb40-c192-408e-891d-c94481d72c94/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : "-",
+      "roomId" : "6674fb81-d97b-44b2-9762-96062b542891",
+      "roomLabel" : "byte",
+      "speaker" : [ ],
+      "timeSlotId" : "183c3cb0-4d7d-4945-9b6e-122b9c796605",
+      "timeSlotLabel" : "09:10 - 09:55",
+      "presentationId" : null,
+      "presentation" : null,
+      "id" : "171999ae-c705-4a80-9056-a04780065b92",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/171999ae-c705-4a80-9056-a04780065b92"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/171999ae-c705-4a80-9056-a04780065b92{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/171999ae-c705-4a80-9056-a04780065b92/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/171999ae-c705-4a80-9056-a04780065b92/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/171999ae-c705-4a80-9056-a04780065b92/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : "-",
+      "roomId" : "d20b2ac4-4d2a-40a4-a0d9-63b3decb55e8",
+      "roomLabel" : "double",
+      "speaker" : [ ],
+      "timeSlotId" : "183c3cb0-4d7d-4945-9b6e-122b9c796605",
+      "timeSlotLabel" : "09:10 - 09:55",
+      "presentationId" : null,
+      "presentation" : null,
+      "id" : "171dddc0-965c-4c35-af74-25de743381ef",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/171dddc0-965c-4c35-af74-25de743381ef"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/171dddc0-965c-4c35-af74-25de743381ef{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/171dddc0-965c-4c35-af74-25de743381ef/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/171dddc0-965c-4c35-af74-25de743381ef/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/171dddc0-965c-4c35-af74-25de743381ef/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : "-",
+      "roomId" : "db1e8898-2c34-44ab-9a90-3a453c06e04c",
+      "roomLabel" : "Lean Coffee",
+      "speaker" : [ ],
+      "timeSlotId" : "642c7622-bf49-4122-aca1-02d3ee7d82c9",
+      "timeSlotLabel" : "12:15 - 13:00",
+      "presentationId" : null,
+      "presentation" : null,
+      "id" : "19a3deed-b47f-41c1-ba04-798f4f07d432",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/19a3deed-b47f-41c1-ba04-798f4f07d432"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/19a3deed-b47f-41c1-ba04-798f4f07d432{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/19a3deed-b47f-41c1-ba04-798f4f07d432/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/19a3deed-b47f-41c1-ba04-798f4f07d432/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/19a3deed-b47f-41c1-ba04-798f4f07d432/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : null,
+      "roomId" : "6c1af97a-ee93-4a18-9fa1-32e1f4c14a4c",
+      "roomLabel" : "int",
+      "speaker" : [ {
+        "id" : "d374d03f-5122-4f02-9ac3-fa8df669c43f",
+        "name" : "Michał Ostruszka",
+        "bio" : "Seasoned software engineer, solution architect of production-running systems across various domains. Working remotely for 10+ years now, experienced in building distributed, event-driven, and event-sourced solutions. 10+ years long track of record writing Scala commercially, with prior solid Java/JVM background and knowledge of other languages and platforms (e.g. node.js). A keen advocate of practical functional programming approach, Domain Driven Design, domain modelling and event-based architectures",
+        "twitter" : "mostruszka",
+        "github" : null,
+        "www" : null,
+        "photo" : "https://www.gravatar.com/avatar/3bf8ac59830d9faf75c79c82d62f5776.jpg?s=300&d=blank"
+      } ],
+      "timeSlotId" : "9edfa23c-9154-418f-970e-0b901e32a729",
+      "timeSlotLabel" : "11:10 - 11:55",
+      "presentationId" : "ecd2b3f8-bf42-46a2-8935-210c6176bc52",
+      "presentation" : {
+        "id" : "ecd2b3f8-bf42-46a2-8935-210c6176bc52",
+        "title" : "Things I wish I knew before I started with event sourcing",
+        "shortDescription" : "Reading about EventSourcing, or maybe just getting your feet wet with it? Let me show you few aspects of this approach which I learned over time (sometimes the hard way) I wish I had known before so that you could either better understand where it fits or simply avoid some mistakes I made. ",
+        "description" : "So, you've heard about this event sourcing thing and eager to try it? Looks great, gives you events history, auditing, read models you can build for given use case and rebuild at any time and so on. It has it's pros indeed (a lot), it also has some cons (well, there is no silver bullet), but there are things that you can only learn and truly understand when you hit the problem and experience it for real. How it all works and how it fits in the real world systems? There are few gems and tricks in all this event sourcing world that I learned over time that I'd like to show you. What to watch for when choosing that architecture, what to avoid and how to do certain things in an event-sourced way for successful long running project. I hope this talk will either save you from making few of the mistakes I did (or was close to doing so) or at least shed some more light on event sourcing in practical aspect.",
+        "level" : "intermediate",
+        "language" : "en",
+        "status" : "accepted",
+        "workshop" : false,
+        "new" : false,
+        "accepted" : true
+      },
+      "id" : "242f4e3d-50b1-44e4-bebb-a5b636def0ec",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/242f4e3d-50b1-44e4-bebb-a5b636def0ec"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/242f4e3d-50b1-44e4-bebb-a5b636def0ec{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/242f4e3d-50b1-44e4-bebb-a5b636def0ec/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/242f4e3d-50b1-44e4-bebb-a5b636def0ec/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/242f4e3d-50b1-44e4-bebb-a5b636def0ec/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : null,
+      "roomId" : "6c1af97a-ee93-4a18-9fa1-32e1f4c14a4c",
+      "roomLabel" : "int",
+      "speaker" : [ {
+        "id" : "a4f76848-872a-44e5-a95f-0468d1f4ea9a",
+        "name" : "Piotr Suwała",
+        "bio" : "I'm a programmer with several years experience in enterprise systems.\nTackling code debt made me appreciate well structurised and easy to change systems.\nI augment my experience with knowledge from the books which I apply to commercial projects and open source ones.\nCurrently I am working at Kinguin as architect and leading Domain Driven Design meetup in Gdańsk.",
+        "twitter" : "https://twitter.com/ksidelta",
+        "github" : null,
+        "www" : "https://www.ksidelta.com/",
+        "photo" : "/api/resources//photos/a4f76848-872a-44e5-a95f-0468d1f4ea9a.jpg"
+      } ],
+      "timeSlotId" : "4ed4e411-c21b-4f46-9bd5-988d711cfe1f",
+      "timeSlotLabel" : "10:05 - 10:50",
+      "presentationId" : "1dee35aa-aac3-4727-b568-1429da549dd5",
+      "presentation" : {
+        "id" : "1dee35aa-aac3-4727-b568-1429da549dd5",
+        "title" : "Clean & Hexagonal Architecture - it really works!",
+        "shortDescription" : "In the presentation I'll show you Clean Architecture and Hexagonal Architecture in practice based on opensource application for templating prints. You will also experience how those approaches interact with Event Storming, Spring Boot and Kotlin.",
+        "description" : "In IT industry we have a repeatable problem of code debt, which steals happiness from our work, inducing horrible stress and frustration.\nOn the other hand frameworks, architectural approaches, tests cost us supposedly wasted time and they seem not to deliver their promises.\n\nIn the presentation I'll show you Clean Architecture and Hexagonal Architecture in practice. You will also experience how those approaches interact with Event Storming, Spring Boot and Kotlin.\n\nUsing Open Source Labella application I'll show you:\n- what potential problems I wanted to solve using those techniques\n- what real problems were solved and what challenges arised from them\n- and summarise, what in my opinion, these practices are meant for\n\nSpoiler Alert:\nThese techniques deliver their promises, just not in the way we expect.",
+        "level" : "intermediate",
+        "language" : "pl",
+        "status" : "accepted",
+        "workshop" : false,
+        "new" : false,
+        "accepted" : true
+      },
+      "id" : "27959d39-fbba-4c4d-833d-a0583d3b394b",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/27959d39-fbba-4c4d-833d-a0583d3b394b"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/27959d39-fbba-4c4d-833d-a0583d3b394b{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/27959d39-fbba-4c4d-833d-a0583d3b394b/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/27959d39-fbba-4c4d-833d-a0583d3b394b/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/27959d39-fbba-4c4d-833d-a0583d3b394b/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : null,
+      "roomId" : "c1fd821c-5615-4518-8aaa-19fd191d0c10",
+      "roomLabel" : "long",
+      "speaker" : [ {
+        "id" : "b443ab41-43fa-45a0-96bc-4ae4db51ecf2",
+        "name" : "Wojciech Seliga",
+        "bio" : "Zacząłem programować prawie 40 lat temu, jak miałem jakieś 6 czy 7 lat. Widziałem przez te lata różne technologie, metodologie, trendy, mody, buzzwordy. Pokochałem C++, ale większość życia programistycznego kodowałem w Javie.\nOd prawie 20 lat krzewię ideały i praktyki metodologii zwinnych, a przede wszystkim otwartość i uczciwość we wszystkich relacjach.\nW 2007 roku założyłem z kolegami Spartez, która po latach rozrosła się we dwie firmy – software house obsługujący przede wszystkim Atlassiana i osobną firmę produktową z kilkoma tysiącami klientów z całego świata. Przez wiele lat byłem ich CEO. Zatrudnialiśmy ponad 250 fantastycznych osób z kilkunastu krajów świata i wszystkich kontynentów, razem stworzyliśmy dużo dobrych produktów.\nW latach 2020 – 2021 sprzedaliśmy obie firmy. Teraz więcej odpoczywam, spędzam sporo czasu z rodziną, uprawiam sport (tenis, narty, rower), inwestuję (także sporo poza IT), buduję (fizycznie), doradzam oraz nadal staram się dzielić wiedzą.\n \nPrezentowałem na wielu uznanych, a także mniej znanych eventach w Polsce i za granicą: np. Devoxx, Agile, Agile EE, Confitura, GeeCon, InfoSHARE, Atlassian Summit, Atlascamp, COOLuary, JUGi, JDD, itd.",
+        "twitter" : "wseliga",
+        "github" : null,
+        "www" : null,
+        "photo" : "https://www.gravatar.com/avatar/d998f46456336526118740b5e7f658df.jpg?s=300&d=blank"
+      } ],
+      "timeSlotId" : "1a710d3d-7e43-420c-a702-82a5b07703b5",
+      "timeSlotLabel" : "14:00 - 14:45",
+      "presentationId" : "eccc46ae-522e-478f-b4e6-c626f713e844",
+      "presentation" : {
+        "id" : "eccc46ae-522e-478f-b4e6-c626f713e844",
+        "title" : "Sprzedawanie własnego biznesu IT - jak nie wtopić i co potem",
+        "shortDescription" : "Opowiem Ci swoją historię założenia, rozwoju i sprzedaży dwóch firm (i przejęcia lub zainwestowania w kilka innych), czego się z tego nauczyłem i w jaki sposób diametralnie zmieniło się moje pierwotne postrzeganie \"niezbędnej wcześniejszej emerytury software developera\".",
+        "description" : "Jeśli podobnie jak ja sądziliście w młodym wieku (albo studenckim/młodzieńczym), że trzeba zarobić kupę kasiory do czterdziestki czy czterdziestki piątki (wersja dla pesymistów), bo potem jako starzejący się software developerzy będziecie niewiele już warci na szybko zmieniającym się rynku IT, a zarobić to można najwięcej przez zbudowanie i sprzedaż firmy IT, to ta prezentacja jest dla Was. Kiedyś jeszcze mieszkając w komunie studenckiej snułem z kumplami plany, że do 42 roku życia to będziemy już na zasłużonej emeryturze. Ja nie zdążyłem sprzedać firmy do tego wieku, natomiast zrobiłem to w wieku 44 lat. I w sumie dobrze, że później...\nOpowiem Ci swoją historię założenia, rozwoju i sprzedaży dwóch firm (i przejęcia lub zainwestowania w kilka innych), czego się z tego nauczyłem i w jaki sposób diametralnie zmieniło się moje pierwotne postrzeganie \"niezbędnej wcześniejszej emerytury software developera\". ",
+        "level" : "intermediate",
+        "language" : "pl",
+        "status" : "accepted",
+        "workshop" : false,
+        "new" : false,
+        "accepted" : true
+      },
+      "id" : "2c3da66f-778c-4952-bf36-d6af4a770f40",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/2c3da66f-778c-4952-bf36-d6af4a770f40"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/2c3da66f-778c-4952-bf36-d6af4a770f40{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/2c3da66f-778c-4952-bf36-d6af4a770f40/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/2c3da66f-778c-4952-bf36-d6af4a770f40/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/2c3da66f-778c-4952-bf36-d6af4a770f40/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : null,
+      "roomId" : "6c1af97a-ee93-4a18-9fa1-32e1f4c14a4c",
+      "roomLabel" : "int",
+      "speaker" : [ {
+        "id" : "0cc7ff41-ab9e-40cb-bde8-d25e9214c716",
+        "name" : "Tomasz Janczewski ",
+        "bio" : null,
+        "twitter" : null,
+        "github" : null,
+        "www" : null,
+        "photo" : "/api/resources//photos/18bda3aa-2253-4f35-ac9f-7fb65370a59e.jpg"
+      } ],
+      "timeSlotId" : "ca9420f7-8f95-4251-9e2b-62c6d655190e",
+      "timeSlotLabel" : "16:10 - 16:55",
+      "presentationId" : "4f579c17-428b-41d6-94dc-b7deb203f687",
+      "presentation" : {
+        "id" : "4f579c17-428b-41d6-94dc-b7deb203f687",
+        "title" : "365 dni cyber wojny, czyli jakie ataki przeżył mój serwer w ostatnim roku",
+        "shortDescription" : "Prezentacja przedstawa wyniki analizy ataków na publicznie wystawiony Honeypot imitujący aplikację Java w ciągu ostatniego roku oraz opis jak samemu analizować zagrożenia w sieci.",
+        "description" : "W trakcie prezentacji uczestnicy zapoznają się z wynikami analizy ataków przeprowadzonych na publicznie wystawiony Honeypot w trakcie ostatnich 365 dni. Autor pokaże jakie ataki były najpopularniejsze, jak charakteryzuje się scena cyber-security w kontekście publicznie wystawionych serwerów oraz na co zwracać uwagę chroniąc swój serwer. W ramach prezentacji zastanowimy się wspólnie czy warto uruchamiać własne garnuszki miodu oraz jak mogą one wpływać na bezpieczeństwo zarówno domowych jak i firmowych środowisk IT.",
+        "level" : "intermediate",
+        "language" : "pl",
+        "status" : "accepted",
+        "workshop" : false,
+        "new" : false,
+        "accepted" : true
+      },
+      "id" : "2fb7d199-a1f0-4d4f-942b-336260f7e1c3",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/2fb7d199-a1f0-4d4f-942b-336260f7e1c3"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/2fb7d199-a1f0-4d4f-942b-336260f7e1c3{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/2fb7d199-a1f0-4d4f-942b-336260f7e1c3/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/2fb7d199-a1f0-4d4f-942b-336260f7e1c3/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/2fb7d199-a1f0-4d4f-942b-336260f7e1c3/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : "-",
+      "roomId" : "db1e8898-2c34-44ab-9a90-3a453c06e04c",
+      "roomLabel" : "Lean Coffee",
+      "speaker" : [ ],
+      "timeSlotId" : "a0e28de4-2e56-4e1f-9396-c49c51254ebd",
+      "timeSlotLabel" : "09:00 - 09:10",
+      "presentationId" : null,
+      "presentation" : null,
+      "id" : "3020703c-f389-4817-b0d6-a481abdfed40",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/3020703c-f389-4817-b0d6-a481abdfed40"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/3020703c-f389-4817-b0d6-a481abdfed40{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/3020703c-f389-4817-b0d6-a481abdfed40/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/3020703c-f389-4817-b0d6-a481abdfed40/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/3020703c-f389-4817-b0d6-a481abdfed40/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : null,
+      "roomId" : "c1fd821c-5615-4518-8aaa-19fd191d0c10",
+      "roomLabel" : "long",
+      "speaker" : [ {
+        "id" : "a61d0fd1-27f8-47ef-8365-485cea8acce1",
+        "name" : "Jakub Kubrynski",
+        "bio" : null,
+        "twitter" : "jkubrynski",
+        "github" : null,
+        "www" : null,
+        "photo" : "https://www.gravatar.com/avatar/13962ee99d2c07e7b7a7776222532f1d.jpg?s=300&d=blank"
+      }, {
+        "id" : "6b8d6fd2-b835-4c51-a78d-4c988a80c58d",
+        "name" : "Tomasz Nurkiewicz",
+        "bio" : "Spent half of his life on programming, for the last decade professionally in Java land. Loves back-end and data visualization. Passionate about alternative JVM languages. Disappointed with the quality of software written these days (so often by himself!), hates long methods and hidden side effects. Interested in charting, data analysis, and reactive programming. Believes that computers were invented so that developers can automate boring and repetitive tasks. Also their own.\n\nOn a daily basis works in the e-commerce sector. Involved in open-source, DZone’s Most Valuable Blogger, used to be very active on StackOverflow. Author, trainer, conference speaker, technical reviewer, runner. Claims that code not tested automatically is not a feature but just a rumour. Wrote a book on RxJava for O'Reilly.\n\nhttps://nurkiewicz.com/talks - almost 100 public speaking engagements",
+        "twitter" : "https://twitter.com/tnurkiewicz",
+        "github" : "https://github.com/nurkiewicz/",
+        "www" : "https://nurkiewicz.com/",
+        "photo" : "https://www.gravatar.com/avatar/a0a3a4200899708103f7430d87d56e24.jpg?s=300&d=blank"
+      } ],
+      "timeSlotId" : "9edfa23c-9154-418f-970e-0b901e32a729",
+      "timeSlotLabel" : "11:10 - 11:55",
+      "presentationId" : "540af997-c327-403b-b8b1-595c95c3d91c",
+      "presentation" : {
+        "id" : "540af997-c327-403b-b8b1-595c95c3d91c",
+        "title" : "No Big Bang Theory: dekada rozwijania własnego produktu",
+        "shortDescription" : "Każdy chciałby pisać greenfield. A my tworzymy od 10 lat jeden produkt używany w ponad setce krajów. I co najważniejsze, nie wstajemy rano z kacem, myśląc o piętrzącym się długu technologicznym. System nadal wdrażamy codziennie, jest pokryty testami i działa stabilnie. ",
+        "description" : "Każdy chciałby pisać greenfield. A my tworzymy od 10 lat jeden produkt używany w ponad setce krajów. I co najważniejsze, nie wstajemy rano z kacem, myśląc o piętrzącym się długu technologicznym. System nadal wdrażamy codziennie, jest pokryty testami i działa stabilnie. Dodajemy (i usuwamy!) nowe funkcje oraz refakturujemy i modularyzujemy. Z głową.\n\nCzego nauczysz się z tej prezentacji?\nJak zdecydować, co implementujemy i co wyrzucamy?\nJak bezpiecznie wdrażać zmiany\nJak unowocześniać aplikację nie zamrażając rozwoju\nCzy i jak współdzielić kod?\nCo warto implementować, a co kupić?",
+        "level" : "intermediate",
+        "language" : "pl",
+        "status" : "accepted",
+        "workshop" : false,
+        "new" : false,
+        "accepted" : true
+      },
+      "id" : "3ff4e30d-ecf6-4a3b-892f-935c0ffd87c3",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/3ff4e30d-ecf6-4a3b-892f-935c0ffd87c3"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/3ff4e30d-ecf6-4a3b-892f-935c0ffd87c3{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/3ff4e30d-ecf6-4a3b-892f-935c0ffd87c3/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/3ff4e30d-ecf6-4a3b-892f-935c0ffd87c3/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/3ff4e30d-ecf6-4a3b-892f-935c0ffd87c3/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : null,
+      "roomId" : "c1fd821c-5615-4518-8aaa-19fd191d0c10",
+      "roomLabel" : "long",
+      "speaker" : [ {
+        "id" : "cc40066a-54af-4316-98c4-f14ad03076ba",
+        "name" : "Krzysztof Kudryński",
+        "bio" : "Projektant rozwiązań inżynieryjnych dla sztucznej inteligencji, wizji komputerowej, pojazdów autonomicznych i robotyki. Trener głębokiego uczenia. W NVIDIA odpowiedzialny za integrację rozwiązań głębokiego uczenia na skalę przemysłową.",
+        "twitter" : "kriskudrynski",
+        "github" : "https://github.com/nv-kkudrynski",
+        "www" : "https://kkudrynski.wixsite.com/portfolio",
+        "photo" : "/api/resources//photos/cc40066a-54af-4316-98c4-f14ad03076ba.jpg"
+      } ],
+      "timeSlotId" : "407c811e-f0bd-496f-b7cd-1919ff10e032",
+      "timeSlotLabel" : "15:05 - 15:50",
+      "presentationId" : "8d9bc146-4dee-48f2-9325-053ad1c5dbe3",
+      "presentation" : {
+        "id" : "8d9bc146-4dee-48f2-9325-053ad1c5dbe3",
+        "title" : "Od perceptronu do głębokiego uczenia na skalę przemysłową",
+        "shortDescription" : "Sztuczna inteligencja - z czasopism naukowych i podbiurkowych stacji roboczych - wkracza dziś do świata wielkich korporacji, zastępując masowo tradycyjne rozwiązania samooptymalizującymi się modelami.",
+        "description" : "Sztuczna inteligencja - z czasopism naukowych i podbiurkowych stacji roboczych - wkracza dziś do świata wielkich korporacji, zastępując masowo tradycyjne rozwiązania samooptymalizującymi się modelami.\nChoć pod maską są to wciąż znane z poprzedniego wieku algorytmy oparte na wstecznej propagacji gradientu, ich rozwój na skalę przemysłową przynosi wiele nowych wyzwań. Podczas spotkania rozpoczniemy od przypomnienia podstaw sieci neuronowych by poprzez ciekawe przykłady ich zastosowań pokazać z czym zmagają się dzisiaj najwięksi gracze na rynku.\n",
+        "level" : "intermediate",
+        "language" : "pl",
+        "status" : "accepted",
+        "workshop" : false,
+        "new" : false,
+        "accepted" : true
+      },
+      "id" : "41f93d6e-cb05-4515-9468-370bb8a110ac",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/41f93d6e-cb05-4515-9468-370bb8a110ac"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/41f93d6e-cb05-4515-9468-370bb8a110ac{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/41f93d6e-cb05-4515-9468-370bb8a110ac/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/41f93d6e-cb05-4515-9468-370bb8a110ac/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/41f93d6e-cb05-4515-9468-370bb8a110ac/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : null,
+      "roomId" : "6674fb81-d97b-44b2-9762-96062b542891",
+      "roomLabel" : "byte",
+      "speaker" : [ {
+        "id" : "f868002d-5281-4747-a81c-2c4ff5ae46b4",
+        "name" : "Mateusz \"Serafin\" Gajewski",
+        "bio" : "Time isn’t slowing,\r\njust speed,\r\nit’s all we’re knowing.",
+        "twitter" : "wendigo",
+        "github" : "wendigo",
+        "www" : "https://wendigo.pl",
+        "photo" : "https://avatars.githubusercontent.com/u/66972?v=4"
+      } ],
+      "timeSlotId" : "1a710d3d-7e43-420c-a702-82a5b07703b5",
+      "timeSlotLabel" : "14:00 - 14:45",
+      "presentationId" : "d8a12fa2-d432-402f-8ee3-2fa3cf7ad242",
+      "presentation" : {
+        "id" : "d8a12fa2-d432-402f-8ee3-2fa3cf7ad242",
+        "title" : "Modern Java for decade-old problems",
+        "shortDescription" : "Za niecałe 3 lata Java będzie świętować swoje 30 urodziny. Jej krytycy powiedzieliby że nie ma ona już nic nowego do zaoferowania w stosunku do młodszych języków. Tymczasem, doświadczenie pokazuje, że ilość innowacji w Javie sprawia, że ciężko jest za nią nadążyć i o tym opowiem Wam w prezentacji.",
+        "description" : "W swojej prezentacji rozprawię się z niektórymi mitami o rozwoju Javy. Pokażę, jakie nowe możliwości przyniosły nam kolejne wersje języka, od 8 do 21, na przykładach z ich praktycznego zastosowania w projekcie open-source Trino (dawnie PrestoSQL). Szczególny nacisk położę na aspekty związane z czytelnością kodu, jego wydajnością oraz skalowalnością.",
+        "level" : "intermediate",
+        "language" : "pl",
+        "status" : "accepted",
+        "workshop" : false,
+        "new" : false,
+        "accepted" : true
+      },
+      "id" : "4caa2828-23af-40c2-ab83-5ea4e07df679",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/4caa2828-23af-40c2-ab83-5ea4e07df679"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/4caa2828-23af-40c2-ab83-5ea4e07df679{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/4caa2828-23af-40c2-ab83-5ea4e07df679/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/4caa2828-23af-40c2-ab83-5ea4e07df679/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/4caa2828-23af-40c2-ab83-5ea4e07df679/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : null,
+      "roomId" : "6674fb81-d97b-44b2-9762-96062b542891",
+      "roomLabel" : "byte",
+      "speaker" : [ {
+        "id" : "2f111a87-8d0f-4861-b378-cb9df8cb747c",
+        "name" : "Rafał Maciak",
+        "bio" : "Programista pasjonat i pragmatyk z doświadczeniem głównie w technologiach około JVMowych. Wierzy w koncepcje stojące za trzyliterowymi skrótami - TDD, DDD i tym podobnymi. Lubi od czasu do czasu wyjść z piwnicy i porozmawiać z ludźmi. Często możecie go spotkać przy ścianie przyklejającego karteczki.\n",
+        "twitter" : "r_maciak",
+        "github" : "https://github.com/ramafasa",
+        "www" : null,
+        "photo" : "/api/resources//photos/2f111a87-8d0f-4861-b378-cb9df8cb747c.jpg"
+      } ],
+      "timeSlotId" : "4ed4e411-c21b-4f46-9bd5-988d711cfe1f",
+      "timeSlotLabel" : "10:05 - 10:50",
+      "presentationId" : "25dc651f-ea5c-4e74-8294-f13d260046cc",
+      "presentation" : {
+        "id" : "25dc651f-ea5c-4e74-8294-f13d260046cc",
+        "title" : "Komunikacja bez przemocy w świecie systemów rozproszonych",
+        "shortDescription" : "Prezentacja dotyczy jednego z aspektów testowania mikrousług - testów kontraktowych.",
+        "description" : "Problem zapewnienia poprawności komunikacji dotknął z pewnością każdego, kto kiedykolwiek pracował z systemami rozproszonymi. Szczęściarzem jest ten, kto nie musiał nigdy wycofywać wdrożenia z powodu złamanego kontraktu. Oczywiście testy integracyjne czy end-to-end bardzo pomagają w zachowaniu kompatybilności, ale mają sporo wad. \n\nA co jeśli jest możliwość szybkiego, taniego i co najważniejsze, skutecznego przetestowania poprawności komunikacji naszych systemów? Takie możliwości dają nam właśnie testy kontraktowe. \n\nPodczas spotkanie dowiesz się między innymi:\n\n* dlaczego testy integracyjne oraz end-to-end nie są najlepszym kandydatem do testowania poprawności komunikacji\n* czemu powinnismy stosować właśnie testy kontraktowe\n* jak implementować poprawne testy kontraktowe",
+        "level" : "intermediate",
+        "language" : "pl",
+        "status" : "accepted",
+        "workshop" : false,
+        "new" : false,
+        "accepted" : true
+      },
+      "id" : "53b3f811-ec2e-42de-b121-4140d2d55d94",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/53b3f811-ec2e-42de-b121-4140d2d55d94"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/53b3f811-ec2e-42de-b121-4140d2d55d94{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/53b3f811-ec2e-42de-b121-4140d2d55d94/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/53b3f811-ec2e-42de-b121-4140d2d55d94/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/53b3f811-ec2e-42de-b121-4140d2d55d94/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : null,
+      "roomId" : "6674fb81-d97b-44b2-9762-96062b542891",
+      "roomLabel" : "byte",
+      "speaker" : [ {
+        "id" : "f953198e-9472-4301-b3e9-5f47bb336f0e",
+        "name" : "Paulina Szwed",
+        "bio" : "Software engineer at Allegro. Backend dev with strong interests in software architecture. Soft skills and cognitive sciences enthusiast.",
+        "twitter" : null,
+        "github" : "Delebrith",
+        "www" : null,
+        "photo" : "/api/resources//photos/f953198e-9472-4301-b3e9-5f47bb336f0e.png"
+      } ],
+      "timeSlotId" : "642c7622-bf49-4122-aca1-02d3ee7d82c9",
+      "timeSlotLabel" : "12:15 - 13:00",
+      "presentationId" : "e7e04673-cd58-4e82-85bf-15693ab6b739",
+      "presentation" : {
+        "id" : "e7e04673-cd58-4e82-85bf-15693ab6b739",
+        "title" : "The Art of Engineering Diplomacy - Driving Significant Changes in Large Organisations",
+        "shortDescription" : "\"I didn't become an engineer to talk to people\" - wrong! This presentation tackles challenges in big organizations, like bureaucracy, conflicting goals and communication barriers. It emphasizes the importance of soft skills and effective communication in delivering high quality solutions.",
+        "description" : "\"I didn't become an engineer to talk to people\" - I'm going to prove you wrong! \"The Art of Engineering Diplomacy\" presentation dives into the challenges faced by larger organizations, like dealing with bureaucracy, conflicting goals, siloed knowledge and breaking down communication barriers. It stresses the significance of soft skills, teamwork, and effective communication. Real-life stories shed light on how these challenges affect productivity, innovation and quality of delivered solutions. The talk offers practical advice on enhancing collaboration and sharpening soft skills within engineering teams. Attendees are empowered to apply these principles in their own work environments, breaking down silos and fostering effective collaboration in order to deliver best possible outcome.",
+        "level" : "novice",
+        "language" : "pl",
+        "status" : "accepted",
+        "workshop" : false,
+        "new" : false,
+        "accepted" : true
+      },
+      "id" : "53c07e17-494a-4bab-af72-1b2656599379",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/53c07e17-494a-4bab-af72-1b2656599379"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/53c07e17-494a-4bab-af72-1b2656599379{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/53c07e17-494a-4bab-af72-1b2656599379/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/53c07e17-494a-4bab-af72-1b2656599379/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/53c07e17-494a-4bab-af72-1b2656599379/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : "Lunch break",
+      "roomId" : null,
+      "roomLabel" : null,
+      "speaker" : [ ],
+      "timeSlotId" : "6e878b93-d2d8-46b3-8613-36549518c85e",
+      "timeSlotLabel" : "13:00 - 13:30",
+      "presentationId" : null,
+      "presentation" : null,
+      "id" : "545993d0-f00c-44cb-8553-7c837d04a279",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/545993d0-f00c-44cb-8553-7c837d04a279"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/545993d0-f00c-44cb-8553-7c837d04a279{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/545993d0-f00c-44cb-8553-7c837d04a279/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/545993d0-f00c-44cb-8553-7c837d04a279/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/545993d0-f00c-44cb-8553-7c837d04a279/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : "Opening",
+      "roomId" : "c1fd821c-5615-4518-8aaa-19fd191d0c10",
+      "roomLabel" : "long",
+      "speaker" : [ ],
+      "timeSlotId" : "a0e28de4-2e56-4e1f-9396-c49c51254ebd",
+      "timeSlotLabel" : "09:00 - 09:10",
+      "presentationId" : null,
+      "presentation" : null,
+      "id" : "54ce490b-0a4e-4b44-b8e9-9af02ab83c3e",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/54ce490b-0a4e-4b44-b8e9-9af02ab83c3e"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/54ce490b-0a4e-4b44-b8e9-9af02ab83c3e{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/54ce490b-0a4e-4b44-b8e9-9af02ab83c3e/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/54ce490b-0a4e-4b44-b8e9-9af02ab83c3e/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/54ce490b-0a4e-4b44-b8e9-9af02ab83c3e/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : null,
+      "roomId" : "6674fb81-d97b-44b2-9762-96062b542891",
+      "roomLabel" : "byte",
+      "speaker" : [ {
+        "id" : "862eaef6-32b7-48bb-b3ba-ba31ce19a495",
+        "name" : "Mateusz Parada",
+        "bio" : null,
+        "twitter" : null,
+        "github" : null,
+        "www" : null,
+        "photo" : "/api/resources//photos/862eaef6-32b7-48bb-b3ba-ba31ce19a495.jpeg"
+      } ],
+      "timeSlotId" : "407c811e-f0bd-496f-b7cd-1919ff10e032",
+      "timeSlotLabel" : "15:05 - 15:50",
+      "presentationId" : "3080ded2-aed9-452b-8c5f-566c9b4cc628",
+      "presentation" : {
+        "id" : "3080ded2-aed9-452b-8c5f-566c9b4cc628",
+        "title" : "Obligacje, kredyty i pożyczki - co jesteś winien wobec swojego kodu?",
+        "shortDescription" : "Dług technologiczny umożliwia szybsze dostarczanie wartości biznesowej. Rosnący rozwala nawet najlepsze aplikacje i wzbudza frustrację w zespole. Kiedy? Jak? Po co go spłacać? Programistom często brakuje odpowiedzi. Moje doświadczenia skutecznego zarządzania długiem technologicznym w projekcie.",
+        "description" : "Dług technologiczny umożliwia szybsze dostarczanie wartości biznesowej. Rosnący rozwala nawet najlepsze aplikacje i wzbudza frustrację w zespole. Kiedy? Jak? Po co go spłacać? Programistom często brakuje odpowiedzi. Moje doświadczenia skutecznego zarządzania długiem technologicznym w projekcie.",
+        "level" : "intermediate",
+        "language" : "pl",
+        "status" : "accepted",
+        "workshop" : false,
+        "new" : false,
+        "accepted" : true
+      },
+      "id" : "551922e9-433b-4619-aa19-23ecb9818a49",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/551922e9-433b-4619-aa19-23ecb9818a49"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/551922e9-433b-4619-aa19-23ecb9818a49{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/551922e9-433b-4619-aa19-23ecb9818a49/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/551922e9-433b-4619-aa19-23ecb9818a49/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/551922e9-433b-4619-aa19-23ecb9818a49/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : null,
+      "roomId" : "d20b2ac4-4d2a-40a4-a0d9-63b3decb55e8",
+      "roomLabel" : "double",
+      "speaker" : [ {
+        "id" : "216d8640-4387-4b00-80ef-11657eb3d44e",
+        "name" : "Paweł Warczyński",
+        "bio" : "fun main() {\n    val me = SoftwareDeveloper()\n    while(me.isActive()) {\n        val result = me.doYourJob()\n        if (result is Mistake) {\n            me.improveMyself(result)\n        } else {\n            println(\"result = $result\")\n        }\n    }\n}",
+        "twitter" : null,
+        "github" : null,
+        "www" : null,
+        "photo" : "/api/resources//photos/216d8640-4387-4b00-80ef-11657eb3d44e.jpeg"
+      } ],
+      "timeSlotId" : "4ed4e411-c21b-4f46-9bd5-988d711cfe1f",
+      "timeSlotLabel" : "10:05 - 10:50",
+      "presentationId" : "f06fbfc1-c7bb-430a-b293-df031a7e7a1c",
+      "presentation" : {
+        "id" : "f06fbfc1-c7bb-430a-b293-df031a7e7a1c",
+        "title" : "Blizny, stłuczenia i złamania - czyli o programowaniu z perspektywy czasu",
+        "shortDescription" : "Co nam zostanie w głowie po kilkunastu latach pracy jako programista? Przełączniki, składnie? Opowiem wam historie, które nie przeczytacie w książkach o Java czy Pythonie...",
+        "description" : "Co nam zostanie w głowie po kilkunastu latach pracy jako programista? Przełącznik w kompilatorze? A może składnia języka, którą kiedyś byliśmy zafascynowani? Co przetrwa próbę czasu i zostanie zapamiętane? Opowiem wam historie, których nie przeczytacie w książkach o Javie czy Pythonie. Opowiem wam o zdarzeniach, które wpłynęły na mnie jako programistę. To były często bolesne lekcje, ale to czego się nauczyłem zmieniło sposób w jaki dzisiaj pracuje.",
+        "level" : "intermediate",
+        "language" : "pl",
+        "status" : "accepted",
+        "workshop" : false,
+        "new" : false,
+        "accepted" : true
+      },
+      "id" : "5dbe13a0-ec8b-4dfe-b8b3-3baad0d18d41",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/5dbe13a0-ec8b-4dfe-b8b3-3baad0d18d41"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/5dbe13a0-ec8b-4dfe-b8b3-3baad0d18d41{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/5dbe13a0-ec8b-4dfe-b8b3-3baad0d18d41/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/5dbe13a0-ec8b-4dfe-b8b3-3baad0d18d41/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/5dbe13a0-ec8b-4dfe-b8b3-3baad0d18d41/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : null,
+      "roomId" : "6674fb81-d97b-44b2-9762-96062b542891",
+      "roomLabel" : "byte",
+      "speaker" : [ {
+        "id" : "23176155-4e7b-44f9-9d78-aff0c7dfe7a0",
+        "name" : "Paweł Bogdan",
+        "bio" : "Scala&Java developer with ~10 years of experience. PhD in mathematics. Heavy metal lover. Weight loss expert. Bookworm. Cryptography&blockchain padawan",
+        "twitter" : null,
+        "github" : "https://github.com/PawelBogdan",
+        "www" : "https://www.linkedin.com/in/pawe%C5%82-bogdan-2166b869/",
+        "photo" : "/api/resources//photos/23176155-4e7b-44f9-9d78-aff0c7dfe7a0.png"
+      } ],
+      "timeSlotId" : "ca9420f7-8f95-4251-9e2b-62c6d655190e",
+      "timeSlotLabel" : "16:10 - 16:55",
+      "presentationId" : "9df5d57f-805b-44bf-8d78-846d8fd6e891",
+      "presentation" : {
+        "id" : "9df5d57f-805b-44bf-8d78-846d8fd6e891",
+        "title" : "How to write microservices in Scala without Akka",
+        "shortDescription" : "The whole world is crazy about microservices. I would like to show that Scala can be used  in that madness too. And it may be a very good choice.",
+        "description" : "The whole world is crazy about microservices. In the JVM world, the first choice is Java. The second one is Kotlin.\nScala is very often considered a great tool for Big Data. However, I strongly believe that it may be also used as a tool to create microservices. It has many advantages and I would like to present some of them.\nOne of the brightest aspects of Scala is Akka which provides a very powerful environment for asynchronous communication. Unfortunately, Akka has changed the license. In my presentation, I will show how it can be replaced.",
+        "level" : "intermediate",
+        "language" : "en",
+        "status" : "accepted",
+        "workshop" : false,
+        "new" : false,
+        "accepted" : true
+      },
+      "id" : "6277a987-87d3-408d-a20a-f27629136692",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/6277a987-87d3-408d-a20a-f27629136692"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/6277a987-87d3-408d-a20a-f27629136692{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/6277a987-87d3-408d-a20a-f27629136692/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/6277a987-87d3-408d-a20a-f27629136692/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/6277a987-87d3-408d-a20a-f27629136692/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : "-",
+      "roomId" : "db1e8898-2c34-44ab-9a90-3a453c06e04c",
+      "roomLabel" : "Lean Coffee",
+      "speaker" : [ ],
+      "timeSlotId" : "109a5c0c-70b9-4c55-b84a-e98dc5207d5e",
+      "timeSlotLabel" : "17:15 - 18:00",
+      "presentationId" : null,
+      "presentation" : null,
+      "id" : "68e94144-2391-4bcd-8fb7-5dce64fd139e",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/68e94144-2391-4bcd-8fb7-5dce64fd139e"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/68e94144-2391-4bcd-8fb7-5dce64fd139e{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/68e94144-2391-4bcd-8fb7-5dce64fd139e/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/68e94144-2391-4bcd-8fb7-5dce64fd139e/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/68e94144-2391-4bcd-8fb7-5dce64fd139e/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : null,
+      "roomId" : "d20b2ac4-4d2a-40a4-a0d9-63b3decb55e8",
+      "roomLabel" : "double",
+      "speaker" : [ {
+        "id" : "91e488f9-a014-442c-91ae-a2f683b6f09a",
+        "name" : "Wojciech Marusarz",
+        "bio" : "Lubię pracować w zespołach, gdzie jakość kodu i ukierunkowany rozwój projektu są kluczowe. W dłuższej perspektywie pozwala mi to na dogłębne zrozumienie tematu, rozwój osobisty i szukanie wyzwań. Zajmuje się programowaniem w Javie i Kotlinie. Dodatkowo interesuję się narzędziami Big Data oraz Data-Intensive.",
+        "twitter" : null,
+        "github" : "https://github.com/marwoj/",
+        "www" : null,
+        "photo" : "/api/resources//photos/91e488f9-a014-442c-91ae-a2f683b6f09a.jpeg"
+      } ],
+      "timeSlotId" : "ca9420f7-8f95-4251-9e2b-62c6d655190e",
+      "timeSlotLabel" : "16:10 - 16:55",
+      "presentationId" : "198a0c85-33de-40b8-aef0-4d716d31d50b",
+      "presentation" : {
+        "id" : "198a0c85-33de-40b8-aef0-4d716d31d50b",
+        "title" : "wszystko wszędzie naraz",
+        "shortDescription" : "W JVM dzieje się sporo! Reactor, Coroutines i Loom kuszą lepszą wydajnością, oferując asynchroniczne przetwarzanie. Jak te rozwiązania działają pod spodem? Czym się od siebie różnią, a w czym są podobne. Prześledźmy to na przykładzie aplikacji napisanej w Spring Boot, porównujące je do Spring MVC.",
+        "description" : "W uniwersum JVM dzieje się sporo! Reactor, Coroutines czy Loom kuszą wizją asynchronicznego przetwarzania i większej wydajności.\n\nJak te rozwiązania działają pod spodem?\nCzym się od siebie różnią, a w czym są podobne.\nDlaczego mówimy, że działają asynchronicznie?\nCo to jest Event Loop oraz Continuation i dlaczego warto byłoby uważać na studiach?\nCo z klasycznym modelem Thread Per Request?\nKtórego podejścia użyć w swoich działających już i nowych projektach?\n\nW trakcie prezentacji prześledzimy, co się dzieje, kiedy wołamy endpoint RESTowy, a nasza aplikacja napisana w Spring Boot zajmuje się jego obsługą w czterech scenariuszach: Thread Per Request (MVC), Reactor, Coroutines oraz Loom.",
+        "level" : "intermediate",
+        "language" : "pl",
+        "status" : "accepted",
+        "workshop" : false,
+        "new" : false,
+        "accepted" : true
+      },
+      "id" : "6a878355-c173-42af-a58f-fd10c9cc826d",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/6a878355-c173-42af-a58f-fd10c9cc826d"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/6a878355-c173-42af-a58f-fd10c9cc826d{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/6a878355-c173-42af-a58f-fd10c9cc826d/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/6a878355-c173-42af-a58f-fd10c9cc826d/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/6a878355-c173-42af-a58f-fd10c9cc826d/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : "Lunch",
+      "roomId" : "6c1af97a-ee93-4a18-9fa1-32e1f4c14a4c",
+      "roomLabel" : "int",
+      "speaker" : [ ],
+      "timeSlotId" : "b3f81b8a-daf6-44ee-82d8-76fa479a078f",
+      "timeSlotLabel" : "13:30 - 14:00",
+      "presentationId" : null,
+      "presentation" : null,
+      "id" : "701f695b-2a26-4f36-9569-00a5d3a498bf",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/701f695b-2a26-4f36-9569-00a5d3a498bf"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/701f695b-2a26-4f36-9569-00a5d3a498bf{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/701f695b-2a26-4f36-9569-00a5d3a498bf/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/701f695b-2a26-4f36-9569-00a5d3a498bf/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/701f695b-2a26-4f36-9569-00a5d3a498bf/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : "-",
+      "roomId" : "db1e8898-2c34-44ab-9a90-3a453c06e04c",
+      "roomLabel" : "Lean Coffee",
+      "speaker" : [ ],
+      "timeSlotId" : "9edfa23c-9154-418f-970e-0b901e32a729",
+      "timeSlotLabel" : "11:10 - 11:55",
+      "presentationId" : null,
+      "presentation" : null,
+      "id" : "7335b268-302d-44e3-b51c-c99cad5661a5",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/7335b268-302d-44e3-b51c-c99cad5661a5"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/7335b268-302d-44e3-b51c-c99cad5661a5{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/7335b268-302d-44e3-b51c-c99cad5661a5/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/7335b268-302d-44e3-b51c-c99cad5661a5/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/7335b268-302d-44e3-b51c-c99cad5661a5/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : "also Lunch",
+      "roomId" : "6674fb81-d97b-44b2-9762-96062b542891",
+      "roomLabel" : "byte",
+      "speaker" : [ ],
+      "timeSlotId" : "b3f81b8a-daf6-44ee-82d8-76fa479a078f",
+      "timeSlotLabel" : "13:30 - 14:00",
+      "presentationId" : null,
+      "presentation" : null,
+      "id" : "743855b0-629e-4485-815a-9b0de0ceff94",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/743855b0-629e-4485-815a-9b0de0ceff94"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/743855b0-629e-4485-815a-9b0de0ceff94{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/743855b0-629e-4485-815a-9b0de0ceff94/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/743855b0-629e-4485-815a-9b0de0ceff94/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/743855b0-629e-4485-815a-9b0de0ceff94/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : "-",
+      "roomId" : "6c1af97a-ee93-4a18-9fa1-32e1f4c14a4c",
+      "roomLabel" : "int",
+      "speaker" : [ ],
+      "timeSlotId" : "a0e28de4-2e56-4e1f-9396-c49c51254ebd",
+      "timeSlotLabel" : "09:00 - 09:10",
+      "presentationId" : null,
+      "presentation" : null,
+      "id" : "7572243a-0e80-45be-8f70-ad13cd072084",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/7572243a-0e80-45be-8f70-ad13cd072084"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/7572243a-0e80-45be-8f70-ad13cd072084{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/7572243a-0e80-45be-8f70-ad13cd072084/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/7572243a-0e80-45be-8f70-ad13cd072084/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/7572243a-0e80-45be-8f70-ad13cd072084/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : "-",
+      "roomId" : "d20b2ac4-4d2a-40a4-a0d9-63b3decb55e8",
+      "roomLabel" : "double",
+      "speaker" : [ ],
+      "timeSlotId" : "a0e28de4-2e56-4e1f-9396-c49c51254ebd",
+      "timeSlotLabel" : "09:00 - 09:10",
+      "presentationId" : null,
+      "presentation" : null,
+      "id" : "76c6222b-4721-4ad4-babc-3e9d8f292a45",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/76c6222b-4721-4ad4-babc-3e9d8f292a45"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/76c6222b-4721-4ad4-babc-3e9d8f292a45{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/76c6222b-4721-4ad4-babc-3e9d8f292a45/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/76c6222b-4721-4ad4-babc-3e9d8f292a45/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/76c6222b-4721-4ad4-babc-3e9d8f292a45/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : "Lunch",
+      "roomId" : "d20b2ac4-4d2a-40a4-a0d9-63b3decb55e8",
+      "roomLabel" : "double",
+      "speaker" : [ ],
+      "timeSlotId" : "b3f81b8a-daf6-44ee-82d8-76fa479a078f",
+      "timeSlotLabel" : "13:30 - 14:00",
+      "presentationId" : null,
+      "presentation" : null,
+      "id" : "76ca1c94-f196-4bc9-86ba-1c62525b1a18",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/76ca1c94-f196-4bc9-86ba-1c62525b1a18"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/76ca1c94-f196-4bc9-86ba-1c62525b1a18{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/76ca1c94-f196-4bc9-86ba-1c62525b1a18/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/76ca1c94-f196-4bc9-86ba-1c62525b1a18/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/76ca1c94-f196-4bc9-86ba-1c62525b1a18/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : null,
+      "roomId" : "c1fd821c-5615-4518-8aaa-19fd191d0c10",
+      "roomLabel" : "long",
+      "speaker" : [ {
+        "id" : "a859937f-a1b2-4af3-b60a-5925888f0224",
+        "name" : "Wojtek Ptak",
+        "bio" : "Wojtek works as an Engineering Executive and a Head of Product Engineering at Revolut. Before, he worked as CTO for several companies, provided consulting, training, and assisted in building various data collecting, analytics, and applied ML/AI solutions, including Big Data implementations, data stream processing systems, and data insight projects. He worked with multiple Forbes 500 brands in the US, UK, and the Netherlands, including The Coca-Cola Company, the American Bankers Association, Macy’s, Bloomingdales, Heineken, Saks 5th Avenue, BP, Boots, Polo Ralph Lauren, Porsche, HSBC, and others.",
+        "twitter" : "https://twitter.com/wjptak",
+        "github" : null,
+        "www" : "https://www.linkedin.com/in/wojtekptak/",
+        "photo" : "https://www.gravatar.com/avatar/686f3acc8cdf8073d9fa8763d24f77ea.jpg?s=300&d=blank"
+      }, {
+        "id" : "191f9c04-72b4-4f59-8f55-cd2e23f5c732",
+        "name" : "ags",
+        "bio" : "ags likes distributed systems in all shapes and form. Coding since the age of 8, loves simplicity and continuous delivery. While he has written in many languages, he favours the JVM. Since \"most software problems are people problems”, he stirs communities, organizes and speaks at conferences. And he is a Java Champion!",
+        "twitter" : "ags313",
+        "github" : null,
+        "www" : null,
+        "photo" : "https://www.gravatar.com/avatar/498838b88051c5a4c8a20b8499bd1b19.jpg?s=300&d=blank"
+      } ],
+      "timeSlotId" : "ca9420f7-8f95-4251-9e2b-62c6d655190e",
+      "timeSlotLabel" : "16:10 - 16:55",
+      "presentationId" : "18674e94-dffc-41f0-9eca-dbb5ffdc4f63",
+      "presentation" : {
+        "id" : "18674e94-dffc-41f0-9eca-dbb5ffdc4f63",
+        "title" : "Avoiding mistakes with events, an event at a time",
+        "shortDescription" : "Made mistakes with events so that you don't have to! We will talk about mistakes to make when building using events. Expect: problems, symptoms, consequences, some \"get-out-of\" cards. And a dry joke, or two.",
+        "description" : "Some say: Use events, events are great, all will be great and rosy. Then reality bites, and.. Let's talk about strangers you'd rather avoid - mistakes to make when building using events. Things change, evolve, are not and overdelivered, old events start taking a lot of space, and someone is already using the name you wanted?! Expect: problems, symptoms, consequences, and some \"get-out-of\" cards. Come for the experience others gained first-hand, so you know what to avoid.",
+        "level" : "intermediate",
+        "language" : "en",
+        "status" : "accepted",
+        "workshop" : false,
+        "new" : false,
+        "accepted" : true
+      },
+      "id" : "77148268-5554-437c-b37a-46c05212a9b0",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/77148268-5554-437c-b37a-46c05212a9b0"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/77148268-5554-437c-b37a-46c05212a9b0{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/77148268-5554-437c-b37a-46c05212a9b0/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/77148268-5554-437c-b37a-46c05212a9b0/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/77148268-5554-437c-b37a-46c05212a9b0/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : "-",
+      "roomId" : "db1e8898-2c34-44ab-9a90-3a453c06e04c",
+      "roomLabel" : "Lean Coffee",
+      "speaker" : [ ],
+      "timeSlotId" : "183c3cb0-4d7d-4945-9b6e-122b9c796605",
+      "timeSlotLabel" : "09:10 - 09:55",
+      "presentationId" : null,
+      "presentation" : null,
+      "id" : "7e42b89d-2810-4d2c-ae11-a4d4230e087a",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/7e42b89d-2810-4d2c-ae11-a4d4230e087a"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/7e42b89d-2810-4d2c-ae11-a4d4230e087a{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/7e42b89d-2810-4d2c-ae11-a4d4230e087a/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/7e42b89d-2810-4d2c-ae11-a4d4230e087a/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/7e42b89d-2810-4d2c-ae11-a4d4230e087a/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : null,
+      "roomId" : "c1fd821c-5615-4518-8aaa-19fd191d0c10",
+      "roomLabel" : "long",
+      "speaker" : [ {
+        "id" : "2c9a8b37-411d-44ce-97e5-5b96150bcd16",
+        "name" : "Paul Clark",
+        "bio" : "Paul has worked across multiple sectors helping to deliver digital products used by millions of customers. At Channel 4 in 2006 as one of the first hires onto 4oD he helped to deliver the first truly end to end video on demand platform. Moving from there to the BBC he managed Customer Facing Products, all the reusable parts of the BBC shared across iPlayer, News, Weather, Worldwide etc. and helped deliver v3 of iPlayer. As CTO of Online at ITV Paul stripped back and rebuilt the failing platform leading to the ITV Hub rebrand and relaunch. Moving into digital banking Paul spent a brief time at HSBC as Head of Engineering for Digital before moving to Tandem Bank to launch savings, credit card and mortgage products delivered via a digital experience. This involved migrating Tandem from the legacy Fiserv platform onto Mambu. Paul joined JPMorgan in August 2021, to help them integrate their new businesses, roll out across Europe and improve their agile ways of working and delivery predictability. When not playing with computers at home Paul likes playing golf and watching cricket.",
+        "twitter" : null,
+        "github" : null,
+        "www" : null,
+        "photo" : "/api/resources//photos/2c9a8b37-411d-44ce-97e5-5b96150bcd16.jpeg"
+      } ],
+      "timeSlotId" : "183c3cb0-4d7d-4945-9b6e-122b9c796605",
+      "timeSlotLabel" : "09:10 - 09:55",
+      "presentationId" : "840b6b5f-83e8-42b4-b8d8-7c4b9dde3b2d",
+      "presentation" : {
+        "id" : "840b6b5f-83e8-42b4-b8d8-7c4b9dde3b2d",
+        "title" : "Disrupting the Banking Industry – Are we on the right track?",
+        "shortDescription" : "Offering consumers a convenient and easy way to manage their finances via a mobile app, the digital banking model has been predicated on building an app on the public cloud. But has cloud-based technology really created meaningful disruption in the banking sector?",
+        "description" : "More than a decade of fintech innovation has led to a thriving digital banking scene in the UK. Offering consumers a convenient and easy way to manage their finances via a mobile app, the digital banking model has been predicated on building an app on the public cloud whilst utilising the latest technology. But has cloud-based technology really created meaningful disruption in the banking sector?",
+        "level" : "intermediate",
+        "language" : "en",
+        "status" : "accepted",
+        "workshop" : false,
+        "new" : false,
+        "accepted" : true
+      },
+      "id" : "8606da6c-5560-482a-b0cb-dd628e5a4c8c",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/8606da6c-5560-482a-b0cb-dd628e5a4c8c"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/8606da6c-5560-482a-b0cb-dd628e5a4c8c{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/8606da6c-5560-482a-b0cb-dd628e5a4c8c/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/8606da6c-5560-482a-b0cb-dd628e5a4c8c/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/8606da6c-5560-482a-b0cb-dd628e5a4c8c/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : null,
+      "roomId" : "d20b2ac4-4d2a-40a4-a0d9-63b3decb55e8",
+      "roomLabel" : "double",
+      "speaker" : [ {
+        "id" : "cd21c3b4-f80a-4927-b7f8-c286c3528370",
+        "name" : "Marcin Baranowski",
+        "bio" : "Programista od kiedy sięgnąć pamięcią - programuje zawsze i wszędzie, chyba że akurat śpi lub musi wyjść za potrzebą. Zawodowy programista Java. Lubi optymalizować procesy i dzielić się wiedzą. Uważa, że porządek musi być i na biurku, i w kodzie (a przynajmniej w tym drugim). Uwielbia zieloną herbatę, przez całe życie nie wypił nawet filiżanki kawy.",
+        "twitter" : null,
+        "github" : "SilverSheep",
+        "www" : "https://mbaranowski.pl/",
+        "photo" : "/api/resources//photos/cd21c3b4-f80a-4927-b7f8-c286c3528370.JPG"
+      } ],
+      "timeSlotId" : "642c7622-bf49-4122-aca1-02d3ee7d82c9",
+      "timeSlotLabel" : "12:15 - 13:00",
+      "presentationId" : "92c5cd07-b998-4b2e-a5b6-e56ae3b17365",
+      "presentation" : {
+        "id" : "92c5cd07-b998-4b2e-a5b6-e56ae3b17365",
+        "title" : "Jakie zJavy są wśród nas? Czyli co musisz nadrobić przed JDK 21",
+        "shortDescription" : "We wrześniu tego roku pojawi się Java 21. Której wersji Ty używasz? Co ciekawego pojawiło się w Javie od czasu JDK11? \nTa prezentacja jest doskonałą okazją do nadrobienia zaległości i przygotowania się do przesiadki na nowsze wydanie",
+        "description" : "Kilka lat temu Java weszła w tryb częstszych aktualizacji, kolejne wydania są udostępniane co sześć miesięcy.\nWe wrześniu tego roku pojawi się Java 21. Której wersji Ty używasz? Co ciekawego pojawiło się w Javie od czasu JDK11?  \nTa prezentacja jest doskonałą okazją do nadrobienia zaległości i przygotowania się do przesiadki na nowsze wydanie",
+        "level" : "novice",
+        "language" : "pl",
+        "status" : "accepted",
+        "workshop" : false,
+        "new" : false,
+        "accepted" : true
+      },
+      "id" : "8eefef2f-e0b0-4720-84f2-1070eb77fdf3",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/8eefef2f-e0b0-4720-84f2-1070eb77fdf3"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/8eefef2f-e0b0-4720-84f2-1070eb77fdf3{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/8eefef2f-e0b0-4720-84f2-1070eb77fdf3/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/8eefef2f-e0b0-4720-84f2-1070eb77fdf3/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/8eefef2f-e0b0-4720-84f2-1070eb77fdf3/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : null,
+      "roomId" : "6c1af97a-ee93-4a18-9fa1-32e1f4c14a4c",
+      "roomLabel" : "int",
+      "speaker" : [ {
+        "id" : "607747bd-f752-46ca-8c57-9a7a882b35ff",
+        "name" : "Marek Chrapek",
+        "bio" : "Tech Lead w Onwelo. Pragmatyk z obsesją czystego kodu oraz strażnik profesjonalizmu w każdym aspekcie pracy, lider techniczny, od początku blisko związany z językami JVM i z przygodami na front-endzie. Jest fanem i uczestnikiem wielu konferencji i hackathonów. Aktywnie bierze udział w życiu śląskiej społeczności IT. Kolekcjonuje książki i artykuły z myślą o przeczytaniu ich w przyszłości.",
+        "twitter" : null,
+        "github" : "mchrapek",
+        "www" : "https://www.linkedin.com/in/marek-chrapek/",
+        "photo" : "https://www.gravatar.com/avatar/d118a0cb30c4162cfb0f101172dfe0b8.jpg?s=300&d=blank"
+      } ],
+      "timeSlotId" : "407c811e-f0bd-496f-b7cd-1919ff10e032",
+      "timeSlotLabel" : "15:05 - 15:50",
+      "presentationId" : "c9548366-d782-4383-9889-ce2dcb65cba6",
+      "presentation" : {
+        "id" : "c9548366-d782-4383-9889-ce2dcb65cba6",
+        "title" : "Multitenancy from scratch",
+        "shortDescription" : ".",
+        "description" : "Rozwiązania chmurowe zdominowały rynek, a Software-as-a-Service to prawdopodobnie najpopularniejszy model dystrybuowania oprogramowania. Najprostszym sposobem dostarczania klientowi oprogramowania w tym modelu, to stworzenie dla niego dedykowanej instancji naszej aplikacji. A co w momencie, w którym liczba klientów rośnie na tyle, że zarządzanie taką ilością instancji staje się piekłem, a koszty utrzymania infrastruktury rosną zbyt szybko? A gdybyśmy mogli mieć jedną aplikację, którą moglibyśmy udostępnić wszystkim klientom?\n\nTutaj swoje zastosowanie znajduje architektura multitenant, pozwalająca nam wykorzystać pełen potencjał chmury. Podczas prezentacji opowiem o ścieżce, którą przeszliśmy, implementując rozwiązanie multitenant w istniejącym produkcie, wykorzystując framework Spring.",
+        "level" : "novice",
+        "language" : "pl",
+        "status" : "accepted",
+        "workshop" : false,
+        "new" : false,
+        "accepted" : true
+      },
+      "id" : "90f12a86-46e6-4056-908c-74f07855ac81",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/90f12a86-46e6-4056-908c-74f07855ac81"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/90f12a86-46e6-4056-908c-74f07855ac81{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/90f12a86-46e6-4056-908c-74f07855ac81/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/90f12a86-46e6-4056-908c-74f07855ac81/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/90f12a86-46e6-4056-908c-74f07855ac81/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : null,
+      "roomId" : "6674fb81-d97b-44b2-9762-96062b542891",
+      "roomLabel" : "byte",
+      "speaker" : [ {
+        "id" : "4a1b8e56-3b16-4a7b-b43a-bfd303b30d1b",
+        "name" : "Chris Suszynski",
+        "bio" : "I work at Red Hat as a Senior Software Engineer on the OpenShift Serverless team. I can describe myself as a software craftsman with over 15 years of experience in various technologies such as Golang, Java, Ruby, Python and Rust. My main interests are hybrid cloud technologies, especially Kubernetes and WASI technologies, and clear architecture for applications. I work on open-source software and strongly believe in its success.",
+        "twitter" : "@ksuszynski",
+        "github" : "cardil",
+        "www" : null,
+        "photo" : "https://avatars.githubusercontent.com/u/540893?v=4"
+      } ],
+      "timeSlotId" : "109a5c0c-70b9-4c55-b84a-e98dc5207d5e",
+      "timeSlotLabel" : "17:15 - 18:00",
+      "presentationId" : "c653553b-c4fb-46fe-b641-d1d722d79946",
+      "presentation" : {
+        "id" : "c653553b-c4fb-46fe-b641-d1d722d79946",
+        "title" : "You need Event Mesh, not Service Mesh",
+        "shortDescription" : "You’ve heard about microservices, right? It’s likely you know a service mesh (such as Istio) can help? Most likely, that’s an antipattern! Instead, what you need is the Event Mesh. With it, you can architect your apps into a distributed CQRS-style solution, which would reconcile state eventually.",
+        "description" : "You’ve probably heard about building microservices-style applications, right? It’s likely that you’ve heard that a service mesh (such as Istio) can help you achieve this. Unfortunately, in most cases that’s an antipattern. Instead, what you need is the Event Mesh. Using the Event Mesh could help you architect your application into a distributed CQRS-style solution that would eventually reconcile system state.\n\nIn this session, you’ll learn why you should avoid using blocking API calls when building your microservices, and instead use the CQRS architecture to separate commands and queries. Your architecture for commands should be implemented with asynchronous events, which are processed whenever possible. We’ll take some inspiration from the Kubernetes architecture, and how you can model such a reconciliation loop within your own enterprise microservices. All this on top of the Knative framework, as an excellent example of event mesh implementation.",
+        "level" : "intermediate",
+        "language" : "en",
+        "status" : "accepted",
+        "workshop" : false,
+        "new" : false,
+        "accepted" : true
+      },
+      "id" : "9145c23f-8fef-413d-ade3-8c1c01f19ef8",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/9145c23f-8fef-413d-ade3-8c1c01f19ef8"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/9145c23f-8fef-413d-ade3-8c1c01f19ef8{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/9145c23f-8fef-413d-ade3-8c1c01f19ef8/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/9145c23f-8fef-413d-ade3-8c1c01f19ef8/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/9145c23f-8fef-413d-ade3-8c1c01f19ef8/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : null,
+      "roomId" : "6c1af97a-ee93-4a18-9fa1-32e1f4c14a4c",
+      "roomLabel" : "int",
+      "speaker" : [ {
+        "id" : "428bddd6-2c35-478a-a255-7db5b428c8d4",
+        "name" : " Piotr Stawirej",
+        "bio" : "Expert Software Engineer",
+        "twitter" : "p_stawirej",
+        "github" : "stawirej",
+        "www" : "https://amazingcode.pl/",
+        "photo" : "https://avatars.githubusercontent.com/u/52084106?v=4"
+      } ],
+      "timeSlotId" : "1a710d3d-7e43-420c-a702-82a5b07703b5",
+      "timeSlotLabel" : "14:00 - 14:45",
+      "presentationId" : "2a019583-a042-4934-a697-22e5845d08b3",
+      "presentation" : {
+        "id" : "2a019583-a042-4934-a697-22e5845d08b3",
+        "title" : "Testing the untestable - patterns and use cases analysis",
+        "shortDescription" : "Zaprezentuję, jak można uprościć aplikację i umożliwić jej testowanie poprzez analizę napotkanych przypadków i zastosowanych rozwiązań. Skupimy się na niestandardowych przypadkach oraz często powtarzalnych sytuacjach które występują podczas naszej pracy.",
+        "description" : "Zaprezentuję, jak można uprościć aplikację i umożliwić jej testowanie poprzez analizę napotkanych przypadków i zastosowanych rozwiązań. Skupimy się na niestandardowych przypadkach oraz często powtarzalnych sytuacjach, które występują podczas naszej pracy. Nauczymy się jak testować problematyczne klasy, integrację z bibliotekami, frameworkami i usługami zewnętrznymi, jak skutecznie używać zaślepek (fakes), co mockować, a czego nie, jak testować aplikacje wielowątkowe, jak przyspieszać testy integracyjne, jak testować kod zależny od czasu i działania bez widocznego efektu, jak testować tolerancję na błędy oraz jak ponownie wykorzystać akceptacyjne testy jednostkowe jako testy integracyjne lub API. Omówimy, dlaczego warto stosować Property Based Testing dla Value Object’ów, jak testować obiekty mutowalne, zapis (persistence), czy testować logowanie, jak testować kod asynchroniczny. Poznamy przydatne heurystyki testowania oraz alternatywę dla testów wydajnościowych.",
+        "level" : "intermediate",
+        "language" : "pl",
+        "status" : "accepted",
+        "workshop" : false,
+        "new" : false,
+        "accepted" : true
+      },
+      "id" : "94f945e5-49e6-4b35-94f6-130be94f87fe",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/94f945e5-49e6-4b35-94f6-130be94f87fe"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/94f945e5-49e6-4b35-94f6-130be94f87fe{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/94f945e5-49e6-4b35-94f6-130be94f87fe/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/94f945e5-49e6-4b35-94f6-130be94f87fe/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/94f945e5-49e6-4b35-94f6-130be94f87fe/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : null,
+      "roomId" : "c1fd821c-5615-4518-8aaa-19fd191d0c10",
+      "roomLabel" : "long",
+      "speaker" : [ {
+        "id" : "3c1887ad-2561-4678-abf8-17d9706c0d01",
+        "name" : "Krzysztof Ślusarski",
+        "bio" : "Jestem programistą z prawie pełnoletnim doświadczeniem w Javie. Mój konik to profiling.",
+        "twitter" : "k_slusar",
+        "github" : "krzysztofslusarski",
+        "www" : "http://kś.pl/",
+        "photo" : "/api/resources//photos/3c1887ad-2561-4678-abf8-17d9706c0d01.jpg"
+      } ],
+      "timeSlotId" : "109a5c0c-70b9-4c55-b84a-e98dc5207d5e",
+      "timeSlotLabel" : "17:15 - 18:00",
+      "presentationId" : "4cba3de7-d104-48bf-ac60-91cd808d19f7",
+      "presentation" : {
+        "id" : "4cba3de7-d104-48bf-ac60-91cd808d19f7",
+        "title" : "Java vs CPU ",
+        "shortDescription" : "\"Pisz ładny kod a JIT zajmie się wydajnością\" - takie piękne frazesy można spotkać na niejednej prezentacji. Czy jest to na pewno prawda? Czy znajomość tego jak działa procesor jest w ogóle jeszcze w dzisiejszych czasach potrzebna? Czy może wystarczy, żeby umieli to \"goście\" od kompilatorów?",
+        "description" : "\"Pisz ładny kod a JIT zajmie się wydajnością\" - takie piękne frazesy można spotkać na niejednej prezentacji. Czy jest to na pewno prawda? Czy znajomość tego jak działa procesor jest w ogóle jeszcze w dzisiejszych czasach potrzebna? Czy może wystarczy, żeby umieli to \"goście\" od kompilatorów?",
+        "level" : "intermediate",
+        "language" : "pl",
+        "status" : "accepted",
+        "workshop" : false,
+        "new" : false,
+        "accepted" : true
+      },
+      "id" : "9f66cb85-2805-4fcc-96d2-f54cb98df495",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/9f66cb85-2805-4fcc-96d2-f54cb98df495"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/9f66cb85-2805-4fcc-96d2-f54cb98df495{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/9f66cb85-2805-4fcc-96d2-f54cb98df495/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/9f66cb85-2805-4fcc-96d2-f54cb98df495/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/9f66cb85-2805-4fcc-96d2-f54cb98df495/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : "Coffee break",
+      "roomId" : null,
+      "roomLabel" : null,
+      "speaker" : [ ],
+      "timeSlotId" : "eec46835-3e84-4441-b3ff-cf10045ce2bf",
+      "timeSlotLabel" : "10:50 - 11:10",
+      "presentationId" : null,
+      "presentation" : null,
+      "id" : "a821d701-2a24-4d6d-8318-0e0a39fba6cc",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/a821d701-2a24-4d6d-8318-0e0a39fba6cc"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/a821d701-2a24-4d6d-8318-0e0a39fba6cc{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/a821d701-2a24-4d6d-8318-0e0a39fba6cc/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/a821d701-2a24-4d6d-8318-0e0a39fba6cc/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/a821d701-2a24-4d6d-8318-0e0a39fba6cc/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : null,
+      "roomId" : "d20b2ac4-4d2a-40a4-a0d9-63b3decb55e8",
+      "roomLabel" : "double",
+      "speaker" : [ {
+        "id" : "a772d893-6462-4423-a511-5fec2f0b82a8",
+        "name" : "Grzegorz Kocur",
+        "bio" : "I'm an experienced DevOps Engineer and the leader of SoftwareMill's DevOps Team. Some refer to my position as 'YAML developer' :-). Over the past 20 years, I have been helping create amazing software for multiple organizations. I'm an avid user of Kubernetes and Cloud Computing, and, obviously, an enthusiast of the DevOps culture. In my free time, I like running and I regenerate while working in my garden.\n",
+        "twitter" : "@GrzegorzKocur",
+        "github" : null,
+        "www" : null,
+        "photo" : "/api/resources//photos/a772d893-6462-4423-a511-5fec2f0b82a8.jpg"
+      } ],
+      "timeSlotId" : "9edfa23c-9154-418f-970e-0b901e32a729",
+      "timeSlotLabel" : "11:10 - 11:55",
+      "presentationId" : "0336c05f-908e-4e26-adc5-8fbf4f0963ae",
+      "presentation" : {
+        "id" : "0336c05f-908e-4e26-adc5-8fbf4f0963ae",
+        "title" : "JVM and Kubernetes walk into the bar...",
+        "shortDescription" : "Czy uruchamianie aplikacji JVM na klastrze Kubernetes jest rzeczywiście tak proste jak się wydaje? Jak działa JVM container awareness? Jak poprawnie skonfigurować poda żeby nie strzelić sobie w stopę? W czasie prezentacji postaram się odpowiedzieć na te i inne pytania dotyczące działania JVM w k8s.",
+        "description" : "Uruchomienie aplikacji opartych na JVM na klastrze Kubernetes wydaje się stosunkowo łatwym zadaniem - wystarczy zapakować plik JAR do kontenera i gotowe.\nAle czy tak jest naprawdę? Jak działa container awareness w JVM? Jak to się ma do konfiguracji poda?\nSpoiler: czycha tam kilka pułapek. Jak je ominąć?\nZagłębimy się w kontenery, JVM, zarządzanie zasobami Kubernetes i sprawdzimy, jak wszystko jest ze sobą połączone.",
+        "level" : "intermediate",
+        "language" : "pl",
+        "status" : "accepted",
+        "workshop" : false,
+        "new" : false,
+        "accepted" : true
+      },
+      "id" : "ac4301bf-e9d1-4288-8065-f73498b55f6f",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/ac4301bf-e9d1-4288-8065-f73498b55f6f"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/ac4301bf-e9d1-4288-8065-f73498b55f6f{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/ac4301bf-e9d1-4288-8065-f73498b55f6f/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/ac4301bf-e9d1-4288-8065-f73498b55f6f/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/ac4301bf-e9d1-4288-8065-f73498b55f6f/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : "Coffee break",
+      "roomId" : null,
+      "roomLabel" : null,
+      "speaker" : [ ],
+      "timeSlotId" : "6179c11c-2dc9-4c71-bb4d-934352677a21",
+      "timeSlotLabel" : "15:50 - 16:10",
+      "presentationId" : null,
+      "presentation" : null,
+      "id" : "ad04119e-557d-408c-8c97-c0ea851aaa02",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/ad04119e-557d-408c-8c97-c0ea851aaa02"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/ad04119e-557d-408c-8c97-c0ea851aaa02{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/ad04119e-557d-408c-8c97-c0ea851aaa02/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/ad04119e-557d-408c-8c97-c0ea851aaa02/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/ad04119e-557d-408c-8c97-c0ea851aaa02/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : null,
+      "roomId" : "6674fb81-d97b-44b2-9762-96062b542891",
+      "roomLabel" : "byte",
+      "speaker" : [ {
+        "id" : "b8badba8-89b9-4f30-a63b-55b566d119f8",
+        "name" : "Bartłomiej Żyliński",
+        "bio" : "I'm a Software Engineer with industry experience in designing and implementing complex applications and systems, mostly where it's not visible to users - at the backend.\nI'm a self-taught developer and a hands-on learner, constantly working towards expanding my knowledge further.\n\nI contribute to several open source projects, my main focus being sttp (where you can see my contributions on the project's Github). \n\nI appreciate the exchange of technical know-how - which is expressed by my various publications found on Medium and DZone, and appearances at top tech conferences and meetups, including Devoxx Belgium. I enjoy exploring topics that combine software engineering and mathematics.\n\nIn my free time, I like to read a good book.",
+        "twitter" : "@PaskSoftware",
+        "github" : "Pask423",
+        "www" : "https://medium.com/@PaskSoftware",
+        "photo" : "/api/resources//photos/b8badba8-89b9-4f30-a63b-55b566d119f8.jpg"
+      } ],
+      "timeSlotId" : "9edfa23c-9154-418f-970e-0b901e32a729",
+      "timeSlotLabel" : "11:10 - 11:55",
+      "presentationId" : "5bf8d3b7-dcfc-403a-ab67-f3518839cdf1",
+      "presentation" : {
+        "id" : "5bf8d3b7-dcfc-403a-ab67-f3518839cdf1",
+        "title" : "JVM Under The Hood",
+        "shortDescription" : "Have you ever wondered how JVM works under the hood?\n\nIn my talk, I focus on the inner working of JVM itself and JVM compilation process in particular. \n\nI will bring closer concepts like JIT or tiered compilation. I will also mention Graal VM and its impact on the JVM ecosystem.",
+        "description" : "Have you ever wondered how JVM works under the hood?\n\nIn my talk, I focus on the inner working of JVM itself and JVM compilation process in particular. \n\nI will open with a short description of what compilation is, bring closer concept of tiered compilation, and describe what HotSpot means in terms of JVM. I will also mention Graal VM and its impact on the JVM ecosystem.\n\nPlease mind that this is a basic level talk that revolves around how JVM works and I will not be sharing tips & tricks around JVM performance.",
+        "level" : "intermediate",
+        "language" : "en",
+        "status" : "accepted",
+        "workshop" : false,
+        "new" : false,
+        "accepted" : true
+      },
+      "id" : "af2bcc1b-7ba3-4b85-9698-72dec7d9db40",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/af2bcc1b-7ba3-4b85-9698-72dec7d9db40"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/af2bcc1b-7ba3-4b85-9698-72dec7d9db40{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/af2bcc1b-7ba3-4b85-9698-72dec7d9db40/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/af2bcc1b-7ba3-4b85-9698-72dec7d9db40/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/af2bcc1b-7ba3-4b85-9698-72dec7d9db40/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : "Coffee break",
+      "roomId" : null,
+      "roomLabel" : null,
+      "speaker" : [ ],
+      "timeSlotId" : "ec81cedd-6ee5-4e06-89b8-2f0a14adba25",
+      "timeSlotLabel" : "16:55 - 17:15",
+      "presentationId" : null,
+      "presentation" : null,
+      "id" : "b719819e-6286-40b9-b82d-1228cfecf014",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/b719819e-6286-40b9-b82d-1228cfecf014"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/b719819e-6286-40b9-b82d-1228cfecf014{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/b719819e-6286-40b9-b82d-1228cfecf014/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/b719819e-6286-40b9-b82d-1228cfecf014/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/b719819e-6286-40b9-b82d-1228cfecf014/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : null,
+      "roomId" : "c1fd821c-5615-4518-8aaa-19fd191d0c10",
+      "roomLabel" : "long",
+      "speaker" : [ {
+        "id" : "8f834105-1585-4051-93d5-3ce6f61325ad",
+        "name" : "Sławomir Sobótka",
+        "bio" : "Od 13 lat jestem właścicielem firmy szkoleniowo doradczej Bottega IT Minds zrzeszającej 60 ekspertów technicznych.\nRównolegle współpracuję jako inwestor i CTO z kilkoma startupami:\nCortivision - obrazowanie pracy mózgu w bliskiej podczerwieni i sceny VR dla dzieci z deficytami uwagi\nAugmented Neural Systems - sceny VR wspomagające system hormonalno-odpornościowy w walce z rakiem\nAugmented Reality Training Systems - rzeczywistość dopełniona w treningach strzeleckich\noraz Devskiller - automatyzacja rekrutacji i zarządzanie kompetencjami w organizacjach IT",
+        "twitter" : null,
+        "github" : null,
+        "www" : "bottega.com.pl",
+        "photo" : "https://www.gravatar.com/avatar/dae6d35b89426bd954889860c4b2b6e1.jpg?s=300&d=blank"
+      } ],
+      "timeSlotId" : "642c7622-bf49-4122-aca1-02d3ee7d82c9",
+      "timeSlotLabel" : "12:15 - 13:00",
+      "presentationId" : "f2eced3e-c6b3-4df5-9753-3ad24d9d5354",
+      "presentation" : {
+        "id" : "f2eced3e-c6b3-4df5-9753-3ad24d9d5354",
+        "title" : "Modularyzacja - miało być tak pięknie a wyszło jak zwykle:(",
+        "shortDescription" : "Syjamska modularyzacja - niby na diagramach mamy prostokąty ale wciąż robimy JOINY po mikroserwisach zamiast po tabelkach jak dawniej. Podczas prezentacji pokażę jak destylować niezależne konteksty, czyli takie, których zmiana lub awaria nie pociąga za sobą kolejnych.",
+        "description" : "Z jednej strony mamy Event Stormingi na różnych poziomach jako techniki komunikacji i zbierania informacji. Z drugiej strony mamy C4 do skupiania uwagi na odpowiednich driverach architektonicznych. Niestety intuicyjne przejście z jednego do drugiego wychodzi rzadziej niż częściej. W trakcie prezentacji dowiesz się jak przekładać informacji ze stormingu na decyzje architektoniczne dzięki strategicznym narzędziom DDD: destylacji kontekstów i mapowaniu kontekstów. Skupimy się na kilku konkretnych heurystykach, które podpowiadają jak dążyć do modularnego monolitu lub microservices, które mają realną autonomię dzięki: projektowani single source of truth i unikaniu single point of failure.",
+        "level" : "intermediate",
+        "language" : "pl",
+        "status" : "accepted",
+        "workshop" : false,
+        "new" : false,
+        "accepted" : true
+      },
+      "id" : "b723cd4b-c403-4c04-bf4f-57b917e51e4a",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/b723cd4b-c403-4c04-bf4f-57b917e51e4a"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/b723cd4b-c403-4c04-bf4f-57b917e51e4a{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/b723cd4b-c403-4c04-bf4f-57b917e51e4a/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/b723cd4b-c403-4c04-bf4f-57b917e51e4a/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/b723cd4b-c403-4c04-bf4f-57b917e51e4a/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : null,
+      "roomId" : "db1e8898-2c34-44ab-9a90-3a453c06e04c",
+      "roomLabel" : "Lean Coffee",
+      "speaker" : [ {
+        "id" : "a4f76848-872a-44e5-a95f-0468d1f4ea9a",
+        "name" : "Piotr Suwała",
+        "bio" : "I'm a programmer with several years experience in enterprise systems.\nTackling code debt made me appreciate well structurised and easy to change systems.\nI augment my experience with knowledge from the books which I apply to commercial projects and open source ones.\nCurrently I am working at Kinguin as architect and leading Domain Driven Design meetup in Gdańsk.",
+        "twitter" : "https://twitter.com/ksidelta",
+        "github" : null,
+        "www" : "https://www.ksidelta.com/",
+        "photo" : "/api/resources//photos/a4f76848-872a-44e5-a95f-0468d1f4ea9a.jpg"
+      }, {
+        "id" : "9a68de66-3c1a-4238-99ae-c8b19875b006",
+        "name" : "Dastin Sandura",
+        "bio" : "Inżynier oprogramowania działający w branży IT od 2015 roku. Obenie pracuje w roli Doświadczonego Konsultanta w GFT Poland. Przez 5 lat pracował w startupie w rolach, między innymi: front-end i back-end developera, konsultanta, dowódcy zespołu konsultantów, dowódcy działu wsparcia klienta oraz międzynarodowego trenera prowadzącego w języku angielskim szkolenia między innymi dla klientów takich jak SONY Interactive Entertainment i Tom Tom między innymi w biurach San Mateo - California, Las Vegas - Nevada, Monachium, Estonii oraz U.K. Współorganizator spotkań Domain Driven Design Gdańsk.",
+        "twitter" : "https://twitter.com/dastin_it",
+        "github" : "https://github.com/dastin-sandura",
+        "www" : "https://dastin-sandura-software-developer.blogspot.com",
+        "photo" : "/api/resources//photos/9a68de66-3c1a-4238-99ae-c8b19875b006.jpg"
+      } ],
+      "timeSlotId" : "407c811e-f0bd-496f-b7cd-1919ff10e032",
+      "timeSlotLabel" : "15:05 - 15:50",
+      "presentationId" : "13605079-4a91-45b6-a164-adbf990f09e9",
+      "presentation" : {
+        "id" : "13605079-4a91-45b6-a164-adbf990f09e9",
+        "title" : "Lean Coffee - Sesja III, Sesja IV",
+        "shortDescription" : "Tutaj pojawią się tematy sesji w trakcie konferencji.\nWięcej Info: [Lean Coffee](https://2023.confitura.pl/lean-coffee)",
+        "description" : "Tutaj pojawią się tematy sesji w trakcie konferencji.\nWięcej Info: [Lean Coffee](https://2023.confitura.pl/lean-coffee)",
+        "level" : "novice",
+        "language" : "pl",
+        "status" : "accepted",
+        "workshop" : false,
+        "new" : false,
+        "accepted" : true
+      },
+      "id" : "bc0e82ad-e08f-40f6-8072-e4eac8a60221",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/bc0e82ad-e08f-40f6-8072-e4eac8a60221"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/bc0e82ad-e08f-40f6-8072-e4eac8a60221{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/bc0e82ad-e08f-40f6-8072-e4eac8a60221/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/bc0e82ad-e08f-40f6-8072-e4eac8a60221/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/bc0e82ad-e08f-40f6-8072-e4eac8a60221/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : null,
+      "roomId" : "d20b2ac4-4d2a-40a4-a0d9-63b3decb55e8",
+      "roomLabel" : "double",
+      "speaker" : [ {
+        "id" : "ab278e7c-e59a-4b6d-8c19-6a66e239f51f",
+        "name" : "Piotr Kaczor",
+        "bio" : "Piotr, Senior Technical Architect, IQVIA, has around 15 years experience in data warehousing. For the past 8 years Piotr remains responsible for end-to-end healthcare data warehouse design for local IQVIA teams around the world. Before IQVIA switched entirely to BigData in 2016, he was involved in data onboarding, curation & reporting processes on IBM PureData for Analytics (Netezza) technology. He originated from Oracle, had a chance to work with Teradata as well. Currently helping to transition Electronic Medical Records data solutions towards the cloud (DataBricks and/or SnowFlake). Personally more data-oriented, less interested in deep-programming topics.",
+        "twitter" : null,
+        "github" : null,
+        "www" : null,
+        "photo" : "/api/resources//photos/ab278e7c-e59a-4b6d-8c19-6a66e239f51f.jpg"
+      } ],
+      "timeSlotId" : "109a5c0c-70b9-4c55-b84a-e98dc5207d5e",
+      "timeSlotLabel" : "17:15 - 18:00",
+      "presentationId" : "1d4d3f62-0fe2-4e12-8985-48df80fb592f",
+      "presentation" : {
+        "id" : "1d4d3f62-0fe2-4e12-8985-48df80fb592f",
+        "title" : "What it takes to process healthcare data ?",
+        "shortDescription" : "Why processing medical data could be challenging ? How much healthcare data differs from other market sectors ? How data privacy affects our work ? Is your own medical history safe with us ? Come and get answers to these and many other questions from IQVIA - healthcare IT industry leader.",
+        "description" : "In this presentation I will present challenges every company will face when processing medical data, e.g. data supplier agreements / data security / data (re)identification risks. I will also explain how medical data differs from other market sectors, e.g. multi-fact-based, data regulations (GDPR/HIPAA), wide selection of data dictionaries.\n\nIQVIA is by far a leader in healthcare data IT industry. We do not represent any pharmaceutical or medical institution - we are independent company focused on medical data aggregation & analytics. We have offices in 100+ countries around the world. In this presentation I will summarize the experience in data processing I acquired working for IQVIA almost 10 years now as solution architect for medical data analytical platform(s).",
+        "level" : "intermediate",
+        "language" : "en",
+        "status" : "accepted",
+        "workshop" : false,
+        "new" : false,
+        "accepted" : true
+      },
+      "id" : "c32714f8-19b8-44a3-b78e-cd2b3d24458f",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/c32714f8-19b8-44a3-b78e-cd2b3d24458f"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/c32714f8-19b8-44a3-b78e-cd2b3d24458f{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/c32714f8-19b8-44a3-b78e-cd2b3d24458f/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/c32714f8-19b8-44a3-b78e-cd2b3d24458f/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/c32714f8-19b8-44a3-b78e-cd2b3d24458f/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : null,
+      "roomId" : "db1e8898-2c34-44ab-9a90-3a453c06e04c",
+      "roomLabel" : "Lean Coffee",
+      "speaker" : [ {
+        "id" : "a4f76848-872a-44e5-a95f-0468d1f4ea9a",
+        "name" : "Piotr Suwała",
+        "bio" : "I'm a programmer with several years experience in enterprise systems.\nTackling code debt made me appreciate well structurised and easy to change systems.\nI augment my experience with knowledge from the books which I apply to commercial projects and open source ones.\nCurrently I am working at Kinguin as architect and leading Domain Driven Design meetup in Gdańsk.",
+        "twitter" : "https://twitter.com/ksidelta",
+        "github" : null,
+        "www" : "https://www.ksidelta.com/",
+        "photo" : "/api/resources//photos/a4f76848-872a-44e5-a95f-0468d1f4ea9a.jpg"
+      }, {
+        "id" : "9a68de66-3c1a-4238-99ae-c8b19875b006",
+        "name" : "Dastin Sandura",
+        "bio" : "Inżynier oprogramowania działający w branży IT od 2015 roku. Obenie pracuje w roli Doświadczonego Konsultanta w GFT Poland. Przez 5 lat pracował w startupie w rolach, między innymi: front-end i back-end developera, konsultanta, dowódcy zespołu konsultantów, dowódcy działu wsparcia klienta oraz międzynarodowego trenera prowadzącego w języku angielskim szkolenia między innymi dla klientów takich jak SONY Interactive Entertainment i Tom Tom między innymi w biurach San Mateo - California, Las Vegas - Nevada, Monachium, Estonii oraz U.K. Współorganizator spotkań Domain Driven Design Gdańsk.",
+        "twitter" : "https://twitter.com/dastin_it",
+        "github" : "https://github.com/dastin-sandura",
+        "www" : "https://dastin-sandura-software-developer.blogspot.com",
+        "photo" : "/api/resources//photos/9a68de66-3c1a-4238-99ae-c8b19875b006.jpg"
+      } ],
+      "timeSlotId" : "b3f81b8a-daf6-44ee-82d8-76fa479a078f",
+      "timeSlotLabel" : "13:30 - 14:00",
+      "presentationId" : "fb63b8e9-ee48-4b3e-98dc-384da4122d72",
+      "presentation" : {
+        "id" : "fb63b8e9-ee48-4b3e-98dc-384da4122d72",
+        "title" : "Lean Coffee - Zbieranie Tematów",
+        "shortDescription" : "wstępny brainstorm i przypisywanie się do tematów dyskusji/konsultacji\n[Lean Coffee](https://2023.confitura.pl/lean-coffee)",
+        "description" : "ZBIERANIE TEMATÓW\n\nŻebyśmy mieli na czym pracować, musimy pozyskać pomysły problemów do rozwiązania i tematów do konsultowania. Przyjdź do sali Lean Coffee w drugiej połowie przerwy obiadowej. Nasi trenerzy zapoznają Cię z zasadami i wyjaśnią ogólne reguły metodyk lean coffee i troika consulting. Możesz wtedy zgłosić swój pomysł do przepracowania lub zagłosować na temat kogoś innego. Wtedy też podzielimy się na grupy i przypiszemy do slotów czasowych podczas których będziemy pracować. Mamy 5 sesji po 30 minut. Wtedy też zdecydujesz czy chcesz wziąć udział w dyskusji lean coffee czy troika consulting. Mamy miejsce na 4 grupy troika consulting i 2 grupy lean coffee w trakcie każdej sesji.\n\nWięcej informacji: [Lean Coffee](https://2023.confitura.pl/lean-coffee)",
+        "level" : "novice",
+        "language" : "pl",
+        "status" : "accepted",
+        "workshop" : false,
+        "new" : false,
+        "accepted" : true
+      },
+      "id" : "cce7c9f5-5db3-4803-9906-1ccd6a688509",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/cce7c9f5-5db3-4803-9906-1ccd6a688509"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/cce7c9f5-5db3-4803-9906-1ccd6a688509{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/cce7c9f5-5db3-4803-9906-1ccd6a688509/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/cce7c9f5-5db3-4803-9906-1ccd6a688509/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/cce7c9f5-5db3-4803-9906-1ccd6a688509/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : null,
+      "roomId" : "db1e8898-2c34-44ab-9a90-3a453c06e04c",
+      "roomLabel" : "Lean Coffee",
+      "speaker" : [ {
+        "id" : "a4f76848-872a-44e5-a95f-0468d1f4ea9a",
+        "name" : "Piotr Suwała",
+        "bio" : "I'm a programmer with several years experience in enterprise systems.\nTackling code debt made me appreciate well structurised and easy to change systems.\nI augment my experience with knowledge from the books which I apply to commercial projects and open source ones.\nCurrently I am working at Kinguin as architect and leading Domain Driven Design meetup in Gdańsk.",
+        "twitter" : "https://twitter.com/ksidelta",
+        "github" : null,
+        "www" : "https://www.ksidelta.com/",
+        "photo" : "/api/resources//photos/a4f76848-872a-44e5-a95f-0468d1f4ea9a.jpg"
+      } ],
+      "timeSlotId" : "ca9420f7-8f95-4251-9e2b-62c6d655190e",
+      "timeSlotLabel" : "16:10 - 16:55",
+      "presentationId" : "fb67d149-516a-4914-a52e-4d4e12d79690",
+      "presentation" : {
+        "id" : "fb67d149-516a-4914-a52e-4d4e12d79690",
+        "title" : "Lean Coffee - Sesja V, Retrospektywa",
+        "shortDescription" : "\nWspólna retrospekcja warsztatów Lean Coffe i Troika consulting.\n",
+        "description" : "16:10 - Sesja V\n\nLean Coffee I: Jak nie dać się AI?\nLean Coffee II: Jak przekonać inżynierów do retrospekcji?\nTroika III: Jak utrzymać produktywność zespołu?\nTroika IV: Warunki przejścia z monolitu na mikroserwisy\nTroika V: Jak przekonać szefa do wprowadzenia testów automatycznych\nTroika VI: Wolne\n\n16:40 - RETROSPEKTYWA\nNa samym końcu odbędzie się retrospektywa. Chcemy dostać od Was jak najwięcej feedbacku, żeby nasze warsztaty stawały się za każdym razem lepsze. Będzie nam bardzo miło jeśli wpadniesz i podzielisz się odczuciami i sugestiami.\n\nWięcej info: [Lean Coffee](https://2023.confitura.pl/lean-coffee)",
+        "level" : "novice",
+        "language" : "pl",
+        "status" : "accepted",
+        "workshop" : false,
+        "new" : false,
+        "accepted" : true
+      },
+      "id" : "d1c4bdc2-f9ac-4cdd-b022-69c84b360c43",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/d1c4bdc2-f9ac-4cdd-b022-69c84b360c43"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/d1c4bdc2-f9ac-4cdd-b022-69c84b360c43{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/d1c4bdc2-f9ac-4cdd-b022-69c84b360c43/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/d1c4bdc2-f9ac-4cdd-b022-69c84b360c43/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/d1c4bdc2-f9ac-4cdd-b022-69c84b360c43/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : "Coffee break",
+      "roomId" : null,
+      "roomLabel" : null,
+      "speaker" : [ ],
+      "timeSlotId" : "fe3a9eed-ea66-4c06-a1d2-d1887cb9a905",
+      "timeSlotLabel" : "09:55 - 10:05",
+      "presentationId" : null,
+      "presentation" : null,
+      "id" : "dbec45cb-c5f9-4917-9423-5c535cf435d1",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/dbec45cb-c5f9-4917-9423-5c535cf435d1"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/dbec45cb-c5f9-4917-9423-5c535cf435d1{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/dbec45cb-c5f9-4917-9423-5c535cf435d1/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/dbec45cb-c5f9-4917-9423-5c535cf435d1/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/dbec45cb-c5f9-4917-9423-5c535cf435d1/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : "Registration & breakfast",
+      "roomId" : null,
+      "roomLabel" : null,
+      "speaker" : [ ],
+      "timeSlotId" : "621ceeae-529c-45a7-9d85-fec6b9d8be2c",
+      "timeSlotLabel" : "08:00 - 09:00",
+      "presentationId" : null,
+      "presentation" : null,
+      "id" : "e07aedd8-284a-4904-9916-d64893e55aaa",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/e07aedd8-284a-4904-9916-d64893e55aaa"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/e07aedd8-284a-4904-9916-d64893e55aaa{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/e07aedd8-284a-4904-9916-d64893e55aaa/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/e07aedd8-284a-4904-9916-d64893e55aaa/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/e07aedd8-284a-4904-9916-d64893e55aaa/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : "-",
+      "roomId" : "6674fb81-d97b-44b2-9762-96062b542891",
+      "roomLabel" : "byte",
+      "speaker" : [ ],
+      "timeSlotId" : "a0e28de4-2e56-4e1f-9396-c49c51254ebd",
+      "timeSlotLabel" : "09:00 - 09:10",
+      "presentationId" : null,
+      "presentation" : null,
+      "id" : "e52155d3-0f03-4632-9423-09860e385852",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/e52155d3-0f03-4632-9423-09860e385852"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/e52155d3-0f03-4632-9423-09860e385852{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/e52155d3-0f03-4632-9423-09860e385852/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/e52155d3-0f03-4632-9423-09860e385852/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/e52155d3-0f03-4632-9423-09860e385852/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : "-",
+      "roomId" : "db1e8898-2c34-44ab-9a90-3a453c06e04c",
+      "roomLabel" : "Lean Coffee",
+      "speaker" : [ ],
+      "timeSlotId" : "4ed4e411-c21b-4f46-9bd5-988d711cfe1f",
+      "timeSlotLabel" : "10:05 - 10:50",
+      "presentationId" : null,
+      "presentation" : null,
+      "id" : "eb2dec15-4002-4ef6-be68-c00c69297460",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/eb2dec15-4002-4ef6-be68-c00c69297460"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/eb2dec15-4002-4ef6-be68-c00c69297460{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/eb2dec15-4002-4ef6-be68-c00c69297460/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/eb2dec15-4002-4ef6-be68-c00c69297460/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/eb2dec15-4002-4ef6-be68-c00c69297460/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : "Coffee break",
+      "roomId" : null,
+      "roomLabel" : null,
+      "speaker" : [ ],
+      "timeSlotId" : "ad1194f3-df8a-4a5e-ba17-2065524e1fb7",
+      "timeSlotLabel" : "11:55 - 12:15",
+      "presentationId" : null,
+      "presentation" : null,
+      "id" : "f61cc5bb-1762-420b-ae56-8acce8e4a21b",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/f61cc5bb-1762-420b-ae56-8acce8e4a21b"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/f61cc5bb-1762-420b-ae56-8acce8e4a21b{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/f61cc5bb-1762-420b-ae56-8acce8e4a21b/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/f61cc5bb-1762-420b-ae56-8acce8e4a21b/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/f61cc5bb-1762-420b-ae56-8acce8e4a21b/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : "Lunch",
+      "roomId" : "c1fd821c-5615-4518-8aaa-19fd191d0c10",
+      "roomLabel" : "long",
+      "speaker" : [ ],
+      "timeSlotId" : "b3f81b8a-daf6-44ee-82d8-76fa479a078f",
+      "timeSlotLabel" : "13:30 - 14:00",
+      "presentationId" : null,
+      "presentation" : null,
+      "id" : "f712d4bf-b503-403b-b0a3-f2b61685b26e",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/f712d4bf-b503-403b-b0a3-f2b61685b26e"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/f712d4bf-b503-403b-b0a3-f2b61685b26e{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/f712d4bf-b503-403b-b0a3-f2b61685b26e/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/f712d4bf-b503-403b-b0a3-f2b61685b26e/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/f712d4bf-b503-403b-b0a3-f2b61685b26e/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : null,
+      "roomId" : "6c1af97a-ee93-4a18-9fa1-32e1f4c14a4c",
+      "roomLabel" : "int",
+      "speaker" : [ {
+        "id" : "f15b5e90-42c9-42c3-b24c-82107041bdba",
+        "name" : "Juliusz Marciniak",
+        "bio" : "Programista Java z 9 letnim stażem. W codziennej pracy zajmuję się tematami cloudowymi i Kubernetesowymi. Oprócz tego doglądam architektury aplikacji w swoich projektach. Jestem entuzjastą nowych rozwiązań i technologii. Zwracam duża uwagę, by rzeczy wdrażane przeze mnie były przemyślane i spójne. Czasami też programuję… i rekrutuję.",
+        "twitter" : null,
+        "github" : null,
+        "www" : null,
+        "photo" : "/api/resources//photos/f15b5e90-42c9-42c3-b24c-82107041bdba.jpg"
+      } ],
+      "timeSlotId" : "642c7622-bf49-4122-aca1-02d3ee7d82c9",
+      "timeSlotLabel" : "12:15 - 13:00",
+      "presentationId" : "f9bc0e70-c045-4dea-8227-dcc0df7b3918",
+      "presentation" : {
+        "id" : "f9bc0e70-c045-4dea-8227-dcc0df7b3918",
+        "title" : "Kubernetes on-premises, dlaczego nie chcesz tego robić?",
+        "shortDescription" : "Konfiguracja klastra to zawsze jest jakieś wyzwanie, szczególnie gdy mówimy o klastrze postawionym w formie on-premises. To będzie 45 minut technicznej wyprawy w głąb świata Kubernetesa i poznawania jego zakamarków, ukrytych tricków i nieoczywistych rozwiązań. Więc zapinamy pasy i lecimy!",
+        "description" : "Konfiguracja klastra to zawsze jest jakieś wyzwanie, szczególnie gdy mówimy o klastrze postawionym w formie on-premises. Zaprezentuję krok po kroku jak przygotować klaster Kubernetesowy do formy produkcyjnej. Pokażę przykładowe rozwiązania problemów niewystępujących w środowiskach cloudowych lub rozwiązanych już przez dostawcę. Zaczniemy od tego jak w ogóle wystawić jakąkolwiek usługę na świat, w tej części omówię konfigurację MetalLB, cert-managera i nginx ingress controllera. Następnie weźmiemy na tapet konfigurację wolumenów, a skończymy konfiguracją prometheusa. Co da nam nieco uproszczony, ale jednak gotowy klaster produkcyjny, który mógłby być używany w organizacji.\nDodatkowo opowiem, jak zarządzać takim klastrem w przyszłości, jak planować jego maintenance i upgrade. To będzie 45 minut technicznej wyprawy w głąb świata Kubernetesa i poznawania jego zakamarków, ukrytych tricków i nieoczywistych rozwiązań. Więc zapinamy pasy i lecimy!",
+        "level" : "intermediate",
+        "language" : "pl",
+        "status" : "accepted",
+        "workshop" : false,
+        "new" : false,
+        "accepted" : true
+      },
+      "id" : "f9709473-965a-4ce4-b1ab-61ebc9122177",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/f9709473-965a-4ce4-b1ab-61ebc9122177"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/f9709473-965a-4ce4-b1ab-61ebc9122177{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/f9709473-965a-4ce4-b1ab-61ebc9122177/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/f9709473-965a-4ce4-b1ab-61ebc9122177/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/f9709473-965a-4ce4-b1ab-61ebc9122177/room{?projection}",
+          "templated" : true
+        }
+      }
+    }, {
+      "label" : null,
+      "roomId" : "d20b2ac4-4d2a-40a4-a0d9-63b3decb55e8",
+      "roomLabel" : "double",
+      "speaker" : [ {
+        "id" : "76ee7373-420d-4c36-b51b-c720be1b5ed2",
+        "name" : "Michał Zaborowski",
+        "bio" : "Inżynier z wykształcenia i przekonania, do 25 lat zarabia na tworzeniu kodu, od nastu lat - JVM. Lubi szczegóły, niebanalne problemy, rozwiązania, które działają. ",
+        "twitter" : null,
+        "github" : "https://github.com/texxas",
+        "www" : "texxas.io",
+        "photo" : "/api/resources//photos/76ee7373-420d-4c36-b51b-c720be1b5ed2.jpeg"
+      } ],
+      "timeSlotId" : "1a710d3d-7e43-420c-a702-82a5b07703b5",
+      "timeSlotLabel" : "14:00 - 14:45",
+      "presentationId" : "068eaa36-420f-4e6d-93b9-bb9ffb130235",
+      "presentation" : {
+        "id" : "068eaa36-420f-4e6d-93b9-bb9ffb130235",
+        "title" : "Jak ludzie radzą sobie ze współbieżnością?",
+        "shortDescription" : "Współbieżność jest problemem, który ciężko ominąć... Pokażę jakie są propozycje radzenia sobie z nim w różnych językach. Następnie przyjrzę się propozycjom na przyszłość. Celem jest poszerzenie wiedzy, pokazanie, że inni też mogą, że można się czegoś nauczyć. ",
+        "description" : "Agenda:\n- Java - Servlety 2.5 - skąd się wzięło, co dało.\n- Python, Javascript - życie z jednym wątkiem, czy to ma sens?\n- Ktoś już miał green threads - słowo o gorutines w go-langu\n- Kotlin - coroutines - programowanie reaktywne z ludzką twarzą.\n- GreenThreads i Project Loom - co się zmieni?\n- Języki funkcyjne, aktorzy z Akki - jak paradygmat programowania wpływa na rozwiązanie?\n- A może reaktywnie? Spojrzenie na jeszcze inną opcję.\n- Podsumowanie - czyli co warto zapamiętać - zdaniem prowadzącego :)",
+        "level" : "intermediate",
+        "language" : "pl",
+        "status" : "accepted",
+        "workshop" : false,
+        "new" : false,
+        "accepted" : true
+      },
+      "id" : "fd4559ee-8d29-4780-aa23-98b2b1400569",
+      "_links" : {
+        "self" : {
+          "href" : "https://2023.confitura.pl/api/agenda/fd4559ee-8d29-4780-aa23-98b2b1400569"
+        },
+        "agendaEntry" : {
+          "href" : "https://2023.confitura.pl/api/agenda/fd4559ee-8d29-4780-aa23-98b2b1400569{?projection}",
+          "templated" : true
+        },
+        "presentation" : {
+          "href" : "https://2023.confitura.pl/api/agenda/fd4559ee-8d29-4780-aa23-98b2b1400569/presentation{?projection}",
+          "templated" : true
+        },
+        "timeSlot" : {
+          "href" : "https://2023.confitura.pl/api/agenda/fd4559ee-8d29-4780-aa23-98b2b1400569/timeSlot{?projection}",
+          "templated" : true
+        },
+        "room" : {
+          "href" : "https://2023.confitura.pl/api/agenda/fd4559ee-8d29-4780-aa23-98b2b1400569/room{?projection}",
+          "templated" : true
+        }
+      }
+    } ]
+  },
+  "_links" : {
+    "self" : {
+      "href" : "https://2023.confitura.pl/api/agenda"
+    },
+    "profile" : {
+      "href" : "https://2023.confitura.pl/api/profile/agenda"
+    },
+    "search" : {
+      "href" : "https://2023.confitura.pl/api/agenda/search"
+    }
+  }
+}

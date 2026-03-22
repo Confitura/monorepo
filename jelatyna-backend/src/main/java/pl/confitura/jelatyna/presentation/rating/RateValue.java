@@ -7,9 +7,22 @@ public enum RateValue {
     BAD(2),
     TERRIBLE(1);
 
-    double numericValue;
+    int numericValue;
 
-    RateValue(double numericValue) {
+    RateValue(int numericValue) {
         this.numericValue = numericValue;
+    }
+
+    public static RateValue from(int value) {
+        for (RateValue rateValue : values()) {
+            if (rateValue.numericValue == value) {
+                return rateValue;
+            }
+        }
+        return null;
+    }
+
+    public int getNumericValue() {
+        return numericValue;
     }
 }

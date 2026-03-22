@@ -1,0 +1,47 @@
+{
+  "level" : "novice",
+  "shortDescription" : "Pierwsze dwa bloki dyskusji na tematy zebrane podczas \"Zbierania tematów\" z godziny 13:30",
+  "tags" : [ ],
+  "description" : "Tutaj pojawią się tematy sesji w trakcie konferencji.\nWięcej Info: [Lean Coffee](https://2023.confitura.pl/lean-coffee)",
+  "title" : "Lean Coffee - Sesja I, Sesja II",
+  "status" : "accepted",
+  "workshop" : false,
+  "speakers" : [ {
+    "id" : "a4f76848-872a-44e5-a95f-0468d1f4ea9a",
+    "name" : "Piotr Suwała",
+    "bio" : "I'm a programmer with several years experience in enterprise systems.\nTackling code debt made me appreciate well structurised and easy to change systems.\nI augment my experience with knowledge from the books which I apply to commercial projects and open source ones.\nCurrently I am working at Kinguin as architect and leading Domain Driven Design meetup in Gdańsk.",
+    "twitter" : "https://twitter.com/ksidelta",
+    "github" : null,
+    "www" : "https://www.ksidelta.com/",
+    "photo" : "/api/resources//photos/a4f76848-872a-44e5-a95f-0468d1f4ea9a.jpg"
+  }, {
+    "id" : "9a68de66-3c1a-4238-99ae-c8b19875b006",
+    "name" : "Dastin Sandura",
+    "bio" : "Inżynier oprogramowania działający w branży IT od 2015 roku. Obenie pracuje w roli Doświadczonego Konsultanta w GFT Poland. Przez 5 lat pracował w startupie w rolach, między innymi: front-end i back-end developera, konsultanta, dowódcy zespołu konsultantów, dowódcy działu wsparcia klienta oraz międzynarodowego trenera prowadzącego w języku angielskim szkolenia między innymi dla klientów takich jak SONY Interactive Entertainment i Tom Tom między innymi w biurach San Mateo - California, Las Vegas - Nevada, Monachium, Estonii oraz U.K. Współorganizator spotkań Domain Driven Design Gdańsk.",
+    "twitter" : "https://twitter.com/dastin_it",
+    "github" : "https://github.com/dastin-sandura",
+    "www" : "https://dastin-sandura-software-developer.blogspot.com",
+    "photo" : "/api/resources//photos/9a68de66-3c1a-4238-99ae-c8b19875b006.jpg"
+  } ],
+  "language" : "pl",
+  "id" : "7edf1184-f4c9-4e8f-a992-2e769a56ce91",
+  "_links" : {
+    "self" : {
+      "href" : "https://2023.confitura.pl/api/presentations/7edf1184-f4c9-4e8f-a992-2e769a56ce91"
+    },
+    "presentation" : {
+      "href" : "https://2023.confitura.pl/api/presentations/7edf1184-f4c9-4e8f-a992-2e769a56ce91{?projection}",
+      "templated" : true
+    },
+    "tags" : {
+      "href" : "https://2023.confitura.pl/api/presentations/7edf1184-f4c9-4e8f-a992-2e769a56ce91/tags"
+    },
+    "speakers" : {
+      "href" : "https://2023.confitura.pl/api/presentations/7edf1184-f4c9-4e8f-a992-2e769a56ce91/speakers{?projection}",
+      "templated" : true
+    },
+    "ratings" : {
+      "href" : "https://2023.confitura.pl/api/presentations/7edf1184-f4c9-4e8f-a992-2e769a56ce91/ratings"
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "level" : "intermediate",
+  "shortDescription" : "Zaprezentuję, jak można uprościć aplikację i umożliwić jej testowanie poprzez analizę napotkanych przypadków i zastosowanych rozwiązań. Skupimy się na niestandardowych przypadkach oraz często powtarzalnych sytuacjach które występują podczas naszej pracy.",
+  "tags" : [ {
+    "id" : "testing",
+    "name" : "Testing"
+  }, {
+    "id" : "java",
+    "name" : "Java"
+  } ],
+  "description" : "Zaprezentuję, jak można uprościć aplikację i umożliwić jej testowanie poprzez analizę napotkanych przypadków i zastosowanych rozwiązań. Skupimy się na niestandardowych przypadkach oraz często powtarzalnych sytuacjach, które występują podczas naszej pracy. Nauczymy się jak testować problematyczne klasy, integrację z bibliotekami, frameworkami i usługami zewnętrznymi, jak skutecznie używać zaślepek (fakes), co mockować, a czego nie, jak testować aplikacje wielowątkowe, jak przyspieszać testy integracyjne, jak testować kod zależny od czasu i działania bez widocznego efektu, jak testować tolerancję na błędy oraz jak ponownie wykorzystać akceptacyjne testy jednostkowe jako testy integracyjne lub API. Omówimy, dlaczego warto stosować Property Based Testing dla Value Object’ów, jak testować obiekty mutowalne, zapis (persistence), czy testować logowanie, jak testować kod asynchroniczny. Poznamy przydatne heurystyki testowania oraz alternatywę dla testów wydajnościowych.",
+  "title" : "Testing the untestable - patterns and use cases analysis",
+  "status" : "accepted",
+  "workshop" : false,
+  "speakers" : [ {
+    "id" : "428bddd6-2c35-478a-a255-7db5b428c8d4",
+    "name" : " Piotr Stawirej",
+    "bio" : "Expert Software Engineer",
+    "twitter" : "p_stawirej",
+    "github" : "stawirej",
+    "www" : "https://amazingcode.pl/",
+    "photo" : "https://avatars.githubusercontent.com/u/52084106?v=4"
+  } ],
+  "language" : "pl",
+  "id" : "2a019583-a042-4934-a697-22e5845d08b3",
+  "_links" : {
+    "self" : {
+      "href" : "https://2023.confitura.pl/api/presentations/2a019583-a042-4934-a697-22e5845d08b3"
+    },
+    "presentation" : {
+      "href" : "https://2023.confitura.pl/api/presentations/2a019583-a042-4934-a697-22e5845d08b3{?projection}",
+      "templated" : true
+    },
+    "tags" : {
+      "href" : "https://2023.confitura.pl/api/presentations/2a019583-a042-4934-a697-22e5845d08b3/tags"
+    },
+    "speakers" : {
+      "href" : "https://2023.confitura.pl/api/presentations/2a019583-a042-4934-a697-22e5845d08b3/speakers{?projection}",
+      "templated" : true
+    },
+    "ratings" : {
+      "href" : "https://2023.confitura.pl/api/presentations/2a019583-a042-4934-a697-22e5845d08b3/ratings"
+    }
+  }
+}

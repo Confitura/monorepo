@@ -1,9 +1,7 @@
 package pl.confitura.jelatyna.registration;
 
-import static java.time.LocalDateTime.now;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.StreamSupport.stream;
-import static pl.confitura.jelatyna.mail.MailSender.MailType.VOUCHER;
 import static pl.confitura.jelatyna.registration.VoucherStatus.*;
 
 import java.io.IOException;
@@ -13,7 +11,6 @@ import java.util.List;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,21 +22,18 @@ import com.opencsv.CSVReader;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import pl.confitura.jelatyna.mail.MailSender;
-import pl.confitura.jelatyna.mail.MessageInfo;
 import pl.confitura.jelatyna.registration.voucher.Voucher;
 import pl.confitura.jelatyna.registration.voucher.VoucherService;
 
-@RepositoryRestController
 @Slf4j
 @AllArgsConstructor
 public class RegistrationUploadController {
 
-    private MailSender sender;
     private VoucherService service;
 
     @PostMapping("/participants/upload")
     @PreAuthorize("@security.isAdmin()")
+    @Transactional
     public ResponseEntity<List<GenerateVouchersResponse>> upload(@RequestParam MultipartFile file)
             throws IOException {
         List<GenerateVouchersResponse> responses =
@@ -66,12 +60,9 @@ public class RegistrationUploadController {
 
     }
 
-    @Transactional
     VoucherStatus sendVoucher(Voucher voucher) {
         try {
-            sender.send(VOUCHER, new MessageInfo().setEmail(voucher.getOriginalBuyer()).setToken(voucher.getId()));
-            voucher.setTicketSendDate(now());
-            service.save(voucher);
+            service.sendVoucher(voucher);
             return SUCCESS;
         } catch (Exception ex) {
             log.error("Error on sending email", ex);
@@ -79,8 +70,6 @@ public class RegistrationUploadController {
         }
     }
 
-
-    @Transactional
     Voucher createVoucher(GenerateVouchersRequest request) {
         return service.generateVoucher(request.getBuyerEmail(), request.getType(), request.getComment());
     }

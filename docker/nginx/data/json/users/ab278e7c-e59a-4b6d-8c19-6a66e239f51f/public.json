@@ -1,0 +1,9 @@
+{
+  "id" : "ab278e7c-e59a-4b6d-8c19-6a66e239f51f",
+  "name" : "Piotr Kaczor",
+  "bio" : "Piotr, Senior Technical Architect, IQVIA, has around 15 years experience in data warehousing. For the past 8 years Piotr remains responsible for end-to-end healthcare data warehouse design for local IQVIA teams around the world. Before IQVIA switched entirely to BigData in 2016, he was involved in data onboarding, curation & reporting processes on IBM PureData for Analytics (Netezza) technology. He originated from Oracle, had a chance to work with Teradata as well. Currently helping to transition Electronic Medical Records data solutions towards the cloud (DataBricks and/or SnowFlake). Personally more data-oriented, less interested in deep-programming topics.",
+  "twitter" : null,
+  "github" : null,
+  "www" : null,
+  "photo" : "/api/resources//photos/ab278e7c-e59a-4b6d-8c19-6a66e239f51f.jpg"
+}

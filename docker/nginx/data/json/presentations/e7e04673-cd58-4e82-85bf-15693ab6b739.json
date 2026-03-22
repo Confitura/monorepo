@@ -1,0 +1,45 @@
+{
+  "level" : "novice",
+  "shortDescription" : "\"I didn't become an engineer to talk to people\" - wrong! This presentation tackles challenges in big organizations, like bureaucracy, conflicting goals and communication barriers. It emphasizes the importance of soft skills and effective communication in delivering high quality solutions.",
+  "tags" : [ {
+    "id" : "sc",
+    "name" : "Software Craftsmanship"
+  }, {
+    "id" : "agile",
+    "name" : "Agile"
+  } ],
+  "description" : "\"I didn't become an engineer to talk to people\" - I'm going to prove you wrong! \"The Art of Engineering Diplomacy\" presentation dives into the challenges faced by larger organizations, like dealing with bureaucracy, conflicting goals, siloed knowledge and breaking down communication barriers. It stresses the significance of soft skills, teamwork, and effective communication. Real-life stories shed light on how these challenges affect productivity, innovation and quality of delivered solutions. The talk offers practical advice on enhancing collaboration and sharpening soft skills within engineering teams. Attendees are empowered to apply these principles in their own work environments, breaking down silos and fostering effective collaboration in order to deliver best possible outcome.",
+  "title" : "The Art of Engineering Diplomacy - Driving Significant Changes in Large Organisations",
+  "status" : "accepted",
+  "workshop" : false,
+  "speakers" : [ {
+    "id" : "f953198e-9472-4301-b3e9-5f47bb336f0e",
+    "name" : "Paulina Szwed",
+    "bio" : "Software engineer at Allegro. Backend dev with strong interests in software architecture. Soft skills and cognitive sciences enthusiast.",
+    "twitter" : null,
+    "github" : "Delebrith",
+    "www" : null,
+    "photo" : "/api/resources//photos/f953198e-9472-4301-b3e9-5f47bb336f0e.png"
+  } ],
+  "language" : "pl",
+  "id" : "e7e04673-cd58-4e82-85bf-15693ab6b739",
+  "_links" : {
+    "self" : {
+      "href" : "https://2023.confitura.pl/api/presentations/e7e04673-cd58-4e82-85bf-15693ab6b739"
+    },
+    "presentation" : {
+      "href" : "https://2023.confitura.pl/api/presentations/e7e04673-cd58-4e82-85bf-15693ab6b739{?projection}",
+      "templated" : true
+    },
+    "tags" : {
+      "href" : "https://2023.confitura.pl/api/presentations/e7e04673-cd58-4e82-85bf-15693ab6b739/tags"
+    },
+    "speakers" : {
+      "href" : "https://2023.confitura.pl/api/presentations/e7e04673-cd58-4e82-85bf-15693ab6b739/speakers{?projection}",
+      "templated" : true
+    },
+    "ratings" : {
+      "href" : "https://2023.confitura.pl/api/presentations/e7e04673-cd58-4e82-85bf-15693ab6b739/ratings"
+    }
+  }
+}

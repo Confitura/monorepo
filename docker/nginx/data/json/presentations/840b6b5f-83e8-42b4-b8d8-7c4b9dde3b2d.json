@@ -1,0 +1,39 @@
+{
+  "level" : "intermediate",
+  "shortDescription" : "Offering consumers a convenient and easy way to manage their finances via a mobile app, the digital banking model has been predicated on building an app on the public cloud. But has cloud-based technology really created meaningful disruption in the banking sector?",
+  "tags" : [ ],
+  "description" : "More than a decade of fintech innovation has led to a thriving digital banking scene in the UK. Offering consumers a convenient and easy way to manage their finances via a mobile app, the digital banking model has been predicated on building an app on the public cloud whilst utilising the latest technology. But has cloud-based technology really created meaningful disruption in the banking sector?",
+  "title" : "Disrupting the Banking Industry – Are we on the right track?",
+  "status" : "accepted",
+  "workshop" : false,
+  "speakers" : [ {
+    "id" : "2c9a8b37-411d-44ce-97e5-5b96150bcd16",
+    "name" : "Paul Clark",
+    "bio" : "Paul has worked across multiple sectors helping to deliver digital products used by millions of customers. At Channel 4 in 2006 as one of the first hires onto 4oD he helped to deliver the first truly end to end video on demand platform. Moving from there to the BBC he managed Customer Facing Products, all the reusable parts of the BBC shared across iPlayer, News, Weather, Worldwide etc. and helped deliver v3 of iPlayer. As CTO of Online at ITV Paul stripped back and rebuilt the failing platform leading to the ITV Hub rebrand and relaunch. Moving into digital banking Paul spent a brief time at HSBC as Head of Engineering for Digital before moving to Tandem Bank to launch savings, credit card and mortgage products delivered via a digital experience. This involved migrating Tandem from the legacy Fiserv platform onto Mambu. Paul joined JPMorgan in August 2021, to help them integrate their new businesses, roll out across Europe and improve their agile ways of working and delivery predictability. When not playing with computers at home Paul likes playing golf and watching cricket.",
+    "twitter" : null,
+    "github" : null,
+    "www" : null,
+    "photo" : "/api/resources//photos/2c9a8b37-411d-44ce-97e5-5b96150bcd16.jpeg"
+  } ],
+  "language" : "en",
+  "id" : "840b6b5f-83e8-42b4-b8d8-7c4b9dde3b2d",
+  "_links" : {
+    "self" : {
+      "href" : "https://2023.confitura.pl/api/presentations/840b6b5f-83e8-42b4-b8d8-7c4b9dde3b2d"
+    },
+    "presentation" : {
+      "href" : "https://2023.confitura.pl/api/presentations/840b6b5f-83e8-42b4-b8d8-7c4b9dde3b2d{?projection}",
+      "templated" : true
+    },
+    "tags" : {
+      "href" : "https://2023.confitura.pl/api/presentations/840b6b5f-83e8-42b4-b8d8-7c4b9dde3b2d/tags"
+    },
+    "speakers" : {
+      "href" : "https://2023.confitura.pl/api/presentations/840b6b5f-83e8-42b4-b8d8-7c4b9dde3b2d/speakers{?projection}",
+      "templated" : true
+    },
+    "ratings" : {
+      "href" : "https://2023.confitura.pl/api/presentations/840b6b5f-83e8-42b4-b8d8-7c4b9dde3b2d/ratings"
+    }
+  }
+}

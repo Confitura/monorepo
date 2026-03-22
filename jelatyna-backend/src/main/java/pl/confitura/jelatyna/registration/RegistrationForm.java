@@ -4,6 +4,8 @@ import lombok.Data;
 import pl.confitura.jelatyna.registration.demographic.DemographicData;
 import pl.confitura.jelatyna.registration.voucher.Voucher;
 
+import java.util.Set;
+
 @Data
 class RegistrationForm {
     private Voucher voucher;
@@ -20,6 +22,7 @@ class RegistrationForm {
     private String city;
     private String experience;
     private String role;
+    private Set<String> technologies;
 
     public ParticipationData createParticipant() {
         return new ParticipationData()
@@ -35,7 +38,9 @@ class RegistrationForm {
     public DemographicData createDemographicData() {
         return new DemographicData()
                 .setCity(city)
-                .setMealOption(mealOption).setRole(role)
-                .setExperience(experience);
+                .setMealOption(mealOption)
+                .setRole(role)
+                .setExperience(experience)
+                .setTechnologies(technologies);
     }
 }

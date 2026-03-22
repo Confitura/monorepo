@@ -7,11 +7,10 @@ import com.google.common.collect.Lists;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.*;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.webmvc.RepositoryRestController;
-import org.springframework.hateoas.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,8 +19,9 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import pl.confitura.jelatyna.infrastructure.WebUtils;
 import pl.confitura.jelatyna.presentation.*;
+import pl.confitura.jelatyna.user.User;
 
-@RepositoryRestController
+@RestController
 public class VoteController {
 
     private PresentationRepository presentationRepository;
@@ -45,15 +45,15 @@ public class VoteController {
 
     @RequestMapping(value = "/votes/start/{token}", method = RequestMethod.POST)
     @Transactional
-    public ResponseEntity<Resources<?>> start(@PathVariable String token) {
-        Set<Vote> votes = voteRepository.findAllForToken(token);
+    public ResponseEntity<List<InlineVote>> start(@PathVariable String token) {
+        List<Vote> votes = voteRepository.findAllForToken(token);
         if (votes.isEmpty()) {
             votes = generateVotes(token);
         }
-        return ResponseEntity.ok(new Resources<>(votes));
+        return ResponseEntity.ok(InlineVote.from(votes));
     }
 
-    private Set<Vote> generateVotes(@PathVariable String token) {
+    private List<Vote> generateVotes(String token) {
         List<Presentation> presentations = Lists.newArrayList(this.presentationRepository.findAllForV4p());
         Collections.shuffle(presentations);
         List<Vote> votes = IntStream.range(0, presentations.size())
@@ -63,16 +63,17 @@ public class VoteController {
                         .setPresentation(presentations.get(idx))
                         .setOrder(idx))
                 .collect(toList());
-        return this.voteRepository.saveAll(votes);
+        voteRepository.saveAll(votes);
+        return voteRepository.findAllForToken(token);
     }
 
     @PostMapping("/votes")
     @Transactional
-    public ResponseEntity<Resource<Vote>> save(@RequestBody @Valid Vote vote) {
-        Vote loaded = voteRepository.findById(vote.getId());
-        loaded.setRate(vote.getRate());
+    public ResponseEntity<InlineVote> save(@RequestBody @Valid VoteController.VoteRequest vote) {
+        Vote loaded = voteRepository.findById(vote.id());
+        loaded.setRate(vote.rate);
         loaded.setVoteDate(LocalDateTime.now());
-        return ResponseEntity.ok(new Resource<>(loaded));
+        return ResponseEntity.ok(InlineVote.from(loaded));
     }
 
 
@@ -95,5 +96,87 @@ public class VoteController {
                 .sorted(Comparator.comparing(PresentationStats::getPositiveVotes))
                 .collect(toList());
 
+    }
+
+    public record VoteRequest(
+            String id,
+            Integer rate
+    ) {
+
+    }
+
+    public record InlineVote(
+            @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
+            String id,
+            @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
+            Integer order,
+            @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
+            InlineVotePresentation presentation,
+            @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
+            Integer rate
+    ) {
+
+        public static InlineVote from(Vote loaded) {
+            return new InlineVote(
+                    loaded.getId(),
+                    loaded.getOrder(),
+                    InlineVotePresentation.from(loaded.getPresentation()),
+                    loaded.getRate()
+            );
+        }
+
+        public static List<InlineVote> from(List<Vote> votes) {
+            return votes.stream().map(InlineVote::from).toList();
+        }
+    }
+
+    public record InlineVotePresentation(
+            @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
+            String id,
+            @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
+            String title,
+            @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
+            String longDescription,
+            @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
+            String shortDescription,
+            @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
+            List<InlineVoteSpeaker> speakers,
+            @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
+            boolean workshop
+    ) {
+        public static InlineVotePresentation from(Presentation presentation) {
+            return new InlineVotePresentation(
+                    presentation.getId(),
+                    presentation.getTitle(),
+                    presentation.getDescription(),
+                    presentation.getShortDescription(),
+                    InlineVoteSpeaker.from(presentation.getSpeakers()),
+                    presentation.isWorkshop()
+            );
+        }
+    }
+
+    public record InlineVoteSpeaker(
+            @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
+            String id,
+            @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
+            String name,
+            @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
+            String bio,
+            @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
+            String photo
+    ) {
+        public static List<InlineVoteSpeaker> from(Set<User> speakers) {
+            return speakers.stream().map(InlineVoteSpeaker::from).toList();
+        }
+
+        public static InlineVoteSpeaker from(User speaker) {
+            return new InlineVoteSpeaker(
+                    speaker.getId(),
+                    speaker.getName(),
+                    speaker.getBio(),
+                    speaker.getPhoto()
+            );
+        }
     }
 }

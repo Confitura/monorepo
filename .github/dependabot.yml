@@ -1,0 +1,21 @@
+version: 2
+updates:
+  - package-ecosystem: maven
+    directory: /jelatyna-backend
+    schedule:
+      interval: weekly
+
+  - package-ecosystem: npm
+    directory: /webpage
+    schedule:
+      interval: weekly
+
+  - package-ecosystem: npm
+    directory: /admin-app
+    schedule:
+      interval: weekly
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly

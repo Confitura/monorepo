@@ -1,0 +1,48 @@
+{
+  "level" : "intermediate",
+  "shortDescription" : "W JVM dzieje się sporo! Reactor, Coroutines i Loom kuszą lepszą wydajnością, oferując asynchroniczne przetwarzanie. Jak te rozwiązania działają pod spodem? Czym się od siebie różnią, a w czym są podobne. Prześledźmy to na przykładzie aplikacji napisanej w Spring Boot, porównujące je do Spring MVC.",
+  "tags" : [ {
+    "id" : "reactive",
+    "name" : "Reactive"
+  }, {
+    "id" : "java",
+    "name" : "Java"
+  }, {
+    "id" : "jvm",
+    "name" : "JVM"
+  } ],
+  "description" : "W uniwersum JVM dzieje się sporo! Reactor, Coroutines czy Loom kuszą wizją asynchronicznego przetwarzania i większej wydajności.\n\nJak te rozwiązania działają pod spodem?\nCzym się od siebie różnią, a w czym są podobne.\nDlaczego mówimy, że działają asynchronicznie?\nCo to jest Event Loop oraz Continuation i dlaczego warto byłoby uważać na studiach?\nCo z klasycznym modelem Thread Per Request?\nKtórego podejścia użyć w swoich działających już i nowych projektach?\n\nW trakcie prezentacji prześledzimy, co się dzieje, kiedy wołamy endpoint RESTowy, a nasza aplikacja napisana w Spring Boot zajmuje się jego obsługą w czterech scenariuszach: Thread Per Request (MVC), Reactor, Coroutines oraz Loom.",
+  "title" : "wszystko wszędzie naraz",
+  "status" : "accepted",
+  "workshop" : false,
+  "speakers" : [ {
+    "id" : "91e488f9-a014-442c-91ae-a2f683b6f09a",
+    "name" : "Wojciech Marusarz",
+    "bio" : "Lubię pracować w zespołach, gdzie jakość kodu i ukierunkowany rozwój projektu są kluczowe. W dłuższej perspektywie pozwala mi to na dogłębne zrozumienie tematu, rozwój osobisty i szukanie wyzwań. Zajmuje się programowaniem w Javie i Kotlinie. Dodatkowo interesuję się narzędziami Big Data oraz Data-Intensive.",
+    "twitter" : null,
+    "github" : "https://github.com/marwoj/",
+    "www" : null,
+    "photo" : "/api/resources//photos/91e488f9-a014-442c-91ae-a2f683b6f09a.jpeg"
+  } ],
+  "language" : "pl",
+  "id" : "198a0c85-33de-40b8-aef0-4d716d31d50b",
+  "_links" : {
+    "self" : {
+      "href" : "https://2023.confitura.pl/api/presentations/198a0c85-33de-40b8-aef0-4d716d31d50b"
+    },
+    "presentation" : {
+      "href" : "https://2023.confitura.pl/api/presentations/198a0c85-33de-40b8-aef0-4d716d31d50b{?projection}",
+      "templated" : true
+    },
+    "tags" : {
+      "href" : "https://2023.confitura.pl/api/presentations/198a0c85-33de-40b8-aef0-4d716d31d50b/tags"
+    },
+    "speakers" : {
+      "href" : "https://2023.confitura.pl/api/presentations/198a0c85-33de-40b8-aef0-4d716d31d50b/speakers{?projection}",
+      "templated" : true
+    },
+    "ratings" : {
+      "href" : "https://2023.confitura.pl/api/presentations/198a0c85-33de-40b8-aef0-4d716d31d50b/ratings"
+    }
+  }
+}

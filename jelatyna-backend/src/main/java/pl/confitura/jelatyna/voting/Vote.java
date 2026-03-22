@@ -3,8 +3,8 @@ package pl.confitura.jelatyna.voting;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.time.LocalDateTime;
-import javax.persistence.*;
-import javax.validation.constraints.*;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -24,7 +24,7 @@ public class Vote {
     private String token;
     @Column(name = "vote_order")
     private Integer order;
-    @OneToOne
+    @ManyToOne
     private Presentation presentation;
     @Max(1)
     @Min(-1)

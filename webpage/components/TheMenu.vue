@@ -1,0 +1,133 @@
+<template>
+  <div class="menu" :key="isLogin">
+    <div v-for="item in items" :key="item.label" class="menu-item">
+      <template v-if="isVisible(item)">
+        <NuxtLink
+            v-if="item.url"
+            :to="item.url"
+            class="menu-link"
+            @click.native="click()"
+        >{{ item.label }}
+        </NuxtLink>
+        <span v-else class="menu-link" @click="item.action()">{{
+            item.label
+          }}</span>
+      </template>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+
+let items: MenuItem[] = [
+  // { label: 'scanner', url: '/new-scanner', visible: () => isVolunteer() },
+  { label: 'home', url: '/' },
+  { label: 'venue', url: '/venue' },
+  // { label: "vote", url: "https://app.confitura.pl/vote-for-papers" },
+  // { label: 'partners', url: '/partners' },
+  { label: 'news', url: '/news' },
+  // { label: 'schedule', url: '/schedule' },
+  // { label: 'speakers', url: '/speakers' },
+  // { label: 'presentations', url: '/presentations' },
+  // { label: 'workshops', url: '/workshops' },
+  // { label: 'about us', url: '/about' },
+  { label: '2025', url: 'http://2025.confitura.pl/' },
+  { label: 'FAQ', url: '/faq' },
+  { label: 'C4P', url: 'https://app.confitura.pl/' },
+  // { label: 'tickets', url: '/tickets' },
+  // { label: 'lean coffee', url: '/lean-coffee' },
+  // { label: "workshop day", url: "/workshops" },
+]
+
+function isVisible(item: MenuItem): boolean {
+  return item.visible === undefined || item.visible()
+}
+
+const emit = defineEmits(['linkClicked'])
+function click() {
+  emit('linkClicked')
+}
+
+function isLogin() {
+  return false//TODO this.$store.getters.isLogin;
+}
+
+function isAdmin() {
+  return false//TODOthis.$store.getters.isAdmin;
+}
+
+function isVolunteer() {
+  return false//TODO this.$store.getters.isVolunteer || this.isAdmin;
+}
+
+function logout() {
+  //TODO this.$store.dispatch(LOGOUT);
+}
+
+
+interface MenuItem {
+  label: string;
+  url?: string;
+  action?: () => void;
+  visible?: () => boolean;
+}
+</script>
+
+<style scoped lang="scss">
+@use "~/assets/colors" as *;
+@use "~/assets/media" as *;
+
+.menu {
+  flex-basis: 170px;
+  align-self: flex-end;
+  height: 100%;
+
+  &.header--default,
+  &.header--white,
+  &.header--red,
+  &.header--black {
+    background-color: #000000;
+    @include lg() {
+      background-color: transparent;
+    }
+  }
+
+  @include lg() {
+    flex-basis: unset;
+    justify-content: right;
+    display: unset;
+  }
+
+  .menu-item {
+    margin: 2rem;
+
+    @include lg() {
+      margin: 0.4rem;
+      display: unset;
+    }
+  }
+
+  & .menu-link {
+    text-decoration: none;
+    color: $brand;
+    font-size: 1.1rem;
+    cursor: pointer;
+
+    @include xl() {
+      font-size: 1.3rem;
+    }
+
+    &:hover,
+    &.router-link-active {
+      color: #ffffff;
+      border-bottom: 2px #ffffff solid;
+
+      .header--red &,
+      .header--black & {
+        color: #000000;
+        border-bottom: 2px #000000 solid;
+      }
+    }
+  }
+}
+</style>

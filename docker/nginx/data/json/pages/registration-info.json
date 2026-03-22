@@ -1,0 +1,12 @@
+{
+  "id" : "registration-info",
+  "content" : "Just as in previous years tickets for Confitura arte available through [Allegro Platform](https://allegro.pl/uzytkownik/ConfituraPL). They are released in several batches. Please be aware that you buy any number of tickets, but you are not allowed to resell them.\n\nConfirmation from Allegro, is not the ticket. After up to a week you will get a message with a link to registration form. After providing all necessary data we will send you a QR Code which will be your e-ticket that grant you an access to conference venue. In case of any questions please check our [FAQ](/faq)\n\nThis year all tickets will go directly to [Dom Hospicyjny w Pruszczu Gdańskim](https://hospicjumpruszcz.pl/).",
+  "_links" : {
+    "self" : {
+      "href" : "https://2023.confitura.pl/api/pages/registration-info"
+    },
+    "page" : {
+      "href" : "https://2023.confitura.pl/api/pages/registration-info"
+    }
+  }
+}

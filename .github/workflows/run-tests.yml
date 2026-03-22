@@ -11,64 +11,94 @@ on:
     branches: [ master ]
 
 jobs:
-  test-backend:
+  changes:
     runs-on: ubuntu-latest
+    outputs:
+      backend: ${{ steps.filter.outputs.backend }}
+      frontend: ${{ steps.filter.outputs.frontend }}
+      admin-app: ${{ steps.filter.outputs.admin-app }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            backend:
+              - 'jelatyna-backend/**'
+            frontend:
+              - 'webpage/**'
+            admin-app:
+              - 'admin-app/**'
+
+  test-backend:
+    needs: changes
+    if: needs.changes.outputs.backend == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      checks: write
+      contents: read
     defaults:
       run:
         working-directory: jelatyna-backend
 
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up JDK 8
-        uses: actions/setup-java@v3
+      - uses: actions/checkout@v4
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
         with:
-          java-version: '8'
+          java-version: '21'
           distribution: 'temurin'
           cache: maven
       - name: run Maven
         run: mvn -B package
 
+#      - name: Publish Test Report
+#        if: success() || failure()
+#        uses: scacap/action-surefire-report@v3
+
   test-frontend:
+    needs: changes
+    if: needs.changes.outputs.frontend == 'true'
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [ 12.x, 14.x ]
 
     defaults:
       run:
-        working-directory: confitura-vue
+        working-directory: webpage
 
     steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: '20.x'
           cache: 'npm'
-          cache-dependency-path: confitura-vue/package-lock.json
-      - run: npm ci
+          cache-dependency-path: webpage/package-lock.json
+      - run: npm ci --legacy-peer-deps
       - run: npm run lint --if-present
       - run: npm run build --if-present
       - run: npm test
 
-  test-console:
+  test-admin-app:
+    needs: changes
+    if: needs.changes.outputs.admin-app == 'true'
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [ 12.x, 14.x ]
 
     defaults:
       run:
-        working-directory: confitura-page
+        working-directory: admin-app
 
     steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-          cache-dependency-path: confitura-page/package-lock.json
-      - run: npm ci
-      - run: npm run build --if-present
-      - run: npm test
+          version: '10.5.2'
+      - name: Use Node.js 22.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+          cache: 'pnpm'
+          cache-dependency-path: admin-app/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run typecheck
+      - run: pnpm run test:unit

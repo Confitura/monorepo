@@ -1,0 +1,12 @@
+{
+  "id" : "bcc",
+  "content" : "In 2017, 10 years after first Javarsovia conference, we have decided that it is the hight time to formalize business side of the conference. \n\nWe did not think long about the name of the company, we have named it after the business from our promo video from 2016 - Brain Change Continental. Have you seen it? If you look closely and you will spot some of us in minor roles :)\n\nSince 2017 BCC is responsible for the finance, and legal side of Confitura.",
+  "_links" : {
+    "self" : {
+      "href" : "https://2023.confitura.pl/api/pages/bcc"
+    },
+    "page" : {
+      "href" : "https://2023.confitura.pl/api/pages/bcc"
+    }
+  }
+}

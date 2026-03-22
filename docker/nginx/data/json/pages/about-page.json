@@ -1,0 +1,12 @@
+{
+  "id" : "about-page",
+  "content" : "Confitura is one of the biggest JVM conferences in Poland. It’s the place where Polish and International members of the IT community share their knowledge and experience during sessions and breaks. Each year we host more and more participants keen to find out about new technologies. \n\nThis year we will gather over 2000 people. The conference used to be totally free of charge but one year we decided to use the opportunity to help others and introduced a charity donation based model of registering. We collect symbolic donations with help of the Allegro Charity Platform (all the money go directly to a charity organization) and invite our donors to register.\n\n",
+  "_links" : {
+    "self" : {
+      "href" : "https://2023.confitura.pl/api/pages/about-page"
+    },
+    "page" : {
+      "href" : "https://2023.confitura.pl/api/pages/about-page"
+    }
+  }
+}

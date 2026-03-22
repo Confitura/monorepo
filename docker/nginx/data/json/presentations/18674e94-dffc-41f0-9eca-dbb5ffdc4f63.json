@@ -1,0 +1,53 @@
+{
+  "level" : "intermediate",
+  "shortDescription" : "Made mistakes with events so that you don't have to! We will talk about mistakes to make when building using events. Expect: problems, symptoms, consequences, some \"get-out-of\" cards. And a dry joke, or two.",
+  "tags" : [ {
+    "id" : "sc",
+    "name" : "Software Craftsmanship"
+  }, {
+    "id" : "microservices",
+    "name" : "Microservices"
+  } ],
+  "description" : "Some say: Use events, events are great, all will be great and rosy. Then reality bites, and.. Let's talk about strangers you'd rather avoid - mistakes to make when building using events. Things change, evolve, are not and overdelivered, old events start taking a lot of space, and someone is already using the name you wanted?! Expect: problems, symptoms, consequences, and some \"get-out-of\" cards. Come for the experience others gained first-hand, so you know what to avoid.",
+  "title" : "Avoiding mistakes with events, an event at a time",
+  "status" : "accepted",
+  "workshop" : false,
+  "speakers" : [ {
+    "id" : "a859937f-a1b2-4af3-b60a-5925888f0224",
+    "name" : "Wojtek Ptak",
+    "bio" : "Wojtek works as an Engineering Executive and a Head of Product Engineering at Revolut. Before, he worked as CTO for several companies, provided consulting, training, and assisted in building various data collecting, analytics, and applied ML/AI solutions, including Big Data implementations, data stream processing systems, and data insight projects. He worked with multiple Forbes 500 brands in the US, UK, and the Netherlands, including The Coca-Cola Company, the American Bankers Association, Macy’s, Bloomingdales, Heineken, Saks 5th Avenue, BP, Boots, Polo Ralph Lauren, Porsche, HSBC, and others.",
+    "twitter" : "https://twitter.com/wjptak",
+    "github" : null,
+    "www" : "https://www.linkedin.com/in/wojtekptak/",
+    "photo" : "https://www.gravatar.com/avatar/686f3acc8cdf8073d9fa8763d24f77ea.jpg?s=300&d=blank"
+  }, {
+    "id" : "191f9c04-72b4-4f59-8f55-cd2e23f5c732",
+    "name" : "ags",
+    "bio" : "ags likes distributed systems in all shapes and form. Coding since the age of 8, loves simplicity and continuous delivery. While he has written in many languages, he favours the JVM. Since \"most software problems are people problems”, he stirs communities, organizes and speaks at conferences. And he is a Java Champion!",
+    "twitter" : "ags313",
+    "github" : null,
+    "www" : null,
+    "photo" : "https://www.gravatar.com/avatar/498838b88051c5a4c8a20b8499bd1b19.jpg?s=300&d=blank"
+  } ],
+  "language" : "en",
+  "id" : "18674e94-dffc-41f0-9eca-dbb5ffdc4f63",
+  "_links" : {
+    "self" : {
+      "href" : "https://2023.confitura.pl/api/presentations/18674e94-dffc-41f0-9eca-dbb5ffdc4f63"
+    },
+    "presentation" : {
+      "href" : "https://2023.confitura.pl/api/presentations/18674e94-dffc-41f0-9eca-dbb5ffdc4f63{?projection}",
+      "templated" : true
+    },
+    "tags" : {
+      "href" : "https://2023.confitura.pl/api/presentations/18674e94-dffc-41f0-9eca-dbb5ffdc4f63/tags"
+    },
+    "speakers" : {
+      "href" : "https://2023.confitura.pl/api/presentations/18674e94-dffc-41f0-9eca-dbb5ffdc4f63/speakers{?projection}",
+      "templated" : true
+    },
+    "ratings" : {
+      "href" : "https://2023.confitura.pl/api/presentations/18674e94-dffc-41f0-9eca-dbb5ffdc4f63/ratings"
+    }
+  }
+}

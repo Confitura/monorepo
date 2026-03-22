@@ -1,27 +1,27 @@
 package pl.confitura.jelatyna;
 
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
-
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
+import pl.confitura.jelatyna.news.TestListMongConfiguration;
 
 import java.io.IOException;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
-@ActiveProfiles("test, fake-db")
+@ActiveProfiles({"test", "fake-db"})
 @Transactional(propagation = Propagation.NEVER)
+@Import(TestListMongConfiguration.class)
 public class BaseIntegrationTest {
 
     @Autowired
@@ -32,7 +32,7 @@ public class BaseIntegrationTest {
 
     @BeforeEach
     public void setUp() {
-        SecurityContextHolder.clearContext();
+        SecurityHelper.cleanSecurity();
     }
 
     public String json(Object o) {

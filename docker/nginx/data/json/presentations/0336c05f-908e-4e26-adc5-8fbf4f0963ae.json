@@ -1,0 +1,48 @@
+{
+  "level" : "intermediate",
+  "shortDescription" : "Czy uruchamianie aplikacji JVM na klastrze Kubernetes jest rzeczywiście tak proste jak się wydaje? Jak działa JVM container awareness? Jak poprawnie skonfigurować poda żeby nie strzelić sobie w stopę? W czasie prezentacji postaram się odpowiedzieć na te i inne pytania dotyczące działania JVM w k8s.",
+  "tags" : [ {
+    "id" : "devops",
+    "name" : "DevOps"
+  }, {
+    "id" : "java",
+    "name" : "Java"
+  }, {
+    "id" : "jvm",
+    "name" : "JVM"
+  } ],
+  "description" : "Uruchomienie aplikacji opartych na JVM na klastrze Kubernetes wydaje się stosunkowo łatwym zadaniem - wystarczy zapakować plik JAR do kontenera i gotowe.\nAle czy tak jest naprawdę? Jak działa container awareness w JVM? Jak to się ma do konfiguracji poda?\nSpoiler: czycha tam kilka pułapek. Jak je ominąć?\nZagłębimy się w kontenery, JVM, zarządzanie zasobami Kubernetes i sprawdzimy, jak wszystko jest ze sobą połączone.",
+  "title" : "JVM and Kubernetes walk into the bar...",
+  "status" : "accepted",
+  "workshop" : false,
+  "speakers" : [ {
+    "id" : "a772d893-6462-4423-a511-5fec2f0b82a8",
+    "name" : "Grzegorz Kocur",
+    "bio" : "I'm an experienced DevOps Engineer and the leader of SoftwareMill's DevOps Team. Some refer to my position as 'YAML developer' :-). Over the past 20 years, I have been helping create amazing software for multiple organizations. I'm an avid user of Kubernetes and Cloud Computing, and, obviously, an enthusiast of the DevOps culture. In my free time, I like running and I regenerate while working in my garden.\n",
+    "twitter" : "@GrzegorzKocur",
+    "github" : null,
+    "www" : null,
+    "photo" : "/api/resources//photos/a772d893-6462-4423-a511-5fec2f0b82a8.jpg"
+  } ],
+  "language" : "pl",
+  "id" : "0336c05f-908e-4e26-adc5-8fbf4f0963ae",
+  "_links" : {
+    "self" : {
+      "href" : "https://2023.confitura.pl/api/presentations/0336c05f-908e-4e26-adc5-8fbf4f0963ae"
+    },
+    "presentation" : {
+      "href" : "https://2023.confitura.pl/api/presentations/0336c05f-908e-4e26-adc5-8fbf4f0963ae{?projection}",
+      "templated" : true
+    },
+    "tags" : {
+      "href" : "https://2023.confitura.pl/api/presentations/0336c05f-908e-4e26-adc5-8fbf4f0963ae/tags"
+    },
+    "speakers" : {
+      "href" : "https://2023.confitura.pl/api/presentations/0336c05f-908e-4e26-adc5-8fbf4f0963ae/speakers{?projection}",
+      "templated" : true
+    },
+    "ratings" : {
+      "href" : "https://2023.confitura.pl/api/presentations/0336c05f-908e-4e26-adc5-8fbf4f0963ae/ratings"
+    }
+  }
+}
