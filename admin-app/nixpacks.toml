@@ -1,12 +1,11 @@
 [phases.setup]
 nixPkgs = ["nodejs_22"]
-cmds = ["npm install -g pnpm@10.5.2"]
 
 [phases.install]
-cmds = ["pnpm install --frozen-lockfile"]
+cmds = ["npm ci --legacy-peer-deps"]
 
 [phases.build]
-cmds = ["pnpm build"]
+cmds = ["npm run build"]
 
 [start]
 cmd = "npx serve dist"
