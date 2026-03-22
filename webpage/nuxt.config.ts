@@ -29,23 +29,5 @@ export default defineNuxtConfig({
             }]
         }
     },
-    plausible: {
-        // Prevent tracking on localhost
-        ignoredHostnames: ['localhost'],
-        apiHost: 'https://plausible.confitura.pl/'
-    },
-    umami: {
-        id: '1d7ee786-0bb8-4ae4-ac1d-928296b7b44c',
-        host: 'https://umami.confitura.pl',
-        autoTrack: true,
-        // proxy: 'cloak',
-        // useDirective: true,
-        ignoreLocalhost: true,
-        // excludeQueryParams: false,
-        // domains: ['cool-site.app', 'my-space.site'],
-        // customEndpoint: '/my-custom-endpoint',
-        // enabled: false,
-        // logErrors: true,
-    },
-    modules: ['@pinia/nuxt', '@nuxt/test-utils/module', '@nuxtjs/plausible', 'nuxt-umami']
+    modules: ['@pinia/nuxt', '@nuxt/test-utils/module']
 })
