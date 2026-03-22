@@ -67,19 +67,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v6
-      - name: Install pnpm
-        uses: pnpm/action-setup@v5
-        with:
-          version: '10.12.4'
       - name: Use Node.js 20.x
         uses: actions/setup-node@v6
         with:
           node-version: '20.x'
-          cache: 'pnpm'
-          cache-dependency-path: webpage/pnpm-lock.yaml
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm run build
-      - run: pnpm test
+          cache: 'npm'
+          cache-dependency-path: webpage/package-lock.json
+      - run: npm ci --legacy-peer-deps
+      - run: npm run build
+      - run: npm test
 
   test-admin-app:
     needs: changes
