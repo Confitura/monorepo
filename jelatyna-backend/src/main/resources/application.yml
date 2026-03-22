@@ -18,8 +18,15 @@ spring:
     hibernate:
       ddl-auto: update
 
-management.endpoints.web.base-path: /api/actuator
-management.endpoints.web.exposure.include: "*"
+management:
+  endpoints:
+    web:
+      base-path: /actuator
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: when-authorized
 
 conference.c4p:
   start: "2019-01-01T00:00:00.0+02:00[Europe/Warsaw]"
