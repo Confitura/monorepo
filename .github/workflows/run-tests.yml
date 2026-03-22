@@ -78,8 +78,7 @@ jobs:
           cache: 'pnpm'
           cache-dependency-path: webpage/pnpm-lock.yaml
       - run: pnpm install --frozen-lockfile
-      - run: pnpm run lint --if-present
-      - run: pnpm run build --if-present
+      - run: pnpm run build
       - run: pnpm test
 
   test-admin-app:
