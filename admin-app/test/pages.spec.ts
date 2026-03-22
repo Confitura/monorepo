@@ -1,5 +1,5 @@
-import { describe, it, expect, vi } from 'vitest'
-import { mount } from '@vue/test-utils'
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
+import { mount, flushPromises } from '@vue/test-utils'
 
 // jsdom doesn't implement ResizeObserver, required by Vuetify's VSlideGroup, VPagination, etc.
 global.ResizeObserver = class ResizeObserver {
@@ -37,6 +37,7 @@ vi.mock('@/utils/api.ts', () => ({
   },
   presentationApi: {
     getAllPresentations: vi.fn().mockResolvedValue({ data: [] }),
+    getAllTags: vi.fn().mockResolvedValue({ data: [] }),
     addRating: vi.fn().mockResolvedValue({ data: {} }),
     getCospeakers: vi.fn().mockResolvedValue({ data: [] }),
     rates1: vi.fn().mockResolvedValue({ data: {} }),
@@ -115,8 +116,16 @@ import AdminRatesPage from '@/pages/admin/rates.vue'
 import AdminUsersPage from '@/pages/admin/users.vue'
 
 // ---------------------------------------------------------------------------
-// Mount helper
+// Mount helper + lifecycle
+// Each test mounts into a real DOM container so Vuetify's internal Teleport
+// targets (#app-bar) are present. The wrapper is unmounted in afterEach so
+// Vue's reactive system is fully torn down before the next test starts,
+// preventing "update after unmount" unhandled rejections.
 // ---------------------------------------------------------------------------
+let _wrapper: ReturnType<typeof mount> | null = null
+let _container: HTMLElement | null = null
+let _appBar: HTMLElement | null = null
+
 async function mountPage(component: any, route = '/') {
   const vuetify = createVuetify()
   const pinia = createTestingPinia({ stubActions: false })
@@ -128,7 +137,8 @@ async function mountPage(component: any, route = '/') {
   await router.push(route)
   await router.isReady()
 
-  const wrapper = mount(component, {
+  _wrapper = mount(component, {
+    attachTo: _container!,
     global: {
       plugins: [vuetify, pinia, router],
       stubs: {
@@ -143,13 +153,36 @@ async function mountPage(component: any, route = '/') {
       },
     },
   })
-  return wrapper
+  // Flush all pending promises so onMounted async calls complete while the
+  // component is alive — eliminates post-test reactive-update errors.
+  await flushPromises()
+  return _wrapper
 }
 
 // ---------------------------------------------------------------------------
 // Tests
 // ---------------------------------------------------------------------------
 describe('admin-app pages render without errors', () => {
+  beforeEach(() => {
+    // Provide a mount container and the #app-bar teleport target that
+    // Vuetify's VCard and VDialog internally teleport content into.
+    _container = document.createElement('div')
+    document.body.appendChild(_container)
+    _appBar = document.createElement('div')
+    _appBar.id = 'app-bar'
+    document.body.appendChild(_appBar)
+  })
+
+  afterEach(async () => {
+    _wrapper?.unmount()
+    _wrapper = null
+    _container?.remove()
+    _container = null
+    _appBar?.remove()
+    _appBar = null
+    // Drain any final microtasks scheduled during unmount
+    await flushPromises()
+  })
   it('renders the login page', async () => {
     const wrapper = await mountPage(LoginPage)
     expect(wrapper.html()).toContain('Call for Papers')
