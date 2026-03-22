@@ -31,8 +31,9 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers(HttpMethod.DELETE, "/likes/*").permitAll()
                         .requestMatchers(HttpMethod.DELETE, "/**").authenticated()
-                        .requestMatchers("/api/actuator/info").permitAll()
-                        .requestMatchers("/api/actuator/*").hasAnyAuthority(ADMIN)
+                        .requestMatchers("/actuator/info").permitAll()
+                        .requestMatchers("/actuator/health").permitAll()
+                        .requestMatchers("/actuator/**").hasAnyAuthority(ADMIN)
                         .requestMatchers("/**").permitAll())
 
                 .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
