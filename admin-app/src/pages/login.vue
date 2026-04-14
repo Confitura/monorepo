@@ -102,7 +102,7 @@ function loginUrl(provider: string) {
             events, please include a link in your submission - it really helps
             us
             get to know our future speakers better.
-            <b> The deadline</b> to submit your abstract is <b>July 31.</b></p>
+            <b> The deadline</b> to submit your abstract is <b>June 7.</b></p>
 
           <p>How are talks selected for the Confitura agenda? We’ve let the
             community decide for years. After the Call for Papers deadline, we
