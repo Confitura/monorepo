@@ -11,10 +11,10 @@
     </Box>
     <AboutCommittee :committee="committee"></AboutCommittee>
 
-<!--    <Box color="white" class="about__volunteers no-padding">
-      <h3 class="volunteers__header">volunteers</h3>
-      <AboutVolunteersGrid :users="volunteers"></AboutVolunteersGrid>
-    </Box>-->
+    <!--    <Box color="white" class="about__volunteers no-padding">
+          <h3 class="volunteers__header">volunteers</h3>
+          <AboutVolunteersGrid :users="volunteers"></AboutVolunteersGrid>
+        </Box>-->
 
     <Box color="white">
       <div class="bcc">
@@ -34,18 +34,20 @@
 </template>
 
 <script setup lang="ts">
+import type {UserProfile} from "~/components/about/Committee.vue";
+
 const config = useRuntimeConfig();
 import {useAPIFetch, useArchiveFetch} from '~/composables/useAPIFetch'
 
-const {data: committee} = await fetchUsers('admins')
-const {data: volunteers} = await fetchUsers('volunteers')
+const committee = await fetchUsers('admins')
+const volunteers = await fetchUsers('volunteers')
+
 
 async function fetchUsers(type: string) {
   return useArchiveFetch('/users/search/' + type + '.json', {
     key: type,
-    transform: (response) => {
-      let users = response;
-      users = users.map(user => {
+    transform: (response: any[]) => {
+      let users: UserProfile[] = response.map(user => {
         let photo = user.photo;
         if (photo.startsWith('/')) {
           photo = config.public.fileServer + photo;
@@ -54,9 +56,8 @@ async function fetchUsers(type: string) {
       })
       return users
     }
-  })
+  }).data
 }
-
 
 
 const title = 'About Confitura — Java Community Conference';

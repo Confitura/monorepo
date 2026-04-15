@@ -42,9 +42,9 @@
 
 </template>
 <script setup lang="ts">
-const {committee = []} = defineProps<{ committee: UserProfile[] }>()
+const {committee = []} = defineProps<{ committee: (UserProfile[] | undefined) }>()
 
-interface UserProfile {
+export interface UserProfile {
   id?: string | number
   name: string
   photo?: string
