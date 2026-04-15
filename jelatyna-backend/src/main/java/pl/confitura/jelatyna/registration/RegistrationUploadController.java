@@ -40,8 +40,8 @@ public class RegistrationUploadController {
             throws IOException {
         List<GenerateVouchersResponse> responses =
                 parseFile(file)
-                .map(this::sendVouchers)
-                .collect(toList());
+                        .map(this::sendVouchers)
+                        .collect(toList());
         return ResponseEntity.ok(responses);
     }
 
@@ -50,9 +50,7 @@ public class RegistrationUploadController {
                 .withCSVParser(new CSVParserBuilder().withSeparator(';').build())
                 .build()) {
             return stream(reader.spliterator(), false)
-                    .map(GenerateVouchersRequest::build)
-                    .collect(toList())
-                    .stream();
+                    .map(GenerateVouchersRequest::build);
         }
     }
 
