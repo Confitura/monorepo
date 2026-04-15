@@ -11,8 +11,8 @@ spring:
       ddl-auto: create-drop
 resources:
   resources-base-url: "http://localhost:8080/api"
-  path: files
-  folder: /tmp/confitura
+  path: resources
+  folder: uploaded
 
 mail.apiKey: 123
 
@@ -20,5 +20,41 @@ app:
   cors:
     origins:
       - http://localhost:5173/
+      - http://localhost:3000/
   jwt:
     secret-key: c1c29b861174cd979e5bcd2dc1acf89ac2bc9a30d7307b6949dfd26f2bdc6fed
+
+
+app.oauth.oauth2:
+  facebook:
+    api-key: "..."
+    api-secret: "..."
+    callback: "..."
+
+  github:
+    api-key: "ad8e3871656276280f94"
+    api-secret: "eb50d2038724108266d10244ea27f991025af2d4"
+    callback: "http://localhost:8080/api/login/github/callback"
+
+  google:
+    api-key: "..."
+    api-secret: "..."
+    callback: "..."
+  twitter2:
+    api-key: "Nk1KamdCRUFIbXg1TGp0T0FaVlY6MTpjaQ"
+    api-secret: "kzelraFbT6lgdnEjVoPVMN-fAZtdbYeMGDaCd6Grb29uoetUHX"
+    callback: "http://localhost:8080/api/login/twitter2/callback"
+twitter:
+  api-key: ZeaUz9t1onHENyiOBLgsEoXLC
+  api-secret: UgIjYtcfbxBOfjMI3aic5Pe9FIls5ik4hWszTztmju5OpmLwfO
+  Bearer: AAAAAAAAAAAAAAAAAAAAADan0QEAAAAAk%2B2wmUR9QxhhNuhbHxceyzvcaho%3D3NimVT5zmT1De2IZDBvf1QJRYimLfpPfcwroaq5Fg1IF4nxCAh
+  client-id": Nk1KamdCRUFIbXg1TGp0T0FaVlY6MTpjaQ
+  callback: http://localhost:8080/api/login/twitter/callback
+  access-token: 319890249-2aPoVbuoEYtsazasasMMCc80fZVLkh1ceAcHMyGl
+  access-token-secret: Fu4vIzlM3WePCtWtuwWJWfwUs4GErrxTP8zt14qxWKqnr
+
+#  kzelraFbT6lgdnEjVoPVMN-fAZtdbYeMGDaCd6Grb29uoetUHX
+listmonk:
+  base-url: "https://newsletter.confitura.pl/"
+  username: "jelatyna"
+  password: "geAPNP9qla7QQghW5MIi1rj2iAbmVU0A"

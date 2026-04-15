@@ -22,10 +22,10 @@ public interface PresentationRepository extends Repository<Presentation, String>
     @PreAuthorize("@security.isAdmin()")
     List<Presentation> findAll();
 
-    @Query("FROM Presentation ")
+    @Query("SELECT p FROM Presentation p")
     Iterable<Presentation> findAllForV4p();
 
-    @Query("FROM Presentation p " +
+    @Query("SELECT p FROM Presentation p " +
            " left join fetch p.tags " +
            " left join fetch p.speakers " +
            " WHERE p.status ='accepted' ")
@@ -33,10 +33,10 @@ public interface PresentationRepository extends Repository<Presentation, String>
 
     Long count();
 
-    @Query("SELECT count(p.id) FROM Presentation p WHERE status ='accepted'")
+    @Query("SELECT count(p.id) FROM Presentation p WHERE p.status ='accepted'")
     Long countAccepted();
 
-    @Query("FROM Presentation p JOIN p.speakers co WHERE p.status ='accepted' and co = ?1")
+    @Query("SELECT p FROM Presentation p JOIN p.speakers co WHERE p.status ='accepted' and co = :user")
     List<Presentation> findAcceptedWithCoSpeaker(User user);
 
 
