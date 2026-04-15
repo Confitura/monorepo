@@ -13,6 +13,6 @@ public interface VoteRepository extends Repository<Vote, String> {
 
     Iterable<Vote> findAll();
 
-    @Query("FROM Vote v WHERE v.token = ?1 order by v.order")
+    @Query("SELECT v FROM Vote v WHERE v.token = :token order by v.order")
     List<Vote> findAllForToken(String token);
 }
