@@ -8,6 +8,7 @@ import lombok.experimental.Accessors;
 import org.hibernate.annotations.GenericGenerator;
 import pl.confitura.jelatyna.infrastructure.db.AuditedEntity;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
@@ -39,6 +40,7 @@ public class Voucher  extends AuditedEntity {
     public Voucher() {
     }
 
+    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public Voucher(String id) {
         this.id = id;
     }
