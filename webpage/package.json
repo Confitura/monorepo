@@ -22,7 +22,7 @@
     "modern-normalize": "^3.0.1",
     "nuxt": "^4.4.2",
     "pinia": "^3.0.4",
-    "vue": "^3.5.32",
+    "vue": "^3.5.33",
     "vue-router": "^5.0.4",
     "vue3-google-map": "^0.27.1"
   },
