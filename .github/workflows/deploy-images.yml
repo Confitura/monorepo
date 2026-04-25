@@ -43,6 +43,7 @@ jobs:
       - name: Build and push webpage
         run: |
           IMAGE=ghcr.io/${{ github.repository_owner }}/confitura-webpage
+          IMAGE=${IMAGE,,}
           nixpacks build webpage --name $IMAGE
           docker tag $IMAGE:latest $IMAGE:${{ github.sha }}
           docker push $IMAGE:latest
@@ -67,6 +68,7 @@ jobs:
       - name: Build and push admin-app
         run: |
           IMAGE=ghcr.io/${{ github.repository_owner }}/confitura-admin-app
+          IMAGE=${IMAGE,,}
           nixpacks build admin-app --name $IMAGE
           docker tag $IMAGE:latest $IMAGE:${{ github.sha }}
           docker push $IMAGE:latest
@@ -91,6 +93,7 @@ jobs:
       - name: Build and push backend
         run: |
           IMAGE=ghcr.io/${{ github.repository_owner }}/confitura-backend
+          IMAGE=${IMAGE,,}
           nixpacks build jelatyna-backend --name $IMAGE
           docker tag $IMAGE:latest $IMAGE:${{ github.sha }}
           docker push $IMAGE:latest
