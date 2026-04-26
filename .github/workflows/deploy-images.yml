@@ -3,18 +3,33 @@ name: deploy images
 on:
   push:
     branches: [ master ]
+  workflow_dispatch:
+    inputs:
+      backend:
+        description: Deploy backend
+        type: boolean
+        default: false
+      frontend:
+        description: Deploy webpage
+        type: boolean
+        default: false
+      admin-app:
+        description: Deploy admin-app
+        type: boolean
+        default: false
 
 jobs:
   changes:
     runs-on: ubuntu-latest
     outputs:
-      backend: ${{ steps.filter.outputs.backend }}
-      frontend: ${{ steps.filter.outputs.frontend }}
-      admin-app: ${{ steps.filter.outputs.admin-app }}
+      backend: ${{ steps.resolve.outputs.backend }}
+      frontend: ${{ steps.resolve.outputs.frontend }}
+      admin-app: ${{ steps.resolve.outputs.admin-app }}
     steps:
       - uses: actions/checkout@v6
       - uses: dorny/paths-filter@v4
         id: filter
+        if: github.event_name == 'push'
         with:
           filters: |
             backend:
@@ -23,6 +38,18 @@ jobs:
               - 'webpage/**'
             admin-app:
               - 'admin-app/**'
+      - name: Resolve which projects to deploy
+        id: resolve
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            echo "backend=${{ github.event.inputs.backend }}" >> $GITHUB_OUTPUT
+            echo "frontend=${{ github.event.inputs.frontend }}" >> $GITHUB_OUTPUT
+            echo "admin-app=${{ github.event.inputs.admin-app }}" >> $GITHUB_OUTPUT
+          else
+            echo "backend=${{ steps.filter.outputs.backend }}" >> $GITHUB_OUTPUT
+            echo "frontend=${{ steps.filter.outputs.frontend }}" >> $GITHUB_OUTPUT
+            echo "admin-app=${{ steps.filter.outputs.admin-app }}" >> $GITHUB_OUTPUT
+          fi
 
   push-webpage:
     needs: changes
@@ -48,6 +75,11 @@ jobs:
           docker tag $IMAGE:latest $IMAGE:${{ github.sha }}
           docker push $IMAGE:latest
           docker push $IMAGE:${{ github.sha }}
+      - name: Trigger Coolify deployment
+        run: |
+          curl -fsS -X GET \
+            -H "Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}" \
+            "https://admin.confitura.pl/api/v1/deploy?uuid=jjbrvlzsq0ck1oqx46b0i0v6&force=false"
 
   push-admin-app:
     needs: changes
