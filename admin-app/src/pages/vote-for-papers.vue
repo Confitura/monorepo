@@ -312,7 +312,6 @@ async function vote(vote: InlineVote, value: number) {
       v-model="snackbar"
       :timeout="snackbarTimeout"
       color="info"
-      multi-line
     >
       Available shortcuts:
       <pre>

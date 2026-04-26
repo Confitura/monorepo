@@ -1,4 +1,4 @@
-name: check nixpacks builds
+name: check builds
 
 on:
   push:
@@ -32,10 +32,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - name: Install nixpacks
-        run: curl -sSL https://nixpacks.com/install.sh | bash
       - name: Build webpage
-        run: nixpacks build webpage --name confitura-webpage
+        run: docker build -f webpage/docker/Dockerfile webpage
 
   build-admin-app:
     needs: changes
@@ -43,10 +41,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - name: Install nixpacks
-        run: curl -sSL https://nixpacks.com/install.sh | bash
       - name: Build admin-app
-        run: nixpacks build admin-app --name confitura-admin-app
+        run: |
+          docker build \
+            -f admin-app/docker/Dockerfile \
+            --build-arg VITE_API_URL=https://api.confitura.pl/api \
+            --build-arg VITE_SELF_URL=https://app.confitura.pl \
+            admin-app
 
   build-backend:
     needs: changes
