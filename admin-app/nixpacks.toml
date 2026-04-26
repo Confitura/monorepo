@@ -2,10 +2,14 @@
 nixPkgs = ["nodejs_22"]
 
 [phases.install]
-cmds = ["npm ci --legacy-peer-deps"]
+cmds = ["npm ci --legacy-peer-deps", "npm install -g serve"]
 
 [phases.build]
 cmds = ["npm run build"]
 
+[variables]
+VITE_API_URL = "https://api.confitura.pl/api"
+VITE_SELF_URL = "https://app.confitura.pl"
+
 [start]
-cmd = "npx serve dist"
+cmd = "serve dist"
