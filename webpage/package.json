@@ -28,11 +28,11 @@
     "vue3-google-map": "^0.27.1"
   },
   "devDependencies": {
-    "@nuxt/test-utils": "^3.23.0",
+    "@nuxt/test-utils": "4.0.2",
     "@vue/test-utils": "^2.4.6",
     "happy-dom": "^20.9.0",
     "playwright-core": "^1.59.1",
     "sass-embedded": "^1.99.0",
-    "vitest": "^3.2.4"
+    "vitest": "^4.0.2"
   }
 }
