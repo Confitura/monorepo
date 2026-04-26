@@ -7,5 +7,9 @@ cmds = ["npm ci --legacy-peer-deps"]
 [phases.build]
 cmds = ["npm run build"]
 
+[variables]
+VITE_API_URL = "https://api.confitura.pl/api"
+VITE_SELF_URL = "https://app.confitura.pl"
+
 [start]
 cmd = "npx serve dist"
