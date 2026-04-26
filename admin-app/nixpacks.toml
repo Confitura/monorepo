@@ -12,4 +12,4 @@ VITE_API_URL = "https://api.confitura.pl/api"
 VITE_SELF_URL = "https://app.confitura.pl"
 
 [start]
-cmd = "./node_modules/.bin/serve dist"
+cmd = "./node_modules/.bin/serve -s dist"
