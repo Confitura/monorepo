@@ -17,7 +17,7 @@ public interface PartnerRepository extends Repository<Partner, String> {
     @PreAuthorize("@security.isAdmin()")
     void deleteById(String id);
 
-    @Query("FROM Partner as p WHERE p.published = true")
+    @Query("SELECT p FROM Partner p WHERE p.published = true")
     Iterable<Partner> findPublished();
 
 

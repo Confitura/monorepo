@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
+import com.opencsv.CSVParserBuilder;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -38,15 +40,18 @@ public class RegistrationUploadController {
             throws IOException {
         List<GenerateVouchersResponse> responses =
                 parseFile(file)
-                .map(this::sendVouchers)
-                .collect(toList());
+                        .map(this::sendVouchers)
+                        .collect(toList());
         return ResponseEntity.ok(responses);
     }
 
     private Stream<GenerateVouchersRequest> parseFile(@RequestParam MultipartFile file) throws IOException {
-        CSVReader reader = new CSVReader(new InputStreamReader(file.getInputStream()), ';');
-        return stream(reader.spliterator(), false)
-                .map(GenerateVouchersRequest::build);
+        try (CSVReader reader = new CSVReaderBuilder(new InputStreamReader(file.getInputStream()))
+                .withCSVParser(new CSVParserBuilder().withSeparator(';').build())
+                .build()) {
+            return stream(reader.spliterator(), false)
+                    .map(GenerateVouchersRequest::build);
+        }
     }
 
     private GenerateVouchersResponse sendVouchers(GenerateVouchersRequest registerRequest) {

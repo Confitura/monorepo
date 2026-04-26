@@ -1,0 +1,165 @@
+name: deploy images
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+    inputs:
+      backend:
+        description: Deploy backend
+        type: boolean
+        default: false
+      frontend:
+        description: Deploy webpage
+        type: boolean
+        default: false
+      admin-app:
+        description: Deploy admin-app
+        type: boolean
+        default: false
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      backend: ${{ steps.resolve.outputs.backend }}
+      frontend: ${{ steps.resolve.outputs.frontend }}
+      admin-app: ${{ steps.resolve.outputs.admin-app }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: dorny/paths-filter@v4
+        id: filter
+        if: github.event_name == 'push'
+        with:
+          filters: |
+            backend:
+              - 'jelatyna-backend/**'
+            frontend:
+              - 'webpage/**'
+            admin-app:
+              - 'admin-app/**'
+      - name: Resolve which projects to deploy
+        id: resolve
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            echo "backend=${{ github.event.inputs.backend }}" >> $GITHUB_OUTPUT
+            echo "frontend=${{ github.event.inputs.frontend }}" >> $GITHUB_OUTPUT
+            echo "admin-app=${{ github.event.inputs.admin-app }}" >> $GITHUB_OUTPUT
+          else
+            echo "backend=${{ steps.filter.outputs.backend }}" >> $GITHUB_OUTPUT
+            echo "frontend=${{ steps.filter.outputs.frontend }}" >> $GITHUB_OUTPUT
+            echo "admin-app=${{ steps.filter.outputs.admin-app }}" >> $GITHUB_OUTPUT
+          fi
+
+  push-webpage:
+    needs: changes
+    if: needs.changes.outputs.frontend == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+    steps:
+      - uses: actions/checkout@v6
+      - uses: docker/setup-buildx-action@v3
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push webpage
+        run: |
+          IMAGE=ghcr.io/${{ github.repository_owner }}/confitura-webpage
+          IMAGE=${IMAGE,,}
+          docker buildx build \
+            -f webpage/docker/Dockerfile \
+            --cache-from type=gha \
+            --cache-to type=gha,mode=max \
+            -t $IMAGE:latest \
+            -t $IMAGE:${{ github.sha }} \
+            --push \
+            webpage
+      - name: Trigger Coolify deployment
+        run: |
+          curl -fsS -X GET \
+            -H "Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}" \
+            "https://admin.confitura.pl/api/v1/deploy?uuid=jjbrvlzsq0ck1oqx46b0i0v6&force=false"
+
+  push-admin-app:
+    needs: changes
+    if: needs.changes.outputs.admin-app == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+    steps:
+      - uses: actions/checkout@v6
+      - uses: docker/setup-buildx-action@v3
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push admin-app
+        run: |
+          IMAGE=ghcr.io/${{ github.repository_owner }}/confitura-admin-app
+          IMAGE=${IMAGE,,}
+          docker buildx build \
+            -f admin-app/docker/Dockerfile \
+            --build-arg VITE_API_URL=https://api.confitura.pl/api \
+            --build-arg VITE_SELF_URL=https://app.confitura.pl \
+            --cache-from type=gha \
+            --cache-to type=gha,mode=max \
+            -t $IMAGE:latest \
+            -t $IMAGE:${{ github.sha }} \
+            --push \
+            admin-app
+      - name: Trigger Coolify deployment
+        run: |
+          curl -fsS -X GET \
+            -H "Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}" \
+            "https://admin.confitura.pl/api/v1/deploy?uuid=a4z9gvkuf4vk784dxd39nj2f&force=false"
+
+  push-backend:
+    needs: changes
+    if: needs.changes.outputs.backend == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: temurin
+          cache: maven
+      - name: Cache Paketo builder
+        id: paketo-cache
+        uses: actions/cache@v4
+        with:
+          path: /tmp/paketo-builder.tar
+          key: paketo-builder-${{ hashFiles('jelatyna-backend/pom.xml') }}
+          restore-keys: paketo-builder-
+      - name: Load Paketo builder
+        if: steps.paketo-cache.outputs.cache-hit == 'true'
+        run: docker load -i /tmp/paketo-builder.tar
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push backend
+        run: |
+          IMAGE=ghcr.io/${{ github.repository_owner }}/confitura-backend
+          IMAGE=${IMAGE,,}
+          cd jelatyna-backend && ./mvnw spring-boot:build-image -DskipTests \
+            -Dspring-boot.build-image.imageName=$IMAGE:latest
+          docker tag $IMAGE:latest $IMAGE:${{ github.sha }}
+          docker push $IMAGE:latest
+          docker push $IMAGE:${{ github.sha }}
+      - name: Save Paketo builder
+        if: steps.paketo-cache.outputs.cache-hit != 'true'
+        run: |
+          docker save $(docker images --format '{{.Repository}}:{{.Tag}}' \
+            | grep -E 'paketobuildpacks|buildpacks' | head -1) \
+            -o /tmp/paketo-builder.tar
