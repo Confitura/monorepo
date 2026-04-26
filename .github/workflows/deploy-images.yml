@@ -105,6 +105,11 @@ jobs:
           docker tag $IMAGE:latest $IMAGE:${{ github.sha }}
           docker push $IMAGE:latest
           docker push $IMAGE:${{ github.sha }}
+      - name: Trigger Coolify deployment
+        run: |
+          curl -fsS -X GET \
+            -H "Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}" \
+            "https://admin.confitura.pl/api/v1/deploy?uuid=a4z9gvkuf4vk784dxd39nj2f&force=false"
 
   push-backend:
     needs: changes
