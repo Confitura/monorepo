@@ -2,11 +2,12 @@ package pl.confitura.jelatyna.twitter;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import twitter4j.ResponseList;
-import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
+import twitter4j.v1.ResponseList;
+import twitter4j.v1.Status;
 
+import java.time.ZoneOffset;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,7 +27,7 @@ public class TwitterClient {
     @Deprecated
     List<Tweet> useTwitterPremiumFeatureToFetchTweets() {
         try {
-            ResponseList<Status> timelines = twitter.getUserTimeline("confiturapl");
+            ResponseList<Status> timelines = twitter.v1().timelines().getUserTimeline("confiturapl");
             return timelines.stream().map(this::mapTweet).collect(Collectors.toList());
         } catch (TwitterException e) {
             log.warn("Couldn't load tweets", e);
@@ -40,7 +41,7 @@ public class TwitterClient {
         tweet.setName(status.getUser().getName());
         tweet.setTwitterHandle(status.getUser().getScreenName());
         tweet.setAvatar(status.getUser().get400x400ProfileImageURLHttps());
-        tweet.setTime(status.getCreatedAt().toInstant());
+        tweet.setTime(status.getCreatedAt().toInstant(ZoneOffset.UTC));
         return tweet;
     }
 }

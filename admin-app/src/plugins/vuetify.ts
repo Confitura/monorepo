@@ -2,7 +2,7 @@ import 'vuetify/styles'
 import { createVuetify, type IconSet, type IconProps } from 'vuetify'
 import { aliases, mdi } from 'vuetify/iconsets/mdi-svg'
 import { md3 } from 'vuetify/blueprints'
-import type { VDataTable } from 'vuetify/lib/components/index.mjs'
+import type { VDataTable } from 'vuetify/components'
 export type DataTableHeaders = InstanceType<
   typeof VDataTable
 >['$props']['headers']

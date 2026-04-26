@@ -11,10 +11,10 @@
     </Box>
     <AboutCommittee :committee="committee"></AboutCommittee>
 
-    <Box color="white" class="about__volunteers no-padding">
+<!--    <Box color="white" class="about__volunteers no-padding">
       <h3 class="volunteers__header">volunteers</h3>
       <AboutVolunteersGrid :users="volunteers"></AboutVolunteersGrid>
-    </Box>
+    </Box>-->
 
     <Box color="white">
       <div class="bcc">
