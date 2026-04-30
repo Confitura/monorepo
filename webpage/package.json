@@ -28,7 +28,7 @@
     "vue3-google-map": "^0.27.1"
   },
   "devDependencies": {
-    "@nuxt/test-utils": "4.0.2",
+    "@nuxt/test-utils": "4.0.3",
     "@vue/test-utils": "^2.4.10",
     "happy-dom": "^20.9.0",
     "playwright-core": "^1.59.1",
