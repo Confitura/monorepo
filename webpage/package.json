@@ -29,7 +29,7 @@
   },
   "devDependencies": {
     "@nuxt/test-utils": "4.0.2",
-    "@vue/test-utils": "^2.4.6",
+    "@vue/test-utils": "^2.4.10",
     "happy-dom": "^20.9.0",
     "playwright-core": "^1.59.1",
     "sass-embedded": "^1.99.0",
