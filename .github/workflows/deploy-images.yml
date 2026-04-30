@@ -134,7 +134,7 @@ jobs:
           cache: maven
       - name: Cache Paketo builder
         id: paketo-cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: /tmp/paketo-builder.tar
           key: paketo-builder-${{ hashFiles('jelatyna-backend/pom.xml') }}
