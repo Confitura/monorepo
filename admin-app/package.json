@@ -45,7 +45,7 @@
     "rollup-plugin-regexp": "^5.0.1",
     "sass-embedded": "^1.98.0",
     "typescript": "^5.9.3",
-    "unplugin-auto-import": "^19.1.1",
+    "unplugin-auto-import": "^21.0.0",
     "unplugin-vue-components": "^31.0.0",
     "unplugin-vue-router": "^0.19.2",
     "vite": "^8.0.10",
