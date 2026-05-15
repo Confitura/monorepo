@@ -1,5 +1,5 @@
 [phases.setup]
-nixPkgs = ["nodejs_22"]
+nixPkgs = ["nodejs_24"]
 
 [phases.install]
 cmds = ["npm ci --legacy-peer-deps", "npm install --no-save serve"]
