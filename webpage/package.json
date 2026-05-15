@@ -1,6 +1,6 @@
 {
   "engines": {
-    "node": "22"
+    "node": "24"
   },
 
   "packageManager": "npm@10.9.2",
