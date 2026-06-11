@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "@mdi/js": "^7.4.47",
-    "@nuxt/eslint-config": "^1.15.2",
+    "@nuxt/eslint-config": "^1.16.0",
     "@pinia/testing": "^1.0.3",
     "@playwright/test": "^1.60.0",
     "@testing-library/vue": "^8.1.0",
