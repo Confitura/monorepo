@@ -21,7 +21,7 @@
     "uuid": "^14.0.0",
     "vue": "^3.5.35",
     "vue-echarts": "^7.0.3",
-    "vue-markdown-render": "^2.3.0",
+    "vue-markdown-render": "^2.3.1",
     "vue-router": "^4.6.4",
     "vuetify": "4.0.8"
   },
