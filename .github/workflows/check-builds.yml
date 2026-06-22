@@ -14,7 +14,7 @@ jobs:
       frontend: ${{ steps.filter.outputs.frontend }}
       admin-app: ${{ steps.filter.outputs.admin-app }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: dorny/paths-filter@v4
         id: filter
         with:
@@ -31,7 +31,7 @@ jobs:
     if: needs.changes.outputs.frontend == 'true'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Build webpage
         run: docker build -f webpage/docker/Dockerfile webpage
 
@@ -40,7 +40,7 @@ jobs:
     if: needs.changes.outputs.admin-app == 'true'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Build admin-app
         run: |
           docker build \
@@ -54,7 +54,7 @@ jobs:
     if: needs.changes.outputs.backend == 'true'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Install nixpacks
         run: curl -sSL https://nixpacks.com/install.sh | bash
       - name: Build backend
