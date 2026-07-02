@@ -77,15 +77,16 @@ class VoteResultsControllerTest extends BaseIntegrationTest {
     }
 
     @Test
-    void adminShouldSetPreSelectionStatus() throws Exception {
+    void adminShouldSetPreSelectionStatusAndComment() throws Exception {
         mockMvc.perform(post("/presentations/" + presentation.getId() + "/pre-selection")
-                        .content("{\"status\":\"PRE_APPROVED\"}")
+                        .content("{\"status\":\"IN_RESERVE\",\"comment\":\"solid backup talk\"}")
                         .contentType(MediaType.APPLICATION_JSON)
                         .with(admin()))
                 .andExpect(status().isOk());
 
-        assertThat(presentationRepository.findById(presentation.getId()).getPreSelectionStatus())
-                .isEqualTo(PreSelectionStatus.PRE_APPROVED);
+        Presentation reloaded = presentationRepository.findById(presentation.getId());
+        assertThat(reloaded.getPreSelectionStatus()).isEqualTo(PreSelectionStatus.IN_RESERVE);
+        assertThat(reloaded.getPreSelectionComment()).isEqualTo("solid backup talk");
     }
 
     private Vote vote(String token, int rate) {

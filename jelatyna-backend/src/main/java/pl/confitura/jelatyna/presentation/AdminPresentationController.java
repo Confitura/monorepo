@@ -41,11 +41,13 @@ public class AdminPresentationController {
     @Transactional
     public ResponseEntity<?> setPreSelection(@PathVariable String presentationId,
                                              @RequestBody PreSelectionRequest request) {
-        this.repository.findById(presentationId).setPreSelectionStatus(request.status());
+        Presentation presentation = this.repository.findById(presentationId);
+        presentation.setPreSelectionStatus(request.status());
+        presentation.setPreSelectionComment(request.comment());
         return ResponseEntity.ok().build();
     }
 
-    public record PreSelectionRequest(PreSelectionStatus status) {
+    public record PreSelectionRequest(PreSelectionStatus status, String comment) {
     }
 
 

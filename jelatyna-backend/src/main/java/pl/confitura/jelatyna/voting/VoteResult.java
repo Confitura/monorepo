@@ -29,10 +29,13 @@ public record VoteResult(
         @Schema(requiredMode = REQUIRED) int negativePercent,
         @Schema(requiredMode = REQUIRED) int neutralPercent,
         @Schema(requiredMode = REQUIRED) PreSelectionStatus preSelectionStatus,
+        @Schema(requiredMode = REQUIRED) String preSelectionComment,
+        @Schema(requiredMode = REQUIRED) boolean speakerHasAcceptedPresentation,
         @Schema(requiredMode = REQUIRED) Map<String, Integer> voterScores
 ) {
 
-    static VoteResult from(Presentation presentation, List<Vote> votes, Set<String> selectedTokens) {
+    static VoteResult from(Presentation presentation, List<Vote> votes, Set<String> selectedTokens,
+                           Set<String> acceptedSpeakerIds) {
         int total = votes.size();
         int positive = (int) votes.stream().filter(v -> v.getRate() > 0).count();
         int negative = (int) votes.stream().filter(v -> v.getRate() < 0).count();
@@ -42,6 +45,9 @@ public record VoteResult(
         Map<String, Integer> voterScores = votes.stream()
                 .filter(v -> selectedTokens.contains(v.getToken()))
                 .collect(Collectors.groupingBy(Vote::getToken, Collectors.summingInt(Vote::getRate)));
+
+        boolean speakerHasAcceptedPresentation = !presentation.isAccepted()
+                && presentation.getSpeakers().stream().anyMatch(s -> acceptedSpeakerIds.contains(s.getId()));
 
         return new VoteResult(
                 presentation.getId(),
@@ -59,6 +65,8 @@ public record VoteResult(
                 percent(negative, total),
                 percent(neutral, total),
                 presentation.getPreSelectionStatus() == null ? PreSelectionStatus.NONE : presentation.getPreSelectionStatus(),
+                presentation.getPreSelectionComment() == null ? "" : presentation.getPreSelectionComment(),
+                speakerHasAcceptedPresentation,
                 voterScores
         );
     }

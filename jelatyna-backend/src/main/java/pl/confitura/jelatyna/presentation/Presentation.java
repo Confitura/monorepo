@@ -68,6 +68,8 @@ public class Presentation {
     @Enumerated(EnumType.STRING)
     private PreSelectionStatus preSelectionStatus = PreSelectionStatus.NONE;
 
+    private String preSelectionComment;
+
     private boolean workshop = false;
 
     private Boolean isFree = null;
