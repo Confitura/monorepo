@@ -1,3 +1,0 @@
-org.springframework.context.ApplicationListener=\
-org.springframework.boot.context.ApplicationPidFileWriter,\
-org.springframework.boot.web.server.context.WebServerPortFileWriter
