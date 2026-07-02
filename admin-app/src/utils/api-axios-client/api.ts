@@ -1127,12 +1127,19 @@ export interface PreSelectionRequest {
      * @memberof PreSelectionRequest
      */
     'status'?: PreSelectionRequestStatusEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof PreSelectionRequest
+     */
+    'comment'?: string;
 }
 
 export const PreSelectionRequestStatusEnum = {
     None: 'NONE',
     PreApproved: 'PRE_APPROVED',
-    PreRejected: 'PRE_REJECTED'
+    PreRejected: 'PRE_REJECTED',
+    InReserve: 'IN_RESERVE'
 } as const;
 
 export type PreSelectionRequestStatusEnum = typeof PreSelectionRequestStatusEnum[keyof typeof PreSelectionRequestStatusEnum];
@@ -1211,6 +1218,12 @@ export interface Presentation {
     'preSelectionStatus'?: PresentationPreSelectionStatusEnum;
     /**
      * 
+     * @type {string}
+     * @memberof Presentation
+     */
+    'preSelectionComment'?: string;
+    /**
+     * 
      * @type {boolean}
      * @memberof Presentation
      */
@@ -1262,7 +1275,8 @@ export interface Presentation {
 export const PresentationPreSelectionStatusEnum = {
     None: 'NONE',
     PreApproved: 'PRE_APPROVED',
-    PreRejected: 'PRE_REJECTED'
+    PreRejected: 'PRE_REJECTED',
+    InReserve: 'IN_RESERVE'
 } as const;
 
 export type PresentationPreSelectionStatusEnum = typeof PresentationPreSelectionStatusEnum[keyof typeof PresentationPreSelectionStatusEnum];
@@ -1862,13 +1876,13 @@ export interface User {
      * @type {boolean}
      * @memberof User
      */
-    'volunteer'?: boolean;
+    'admin'?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof User
      */
-    'admin'?: boolean;
+    'volunteer'?: boolean;
     /**
      * 
      * @type {boolean}
@@ -2097,6 +2111,18 @@ export interface VoteResult {
     'preSelectionStatus': VoteResultPreSelectionStatusEnum;
     /**
      * 
+     * @type {string}
+     * @memberof VoteResult
+     */
+    'preSelectionComment': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof VoteResult
+     */
+    'speakerHasPreSelectedPresentation': boolean;
+    /**
+     * 
      * @type {{ [key: string]: number; }}
      * @memberof VoteResult
      */
@@ -2106,7 +2132,8 @@ export interface VoteResult {
 export const VoteResultPreSelectionStatusEnum = {
     None: 'NONE',
     PreApproved: 'PRE_APPROVED',
-    PreRejected: 'PRE_REJECTED'
+    PreRejected: 'PRE_REJECTED',
+    InReserve: 'IN_RESERVE'
 } as const;
 
 export type VoteResultPreSelectionStatusEnum = typeof VoteResultPreSelectionStatusEnum[keyof typeof VoteResultPreSelectionStatusEnum];

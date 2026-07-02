@@ -23,10 +23,19 @@ const voters = ref<Voter[]>(loadVoters())
 const votersText = ref(voters.value.map(v => `${v.name}=${v.token}`).join('\n'))
 
 const preSelectionOptions = [
-  {title: 'None', value: 'NONE'},
-  {title: 'Pre-approved', value: 'PRE_APPROVED'},
-  {title: 'Pre-rejected', value: 'PRE_REJECTED'},
+  {title: 'None', value: 'NONE', color: 'grey'},
+  {title: 'Pre-approved', value: 'PRE_APPROVED', color: 'green'},
+  {title: 'Pre-rejected', value: 'PRE_REJECTED', color: 'red'},
+  {title: 'In reserve', value: 'IN_RESERVE', color: 'amber-darken-2'},
 ]
+
+const statusCounts = computed(() => {
+  const counts: Record<string, number> = {NONE: 0, PRE_APPROVED: 0, PRE_REJECTED: 0, IN_RESERVE: 0}
+  for (const r of results.value) {
+    counts[r.preSelectionStatus] = (counts[r.preSelectionStatus] ?? 0) + 1
+  }
+  return counts
+})
 
 const baseHeaders: DataTableHeaders = [
   {title: 'Title', key: 'title'},
@@ -42,6 +51,7 @@ const baseHeaders: DataTableHeaders = [
   {title: 'Workshop', key: 'workshop'},
   {title: 'Tags', key: 'flatTags'},
   {title: 'Pre-selection', key: 'preSelectionStatus', sortable: false},
+  {title: 'Comment', key: 'preSelectionComment', sortable: false},
 ]
 
 const headers = computed<DataTableHeaders>(() => [
@@ -86,6 +96,8 @@ function reload() {
 function rowClass(item: VoteResult): string {
   if (item.preSelectionStatus === 'PRE_APPROVED') return 'pre-approved-row'
   if (item.preSelectionStatus === 'PRE_REJECTED') return 'pre-rejected-row'
+  if (item.preSelectionStatus === 'IN_RESERVE') return 'in-reserve-row'
+  if (item.speakerHasPreSelectedPresentation) return 'speaker-preselected-row'
   return ''
 }
 
@@ -94,15 +106,28 @@ function scoreColor(value: number | undefined): string {
   return value > 0 ? 'text-light-green-darken-2' : 'text-red-darken-1'
 }
 
+function savePreSelection(item: VoteResult) {
+  return adminPresentationApi.setPreSelection(item.presentationId, {
+    status: item.preSelectionStatus as any,
+    comment: item.preSelectionComment ?? '',
+  })
+}
+
 function setPreSelection(item: VoteResult, status: string) {
   const previous = item.preSelectionStatus
   item.preSelectionStatus = status as VoteResult['preSelectionStatus']
-  adminPresentationApi.setPreSelection(item.presentationId, {status: status as any})
+  savePreSelection(item)
     .then(() => Notify.success(`Updated ${item.title}`))
     .catch(() => {
       item.preSelectionStatus = previous
       Notify.error('Failed to update pre-selection')
     })
+}
+
+function saveComment(item: VoteResult) {
+  savePreSelection(item)
+    .then(() => Notify.success(`Saved comment for ${item.title}`))
+    .catch(() => Notify.error('Failed to save comment'))
 }
 
 onMounted(reload)
@@ -146,6 +171,18 @@ onMounted(reload)
         </v-card>
 
         <v-card>
+          <v-card-text class="d-flex ga-2 flex-wrap align-center">
+            <v-chip
+              v-for="option in preSelectionOptions"
+              :key="option.value"
+              :color="option.color"
+              variant="flat"
+              label
+            >
+              {{ option.title }}: {{ statusCounts[option.value] }}
+            </v-chip>
+            <v-chip color="primary" variant="tonal" label>Total: {{ results.length }}</v-chip>
+          </v-card-text>
           <v-data-table
             :headers="headers"
             :items="results"
@@ -185,6 +222,18 @@ onMounted(reload)
                 @update:model-value="status => setPreSelection(item, status)"
               />
             </template>
+            <template #item.preSelectionComment="{ item }">
+              <v-text-field
+                v-model="item.preSelectionComment"
+                density="compact"
+                variant="plain"
+                hide-details
+                placeholder="add comment"
+                style="min-width: 160px"
+                @blur="saveComment(item)"
+                @keyup.enter="saveComment(item)"
+              />
+            </template>
             <template
               v-for="voter in voters"
               :key="voter.token"
@@ -208,5 +257,13 @@ onMounted(reload)
 
 :deep(tr.pre-rejected-row) > td {
   background-color: rgba(244, 67, 54, 0.12);
+}
+
+:deep(tr.in-reserve-row) > td {
+  background-color: rgba(255, 193, 7, 0.16);
+}
+
+:deep(tr.speaker-preselected-row) > td {
+  background-color: rgba(33, 150, 243, 0.14);
 }
 </style>
