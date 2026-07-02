@@ -1,6 +1,7 @@
 [phases.setup]
 nixPkgs = ["jdk21", "bash", "coreutils"]
 aptPkgs = ["bash"]
+cmds = ["ln -sf $(which bash) /bin/bash 2>/dev/null || true", "ln -sf $(which sh) /bin/sh 2>/dev/null || true"]
 
 [phases.install]
 cmds = ["./mvnw dependency:go-offline -q"]
