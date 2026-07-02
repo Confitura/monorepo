@@ -9,5 +9,6 @@ ARG VITE_SELF_URL
 RUN pnpm run build
 
 FROM nginx:alpine
+RUN apk add --no-cache bash
 COPY --from=builder /app/dist /usr/share/nginx/html
 COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
