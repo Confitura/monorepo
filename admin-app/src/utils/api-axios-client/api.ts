@@ -2123,6 +2123,12 @@ export interface VoteResult {
     'speakerHasPreSelectedPresentation': boolean;
     /**
      * 
+     * @type {boolean}
+     * @memberof VoteResult
+     */
+    'accepted': boolean;
+    /**
+     * 
      * @type {{ [key: string]: number; }}
      * @memberof VoteResult
      */

@@ -31,6 +31,7 @@ public record VoteResult(
         @Schema(requiredMode = REQUIRED) PreSelectionStatus preSelectionStatus,
         @Schema(requiredMode = REQUIRED) String preSelectionComment,
         @Schema(requiredMode = REQUIRED) boolean speakerHasPreSelectedPresentation,
+        @Schema(requiredMode = REQUIRED) boolean accepted,
         @Schema(requiredMode = REQUIRED) Map<String, Integer> voterScores
 ) {
 
@@ -67,6 +68,7 @@ public record VoteResult(
                 presentation.getPreSelectionStatus() == null ? PreSelectionStatus.NONE : presentation.getPreSelectionStatus(),
                 presentation.getPreSelectionComment() == null ? "" : presentation.getPreSelectionComment(),
                 speakerHasPreSelectedPresentation,
+                presentation.isAccepted(),
                 voterScores
         );
     }
