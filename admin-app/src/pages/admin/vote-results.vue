@@ -156,6 +156,18 @@ onMounted(reload)
             :sort-by="[{ key: 'score', order: 'desc' }]"
             :row-props="({ item }) => ({ class: rowClass(item) })"
           >
+            <template #item.title="{ item }">
+              <a
+                :href="`/admin/presentation-preview/${item.presentationId}`"
+                target="_blank"
+                class="text-primary"
+              >{{ item.title }}</a>
+            </template>
+            <template #item.flatSpeakers="{ item }">
+              <template v-for="(speaker, i) in item.speakers" :key="speaker.id">
+                <RouterLink :to="`/homepage/${speaker.id}`" class="text-primary">{{ speaker.name }}</RouterLink><span v-if="i < item.speakers.length - 1">, </span>
+              </template>
+            </template>
             <template #item.workshop="{ item }">
               <v-chip v-if="item.workshop" color="purple" label size="small">Workshop</v-chip>
             </template>

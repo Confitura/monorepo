@@ -16,6 +16,7 @@ import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 public record VoteResult(
         @Schema(requiredMode = REQUIRED) String presentationId,
         @Schema(requiredMode = REQUIRED) String title,
+        @Schema(requiredMode = REQUIRED) List<Speaker> speakers,
         @Schema(requiredMode = REQUIRED) String flatSpeakers,
         @Schema(requiredMode = REQUIRED) boolean workshop,
         @Schema(requiredMode = REQUIRED) String flatTags,
@@ -45,6 +46,7 @@ public record VoteResult(
         return new VoteResult(
                 presentation.getId(),
                 presentation.getTitle(),
+                presentation.getSpeakers().stream().map(user -> new Speaker(user.getId(), user.getName())).toList(),
                 presentation.getSpeakers().stream().map(User::getName).collect(Collectors.joining(", ")),
                 presentation.isWorkshop(),
                 presentation.getTags().stream().map(Tag::getId).collect(Collectors.joining(", ")),
@@ -63,5 +65,11 @@ public record VoteResult(
 
     private static int percent(int part, int total) {
         return total == 0 ? 0 : (int) Math.round(part * 100.0 / total);
+    }
+
+    public record Speaker(
+            @Schema(requiredMode = REQUIRED) String id,
+            @Schema(requiredMode = REQUIRED) String name
+    ) {
     }
 }

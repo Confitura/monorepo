@@ -1862,13 +1862,13 @@ export interface User {
      * @type {boolean}
      * @memberof User
      */
-    'admin'?: boolean;
+    'volunteer'?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof User
      */
-    'volunteer'?: boolean;
+    'admin'?: boolean;
     /**
      * 
      * @type {boolean}
@@ -2017,6 +2017,12 @@ export interface VoteResult {
      * @memberof VoteResult
      */
     'title': string;
+    /**
+     * 
+     * @type {Array<Speaker>}
+     * @memberof VoteResult
+     */
+    'speakers': Array<Speaker>;
     /**
      * 
      * @type {string}
