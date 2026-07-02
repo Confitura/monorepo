@@ -73,6 +73,7 @@ const headers = computed<DataTableHeaders>(() => [
     align: 'end' as const,
     value: (item: VoteResult) => item.voterScores?.[voter.token] ?? 0,
   })),
+  {title: 'Status', key: 'accepted', align: 'center' as const, sortable: false},
 ])
 
 function loadVoters(): Voter[] {
@@ -143,6 +144,20 @@ function saveComment(item: VoteResult) {
   savePreSelection(item)
     .then(() => Notify.success(`Saved comment for ${item.title}`))
     .catch(() => Notify.error('Failed to save comment'))
+}
+
+function toggleAccepted(item: VoteResult) {
+  const next = !item.accepted
+  item.accepted = next
+  const request = next
+    ? adminPresentationApi.accept(item.presentationId)
+    : adminPresentationApi.reject(item.presentationId)
+  request
+    .then(() => Notify.success(`${next ? 'Accepted' : 'Reported'} ${item.title}`))
+    .catch(() => {
+      item.accepted = !next
+      Notify.error('Failed to update status')
+    })
 }
 
 onMounted(reload)
@@ -285,6 +300,16 @@ onMounted(reload)
               <span :class="scoreColor(item.voterScores?.[voter.token])">
                 {{ item.voterScores?.[voter.token] ?? 0 }}
               </span>
+            </template>
+            <template #item.accepted="{ item }">
+              <v-btn
+                :color="item.accepted ? 'green' : 'grey'"
+                :variant="item.accepted ? 'flat' : 'outlined'"
+                size="small"
+                @click="toggleAccepted(item)"
+              >
+                {{ item.accepted ? 'Accepted' : 'Reported' }}
+              </v-btn>
             </template>
           </v-data-table>
         </v-card>
