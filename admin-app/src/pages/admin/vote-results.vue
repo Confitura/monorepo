@@ -37,6 +37,17 @@ const statusCounts = computed(() => {
   return counts
 })
 
+const preApprovedByTag = computed(() => {
+  const counts: Record<string, number> = {}
+  for (const r of results.value) {
+    if (r.preSelectionStatus !== 'PRE_APPROVED') continue
+    for (const tag of (r.flatTags || '').split(',').map(t => t.trim()).filter(Boolean)) {
+      counts[tag] = (counts[tag] ?? 0) + 1
+    }
+  }
+  return Object.entries(counts).sort((a, b) => b[1] - a[1])
+})
+
 const baseHeaders: DataTableHeaders = [
   {title: 'Title', key: 'title'},
   {title: 'Speakers', key: 'flatSpeakers'},
@@ -86,11 +97,15 @@ function applyVoters() {
   reload()
 }
 
+const loading = ref(false)
+
 function reload() {
+  loading.value = true
   const tokens = voters.value.map(v => v.token)
   adminVoteApi.results(tokens.length ? tokens : undefined)
     .then(res => results.value = res.data)
     .catch(e => console.error(e))
+    .finally(() => loading.value = false)
 }
 
 function rowClass(item: VoteResult): string {
@@ -138,19 +153,28 @@ onMounted(reload)
     <v-row>
       <v-col>
         <teleport to="#app-bar">
-          <v-text-field
-            v-model="search"
-            prepend-inner-icon="mdi-magnify"
-            label="Search"
-            single-line
-            hide-details
-            density="compact"
-            class="mr-2"
-            rounded="xl"
-            flat
-            variant="solo"
-            style="width: 250px"
-          />
+          <div class="d-flex align-center">
+            <v-text-field
+              v-model="search"
+              prepend-inner-icon="mdi-magnify"
+              label="Search"
+              single-line
+              hide-details
+              density="compact"
+              class="mr-2"
+              rounded="xl"
+              flat
+              variant="solo"
+              style="width: 250px"
+            />
+            <v-btn
+              icon="mdi-refresh"
+              variant="text"
+              :loading="loading"
+              title="Refresh"
+              @click="reload"
+            />
+          </div>
         </teleport>
 
         <v-card class="mb-4">
@@ -170,6 +194,24 @@ onMounted(reload)
           </v-card-actions>
         </v-card>
 
+        <v-card class="mb-4">
+          <v-card-title class="text-subtitle-1">Pre-approved per tag</v-card-title>
+          <v-card-text class="d-flex ga-2 flex-wrap">
+            <template v-if="preApprovedByTag.length">
+              <v-chip
+                v-for="[tag, count] in preApprovedByTag"
+                :key="tag"
+                color="green"
+                variant="tonal"
+                label
+              >
+                {{ tag }}: {{ count }}
+              </v-chip>
+            </template>
+            <span v-else class="text-medium-emphasis">No pre-approved presentations yet.</span>
+          </v-card-text>
+        </v-card>
+
         <v-card>
           <v-card-text class="d-flex ga-2 flex-wrap align-center">
             <v-chip
@@ -186,6 +228,7 @@ onMounted(reload)
           <v-data-table
             :headers="headers"
             :items="results"
+            :loading="loading"
             items-per-page="100"
             item-value="presentationId"
             :filter-keys="['title', 'flatSpeakers', 'flatTags']"
