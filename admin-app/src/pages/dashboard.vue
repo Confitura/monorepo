@@ -75,9 +75,22 @@ async function loadStats() {
 
 }
 
+const votesData = ref<unknown[]>([]);
+const hasVotes = computed(() => votesData.value.length > 1);
+
+async function loadVotes() {
+  try {
+    const {data} = await dashboardApi.votes();
+    votesData.value = data as unknown as unknown[];
+  } catch (e) {
+    console.error('Failed to load votes over time', e);
+  }
+}
+
 onMounted(() => {
   loadStats();
   loadLastWebpageDump();
+  loadVotes();
 });
 const stats = ref([
   {
@@ -199,9 +212,9 @@ async function copyV4PToken() {
       <!--          <ChartRadar />-->
       <!--        </v-card>-->
       <!--      </v-col>-->
-      <v-col cols="12" lg="8">
+      <v-col v-if="hasVotes" cols="12" lg="8">
         <v-card class="pa-2">
-          <ChartVotesOverTime/>
+          <ChartVotesOverTime :source="votesData"/>
         </v-card>
       </v-col>
       <v-col cols="12" md="6" lg="4">

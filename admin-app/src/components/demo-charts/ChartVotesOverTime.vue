@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import type {ECOption} from '@/plugins/echarts'
-import {dashboardApi} from '@/utils/api.ts'
 
-const option = ref<ECOption>({
+const props = defineProps<{ source: unknown[] }>()
+
+const option = computed<ECOption>(() => ({
   backgroundColor: 'transparent',
   title: {
     text: 'Votes over time',
@@ -25,7 +26,7 @@ const option = ref<ECOption>({
   yAxis: {
     type: 'value',
   },
-  dataset: {source: []},
+  dataset: {source: props.source as any},
   series: [
     {
       name: 'votes',
@@ -36,13 +37,7 @@ const option = ref<ECOption>({
       areaStyle: {},
     },
   ],
-})
-
-dashboardApi.votes()
-  .then(res => {
-    option.value.dataset = {source: res.data as any}
-  })
-  .catch(e => console.error(e))
+}))
 </script>
 
 <template>
