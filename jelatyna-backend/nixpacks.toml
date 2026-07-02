@@ -1,5 +1,6 @@
 [phases.setup]
 nixPkgs = ["jdk21", "bash", "coreutils"]
+aptPkgs = ["bash"]
 
 [phases.install]
 cmds = ["./mvnw dependency:go-offline -q"]
