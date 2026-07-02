@@ -29,24 +29,37 @@ const preSelectionOptions = [
   {title: 'In reserve', value: 'IN_RESERVE', color: 'amber-darken-2'},
 ]
 
-const statusCounts = computed(() => {
+function statusCountsFor(items: VoteResult[]): Record<string, number> {
   const counts: Record<string, number> = {NONE: 0, PRE_APPROVED: 0, PRE_REJECTED: 0, IN_RESERVE: 0}
-  for (const r of results.value) {
+  for (const r of items) {
     counts[r.preSelectionStatus] = (counts[r.preSelectionStatus] ?? 0) + 1
   }
   return counts
-})
+}
 
-const preApprovedByTag = computed(() => {
+function preApprovedByTagFor(items: VoteResult[]): [string, number][] {
   const counts: Record<string, number> = {}
-  for (const r of results.value) {
+  for (const r of items) {
     if (r.preSelectionStatus !== 'PRE_APPROVED') continue
     for (const tag of (r.flatTags || '').split(',').map(t => t.trim()).filter(Boolean)) {
       counts[tag] = (counts[tag] ?? 0) + 1
     }
   }
   return Object.entries(counts).sort((a, b) => b[1] - a[1])
-})
+}
+
+const presentationItems = computed(() => results.value.filter(r => !r.workshop))
+const workshopItems = computed(() => results.value.filter(r => r.workshop))
+
+const statusGroups = computed(() => [
+  {label: 'Presentations', counts: statusCountsFor(presentationItems.value), total: presentationItems.value.length},
+  {label: 'Workshops', counts: statusCountsFor(workshopItems.value), total: workshopItems.value.length},
+])
+
+const tagGroups = computed(() => [
+  {label: 'Presentations', tags: preApprovedByTagFor(presentationItems.value)},
+  {label: 'Workshops', tags: preApprovedByTagFor(workshopItems.value)},
+])
 
 const baseHeaders: DataTableHeaders = [
   {title: 'Title', key: 'title'},
@@ -211,34 +224,34 @@ onMounted(reload)
 
         <v-card class="mb-4">
           <v-card-title class="text-subtitle-1">Pre-approved per tag</v-card-title>
-          <v-card-text class="d-flex ga-2 flex-wrap">
-            <template v-if="preApprovedByTag.length">
-              <v-chip
-                v-for="[tag, count] in preApprovedByTag"
-                :key="tag"
-                color="green"
-                variant="tonal"
-                label
-              >
-                {{ tag }}: {{ count }}
-              </v-chip>
-            </template>
-            <span v-else class="text-medium-emphasis">No pre-approved presentations yet.</span>
+          <v-card-text>
+            <div v-for="group in tagGroups" :key="group.label" class="d-flex ga-2 flex-wrap align-center mb-2">
+              <strong style="width: 110px">{{ group.label }}</strong>
+              <template v-if="group.tags.length">
+                <v-chip v-for="[tag, count] in group.tags" :key="tag" color="green" variant="tonal" label>
+                  {{ tag }}: {{ count }}
+                </v-chip>
+              </template>
+              <span v-else class="text-medium-emphasis">none pre-approved</span>
+            </div>
           </v-card-text>
         </v-card>
 
         <v-card>
-          <v-card-text class="d-flex ga-2 flex-wrap align-center">
-            <v-chip
-              v-for="option in preSelectionOptions"
-              :key="option.value"
-              :color="option.color"
-              variant="flat"
-              label
-            >
-              {{ option.title }}: {{ statusCounts[option.value] }}
-            </v-chip>
-            <v-chip color="primary" variant="tonal" label>Total: {{ results.length }}</v-chip>
+          <v-card-text>
+            <div v-for="group in statusGroups" :key="group.label" class="d-flex ga-2 flex-wrap align-center mb-2">
+              <strong style="width: 110px">{{ group.label }}</strong>
+              <v-chip
+                v-for="option in preSelectionOptions"
+                :key="option.value"
+                :color="option.color"
+                variant="flat"
+                label
+              >
+                {{ option.title }}: {{ group.counts[option.value] }}
+              </v-chip>
+              <v-chip color="primary" variant="tonal" label>Total: {{ group.total }}</v-chip>
+            </div>
           </v-card-text>
           <v-data-table
             :headers="headers"
