@@ -36,6 +36,20 @@ public class AdminPresentationController {
         return ResponseEntity.ok().build();
     }
 
+    @PreAuthorize("@security.isAdmin()")
+    @PostMapping("/presentations/{presentationId}/pre-selection")
+    @Transactional
+    public ResponseEntity<?> setPreSelection(@PathVariable String presentationId,
+                                             @RequestBody PreSelectionRequest request) {
+        Presentation presentation = this.repository.findById(presentationId);
+        presentation.setPreSelectionStatus(request.status());
+        presentation.setPreSelectionComment(request.comment());
+        return ResponseEntity.ok().build();
+    }
+
+    public record PreSelectionRequest(PreSelectionStatus status, String comment) {
+    }
+
 
     @PreAuthorize("@security.isAdmin()")
     @PostMapping("/ratings")

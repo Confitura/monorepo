@@ -14,6 +14,7 @@ import pl.confitura.jelatyna.news.NewsletterApi;
 import pl.confitura.jelatyna.registration.QParticipationData;
 import pl.confitura.jelatyna.registration.demographic.QDemographicData;
 import pl.confitura.jelatyna.registration.voucher.QVoucher;
+import pl.confitura.jelatyna.voting.QVote;
 
 import jakarta.persistence.EntityManager;
 
@@ -173,6 +174,26 @@ class DashboardController {
                 .from(participationData)
                 .where(participationData.voucher.isNotNull())
                 .orderBy(participationData.createdDate.asc())
+                .fetch();
+
+        AtomicInteger atomicInteger = new AtomicInteger();
+        List<Object[]> data = fetch.stream()
+                .map(it -> new Object[]{it.toString(), atomicInteger.incrementAndGet()})
+                .collect(toList());
+
+        data.add(0, new Object[]{"date", "total"});
+        return data;
+    }
+
+    @GetMapping("votes")
+    Object votes() {
+        JPAQuery<?> query = new JPAQuery<Void>(entityManager);
+        QVote vote = QVote.vote;
+
+        List<LocalDateTime> fetch = query.select(vote.voteDate)
+                .from(vote)
+                .where(vote.voteDate.isNotNull())
+                .orderBy(vote.voteDate.asc())
                 .fetch();
 
         AtomicInteger atomicInteger = new AtomicInteger();

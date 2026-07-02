@@ -2,10 +2,14 @@
 nixPkgs = ["nodejs_24"]
 
 [phases.install]
-cmds = ["npm install"]
+cmds = [
+  "corepack enable",
+  "corepack prepare pnpm@10.5.2 --activate",
+  "pnpm install --frozen-lockfile",
+]
 
 [phases.build]
-cmds = ["npm run build"]
+cmds = ["pnpm run build"]
 
 [start]
 cmd = "node .output/server/index.mjs"

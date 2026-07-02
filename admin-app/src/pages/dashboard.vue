@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import ChartUserTypes from "@/components/demo-charts/ChartUserTypes.vue";
+import ChartVotesOverTime from "@/components/demo-charts/ChartVotesOverTime.vue";
 
 import {onMounted, ref, computed} from 'vue';
 import {dashboardApi, adminTasksApi} from "@/utils/api.ts";
@@ -198,6 +199,11 @@ async function copyV4PToken() {
       <!--          <ChartRadar />-->
       <!--        </v-card>-->
       <!--      </v-col>-->
+      <v-col cols="12" lg="8">
+        <v-card class="pa-2">
+          <ChartVotesOverTime/>
+        </v-card>
+      </v-col>
       <v-col cols="12" md="6" lg="4">
         <v-card class="pa-2">
           <ChartUserTypes/>

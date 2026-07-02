@@ -3,7 +3,7 @@
     "node": "24"
   },
 
-  "packageManager": "npm@10.9.2",
+  "packageManager": "pnpm@10.5.2",
   "name": "nuxt-app",
   "private": true,
   "type": "module",
@@ -23,7 +23,7 @@
     "modern-normalize": "^3.0.1",
     "nuxt": "^4.4.8",
     "pinia": "^3.0.4",
-    "vue": "^3.5.38",
+    "vue": "^3.5.39",
     "vue-router": "^5.1.0",
     "vue3-google-map": "^0.27.1"
   },
@@ -31,7 +31,7 @@
     "@nuxt/test-utils": "4.0.3",
     "@vue/test-utils": "^2.4.11",
     "happy-dom": "^20.10.6",
-    "playwright-core": "^1.61.0",
+    "playwright-core": "^1.61.1",
     "sass-embedded": "^1.100.0",
     "vitest": "^4.1.9"
   }

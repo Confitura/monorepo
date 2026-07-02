@@ -98,6 +98,30 @@ public class VoteController {
 
     }
 
+    @PreAuthorize("@security.isAdmin()")
+    @GetMapping("/votes/results")
+    @ResponseBody
+    @Transactional
+    public List<VoteResult> results(@RequestParam(required = false) List<String> tokens) {
+        Set<String> selectedTokens = tokens == null ? Set.of() : new HashSet<>(tokens);
+
+        Set<String> preSelectedSpeakerIds = presentationRepository.findAll().stream()
+                .filter(presentation -> presentation.getPreSelectionStatus() == PreSelectionStatus.PRE_APPROVED)
+                .flatMap(presentation -> presentation.getSpeakers().stream())
+                .map(User::getId)
+                .collect(Collectors.toSet());
+
+        Map<String, List<Vote>> votesByPresentation = StreamSupport
+                .stream(voteRepository.findAll().spliterator(), false)
+                .filter(vote -> vote.getRate() != null)
+                .collect(Collectors.groupingBy(vote -> vote.getPresentation().getId()));
+
+        return votesByPresentation.values().stream()
+                .map(votes -> VoteResult.from(votes.get(0).getPresentation(), votes, selectedTokens, preSelectedSpeakerIds))
+                .sorted(Comparator.comparingInt(VoteResult::score).reversed())
+                .collect(toList());
+    }
+
     public record VoteRequest(
             String id,
             Integer rate

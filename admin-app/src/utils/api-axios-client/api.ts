@@ -945,10 +945,10 @@ export interface MessageInfo {
     'email'?: string;
     /**
      * 
-     * @type {Array<string>}
+     * @type {string}
      * @memberof MessageInfo
      */
-    'ticket'?: Array<string>;
+    'ticket'?: string;
     /**
      * 
      * @type {{ [key: string]: string; }}
@@ -960,13 +960,13 @@ export interface MessageInfo {
      * @type {MessageInfo}
      * @memberof MessageInfo
      */
-    'name'?: MessageInfo;
+    'token'?: MessageInfo;
     /**
      * 
      * @type {MessageInfo}
      * @memberof MessageInfo
      */
-    'token'?: MessageInfo;
+    'name'?: MessageInfo;
 }
 /**
  * 
@@ -1118,6 +1118,35 @@ export interface ParticipationData {
 /**
  * 
  * @export
+ * @interface PreSelectionRequest
+ */
+export interface PreSelectionRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof PreSelectionRequest
+     */
+    'status'?: PreSelectionRequestStatusEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof PreSelectionRequest
+     */
+    'comment'?: string;
+}
+
+export const PreSelectionRequestStatusEnum = {
+    None: 'NONE',
+    PreApproved: 'PRE_APPROVED',
+    PreRejected: 'PRE_REJECTED',
+    InReserve: 'IN_RESERVE'
+} as const;
+
+export type PreSelectionRequestStatusEnum = typeof PreSelectionRequestStatusEnum[keyof typeof PreSelectionRequestStatusEnum];
+
+/**
+ * 
+ * @export
  * @interface Presentation
  */
 export interface Presentation {
@@ -1183,6 +1212,18 @@ export interface Presentation {
     'status'?: string;
     /**
      * 
+     * @type {string}
+     * @memberof Presentation
+     */
+    'preSelectionStatus'?: PresentationPreSelectionStatusEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof Presentation
+     */
+    'preSelectionComment'?: string;
+    /**
+     * 
      * @type {boolean}
      * @memberof Presentation
      */
@@ -1213,6 +1254,12 @@ export interface Presentation {
     'maxGroupSize'?: number;
     /**
      * 
+     * @type {boolean}
+     * @memberof Presentation
+     */
+    'accepted'?: boolean;
+    /**
+     * 
      * @type {Presentation}
      * @memberof Presentation
      */
@@ -1222,14 +1269,18 @@ export interface Presentation {
      * @type {boolean}
      * @memberof Presentation
      */
-    'accepted'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Presentation
-     */
     'new'?: boolean;
 }
+
+export const PresentationPreSelectionStatusEnum = {
+    None: 'NONE',
+    PreApproved: 'PRE_APPROVED',
+    PreRejected: 'PRE_REJECTED',
+    InReserve: 'IN_RESERVE'
+} as const;
+
+export type PresentationPreSelectionStatusEnum = typeof PresentationPreSelectionStatusEnum[keyof typeof PresentationPreSelectionStatusEnum];
+
 /**
  * 
  * @export
@@ -1831,13 +1882,13 @@ export interface User {
      * @type {boolean}
      * @memberof User
      */
-    'admin'?: boolean;
+    'volunteer'?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof User
      */
-    'volunteer'?: boolean;
+    'admin'?: boolean;
     /**
      * 
      * @type {boolean}
@@ -1962,6 +2013,137 @@ export interface VoteRequest {
      */
     'rate'?: number;
 }
+/**
+ * 
+ * @export
+ * @interface VoteResult
+ */
+export interface VoteResult {
+    /**
+     * 
+     * @type {string}
+     * @memberof VoteResult
+     */
+    'presentationId': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof VoteResult
+     */
+    'title': string;
+    /**
+     * 
+     * @type {Array<Speaker>}
+     * @memberof VoteResult
+     */
+    'speakers': Array<Speaker>;
+    /**
+     * 
+     * @type {string}
+     * @memberof VoteResult
+     */
+    'flatSpeakers': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof VoteResult
+     */
+    'workshop': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof VoteResult
+     */
+    'flatTags': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof VoteResult
+     */
+    'total': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof VoteResult
+     */
+    'score': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof VoteResult
+     */
+    'positive': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof VoteResult
+     */
+    'negative': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof VoteResult
+     */
+    'neutral': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof VoteResult
+     */
+    'positivePercent': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof VoteResult
+     */
+    'negativePercent': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof VoteResult
+     */
+    'neutralPercent': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof VoteResult
+     */
+    'preSelectionStatus': VoteResultPreSelectionStatusEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof VoteResult
+     */
+    'preSelectionComment': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof VoteResult
+     */
+    'speakerHasPreSelectedPresentation': boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof VoteResult
+     */
+    'accepted': boolean;
+    /**
+     * 
+     * @type {{ [key: string]: number; }}
+     * @memberof VoteResult
+     */
+    'voterScores': { [key: string]: number; };
+}
+
+export const VoteResultPreSelectionStatusEnum = {
+    None: 'NONE',
+    PreApproved: 'PRE_APPROVED',
+    PreRejected: 'PRE_REJECTED',
+    InReserve: 'IN_RESERVE'
+} as const;
+
+export type VoteResultPreSelectionStatusEnum = typeof VoteResultPreSelectionStatusEnum[keyof typeof VoteResultPreSelectionStatusEnum];
+
 /**
  * 
  * @export
@@ -2264,6 +2446,49 @@ export const AdminPresentationControllerApiAxiosParamCreator = function (configu
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {string} presentationId 
+         * @param {PreSelectionRequest} preSelectionRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        setPreSelection: async (presentationId: string, preSelectionRequest: PreSelectionRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'presentationId' is not null or undefined
+            assertParamExists('setPreSelection', 'presentationId', presentationId)
+            // verify required parameter 'preSelectionRequest' is not null or undefined
+            assertParamExists('setPreSelection', 'preSelectionRequest', preSelectionRequest)
+            const localVarPath = `/presentations/{presentationId}/pre-selection`
+                .replace(`{${"presentationId"}}`, encodeURIComponent(String(presentationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(preSelectionRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -2321,6 +2546,19 @@ export const AdminPresentationControllerApiFp = function(configuration?: Configu
             const localVarOperationServerBasePath = operationServerMap['AdminPresentationControllerApi.saveTags']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * 
+         * @param {string} presentationId 
+         * @param {PreSelectionRequest} preSelectionRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async setPreSelection(presentationId: string, preSelectionRequest: PreSelectionRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.setPreSelection(presentationId, preSelectionRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminPresentationControllerApi.setPreSelection']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -2365,6 +2603,16 @@ export const AdminPresentationControllerApiFactory = function (configuration?: C
          */
         saveTags(body: object, options?: RawAxiosRequestConfig): AxiosPromise<object> {
             return localVarFp.saveTags(body, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} presentationId 
+         * @param {PreSelectionRequest} preSelectionRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        setPreSelection(presentationId: string, preSelectionRequest: PreSelectionRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.setPreSelection(presentationId, preSelectionRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2417,6 +2665,18 @@ export class AdminPresentationControllerApi extends BaseAPI {
      */
     public saveTags(body: object, options?: RawAxiosRequestConfig) {
         return AdminPresentationControllerApiFp(this.configuration).saveTags(body, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} presentationId 
+     * @param {PreSelectionRequest} preSelectionRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminPresentationControllerApi
+     */
+    public setPreSelection(presentationId: string, preSelectionRequest: PreSelectionRequest, options?: RawAxiosRequestConfig) {
+        return AdminPresentationControllerApiFp(this.configuration).setPreSelection(presentationId, preSelectionRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -3018,7 +3278,7 @@ export const AgendaControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async exportIcal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<string>>> {
+        async exportIcal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.exportIcal(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AgendaControllerApi.exportIcal']?.[localVarOperationServerIndex]?.url;
@@ -3100,7 +3360,7 @@ export const AgendaControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async subscribeIcal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<string>>> {
+        async subscribeIcal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.subscribeIcal(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AgendaControllerApi.subscribeIcal']?.[localVarOperationServerIndex]?.url;
@@ -3170,7 +3430,7 @@ export const AgendaControllerApiFactory = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        exportIcal(options?: RawAxiosRequestConfig): AxiosPromise<Array<string>> {
+        exportIcal(options?: RawAxiosRequestConfig): AxiosPromise<string> {
             return localVarFp.exportIcal(options).then((request) => request(axios, basePath));
         },
         /**
@@ -3231,7 +3491,7 @@ export const AgendaControllerApiFactory = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        subscribeIcal(options?: RawAxiosRequestConfig): AxiosPromise<Array<string>> {
+        subscribeIcal(options?: RawAxiosRequestConfig): AxiosPromise<string> {
             return localVarFp.subscribeIcal(options).then((request) => request(axios, basePath));
         },
         /**
@@ -3626,7 +3886,7 @@ export const AllegroImportControllerApiFp = function(configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getStatus(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: object; }>> {
+        async getStatus(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getStatus(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AllegroImportControllerApi.getStatus']?.[localVarOperationServerIndex]?.url;
@@ -3684,7 +3944,7 @@ export const AllegroImportControllerApiFactory = function (configuration?: Confi
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getStatus(options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: object; }> {
+        getStatus(options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
             return localVarFp.getStatus(options).then((request) => request(axios, basePath));
         },
         /**
@@ -4063,6 +4323,39 @@ export const DashboardControllerApiAxiosParamCreator = function (configuration?:
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        votes: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/dashboard/votes`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -4172,6 +4465,17 @@ export const DashboardControllerApiFp = function(configuration?: Configuration) 
             const localVarOperationServerBasePath = operationServerMap['DashboardControllerApi.usersStats']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async votes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.votes(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DashboardControllerApi.votes']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -4253,6 +4557,14 @@ export const DashboardControllerApiFactory = function (configuration?: Configura
          */
         usersStats(options?: RawAxiosRequestConfig): AxiosPromise<UsersStats> {
             return localVarFp.usersStats(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        votes(options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.votes(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -4352,6 +4664,16 @@ export class DashboardControllerApi extends BaseAPI {
      */
     public usersStats(options?: RawAxiosRequestConfig) {
         return DashboardControllerApiFp(this.configuration).usersStats(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DashboardControllerApi
+     */
+    public votes(options?: RawAxiosRequestConfig) {
+        return DashboardControllerApiFp(this.configuration).votes(options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -5995,10 +6317,6 @@ export const PresentationControllerApiAxiosParamCreator = function (configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -6035,10 +6353,6 @@ export const PresentationControllerApiAxiosParamCreator = function (configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
 
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
@@ -6071,10 +6385,6 @@ export const PresentationControllerApiAxiosParamCreator = function (configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -6103,10 +6413,6 @@ export const PresentationControllerApiAxiosParamCreator = function (configuratio
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -6141,10 +6447,6 @@ export const PresentationControllerApiAxiosParamCreator = function (configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -6177,10 +6479,6 @@ export const PresentationControllerApiAxiosParamCreator = function (configuratio
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -6218,10 +6516,6 @@ export const PresentationControllerApiAxiosParamCreator = function (configuratio
             const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -6262,10 +6556,6 @@ export const PresentationControllerApiAxiosParamCreator = function (configuratio
             const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -9370,6 +9660,40 @@ export const VoteControllerApiAxiosParamCreator = function (configuration?: Conf
     return {
         /**
          * 
+         * @param {Array<string>} [tokens] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        results: async (tokens?: Array<string>, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/votes/results`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (tokens) {
+                localVarQueryParameter['tokens'] = tokens;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {VoteRequest} voteRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -9477,6 +9801,18 @@ export const VoteControllerApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @param {Array<string>} [tokens] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async results(tokens?: Array<string>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<VoteResult>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.results(tokens, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['VoteControllerApi.results']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @param {VoteRequest} voteRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -9522,6 +9858,15 @@ export const VoteControllerApiFactory = function (configuration?: Configuration,
     return {
         /**
          * 
+         * @param {Array<string>} [tokens] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        results(tokens?: Array<string>, options?: RawAxiosRequestConfig): AxiosPromise<Array<VoteResult>> {
+            return localVarFp.results(tokens, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {VoteRequest} voteRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -9556,6 +9901,17 @@ export const VoteControllerApiFactory = function (configuration?: Configuration,
  * @extends {BaseAPI}
  */
 export class VoteControllerApi extends BaseAPI {
+    /**
+     * 
+     * @param {Array<string>} [tokens] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof VoteControllerApi
+     */
+    public results(tokens?: Array<string>, options?: RawAxiosRequestConfig) {
+        return VoteControllerApiFp(this.configuration).results(tokens, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @param {VoteRequest} voteRequest 

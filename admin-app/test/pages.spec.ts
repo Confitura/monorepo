@@ -57,6 +57,7 @@ vi.mock('@/utils/api.ts', () => ({
     usersStats: vi.fn().mockResolvedValue({ data: { total: 0 } }),
     submissionStats: vi.fn().mockResolvedValue({ data: { total: 0, workshops: 0, presentations: 0 } }),
     newsletterStat: vi.fn().mockResolvedValue({ data: { subscribersCount: 0 } }),
+    votes: vi.fn().mockResolvedValue({ data: [['date', 'total']] }),
   },
   tokenAPi: {
     refreshToken: vi.fn().mockResolvedValue({ data: '' }),
