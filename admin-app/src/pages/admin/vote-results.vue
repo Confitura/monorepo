@@ -37,6 +37,17 @@ const statusCounts = computed(() => {
   return counts
 })
 
+const preApprovedByTag = computed(() => {
+  const counts: Record<string, number> = {}
+  for (const r of results.value) {
+    if (r.preSelectionStatus !== 'PRE_APPROVED') continue
+    for (const tag of (r.flatTags || '').split(',').map(t => t.trim()).filter(Boolean)) {
+      counts[tag] = (counts[tag] ?? 0) + 1
+    }
+  }
+  return Object.entries(counts).sort((a, b) => b[1] - a[1])
+})
+
 const baseHeaders: DataTableHeaders = [
   {title: 'Title', key: 'title'},
   {title: 'Speakers', key: 'flatSpeakers'},
@@ -181,6 +192,24 @@ onMounted(reload)
           <v-card-actions>
             <v-btn color="primary" variant="tonal" @click="applyVoters">Apply</v-btn>
           </v-card-actions>
+        </v-card>
+
+        <v-card class="mb-4">
+          <v-card-title class="text-subtitle-1">Pre-approved per tag</v-card-title>
+          <v-card-text class="d-flex ga-2 flex-wrap">
+            <template v-if="preApprovedByTag.length">
+              <v-chip
+                v-for="[tag, count] in preApprovedByTag"
+                :key="tag"
+                color="green"
+                variant="tonal"
+                label
+              >
+                {{ tag }}: {{ count }}
+              </v-chip>
+            </template>
+            <span v-else class="text-medium-emphasis">No pre-approved presentations yet.</span>
+          </v-card-text>
         </v-card>
 
         <v-card>
