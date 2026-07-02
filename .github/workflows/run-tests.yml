@@ -71,11 +71,11 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: '24.x'
-          cache: 'npm'
-          cache-dependency-path: webpage/package-lock.json
-      - run: npm ci --legacy-peer-deps
-      - run: npm run build
-      - run: npm test
+          cache: 'pnpm'
+          cache-dependency-path: webpage/pnpm-lock.yaml
+      - run: pnpm ci --legacy-peer-deps
+      - run: pnpm run build
+      - run: pnpm test
 
   test-admin-app:
     needs: changes
