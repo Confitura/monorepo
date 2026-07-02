@@ -2,10 +2,15 @@
 nixPkgs = ["nodejs_24"]
 
 [phases.install]
-cmds = ["npm ci --legacy-peer-deps", "npm install --no-save serve"]
+cmds = [
+  "corepack enable",
+  "corepack prepare pnpm@10.5.2 --activate",
+  "pnpm install --frozen-lockfile",
+  "pnpm add serve",
+]
 
 [phases.build]
-cmds = ["npm run build"]
+cmds = ["pnpm run build"]
 
 [variables]
 VITE_API_URL = "https://api.confitura.pl/api"

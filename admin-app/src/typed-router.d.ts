@@ -48,6 +48,7 @@ declare module 'vue-router/auto-routes' {
       | '/admin/presentations'
       | '/admin/rates'
       | '/admin/users'
+      | '/admin/vote-results'
     >,
     '/admin/agenda': RouteRecordInfo<
       '/admin/agenda',
@@ -87,6 +88,13 @@ declare module 'vue-router/auto-routes' {
     '/admin/users': RouteRecordInfo<
       '/admin/users',
       '/admin/users',
+      Record<never, never>,
+      Record<never, never>,
+      | never
+    >,
+    '/admin/vote-results': RouteRecordInfo<
+      '/admin/vote-results',
+      '/admin/vote-results',
       Record<never, never>,
       Record<never, never>,
       | never
@@ -195,6 +203,7 @@ declare module 'vue-router/auto-routes' {
         | '/admin/presentations'
         | '/admin/rates'
         | '/admin/users'
+        | '/admin/vote-results'
       views:
         | 'default'
     }
@@ -231,6 +240,12 @@ declare module 'vue-router/auto-routes' {
     'src/pages/admin/users.vue': {
       routes:
         | '/admin/users'
+      views:
+        | never
+    }
+    'src/pages/admin/vote-results.vue': {
+      routes:
+        | '/admin/vote-results'
       views:
         | never
     }
