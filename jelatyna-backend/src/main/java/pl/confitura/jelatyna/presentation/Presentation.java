@@ -66,6 +66,7 @@ public class Presentation {
     private String status;
 
     @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "varchar(255)")
     private PreSelectionStatus preSelectionStatus = PreSelectionStatus.NONE;
 
     private String preSelectionComment;
