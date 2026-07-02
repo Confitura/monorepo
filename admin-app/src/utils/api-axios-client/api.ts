@@ -1257,12 +1257,6 @@ export interface Presentation {
      * @type {boolean}
      * @memberof Presentation
      */
-    'new'?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Presentation
-     */
     'accepted'?: boolean;
     /**
      * 
@@ -1270,6 +1264,12 @@ export interface Presentation {
      * @memberof Presentation
      */
     'speaker'?: Presentation;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Presentation
+     */
+    'new'?: boolean;
 }
 
 export const PresentationPreSelectionStatusEnum = {
@@ -1876,7 +1876,7 @@ export interface User {
      * @type {boolean}
      * @memberof User
      */
-    'admin'?: boolean;
+    'participant'?: boolean;
     /**
      * 
      * @type {boolean}
@@ -1888,13 +1888,13 @@ export interface User {
      * @type {boolean}
      * @memberof User
      */
-    'speaker'?: boolean;
+    'admin'?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof User
      */
-    'participant'?: boolean;
+    'speaker'?: boolean;
 }
 /**
  * 
@@ -4323,6 +4323,39 @@ export const DashboardControllerApiAxiosParamCreator = function (configuration?:
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        votes: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/dashboard/votes`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -4432,6 +4465,17 @@ export const DashboardControllerApiFp = function(configuration?: Configuration) 
             const localVarOperationServerBasePath = operationServerMap['DashboardControllerApi.usersStats']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async votes(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.votes(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DashboardControllerApi.votes']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -4513,6 +4557,14 @@ export const DashboardControllerApiFactory = function (configuration?: Configura
          */
         usersStats(options?: RawAxiosRequestConfig): AxiosPromise<UsersStats> {
             return localVarFp.usersStats(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        votes(options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.votes(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -4612,6 +4664,16 @@ export class DashboardControllerApi extends BaseAPI {
      */
     public usersStats(options?: RawAxiosRequestConfig) {
         return DashboardControllerApiFp(this.configuration).usersStats(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DashboardControllerApi
+     */
+    public votes(options?: RawAxiosRequestConfig) {
+        return DashboardControllerApiFp(this.configuration).votes(options).then((request) => request(this.axios, this.basePath));
     }
 }
 
