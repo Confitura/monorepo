@@ -3,7 +3,7 @@
     "node": "24"
   },
 
-  "packageManager": "npm@10.9.2",
+  "packageManager": "pnpm@10.5.2",
   "name": "nuxt-app",
   "private": true,
   "type": "module",
