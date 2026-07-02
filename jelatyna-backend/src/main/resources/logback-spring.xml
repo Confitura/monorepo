@@ -3,28 +3,11 @@
     <include resource="org/springframework/boot/logging/logback/defaults.xml" />
     <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
 
-    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>./logs/jelatyna.log</file>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!-- daily rollover -->
-            <fileNamePattern>./logs/jelatyna.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
-
-            <!-- keep 10 days' worth of history capped at 3GB total size -->
-            <maxHistory>10</maxHistory>
-            <totalSizeCap>3GB</totalSizeCap>
-
-        </rollingPolicy>
-
-        <encoder>
-            <pattern>${FILE_LOG_PATTERN}</pattern>
-        </encoder>
-    </appender>
 
     <logger name="org.hibernate" level="INFO"/>
     <logger name="com.microtripit" level="INFO"/>
 
     <root level="INFO">
-        <appender-ref ref="FILE" />
         <appender-ref ref="CONSOLE" />
     </root>
 
