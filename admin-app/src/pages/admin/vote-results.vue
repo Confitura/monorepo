@@ -86,11 +86,15 @@ function applyVoters() {
   reload()
 }
 
+const loading = ref(false)
+
 function reload() {
+  loading.value = true
   const tokens = voters.value.map(v => v.token)
   adminVoteApi.results(tokens.length ? tokens : undefined)
     .then(res => results.value = res.data)
     .catch(e => console.error(e))
+    .finally(() => loading.value = false)
 }
 
 function rowClass(item: VoteResult): string {
@@ -138,19 +142,28 @@ onMounted(reload)
     <v-row>
       <v-col>
         <teleport to="#app-bar">
-          <v-text-field
-            v-model="search"
-            prepend-inner-icon="mdi-magnify"
-            label="Search"
-            single-line
-            hide-details
-            density="compact"
-            class="mr-2"
-            rounded="xl"
-            flat
-            variant="solo"
-            style="width: 250px"
-          />
+          <div class="d-flex align-center">
+            <v-text-field
+              v-model="search"
+              prepend-inner-icon="mdi-magnify"
+              label="Search"
+              single-line
+              hide-details
+              density="compact"
+              class="mr-2"
+              rounded="xl"
+              flat
+              variant="solo"
+              style="width: 250px"
+            />
+            <v-btn
+              icon="mdi-refresh"
+              variant="text"
+              :loading="loading"
+              title="Refresh"
+              @click="reload"
+            />
+          </div>
         </teleport>
 
         <v-card class="mb-4">
@@ -186,6 +199,7 @@ onMounted(reload)
           <v-data-table
             :headers="headers"
             :items="results"
+            :loading="loading"
             items-per-page="100"
             item-value="presentationId"
             :filter-keys="['title', 'flatSpeakers', 'flatTags']"
