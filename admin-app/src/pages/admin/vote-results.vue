@@ -97,6 +97,7 @@ function rowClass(item: VoteResult): string {
   if (item.preSelectionStatus === 'PRE_APPROVED') return 'pre-approved-row'
   if (item.preSelectionStatus === 'PRE_REJECTED') return 'pre-rejected-row'
   if (item.preSelectionStatus === 'IN_RESERVE') return 'in-reserve-row'
+  if (item.speakerHasPreSelectedPresentation) return 'speaker-preselected-row'
   return ''
 }
 
@@ -260,5 +261,9 @@ onMounted(reload)
 
 :deep(tr.in-reserve-row) > td {
   background-color: rgba(255, 193, 7, 0.16);
+}
+
+:deep(tr.speaker-preselected-row) > td {
+  background-color: rgba(33, 150, 243, 0.14);
 }
 </style>

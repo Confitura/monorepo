@@ -30,12 +30,12 @@ public record VoteResult(
         @Schema(requiredMode = REQUIRED) int neutralPercent,
         @Schema(requiredMode = REQUIRED) PreSelectionStatus preSelectionStatus,
         @Schema(requiredMode = REQUIRED) String preSelectionComment,
-        @Schema(requiredMode = REQUIRED) boolean speakerHasAcceptedPresentation,
+        @Schema(requiredMode = REQUIRED) boolean speakerHasPreSelectedPresentation,
         @Schema(requiredMode = REQUIRED) Map<String, Integer> voterScores
 ) {
 
     static VoteResult from(Presentation presentation, List<Vote> votes, Set<String> selectedTokens,
-                           Set<String> acceptedSpeakerIds) {
+                           Set<String> preSelectedSpeakerIds) {
         int total = votes.size();
         int positive = (int) votes.stream().filter(v -> v.getRate() > 0).count();
         int negative = (int) votes.stream().filter(v -> v.getRate() < 0).count();
@@ -46,8 +46,8 @@ public record VoteResult(
                 .filter(v -> selectedTokens.contains(v.getToken()))
                 .collect(Collectors.groupingBy(Vote::getToken, Collectors.summingInt(Vote::getRate)));
 
-        boolean speakerHasAcceptedPresentation = !presentation.isAccepted()
-                && presentation.getSpeakers().stream().anyMatch(s -> acceptedSpeakerIds.contains(s.getId()));
+        boolean speakerHasPreSelectedPresentation = presentation.getPreSelectionStatus() != PreSelectionStatus.PRE_APPROVED
+                && presentation.getSpeakers().stream().anyMatch(s -> preSelectedSpeakerIds.contains(s.getId()));
 
         return new VoteResult(
                 presentation.getId(),
@@ -66,7 +66,7 @@ public record VoteResult(
                 percent(neutral, total),
                 presentation.getPreSelectionStatus() == null ? PreSelectionStatus.NONE : presentation.getPreSelectionStatus(),
                 presentation.getPreSelectionComment() == null ? "" : presentation.getPreSelectionComment(),
-                speakerHasAcceptedPresentation,
+                speakerHasPreSelectedPresentation,
                 voterScores
         );
     }

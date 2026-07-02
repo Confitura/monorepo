@@ -2117,6 +2117,12 @@ export interface VoteResult {
     'preSelectionComment': string;
     /**
      * 
+     * @type {boolean}
+     * @memberof VoteResult
+     */
+    'speakerHasPreSelectedPresentation': boolean;
+    /**
+     * 
      * @type {{ [key: string]: number; }}
      * @memberof VoteResult
      */

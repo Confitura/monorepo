@@ -89,18 +89,37 @@ class VoteResultsControllerTest extends BaseIntegrationTest {
         assertThat(reloaded.getPreSelectionComment()).isEqualTo("solid backup talk");
     }
 
+    @Test
+    void resultShouldFlagWhenSpeakerAlreadyHasPreSelectedPresentation() throws Exception {
+        //given a speaker with a pre-approved presentation and another (voted) presentation
+        User speaker = userRepository.save(new User().setName("Busy Speaker"));
+        Presentation preSelected = createPresentation("Pre-approved Talk", speaker);
+        preSelected.setPreSelectionStatus(PreSelectionStatus.PRE_APPROVED);
+        presentationRepository.save(preSelected);
+        Presentation other = createPresentation("Other Talk", speaker);
+        voteRepository.saveAll(List.of(new Vote().setToken("Z").setRate(1).setPresentation(other)));
+
+        mockMvc.perform(get("/votes/results").with(admin()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[?(@.presentationId=='" + other.getId() + "')].speakerHasPreSelectedPresentation",
+                        contains(true)));
+    }
+
     private Vote vote(String token, int rate) {
         return new Vote().setToken(token).setRate(rate).setPresentation(presentation);
     }
 
     private Presentation createPresentation(String title, String speakerName) {
+        return createPresentation(title, userRepository.save(new User().setName(speakerName)));
+    }
+
+    private Presentation createPresentation(String title, User speaker) {
         Presentation p = new Presentation();
         p.setTitle(title);
         p.setShortDescription("short");
         p.setDescription("description");
         p.setLevel("advanced");
         p.setLanguage("en");
-        User speaker = userRepository.save(new User().setName(speakerName));
         p.setSpeaker(speaker);
         return presentationRepository.save(p);
     }

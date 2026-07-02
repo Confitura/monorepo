@@ -105,7 +105,8 @@ public class VoteController {
     public List<VoteResult> results(@RequestParam(required = false) List<String> tokens) {
         Set<String> selectedTokens = tokens == null ? Set.of() : new HashSet<>(tokens);
 
-        Set<String> acceptedSpeakerIds = presentationRepository.findAccepted().stream()
+        Set<String> preSelectedSpeakerIds = presentationRepository.findAll().stream()
+                .filter(presentation -> presentation.getPreSelectionStatus() == PreSelectionStatus.PRE_APPROVED)
                 .flatMap(presentation -> presentation.getSpeakers().stream())
                 .map(User::getId)
                 .collect(Collectors.toSet());
@@ -116,7 +117,7 @@ public class VoteController {
                 .collect(Collectors.groupingBy(vote -> vote.getPresentation().getId()));
 
         return votesByPresentation.values().stream()
-                .map(votes -> VoteResult.from(votes.get(0).getPresentation(), votes, selectedTokens, acceptedSpeakerIds))
+                .map(votes -> VoteResult.from(votes.get(0).getPresentation(), votes, selectedTokens, preSelectedSpeakerIds))
                 .sorted(Comparator.comparingInt(VoteResult::score).reversed())
                 .collect(toList());
     }
