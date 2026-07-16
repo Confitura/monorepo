@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@vueuse/core": "^14.3.0",
-    "axios": "^1.18.0",
+    "axios": "^1.18.1",
     "echarts": "^6.1.0",
     "jwt-decode": "^4.0.0",
     "pinia": "^3.0.4",
