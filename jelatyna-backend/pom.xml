@@ -231,6 +231,10 @@
                         <profile>dev</profile>
                         <profile>fake-security</profile>
                     </profiles>
+                    <image>
+                        <builder>paketobuildpacks/builder-jammy-base</builder>
+                        <runImage>paketobuildpacks/run-jammy-base</runImage>
+                    </image>
                 </configuration>
                 <executions>
                     <execution>
