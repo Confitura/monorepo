@@ -17,12 +17,12 @@
     "start": " node .output/server/index.mjs"
   },
   "dependencies": {
-    "@pinia/nuxt": "^0.11.3",
+    "@pinia/nuxt": "^1.0.1",
     "dayjs": "^1.11.21",
     "marked": "^18.0.7",
     "modern-normalize": "^3.0.1",
     "nuxt": "^4.5.0",
-    "pinia": "^3.0.4",
+    "pinia": "^4.0.2",
     "vue": "^3.5.40",
     "vue-router": "^5.2.0",
     "vue3-google-map": "^0.27.2"
