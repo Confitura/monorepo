@@ -160,6 +160,7 @@ jobs:
       - name: Trigger Coolify deployment
         run: |
           curl -fsS -X GET \
+            -H "Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}" \
             "https://admin.confitura.pl/api/v1/deploy?uuid=wqwwmtfjn4xuhsgj4uzwfd4x&force=true"
       - name: Save Paketo builder
         if: steps.paketo-cache.outputs.cache-hit != 'true'
