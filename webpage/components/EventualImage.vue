@@ -15,7 +15,7 @@ function resizeTo(size: number) {
     return ''
   }
   if (src.includes('/photos/')) {
-    return `${src}${src.includes('?') ? '&' : '?'}size=${size}`
+    return `${src}${src.includes('?') ? '&' : '?'}size=${size}`.replace("api.confitura.pl/api/resources", "resources.confitura.pl")
   } else if (src.includes('githubusercontent.com')) {
     return `${src}&s=${size}`
   } else if (src.includes('gravatar.com')) {
