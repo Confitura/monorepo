@@ -4,7 +4,7 @@
     <Box class="content" color="white" :full="false">
       <div v-if="speaker" class="speaker__container">
         <div class="speaker__left">
-          <img :src="speaker.photo" class="speaker__photo"/>
+          <EventualImage :src="speaker.photo" :size="400" class="speaker__photo"/>
           <div class="speaker__social">
             <SocialLink
                 class="speaker__social-link"

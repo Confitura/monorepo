@@ -6,15 +6,16 @@
 
 <script setup lang="ts">
 
-const { src } = defineProps<{ src: string }>()
-let loaded = false
+const { src, size = 90 } = defineProps<{ src?: string; size?: number }>()
 
-let fullSizeSrc = computed(() => resizeTo(90))
-let thumbnailSrc = computed(() => resizeTo(5))
+let fullSizeSrc = computed(() => resizeTo(size))
 
 function resizeTo(size: number) {
+  if (!src) {
+    return ''
+  }
   if (src.includes('/photos/')) {
-    return src//.replace('/photos/', `/photos/${size}/`) TODO
+    return `${src}${src.includes('?') ? '&' : '?'}size=${size}`.replace("api.confitura.pl/api/resources", "resources.confitura.pl")
   } else if (src.includes('githubusercontent.com')) {
     return `${src}&s=${size}`
   } else if (src.includes('gravatar.com')) {
