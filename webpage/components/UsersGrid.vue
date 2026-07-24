@@ -6,7 +6,7 @@
       :key="user.id"
       @click="show(user)"
     >
-      <EventualImage :src="user.photo" :size="200" class="user__photo"/>
+      <img :src="photoUrl(user.photo, 200)" alt="" class="user__photo" loading="lazy"/>
       <div class="user__name">
         <span>{{ firstName(user.name) }}</span>
         <span>{{ lastName(user.name) }}</span>
