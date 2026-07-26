@@ -155,6 +155,20 @@ declare module 'vue-router/auto-routes' {
       { entryId?: ParamValueZeroOrOne<false> },
       | never
     >,
+    '/rooms/': RouteRecordInfo<
+      '/rooms/',
+      '/rooms',
+      Record<never, never>,
+      Record<never, never>,
+      | never
+    >,
+    '/rooms/[id]': RouteRecordInfo<
+      '/rooms/[id]',
+      '/rooms/:id',
+      { id: ParamValue<true> },
+      { id: ParamValue<false> },
+      | never
+    >,
     '/vote-for-papers': RouteRecordInfo<
       '/vote-for-papers',
       '/vote-for-papers',
@@ -294,6 +308,18 @@ declare module 'vue-router/auto-routes' {
     'src/pages/rate.[[entryId]].vue': {
       routes:
         | '/rate.[[entryId]]'
+      views:
+        | never
+    }
+    'src/pages/rooms/index.vue': {
+      routes:
+        | '/rooms/'
+      views:
+        | never
+    }
+    'src/pages/rooms/[id].vue': {
+      routes:
+        | '/rooms/[id]'
       views:
         | never
     }
