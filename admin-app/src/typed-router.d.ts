@@ -155,6 +155,14 @@ declare module 'vue-router/auto-routes' {
       { entryId?: ParamValueZeroOrOne<false> },
       | never
     >,
+    '/rooms': RouteRecordInfo<
+      '/rooms',
+      '/rooms',
+      Record<never, never>,
+      Record<never, never>,
+      | '/rooms/'
+      | '/rooms/[id]'
+    >,
     '/rooms/': RouteRecordInfo<
       '/rooms/',
       '/rooms',
@@ -310,6 +318,14 @@ declare module 'vue-router/auto-routes' {
         | '/rate.[[entryId]]'
       views:
         | never
+    }
+    'src/pages/rooms.vue': {
+      routes:
+        | '/rooms'
+        | '/rooms/'
+        | '/rooms/[id]'
+      views:
+        | 'default'
     }
     'src/pages/rooms/index.vue': {
       routes:
