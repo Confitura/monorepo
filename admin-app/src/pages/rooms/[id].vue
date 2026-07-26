@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { agendaApi, daysApi, presentationApi } from '@/utils/api.ts'
-import type { InlineAgendaEntry, InlineTimeSlot, FullPresentation } from '@/utils/api-axios-client'
+import type {
+  FullPresentation,
+  InlineAgendaEntry,
+  InlineTimeSlot,
+} from '@/utils/api-axios-client'
 
 definePage({
   meta: {
@@ -47,9 +51,12 @@ function formatCountdown(targetTimeStr: string): string {
   const ms = remainingMs(targetTimeStr)
   if (ms <= 0) return '00:00'
   const totalSeconds = Math.floor(ms / 1000)
-  const mins = Math.floor(totalSeconds / 60)
+  if (totalSeconds > 60) {
+    const mins = Math.floor(totalSeconds / 60)
+    return `${mins} minute${mins !== 1 ? 's' : ''}`
+  }
   const secs = totalSeconds % 60
-  return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`
+  return `00:${String(secs).padStart(2, '0')}`
 }
 
 // --- State types ---
@@ -62,35 +69,57 @@ interface NextPresentation {
 
 type RoomState =
   | { type: 'current'; title: string; speakers: string; endsAt: string }
-  | { type: 'break'; label: string; endsAt: string; next: NextPresentation | null }
+  | {
+      type: 'break'
+      label: string
+      endsAt: string
+      next: NextPresentation | null
+    }
   | { type: 'upcoming'; next: NextPresentation }
   | { type: 'ended' }
 
 // --- State computation ---
 
 function speakersLabel(p: FullPresentation): string {
-  return p.flatSpeakers || p.speakers.map(s => s.name || '').filter(Boolean).join(', ')
+  return (
+    p.flatSpeakers ||
+    p.speakers
+      .map((s) => s.name || '')
+      .filter(Boolean)
+      .join(', ')
+  )
 }
 
-function findNextPresentation(fromDisplayOrder: number): NextPresentation | null {
-  const sortedSlots = [...timeSlots.value].sort((a, b) => a.displayOrder - b.displayOrder)
+function findNextPresentation(
+  fromDisplayOrder: number,
+): NextPresentation | null {
+  const sortedSlots = [...timeSlots.value].sort(
+    (a, b) => a.displayOrder - b.displayOrder,
+  )
 
   for (const slot of sortedSlots) {
     if (slot.displayOrder < fromDisplayOrder) continue
 
     // Skip break slots (all-rooms entries with a label and no roomId)
     const isBreakSlot = agendaEntries.value.some(
-      e => e.timeSlotIndex === slot.displayOrder && !e.roomId && e.label,
+      (e) => e.timeSlotIndex === slot.displayOrder && !e.roomId && e.label,
     )
     if (isBreakSlot) continue
 
     const entry = agendaEntries.value.find(
-      e => e.roomId === roomId && e.timeSlotIndex === slot.displayOrder && e.presentationId,
+      (e) =>
+        e.roomId === roomId &&
+        e.timeSlotIndex === slot.displayOrder &&
+        e.presentationId,
     )
     if (entry?.presentationId) {
       const p = presentationsMap.value.get(entry.presentationId)
       if (p) {
-        return { title: p.title, speakers: speakersLabel(p), startsAt: slot.start }
+        return {
+          title: p.title,
+          speakers: speakersLabel(p),
+          startsAt: slot.start,
+        }
       }
     }
   }
@@ -102,16 +131,19 @@ const roomState = computed((): RoomState => {
   void tickCount.value
 
   const now = nowMinutes()
-  const sortedSlots = [...timeSlots.value].sort((a, b) => a.displayOrder - b.displayOrder)
+  const sortedSlots = [...timeSlots.value].sort(
+    (a, b) => a.displayOrder - b.displayOrder,
+  )
 
   const currentSlot = sortedSlots.find(
-    ts => timeToMinutes(ts.start) <= now && now < timeToMinutes(ts.end),
+    (ts) => timeToMinutes(ts.start) <= now && now < timeToMinutes(ts.end),
   )
 
   if (currentSlot) {
     // Break: an all-rooms entry with a label and no roomId
     const breakEntry = agendaEntries.value.find(
-      e => e.timeSlotIndex === currentSlot.displayOrder && !e.roomId && e.label,
+      (e) =>
+        e.timeSlotIndex === currentSlot.displayOrder && !e.roomId && e.label,
     )
     if (breakEntry) {
       return {
@@ -124,7 +156,10 @@ const roomState = computed((): RoomState => {
 
     // Regular slot — check if this room has a presentation scheduled
     const entry = agendaEntries.value.find(
-      e => e.roomId === roomId && e.timeSlotIndex === currentSlot.displayOrder && e.presentationId,
+      (e) =>
+        e.roomId === roomId &&
+        e.timeSlotIndex === currentSlot.displayOrder &&
+        e.presentationId,
     )
     if (entry?.presentationId) {
       const p = presentationsMap.value.get(entry.presentationId)
@@ -145,7 +180,7 @@ const roomState = computed((): RoomState => {
   }
 
   // Between slots — find the next one
-  const nextSlot = sortedSlots.find(ts => timeToMinutes(ts.start) > now)
+  const nextSlot = sortedSlots.find((ts) => timeToMinutes(ts.start) > now)
   if (!nextSlot) return { type: 'ended' }
 
   const next = findNextPresentation(nextSlot.displayOrder)
@@ -167,10 +202,7 @@ let timer: ReturnType<typeof setInterval> | null = null
 
 function reschedule() {
   if (timer) clearInterval(timer)
-  const target = targetTime.value
-  const ms = target ? remainingMs(target) : null
-  const interval = ms !== null && ms < 60_000 ? 1_000 : 30_000
-  timer = setInterval(tick, interval)
+  timer = setInterval(tick, 1_000)
 }
 
 function tick() {
@@ -187,8 +219,10 @@ onMounted(async () => {
     const days = daysResponse.data
 
     const todayDay =
-      days.find(d => d.date === today) ??
-      [...days].sort((a, b) => a.date.localeCompare(b.date)).find(d => d.date > today) ??
+      days.find((d) => d.date === today) ??
+      [...days]
+        .sort((a, b) => a.date.localeCompare(b.date))
+        .find((d) => d.date > today) ??
       null
 
     if (!todayDay) {
@@ -203,7 +237,7 @@ onMounted(async () => {
       presentationApi.getAllPresentations(),
     ])
 
-    const room = roomsRes.data.find(r => r.id === roomId)
+    const room = roomsRes.data.find((r) => r.id === roomId)
     if (!room) {
       error.value = 'Room not found'
       return
@@ -251,7 +285,13 @@ onUnmounted(() => {
 
     <!-- Error -->
     <div v-else-if="error" class="fill-center">
-      <v-alert type="info" variant="tonal" class="text-center" max-width="400">{{ error }}</v-alert>
+      <v-alert
+        type="info"
+        variant="tonal"
+        class="text-center"
+        max-width="400"
+        >{{ error }}</v-alert
+      >
     </div>
 
     <!-- Content -->
@@ -272,7 +312,9 @@ onUnmounted(() => {
         <div class="state-label break-state">BREAK</div>
         <div class="presentation-title">{{ roomState.label }}</div>
         <div class="countdown-label">ends in</div>
-        <div class="countdown break-countdown">{{ formatCountdown(roomState.endsAt) }}</div>
+        <div class="countdown break-countdown">
+          {{ formatCountdown(roomState.endsAt) }}
+        </div>
         <template v-if="roomState.next">
           <div class="next-divider" />
           <div class="next-label">UP NEXT</div>
@@ -287,13 +329,17 @@ onUnmounted(() => {
         <div class="presentation-title">{{ roomState.next.title }}</div>
         <div class="speakers-label">{{ roomState.next.speakers }}</div>
         <div class="countdown-label">starts in</div>
-        <div class="countdown upcoming-countdown">{{ formatCountdown(roomState.next.startsAt) }}</div>
+        <div class="countdown upcoming-countdown">
+          {{ formatCountdown(roomState.next.startsAt) }}
+        </div>
       </template>
 
       <!-- No more presentations today -->
       <template v-else>
         <v-icon size="80" class="mb-6 opacity-40">mdi-calendar-check</v-icon>
-        <div class="presentation-title opacity-60">No more presentations today</div>
+        <div class="presentation-title opacity-60">
+          No more presentations today
+        </div>
       </template>
     </div>
   </div>
