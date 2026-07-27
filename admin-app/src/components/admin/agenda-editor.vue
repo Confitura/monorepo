@@ -503,6 +503,7 @@ async function deleteAgendaEntry() {
                     size="small"
                     color="primary"
                     prepend-icon="mdi-plus"
+                    :disabled="timeSlot.forAllRooms"
                     @click="addAgendaEntry(timeSlot, room)"
                   >
                     Add
@@ -533,6 +534,7 @@ async function deleteAgendaEntry() {
                     size="small"
                     color="primary"
                     prepend-icon="mdi-plus"
+                    :disabled="!timeSlot.forAllRooms"
                     @click="addAgendaEntry(timeSlot, null)"
                   >
                     Add

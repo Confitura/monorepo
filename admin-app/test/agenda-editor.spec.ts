@@ -18,7 +18,7 @@ const DAY_ID = 'day-1'
 const day = { id: DAY_ID, label: 'Day 1', date: '2026-09-19', displayOrder: 1 }
 const timeSlots = [
   { dayId: DAY_ID, displayOrder: 0, label: '09:00 - 10:00', start: '09:00', end: '10:00', forAllRooms: false },
-  { dayId: DAY_ID, displayOrder: 1, label: '10:15 - 11:15', start: '10:15', end: '11:15', forAllRooms: false },
+  { dayId: DAY_ID, displayOrder: 1, label: '10:15 - 11:15', start: '10:15', end: '11:15', forAllRooms: true },
 ]
 const rooms = [
   { id: 'room-ab', label: 'AB', displayOrder: 1 },
@@ -173,6 +173,23 @@ describe('component agenda-editor.vue', () => {
     expect(headers[2].text()).toContain('CDE')
   })
 
+  it('only offers the all-rooms cell on a slot spanning all rooms', async () => {
+    const editor = await mountEditor()
+
+    const addButton = (row: number, cell: number) =>
+      editor.findAll('tbody tr')[row].findAll('td')[cell].find('button')
+        .element as HTMLButtonElement
+
+    // second slot spans all rooms: only its all-rooms cell can be filled
+    expect(addButton(1, 1).disabled).toBe(true)
+    expect(addButton(1, 2).disabled).toBe(true)
+    expect(addButton(1, rooms.length + 1).disabled).toBe(false)
+
+    // first slot does not, so the rooms take entries and the all-rooms cell does not
+    expect(addButton(0, 2).disabled).toBe(false)
+    expect(addButton(0, rooms.length + 1).disabled).toBe(true)
+  })
+
   it('shows the presentation scheduled in a slot', async () => {
     const editor = await mountEditor()
 
@@ -204,6 +221,8 @@ describe('component agenda-editor.vue', () => {
     await clickButtonWithText(editor, 'Time Slot')
     expect(dialogField('Duration').value).toBe('60')
     expect(dialogField('End Time').value).toBe('12:15')
+    // a prefilled slot is savable straight away, no field has to be touched
+    expect(dialogButton('Save').disabled).toBe(false)
 
     await fillDialogField('Duration', '45')
     expect(dialogField('End Time').value).toBe('12:00')
@@ -241,7 +260,7 @@ describe('component agenda-editor.vue', () => {
     expect(agendaApi.updateTimeSlot).toHaveBeenCalledWith(DAY_ID, 1, {
       start: '10:00',
       end: '11:00',
-      forAllRooms: false,
+      forAllRooms: true,
     })
   })
 
