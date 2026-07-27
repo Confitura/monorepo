@@ -204,6 +204,8 @@ describe('component agenda-editor.vue', () => {
     await clickButtonWithText(editor, 'Time Slot')
     expect(dialogField('Duration').value).toBe('60')
     expect(dialogField('End Time').value).toBe('12:15')
+    // a prefilled slot is savable straight away, no field has to be touched
+    expect(dialogButton('Save').disabled).toBe(false)
 
     await fillDialogField('Duration', '45')
     expect(dialogField('End Time').value).toBe('12:00')
