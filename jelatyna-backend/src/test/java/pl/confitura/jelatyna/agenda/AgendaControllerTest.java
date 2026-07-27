@@ -210,4 +210,162 @@ class AgendaControllerTest extends BaseIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(0)));
     }
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    void shouldReplaceAgendaEntryContent() throws Exception {
+        mockMvc.perform(put("/agenda/entries/" + entry1.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"label\":\"Lunch\",\"roomId\":null}"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.label", is("Lunch")))
+                .andExpect(jsonPath("$.roomLabel").doesNotExist());
+    }
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    void shouldMoveAgendaEntryToAnotherTimeSlot() throws Exception {
+        String request = String.format("{\"dayId\":\"%s\",\"timeSlotIndex\":%d,\"roomId\":\"%s\"}",
+                day1.getId(), timeSlot2.getDisplayOrder(), room1.getId());
+
+        mockMvc.perform(put("/agenda/entries/" + entry1.getId() + "/slot")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(request))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.timeSlotIndex", is(timeSlot2.getDisplayOrder())))
+                .andExpect(jsonPath("$.timeSlotLabel", is("10:15 - 11:15")));
+    }
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    void shouldCreateTimeSlotAsTheLastOneOfTheDay() throws Exception {
+        mockMvc.perform(post("/agenda/" + day1.getId() + "/time-slots")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"start\":\"11:30\",\"end\":\"12:30\"}"))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.displayOrder", is(3)))
+                .andExpect(jsonPath("$.label", is("11:30 - 12:30")))
+                .andExpect(jsonPath("$.forAllRooms", is(false)));
+
+        mockMvc.perform(get("/agenda/" + day1.getId() + "/time-slots"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(3)));
+    }
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    void shouldReturnTimeSlotsInChronologicalOrder() throws Exception {
+        // added as the last one, but starting before all the other slots
+        mockMvc.perform(post("/agenda/" + day1.getId() + "/time-slots")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"start\":\"08:00\",\"end\":\"09:00\",\"forAllRooms\":true}"))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.displayOrder", is(3)))
+                .andExpect(jsonPath("$.forAllRooms", is(true)));
+
+        mockMvc.perform(get("/agenda/" + day1.getId() + "/time-slots"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(3)))
+                .andExpect(jsonPath("$[0].start", is("08:00")))
+                .andExpect(jsonPath("$[1].start", is("09:00")))
+                .andExpect(jsonPath("$[2].start", is("10:15")));
+    }
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    void shouldRejectTimeSlotWithUnparsableTime() throws Exception {
+        mockMvc.perform(post("/agenda/" + day1.getId() + "/time-slots")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"start\":\"noon\",\"end\":\"12:30\"}"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    void shouldNotCreateTimeSlotForUnknownDay() throws Exception {
+        mockMvc.perform(post("/agenda/non-existent-id/time-slots")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"start\":\"11:30\",\"end\":\"12:30\"}"))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    void shouldUpdateTimeSlotTimes() throws Exception {
+        mockMvc.perform(put("/agenda/" + day1.getId() + "/time-slots/" + timeSlot1.getDisplayOrder())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"start\":\"09:15\",\"end\":\"10:05\"}"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.label", is("09:15 - 10:05")));
+    }
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    void shouldDeleteTimeSlotWithItsEntries() throws Exception {
+        mockMvc.perform(delete("/agenda/" + day1.getId() + "/time-slots/" + timeSlot1.getDisplayOrder()))
+                .andExpect(status().isNoContent());
+
+        mockMvc.perform(get("/agenda/" + day1.getId() + "/time-slots"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(1)));
+
+        mockMvc.perform(get("/agenda/" + day1.getId() + "/entries"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(0)));
+    }
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    void shouldNotDeleteUnknownTimeSlot() throws Exception {
+        mockMvc.perform(delete("/agenda/" + day1.getId() + "/time-slots/42"))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    void shouldCreateRoomAsTheLastOneOfTheDay() throws Exception {
+        mockMvc.perform(post("/agenda/" + day1.getId() + "/rooms")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"label\":\"Side Room\"}"))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.label", is("Side Room")))
+                .andExpect(jsonPath("$.displayOrder", is(room1.getDisplayOrder() + 1)));
+
+        mockMvc.perform(get("/agenda/" + day1.getId() + "/rooms"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)));
+    }
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    void shouldUpdateRoomLabelAndDisplayOrder() throws Exception {
+        mockMvc.perform(put("/agenda/rooms/" + room1.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"label\":\"Big Hall\",\"displayOrder\":5}"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.label", is("Big Hall")))
+                .andExpect(jsonPath("$.displayOrder", is(5)));
+    }
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    void shouldRemoveRoomWithItsEntries() throws Exception {
+        mockMvc.perform(delete("/agenda/rooms/" + room1.getId()))
+                .andExpect(status().isNoContent());
+
+        mockMvc.perform(get("/agenda/" + day1.getId() + "/rooms"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(0)));
+
+        mockMvc.perform(get("/agenda/" + day1.getId() + "/entries"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(0)));
+    }
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    void shouldNotRemoveUnknownRoom() throws Exception {
+        mockMvc.perform(delete("/agenda/rooms/non-existent-id"))
+                .andExpect(status().isNotFound());
+    }
 }

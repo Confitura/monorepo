@@ -22,4 +22,9 @@ public interface AgendaRepository extends Repository<AgendaEntry, String> {
     List<AgendaEntry> findEntriesForAllRooms();
 
     List<AgendaEntry> findByTimeSlotIdDayId(String dayId);
+
+    List<AgendaEntry> findByTimeSlotId(TimeSlot.TimeSlotId timeSlotId);
+
+    @Query("from AgendaEntry where room.id = :roomId")
+    List<AgendaEntry> findByRoomId(String roomId);
 }
