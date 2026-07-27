@@ -87,6 +87,30 @@ async function clickButtonWithText(editor: ReturnType<typeof mount>, text: strin
   await flushPromises()
 }
 
+function dialogField(label: string) {
+  const field = [...document.querySelectorAll('.v-overlay .v-input')].find((it) =>
+    it.textContent?.includes(label),
+  )
+  if (!field) throw new Error(`No "${label}" field found in the open dialog`)
+  return field.querySelector('input')!
+}
+
+async function fillDialogField(label: string, value: string) {
+  const input = dialogField(label)
+  input.value = value
+  input.dispatchEvent(new Event('input', { bubbles: true }))
+  await flushPromises()
+}
+
+async function clickDialogButtonContaining(text: string) {
+  const button = [...document.querySelectorAll('.v-overlay button')].find((it) =>
+    it.textContent?.includes(text),
+  )
+  if (!button) throw new Error(`No button containing "${text}" found in the open dialog`)
+  button.dispatchEvent(new MouseEvent('click', { bubbles: true }))
+  await flushPromises()
+}
+
 async function selectDialogOption(label: string, option: string) {
   const select = [...document.querySelectorAll('.v-overlay .v-input')].find((it) =>
     it.textContent?.includes(label),
@@ -103,12 +127,16 @@ async function selectDialogOption(label: string, option: string) {
 }
 
 // dialogs are teleported out of the component, so they are looked up in the document
-async function clickDialogButton(text: string) {
-  const button = [...document.querySelectorAll('.v-overlay button')].find(
+function dialogButton(text: string) {
+  const button = [...document.querySelectorAll<HTMLButtonElement>('.v-overlay button')].find(
     (it) => it.textContent?.trim() === text,
   )
   if (!button) throw new Error(`No "${text}" button found in the open dialog`)
-  button.dispatchEvent(new MouseEvent('click', { bubbles: true }))
+  return button
+}
+
+async function clickDialogButton(text: string) {
+  dialogButton(text).dispatchEvent(new MouseEvent('click', { bubbles: true }))
   await flushPromises()
 }
 
@@ -168,6 +196,91 @@ describe('component agenda-editor.vue', () => {
     })
     // the day is reloaded so the new slot shows up in its chronological place
     expect(agendaApi.getAllTimeSlots).toHaveBeenCalledTimes(2)
+  })
+
+  it('derives the end time from the duration', async () => {
+    const editor = await mountEditor()
+
+    await clickButtonWithText(editor, 'Time Slot')
+    expect(dialogField('Duration').value).toBe('60')
+    expect(dialogField('End Time').value).toBe('12:15')
+
+    await fillDialogField('Duration', '45')
+    expect(dialogField('End Time').value).toBe('12:00')
+
+    await clickDialogButton('Save')
+    expect(agendaApi.createTimeSlot).toHaveBeenCalledWith(DAY_ID, {
+      start: '11:15',
+      end: '12:00',
+      forAllRooms: false,
+    })
+  })
+
+  it('derives the duration from a hand-picked end time', async () => {
+    const editor = await mountEditor()
+
+    await clickButtonWithText(editor, 'Time Slot')
+    await fillDialogField('End Time', '11:45')
+
+    expect(dialogField('Duration').value).toBe('30')
+  })
+
+  it('starts a slot when the previous one ends', async () => {
+    const editor = await mountEditor()
+
+    // edit the second slot (10:15 - 11:15), which follows one ending at 10:00
+    const [editButton] = editor.findAll('tbody tr')[1].findAll('td')[0].findAll('button')
+    await editButton.trigger('click')
+    await clickDialogButtonContaining('Start when previous slot ends (10:00)')
+
+    expect(dialogField('Start Time').value).toBe('10:00')
+    // the 60 minute duration is kept, so the end time follows the start
+    expect(dialogField('End Time').value).toBe('11:00')
+
+    await clickDialogButton('Save')
+    expect(agendaApi.updateTimeSlot).toHaveBeenCalledWith(DAY_ID, 1, {
+      start: '10:00',
+      end: '11:00',
+      forAllRooms: false,
+    })
+  })
+
+  it('keeps the dialog open for the next slot when adding several in a row', async () => {
+    const editor = await mountEditor()
+
+    await clickButtonWithText(editor, 'Time Slot')
+    await fillDialogField('Duration', '30')
+    await clickDialogButton('Save & add next')
+
+    // ready for the following slot, starting where the saved one ended
+    expect(dialogField('Start Time').value).toBe('11:45')
+    expect(dialogField('End Time').value).toBe('12:15')
+
+    await clickDialogButton('Save')
+
+    expect(agendaApi.createTimeSlot).toHaveBeenNthCalledWith(1, DAY_ID, {
+      start: '11:15',
+      end: '11:45',
+      forAllRooms: false,
+    })
+    expect(agendaApi.createTimeSlot).toHaveBeenNthCalledWith(2, DAY_ID, {
+      start: '11:45',
+      end: '12:15',
+      forAllRooms: false,
+    })
+  })
+
+  it('refuses to save a slot ending before it starts', async () => {
+    const editor = await mountEditor()
+
+    await clickButtonWithText(editor, 'Time Slot')
+    await fillDialogField('End Time', '10:00')
+
+    expect(document.body.textContent).toContain('End time must be after the start time')
+    expect(dialogButton('Save').disabled).toBe(true)
+
+    await clickDialogButton('Save')
+    expect(agendaApi.createTimeSlot).not.toHaveBeenCalled()
   })
 
   it('adds an agenda entry to an empty cell', async () => {

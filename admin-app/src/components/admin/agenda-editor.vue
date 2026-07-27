@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import type { Ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import DialogConfirm from '@/components/DialogConfirm.vue';
@@ -87,6 +87,14 @@ function addMinutes(time: string, minutes: number) {
   return `${String(Math.floor(total / 60)).padStart(2, '0')}:${String(total % 60).padStart(2, '0')}`;
 }
 
+function minutesBetween(start: string, end: string) {
+  const toMinutes = (time: string) => {
+    const [hours, mins] = time.split(':').map(Number);
+    return hours * 60 + mins;
+  };
+  return toMinutes(end) - toMinutes(start);
+}
+
 // --- time slots --------------------------------------------------------------
 
 interface TimeSlotForm {
@@ -96,6 +104,8 @@ interface TimeSlotForm {
   forAllRooms: boolean;
 }
 
+const DEFAULT_DURATION = 60;
+
 const timeSlotDialog = ref(false);
 const timeSlotFormValid = ref(false);
 const editedTimeSlot: Ref<TimeSlotForm> = ref({
@@ -103,6 +113,25 @@ const editedTimeSlot: Ref<TimeSlotForm> = ref({
   start: '',
   end: '',
   forAllRooms: false,
+});
+const duration = ref(DEFAULT_DURATION);
+
+const endTimeError = computed(() => {
+  const form = editedTimeSlot.value;
+  return form.start && form.end && form.end <= form.start
+    ? 'End time must be after the start time'
+    : '';
+});
+const timeSlotSavable = computed(() => timeSlotFormValid.value && !endTimeError.value);
+
+/** The slot the edited one follows: the last one of the day when adding, the preceding one when editing. */
+const previousTimeSlot = computed(() => {
+  const displayOrder = editedTimeSlot.value.displayOrder;
+  if (displayOrder === null) {
+    return timeSlots.value[timeSlots.value.length - 1] ?? null;
+  }
+  const index = timeSlots.value.findIndex((it) => it.displayOrder === displayOrder);
+  return index > 0 ? timeSlots.value[index - 1] : null;
 });
 
 function addTimeSlot() {
@@ -113,9 +142,10 @@ function addTimeSlot() {
   editedTimeSlot.value = {
     displayOrder: null,
     start,
-    end: addMinutes(start, 60),
+    end: addMinutes(start, DEFAULT_DURATION),
     forAllRooms: false,
   };
+  duration.value = DEFAULT_DURATION;
   timeSlotDialog.value = true;
 }
 
@@ -126,11 +156,41 @@ function editTimeSlot(timeSlot: InlineTimeSlot) {
     end: timeSlot.end.slice(0, 5),
     forAllRooms: timeSlot.forAllRooms,
   };
+  duration.value = minutesBetween(editedTimeSlot.value.start, editedTimeSlot.value.end);
   timeSlotDialog.value = true;
 }
 
-async function saveTimeSlot() {
+/** Start and duration drive the end time, so only the duration has to be typed in. */
+function applyDuration() {
   const form = editedTimeSlot.value;
+  if (form.start && duration.value > 0) {
+    form.end = addMinutes(form.start, duration.value);
+  }
+}
+
+function readDuration() {
+  const form = editedTimeSlot.value;
+  if (form.start && form.end) {
+    duration.value = minutesBetween(form.start, form.end);
+  }
+}
+
+// the three time fields stay in sync: changing the start or the duration moves the end,
+// picking an end time updates the duration
+watch(duration, applyDuration);
+watch(() => editedTimeSlot.value.start, applyDuration);
+watch(() => editedTimeSlot.value.end, readDuration);
+
+function startAfterPreviousSlot() {
+  const previous = previousTimeSlot.value;
+  if (!previous) return;
+  editedTimeSlot.value.start = previous.end.slice(0, 5);
+  applyDuration();
+}
+
+async function saveTimeSlot(addAnother = false) {
+  const form = editedTimeSlot.value;
+  if (endTimeError.value) return;
   try {
     if (form.displayOrder === null) {
       await agenda.createTimeSlot(props.dayId, {
@@ -145,7 +205,14 @@ async function saveTimeSlot() {
         forAllRooms: form.forAllRooms,
       });
     }
-    timeSlotDialog.value = false;
+    if (addAnother) {
+      // keep the dialog open, ready for the slot that follows the one just saved
+      form.displayOrder = null;
+      form.start = form.end;
+      applyDuration();
+    } else {
+      timeSlotDialog.value = false;
+    }
   } catch (error) {
     console.error('Error saving time slot:', error);
     Notify.error('Error saving time slot');
@@ -573,7 +640,7 @@ async function deleteAgendaEntry() {
         <v-card-text>
           <v-form v-model="timeSlotFormValid">
             <v-row>
-              <v-col cols="12" sm="6">
+              <v-col cols="12" sm="4">
                 <v-text-field
                   v-model="editedTimeSlot.start"
                   label="Start Time"
@@ -581,13 +648,37 @@ async function deleteAgendaEntry() {
                   :rules="[requiredRule]"
                 ></v-text-field>
               </v-col>
-              <v-col cols="12" sm="6">
+              <v-col cols="12" sm="4">
+                <v-text-field
+                  v-model.number="duration"
+                  label="Duration (min)"
+                  type="number"
+                  min="1"
+                  hint="Sets the end time"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="4">
                 <v-text-field
                   v-model="editedTimeSlot.end"
                   label="End Time"
                   type="time"
                   :rules="[requiredRule]"
+                  :error-messages="endTimeError"
                 ></v-text-field>
+              </v-col>
+              <v-col cols="12" class="pt-0">
+                <v-btn
+                  variant="text"
+                  size="small"
+                  color="primary"
+                  prepend-icon="mdi-ray-start-arrow"
+                  :disabled="!previousTimeSlot"
+                  @click="startAfterPreviousSlot"
+                >
+                  Start when previous slot ends{{
+                    previousTimeSlot ? ` (${previousTimeSlot.end.slice(0, 5)})` : ''
+                  }}
+                </v-btn>
               </v-col>
               <v-col cols="12">
                 <v-switch
@@ -606,8 +697,12 @@ async function deleteAgendaEntry() {
           <v-btn color="blue-darken-1" variant="text" @click="timeSlotDialog = false">
             Cancel
           </v-btn>
-          <v-btn color="blue-darken-1" variant="text" :disabled="!timeSlotFormValid"
-                 @click="saveTimeSlot">
+          <v-btn v-if="editedTimeSlot.displayOrder === null" color="blue-darken-1" variant="text"
+                 :disabled="!timeSlotSavable" @click="saveTimeSlot(true)">
+            Save & add next
+          </v-btn>
+          <v-btn color="blue-darken-1" variant="text" :disabled="!timeSlotSavable"
+                 @click="saveTimeSlot()">
             Save
           </v-btn>
         </v-card-actions>
