@@ -13,9 +13,11 @@ public record InlineTimeSlot(
         @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
         String start,
         @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
-        String end
+        String end,
+        @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
+        boolean forAllRooms
 ) {
     public static InlineTimeSlot from(TimeSlot it) {
-        return new InlineTimeSlot(it.getId().dayId(), it.getDisplayOrder(), it.getLabel(), it.getStart().toString(), it.getEnd().toString());
+        return new InlineTimeSlot(it.getId().dayId(), it.getDisplayOrder(), it.getLabel(), it.getStart().toString(), it.getEnd().toString(), it.isForAllRooms());
     }
 }

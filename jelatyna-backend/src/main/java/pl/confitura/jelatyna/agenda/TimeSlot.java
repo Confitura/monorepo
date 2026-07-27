@@ -11,6 +11,7 @@ import pl.confitura.jelatyna.infrastructure.db.AuditedEntity;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 
 @EqualsAndHashCode(callSuper = false)
 @Entity
@@ -20,6 +21,15 @@ import java.time.format.DateTimeFormatter;
 public class TimeSlot extends AuditedEntity {
 
     private static final DateTimeFormatter HOUR_FORMAT = DateTimeFormatter.ofPattern("HH:mm");
+
+    /**
+     * Slots are presented in chronological order. Display order is only a part of the identifier
+     * and is used as a tie-breaker for parallel slots (workshops).
+     */
+    public static final Comparator<TimeSlot> CHRONOLOGICALLY = Comparator
+            .comparing(TimeSlot::getStart)
+            .thenComparing(TimeSlot::getEnd)
+            .thenComparingInt(TimeSlot::getDisplayOrder);
 
     @NotNull
     @EmbeddedId

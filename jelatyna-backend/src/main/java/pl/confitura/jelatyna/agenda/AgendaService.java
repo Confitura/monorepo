@@ -3,9 +3,11 @@ package pl.confitura.jelatyna.agenda;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
 
+import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -16,6 +18,7 @@ public class AgendaService {
     private final RoomRepository roomRepository;
     private final PresentationRepository presentationRepository;
     private final AgendaRepository agendaRepository;
+    private final DayRepository dayRepository;
 
     public AgendaEntry createAgendaEntry(String dayId, int timeSlotPosition, String roomId, String label, String presentationId) {
         TimeSlot timeSlot = timeSlotsRepository.findById(new TimeSlot.TimeSlotId(dayId, timeSlotPosition));
@@ -27,6 +30,70 @@ public class AgendaService {
                 .setRoom(room)
                 .setLabel(label)
                 .setPresentation(presentation);
+    }
+
+    /**
+     * Appends a time slot to a day. The display order is only an identifier - slots are presented
+     * in chronological order, so a slot may be added at any point of the day.
+     */
+    @Transactional
+    public TimeSlot createTimeSlot(String dayId, LocalTime start, LocalTime end, boolean forAllRooms) {
+        int displayOrder = timeSlotsRepository.findByIdDayId(dayId).stream()
+                .mapToInt(TimeSlot::getDisplayOrder)
+                .max()
+                .orElse(-1) + 1;
+        return timeSlotsRepository.save(new TimeSlot()
+                .setId(new TimeSlot.TimeSlotId(dayId, displayOrder))
+                .setStart(start)
+                .setEnd(end)
+                .setForAllRooms(forAllRooms));
+    }
+
+    /**
+     * Removes a time slot together with all agenda entries scheduled in it.
+     */
+    @Transactional
+    public void deleteTimeSlot(String dayId, int displayOrder) {
+        TimeSlot.TimeSlotId id = new TimeSlot.TimeSlotId(dayId, displayOrder);
+        agendaRepository.findByTimeSlotId(id).forEach(entry -> agendaRepository.deleteById(entry.getId()));
+        timeSlotsRepository.deleteById(id);
+    }
+
+    @Transactional
+    public Room createRoom(String dayId, String label, Integer displayOrder) {
+        int order = displayOrder != null ? displayOrder : nextRoomOrder(dayId);
+        return roomRepository.save(new Room()
+                .setId(UUID.randomUUID().toString())
+                .setLabel(label)
+                .setDisplayOrder(order)
+                .setDay(dayRepository.findById(dayId)));
+    }
+
+    /**
+     * Removes a room together with all agenda entries scheduled in it.
+     */
+    @Transactional
+    public void deleteRoom(String roomId) {
+        agendaRepository.findByRoomId(roomId).forEach(entry -> agendaRepository.deleteById(entry.getId()));
+        roomRepository.deleteById(roomId);
+    }
+
+    /**
+     * Removes a day together with its rooms, time slots and agenda entries.
+     */
+    @Transactional
+    public void deleteDay(String dayId) {
+        roomRepository.findByDayId(dayId).forEach(room -> deleteRoom(room.getId()));
+        timeSlotsRepository.findByIdDayId(dayId)
+                .forEach(slot -> deleteTimeSlot(dayId, slot.getDisplayOrder()));
+        dayRepository.deleteById(dayId);
+    }
+
+    private int nextRoomOrder(String dayId) {
+        return roomRepository.findByDayId(dayId).stream()
+                .mapToInt(Room::getDisplayOrder)
+                .max()
+                .orElse(0) + 1;
     }
 
     public List<AgendaEntry> findAllAndMerge() {
@@ -50,7 +117,7 @@ public class AgendaService {
                 .flatMap(it -> {
                     TimeSlotMerger reducer = TimeSlotMerger.empty();
                     it.getValue().stream()
-                            .sorted(Comparator.comparing(AgendaEntry::getTimeSlotOrder))
+                            .sorted(Comparator.comparing((AgendaEntry entry) -> entry.getTimeSlot().getStart()))
                             .forEach(reducer::add);
                     it.getValue().getFirst();
                     return reducer.slots.stream();

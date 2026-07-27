@@ -51,6 +51,10 @@ function subname(room: string) {
 
 let sortByOrder = (a: WithOrder, b: WithOrder) => a.displayOrder - b.displayOrder
 
+// display order of a slot is only a part of its identifier, time decides where it belongs
+let sortByTime = (a: DayTimeSlot, b: DayTimeSlot) =>
+    a.start.localeCompare(b.start) || a.end.localeCompare(b.end) || a.displayOrder - b.displayOrder
+
 let days = ['day-1', 'day-2']
 let dayId = (useRoute().params.dayId || 'day-1') + '-workshops';
 let dayPath = '/agenda/' + dayId + '.json';
@@ -76,6 +80,8 @@ function loadDayAgenda() {
 
     // slots
     slots.value = (value.timeSlots || [])
+        .slice()
+        .sort(sortByTime)
         .map((slot: DayTimeSlot) => ({
           id: String(slot.displayOrder),
           label: slot.label,
@@ -83,8 +89,7 @@ function loadDayAgenda() {
           forAllRooms: false,
           start: slot.start,
           end: slot.end
-        }))
-        .sort(sortByOrder) as any
+        })) as any
 
     // agenda
     agenda.value = (value.agendaEntries || [])
@@ -119,7 +124,7 @@ const enrichedAgenda = computed(() => {
       enriched.timeSlotLabel = slotObj.label
       enriched.start = slotObj.start
       enriched.end = slotObj.end
-      enriched._slotOrder = slotObj.displayOrder
+      enriched._slotOrder = slots.value.indexOf(slotObj)
     } else {
       enriched.timeSlotLabel = ''
       enriched._slotOrder = Number.MAX_SAFE_INTEGER

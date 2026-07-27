@@ -88,6 +88,50 @@ export interface AssignAgendaEntryRequest {
 /**
  * 
  * @export
+ * @interface CreateRoomRequest
+ */
+export interface CreateRoomRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateRoomRequest
+     */
+    'label': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof CreateRoomRequest
+     */
+    'displayOrder'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface CreateTimeSlotRequest
+ */
+export interface CreateTimeSlotRequest {
+    /**
+     * Start time, e.g. 09:00
+     * @type {string}
+     * @memberof CreateTimeSlotRequest
+     */
+    'start': string;
+    /**
+     * End time, e.g. 10:00
+     * @type {string}
+     * @memberof CreateTimeSlotRequest
+     */
+    'end': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CreateTimeSlotRequest
+     */
+    'forAllRooms'?: boolean;
+}
+/**
+ * 
+ * @export
  * @interface Day
  */
 export interface Day {
@@ -702,6 +746,12 @@ export interface InlineTimeSlot {
      * @memberof InlineTimeSlot
      */
     'end': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof InlineTimeSlot
+     */
+    'forAllRooms': boolean;
 }
 /**
  * 
@@ -1257,6 +1307,12 @@ export interface Presentation {
      * @type {boolean}
      * @memberof Presentation
      */
+    'new'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof Presentation
+     */
     'accepted'?: boolean;
     /**
      * 
@@ -1264,12 +1320,6 @@ export interface Presentation {
      * @memberof Presentation
      */
     'speaker'?: Presentation;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof Presentation
-     */
-    'new'?: boolean;
 }
 
 export const PresentationPreSelectionStatusEnum = {
@@ -1728,6 +1778,56 @@ export interface UpdateAgendaEntryRequest {
 /**
  * 
  * @export
+ * @interface UpdateAgendaEntrySlotRequest
+ */
+export interface UpdateAgendaEntrySlotRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateAgendaEntrySlotRequest
+     */
+    'dayId': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateAgendaEntrySlotRequest
+     */
+    'timeSlotIndex': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateAgendaEntrySlotRequest
+     */
+    'roomId'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface UpdateDayRequest
+ */
+export interface UpdateDayRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof UpdateDayRequest
+     */
+    'label': string;
+    /**
+     * Date of the day, e.g. 2026-09-19
+     * @type {string}
+     * @memberof UpdateDayRequest
+     */
+    'date': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateDayRequest
+     */
+    'displayOrder': number;
+}
+/**
+ * 
+ * @export
  * @interface UpdateRoomRequest
  */
 export interface UpdateRoomRequest {
@@ -1736,7 +1836,13 @@ export interface UpdateRoomRequest {
      * @type {string}
      * @memberof UpdateRoomRequest
      */
-    'label': string;
+    'label'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpdateRoomRequest
+     */
+    'displayOrder'?: number;
 }
 /**
  * 
@@ -1882,13 +1988,13 @@ export interface User {
      * @type {boolean}
      * @memberof User
      */
-    'volunteer'?: boolean;
+    'admin'?: boolean;
     /**
      * 
      * @type {boolean}
      * @memberof User
      */
-    'admin'?: boolean;
+    'volunteer'?: boolean;
     /**
      * 
      * @type {boolean}
@@ -2845,6 +2951,84 @@ export const AgendaControllerApiAxiosParamCreator = function (configuration?: Co
     return {
         /**
          * 
+         * @param {string} dayId 
+         * @param {CreateRoomRequest} createRoomRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createRoom: async (dayId: string, createRoomRequest: CreateRoomRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'dayId' is not null or undefined
+            assertParamExists('createRoom', 'dayId', dayId)
+            // verify required parameter 'createRoomRequest' is not null or undefined
+            assertParamExists('createRoom', 'createRoomRequest', createRoomRequest)
+            const localVarPath = `/agenda/{dayId}/rooms`
+                .replace(`{${"dayId"}}`, encodeURIComponent(String(dayId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(createRoomRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} dayId 
+         * @param {CreateTimeSlotRequest} createTimeSlotRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createTimeSlot: async (dayId: string, createTimeSlotRequest: CreateTimeSlotRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'dayId' is not null or undefined
+            assertParamExists('createTimeSlot', 'dayId', dayId)
+            // verify required parameter 'createTimeSlotRequest' is not null or undefined
+            assertParamExists('createTimeSlot', 'createTimeSlotRequest', createTimeSlotRequest)
+            const localVarPath = `/agenda/{dayId}/time-slots`
+                .replace(`{${"dayId"}}`, encodeURIComponent(String(dayId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(createTimeSlotRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2854,6 +3038,43 @@ export const AgendaControllerApiAxiosParamCreator = function (configuration?: Co
             assertParamExists('deleteAgendaEntry', 'id', id)
             const localVarPath = `/agenda/entries/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} dayId 
+         * @param {number} displayOrder 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteTimeSlot: async (dayId: string, displayOrder: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'dayId' is not null or undefined
+            assertParamExists('deleteTimeSlot', 'dayId', dayId)
+            // verify required parameter 'displayOrder' is not null or undefined
+            assertParamExists('deleteTimeSlot', 'displayOrder', displayOrder)
+            const localVarPath = `/agenda/{dayId}/time-slots/{displayOrder}`
+                .replace(`{${"dayId"}}`, encodeURIComponent(String(dayId)))
+                .replace(`{${"displayOrder"}}`, encodeURIComponent(String(displayOrder)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -3068,6 +3289,78 @@ export const AgendaControllerApiAxiosParamCreator = function (configuration?: Co
         },
         /**
          * 
+         * @param {string} id 
+         * @param {UpdateAgendaEntrySlotRequest} updateAgendaEntrySlotRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        moveAgendaEntry: async (id: string, updateAgendaEntrySlotRequest: UpdateAgendaEntrySlotRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('moveAgendaEntry', 'id', id)
+            // verify required parameter 'updateAgendaEntrySlotRequest' is not null or undefined
+            assertParamExists('moveAgendaEntry', 'updateAgendaEntrySlotRequest', updateAgendaEntrySlotRequest)
+            const localVarPath = `/agenda/entries/{id}/slot`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updateAgendaEntrySlotRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        removeRoom: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('removeRoom', 'id', id)
+            const localVarPath = `/agenda/rooms/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {AssignAgendaEntryRequest} assignAgendaEntryRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3263,6 +3556,32 @@ export const AgendaControllerApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @param {string} dayId 
+         * @param {CreateRoomRequest} createRoomRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createRoom(dayId: string, createRoomRequest: CreateRoomRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineRoom>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createRoom(dayId, createRoomRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgendaControllerApi.createRoom']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} dayId 
+         * @param {CreateTimeSlotRequest} createTimeSlotRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createTimeSlot(dayId: string, createTimeSlotRequest: CreateTimeSlotRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineTimeSlot>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createTimeSlot(dayId, createTimeSlotRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgendaControllerApi.createTimeSlot']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3271,6 +3590,19 @@ export const AgendaControllerApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAgendaEntry(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AgendaControllerApi.deleteAgendaEntry']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} dayId 
+         * @param {number} displayOrder 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteTimeSlot(dayId: string, displayOrder: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteTimeSlot(dayId, displayOrder, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgendaControllerApi.deleteTimeSlot']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -3341,6 +3673,31 @@ export const AgendaControllerApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAllTimeSlots(dayId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AgendaControllerApi.getAllTimeSlots']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {UpdateAgendaEntrySlotRequest} updateAgendaEntrySlotRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async moveAgendaEntry(id: string, updateAgendaEntrySlotRequest: UpdateAgendaEntrySlotRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineAgendaEntry>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.moveAgendaEntry(id, updateAgendaEntrySlotRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgendaControllerApi.moveAgendaEntry']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async removeRoom(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.removeRoom(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AgendaControllerApi.removeRoom']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -3418,12 +3775,42 @@ export const AgendaControllerApiFactory = function (configuration?: Configuratio
     return {
         /**
          * 
+         * @param {string} dayId 
+         * @param {CreateRoomRequest} createRoomRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createRoom(dayId: string, createRoomRequest: CreateRoomRequest, options?: RawAxiosRequestConfig): AxiosPromise<InlineRoom> {
+            return localVarFp.createRoom(dayId, createRoomRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} dayId 
+         * @param {CreateTimeSlotRequest} createTimeSlotRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createTimeSlot(dayId: string, createTimeSlotRequest: CreateTimeSlotRequest, options?: RawAxiosRequestConfig): AxiosPromise<InlineTimeSlot> {
+            return localVarFp.createTimeSlot(dayId, createTimeSlotRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         deleteAgendaEntry(id: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.deleteAgendaEntry(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} dayId 
+         * @param {number} displayOrder 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteTimeSlot(dayId: string, displayOrder: number, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteTimeSlot(dayId, displayOrder, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3476,6 +3863,25 @@ export const AgendaControllerApiFactory = function (configuration?: Configuratio
          */
         getAllTimeSlots(dayId: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<InlineTimeSlot>> {
             return localVarFp.getAllTimeSlots(dayId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {UpdateAgendaEntrySlotRequest} updateAgendaEntrySlotRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        moveAgendaEntry(id: string, updateAgendaEntrySlotRequest: UpdateAgendaEntrySlotRequest, options?: RawAxiosRequestConfig): AxiosPromise<InlineAgendaEntry> {
+            return localVarFp.moveAgendaEntry(id, updateAgendaEntrySlotRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        removeRoom(id: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.removeRoom(id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3537,6 +3943,30 @@ export const AgendaControllerApiFactory = function (configuration?: Configuratio
 export class AgendaControllerApi extends BaseAPI {
     /**
      * 
+     * @param {string} dayId 
+     * @param {CreateRoomRequest} createRoomRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgendaControllerApi
+     */
+    public createRoom(dayId: string, createRoomRequest: CreateRoomRequest, options?: RawAxiosRequestConfig) {
+        return AgendaControllerApiFp(this.configuration).createRoom(dayId, createRoomRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} dayId 
+     * @param {CreateTimeSlotRequest} createTimeSlotRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgendaControllerApi
+     */
+    public createTimeSlot(dayId: string, createTimeSlotRequest: CreateTimeSlotRequest, options?: RawAxiosRequestConfig) {
+        return AgendaControllerApiFp(this.configuration).createTimeSlot(dayId, createTimeSlotRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @param {string} id 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3544,6 +3974,18 @@ export class AgendaControllerApi extends BaseAPI {
      */
     public deleteAgendaEntry(id: string, options?: RawAxiosRequestConfig) {
         return AgendaControllerApiFp(this.configuration).deleteAgendaEntry(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} dayId 
+     * @param {number} displayOrder 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgendaControllerApi
+     */
+    public deleteTimeSlot(dayId: string, displayOrder: number, options?: RawAxiosRequestConfig) {
+        return AgendaControllerApiFp(this.configuration).deleteTimeSlot(dayId, displayOrder, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3608,6 +4050,29 @@ export class AgendaControllerApi extends BaseAPI {
      */
     public getAllTimeSlots(dayId: string, options?: RawAxiosRequestConfig) {
         return AgendaControllerApiFp(this.configuration).getAllTimeSlots(dayId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {UpdateAgendaEntrySlotRequest} updateAgendaEntrySlotRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgendaControllerApi
+     */
+    public moveAgendaEntry(id: string, updateAgendaEntrySlotRequest: UpdateAgendaEntrySlotRequest, options?: RawAxiosRequestConfig) {
+        return AgendaControllerApiFp(this.configuration).moveAgendaEntry(id, updateAgendaEntrySlotRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgendaControllerApi
+     */
+    public removeRoom(id: string, options?: RawAxiosRequestConfig) {
+        return AgendaControllerApiFp(this.configuration).removeRoom(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4815,6 +5280,45 @@ export const DayControllerApiAxiosParamCreator = function (configuration?: Confi
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {string} id 
+         * @param {UpdateDayRequest} updateDayRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateDay: async (id: string, updateDayRequest: UpdateDayRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('updateDay', 'id', id)
+            // verify required parameter 'updateDayRequest' is not null or undefined
+            assertParamExists('updateDay', 'updateDayRequest', updateDayRequest)
+            const localVarPath = `/days/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updateDayRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -4872,6 +5376,19 @@ export const DayControllerApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['DayControllerApi.saveDay']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * 
+         * @param {string} id 
+         * @param {UpdateDayRequest} updateDayRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateDay(id: string, updateDayRequest: UpdateDayRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineDay>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateDay(id, updateDayRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['DayControllerApi.updateDay']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -4916,6 +5433,16 @@ export const DayControllerApiFactory = function (configuration?: Configuration, 
          */
         saveDay(day: Day, options?: RawAxiosRequestConfig): AxiosPromise<InlineDay> {
             return localVarFp.saveDay(day, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} id 
+         * @param {UpdateDayRequest} updateDayRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateDay(id: string, updateDayRequest: UpdateDayRequest, options?: RawAxiosRequestConfig): AxiosPromise<InlineDay> {
+            return localVarFp.updateDay(id, updateDayRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -4968,6 +5495,18 @@ export class DayControllerApi extends BaseAPI {
      */
     public saveDay(day: Day, options?: RawAxiosRequestConfig) {
         return DayControllerApiFp(this.configuration).saveDay(day, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} id 
+     * @param {UpdateDayRequest} updateDayRequest 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DayControllerApi
+     */
+    public updateDay(id: string, updateDayRequest: UpdateDayRequest, options?: RawAxiosRequestConfig) {
+        return DayControllerApiFp(this.configuration).updateDay(id, updateDayRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

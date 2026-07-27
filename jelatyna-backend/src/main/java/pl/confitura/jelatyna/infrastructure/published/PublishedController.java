@@ -110,7 +110,7 @@ public class PublishedController {
             return ResponseEntity.notFound().build();
         }
         var timeSlots = timeSlotsRepository.findByIdDayId(dayId).stream()
-                .sorted(Comparator.comparing(pl.confitura.jelatyna.agenda.TimeSlot::getDisplayOrder))
+                .sorted(pl.confitura.jelatyna.agenda.TimeSlot.CHRONOLOGICALLY)
                 .map(InlineTimeSlot::from)
                 .toList();
         var rooms = roomRepository.findByDayId(dayId).stream()
