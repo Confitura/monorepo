@@ -12,6 +12,7 @@ import pl.confitura.jelatyna.allegro.adapter.dto.message.AllegroMessage;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
 import static com.github.scribejava.core.model.OAuthConstants.REDIRECT_URI;
 import static com.github.scribejava.core.model.Verb.POST;
@@ -33,7 +34,6 @@ public class AllegroClient {
         this.service = new AllegroServiceBuilder(properties.getClientId())
                 .apiSecret(properties.getClientSecret())
                 .defaultScope("allegro:api:orders:read allegro:api:orders:write allegro:api:messaging")
-                .debug()
                 .build(AllegroApi.instance(properties.getUri()));
         this.objectMapper = objectMapper;
     }
@@ -93,7 +93,7 @@ public class AllegroClient {
     }
 
     public boolean sendMessage(String login, String testMessage) throws IOException, ExecutionException, InterruptedException {
-        log.info("sending message to {}", login);
+        log.info("sending Allegro message");
         String url = properties.getApi() + "/messaging/messages";
         final OAuthRequest request = new OAuthRequest(POST, url);
         request.addHeader(ACCEPT, ALLEGRO_CONTENT_TYPE);
@@ -106,7 +106,7 @@ public class AllegroClient {
     private <T> T executeRequest(OAuthRequest request, Class<T> responseType) throws IOException, ExecutionException, InterruptedException {
         service.signRequest(getAccessToken(context), request);
         try (Response response = service.execute(request)) {
-            logResponse(response);
+            logResponse(request, response);
             return objectMapper.readValue(response.getBody(), responseType);
         }
     }
@@ -114,17 +114,38 @@ public class AllegroClient {
     private boolean executeRequest(OAuthRequest request) throws IOException, ExecutionException, InterruptedException {
         service.signRequest(getAccessToken(context), request);
         try (Response response = service.execute(request)) {
-            logResponse(response);
+            logResponse(request, response);
             return HttpStatus.valueOf(response.getCode()).is2xxSuccessful();
         }
     }
 
-    private static void logResponse(Response response) throws IOException {
-        log.debug(String.valueOf(response.getCode()));
+    private void logResponse(OAuthRequest request, Response response) {
         if (response.getCode() >= 200 && response.getCode() < 300) {
-            log.debug(response.getBody());
+            log.debug("Allegro {} {} -> {}", request.getVerb(), request.getUrl(), response.getCode());
         } else {
-            log.warn(response.getBody());
+            log.warn("Allegro {} {} -> {}: {}", request.getVerb(), request.getUrl(), response.getCode(),
+                    describeErrors(response));
+        }
+    }
+
+    String describeErrors(Response response) {
+        try {
+            List<AllegroError> errors = objectMapper.readValue(response.getBody(), AllegroErrors.class).errors();
+            if (errors == null || errors.isEmpty()) {
+                return "no error details";
+            }
+            return errors.stream().map(AllegroError::describe).collect(Collectors.joining("; "));
+        } catch (Exception ex) {
+            return "unparseable error body";
+        }
+    }
+
+    record AllegroErrors(List<AllegroError> errors) {
+    }
+
+    record AllegroError(String code, String message, String path) {
+        String describe() {
+            return path == null ? code + ": " + message : code + ": " + message + " (" + path + ")";
         }
     }
 }

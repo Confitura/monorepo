@@ -46,8 +46,8 @@ public class FakeTwitterLoginController {
         User user = getUser();
         String token = URLEncoder.encode(tokenService.asToken(user), StandardCharsets.UTF_8);
         String uri = redirectUri +
-                     "?access_token=" + token +
-                     "&state=" + state;
+                     "?state=" + state +
+                     "#access_token=" + token;
         return ResponseEntity
                 .status(PERMANENT_REDIRECT)
                 .header("Location", uri)

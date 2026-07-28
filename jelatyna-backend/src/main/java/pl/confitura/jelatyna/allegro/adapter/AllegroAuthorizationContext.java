@@ -2,10 +2,12 @@ package pl.confitura.jelatyna.allegro.adapter;
 
 import com.github.scribejava.core.model.OAuth2AccessToken;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Random;
 
 @Data
+@Slf4j
 class AllegroAuthorizationContext {
 
     private String stateSecret;
@@ -21,10 +23,7 @@ class AllegroAuthorizationContext {
         if (stateSecret.equals(value)) {
             return true;
         } else {
-            System.out.println("Ooops, state value does not match!");
-            System.out.println("Expected = " + stateSecret);
-            System.out.println("Got      = " + value);
-            System.out.println();
+            log.warn("Allegro OAuth state does not match");
             return false;
         }
     }
