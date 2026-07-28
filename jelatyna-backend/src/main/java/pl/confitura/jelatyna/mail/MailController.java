@@ -34,7 +34,7 @@ class MailController {
         try {
             mailSender.send(mailsRequest.template, it);
         } catch (Exception e) {
-            log.warn("Couldn't send mail {}", it, e);
+            log.warn("Couldn't send mail of template {} to {}", mailsRequest.template, it.maskedEmail(), e);
         }
     }
 

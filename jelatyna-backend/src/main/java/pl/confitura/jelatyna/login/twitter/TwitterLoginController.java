@@ -49,7 +49,7 @@ public class TwitterLoginController {
         OAuth1AccessToken accessToken = twitter.getAccessToken(new OAuth1RequestToken(token, context.secret()), verifier);
         String code = tokenService.asToken(twitter.getUser(accessToken));
         String state = URLEncoder.encode(context.state(), StandardCharsets.UTF_8);
-        String callbackUrl = context.callback().concat("?access_token=").concat(code).concat("&state=").concat(state);
+        String callbackUrl = context.callback().concat("?state=").concat(state).concat("#access_token=").concat(code);
         return ResponseEntity
                 .status(PERMANENT_REDIRECT)
                 .header("Location", callbackUrl)

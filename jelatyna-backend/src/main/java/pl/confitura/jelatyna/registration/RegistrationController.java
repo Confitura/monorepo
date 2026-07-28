@@ -191,7 +191,7 @@ public class RegistrationController {
                                 .setToken(voucher.getId());
                         sender.send(REGISTRATION_REMINDER, info);
                     } catch (Exception e) {
-                        log.error("Error on sending reminder user to {}", voucher.getOriginalBuyer());
+                        log.error("Error on sending reminder for voucher {}", voucher.getId(), e);
                     }
                 });
     }
@@ -205,7 +205,7 @@ public class RegistrationController {
         try {
             doSendTicketTo(user);
         } catch (Exception e) {
-            log.error("Error on sending ticket to {}", user.getEmail());
+            log.error("Error on sending ticket to participant {}", user.getId());
             log.error("Exception from sender:", e);
         }
     }
@@ -233,7 +233,7 @@ public class RegistrationController {
         try {
             doSendSurvey(user);
         } catch (Exception e) {
-            log.error("Error on sending survey to {}", user.getEmail());
+            log.error("Error on sending survey to participant {}", user.getId());
             log.error("Exception from sender:", e);
         }
     }

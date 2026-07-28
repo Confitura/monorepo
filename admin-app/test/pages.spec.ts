@@ -123,6 +123,12 @@ import AdminUsersPage from '@/pages/admin/users.vue'
 // Vue's reactive system is fully torn down before the next test starts,
 // preventing "update after unmount" unhandled rejections.
 // ---------------------------------------------------------------------------
+function fakeJwt() {
+  const part = (o: object) =>
+    btoa(JSON.stringify(o)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
+  return `${part({ alg: 'HS256' })}.${part({ jti: 'u1', sub: 'Test', isAdmin: false })}.sig`
+}
+
 let _wrapper: ReturnType<typeof mount> | null = null
 let _container: HTMLElement | null = null
 let _appBar: HTMLElement | null = null
@@ -193,6 +199,25 @@ describe('admin-app pages render without errors', () => {
     const wrapper = await mountPage(LoginProviderPage)
     // Shows loading state while processing the OAuth token
     expect(wrapper.html()).toBeDefined()
+  })
+
+  it('takes the OAuth token from the URL fragment', async () => {
+    const jwt = fakeJwt()
+    try {
+      await mountPage(LoginProviderPage, `/login/google#access_token=${jwt}`)
+      expect(localStorage.getItem('token')).toBe(jwt)
+    } finally {
+      localStorage.removeItem('token')
+    }
+  })
+
+  it('ignores an OAuth token passed in the query string', async () => {
+    try {
+      await mountPage(LoginProviderPage, `/login/google?access_token=${fakeJwt()}`)
+      expect(localStorage.getItem('token')).toBeNull()
+    } finally {
+      localStorage.removeItem('token')
+    }
   })
 
   it('renders the catch-all / 404 page', async () => {
