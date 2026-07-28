@@ -15,9 +15,12 @@ definePage({
 
 
 import {onMounted} from 'vue';
+import {useUrlSearchParams} from "@vueuse/core";
+
+const params = useUrlSearchParams('hash-params')
 
 onMounted(() => {
-  let accessToken = new URLSearchParams(window.location.hash.slice(1)).get('access_token');
+  const accessToken = params.access_token as string
   if (accessToken == null) {
     router.push('/login');
   } else {
