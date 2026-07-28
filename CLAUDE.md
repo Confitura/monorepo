@@ -84,3 +84,9 @@ GitHub Actions (`.github/workflows/run-tests.yml`) runs on pushes to `master` an
 - **test-backend**: JDK 21, `mvn package`, Surefire reports
 - **test-frontend**: Node 20, `npm ci → lint → build → test` (webpage)
 - **test-admin-app**: Node 22, pnpm 10.5.2, `typecheck → test:unit`
+
+## Observability
+
+Not implemented yet. `docs/observability.md` holds the proposed setup (Grafana Cloud + Alloy in Coolify) and the open questions to resolve first.
+
+`docs/pii-in-logs.md` documents which log statements leaked personal data, the S1–S6 fixes applied, and the conventions to follow when adding logging: log entity ids rather than emails, mask an address when no id exists (`MessageInfo.maskedEmail()`), use allowlist `@ToString(onlyExplicitlyIncluded = true)` on anything holding PII, log third-party error envelopes rather than response bodies, and never put credentials in a query string.

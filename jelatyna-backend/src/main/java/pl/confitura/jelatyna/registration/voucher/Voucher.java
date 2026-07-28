@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.GenericGenerator;
 import pl.confitura.jelatyna.infrastructure.db.AuditedEntity;
@@ -14,12 +15,14 @@ import java.time.LocalDateTime;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
+@ToString(onlyExplicitlyIncluded = true)
 @Entity
 @Accessors(chain = true)
 public class Voucher  extends AuditedEntity {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @ToString.Include
     private String id;
 
     private String originalBuyer;
@@ -28,9 +31,11 @@ public class Voucher  extends AuditedEntity {
     @Embedded
     private AllegroContext allegro;
 
+    @ToString.Include
     private LocalDateTime ticketSendDate;
 
     @Enumerated(EnumType.STRING)
+    @ToString.Include
     private VoucherType type;
 
     public boolean isEmailSent() {

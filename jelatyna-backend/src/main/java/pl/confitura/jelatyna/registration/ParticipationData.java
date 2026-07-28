@@ -47,11 +47,8 @@ public class ParticipationData extends AuditedEntity {
     @ToString.Include
     private boolean privacyPolicyAccepted;
 
-    @ToString.Include
     private String gender;
-    @ToString.Include
     private String size;
-    @ToString.Include
     private String info;
 
     @ToString.Include
