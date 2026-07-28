@@ -10,6 +10,8 @@ twitter:
   access-token: TOKEN
   access-token-secret: TOKEN_SECRET
 spring:
+  application:
+    name: jelatyna-backend
   datasource:
     url: jdbc:mysql://localhost:33061/confitura?useLegacyDatetimeCode=false&serverTimezone=Europe/Warsaw&useUnicode=yes&characterEncoding=UTF-8
     username: confitura
@@ -18,12 +20,17 @@ spring:
     hibernate:
       ddl-auto: update
 
+logging:
+  level:
+    org.hibernate: INFO
+    com.microtripit: INFO
+
 management:
   endpoints:
     web:
       base-path: /actuator
       exposure:
-        include: health,info,metrics
+        include: health,info,metrics,prometheus
   endpoint:
     health:
       show-details: when-authorized

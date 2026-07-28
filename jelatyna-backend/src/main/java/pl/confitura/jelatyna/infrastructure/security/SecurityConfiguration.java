@@ -32,6 +32,7 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.DELETE, "/**").authenticated()
                         .requestMatchers("/actuator/info").permitAll()
                         .requestMatchers("/actuator/health").permitAll()
+                        .requestMatchers("/actuator/prometheus").permitAll()
                         .requestMatchers("/actuator/**").hasAnyAuthority(ADMIN)
                         .requestMatchers("/**").permitAll())
 

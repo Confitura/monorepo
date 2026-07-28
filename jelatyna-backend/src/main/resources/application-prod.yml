@@ -45,6 +45,27 @@ spring:
     hibernate:
       ddl-auto: update
 
+logging:
+  structured:
+    format:
+      console: ecs
+
+management:
+  server:
+    port: 9090
+  tracing:
+    sampling:
+      probability: 1.0
+  otlp:
+    metrics:
+      export:
+        enabled: false
+#  opentelemetry:
+#    tracing:
+#      export:
+#        otlp:
+#          endpoint: ${OTLP_TRACES_ENDPOINT:http://alloy:4318/v1/traces}
+
 allegro:
   client-id: ${ALLEGRO_CLIENT_ID}
   client-secret: ${ALLEGRO_SECRET}
