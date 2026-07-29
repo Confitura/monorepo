@@ -65,7 +65,7 @@ onMounted(() => {
   }
 })
 
-let votingEnabled = true
+let votingEnabled = false
 
 const labels = ref(['terrible', 'bad', 'it was fine', 'great', 'awesome'])
 </script>
