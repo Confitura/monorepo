@@ -32,7 +32,7 @@ let items: MenuItem[] = [
   { label: 'about us', url: '/about' },
   { label: '2025', url: 'http://2025.confitura.pl/' },
   // { label: 'FAQ', url: '/faq' },
-  { label: 'tickets', url: 'https://www.ebilet.pl/biznes/konferencje/confitura?partner=bcc' },
+  { label: 'tickets', url: '/tickets' },
   // { label: 'lean coffee', url: '/lean-coffee' },
   { label: 'LOGIN', url: 'https://app.confitura.pl/' },
 ]
