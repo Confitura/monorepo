@@ -87,6 +87,6 @@ GitHub Actions (`.github/workflows/run-tests.yml`) runs on pushes to `master` an
 
 ## Observability
 
-Not implemented yet. `docs/observability.md` holds the proposed setup (Grafana Cloud + Alloy in Coolify) and the open questions to resolve first.
+Backend instrumentation (structured ECS logging, Prometheus metrics on a separate management port, OTLP traces) is implemented and verified locally but **not deployed**; no Grafana Cloud stack or Alloy container exists yet. `docs/observability.md` records what was verified, the Boot 4.1 gotchas that cost the most time (tracing needs `spring-boot-starter-opentelemetry`; the OTLP endpoint property is `management.opentelemetry.tracing.export.otlp.endpoint`), and what remains. Build the backend with **JDK 21** — JDK 23+ silently disables Lombok/QueryDSL annotation processing.
 
-`docs/pii-in-logs.md` documents which log statements leaked personal data, the S1–S6 fixes applied, and the conventions to follow when adding logging: log entity ids rather than emails, mask an address when no id exists (`MessageInfo.maskedEmail()`), use allowlist `@ToString(onlyExplicitlyIncluded = true)` on anything holding PII, log third-party error envelopes rather than response bodies, and never put credentials in a query string.
+`docs/pii-in-logs.md` documents which log statements leaked personal data, the S1–S7 fixes applied, and the conventions to follow when adding logging: log entity ids rather than emails, mask an address when no id exists (`MessageInfo.maskedEmail()`), use allowlist `@ToString(onlyExplicitlyIncluded = true)` on anything holding PII, log third-party error envelopes rather than response bodies, and never put credentials in a query string.
