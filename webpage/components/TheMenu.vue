@@ -20,7 +20,6 @@
 <script setup lang="ts">
 
 let items: MenuItem[] = [
-  // { label: 'scanner', url: '/new-scanner', visible: () => isVolunteer() },
   { label: 'home', url: '/' },
   { label: 'venue', url: '/venue' },
   // { label: "vote", url: "https://app.confitura.pl/vote-for-papers" },
@@ -33,10 +32,9 @@ let items: MenuItem[] = [
   { label: 'about us', url: '/about' },
   { label: '2025', url: 'http://2025.confitura.pl/' },
   // { label: 'FAQ', url: '/faq' },
-  { label: 'LOGIN', url: 'https://app.confitura.pl/' },
-  // { label: 'tickets', url: '/tickets' },
+  { label: 'tickets', url: 'https://www.ebilet.pl/biznes/konferencje/confitura?partner=bcc' },
   // { label: 'lean coffee', url: '/lean-coffee' },
-  // { label: "workshop day", url: "/workshops" },
+  { label: 'LOGIN', url: 'https://app.confitura.pl/' },
 ]
 
 function isVisible(item: MenuItem): boolean {
