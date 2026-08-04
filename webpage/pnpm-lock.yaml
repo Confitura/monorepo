@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@nuxtjs/plausible':
+        specifier: ^3.0.2
+        version: 3.0.2(magic-string@1.1.0)(magicast@0.5.3)(oxc-parser@0.140.0)(rolldown@1.2.1)(unplugin@3.3.0(esbuild@0.28.1)(rolldown@1.2.1)(rollup@4.62.3)(vite@8.2.0(@types/node@26.1.1)(esbuild@0.28.1)(jiti@2.7.0)(sass-embedded@1.100.0)(sass@1.100.0)(terser@5.49.0)(yaml@2.9.0)))
       '@pinia/nuxt':
         specifier: ^1.0.1
         version: 1.0.1(magic-string@1.1.0)(magicast@0.5.3)(oxc-parser@0.140.0)(pinia@4.0.2(@vue/devtools-api@8.1.5)(typescript@5.9.3)(vue@3.5.40(typescript@5.9.3)))(rolldown@1.2.1)(unplugin@3.3.0(esbuild@0.28.1)(rolldown@1.2.1)(rollup@4.62.3)(vite@8.2.0(@types/node@26.1.1)(esbuild@0.28.1)(jiti@2.7.0)(sass-embedded@1.100.0)(sass@1.100.0)(terser@5.49.0)(yaml@2.9.0)))
@@ -628,6 +631,9 @@ packages:
       rollup-plugin-visualizer:
         optional: true
 
+  '@nuxtjs/plausible@3.0.2':
+    resolution: {integrity: sha512-6z01a7XbggSmI4CTWCkDDmLHQNm7wob2dx1QnvpIoo+YEV19298+GsuvlBclXVxXSk7op8r8qJpw25xKo8mzQQ==}
+
   '@one-ini/wasm@0.1.1':
     resolution: {integrity: sha512-XuySG1E38YScSJoMlqovLru4KTUNSjgVTIjyh7qMX6aNN5HY5Ct5LhRJdxO79JtTzKfzV/bnWpz+zquYrISsvw==}
 
@@ -852,6 +858,9 @@ packages:
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
     engines: {node: '>=14'}
+
+  '@plausible-analytics/tracker@0.4.5':
+    resolution: {integrity: sha512-6BfAGejXY+YA3Cw6LYT2Zpn4hTxDtPQAawFsYUsQCOg78wIS5C4deAGXTfJffa5VleMWITv5lpJ/EYuQBl1tPA==}
 
   '@polka/url@1.0.0-next.29':
     resolution: {integrity: sha512-wwQAWhWSuHaag8c4q/KN/vCoeOJYshAIvMQwD4GpSb3OiZklFfvAgmj0VCBBImRpuF/aFgIRzllXlVX93Jevww==}
@@ -4809,6 +4818,19 @@ snapshots:
       - vue-tsc
       - yaml
 
+  '@nuxtjs/plausible@3.0.2(magic-string@1.1.0)(magicast@0.5.3)(oxc-parser@0.140.0)(rolldown@1.2.1)(unplugin@3.3.0(esbuild@0.28.1)(rolldown@1.2.1)(rollup@4.62.3)(vite@8.2.0(@types/node@26.1.1)(esbuild@0.28.1)(jiti@2.7.0)(sass-embedded@1.100.0)(sass@1.100.0)(terser@5.49.0)(yaml@2.9.0)))':
+    dependencies:
+      '@nuxt/kit': 4.5.1(magic-string@1.1.0)(magicast@0.5.3)(oxc-parser@0.140.0)(rolldown@1.2.1)(unplugin@3.3.0(esbuild@0.28.1)(rolldown@1.2.1)(rollup@4.62.3)(vite@8.2.0(@types/node@26.1.1)(esbuild@0.28.1)(jiti@2.7.0)(sass-embedded@1.100.0)(sass@1.100.0)(terser@5.49.0)(yaml@2.9.0)))
+      '@plausible-analytics/tracker': 0.4.5
+      defu: 6.1.7
+      ufo: 1.6.4
+    transitivePeerDependencies:
+      - magic-string
+      - magicast
+      - oxc-parser
+      - rolldown
+      - unplugin
+
   '@one-ini/wasm@0.1.1': {}
 
   '@oxc-parser/binding-android-arm-eabi@0.140.0':
@@ -4958,6 +4980,8 @@ snapshots:
 
   '@pkgjs/parseargs@0.11.0':
     optional: true
+
+  '@plausible-analytics/tracker@0.4.5': {}
 
   '@polka/url@1.0.0-next.29': {}
 
