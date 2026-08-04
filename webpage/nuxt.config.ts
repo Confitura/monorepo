@@ -33,7 +33,6 @@ export default defineNuxtConfig({
     plausible: {
         domain: 'confitura.pl',
         apiHost: 'https://plausible.confitura.pl',
-        hashMode: true,
         autoOutboundTracking: true,
         fileDownloads: true
     }
