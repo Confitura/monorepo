@@ -2,7 +2,6 @@
   "engines": {
     "node": "24"
   },
-
   "packageManager": "pnpm@10.5.2",
   "name": "nuxt-app",
   "private": true,
@@ -17,7 +16,9 @@
     "start": " node .output/server/index.mjs"
   },
   "dependencies": {
+    "@nuxtjs/plausible": "^3.0.2",
     "@pinia/nuxt": "^1.0.1",
+    "@plausible-analytics/tracker": "^0.4.5",
     "dayjs": "^1.11.21",
     "marked": "^18.0.7",
     "modern-normalize": "^3.0.1",

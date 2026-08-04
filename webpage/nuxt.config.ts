@@ -29,5 +29,12 @@ export default defineNuxtConfig({
             }]
         }
     },
-    modules: ['@pinia/nuxt', '@nuxt/test-utils/module']
+    modules: ['@pinia/nuxt', '@nuxt/test-utils/module', '@nuxtjs/plausible'],
+    plausible: {
+        domain: 'confitura.pl',
+        apiHost: 'https://plausible.confitura.pl',
+        hashMode: true,
+        autoOutboundTracking: true,
+        fileDownloads: true
+    }
 })
