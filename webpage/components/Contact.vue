@@ -25,7 +25,8 @@
             </span>
         </div>
         <router-link to="privacy-policy" class="contact__privacy">Privacy policy</router-link>
-        <a href="https://api.confitura.pl/api/resources/edition-2025/docs/Regulamin%20Confitura%2025.pdf" class="contact__regulamin" target="_blank">Regulamin wydarzenia</a>
+        <a href="https://docs.google.com/document/d/1a0cCBznIeGzKCNvEc-A3zF1mPsBm6w7iJehVHVOgLx8/edit?usp=sharing" class="contact__regulamin" target="_blank">Terms and Conditions</a>
+        <a href="https://docs.google.com/document/d/1UznCV0gTKpVhtb3XomjkELD55iSdpYC3HoweNZq8hMw/edit?usp=sharing" class="contact__regulamin" target="_blank">Ticket options explained</a>
         <SocialLinks class="mobile"/>
       </div>
     </div>
