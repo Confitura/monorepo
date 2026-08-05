@@ -7,9 +7,8 @@
           <div class="info__live-text">Thank you, and see you next time!</div>
         </div>
         <div class="slogan">
-          don't want to miss next edition?
-          <p>subscribe to our <a href="https://newsletter.confitura.pl/subscription/form">newsletter</a> or follow as on
-            socials</p>
+          Join us on <a href="https://confitura.pl">next edition</a>
+          and follow the <a href="https://newsletter.confitura.pl/subscription/form">newsletter</a>
         </div>
         <!--        <div class="info__long">-->
         <!--&lt;!&ndash;          <TheTimer/>&ndash;&gt;-->
