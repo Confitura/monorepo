@@ -39,7 +39,7 @@
     "@vue/tsconfig": "^0.9.1",
     "eslint": "^10.8.0",
     "eslint-plugin-playwright": "^2.11.0",
-    "jsdom": "^30.0.0",
+    "jsdom": "^30.0.1",
     "prettier": "^3.9.6",
     "rollup-plugin-regexp": "^5.0.1",
     "sass-embedded": "^1.100.0",
