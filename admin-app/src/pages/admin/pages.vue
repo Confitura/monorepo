@@ -2,7 +2,11 @@
 import DialogConfirm from '@/components/DialogConfirm.vue'
 import type {DataTableHeaders} from '@/plugins/vuetify'
 import {pagesApi} from "@/utils/api.ts";
-import axios from "axios";
+import {MdEditor} from 'md-editor-v3'
+import 'md-editor-v3/lib/style.css'
+
+const theme = useTheme()
+const mdTheme = computed(() => (theme.current.value.dark ? 'dark' : 'light'))
 
 definePage({
   meta: {
@@ -31,8 +35,9 @@ const newPage = ref({
   content: ''
 })
 
-const formValid = ref(false)
 const requiredRule = (value: string) => !!value.trim() || 'This field is required'
+const editValid = computed(() => !!currentPage.value.content.trim())
+const createValid = computed(() => !!newPage.value.id.trim() && !!newPage.value.content.trim())
 
 function reloadPages() {
   pagesApi.getPages()
@@ -79,7 +84,7 @@ function showDeleteDialog(item: {id: string}) {
 }
 
 function updatePage() {
-  if (!formValid.value) return
+  if (!editValid.value) return
 
   pagesApi.updatePage(currentPage.value.id, {content: currentPage.value.content})
       .then(() => {
@@ -94,7 +99,7 @@ function updatePage() {
 }
 
 function createPage() {
-  if (!formValid.value) return
+  if (!createValid.value) return
 
   pagesApi.createPage(newPage.value.id, {content: newPage.value.content})
       .then(() => {
@@ -164,6 +169,8 @@ onMounted(() => {
               :items="pages"
               item-value="id"
               :search="search"
+              :items-per-page="100"
+              :sort-by="[{ key: 'id', order: 'asc' }]"
           >
             <template #item.actions="{ item }">
               <v-defaults-provider
@@ -210,25 +217,21 @@ onMounted(() => {
     </v-row>
 
     <!-- Edit Dialog -->
-    <v-dialog v-model="editDialog" max-width="800px">
+    <v-dialog v-model="editDialog" max-width="1100px">
       <v-card>
         <v-card-title>Edit Page: {{ currentPage.id }}</v-card-title>
         <v-card-text>
-          <v-form v-model="formValid">
-            <v-textarea
-                v-model="currentPage.content"
-                label="Content"
-                outlined
-                rows="15"
-                required
-                :rules="[requiredRule]"
-            ></v-textarea>
-          </v-form>
+          <MdEditor
+              v-model="currentPage.content"
+              :theme="mdTheme"
+              language="en-US"
+              style="height: 500px"
+          />
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue-darken-1" variant="text" @click="editDialog = false">Cancel</v-btn>
-          <v-btn color="blue-darken-1" variant="text" @click="updatePage" :disabled="!formValid">Save</v-btn>
+          <v-btn color="blue-darken-1" variant="text" @click="updatePage" :disabled="!editValid">Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -238,29 +241,25 @@ onMounted(() => {
       <v-card>
         <v-card-title>Create New Page</v-card-title>
         <v-card-text>
-          <v-form v-model="formValid">
-            <v-text-field
-                v-model="newPage.id"
-                label="Page ID"
-                outlined
-                required
-                :rules="[requiredRule]"
-            ></v-text-field>
+          <v-text-field
+              v-model="newPage.id"
+              label="Page ID"
+              outlined
+              required
+              :rules="[requiredRule]"
+          ></v-text-field>
 
-            <v-textarea
-                v-model="newPage.content"
-                label="Content"
-                outlined
-                rows="15"
-                required
-                :rules="[requiredRule]"
-            ></v-textarea>
-          </v-form>
+          <MdEditor
+              v-model="newPage.content"
+              :theme="mdTheme"
+              language="en-US"
+              style="height: 500px"
+          />
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue-darken-1" variant="text" @click="createDialog = false">Cancel</v-btn>
-          <v-btn color="blue-darken-1" variant="text" @click="createPage" :disabled="!formValid">Create</v-btn>
+          <v-btn color="blue-darken-1" variant="text" @click="createPage" :disabled="!createValid">Create</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
