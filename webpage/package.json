@@ -18,7 +18,7 @@
   "dependencies": {
     "@nuxtjs/plausible": "^3.0.2",
     "@pinia/nuxt": "^1.0.1",
-    "@plausible-analytics/tracker": "^0.4.5",
+    "@plausible-analytics/tracker": "^0.4.6",
     "dayjs": "^1.11.21",
     "marked": "^18.0.9",
     "modern-normalize": "^3.0.1",
