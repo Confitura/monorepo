@@ -20,7 +20,7 @@
     "@pinia/nuxt": "^1.0.1",
     "@plausible-analytics/tracker": "^0.4.5",
     "dayjs": "^1.11.21",
-    "marked": "^18.0.7",
+    "marked": "^18.0.9",
     "modern-normalize": "^3.0.1",
     "nuxt": "^4.5.1",
     "pinia": "^4.0.2",
