@@ -20,7 +20,7 @@
     "md-editor-v3": "^6.5.6",
     "pinia": "^3.0.4",
     "uuid": "^14.0.1",
-    "vue": "^3.5.40",
+    "vue": "^3.5.41",
     "vue-echarts": "^8.0.1",
     "vue-markdown-render": "^2.3.1",
     "vue-router": "^4.6.4",
