@@ -25,8 +25,8 @@
             </span>
         </div>
         <router-link to="privacy-policy" class="contact__privacy">Privacy policy</router-link>
-        <a href="https://docs.google.com/document/d/1a0cCBznIeGzKCNvEc-A3zF1mPsBm6w7iJehVHVOgLx8/edit?usp=sharing" class="contact__regulamin" target="_blank">Terms and Conditions</a>
-        <a href="https://docs.google.com/document/d/1UznCV0gTKpVhtb3XomjkELD55iSdpYC3HoweNZq8hMw/edit?usp=sharing" class="contact__regulamin" target="_blank">Ticket options explained</a>
+        <router-link to="tickets" class="contact__privacy">Ticket options explained</router-link>
+        <router-link to="terms-and-conditions" class="contact__privacy">Terms and Conditions</router-link>
         <SocialLinks class="mobile"/>
       </div>
     </div>

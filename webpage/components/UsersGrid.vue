@@ -7,7 +7,7 @@
       @click="show(user)"
     >
       <img :src="photoUrl(user.photo, 200)" alt="" class="user__photo" loading="lazy"/>
-      <div class="user__name">
+      <div class="user__name" :class="nameSizeClass(user.name)">
         <span>{{ firstName(user.name) }}</span>
         <span>{{ lastName(user.name) }}</span>
       </div>
@@ -40,6 +40,16 @@ function lastName(value: string) {
   const name = value || ''
   const idx = name.indexOf(' ')
   return idx === -1 ? '' : name.substring(idx + 1)
+}
+
+function nameSizeClass(value: string) {
+  const longest = Math.max(
+    firstName(value).length,
+    lastName(value).length,
+  )
+  if (longest > 15) return 'user__name--xs'
+  if (longest > 12) return 'user__name--sm'
+  return ''
 }
 </script>
 
@@ -135,6 +145,14 @@ function lastName(value: string) {
   @include md() {
     width: 200px;
     height: 200px;
+  }
+
+  &--sm {
+    font-size: 1.4rem;
+  }
+
+  &--xs {
+    font-size: 1.1rem;
   }
 }
 </style>
