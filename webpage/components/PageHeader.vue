@@ -10,7 +10,7 @@
         <slot name="title"></slot>
       </h1>
       <slot v-if="!small && type === 'planets'">
-        <img class="page-image" src="../assets/planety_faq.svg" alt="planets" />
+<!--        <img class="page-image" src="../assets/planety_faq.svg" alt="planets" />-->
       </slot>
       <slot v-if="type === 'coder'">
 <!--        <img-->
