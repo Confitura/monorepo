@@ -1,16 +1,16 @@
 <template>
-  <div class="tickets">
-    <PageHeader title="Tickets" />
+  <div class="terms">
+    <PageHeader title="Terms and Conditions" />
     <Box class="content" color="white">
-      <PageFragment name="terms-and-conditions" class="tickets__info" />
+      <PageFragment name="terms-and-conditions" class="terms__info" />
     </Box>
     <Contact />
   </div>
 </template>
 
 <script setup>
-const title = 'Tickets — Confitura 2026 Registration';
-const description = 'Registration details and ticket information for Confitura 2026. Learn about pricing and important dates.';
+const title = 'Terms and Conditions — Confitura 2026';
+const description = 'Read the terms and conditions for participating in Confitura 2026.';
 useHead({
   title,
   meta: [
@@ -28,7 +28,7 @@ useHead({
 <style lang="scss">
 @use "~/assets/colors" as *;
 
-.tickets__info {
+.terms__info {
   font-size: 1.5rem;
   line-height: 2rem;
 
