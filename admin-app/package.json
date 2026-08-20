@@ -24,7 +24,7 @@
     "vue-echarts": "^8.1.0",
     "vue-markdown-render": "^2.3.1",
     "vue-router": "^4.6.4",
-    "vuetify": "4.1.8"
+    "vuetify": "4.1.9"
   },
   "devDependencies": {
     "@mdi/js": "^7.4.47",
