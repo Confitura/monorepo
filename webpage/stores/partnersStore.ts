@@ -1,5 +1,15 @@
 import {defineStore} from 'pinia'
 
+const descriptions = import.meta.glob('~/content/partners/*.md', {
+    query: '?raw',
+    import: 'default',
+    eager: true
+}) as Record<string, string>
+
+function descFor(id: string): string {
+    return descriptions[`/content/partners/${id}.md`] ?? '';
+}
+
 const partners: Partner[] = getPartners();
 export const usePartnersStore = defineStore('partners', {
     state: () => ({
@@ -68,20 +78,12 @@ export interface Partners {
 
 function getPartners(): Partner[] {
     return [{
-        id: "join-us",
-        name: "Join Us",
-        description: `Join Us`,
-        logo: "/assets/partners/2026/join-us.svg",
-        www: "mailto:confitura@confitura.pl",
+        id: "xtb",
+        name: "XTB",
+        description: descFor("xtb"),
+        logo: "/assets/partners/2026/xtb.svg",
+        www: "https://www.xtb.com/",
         type: "gold",
-        orientation: "horizontal"
-    }, {
-        id: "join-us",
-        name: "Join Us",
-        description: `Join Us`,
-        logo: "/assets/partners/2026/join-us.svg",
-        www: "mailto:confitura@confitura.pl",
-        type: "silver",
         orientation: "horizontal"
     }];
 }
