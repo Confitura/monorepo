@@ -142,7 +142,7 @@ public class AgendaService {
             if (last != null && entry.getPresentation() != null) {
                 var ts1 = last.getTimeSlot();
                 var ts2 = entry.getTimeSlot();
-                if (areInSequence(ts1, ts2)) {
+                if (areInSequence(ts1, ts2, entry.getPresentation().isWorkshop())) {
 
                     TimeSlot mergedSlot = ts1.mergeWith(ts2);
                     AgendaEntry mergedEntry = new AgendaEntry()
@@ -163,9 +163,14 @@ public class AgendaService {
 
         }
 
-        private static boolean areInSequence(TimeSlot ts1, TimeSlot ts2) {
-            return ts2.getStart().equals(ts1.getEnd())
-                   && ts1.getId().dayId().equals(ts2.getId().dayId());
+        private static boolean areInSequence(TimeSlot ts1, TimeSlot ts2, boolean allowBreak) {
+            boolean sameDay = ts1.getId().dayId().equals(ts2.getId().dayId());
+            // Workshops may continue after a break, so their slots are merged even when a gap
+            // (the break) separates them. Other presentations only merge when strictly adjacent.
+            boolean inSequence = allowBreak
+                    ? !ts2.getStart().isBefore(ts1.getEnd())
+                    : ts2.getStart().equals(ts1.getEnd());
+            return sameDay && inSequence;
         }
     }
 
