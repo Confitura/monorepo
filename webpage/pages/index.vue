@@ -4,6 +4,7 @@
     <HomeLatestNews></HomeLatestNews>
     <HomeNumbers/>
     <HomeAbout/>
+    <HomePartners />
     <HomeInvitePartners/>
     <Contact/>
   </div>
