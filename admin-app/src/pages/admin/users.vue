@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import DialogConfirm from '@/components/DialogConfirm.vue'
 import type {DataTableHeaders} from '@/plugins/vuetify'
-import {adminUsersApi, api} from "@/utils/api.ts";
-import type {FullUser} from "@/utils/api-axios-client";
+import {createManual, markAsAdmin, markAsVolunteer, getAllUsers} from "@/utils/api.ts";
+import type {FullUser} from "@/utils/api";
 
 
 definePage({
@@ -31,7 +31,7 @@ async function createUser() {
     return
   }
   try {
-    await api.post('/users/manual', newUser)
+    await createManual({ body: newUser })
     // @ts-ignore
     Notify?.success?.('User created')
     addDialog.value = false
@@ -51,7 +51,7 @@ async function createUser() {
 }
 
 function dialogFlipAdmin(user: FullUser) {
-  let message = user.isAdmin
+  const message = user.isAdmin
       ? `Are you sure you want to remove admin rights from ${user.name}?`
       : `Are you sure you want to add admin to ${user.name}?`;
 
@@ -59,7 +59,7 @@ function dialogFlipAdmin(user: FullUser) {
       ?.open(message)
       .then(async (confirmed: boolean) => {
         if (confirmed) {
-          adminUsersApi.markAsAdmin(user.id!, !user.isAdmin)
+          markAsAdmin({ path: { userId: user.id!, isAdmin: !user.isAdmin } })
               .then(_ => reloadUsers())
               .catch(_ => Notify.error('Failed'))
         }
@@ -67,7 +67,7 @@ function dialogFlipAdmin(user: FullUser) {
 }
 
 function dialogFlipVolunteer(user: FullUser) {
-  let message = user.isVolunteer
+  const message = user.isVolunteer
       ? `Are you sure you want to remove volunteer rights from ${user.name}?`
       : `Are you sure you want to add volunteer to ${user.name}?`;
 
@@ -75,7 +75,7 @@ function dialogFlipVolunteer(user: FullUser) {
       ?.open(message)
       .then(async (confirmed: boolean) => {
         if (confirmed) {
-          adminUsersApi.markAsVolunteer(user.id!, !user.isVolunteer)
+          markAsVolunteer({ path: { userId: user.id!, isVolunteer: !user.isVolunteer } })
               .then(_ => reloadUsers())
               .catch(_ => Notify.error('Failed'))
         }
@@ -99,8 +99,8 @@ const users = ref<FullUser[]>([])
 
 
 function reloadUsers() {
-  adminUsersApi.getAllUsers()
-      .then(res => res.data)
+  getAllUsers()
+      .then(res => res.data ?? [])
       .then((data: Array<FullUser>) => users.value = data)
       .catch(e => console.error(e))
 }

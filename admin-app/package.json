@@ -4,6 +4,7 @@
   "packageManager": "pnpm@10.5.2",
   "scripts": {
     "dev": "vite --open --host",
+    "codegen": "openapi-ts",
     "build": "vite build",
     "preview": "vite preview --config vite.config.preview.ts",
     "test:unit": "vitest",
@@ -27,6 +28,7 @@
     "vuetify": "4.1.9"
   },
   "devDependencies": {
+    "@hey-api/openapi-ts": "^0.99.0",
     "@mdi/js": "^7.4.47",
     "@nuxt/eslint-config": "^1.17.0",
     "@pinia/testing": "^1.0.3",

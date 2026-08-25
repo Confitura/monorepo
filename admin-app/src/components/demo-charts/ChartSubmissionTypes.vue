@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import type {ECOption} from '@/plugins/echarts'
-import {dashboardApi} from "@/utils/api.ts";
+import {submissionStats} from "@/utils/api.ts";
 
-dashboardApi.submissionStats()
+submissionStats()
   .then(res => {
-    let data = {
-      workshops: res.data.workshops || 0,
-      presentations: res.data.presentations || 0,
+    const data = {
+      workshops: res.data?.workshops || 0,
+      presentations: res.data?.presentations || 0,
     };
     option.value.series = [
       {

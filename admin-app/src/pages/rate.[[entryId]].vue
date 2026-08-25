@@ -1,17 +1,17 @@
 <script setup lang="ts">
 
+import {v4 as uuidv4} from 'uuid';
+import {ref, computed, onMounted} from 'vue'
+import {useRoute} from 'vue-router'
+import {addRating} from '@/utils/api.ts'
+
+
 definePage({
   meta: {
     skipMenu: true,
     layout: 'no-distractions',
   },
 })
-
-
-import {v4 as uuidv4} from 'uuid';
-import {ref, computed, onMounted} from 'vue'
-import {useRoute} from 'vue-router'
-import {presentationApi} from '@/utils/api.ts'
 
 // Accept either path param or query param for flexibility: /rate/123 or /rate?entryId=123
 const route = useRoute()
@@ -31,17 +31,20 @@ async function loadPresentation() {
 function submit() {
   if (!entryId.value) return
 
-  let ratingToken = localStorage.getItem('ratingToken') || uuidv4()
+  const ratingToken = localStorage.getItem('ratingToken') || uuidv4()
   localStorage.setItem('ratingToken', ratingToken)
 
   loading.value = true
-  presentationApi.addRating(entryId.value, {
-    reviewerToken: ratingToken,
-    value: rating.value ?? undefined,
-    comment: comment.value
+  addRating({
+    path: { presentationId: entryId.value },
+    body: {
+      reviewerToken: ratingToken,
+      value: rating.value ?? undefined,
+      comment: comment.value
+    }
   })
-    .then((response) => {
-      if (response.status >= 200 && response.status <= 300) {
+    .then((res) => {
+      if ((res.status ?? 0) >= 200 && (res.status ?? 0) <= 300) {
         submitted.value = true
       } else {
         presError.value = 'Failed to submit rating. Please try again later.'
@@ -65,7 +68,7 @@ onMounted(() => {
   }
 })
 
-let votingEnabled = false
+const votingEnabled = false
 
 const labels = ref(['terrible', 'bad', 'it was fine', 'great', 'awesome'])
 </script>
@@ -76,7 +79,8 @@ const labels = ref(['terrible', 'bad', 'it was fine', 'great', 'awesome'])
       <v-container style="padding: 0; height: 100%">
         <v-card style="height: 100%">
           <div v-if="!entryId" class="pa-4">
-            <v-alert type="error" title="Missing entryId"
+            <v-alert
+type="error" title="Missing entryId"
                      text="No presentation/workshop identifier provided."/>
           </div>
           <div v-else>
@@ -85,31 +89,34 @@ const labels = ref(['terrible', 'bad', 'it was fine', 'great', 'awesome'])
               <v-alert type="warning" :text="presError" class="mb-4"/>
             </div>
 
-            <v-banner text="Rating will be enabled on conference day"
-                      v-if="!votingEnabled">
-            </v-banner>
+            <v-banner
+v-if="!votingEnabled"
+                      text="Rating will be enabled on conference day"/>
             <v-container v-if="votingEnabled">
               <div class="mb-6">
                 <div class="mb-2">Your rating</div>
-                <v-rating v-model="rating"
+                <v-rating
+v-model="rating"
                           length="5"
                           color="amber"
                           hover
                           :item-labels="labels"
-                          clearable size="50">
-                </v-rating>
+                          clearable size="50"/>
               </div>
 
               <div class="mb-6">
                 <div class="mb-2">Comment (optional)</div>
-                <v-textarea v-model="comment" auto-grow rows="3"
+                <v-textarea
+v-model="comment" auto-grow rows="3"
                             placeholder="What did you like? What can be improved?"/>
               </div>
 
-              <v-alert v-if="submitted" type="success" variant="tonal"
+              <v-alert
+v-if="submitted" type="success" variant="tonal"
                        class="mb-4" text="Thanks for your feedback!"/>
 
-              <v-btn color="primary" :disabled="!rating || loading"
+              <v-btn
+color="primary" :disabled="!rating || loading"
                      :loading="loading" @click="submit">
                 Submit {{ rating }}
               </v-btn>
