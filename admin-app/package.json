@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@vueuse/core": "^14.4.0",
-    "axios": "^1.18.1",
+    "axios": "^1.19.0",
     "echarts": "^6.1.0",
     "jwt-decode": "^4.0.0",
     "md-editor-v3": "^6.5.6",
