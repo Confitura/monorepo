@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import DialogConfirm from '@/components/DialogConfirm.vue'
 import type {DataTableHeaders} from '@/plugins/vuetify'
-import {adminPresentationApi, presentationApi} from "@/utils/api.ts";
-import type {FullPresentation} from "@/utils/api-axios-client";
+import {accept, reject, getAllPresentations} from "@/utils/api.ts";
+import type {FullPresentation} from "@/utils/api";
 
 
 definePage({
@@ -20,7 +20,7 @@ function showDialogApprove(presentation: FullPresentation) {
     ?.open(`Are you sure you want to APPROVE ${presentation.title}?`)
     .then(async (confirmed: boolean) => {
       if (confirmed) {
-        adminPresentationApi.accept(presentation.id!)
+        accept({ path: { presentationId: presentation.id! } })
           .then(_ => Notify.success(`Approved ${presentation.title}`))
           .then(_ => reloadPresentations())
           .catch(_ => Notify.error('Failed to approve'))
@@ -33,7 +33,7 @@ function showDialogReject(presentation: FullPresentation) {
     ?.open(`Are you sure you want to REJECT ${presentation.title}?`)
     .then(async (confirmed: boolean) => {
       if (confirmed) {
-        adminPresentationApi.reject(presentation.id!)
+        reject({ path: { presentationId: presentation.id! } })
           .then(_ => Notify.success(`Rejected  ${presentation.title}`))
           .then(_ => reloadPresentations())
           .catch(_ => Notify.error('Failed to reject'))
@@ -59,8 +59,8 @@ const presentations = ref<FullPresentation[]>([])
 
 
 function reloadPresentations() {
-  presentationApi.getAllPresentations()
-    .then(res => res.data)
+  getAllPresentations()
+    .then(res => res.data ?? [])
     .then((data: Array<FullPresentation>) => presentations.value = data)
     .catch(e => console.error(e))
 }
@@ -116,7 +116,7 @@ onMounted(() => {
                   },
                 }"
               >
-                <v-tooltip location="top" v-if="item.status !== 'accepted'">
+                <v-tooltip v-if="item.status !== 'accepted'" location="top">
                   <template #activator="{ props }">
                     <v-btn
                       icon="mdi-check-outline"
@@ -127,7 +127,7 @@ onMounted(() => {
                   <span>Approve</span>
                 </v-tooltip>
 
-                <v-tooltip location="top" v-else>
+                <v-tooltip v-else location="top">
                   <template #activator="{ props }">
                     <v-btn
                       icon="mdi-close"

@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
 import router from '@/plugins/router.ts'
-import { api } from '@/utils/api.ts'
 import { jwtDecode } from 'jwt-decode'
 
 export interface User {
@@ -24,7 +23,6 @@ export const useAuthStore = defineStore('auth', {
   state: () => {
     const token = localStorage.getItem('token')
     const user: User | null = extractUser(token)
-    api.defaults.headers.common['Authorization'] = token
     return { user, token }
   },
   actions: {
@@ -32,7 +30,6 @@ export const useAuthStore = defineStore('auth', {
       localStorage.setItem('token', token)
       this.token = token
       this.user = extractUser(token)
-      api.defaults.headers.common['Authorization'] = token
       if (this.user?.isAdmin) {
         router.push('/dashboard')
       } else {
@@ -43,7 +40,6 @@ export const useAuthStore = defineStore('auth', {
       localStorage.removeItem('token')
       this.token = null
       this.user = null
-      api.defaults.headers.common['Authorization'] = null
       router.push('/login')
     },
   },

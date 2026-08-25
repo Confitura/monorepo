@@ -1,13 +1,12 @@
 <script setup lang="ts">
-import {presentationApi, usersApi} from "@/utils/api.ts";
-import {ref} from 'vue'
-import type {PresentationRequest, Tag} from "@/utils/api-axios-client";
+import {getAllTags, getPresentation, updatePresentation, addPresentationToUser} from "@/utils/api.ts";
+import {ref,onMounted} from 'vue'
+import type {PresentationRequest, Tag} from "@/utils/api";
 import {useAuthStore} from "@/stores/auth.ts";
-import {onMounted} from 'vue'
 import {useRoute} from "vue-router";
 import router from "@/plugins/router.ts";
 
-let user = useAuthStore().user
+const user = useAuthStore().user
 const route = useRoute()
 const presentationId = (route.params as { id?: string; userId?: string }).id
 const userId = (route.params as { id?: string; userId?: string }).userId
@@ -34,21 +33,21 @@ const presentation = ref<PresentationRequest>({
   tags: [],
 })
 
-let availableTags = ref<Tag[]>([])
+const availableTags = ref<Tag[]>([])
 
 // Validation rules
 const requiredRule = (value: string) => !!value.trim() || 'This field is required'
 
 onMounted(async () => {
-  presentationApi.getAllTags()
+  getAllTags()
     .then(response => response.data)
-    .then(data => availableTags.value = data)
+    .then(data => availableTags.value = data ?? [])
     .catch(error => console.error(error))
 
   if (presentationId && presentationId != 'new') {
-    usersApi.getPresentation(actualUserId.value!, presentationId!)
+    getPresentation({ path: { id: actualUserId.value!, presentationId: presentationId! } })
       .then(response => response.data)
-      .then(data => presentation.value = data)
+      .then(data => { if (data) presentation.value = data })
   } else {
     console.log('no id')
   }
@@ -57,9 +56,9 @@ onMounted(async () => {
 
 function doSubmit() {
   if (presentationId && presentationId != 'new') {
-    return usersApi.updatePresentation(actualUserId.value!, presentationId!, presentation.value)
+    return updatePresentation({ path: { userId: actualUserId.value!, presentationId: presentationId! }, body: presentation.value })
   } else {
-    return usersApi.addPresentationToUser(actualUserId.value!, presentation.value);
+    return addPresentationToUser({ path: { userId: actualUserId.value! }, body: presentation.value });
   }
 }
 
@@ -76,14 +75,14 @@ function handleSubmit() {
 </script>
 <template>
 
-  <v-form @submit.prevent="handleSubmit" v-model="formValid">
+  <v-form v-model="formValid" @submit.prevent="handleSubmit">
     <v-text-field
       v-model="presentation.title"
       label="Title"
       outlined
       required
       :rules="[requiredRule]"
-    ></v-text-field>
+    />
 
     <v-text-field
       v-model="presentation.shortDescription"
@@ -91,7 +90,7 @@ function handleSubmit() {
       outlined
       required
       :rules="[requiredRule]"
-    ></v-text-field>
+    />
 
     <v-textarea
       v-model="presentation.description"
@@ -100,7 +99,7 @@ function handleSubmit() {
       rows="4"
       required
       :rules="[requiredRule]"
-    ></v-textarea>
+    />
 
     <v-select
       v-model="presentation.level"
@@ -109,7 +108,7 @@ function handleSubmit() {
       outlined
       required
       :rules="[requiredRule]"
-    ></v-select>
+    />
 
     <v-select
       v-model="presentation.language"
@@ -118,7 +117,7 @@ function handleSubmit() {
       outlined
       required
       :rules="[requiredRule]"
-    ></v-select>
+    />
 
 
     <v-select
@@ -129,7 +128,7 @@ function handleSubmit() {
       item-title="name"
       item-value="id"
       outlined
-    ></v-select>
+    />
 
     <v-btn type="submit" color="primary" class="mt-4" :disabled="!formValid">
       Submit

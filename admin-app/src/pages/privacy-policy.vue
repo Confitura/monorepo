@@ -1,5 +1,11 @@
 <script setup lang="ts">
 
+import VueMarkdown from 'vue-markdown-render'
+import {useRoute} from 'vue-router';
+
+import {ref, onMounted} from 'vue';
+import {getPage} from "@/utils/api.ts";
+
 definePage({
   meta: {
     icon: 'mdi-home',
@@ -10,14 +16,8 @@ definePage({
   },
 })
 
-import VueMarkdown from 'vue-markdown-render'
-import {useRoute} from 'vue-router';
-
 const route = useRoute();
 console.log('Current route:', route);
-
-import {ref, onMounted} from 'vue';
-import {pagesApi} from "@/utils/api.ts";
 
 const pageData = ref<string | null>(null);
 
@@ -30,7 +30,7 @@ const markdownOptions = {
 
 onMounted(async () => {
   try {
-    const response = await pagesApi.getPage('privacy-policy');
+    const response = await getPage({ path: { id: 'privacy-policy' } });
     pageData.value = response.data || "";
   } catch (error) {
     console.error('Failed to fetch page data:', error);
@@ -41,7 +41,7 @@ onMounted(async () => {
 
 <template>
 
-  <v-container fluid v-if="pageData">
+  <v-container v-if="pageData" fluid>
     <v-row justify="center">
       <v-col cols="12" md="8" lg="6">
         <v-card class="pa-4 markdown">

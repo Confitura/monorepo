@@ -1,5 +1,10 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { mount, flushPromises } from '@vue/test-utils'
+import { createVuetify } from 'vuetify'
+import { createTestingPinia } from '@pinia/testing'
+import AgendaEditor from '@/components/admin/agenda-editor.vue'
+import { useAgendaStore } from '@/stores/agenda'
+import { useNotificationStore } from '@/stores/notification'
 
 // jsdom doesn't implement ResizeObserver, required by Vuetify's tables/windows
 global.ResizeObserver = class ResizeObserver {
@@ -7,11 +12,6 @@ global.ResizeObserver = class ResizeObserver {
   unobserve() {}
   disconnect() {}
 }
-import { createVuetify } from 'vuetify'
-import { createTestingPinia } from '@pinia/testing'
-import AgendaEditor from '@/components/admin/agenda-editor.vue'
-import { useAgendaStore } from '@/stores/agenda'
-import { useNotificationStore } from '@/stores/notification'
 
 const DAY_ID = 'day-1'
 
@@ -41,27 +41,26 @@ const presentations = [
   { id: 'presentation-1', title: 'Deep Dive Into Records', flatSpeakers: 'Ada Lovelace' },
 ]
 
-const { agendaApi, daysApi, presentationApi } = vi.hoisted(() => ({
-  agendaApi: {
-    getAllTimeSlots: vi.fn(),
-    getAllRooms1: vi.fn(),
-    getAgendaEntriesByDay: vi.fn(),
-    createTimeSlot: vi.fn(),
-    updateTimeSlot: vi.fn(),
-    deleteTimeSlot: vi.fn(),
-    createRoom: vi.fn(),
-    updateRoom: vi.fn(),
-    removeRoom: vi.fn(),
-    saveAgendaEntry: vi.fn(),
-    updateAgendaEntry: vi.fn(),
-    deleteAgendaEntry: vi.fn(),
-    moveAgendaEntry: vi.fn(),
-  },
-  daysApi: { getDayById: vi.fn() },
-  presentationApi: { getAllPresentations: vi.fn() },
+// The agenda store consumes the generated hey-api SDK's flat, per-operation functions.
+const api = vi.hoisted(() => ({
+  getDayById: vi.fn(),
+  getAllPresentations: vi.fn(),
+  getAllTimeSlots: vi.fn(),
+  getAllRooms1: vi.fn(),
+  getAgendaEntriesByDay: vi.fn(),
+  createTimeSlot: vi.fn(),
+  updateTimeSlot: vi.fn(),
+  deleteTimeSlot: vi.fn(),
+  createRoom: vi.fn(),
+  updateRoom: vi.fn(),
+  removeRoom: vi.fn(),
+  saveAgendaEntry: vi.fn(),
+  updateAgendaEntry: vi.fn(),
+  deleteAgendaEntry: vi.fn(),
+  moveAgendaEntry: vi.fn(),
 }))
 
-vi.mock('@/utils/api', () => ({ agendaApi, daysApi, presentationApi }))
+vi.mock('@/utils/api', () => api)
 
 let wrapper: ReturnType<typeof mount> | null = null
 let container: HTMLElement | null = null
@@ -143,12 +142,12 @@ async function clickDialogButton(text: string) {
 describe('component agenda-editor.vue', () => {
   beforeEach(() => {
     vi.clearAllMocks()
-    daysApi.getDayById.mockResolvedValue({ data: day })
-    agendaApi.getAllTimeSlots.mockResolvedValue({ data: timeSlots })
-    agendaApi.getAllRooms1.mockResolvedValue({ data: rooms })
-    agendaApi.getAgendaEntriesByDay.mockResolvedValue({ data: entries })
-    presentationApi.getAllPresentations.mockResolvedValue({ data: presentations })
-    Object.values(agendaApi)
+    api.getDayById.mockResolvedValue({ data: day })
+    api.getAllTimeSlots.mockResolvedValue({ data: timeSlots })
+    api.getAllRooms1.mockResolvedValue({ data: rooms })
+    api.getAgendaEntriesByDay.mockResolvedValue({ data: entries })
+    api.getAllPresentations.mockResolvedValue({ data: presentations })
+    Object.values(api)
       .filter((fn) => !fn.getMockImplementation())
       .forEach((fn) => fn.mockResolvedValue({ data: {} }))
   })
@@ -206,13 +205,16 @@ describe('component agenda-editor.vue', () => {
     await clickButtonWithText(editor, 'Time Slot')
     await clickDialogButton('Save')
 
-    expect(agendaApi.createTimeSlot).toHaveBeenCalledWith(DAY_ID, {
-      start: '11:15',
-      end: '12:15',
-      forAllRooms: false,
+    expect(api.createTimeSlot).toHaveBeenCalledWith({
+      path: { dayId: DAY_ID },
+      body: {
+        start: '11:15',
+        end: '12:15',
+        forAllRooms: false,
+      },
     })
     // the day is reloaded so the new slot shows up in its chronological place
-    expect(agendaApi.getAllTimeSlots).toHaveBeenCalledTimes(2)
+    expect(api.getAllTimeSlots).toHaveBeenCalledTimes(2)
   })
 
   it('derives the end time from the duration', async () => {
@@ -228,10 +230,13 @@ describe('component agenda-editor.vue', () => {
     expect(dialogField('End Time').value).toBe('12:00')
 
     await clickDialogButton('Save')
-    expect(agendaApi.createTimeSlot).toHaveBeenCalledWith(DAY_ID, {
-      start: '11:15',
-      end: '12:00',
-      forAllRooms: false,
+    expect(api.createTimeSlot).toHaveBeenCalledWith({
+      path: { dayId: DAY_ID },
+      body: {
+        start: '11:15',
+        end: '12:00',
+        forAllRooms: false,
+      },
     })
   })
 
@@ -257,10 +262,13 @@ describe('component agenda-editor.vue', () => {
     expect(dialogField('End Time').value).toBe('11:00')
 
     await clickDialogButton('Save')
-    expect(agendaApi.updateTimeSlot).toHaveBeenCalledWith(DAY_ID, 1, {
-      start: '10:00',
-      end: '11:00',
-      forAllRooms: true,
+    expect(api.updateTimeSlot).toHaveBeenCalledWith({
+      path: { dayId: DAY_ID, displayOrder: 1 },
+      body: {
+        start: '10:00',
+        end: '11:00',
+        forAllRooms: true,
+      },
     })
   })
 
@@ -277,15 +285,21 @@ describe('component agenda-editor.vue', () => {
 
     await clickDialogButton('Save')
 
-    expect(agendaApi.createTimeSlot).toHaveBeenNthCalledWith(1, DAY_ID, {
-      start: '11:15',
-      end: '11:45',
-      forAllRooms: false,
+    expect(api.createTimeSlot).toHaveBeenNthCalledWith(1, {
+      path: { dayId: DAY_ID },
+      body: {
+        start: '11:15',
+        end: '11:45',
+        forAllRooms: false,
+      },
     })
-    expect(agendaApi.createTimeSlot).toHaveBeenNthCalledWith(2, DAY_ID, {
-      start: '11:45',
-      end: '12:15',
-      forAllRooms: false,
+    expect(api.createTimeSlot).toHaveBeenNthCalledWith(2, {
+      path: { dayId: DAY_ID },
+      body: {
+        start: '11:45',
+        end: '12:15',
+        forAllRooms: false,
+      },
     })
   })
 
@@ -299,7 +313,7 @@ describe('component agenda-editor.vue', () => {
     expect(dialogButton('Save').disabled).toBe(true)
 
     await clickDialogButton('Save')
-    expect(agendaApi.createTimeSlot).not.toHaveBeenCalled()
+    expect(api.createTimeSlot).not.toHaveBeenCalled()
   })
 
   it('adds an agenda entry to an empty cell', async () => {
@@ -310,12 +324,14 @@ describe('component agenda-editor.vue', () => {
     await cell.find('button').trigger('click')
     await clickDialogButton('Save')
 
-    expect(agendaApi.saveAgendaEntry).toHaveBeenCalledWith({
-      dayId: DAY_ID,
-      timeSlotIndex: 0,
-      roomId: 'room-cde',
-      label: '',
-      presentationId: '',
+    expect(api.saveAgendaEntry).toHaveBeenCalledWith({
+      body: {
+        dayId: DAY_ID,
+        timeSlotIndex: 0,
+        roomId: 'room-cde',
+        label: '',
+        presentationId: '',
+      },
     })
   })
 
@@ -330,8 +346,8 @@ describe('component agenda-editor.vue', () => {
 
     await clickDialogButton('Confirm')
 
-    expect(agendaApi.deleteTimeSlot).toHaveBeenCalledWith(DAY_ID, 0)
-    expect(agendaApi.getAgendaEntriesByDay).toHaveBeenCalledTimes(2)
+    expect(api.deleteTimeSlot).toHaveBeenCalledWith({ path: { dayId: DAY_ID, displayOrder: 0 } })
+    expect(api.getAgendaEntriesByDay).toHaveBeenCalledTimes(2)
   })
 
   it('does not delete a time slot when the confirmation is cancelled', async () => {
@@ -343,7 +359,7 @@ describe('component agenda-editor.vue', () => {
 
     await clickDialogButton('Cancel')
 
-    expect(agendaApi.deleteTimeSlot).not.toHaveBeenCalled()
+    expect(api.deleteTimeSlot).not.toHaveBeenCalled()
   })
 
   it('refuses to move an entry onto an occupied slot', async () => {
@@ -356,7 +372,7 @@ describe('component agenda-editor.vue', () => {
     await selectDialogOption('Room', 'AB')
     await clickDialogButton('Save')
 
-    expect(agendaApi.saveAgendaEntry).not.toHaveBeenCalled()
+    expect(api.saveAgendaEntry).not.toHaveBeenCalled()
     expect(useNotificationStore().notifications.map((it) => it.text)).toContain(
       'There is already an entry in that time slot and room',
     )
@@ -367,10 +383,10 @@ describe('component agenda-editor.vue', () => {
     const store = useAgendaStore()
 
     await store.createRoom(DAY_ID, { label: 'Room 13' })
-    expect(agendaApi.createRoom).toHaveBeenCalledWith(DAY_ID, { label: 'Room 13' })
+    expect(api.createRoom).toHaveBeenCalledWith({ path: { dayId: DAY_ID }, body: { label: 'Room 13' } })
 
     await store.deleteRoom(DAY_ID, 'room-cde')
-    expect(agendaApi.removeRoom).toHaveBeenCalledWith('room-cde')
+    expect(api.removeRoom).toHaveBeenCalledWith({ path: { id: 'room-cde' } })
   })
 
   it('swaps display order of neighbouring rooms when moving a room', async () => {
@@ -379,8 +395,8 @@ describe('component agenda-editor.vue', () => {
 
     await store.moveRoom(DAY_ID, 'room-cde', -1)
 
-    expect(agendaApi.updateRoom).toHaveBeenNthCalledWith(1, 'room-cde', { displayOrder: 1 })
-    expect(agendaApi.updateRoom).toHaveBeenNthCalledWith(2, 'room-ab', { displayOrder: 2 })
+    expect(api.updateRoom).toHaveBeenNthCalledWith(1, { path: { id: 'room-cde' }, body: { displayOrder: 1 } })
+    expect(api.updateRoom).toHaveBeenNthCalledWith(2, { path: { id: 'room-ab' }, body: { displayOrder: 2 } })
   })
 
   it('does not move the first room to the left', async () => {
@@ -389,7 +405,7 @@ describe('component agenda-editor.vue', () => {
 
     await store.moveRoom(DAY_ID, 'room-ab', -1)
 
-    expect(agendaApi.updateRoom).not.toHaveBeenCalled()
+    expect(api.updateRoom).not.toHaveBeenCalled()
   })
 
   it('moves an agenda entry to another slot', async () => {
@@ -398,10 +414,13 @@ describe('component agenda-editor.vue', () => {
 
     await store.moveAgendaEntry('entry-1', { dayId: DAY_ID, timeSlotIndex: 1, roomId: 'room-cde' }, DAY_ID)
 
-    expect(agendaApi.moveAgendaEntry).toHaveBeenCalledWith('entry-1', {
-      dayId: DAY_ID,
-      timeSlotIndex: 1,
-      roomId: 'room-cde',
+    expect(api.moveAgendaEntry).toHaveBeenCalledWith({
+      path: { id: 'entry-1' },
+      body: {
+        dayId: DAY_ID,
+        timeSlotIndex: 1,
+        roomId: 'room-cde',
+      },
     })
   })
 })

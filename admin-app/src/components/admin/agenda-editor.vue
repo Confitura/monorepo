@@ -8,7 +8,7 @@ import type {
   InlineAgendaEntry,
   InlineRoom,
   InlineTimeSlot,
-} from "@/utils/api-axios-client";
+} from "@/utils/api";
 
 const props = defineProps<{
   dayId: string;
@@ -426,11 +426,13 @@ async function deleteAgendaEntry() {
           <v-card-title class="d-flex justify-space-between align-center">
             <span>Conference Schedule</span>
             <div>
-              <v-btn class="mr-2" color="primary" variant="tonal"
+              <v-btn
+class="mr-2" color="primary" variant="tonal"
                      prepend-icon="mdi-plus" @click="addTimeSlot">
                 Time Slot
               </v-btn>
-              <v-btn color="primary" variant="tonal" prepend-icon="mdi-plus"
+              <v-btn
+color="primary" variant="tonal" prepend-icon="mdi-plus"
                      @click="addRoom">
                 Room
               </v-btn>
@@ -450,10 +452,12 @@ async function deleteAgendaEntry() {
                   <div class="d-flex align-center justify-space-between">
                     <span>{{ room.label }}</span>
                     <span class="text-no-wrap">
-                      <v-btn icon="mdi-pencil" size="x-small" variant="text"
-                             @click="editRoom(room)"></v-btn>
-                      <v-btn icon="mdi-delete" size="x-small" variant="text" color="error"
-                             @click="deleteRoom(room)"></v-btn>
+                      <v-btn
+icon="mdi-pencil" size="x-small" variant="text"
+                             @click="editRoom(room)"/>
+                      <v-btn
+icon="mdi-delete" size="x-small" variant="text" color="error"
+                             @click="deleteRoom(room)"/>
                     </span>
                   </div>
                 </th>
@@ -471,10 +475,12 @@ async function deleteAgendaEntry() {
                       </v-chip>
                     </div>
                     <span class="text-no-wrap">
-                      <v-btn icon="mdi-pencil" size="x-small" variant="text"
-                             @click="editTimeSlot(timeSlot)"></v-btn>
-                      <v-btn icon="mdi-delete" size="x-small" variant="text" color="error"
-                             @click="deleteTimeSlot(timeSlot)"></v-btn>
+                      <v-btn
+icon="mdi-pencil" size="x-small" variant="text"
+                             @click="editTimeSlot(timeSlot)"/>
+                      <v-btn
+icon="mdi-delete" size="x-small" variant="text" color="error"
+                             @click="deleteTimeSlot(timeSlot)"/>
                     </span>
                   </div>
                 </td>
@@ -573,14 +579,16 @@ async function deleteAgendaEntry() {
                 <td>{{ timeSlot.start }}</td>
                 <td>{{ timeSlot.end }}</td>
                 <td>
-                  <v-icon v-if="timeSlot.forAllRooms" icon="mdi-check"></v-icon>
+                  <v-icon v-if="timeSlot.forAllRooms" icon="mdi-check"/>
                 </td>
                 <td>{{ entriesInTimeSlot(timeSlot).length }}</td>
                 <td class="text-no-wrap">
-                  <v-btn icon="mdi-pencil" size="small" variant="text" class="mr-2"
-                         @click="editTimeSlot(timeSlot)"></v-btn>
-                  <v-btn icon="mdi-delete" size="small" variant="text" color="error"
-                         @click="deleteTimeSlot(timeSlot)"></v-btn>
+                  <v-btn
+icon="mdi-pencil" size="small" variant="text" class="mr-2"
+                         @click="editTimeSlot(timeSlot)"/>
+                  <v-btn
+icon="mdi-delete" size="small" variant="text" color="error"
+                         @click="deleteTimeSlot(timeSlot)"/>
                 </td>
               </tr>
               </tbody>
@@ -611,16 +619,20 @@ async function deleteAgendaEntry() {
                 <td>{{ room.label }}</td>
                 <td>{{ entriesInRoom(room).length }}</td>
                 <td class="text-no-wrap">
-                  <v-btn icon="mdi-arrow-up" size="small" variant="text"
+                  <v-btn
+icon="mdi-arrow-up" size="small" variant="text"
                          :disabled="index === 0"
-                         @click="moveRoom(room, -1)"></v-btn>
-                  <v-btn icon="mdi-arrow-down" size="small" variant="text"
+                         @click="moveRoom(room, -1)"/>
+                  <v-btn
+icon="mdi-arrow-down" size="small" variant="text"
                          :disabled="index === rooms.length - 1"
-                         @click="moveRoom(room, 1)"></v-btn>
-                  <v-btn icon="mdi-pencil" size="small" variant="text" class="mr-2"
-                         @click="editRoom(room)"></v-btn>
-                  <v-btn icon="mdi-delete" size="small" variant="text" color="error"
-                         @click="deleteRoom(room)"></v-btn>
+                         @click="moveRoom(room, 1)"/>
+                  <v-btn
+icon="mdi-pencil" size="small" variant="text" class="mr-2"
+                         @click="editRoom(room)"/>
+                  <v-btn
+icon="mdi-delete" size="small" variant="text" color="error"
+                         @click="deleteRoom(room)"/>
                 </td>
               </tr>
               </tbody>
@@ -648,7 +660,7 @@ async function deleteAgendaEntry() {
                   label="Start Time"
                   type="time"
                   :rules="[requiredRule]"
-                ></v-text-field>
+                />
               </v-col>
               <v-col cols="12" sm="4">
                 <v-text-field
@@ -657,7 +669,7 @@ async function deleteAgendaEntry() {
                   type="number"
                   min="1"
                   hint="Sets the end time"
-                ></v-text-field>
+                />
               </v-col>
               <v-col cols="12" sm="4">
                 <v-text-field
@@ -666,7 +678,7 @@ async function deleteAgendaEntry() {
                   type="time"
                   :rules="[requiredRule]"
                   :error-messages="endTimeError"
-                ></v-text-field>
+                />
               </v-col>
               <v-col cols="12" class="pt-0">
                 <v-btn
@@ -688,22 +700,24 @@ async function deleteAgendaEntry() {
                   label="Spans all rooms (break, keynote, ...)"
                   color="primary"
                   hide-details
-                ></v-switch>
+                />
               </v-col>
             </v-row>
           </v-form>
         </v-card-text>
 
         <v-card-actions>
-          <v-spacer></v-spacer>
+          <v-spacer/>
           <v-btn color="blue-darken-1" variant="text" @click="timeSlotDialog = false">
             Cancel
           </v-btn>
-          <v-btn v-if="editedTimeSlot.displayOrder === null" color="blue-darken-1" variant="text"
+          <v-btn
+v-if="editedTimeSlot.displayOrder === null" color="blue-darken-1" variant="text"
                  :disabled="!timeSlotSavable" @click="saveTimeSlot(true)">
             Save & add next
           </v-btn>
-          <v-btn color="blue-darken-1" variant="text" :disabled="!timeSlotSavable"
+          <v-btn
+color="blue-darken-1" variant="text" :disabled="!timeSlotSavable"
                  @click="saveTimeSlot()">
             Save
           </v-btn>
@@ -724,14 +738,15 @@ async function deleteAgendaEntry() {
               v-model="editedRoom.label"
               label="Room Name"
               :rules="[requiredRule]"
-            ></v-text-field>
+            />
           </v-form>
         </v-card-text>
 
         <v-card-actions>
-          <v-spacer></v-spacer>
+          <v-spacer/>
           <v-btn color="blue-darken-1" variant="text" @click="roomDialog = false">Cancel</v-btn>
-          <v-btn color="blue-darken-1" variant="text" :disabled="!roomFormValid"
+          <v-btn
+color="blue-darken-1" variant="text" :disabled="!roomFormValid"
                  @click="saveRoom">
             Save
           </v-btn>
@@ -755,14 +770,14 @@ async function deleteAgendaEntry() {
                 v-model="editedEntry.timeSlotIndex"
                 :items="timeSlotItems"
                 label="Time Slot"
-              ></v-select>
+              />
             </v-col>
             <v-col cols="12" sm="6">
               <v-select
                 v-model="editedEntry.roomId"
                 :items="roomItems"
                 label="Room"
-              ></v-select>
+              />
             </v-col>
             <v-col cols="12">
               <v-autocomplete
@@ -770,24 +785,25 @@ async function deleteAgendaEntry() {
                 :items="presentationItems"
                 label="Presentation"
                 clearable
-              ></v-autocomplete>
+              />
             </v-col>
             <v-col cols="12">
               <v-text-field
                 v-model="editedEntry.label"
                 label="Label (for breaks, etc.)"
                 :disabled="!!editedEntry.presentationId"
-              ></v-text-field>
+              />
             </v-col>
           </v-row>
         </v-card-text>
 
         <v-card-actions>
-          <v-btn v-if="editedEntry.id" color="error" variant="text"
+          <v-btn
+v-if="editedEntry.id" color="error" variant="text"
                  @click="deleteAgendaEntry">
             Delete
           </v-btn>
-          <v-spacer></v-spacer>
+          <v-spacer/>
           <v-btn color="blue-darken-1" variant="text" @click="entryDialog = false">Cancel</v-btn>
           <v-btn color="blue-darken-1" variant="text" @click="saveAgendaEntry">Save</v-btn>
         </v-card-actions>

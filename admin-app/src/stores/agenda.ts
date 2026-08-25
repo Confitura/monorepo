@@ -1,5 +1,21 @@
 import { defineStore } from 'pinia'
-import { daysApi, agendaApi, presentationApi } from '@/utils/api'
+import {
+  getDayById,
+  getAllTimeSlots,
+  getAllRooms1,
+  getAgendaEntriesByDay,
+  getAllPresentations,
+  saveAgendaEntry,
+  updateAgendaEntry,
+  deleteAgendaEntry,
+  moveAgendaEntry,
+  createTimeSlot,
+  updateTimeSlot,
+  deleteTimeSlot,
+  createRoom,
+  updateRoom,
+  removeRoom,
+} from '@/utils/api'
 import type {
   AssignAgendaEntryRequest,
   CreateRoomRequest,
@@ -12,7 +28,7 @@ import type {
   UpdateAgendaEntrySlotRequest,
   UpdateRoomRequest,
   UpdateTimeSlotRequest,
-} from '@/utils/api-axios-client'
+} from '@/utils/api'
 
 export const useAgendaStore = defineStore('agenda', {
   state: () => ({
@@ -36,9 +52,9 @@ export const useAgendaStore = defineStore('agenda', {
         const ids = Array.isArray(dayIds) ? [...new Set(dayIds)] : [dayIds]
 
         // Load presentations at once (global)
-        const presentationsResponse = await presentationApi.getAllPresentations()
+        const presentationsResponse = await getAllPresentations()
 
-        this.presentations = presentationsResponse.data.sort((a, b) =>
+        this.presentations = (presentationsResponse.data ?? []).sort((a, b) =>
           a.title.localeCompare(b.title)
         )
 
@@ -46,10 +62,10 @@ export const useAgendaStore = defineStore('agenda', {
         const results = await Promise.all(
           ids.map(async (dayId) => {
             const [dayResponse, timeSlotsResponse, roomsResponse, agendaEntriesResponse] = await Promise.all([
-              daysApi.getDayById(dayId),
-              agendaApi.getAllTimeSlots(dayId),
-              agendaApi.getAllRooms1(dayId),
-              agendaApi.getAgendaEntriesByDay(dayId),
+              getDayById({ path: { id: dayId } }),
+              getAllTimeSlots({ path: { dayId } }),
+              getAllRooms1({ path: { dayId } }),
+              getAgendaEntriesByDay({ path: { dayId } }),
             ])
 
             return {
@@ -101,7 +117,7 @@ export const useAgendaStore = defineStore('agenda', {
         if (!request.dayId) {
           request.dayId = dayId
         }
-        await agendaApi.saveAgendaEntry(request)
+        await saveAgendaEntry({ body: request })
         await this.refreshData(dayId)
       } catch (e) {
         console.error('AgendaStore.saveAgendaEntry error', e)
@@ -114,7 +130,7 @@ export const useAgendaStore = defineStore('agenda', {
       dayId: string,
     ) {
       try {
-        await agendaApi.updateAgendaEntry(id, request)
+        await updateAgendaEntry({ path: { id }, body: request })
         await this.refreshData(dayId)
       } catch (e) {
         console.error('AgendaStore.updateAgendaEntry error', e)
@@ -123,7 +139,7 @@ export const useAgendaStore = defineStore('agenda', {
     },
     async deleteAgendaEntry(id: string, dayId: string) {
       try {
-        await agendaApi.deleteAgendaEntry(id)
+        await deleteAgendaEntry({ path: { id } })
         await this.refreshData(dayId)
       } catch (e) {
         console.error('AgendaStore.deleteAgendaEntry error', e)
@@ -132,7 +148,7 @@ export const useAgendaStore = defineStore('agenda', {
     },
     async moveAgendaEntry(id: string, request: UpdateAgendaEntrySlotRequest, dayId: string) {
       try {
-        await agendaApi.moveAgendaEntry(id, request)
+        await moveAgendaEntry({ path: { id }, body: request })
         await this.refreshData(dayId)
       } catch (e) {
         console.error('AgendaStore.moveAgendaEntry error', e)
@@ -141,7 +157,7 @@ export const useAgendaStore = defineStore('agenda', {
     },
     async createTimeSlot(dayId: string, request: CreateTimeSlotRequest) {
       try {
-        await agendaApi.createTimeSlot(dayId, request)
+        await createTimeSlot({ path: { dayId }, body: request })
         await this.refreshData(dayId)
       } catch (e) {
         console.error('AgendaStore.createTimeSlot error', e)
@@ -150,7 +166,7 @@ export const useAgendaStore = defineStore('agenda', {
     },
     async updateTimeSlot(dayId: string, displayOrder: number, request: UpdateTimeSlotRequest) {
       try {
-        await agendaApi.updateTimeSlot(dayId, displayOrder, request)
+        await updateTimeSlot({ path: { dayId, displayOrder }, body: request })
         await this.refreshData(dayId)
       } catch (e) {
         console.error('AgendaStore.updateTimeSlot error', e)
@@ -159,7 +175,7 @@ export const useAgendaStore = defineStore('agenda', {
     },
     async deleteTimeSlot(dayId: string, displayOrder: number) {
       try {
-        await agendaApi.deleteTimeSlot(dayId, displayOrder)
+        await deleteTimeSlot({ path: { dayId, displayOrder } })
         await this.refreshData(dayId)
       } catch (e) {
         console.error('AgendaStore.deleteTimeSlot error', e)
@@ -168,7 +184,7 @@ export const useAgendaStore = defineStore('agenda', {
     },
     async createRoom(dayId: string, request: CreateRoomRequest) {
       try {
-        await agendaApi.createRoom(dayId, request)
+        await createRoom({ path: { dayId }, body: request })
         await this.refreshData(dayId)
       } catch (e) {
         console.error('AgendaStore.createRoom error', e)
@@ -177,7 +193,7 @@ export const useAgendaStore = defineStore('agenda', {
     },
     async updateRoom(dayId: string, id: string, request: UpdateRoomRequest) {
       try {
-        await agendaApi.updateRoom(id, request)
+        await updateRoom({ path: { id }, body: request })
         await this.refreshData(dayId)
       } catch (e) {
         console.error('AgendaStore.updateRoom error', e)
@@ -186,7 +202,7 @@ export const useAgendaStore = defineStore('agenda', {
     },
     async deleteRoom(dayId: string, id: string) {
       try {
-        await agendaApi.removeRoom(id)
+        await removeRoom({ path: { id } })
         await this.refreshData(dayId)
       } catch (e) {
         console.error('AgendaStore.deleteRoom error', e)
@@ -203,8 +219,8 @@ export const useAgendaStore = defineStore('agenda', {
       if (index === -1 || !neighbour) return
       const room = rooms[index]
       try {
-        await agendaApi.updateRoom(room.id, { displayOrder: neighbour.displayOrder })
-        await agendaApi.updateRoom(neighbour.id, { displayOrder: room.displayOrder })
+        await updateRoom({ path: { id: room.id }, body: { displayOrder: neighbour.displayOrder } })
+        await updateRoom({ path: { id: neighbour.id }, body: { displayOrder: room.displayOrder } })
         await this.refreshData(dayId)
       } catch (e) {
         console.error('AgendaStore.moveRoom error', e)

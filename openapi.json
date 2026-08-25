@@ -1,0 +1,4463 @@
+{
+  "components" : {
+    "schemas" : {
+      "AllegroContext" : {
+        "properties" : {
+          "auctionId" : {
+            "type" : "string"
+          },
+          "auctionName" : {
+            "type" : "string"
+          },
+          "buyerLogin" : {
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "AssignAgendaEntryRequest" : {
+        "properties" : {
+          "dayId" : {
+            "type" : "string"
+          },
+          "label" : {
+            "type" : "string"
+          },
+          "presentationId" : {
+            "type" : "string"
+          },
+          "roomId" : {
+            "type" : "string"
+          },
+          "timeSlotIndex" : {
+            "format" : "int32",
+            "type" : "integer"
+          }
+        },
+        "required" : [ "dayId", "label", "presentationId", "timeSlotIndex" ],
+        "type" : "object"
+      },
+      "CreateRoomRequest" : {
+        "properties" : {
+          "displayOrder" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "label" : {
+            "type" : "string"
+          }
+        },
+        "required" : [ "label" ],
+        "type" : "object"
+      },
+      "CreateTimeSlotRequest" : {
+        "properties" : {
+          "end" : {
+            "description" : "End time, e.g. 10:00",
+            "type" : "string"
+          },
+          "forAllRooms" : {
+            "type" : "boolean"
+          },
+          "start" : {
+            "description" : "Start time, e.g. 09:00",
+            "type" : "string"
+          }
+        },
+        "required" : [ "end", "start" ],
+        "type" : "object"
+      },
+      "Day" : {
+        "properties" : {
+          "createdBy" : {
+            "type" : "string"
+          },
+          "createdDate" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "date" : {
+            "format" : "date",
+            "type" : "string"
+          },
+          "displayOrder" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "label" : {
+            "type" : "string"
+          },
+          "lastModifiedBy" : {
+            "type" : "string"
+          },
+          "lastModifiedDate" : {
+            "format" : "date-time",
+            "type" : "string"
+          }
+        },
+        "required" : [ "date", "displayOrder", "label" ],
+        "type" : "object"
+      },
+      "DumpResponse" : {
+        "properties" : {
+          "triggeredAt" : {
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "DumpStatus" : {
+        "properties" : {
+          "lastDumpAt" : {
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "FullPresentation" : {
+        "properties" : {
+          "description" : {
+            "type" : "string"
+          },
+          "durationInMinutes" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "expectedPrice" : {
+            "format" : "double",
+            "type" : "number"
+          },
+          "flatSpeakers" : {
+            "type" : "string"
+          },
+          "flatTags" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "isFree" : {
+            "type" : "boolean"
+          },
+          "isWorkshop" : {
+            "type" : "boolean"
+          },
+          "language" : {
+            "type" : "string"
+          },
+          "level" : {
+            "type" : "string"
+          },
+          "maxGroupSize" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "shortDescription" : {
+            "type" : "string"
+          },
+          "speakers" : {
+            "items" : {
+              "$ref" : "#/components/schemas/Speaker"
+            },
+            "type" : "array"
+          },
+          "status" : {
+            "type" : "string"
+          },
+          "tags" : {
+            "items" : {
+              "type" : "string"
+            },
+            "type" : "array"
+          },
+          "title" : {
+            "type" : "string"
+          }
+        },
+        "required" : [ "description", "durationInMinutes", "expectedPrice", "flatSpeakers", "flatTags", "id", "isFree", "isWorkshop", "language", "level", "maxGroupSize", "shortDescription", "speakers", "status", "tags", "title" ],
+        "type" : "object"
+      },
+      "FullUser" : {
+        "properties" : {
+          "bio" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          },
+          "github" : {
+            "type" : "string"
+          },
+          "hasAcceptedPresentation" : {
+            "type" : "boolean"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "isAdmin" : {
+            "type" : "boolean"
+          },
+          "isParticipant" : {
+            "type" : "boolean"
+          },
+          "isSpeaker" : {
+            "type" : "boolean"
+          },
+          "isVolunteer" : {
+            "type" : "boolean"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "origin" : {
+            "type" : "string"
+          },
+          "photo" : {
+            "type" : "string"
+          },
+          "privacyPolicyAccepted" : {
+            "type" : "boolean"
+          },
+          "twitter" : {
+            "type" : "string"
+          },
+          "username" : {
+            "type" : "string"
+          },
+          "www" : {
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "GenerateVouchersRequest" : {
+        "properties" : {
+          "comment" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          },
+          "participantVouchers" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "sponsorVouchers" : {
+            "format" : "int32",
+            "type" : "integer"
+          }
+        },
+        "type" : "object"
+      },
+      "InlineAgendaEntry" : {
+        "properties" : {
+          "dayId" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "label" : {
+            "type" : "string"
+          },
+          "presentationId" : {
+            "type" : "string"
+          },
+          "roomId" : {
+            "type" : "string"
+          },
+          "roomLabel" : {
+            "type" : "string"
+          },
+          "timeSlotIndex" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "timeSlotLabel" : {
+            "type" : "string"
+          },
+          "timeSlotSpan" : {
+            "format" : "int32",
+            "type" : "integer"
+          }
+        },
+        "required" : [ "dayId", "id", "timeSlotIndex" ],
+        "type" : "object"
+      },
+      "InlineDay" : {
+        "properties" : {
+          "date" : {
+            "type" : "string"
+          },
+          "displayOrder" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "label" : {
+            "type" : "string"
+          }
+        },
+        "required" : [ "date", "displayOrder", "id", "label" ],
+        "type" : "object"
+      },
+      "InlinePresentation" : {
+        "properties" : {
+          "description" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "language" : {
+            "type" : "string"
+          },
+          "level" : {
+            "type" : "string"
+          },
+          "shortDescription" : {
+            "type" : "string"
+          },
+          "status" : {
+            "type" : "string"
+          },
+          "tags" : {
+            "items" : {
+              "type" : "string"
+            },
+            "type" : "array"
+          },
+          "title" : {
+            "type" : "string"
+          }
+        },
+        "required" : [ "description", "id", "language", "level", "shortDescription", "status", "tags", "title" ],
+        "type" : "object"
+      },
+      "InlinePresentationWithSpeakers" : {
+        "properties" : {
+          "description" : {
+            "type" : "string"
+          },
+          "durationInMinutes" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "expectedPrice" : {
+            "format" : "double",
+            "type" : "number"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "isFree" : {
+            "type" : "boolean"
+          },
+          "language" : {
+            "type" : "string"
+          },
+          "level" : {
+            "type" : "string"
+          },
+          "maxGroupSize" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "shortDescription" : {
+            "type" : "string"
+          },
+          "sortableTitle" : {
+            "type" : "string"
+          },
+          "speakers" : {
+            "items" : {
+              "$ref" : "#/components/schemas/Speaker"
+            },
+            "type" : "array"
+          },
+          "tags" : {
+            "items" : {
+              "$ref" : "#/components/schemas/Tag"
+            },
+            "type" : "array"
+          },
+          "title" : {
+            "type" : "string"
+          },
+          "workshop" : {
+            "type" : "boolean"
+          }
+        },
+        "type" : "object"
+      },
+      "InlineRoom" : {
+        "properties" : {
+          "displayOrder" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "label" : {
+            "type" : "string"
+          }
+        },
+        "required" : [ "displayOrder", "id", "label" ],
+        "type" : "object"
+      },
+      "InlineTimeSlot" : {
+        "properties" : {
+          "dayId" : {
+            "description" : "Day identifier",
+            "type" : "string"
+          },
+          "displayOrder" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "end" : {
+            "type" : "string"
+          },
+          "forAllRooms" : {
+            "type" : "boolean"
+          },
+          "label" : {
+            "type" : "string"
+          },
+          "start" : {
+            "type" : "string"
+          }
+        },
+        "required" : [ "dayId", "displayOrder", "end", "forAllRooms", "label", "start" ],
+        "type" : "object"
+      },
+      "InlineVote" : {
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "order" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "presentation" : {
+            "$ref" : "#/components/schemas/InlineVotePresentation"
+          },
+          "rate" : {
+            "format" : "int32",
+            "type" : "integer"
+          }
+        },
+        "required" : [ "id", "order", "presentation", "rate" ],
+        "type" : "object"
+      },
+      "InlineVotePresentation" : {
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "longDescription" : {
+            "type" : "string"
+          },
+          "shortDescription" : {
+            "type" : "string"
+          },
+          "speakers" : {
+            "items" : {
+              "$ref" : "#/components/schemas/InlineVoteSpeaker"
+            },
+            "type" : "array"
+          },
+          "title" : {
+            "type" : "string"
+          },
+          "workshop" : {
+            "type" : "boolean"
+          }
+        },
+        "required" : [ "id", "longDescription", "shortDescription", "speakers", "title", "workshop" ],
+        "type" : "object"
+      },
+      "InlineVoteSpeaker" : {
+        "properties" : {
+          "bio" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "photo" : {
+            "type" : "string"
+          }
+        },
+        "required" : [ "bio", "id", "name", "photo" ],
+        "type" : "object"
+      },
+      "InlineWorkshop" : {
+        "properties" : {
+          "description" : {
+            "type" : "string"
+          },
+          "durationInMinutes" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "expectedPrice" : {
+            "format" : "double",
+            "type" : "number"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "isFree" : {
+            "type" : "boolean"
+          },
+          "language" : {
+            "type" : "string"
+          },
+          "level" : {
+            "type" : "string"
+          },
+          "maxGroupSize" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "shortDescription" : {
+            "type" : "string"
+          },
+          "status" : {
+            "type" : "string"
+          },
+          "tags" : {
+            "items" : {
+              "type" : "string"
+            },
+            "type" : "array"
+          },
+          "title" : {
+            "type" : "string"
+          }
+        },
+        "required" : [ "description", "durationInMinutes", "expectedPrice", "id", "isFree", "language", "level", "maxGroupSize", "shortDescription", "status", "tags", "title" ],
+        "type" : "object"
+      },
+      "Like" : {
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "presentation" : {
+            "$ref" : "#/components/schemas/Presentation"
+          },
+          "token" : {
+            "minLength" : 1,
+            "type" : "string"
+          }
+        },
+        "required" : [ "token" ],
+        "type" : "object"
+      },
+      "LikeResponse" : {
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "presentationId" : {
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "MessageInfo" : {
+        "properties" : {
+          "email" : {
+            "type" : "string"
+          },
+          "name" : {
+            "$ref" : "#/components/schemas/MessageInfo",
+            "writeOnly" : true
+          },
+          "ticket" : {
+            "format" : "byte",
+            "type" : "string"
+          },
+          "token" : {
+            "$ref" : "#/components/schemas/MessageInfo",
+            "writeOnly" : true
+          },
+          "variables" : {
+            "additionalProperties" : {
+              "type" : "string"
+            },
+            "type" : "object"
+          }
+        },
+        "type" : "object"
+      },
+      "NewsletterStat" : {
+        "properties" : {
+          "subscribersCount" : {
+            "format" : "int32",
+            "type" : "integer"
+          }
+        },
+        "type" : "object"
+      },
+      "PageContent" : {
+        "properties" : {
+          "content" : {
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "ParticipationData" : {
+        "properties" : {
+          "arrivalDate" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "createdBy" : {
+            "type" : "string"
+          },
+          "createdDate" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          },
+          "firstName" : {
+            "type" : "string"
+          },
+          "fullName" : {
+            "type" : "string"
+          },
+          "gender" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "info" : {
+            "type" : "string"
+          },
+          "lastModifiedBy" : {
+            "type" : "string"
+          },
+          "lastModifiedDate" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "lastName" : {
+            "type" : "string"
+          },
+          "privacyPolicyAccepted" : {
+            "type" : "boolean"
+          },
+          "registeredBy" : {
+            "type" : "string"
+          },
+          "registrationDate" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "size" : {
+            "type" : "string"
+          },
+          "surveySendDate" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "ticketSendDate" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "voucher" : {
+            "$ref" : "#/components/schemas/Voucher"
+          }
+        },
+        "type" : "object"
+      },
+      "PreSelectionRequest" : {
+        "properties" : {
+          "comment" : {
+            "type" : "string"
+          },
+          "status" : {
+            "enum" : [ "NONE", "PRE_APPROVED", "PRE_REJECTED", "IN_RESERVE" ],
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "Presentation" : {
+        "properties" : {
+          "accepted" : {
+            "type" : "boolean"
+          },
+          "description" : {
+            "minLength" : 1,
+            "type" : "string"
+          },
+          "durationInMinutes" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "expectedPrice" : {
+            "format" : "double",
+            "type" : "number"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "isFree" : {
+            "type" : "boolean"
+          },
+          "language" : {
+            "minLength" : 1,
+            "type" : "string"
+          },
+          "level" : {
+            "minLength" : 1,
+            "type" : "string"
+          },
+          "maxGroupSize" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "new" : {
+            "type" : "boolean"
+          },
+          "preSelectionComment" : {
+            "type" : "string"
+          },
+          "preSelectionStatus" : {
+            "enum" : [ "NONE", "PRE_APPROVED", "PRE_REJECTED", "IN_RESERVE" ],
+            "type" : "string"
+          },
+          "ratings" : {
+            "items" : {
+              "$ref" : "#/components/schemas/Rate"
+            },
+            "type" : "array",
+            "uniqueItems" : true
+          },
+          "shortDescription" : {
+            "minLength" : 1,
+            "type" : "string"
+          },
+          "speaker" : {
+            "$ref" : "#/components/schemas/Presentation",
+            "writeOnly" : true
+          },
+          "speakers" : {
+            "items" : {
+              "$ref" : "#/components/schemas/User"
+            },
+            "type" : "array",
+            "uniqueItems" : true
+          },
+          "status" : {
+            "type" : "string"
+          },
+          "tags" : {
+            "items" : {
+              "$ref" : "#/components/schemas/Tag"
+            },
+            "type" : "array",
+            "uniqueItems" : true
+          },
+          "title" : {
+            "minLength" : 1,
+            "type" : "string"
+          },
+          "workshop" : {
+            "type" : "boolean"
+          }
+        },
+        "required" : [ "description", "language", "level", "shortDescription", "speakers", "title" ],
+        "type" : "object"
+      },
+      "PresentationRequest" : {
+        "properties" : {
+          "description" : {
+            "type" : "string"
+          },
+          "language" : {
+            "type" : "string"
+          },
+          "level" : {
+            "type" : "string"
+          },
+          "shortDescription" : {
+            "type" : "string"
+          },
+          "tags" : {
+            "items" : {
+              "type" : "string"
+            },
+            "type" : "array"
+          },
+          "title" : {
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "PresentationStats" : {
+        "properties" : {
+          "negativeVotes" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "positiveVotes" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "presentationId" : {
+            "type" : "string"
+          },
+          "rateOfNegative" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "rateOfPositive" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "title" : {
+            "type" : "string"
+          },
+          "totalVotes" : {
+            "format" : "int64",
+            "type" : "integer"
+          }
+        },
+        "type" : "object"
+      },
+      "PublicSpeaker" : {
+        "properties" : {
+          "bio" : {
+            "type" : "string"
+          },
+          "github" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "photo" : {
+            "type" : "string"
+          },
+          "presentations" : {
+            "items" : {
+              "$ref" : "#/components/schemas/Presentation"
+            },
+            "type" : "array"
+          },
+          "twitter" : {
+            "type" : "string"
+          },
+          "www" : {
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "Rate" : {
+        "properties" : {
+          "comment" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "presentation" : {
+            "$ref" : "#/components/schemas/Presentation"
+          },
+          "reviewerToken" : {
+            "type" : "string"
+          },
+          "value" : {
+            "enum" : [ "AWESOME", "GREAT", "IT_WAS_FINE", "BAD", "TERRIBLE" ],
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "RateRequest" : {
+        "properties" : {
+          "comment" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "reviewerToken" : {
+            "type" : "string"
+          },
+          "value" : {
+            "format" : "int32",
+            "type" : "integer"
+          }
+        },
+        "type" : "object"
+      },
+      "RegistrationError" : {
+        "properties" : {
+          "additionalInfo" : {
+            "type" : "string"
+          },
+          "reason" : {
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "Room" : {
+        "properties" : {
+          "createdBy" : {
+            "type" : "string"
+          },
+          "createdDate" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "day" : {
+            "$ref" : "#/components/schemas/Day"
+          },
+          "displayOrder" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "label" : {
+            "type" : "string"
+          },
+          "lastModifiedBy" : {
+            "type" : "string"
+          },
+          "lastModifiedDate" : {
+            "format" : "date-time",
+            "type" : "string"
+          }
+        },
+        "required" : [ "day", "displayOrder" ],
+        "type" : "object"
+      },
+      "SendMailsRequest" : {
+        "properties" : {
+          "messageInfoList" : {
+            "items" : {
+              "$ref" : "#/components/schemas/MessageInfo"
+            },
+            "type" : "array"
+          },
+          "template" : {
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "Speaker" : {
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "SubmittedStats" : {
+        "properties" : {
+          "presentations" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "total" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "workshops" : {
+            "format" : "int64",
+            "type" : "integer"
+          }
+        },
+        "type" : "object"
+      },
+      "Tag" : {
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "Tweet" : {
+        "properties" : {
+          "avatar" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "text" : {
+            "type" : "string"
+          },
+          "time" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "twitterHandle" : {
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "UpdateAgendaEntryRequest" : {
+        "properties" : {
+          "label" : {
+            "type" : "string"
+          },
+          "presentationId" : {
+            "type" : "string"
+          },
+          "roomId" : {
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "UpdateAgendaEntrySlotRequest" : {
+        "properties" : {
+          "dayId" : {
+            "type" : "string"
+          },
+          "roomId" : {
+            "type" : "string"
+          },
+          "timeSlotIndex" : {
+            "format" : "int32",
+            "type" : "integer"
+          }
+        },
+        "required" : [ "dayId", "timeSlotIndex" ],
+        "type" : "object"
+      },
+      "UpdateDayRequest" : {
+        "properties" : {
+          "date" : {
+            "description" : "Date of the day, e.g. 2026-09-19",
+            "type" : "string"
+          },
+          "displayOrder" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "label" : {
+            "type" : "string"
+          }
+        },
+        "required" : [ "date", "displayOrder", "label" ],
+        "type" : "object"
+      },
+      "UpdateRoomRequest" : {
+        "properties" : {
+          "displayOrder" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "label" : {
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "UpdateTimeSlotRequest" : {
+        "properties" : {
+          "end" : {
+            "description" : "End time, e.g. 10:00",
+            "type" : "string"
+          },
+          "forAllRooms" : {
+            "type" : "boolean"
+          },
+          "start" : {
+            "description" : "Start time, e.g. 09:00",
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "User" : {
+        "properties" : {
+          "admin" : {
+            "type" : "boolean"
+          },
+          "bio" : {
+            "type" : "string"
+          },
+          "createdBy" : {
+            "type" : "string"
+          },
+          "createdDate" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          },
+          "github" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "lastModifiedBy" : {
+            "type" : "string"
+          },
+          "lastModifiedDate" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "origin" : {
+            "type" : "string"
+          },
+          "participant" : {
+            "type" : "boolean"
+          },
+          "participationData" : {
+            "$ref" : "#/components/schemas/ParticipationData"
+          },
+          "photo" : {
+            "type" : "string"
+          },
+          "privacyPolicyAccepted" : {
+            "type" : "boolean"
+          },
+          "socialId" : {
+            "type" : "string"
+          },
+          "speaker" : {
+            "type" : "boolean"
+          },
+          "twitter" : {
+            "type" : "string"
+          },
+          "username" : {
+            "type" : "string"
+          },
+          "volunteer" : {
+            "type" : "boolean"
+          },
+          "www" : {
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "UsersStats" : {
+        "properties" : {
+          "admins" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "total" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "volunteers" : {
+            "format" : "int64",
+            "type" : "integer"
+          }
+        },
+        "type" : "object"
+      },
+      "ViewPresentationRate" : {
+        "properties" : {
+          "avgRating" : {
+            "type" : "number"
+          },
+          "presentationId" : {
+            "type" : "string"
+          },
+          "ratingCount" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "ratingCountAwesome" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "ratingCountBad" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "ratingCountGreat" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "ratingCountItWasFine" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "ratingCountTerrible" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "ratings" : {
+            "items" : {
+              "$ref" : "#/components/schemas/Rate"
+            },
+            "type" : "array"
+          },
+          "speakers" : {
+            "items" : {
+              "$ref" : "#/components/schemas/Speaker"
+            },
+            "type" : "array"
+          },
+          "title" : {
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "VoteRequest" : {
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "rate" : {
+            "format" : "int32",
+            "type" : "integer"
+          }
+        },
+        "type" : "object"
+      },
+      "VoteResult" : {
+        "properties" : {
+          "accepted" : {
+            "type" : "boolean"
+          },
+          "flatSpeakers" : {
+            "type" : "string"
+          },
+          "flatTags" : {
+            "type" : "string"
+          },
+          "negative" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "negativePercent" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "neutral" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "neutralPercent" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "positive" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "positivePercent" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "preSelectionComment" : {
+            "type" : "string"
+          },
+          "preSelectionStatus" : {
+            "enum" : [ "NONE", "PRE_APPROVED", "PRE_REJECTED", "IN_RESERVE" ],
+            "type" : "string"
+          },
+          "presentationId" : {
+            "type" : "string"
+          },
+          "score" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "speakerHasPreSelectedPresentation" : {
+            "type" : "boolean"
+          },
+          "speakers" : {
+            "items" : {
+              "$ref" : "#/components/schemas/Speaker"
+            },
+            "type" : "array"
+          },
+          "title" : {
+            "type" : "string"
+          },
+          "total" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "voterScores" : {
+            "additionalProperties" : {
+              "format" : "int32",
+              "type" : "integer"
+            },
+            "type" : "object"
+          },
+          "workshop" : {
+            "type" : "boolean"
+          }
+        },
+        "required" : [ "accepted", "flatSpeakers", "flatTags", "negative", "negativePercent", "neutral", "neutralPercent", "positive", "positivePercent", "preSelectionComment", "preSelectionStatus", "presentationId", "score", "speakerHasPreSelectedPresentation", "speakers", "title", "total", "voterScores", "workshop" ],
+        "type" : "object"
+      },
+      "Voucher" : {
+        "properties" : {
+          "allegro" : {
+            "$ref" : "#/components/schemas/AllegroContext"
+          },
+          "comment" : {
+            "type" : "string"
+          },
+          "createdBy" : {
+            "type" : "string"
+          },
+          "createdDate" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "emailSent" : {
+            "type" : "boolean"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "lastModifiedBy" : {
+            "type" : "string"
+          },
+          "lastModifiedDate" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "originalBuyer" : {
+            "type" : "string"
+          },
+          "ticketSendDate" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "type" : {
+            "enum" : [ "PARTICIPANT", "SPEAKER", "SPONSOR" ],
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "WorkshopRequest" : {
+        "properties" : {
+          "description" : {
+            "type" : "string"
+          },
+          "durationInMinutes" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "expectedPrice" : {
+            "format" : "double",
+            "type" : "number"
+          },
+          "isFree" : {
+            "type" : "boolean"
+          },
+          "language" : {
+            "type" : "string"
+          },
+          "level" : {
+            "type" : "string"
+          },
+          "maxGroupSize" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "shortDescription" : {
+            "type" : "string"
+          },
+          "tags" : {
+            "items" : {
+              "type" : "string"
+            },
+            "type" : "array"
+          },
+          "title" : {
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      }
+    },
+    "securitySchemes" : {
+      "bearerAuth" : {
+        "bearerFormat" : "JWT",
+        "scheme" : "bearer",
+        "type" : "http"
+      }
+    }
+  },
+  "info" : {
+    "title" : "Jelatyna API",
+    "version" : "v1"
+  },
+  "openapi" : "3.1.0",
+  "paths" : {
+    "/admin-tasks/webpage/dump" : {
+      "post" : {
+        "operationId" : "triggerWebpageDump",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/DumpResponse"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "admin-task-controller" ]
+      }
+    },
+    "/admin-tasks/webpage/last-dump" : {
+      "get" : {
+        "operationId" : "getLastWebpageDump",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/DumpStatus"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "admin-task-controller" ]
+      }
+    },
+    "/agenda/days" : {
+      "get" : {
+        "operationId" : "getAllDays_1",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/InlineDay"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "agenda-controller" ]
+      }
+    },
+    "/agenda/entries" : {
+      "post" : {
+        "operationId" : "saveAgendaEntry",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/AssignAgendaEntryRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/InlineAgendaEntry"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "agenda-controller" ]
+      }
+    },
+    "/agenda/entries/{id}" : {
+      "delete" : {
+        "operationId" : "deleteAgendaEntry",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "agenda-controller" ]
+      },
+      "get" : {
+        "operationId" : "getAgendaEntryById",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/InlineAgendaEntry"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "agenda-controller" ]
+      },
+      "put" : {
+        "operationId" : "updateAgendaEntry",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/UpdateAgendaEntryRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/InlineAgendaEntry"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "agenda-controller" ]
+      }
+    },
+    "/agenda/entries/{id}/slot" : {
+      "put" : {
+        "operationId" : "moveAgendaEntry",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/UpdateAgendaEntrySlotRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/InlineAgendaEntry"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "agenda-controller" ]
+      }
+    },
+    "/agenda/ical" : {
+      "get" : {
+        "operationId" : "exportIcal",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "text/calendar" : {
+                "schema" : {
+                  "format" : "byte",
+                  "type" : "string"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "agenda-controller" ]
+      }
+    },
+    "/agenda/ical/subscribe" : {
+      "get" : {
+        "operationId" : "subscribeIcal",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "text/calendar" : {
+                "schema" : {
+                  "format" : "byte",
+                  "type" : "string"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "agenda-controller" ]
+      }
+    },
+    "/agenda/rooms/{id}" : {
+      "delete" : {
+        "operationId" : "removeRoom",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "agenda-controller" ]
+      },
+      "put" : {
+        "operationId" : "updateRoom",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/UpdateRoomRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/InlineRoom"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "agenda-controller" ]
+      }
+    },
+    "/agenda/{dayId}/entries" : {
+      "get" : {
+        "operationId" : "getAgendaEntriesByDay",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "dayId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/InlineAgendaEntry"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "agenda-controller" ]
+      }
+    },
+    "/agenda/{dayId}/rooms" : {
+      "get" : {
+        "operationId" : "getAllRooms_1",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "dayId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/InlineRoom"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "agenda-controller" ]
+      },
+      "post" : {
+        "operationId" : "createRoom",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "dayId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreateRoomRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/InlineRoom"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "agenda-controller" ]
+      }
+    },
+    "/agenda/{dayId}/time-slots" : {
+      "get" : {
+        "operationId" : "getAllTimeSlots",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "dayId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/InlineTimeSlot"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "agenda-controller" ]
+      },
+      "post" : {
+        "operationId" : "createTimeSlot",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "dayId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreateTimeSlotRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/InlineTimeSlot"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "agenda-controller" ]
+      }
+    },
+    "/agenda/{dayId}/time-slots/{displayOrder}" : {
+      "delete" : {
+        "operationId" : "deleteTimeSlot",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "dayId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "displayOrder",
+          "required" : true,
+          "schema" : {
+            "format" : "int32",
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "agenda-controller" ]
+      },
+      "put" : {
+        "operationId" : "updateTimeSlot",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "dayId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "displayOrder",
+          "required" : true,
+          "schema" : {
+            "format" : "int32",
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/UpdateTimeSlotRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/InlineTimeSlot"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "agenda-controller" ]
+      }
+    },
+    "/allegro/authorize" : {
+      "get" : {
+        "operationId" : "authorize",
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "allegro-import-controller" ]
+      }
+    },
+    "/allegro/callback" : {
+      "get" : {
+        "operationId" : "callback_1",
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "code",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "query",
+          "name" : "state",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "allegro-import-controller" ]
+      }
+    },
+    "/allegro/import" : {
+      "post" : {
+        "operationId" : "doImport",
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "allegro-import-controller" ]
+      }
+    },
+    "/allegro/report/ready-to-send" : {
+      "get" : {
+        "operationId" : "importFromAllegro",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "text/csv" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "allegro-import-controller" ]
+      }
+    },
+    "/allegro/status" : {
+      "get" : {
+        "operationId" : "getStatus",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "additionalProperties" : { },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "allegro-import-controller" ]
+      }
+    },
+    "/api/tweets" : {
+      "get" : {
+        "operationId" : "getTweets",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/Tweet"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "tweeter-controller" ]
+      }
+    },
+    "/current-user" : {
+      "get" : {
+        "operationId" : "getCurrentUser",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/User"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "user-controller" ]
+      }
+    },
+    "/dashboard/arrivals" : {
+      "get" : {
+        "operationId" : "arrivals",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "tags" : [ "dashboard-controller" ]
+      }
+    },
+    "/dashboard/meal" : {
+      "get" : {
+        "operationId" : "getMealStats",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "tags" : [ "dashboard-controller" ]
+      }
+    },
+    "/dashboard/newsletter" : {
+      "get" : {
+        "operationId" : "newsletterStat",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/NewsletterStat"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "tags" : [ "dashboard-controller" ]
+      }
+    },
+    "/dashboard/registration" : {
+      "get" : {
+        "operationId" : "getRegistrationStats",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "tags" : [ "dashboard-controller" ]
+      }
+    },
+    "/dashboard/registrations" : {
+      "get" : {
+        "operationId" : "registrations",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "tags" : [ "dashboard-controller" ]
+      }
+    },
+    "/dashboard/submissions" : {
+      "get" : {
+        "operationId" : "submissionStats",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SubmittedStats"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "tags" : [ "dashboard-controller" ]
+      }
+    },
+    "/dashboard/tshirts" : {
+      "get" : {
+        "operationId" : "getTShirtSizes",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "tags" : [ "dashboard-controller" ]
+      }
+    },
+    "/dashboard/users" : {
+      "get" : {
+        "operationId" : "usersStats",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UsersStats"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "tags" : [ "dashboard-controller" ]
+      }
+    },
+    "/dashboard/votes" : {
+      "get" : {
+        "operationId" : "votes",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "tags" : [ "dashboard-controller" ]
+      }
+    },
+    "/dashboard/vouchers" : {
+      "get" : {
+        "operationId" : "getVoucherStats",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "tags" : [ "dashboard-controller" ]
+      }
+    },
+    "/days" : {
+      "get" : {
+        "operationId" : "getAllDays",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/InlineDay"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "day-controller" ]
+      },
+      "post" : {
+        "operationId" : "saveDay",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Day"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/InlineDay"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "day-controller" ]
+      }
+    },
+    "/days/{id}" : {
+      "delete" : {
+        "operationId" : "deleteDay",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "day-controller" ]
+      },
+      "get" : {
+        "operationId" : "getDayById",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/InlineDay"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "day-controller" ]
+      },
+      "put" : {
+        "operationId" : "updateDay",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/UpdateDayRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/InlineDay"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "day-controller" ]
+      }
+    },
+    "/likes" : {
+      "get" : {
+        "operationId" : "getLikes",
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "token",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/LikeResponse"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "like-controller" ]
+      }
+    },
+    "/likes/summary" : {
+      "get" : {
+        "operationId" : "getLikesSummary",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "additionalProperties" : {
+                    "format" : "int64",
+                    "type" : "integer"
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "like-controller" ]
+      }
+    },
+    "/likes/{id}" : {
+      "delete" : {
+        "operationId" : "delete",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "like-controller" ]
+      }
+    },
+    "/login/twitter" : {
+      "get" : {
+        "operationId" : "redirectToTwitterLogin",
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "redirect_uri",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "query",
+          "name" : "state",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "twitter-login-controller" ]
+      }
+    },
+    "/login/twitter/callback" : {
+      "get" : {
+        "operationId" : "doLoginWithTwitter",
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "oauth_token",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "query",
+          "name" : "oauth_verifier",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "twitter-login-controller" ]
+      }
+    },
+    "/login/{provider}" : {
+      "get" : {
+        "operationId" : "loginInProvider",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "provider",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "query",
+          "name" : "state",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "o-auth-2-login-controller" ]
+      }
+    },
+    "/login/{provider}/callback" : {
+      "get" : {
+        "operationId" : "callback",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "provider",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "query",
+          "name" : "state",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "query",
+          "name" : "code",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "o-auth-2-login-controller" ]
+      }
+    },
+    "/mailing" : {
+      "post" : {
+        "operationId" : "sendMails",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/SendMailsRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "mail-controller" ]
+      }
+    },
+    "/mailing/templates" : {
+      "get" : {
+        "operationId" : "getTemplates",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "items" : {
+                    "type" : "string"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "mail-controller" ]
+      }
+    },
+    "/pages" : {
+      "get" : {
+        "operationId" : "getPages",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "items" : {
+                    "type" : "string"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "page-controller" ]
+      }
+    },
+    "/pages/{id}" : {
+      "delete" : {
+        "operationId" : "deletePage",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "page-controller" ]
+      },
+      "get" : {
+        "operationId" : "getPage",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "page-controller" ]
+      },
+      "post" : {
+        "operationId" : "createPage",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PageContent"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "page-controller" ]
+      },
+      "put" : {
+        "operationId" : "updatePage",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PageContent"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "page-controller" ]
+      }
+    },
+    "/presentations" : {
+      "get" : {
+        "operationId" : "getAllPresentations",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/FullPresentation"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "presentation-controller" ]
+      }
+    },
+    "/presentations/{presentationId}/accept" : {
+      "post" : {
+        "operationId" : "accept",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "presentationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "tags" : [ "admin-presentation-controller" ]
+      }
+    },
+    "/presentations/{presentationId}/cospeakers" : {
+      "get" : {
+        "operationId" : "getCospeakers",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "presentationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/User"
+                  },
+                  "type" : "array",
+                  "uniqueItems" : true
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "presentation-controller" ]
+      }
+    },
+    "/presentations/{presentationId}/cospeakers/{email}" : {
+      "post" : {
+        "operationId" : "addCospeaker",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "presentationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "email",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "presentation-controller" ]
+      }
+    },
+    "/presentations/{presentationId}/cospeakers/{id}" : {
+      "delete" : {
+        "operationId" : "removeCospeaker",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "presentationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "presentation-controller" ]
+      }
+    },
+    "/presentations/{presentationId}/likes" : {
+      "get" : {
+        "operationId" : "countByPresentation",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "presentationId",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/Presentation"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "format" : "int64",
+                  "type" : "integer"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "like-controller" ]
+      },
+      "post" : {
+        "operationId" : "createVote",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "presentationId",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/Presentation"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Like"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "like-controller" ]
+      }
+    },
+    "/presentations/{presentationId}/pre-selection" : {
+      "post" : {
+        "operationId" : "setPreSelection",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "presentationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PreSelectionRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "tags" : [ "admin-presentation-controller" ]
+      }
+    },
+    "/presentations/{presentationId}/ratings" : {
+      "get" : {
+        "operationId" : "rates_1",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "presentationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ViewPresentationRate"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "presentation-controller" ]
+      },
+      "post" : {
+        "operationId" : "addRating",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "presentationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/RateRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "presentation-controller" ]
+      }
+    },
+    "/presentations/{presentationId}/ratings/{ratingId}" : {
+      "put" : {
+        "operationId" : "updateRating",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "presentationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "ratingId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Rate"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "presentation-controller" ]
+      }
+    },
+    "/presentations/{presentationId}/reject" : {
+      "post" : {
+        "operationId" : "reject",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "presentationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "tags" : [ "admin-presentation-controller" ]
+      }
+    },
+    "/published/agenda/{dayId}" : {
+      "get" : {
+        "operationId" : "agenda",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "dayId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "published-controller" ]
+      }
+    },
+    "/published/news" : {
+      "get" : {
+        "operationId" : "news",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "published-controller" ]
+      }
+    },
+    "/published/pages/{page}" : {
+      "get" : {
+        "operationId" : "page",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "page",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "published-controller" ]
+      }
+    },
+    "/published/presentations/accepted" : {
+      "get" : {
+        "operationId" : "acceptedPresentations",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/InlinePresentationWithSpeakers"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "published-controller" ]
+      }
+    },
+    "/published/users/search/admins" : {
+      "get" : {
+        "operationId" : "admins",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "published-controller" ]
+      }
+    },
+    "/published/users/search/speakers" : {
+      "get" : {
+        "operationId" : "speakers",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "published-controller" ]
+      }
+    },
+    "/published/users/{id}/public" : {
+      "get" : {
+        "operationId" : "speaker",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PublicSpeaker"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "published-controller" ]
+      }
+    },
+    "/published/workshops/accepted" : {
+      "get" : {
+        "operationId" : "acceptedWorkshops",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/InlinePresentationWithSpeakers"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "published-controller" ]
+      }
+    },
+    "/ratings" : {
+      "post" : {
+        "operationId" : "rates",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/ViewPresentationRate"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "tags" : [ "admin-presentation-controller" ]
+      }
+    },
+    "/resources/partners/{id}" : {
+      "post" : {
+        "description" : "Upload a Multipart file for the partner's logo",
+        "operationId" : "storePartnerLogo",
+        "parameters" : [ {
+          "description" : "ID of the partner",
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "multipart/form-data" : {
+              "schema" : {
+                "properties" : {
+                  "file" : {
+                    "format" : "binary",
+                    "type" : "string"
+                  }
+                },
+                "type" : "object"
+              }
+            }
+          },
+          "description" : "File to upload"
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        },
+        "summary" : "Store partner logo",
+        "tags" : [ "resource-controller" ]
+      }
+    },
+    "/resources/{userId}" : {
+      "post" : {
+        "description" : "Upload a Multipart file for the speaker's photo",
+        "operationId" : "storeUserProfilePicture",
+        "parameters" : [ {
+          "description" : "ID of the user",
+          "in" : "path",
+          "name" : "userId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "multipart/form-data" : {
+              "schema" : {
+                "properties" : {
+                  "file" : {
+                    "format" : "binary",
+                    "type" : "string"
+                  }
+                },
+                "type" : "object"
+              }
+            }
+          },
+          "description" : "File to upload"
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "Store speaker photo",
+        "tags" : [ "resource-controller" ]
+      }
+    },
+    "/rooms" : {
+      "get" : {
+        "operationId" : "getAllRooms",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "room-controller" ]
+      },
+      "post" : {
+        "operationId" : "saveRoom",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Room"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Room"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "room-controller" ]
+      }
+    },
+    "/rooms/{id}" : {
+      "delete" : {
+        "operationId" : "deleteRoom",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "room-controller" ]
+      },
+      "get" : {
+        "operationId" : "getRoomById",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Room"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "room-controller" ]
+      }
+    },
+    "/tags" : {
+      "get" : {
+        "operationId" : "getAllTags",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/Tag"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "presentation-controller" ]
+      },
+      "post" : {
+        "operationId" : "saveTags",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "tags" : [ "admin-presentation-controller" ]
+      }
+    },
+    "/tokens/refresh-token" : {
+      "post" : {
+        "operationId" : "refreshToken",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "token-controller" ]
+      }
+    },
+    "/users" : {
+      "get" : {
+        "operationId" : "getAllUsers",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/FullUser"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "tags" : [ "user-admin-controller" ]
+      },
+      "post" : {
+        "operationId" : "save_1",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/User"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "user-controller" ]
+      }
+    },
+    "/users/manual" : {
+      "post" : {
+        "operationId" : "createManual",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/User"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/FullUser"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "tags" : [ "user-admin-controller" ]
+      }
+    },
+    "/users/search/admins" : {
+      "get" : {
+        "operationId" : "getAdmins",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "user-controller" ]
+      }
+    },
+    "/users/search/speakers" : {
+      "get" : {
+        "operationId" : "getSpeakers",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/PublicSpeaker"
+                  },
+                  "type" : "array",
+                  "uniqueItems" : true
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "user-controller" ]
+      }
+    },
+    "/users/search/volunteers" : {
+      "get" : {
+        "operationId" : "getVolunteers",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "user-controller" ]
+      }
+    },
+    "/users/{id}" : {
+      "get" : {
+        "operationId" : "getById",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/User"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "user-controller" ]
+      }
+    },
+    "/users/{id}/presentations" : {
+      "get" : {
+        "operationId" : "getUserPresentations",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/InlinePresentation"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "user-controller" ]
+      }
+    },
+    "/users/{id}/presentations/{presentationId}" : {
+      "get" : {
+        "operationId" : "getPresentation",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "presentationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/InlinePresentation"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "user-controller" ]
+      }
+    },
+    "/users/{id}/public" : {
+      "get" : {
+        "operationId" : "getPublicById",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "user-controller" ]
+      }
+    },
+    "/users/{id}/workshops" : {
+      "get" : {
+        "operationId" : "getUserWorkshops",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/InlineWorkshop"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "user-controller" ]
+      }
+    },
+    "/users/{id}/workshops/{workshopId}" : {
+      "get" : {
+        "operationId" : "getWorkshop",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "workshopId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/InlineWorkshop"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "user-controller" ]
+      }
+    },
+    "/users/{userId}/admin/{isAdmin}" : {
+      "post" : {
+        "operationId" : "markAsAdmin",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "userId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "isAdmin",
+          "required" : true,
+          "schema" : {
+            "type" : "boolean"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "tags" : [ "user-admin-controller" ]
+      }
+    },
+    "/users/{userId}/participationData" : {
+      "post" : {
+        "operationId" : "assignParticipationData",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "userId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ParticipationData"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "user-controller" ]
+      }
+    },
+    "/users/{userId}/presentations" : {
+      "post" : {
+        "operationId" : "addPresentationToUser",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "userId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PresentationRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/InlinePresentation"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "user-controller" ]
+      }
+    },
+    "/users/{userId}/presentations/{presentationId}" : {
+      "delete" : {
+        "operationId" : "deletePresentation",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "userId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "presentationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "user-controller" ]
+      },
+      "post" : {
+        "operationId" : "updatePresentation",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "userId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "presentationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PresentationRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/InlinePresentation"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "user-controller" ]
+      }
+    },
+    "/users/{userId}/volunteer/{isVolunteer}" : {
+      "post" : {
+        "operationId" : "markAsVolunteer",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "userId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "isVolunteer",
+          "required" : true,
+          "schema" : {
+            "type" : "boolean"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "tags" : [ "user-admin-controller" ]
+      }
+    },
+    "/users/{userId}/workshops" : {
+      "post" : {
+        "operationId" : "addWorkshopToUser",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "userId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/WorkshopRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/InlineWorkshop"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "user-controller" ]
+      }
+    },
+    "/users/{userId}/workshops/{workshopId}" : {
+      "delete" : {
+        "operationId" : "deleteWorkshop",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "userId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "workshopId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "user-controller" ]
+      },
+      "post" : {
+        "operationId" : "updateWorkshop",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "userId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "workshopId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/WorkshopRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/InlineWorkshop"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "user-controller" ]
+      }
+    },
+    "/votes" : {
+      "post" : {
+        "operationId" : "save",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/VoteRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/InlineVote"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "vote-controller" ]
+      }
+    },
+    "/votes/results" : {
+      "get" : {
+        "operationId" : "results",
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "tokens",
+          "required" : false,
+          "schema" : {
+            "items" : {
+              "type" : "string"
+            },
+            "type" : "array"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/VoteResult"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "vote-controller" ]
+      }
+    },
+    "/votes/start/{token}" : {
+      "post" : {
+        "operationId" : "start",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "token",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/InlineVote"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "vote-controller" ]
+      }
+    },
+    "/votes/statistics" : {
+      "get" : {
+        "operationId" : "statistics",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/PresentationStats"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "vote-controller" ]
+      }
+    },
+    "/vouchers" : {
+      "get" : {
+        "operationId" : "findAll",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/Voucher"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "voucher-controller" ]
+      },
+      "post" : {
+        "operationId" : "createVoucher",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/GenerateVouchersRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/Voucher"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "voucher-controller" ]
+      }
+    },
+    "/vouchers/send" : {
+      "post" : {
+        "operationId" : "sendVouchers",
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "voucher-controller" ]
+      }
+    },
+    "/vouchers/{id}/check" : {
+      "get" : {
+        "operationId" : "canUseVoucher",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/RegistrationError"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "voucher-controller" ]
+      }
+    },
+    "/vouchers/{id}/re-send" : {
+      "post" : {
+        "operationId" : "resendVoucher",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "voucher-controller" ]
+      }
+    }
+  },
+  "servers" : [ {
+    "description" : "Generated server url",
+    "url" : "http://localhost"
+  } ]
+}

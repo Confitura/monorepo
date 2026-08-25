@@ -1,12 +1,12 @@
 <script setup lang="ts">
 
-import {resourcesApi, tokenAPi, usersApi} from "@/utils/api.ts";
+import {storeUserProfilePicture, refreshToken, save1, getById} from "@/utils/api.ts";
 import {ref, onMounted, computed} from 'vue';
 import {storeToRefs} from 'pinia';
 import {useAuthStore} from '@/stores/auth';
 import { useRoute } from 'vue-router';
 
-let store = useAuthStore();
+const store = useAuthStore();
 const {user} = storeToRefs(store)
 const route = useRoute()
 
@@ -53,29 +53,24 @@ const form = ref<UserForm>({
 
 function uploadProfilePhoto() {
   if (profilePhoto.value && effectiveUserId.value) {
-      const formData = new FormData();
-      formData.append('file', profilePhoto.value);
-      const storeRequest = {
-        data: formData,
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      };
-      return resourcesApi.storeUserProfilePicture(effectiveUserId.value, storeRequest);
+      return storeUserProfilePicture({
+        path: { userId: effectiveUserId.value },
+        body: { file: profilePhoto.value },
+      });
   }
 }
 
 const onSubmit = async () => {
-  let valid = await xForm.value.validate()
+  const valid = await xForm.value.validate()
 
   if (valid.valid) {
     // ensure id is set to the effective user id before save
     if (!form.value.id && effectiveUserId.value) {
       form.value.id = effectiveUserId.value
     }
-    usersApi.save1(form.value)
-      .then(() => tokenAPi.refreshToken())
-      .then((res) => store.login(res.data))
+    save1({ body: form.value })
+      .then(() => refreshToken())
+      .then((res) => store.login(res.data!))
       .then(() => uploadProfilePhoto())
       .catch((error) => {
         if(error.status == 413){
@@ -90,8 +85,8 @@ const onSubmit = async () => {
 
 const fetchUserData = async (userId: string) => {
   try {
-    const response = await usersApi.getById(userId);
-    form.value = { ...response.data, name: response.data.name ?? '', email: response.data.email ?? '', privacyPolicyAccepted: response.data.privacyPolicyAccepted ?? false };
+    const response = await getById({ path: { id: userId } });
+    form.value = { ...response.data, name: response.data?.name ?? '', email: response.data?.email ?? '', privacyPolicyAccepted: response.data?.privacyPolicyAccepted ?? false };
   } catch (error) {
     console.error('Failed to fetch user data:', error);
   }
@@ -107,14 +102,14 @@ onMounted(() => {
 </script>
 
 <template>
-  <v-form @submit.prevent="onSubmit" ref="xForm">
+  <v-form ref="xForm" @submit.prevent="onSubmit">
     <v-container>
       <v-text-field
         v-model="form.name"
         label="* Name"
         required
         :rules="validationRules.name"
-      ></v-text-field>
+      />
 
       <v-text-field
         v-model="form.email"
@@ -122,37 +117,37 @@ onMounted(() => {
         type="email"
         :rules="validationRules.email"
         required
-      ></v-text-field>
+      />
 
       <v-textarea
         v-model="form.bio"
         label="Bio"
         rows="3"
-      ></v-textarea>
+      />
 
       <v-text-field
         v-model="form.username"
         label="Username"
-      ></v-text-field>
+      />
 
       <v-text-field
         v-model="form.twitter"
         label="Twitter"
         prefix="@"
-      ></v-text-field>
+      />
 
       <v-text-field
         v-model="form.github"
         label="GitHub"
         prefix="@"
-      ></v-text-field>
+      />
 
       <v-text-field
         v-model="form.www"
         label="Website"
         type="url"
         prefix="https://"
-      ></v-text-field>
+      />
 
       <v-file-input
         v-model="profilePhoto"
@@ -161,12 +156,13 @@ onMounted(() => {
         prepend-icon="mdi-camera"
         show-size
         truncate-length="15"
-      ></v-file-input>
+      />
 
-      <v-checkbox v-model="form.privacyPolicyAccepted"
+      <v-checkbox
+v-model="form.privacyPolicyAccepted"
                   :rules="validationRules.privacy"
                   required>
-        <template v-slot:label>
+        <template #label>
           <div>
             * I accept the <a href="/privacy-policy"> Privacy policy</a>
           </div>

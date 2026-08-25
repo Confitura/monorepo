@@ -2,8 +2,8 @@
 import {onMounted, ref} from 'vue';
 import AgendaEditor from "@/components/admin/agenda-editor.vue";
 import DialogConfirm from '@/components/DialogConfirm.vue';
-import {daysApi} from "@/utils/api.ts";
-import type {InlineDay} from "@/utils/api-axios-client";
+import {getAllDays, updateDay, saveDay as apiSaveDay, deleteDay as apiDeleteDay} from "@/utils/api.ts";
+import type {InlineDay} from "@/utils/api";
 
 definePage({
   meta: {
@@ -15,7 +15,7 @@ definePage({
 
 // State for conference days
 const days: Ref<InlineDay[]> = ref([]);
-const loading: Ref<Boolean> = ref(true);
+const loading: Ref<boolean> = ref(true);
 const error: Ref<string | null> = ref(null);
 const tab: Ref<string | null> = ref(null);
 
@@ -30,8 +30,8 @@ const requiredRule = (value: string) => !!value || 'This field is required';
 // Load conference days from API
 async function loadDays() {
   try {
-    const response = await daysApi.getAllDays();
-    days.value = response.data;
+    const response = await getAllDays();
+    days.value = response.data ?? [];
     error.value = null;
   } catch (err) {
     console.error('Error loading conference days:', err);
@@ -75,13 +75,16 @@ async function saveDay() {
   const form = editedDay.value;
   try {
     if (editMode.value) {
-      await daysApi.updateDay(form.id, {
-        label: form.label,
-        date: form.date,
-        displayOrder: form.displayOrder,
+      await updateDay({
+        path: { id: form.id },
+        body: {
+          label: form.label,
+          date: form.date,
+          displayOrder: form.displayOrder,
+        },
       });
     } else {
-      await daysApi.saveDay(form);
+      await apiSaveDay({ body: form });
     }
     dayDialog.value = false;
     await loadDays();
@@ -98,7 +101,7 @@ function deleteDay(day: InlineDay) {
       .then(async (confirmed: boolean) => {
         if (!confirmed) return;
         try {
-          await daysApi.deleteDay(day.id);
+          await apiDeleteDay({ path: { id: day.id } });
           tab.value = null;
           await loadDays();
         } catch (err) {
@@ -137,13 +140,15 @@ function deleteDay(day: InlineDay) {
           <v-card-title class="d-flex align-center">
             <span>{{ day.label }} - {{ day.date }}</span>
             <v-spacer/>
-            <v-btn icon="mdi-pencil" size="small" variant="text"
-                   @click="editDay(day)"></v-btn>
-            <v-btn icon="mdi-delete" size="small" variant="text" color="error"
-                   @click="deleteDay(day)"></v-btn>
+            <v-btn
+icon="mdi-pencil" size="small" variant="text"
+                   @click="editDay(day)"/>
+            <v-btn
+icon="mdi-delete" size="small" variant="text" color="error"
+                   @click="deleteDay(day)"/>
           </v-card-title>
           <v-card-text v-if="day.id">
-            <agenda-editor :day-id="day.id"></agenda-editor>
+            <agenda-editor :day-id="day.id"/>
           </v-card-text>
         </v-card>
       </v-window-item>
@@ -165,14 +170,14 @@ function deleteDay(day: InlineDay) {
                     label="Identifier (used in the schedule URL, e.g. day-1)"
                     :disabled="editMode"
                     :rules="[requiredRule]"
-                ></v-text-field>
+                />
               </v-col>
               <v-col cols="12">
                 <v-text-field
                     v-model="editedDay.label"
                     label="Label"
                     :rules="[requiredRule]"
-                ></v-text-field>
+                />
               </v-col>
               <v-col cols="12" sm="6">
                 <v-text-field
@@ -180,21 +185,21 @@ function deleteDay(day: InlineDay) {
                     label="Date"
                     type="date"
                     :rules="[requiredRule]"
-                ></v-text-field>
+                />
               </v-col>
               <v-col cols="12" sm="6">
                 <v-text-field
                     v-model.number="editedDay.displayOrder"
                     label="Display Order"
                     type="number"
-                ></v-text-field>
+                />
               </v-col>
             </v-row>
           </v-form>
         </v-card-text>
 
         <v-card-actions>
-          <v-spacer></v-spacer>
+          <v-spacer/>
           <v-btn color="blue-darken-1" variant="text" @click="dayDialog = false">Cancel</v-btn>
           <v-btn color="blue-darken-1" variant="text" :disabled="!dayFormValid" @click="saveDay">
             Save

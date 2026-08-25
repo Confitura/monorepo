@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import DialogConfirm from '@/components/DialogConfirm.vue'
 import type {DataTableHeaders} from '@/plugins/vuetify'
-import {pagesApi} from "@/utils/api.ts";
+import {getPages, getPage, updatePage as apiUpdatePage, createPage as apiCreatePage, deletePage as apiDeletePage} from "@/utils/api.ts";
 import {MdEditor} from 'md-editor-v3'
 import 'md-editor-v3/lib/style.css'
 
@@ -40,22 +40,22 @@ const editValid = computed(() => !!currentPage.value.content.trim())
 const createValid = computed(() => !!newPage.value.id.trim() && !!newPage.value.content.trim())
 
 function reloadPages() {
-  pagesApi.getPages()
+  getPages()
       .then(res => res.data)
       .then(data => {
         // Transform array of strings to array of objects with id property
-        pages.value = data.map(id => ({ id }))
+        pages.value = (data ?? []).map(id => ({ id }))
       })
       .catch(e => console.error(e))
 }
 
 function showEditDialog(item: {id: string}) {
-  pagesApi.getPage(item.id)
+  getPage({ path: { id: item.id } })
       .then(res => res.data)
       .then(content => {
         currentPage.value = {
           id: item.id,
-          content: content
+          content: content ?? ''
         }
         editDialog.value = true
       })
@@ -86,7 +86,7 @@ function showDeleteDialog(item: {id: string}) {
 function updatePage() {
   if (!editValid.value) return
 
-  pagesApi.updatePage(currentPage.value.id, {content: currentPage.value.content})
+  apiUpdatePage({ path: { id: currentPage.value.id }, body: {content: currentPage.value.content} })
       .then(() => {
         Notify.success(`Page ${currentPage.value.id} updated`)
         editDialog.value = false
@@ -101,7 +101,7 @@ function updatePage() {
 function createPage() {
   if (!createValid.value) return
 
-  pagesApi.createPage(newPage.value.id, {content: newPage.value.content})
+  apiCreatePage({ path: { id: newPage.value.id }, body: {content: newPage.value.content} })
       .then(() => {
         Notify.success(`Page ${newPage.value.id} created`)
         createDialog.value = false
@@ -115,7 +115,7 @@ function createPage() {
 
 function deletePage(pageId: string) {
 
-  pagesApi.deletePage(pageId)
+  apiDeletePage({ path: { id: pageId } })
       .then(() => {
         Notify.success(`Page ${pageId} deleted`)
         reloadPages()
@@ -229,9 +229,9 @@ onMounted(() => {
           />
         </v-card-text>
         <v-card-actions>
-          <v-spacer></v-spacer>
+          <v-spacer/>
           <v-btn color="blue-darken-1" variant="text" @click="editDialog = false">Cancel</v-btn>
-          <v-btn color="blue-darken-1" variant="text" @click="updatePage" :disabled="!editValid">Save</v-btn>
+          <v-btn color="blue-darken-1" variant="text" :disabled="!editValid" @click="updatePage">Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -247,7 +247,7 @@ onMounted(() => {
               outlined
               required
               :rules="[requiredRule]"
-          ></v-text-field>
+          />
 
           <MdEditor
               v-model="newPage.content"
@@ -257,9 +257,9 @@ onMounted(() => {
           />
         </v-card-text>
         <v-card-actions>
-          <v-spacer></v-spacer>
+          <v-spacer/>
           <v-btn color="blue-darken-1" variant="text" @click="createDialog = false">Cancel</v-btn>
-          <v-btn color="blue-darken-1" variant="text" @click="createPage" :disabled="!createValid">Create</v-btn>
+          <v-btn color="blue-darken-1" variant="text" :disabled="!createValid" @click="createPage">Create</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
