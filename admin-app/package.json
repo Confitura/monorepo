@@ -45,7 +45,7 @@
     "jsdom": "^30.0.1",
     "prettier": "^3.9.6",
     "rollup-plugin-regexp": "^5.0.1",
-    "sass-embedded": "^1.102.0",
+    "sass-embedded": "^1.103.1",
     "typescript": "^6.0.3",
     "unplugin-auto-import": "^21.1.0",
     "unplugin-vue-components": "^32.1.0",
