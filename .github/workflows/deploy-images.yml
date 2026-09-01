@@ -84,7 +84,7 @@ jobs:
             webpage
       - name: Trigger Coolify deployment
         run: |
-          curl -fsS -X GET \
+          curl -fsS -X POST \
             -H "Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}" \
             "https://admin.confitura.pl/api/v1/deploy?uuid=jjbrvlzsq0ck1oqx46b0i0v6&force=true"
 
@@ -120,7 +120,7 @@ jobs:
             admin-app
       - name: Trigger Coolify deployment
         run: |
-          curl -fsS -X GET \
+          curl -fsS -X POST \
             -H "Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}" \
             "https://admin.confitura.pl/api/v1/deploy?uuid=a4z9gvkuf4vk784dxd39nj2f&force=true"
 
@@ -165,7 +165,7 @@ jobs:
           docker push $IMAGE:${{ github.sha }}
       - name: Trigger Coolify deployment
         run: |
-          curl -fsS -X GET \
+          curl -fsS -X POST \
             -H "Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}" \
             "https://admin.confitura.pl/api/v1/deploy?uuid=wqwwmtfjn4xuhsgj4uzwfd4x&force=true"
       - name: Save Paketo builder
