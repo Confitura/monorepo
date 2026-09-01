@@ -11,3 +11,6 @@ confitura-vue
 confitura-page
 
 **/package-lock.json
+
+# AI agent tooling working dir
+.ai/
