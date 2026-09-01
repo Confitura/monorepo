@@ -57,8 +57,9 @@ public class FakeOAuth2LoginController {
         }
 
         String token = URLEncoder.encode(tokenService.asToken(user), StandardCharsets.UTF_8);
+        String encodedState = URLEncoder.encode(state, StandardCharsets.UTF_8);
         String uri = redirectUri +
-                "?state=" + state +
+                "?state=" + encodedState +
                 "#access_token=" + token;
         return ResponseEntity
                 .status(PERMANENT_REDIRECT)
