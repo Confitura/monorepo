@@ -12,7 +12,18 @@
 
     <section v-else class="chat-panel" aria-label="Conference assistant">
       <header class="chat-header">
-        <span>Conference assistant</span>
+        <div class="chat-header-main">
+          <span class="chat-title">Conference assistant</span>
+          <a
+            class="chat-powered"
+            href="https://datalinks.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span>powered by</span>
+            <img :src="datalinksLogo" alt="DataLinks" class="chat-powered-logo" />
+          </a>
+        </div>
         <button type="button" class="chat-close" aria-label="Close" @click="open = false">×</button>
       </header>
 
@@ -51,6 +62,7 @@
 <script setup lang="ts">
 import { ref, nextTick } from 'vue'
 import { marked } from 'marked'
+import datalinksLogo from '~/assets/partners/2025/datalinks.svg'
 
 interface Message {
   role: 'user' | 'assistant'
@@ -226,7 +238,36 @@ function handleEvent(raw: string, assistant: Message) {
   padding: 0.75rem 1rem;
   background: #d81b60;
   color: #fff;
+}
+
+.chat-header-main {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.chat-title {
   font-weight: 600;
+}
+
+.chat-powered {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+}
+
+.chat-powered-logo {
+  height: 13px;
+  width: auto;
+  background: #fff;
+  border-radius: 3px;
+  padding: 2px 4px;
 }
 
 .chat-close {

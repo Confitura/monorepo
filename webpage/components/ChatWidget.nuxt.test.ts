@@ -25,6 +25,11 @@ describe('ChatWidget', () => {
     expect(wrapper.find('.chat-panel').exists()).toBe(false)
     await wrapper.find('.chat-launcher').trigger('click')
     expect(wrapper.find('.chat-panel').exists()).toBe(true)
+    // "powered by DataLinks" logo in the header
+    const powered = wrapper.find('.chat-powered')
+    expect(powered.exists()).toBe(true)
+    expect(powered.text()).toContain('powered by')
+    expect(powered.find('img').attributes('alt')).toBe('DataLinks')
   })
 
   it('shows the question and the streamed answer', async () => {
