@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 public class ChatException extends RuntimeException {
 
     public enum Reason {
+        UNAUTHORIZED(HttpStatus.UNAUTHORIZED),
         DISABLED(HttpStatus.SERVICE_UNAVAILABLE),
         INVALID(HttpStatus.BAD_REQUEST),
         TOO_LONG(HttpStatus.PAYLOAD_TOO_LARGE),

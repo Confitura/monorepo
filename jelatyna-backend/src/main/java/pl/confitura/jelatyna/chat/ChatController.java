@@ -33,8 +33,9 @@ public class ChatController {
 
     @PostMapping(value = "/chat/ask", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public SseEmitter ask(@RequestBody AskRequest request, HttpServletRequest httpRequest) {
-        // Pre-flight in the request thread so failures map to an HTTP status,
+        // Auth + pre-flight in the request thread so failures map to an HTTP status,
         // before any streaming begins and without calling Datalinks.
+        chatService.authorize(httpRequest.getHeader("X-Chat-Secret"));
         chatService.preflight(request, clientKey(httpRequest));
 
         SseEmitter emitter = new SseEmitter(TIMEOUT_MS);

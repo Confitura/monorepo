@@ -150,6 +150,36 @@ class ChatServiceTest {
     }
 
     @Test
+    void authorizeIsNoOpWhenNoSecretConfigured() {
+        ChatService service = service(enabledProps(), new FakeDatalinks());
+        service.authorize(null);
+        service.authorize("anything");
+    }
+
+    @Test
+    void authorizeRejectsMissingOrWrongSecretWhenConfigured() {
+        ChatConfigurationProperties props = enabledProps();
+        props.setSecret("topsecret");
+        ChatService service = service(props, new FakeDatalinks());
+        assertThatThrownBy(() -> service.authorize(null))
+                .isInstanceOf(ChatException.class)
+                .extracting(e -> ((ChatException) e).reason())
+                .isEqualTo(ChatException.Reason.UNAUTHORIZED);
+        assertThatThrownBy(() -> service.authorize("wrong"))
+                .isInstanceOf(ChatException.class)
+                .extracting(e -> ((ChatException) e).reason())
+                .isEqualTo(ChatException.Reason.UNAUTHORIZED);
+    }
+
+    @Test
+    void authorizeAcceptsMatchingSecret() {
+        ChatConfigurationProperties props = enabledProps();
+        props.setSecret("topsecret");
+        ChatService service = service(props, new FakeDatalinks());
+        service.authorize("topsecret"); // does not throw
+    }
+
+    @Test
     void passesConversationIdThroughForFollowUps() throws Exception {
         FakeDatalinks client = new FakeDatalinks();
         ChatService service = service(enabledProps(), client);

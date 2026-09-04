@@ -84,9 +84,16 @@ async function send() {
   await scrollDown()
 
   try {
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+      Accept: 'text/event-stream',
+    }
+    const secret = config.public.chatSecret as string
+    if (secret) headers['X-Chat-Secret'] = secret
+
     const res = await fetch(`${apiBase}/chat/ask`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', Accept: 'text/event-stream' },
+      headers,
       body: JSON.stringify({
         question: text,
         conversationId: conversationId.value ?? undefined,
@@ -99,7 +106,9 @@ async function send() {
           ? 'Too many questions — please wait a moment.'
           : res.status === 503
             ? 'The assistant is unavailable right now.'
-            : 'Something went wrong. Please try again.'
+            : res.status === 401
+              ? 'The assistant is not available.'
+              : 'Something went wrong. Please try again.'
       messages.value.pop()
       return
     }

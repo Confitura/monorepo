@@ -8,6 +8,8 @@ import pl.confitura.jelatyna.chat.ChatTypes.SseEvent;
 import tools.jackson.databind.ObjectMapper;
 import tools.jackson.databind.node.ObjectNode;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.util.Optional;
 
 /**
@@ -40,6 +42,22 @@ public class ChatService {
         this.monthlyGate = monthlyGate;
         this.answerCache = answerCache;
         this.objectMapper = objectMapper;
+    }
+
+    /**
+     * Rejects the request when a shared secret is configured and the supplied header
+     * does not match it (constant-time compare). No-op when no secret is configured.
+     */
+    public void authorize(String providedSecret) {
+        String secret = properties.getSecret();
+        if (secret == null || secret.isBlank()) {
+            return;
+        }
+        byte[] expected = secret.getBytes(StandardCharsets.UTF_8);
+        byte[] actual = (providedSecret == null ? "" : providedSecret).getBytes(StandardCharsets.UTF_8);
+        if (!MessageDigest.isEqual(expected, actual)) {
+            throw new ChatException(ChatException.Reason.UNAUTHORIZED, "Invalid or missing secret");
+        }
     }
 
     /** Synchronous checks that must happen before streaming starts. Throws {@link ChatException}. */

@@ -15,7 +15,10 @@ export default defineNuxtConfig({
             googleMapsApiKey:  "",
             // Chat assistant: toggle with NUXT_PUBLIC_CHAT_ENABLED, backend proxy base with NUXT_PUBLIC_CHAT_API_BASE
             chatEnabled: false,
-            chatApiBase: "https://api.confitura.pl/api"
+            chatApiBase: "https://api.confitura.pl/api",
+            // Optional shared secret sent as X-Chat-Secret. WARNING: this ships to the
+            // browser — only set it for private testing, never on a public deploy.
+            chatSecret: ""
         }
     },
     app: {
