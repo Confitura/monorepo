@@ -15,6 +15,17 @@
         },
         "type" : "object"
       },
+      "AskRequest" : {
+        "properties" : {
+          "conversationId" : {
+            "type" : "string"
+          },
+          "question" : {
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
       "AssignAgendaEntryRequest" : {
         "properties" : {
           "dayId" : {
@@ -981,6 +992,15 @@
           },
           "name" : {
             "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "SseEmitter" : {
+        "properties" : {
+          "timeout" : {
+            "format" : "int64",
+            "type" : "integer"
           }
         },
         "type" : "object"
@@ -2059,6 +2079,34 @@
           }
         },
         "tags" : [ "tweeter-controller" ]
+      }
+    },
+    "/chat/ask" : {
+      "post" : {
+        "operationId" : "ask",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/AskRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "text/event-stream" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/SseEmitter"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "chat-controller" ]
       }
     },
     "/current-user" : {

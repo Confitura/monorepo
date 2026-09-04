@@ -12,7 +12,10 @@ export default defineNuxtConfig({
             archiveServer: "https://api.confitura.pl/api/resources/edition-2026/",
             fileServer: "https://api.confitura.pl",
             appUrl: "https://app.confitura.pl",
-            googleMapsApiKey:  ""
+            googleMapsApiKey:  "",
+            // Chat assistant: toggle with NUXT_PUBLIC_CHAT_ENABLED, backend proxy base with NUXT_PUBLIC_CHAT_API_BASE
+            chatEnabled: false,
+            chatApiBase: "https://api.confitura.pl/api"
         }
     },
     app: {
