@@ -85,5 +85,21 @@ function getPartners(): Partner[] {
         www: "https://www.xtb.com/",
         type: "gold",
         orientation: "horizontal"
+    },{
+        id: "dpd",
+        name: "DPD",
+        description: descFor("dpd"),
+        logo: "/assets/partners/2026/dpd.svg",
+        www: "https://dpdgroupitsolutions.pl/",
+        type: "bronze",
+        orientation: "box"
+    },{
+        id: "cantor",
+        name: "CANTOR",
+        description: descFor("cantor"),
+        logo: "/assets/partners/2026/cantor.png",
+        www: "https://www.cantor.com/",
+        type: "bronze",
+        orientation: "vertical"
     }];
 }
