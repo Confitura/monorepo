@@ -1,0 +1,25 @@
+{
+  "name": "datalinks-ingest",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Manual script that ingests Confitura conference resource data into Datalinks (no speaker PII).",
+  "scripts": {
+    "ingest": "tsx src/ingest.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["esbuild"]
+  }
+}

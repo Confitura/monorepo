@@ -2,6 +2,7 @@
   <TheHeader />
   <SocialLinks class="standard" />
   <NuxtPage />
+  <ChatWidget v-if="config.public.chatEnabled" />
 </template>
 
 <script setup lang="ts">
@@ -9,6 +10,7 @@ import 'modern-normalize'
 import { useThemeStore } from '~/stores/themeStore'
 
 const themeStore = useThemeStore()
+const config = useRuntimeConfig()
 
 onMounted(() => {
   resizedCallback()

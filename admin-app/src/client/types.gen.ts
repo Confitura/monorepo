@@ -10,6 +10,11 @@ export type AllegroContext = {
     buyerLogin?: string;
 };
 
+export type AskRequest = {
+    conversationId?: string;
+    question?: string;
+};
+
 export type AssignAgendaEntryRequest = {
     dayId: string;
     label: string;
@@ -347,6 +352,10 @@ export type SendMailsRequest = {
 export type Speaker = {
     id?: string;
     name?: string;
+};
+
+export type SseEmitter = {
+    timeout?: number;
 };
 
 export type SubmittedStats = {
@@ -1005,6 +1014,22 @@ export type GetTweetsResponses = {
 };
 
 export type GetTweetsResponse = GetTweetsResponses[keyof GetTweetsResponses];
+
+export type AskData = {
+    body: AskRequest;
+    path?: never;
+    query?: never;
+    url: '/chat/ask';
+};
+
+export type AskResponses = {
+    /**
+     * OK
+     */
+    200: SseEmitter;
+};
+
+export type AskResponse = AskResponses[keyof AskResponses];
 
 export type GetCurrentUserData = {
     body?: never;
