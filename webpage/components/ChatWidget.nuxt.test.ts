@@ -46,6 +46,26 @@ describe('ChatWidget', () => {
     expect(text).toContain('Artur Laskowski speaks about Kafka')
   })
 
+  it('renders the assistant answer as markdown', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async () =>
+        sseResponse('event: answer\ndata: {"response":"**Ścieżka kariery** for deweloperów"}\n\n'),
+      ),
+    )
+
+    const wrapper = await mountSuspended(ChatWidget)
+    await wrapper.find('.chat-launcher').trigger('click')
+    await wrapper.find('input').setValue('kariera?')
+    await wrapper.find('form').trigger('submit')
+    await flush()
+
+    const bubble = wrapper.find('.chat-bubble.markdown')
+    // bold rendered to <strong>, and Polish characters preserved
+    expect(bubble.html()).toContain('<strong>Ścieżka kariery</strong>')
+    expect(bubble.text()).toContain('deweloperów')
+  })
+
   it('surfaces a friendly message when rate limited', async () => {
     vi.stubGlobal('fetch', vi.fn(async () => sseResponse('', 429)))
 

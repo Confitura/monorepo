@@ -12,6 +12,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 import pl.confitura.jelatyna.chat.ChatTypes.AskRequest;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
@@ -22,6 +23,9 @@ import java.util.concurrent.ExecutorService;
 public class ChatController {
 
     private static final long TIMEOUT_MS = Duration.ofMinutes(2).toMillis();
+    // SSE data must be written as UTF-8; the default String converter charset (ISO-8859-1)
+    // mangles non-ASCII (e.g. Polish characters) since browsers decode SSE as UTF-8.
+    private static final MediaType UTF8_TEXT = new MediaType(MediaType.TEXT_PLAIN, StandardCharsets.UTF_8);
 
     private final ChatService chatService;
     private final ExecutorService chatExecutor;
@@ -42,12 +46,12 @@ public class ChatController {
         chatExecutor.execute(() -> {
             try {
                 chatService.stream(request, event ->
-                        emitter.send(SseEmitter.event().name(event.event()).data(event.data())));
+                        emitter.send(SseEmitter.event().name(event.event()).data(event.data(), UTF8_TEXT)));
                 emitter.complete();
             } catch (Exception e) {
                 log.warn("Chat stream failed: {}", e.getMessage());
                 try {
-                    emitter.send(SseEmitter.event().name("error").data("{\"message\":\"chat failed\"}"));
+                    emitter.send(SseEmitter.event().name("error").data("{\"message\":\"chat failed\"}", UTF8_TEXT));
                 } catch (IOException ignored) {
                     // client already gone
                 }

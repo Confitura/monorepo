@@ -26,7 +26,9 @@
           class="chat-msg"
           :class="m.role"
         >
-          <span class="chat-bubble">{{ m.text || (m.role === 'assistant' && pending ? '…' : '') }}</span>
+          <!-- eslint-disable-next-line vue/no-v-html -- source is HTML-escaped before marked -->
+          <span v-if="m.role === 'assistant'" class="chat-bubble markdown" v-html="renderAssistant(m)"></span>
+          <span v-else class="chat-bubble">{{ m.text }}</span>
         </div>
         <p v-if="error" class="chat-error">{{ error }}</p>
       </div>
@@ -48,10 +50,22 @@
 
 <script setup lang="ts">
 import { ref, nextTick } from 'vue'
+import { marked } from 'marked'
 
 interface Message {
   role: 'user' | 'assistant'
   text: string
+}
+
+// Escape raw HTML so model output can't inject markup; marked then produces
+// only the safe structural HTML from the markdown itself.
+function escapeHtml(s: string): string {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+}
+
+function renderAssistant(m: Message): string {
+  if (!m.text) return pending.value ? '…' : ''
+  return marked.parse(escapeHtml(m.text), { async: false, breaks: true }) as string
 }
 
 const config = useRuntimeConfig()
@@ -263,6 +277,61 @@ function handleEvent(raw: string, assistant: Message) {
 .chat-msg.assistant .chat-bubble {
   background: #f0f0f0;
   color: #1a1a1a;
+}
+
+.chat-bubble.markdown {
+  display: block;
+  max-width: 100%;
+}
+
+.markdown :first-child {
+  margin-top: 0;
+}
+
+.markdown :last-child {
+  margin-bottom: 0;
+}
+
+.markdown p {
+  margin: 0.4em 0;
+}
+
+.markdown ul,
+.markdown ol {
+  margin: 0.4em 0;
+  padding-left: 1.2em;
+}
+
+.markdown a {
+  color: #d81b60;
+}
+
+.markdown code {
+  background: rgba(0, 0, 0, 0.06);
+  padding: 0 0.25em;
+  border-radius: 3px;
+}
+
+.markdown pre {
+  background: rgba(0, 0, 0, 0.06);
+  padding: 0.5em;
+  border-radius: 6px;
+  overflow-x: auto;
+}
+
+.markdown table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  font-size: 0.9em;
+}
+
+.markdown th,
+.markdown td {
+  border: 1px solid #ccc;
+  padding: 0.3em 0.5em;
+  text-align: left;
 }
 
 .chat-error {
