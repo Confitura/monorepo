@@ -32,6 +32,18 @@ describe('ChatWidget', () => {
     expect(powered.find('img').attributes('alt')).toBe('DataLinks')
   })
 
+  it('toggles maximize on the panel', async () => {
+    const wrapper = await mountSuspended(ChatWidget)
+    await wrapper.find('.chat-launcher').trigger('click')
+    expect(wrapper.find('.chat-panel').classes()).not.toContain('maximized')
+
+    await wrapper.find('button[aria-label="Maximize"]').trigger('click')
+    expect(wrapper.find('.chat-panel').classes()).toContain('maximized')
+
+    await wrapper.find('button[aria-label="Restore"]').trigger('click')
+    expect(wrapper.find('.chat-panel').classes()).not.toContain('maximized')
+  })
+
   it('shows the question and the streamed answer', async () => {
     vi.stubGlobal(
       'fetch',

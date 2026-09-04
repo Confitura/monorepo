@@ -10,7 +10,7 @@
       <span aria-hidden="true">💬</span> Ask
     </button>
 
-    <section v-else class="chat-panel" aria-label="Conference assistant">
+    <section v-else class="chat-panel" :class="{ maximized }" aria-label="Conference assistant">
       <header class="chat-header">
         <div class="chat-header-main">
           <span class="chat-title">Conference assistant</span>
@@ -24,7 +24,17 @@
             <img :src="datalinksLogo" alt="DataLinks" class="chat-powered-logo" />
           </a>
         </div>
-        <button type="button" class="chat-close" aria-label="Close" @click="open = false">×</button>
+        <div class="chat-header-controls">
+          <button
+            type="button"
+            class="chat-header-btn"
+            :aria-label="maximized ? 'Restore' : 'Maximize'"
+            @click="maximized = !maximized"
+          >
+            {{ maximized ? '🗗' : '🗖' }}
+          </button>
+          <button type="button" class="chat-header-btn" aria-label="Close" @click="open = false">×</button>
+        </div>
       </header>
 
       <div ref="log" class="chat-log">
@@ -85,6 +95,7 @@ const apiBase = (config.public.chatApiBase as string).replace(/\/$/, '')
 const maxLength = 500
 
 const open = ref(false)
+const maximized = ref(false)
 const question = ref('')
 const messages = ref<Message[]>([])
 const pending = ref(false)
@@ -231,6 +242,11 @@ function handleEvent(raw: string, assistant: Message) {
   overflow: hidden;
 }
 
+.chat-panel.maximized {
+  width: min(900px, calc(100vw - 2rem));
+  height: calc(100vh - 2rem);
+}
+
 .chat-header {
   display: flex;
   justify-content: space-between;
@@ -270,13 +286,25 @@ function handleEvent(raw: string, assistant: Message) {
   padding: 2px 4px;
 }
 
-.chat-close {
+.chat-header-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.chat-header-btn {
   background: none;
   border: none;
   color: #fff;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   line-height: 1;
+  padding: 0 0.15em;
   cursor: pointer;
+  opacity: 0.9;
+}
+
+.chat-header-btn:hover {
+  opacity: 1;
 }
 
 .chat-log {
