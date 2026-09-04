@@ -58,11 +58,10 @@ function lastName(value: string) {
   margin-bottom: 2rem;
   cursor: pointer;
 
-  &__photo {
-    flex-grow: 0;
+  .speaker__photo {
+    flex: 0 0 auto;
     width: 45px;
     height: 45px;
-    object-fit: cover;
     margin-right: 1rem;
     background-color: #000000;
   }
