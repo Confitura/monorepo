@@ -35,7 +35,10 @@ async function main() {
     fetchPresentations(resourcesBaseUrl),
     fetchWorkshops(resourcesBaseUrl),
   ])
-  const pages: Page[] = await Promise.all(pageSlugs.map((s) => fetchPage(resourcesBaseUrl, s)))
+  const fetchedPages = await Promise.all(pageSlugs.map((s) => fetchPage(resourcesBaseUrl, s)))
+  const pages: Page[] = fetchedPages.filter((p): p is Page => p !== null)
+  const missing = pageSlugs.filter((_, i) => fetchedPages[i] === null)
+  if (missing.length > 0) console.log(`  (skipping unpublished pages: ${missing.join(', ')})`)
   const days: AgendaDay[] = await Promise.all(
     agendaDays.map((d) => fetchAgendaDay(resourcesBaseUrl, d)),
   )

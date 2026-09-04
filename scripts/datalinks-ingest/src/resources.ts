@@ -18,9 +18,13 @@ export async function fetchWorkshops(baseUrl: string): Promise<Presentation[]> {
 }
 
 // CMS pages are stored as a JSON-encoded markdown string, e.g. "## Registration…".
-export async function fetchPage(baseUrl: string, slug: string): Promise<Page> {
-  const content = await getJson<string>(baseUrl, `pages/${slug}.json`)
-  return { slug, content }
+// Returns null for pages that aren't published (404) so ingest can skip them.
+export async function fetchPage(baseUrl: string, slug: string): Promise<Page | null> {
+  const url = `${baseUrl.replace(/\/$/, '')}/pages/${slug}.json`
+  const res = await fetch(url)
+  if (res.status === 404) return null
+  if (!res.ok) throw new Error(`GET ${url} -> ${res.status} ${res.statusText}`)
+  return { slug, content: (await res.json()) as string }
 }
 
 interface RawAgenda {
