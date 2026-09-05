@@ -38,6 +38,8 @@ import { marked } from 'marked'
 
 const route = useRoute()
 const partnersStore = usePartnersStore()
+const {data: partnersData} = await useArchiveFetch('/partners/list.json', {key: 'partners'})
+partnersStore.setPartners(partnersData.value as never)
 const partner = ref<Partner>({
   name: "",
   description: "",
@@ -69,9 +71,9 @@ const imgUrls = import.meta.glob('~/assets/partners/2026/*', {
 })
 
 function resolveImage(path: string): string {
-  let resolved = `${imgUrls[path]}`;
-  console.log('resolved path', resolved)
-  return resolved
+  if (!path) return ''
+  if (/^https?:\/\//.test(path)) return path
+  return `${imgUrls[path] ?? path}`
 }
 
 onMounted(() => {
