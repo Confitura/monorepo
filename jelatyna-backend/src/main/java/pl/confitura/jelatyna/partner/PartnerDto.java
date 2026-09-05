@@ -2,6 +2,7 @@ package pl.confitura.jelatyna.partner;
 
 public record PartnerDto(
         String id,
+        String slug,
         String name,
         String type,
         String www,
@@ -13,6 +14,7 @@ public record PartnerDto(
     public static PartnerDto from(Partner p) {
         return new PartnerDto(
                 p.getId(),
+                p.getSlug(),
                 p.getName(),
                 p.getType(),
                 p.getWww(),

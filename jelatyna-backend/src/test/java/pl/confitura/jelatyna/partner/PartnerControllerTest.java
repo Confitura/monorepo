@@ -86,6 +86,7 @@ class PartnerControllerTest extends BaseIntegrationTest {
     void createsPartner() throws Exception {
         String body = """
                 {
+                  "slug":"dpd",
                   "name":"DPD",
                   "type":"bronze",
                   "www":"https://dpd.com",
@@ -98,6 +99,7 @@ class PartnerControllerTest extends BaseIntegrationTest {
                         .content(body))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").exists())
+                .andExpect(jsonPath("$.slug", is("dpd")))
                 .andExpect(jsonPath("$.name", is("DPD")))
                 .andExpect(jsonPath("$.type", is("bronze")))
                 .andExpect(jsonPath("$.published", is(true)));

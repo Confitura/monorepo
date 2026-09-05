@@ -9,8 +9,8 @@ const FAQ_ENTRIES = [
 ]
 
 const PARTNERS = [
-  { id: 'xtb', name: 'XTB', type: 'gold', www: 'https://xtb.com', logo: 'https://cdn/x.svg', description: 'x', orientation: 'horizontal', published: true },
-  { id: 'dpd', name: 'DPD', type: 'bronze', www: 'https://dpd.com', logo: 'https://cdn/d.svg', description: 'd', orientation: 'box', published: true },
+  { id: 'uuid-1', slug: 'xtb', name: 'XTB', type: 'gold', www: 'https://xtb.com', logo: 'https://cdn/x.svg', description: 'x', orientation: 'horizontal', published: true },
+  { id: 'uuid-2', slug: 'dpd', name: 'DPD', type: 'bronze', www: 'https://dpd.com', logo: 'https://cdn/d.svg', description: 'd', orientation: 'box', published: true },
 ]
 
 vi.mock('~/composables/useAPIFetch', async () => {
@@ -130,6 +130,8 @@ describe('pages render without errors', () => {
     expect(wrapper.find('#bronze').exists()).toBe(true)
     expect(wrapper.html()).toContain('XTB')
     expect(wrapper.html()).toContain('DPD')
+    // partner links use the explicit slug, not the uuid id
+    expect(wrapper.find('a[href="/partners/xtb"]').exists()).toBe(true)
   })
 
   it('renders the partner detail page', async () => {

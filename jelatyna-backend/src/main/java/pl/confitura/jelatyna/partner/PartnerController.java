@@ -47,6 +47,7 @@ public class PartnerController {
     @PostMapping
     public ResponseEntity<PartnerDto> createPartner(@RequestBody PartnerRequest request) {
         Partner partner = new Partner();
+        partner.setSlug(request.slug());
         partner.setName(request.name());
         partner.setType(request.type());
         partner.setWww(request.www());
@@ -62,6 +63,7 @@ public class PartnerController {
         if (partner == null) {
             return ResponseEntity.notFound().build();
         }
+        if (request.slug() != null) partner.setSlug(request.slug());
         if (request.name() != null) partner.setName(request.name());
         if (request.type() != null) partner.setType(request.type());
         if (request.www() != null) partner.setWww(request.www());
