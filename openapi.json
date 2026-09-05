@@ -744,6 +744,58 @@
         },
         "type" : "object"
       },
+      "PartnerDto" : {
+        "properties" : {
+          "description" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "logo" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "orientation" : {
+            "type" : "string"
+          },
+          "published" : {
+            "type" : "boolean"
+          },
+          "type" : {
+            "type" : "string"
+          },
+          "www" : {
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "PartnerRequest" : {
+        "properties" : {
+          "description" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "orientation" : {
+            "type" : "string"
+          },
+          "published" : {
+            "type" : "boolean"
+          },
+          "type" : {
+            "type" : "string"
+          },
+          "www" : {
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
       "PreSelectionRequest" : {
         "properties" : {
           "comment" : {
@@ -3129,6 +3181,151 @@
           }
         },
         "tags" : [ "page-controller" ]
+      }
+    },
+    "/partners" : {
+      "get" : {
+        "operationId" : "getPublishedPartners",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/PartnerDto"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "partner-controller" ]
+      },
+      "post" : {
+        "operationId" : "createPartner",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PartnerRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PartnerDto"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "partner-controller" ]
+      }
+    },
+    "/partners/all" : {
+      "get" : {
+        "operationId" : "getAllPartners",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/PartnerDto"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "partner-controller" ]
+      }
+    },
+    "/partners/{id}" : {
+      "delete" : {
+        "operationId" : "deletePartner",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "partner-controller" ]
+      },
+      "get" : {
+        "operationId" : "getPartner",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PartnerDto"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "partner-controller" ]
+      },
+      "put" : {
+        "operationId" : "updatePartner",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PartnerRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/PartnerDto"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "partner-controller" ]
       }
     },
     "/presentations" : {
