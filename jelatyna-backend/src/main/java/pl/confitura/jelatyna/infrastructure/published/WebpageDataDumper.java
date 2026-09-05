@@ -11,6 +11,8 @@ import pl.confitura.jelatyna.agenda.api.InlineAgendaEntry;
 import pl.confitura.jelatyna.agenda.api.InlineRoom;
 import pl.confitura.jelatyna.agenda.api.InlineTimeSlot;
 import pl.confitura.jelatyna.api.model.InlinePresentationWithSpeakers;
+import pl.confitura.jelatyna.faq.FaqEntryDto;
+import pl.confitura.jelatyna.faq.FaqEntryRepository;
 import pl.confitura.jelatyna.news.NewsletterApi;
 import pl.confitura.jelatyna.page.PageController;
 import pl.confitura.jelatyna.presentation.Presentation;
@@ -48,6 +50,7 @@ public class WebpageDataDumper {
     private final DayRepository dayRepository;
     private final TimeSlotsRepository timeSlotsRepository;
     private final RoomRepository roomRepository;
+    private final FaqEntryRepository faqEntryRepository;
 
     private final AtomicReference<Instant> lastDumpAt = new AtomicReference<>();
 
@@ -62,11 +65,19 @@ public class WebpageDataDumper {
         dumpPages();
         dumpNews();
         dumpAgendaByDay();
+        dumpFaqEntries();
         lastDumpAt.set(Instant.now());
     }
 
     public Instant getLastDumpAt() {
         return lastDumpAt.get();
+    }
+
+    void dumpFaqEntries() {
+        var entries = faqEntryRepository.findPublishedOrdered().stream()
+                .map(FaqEntryDto::from)
+                .toList();
+        dumbData(entries, "/faq/entries.json");
     }
 
     void dumpPages() {
