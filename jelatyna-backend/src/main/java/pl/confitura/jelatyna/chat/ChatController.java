@@ -23,8 +23,6 @@ import java.util.concurrent.ExecutorService;
 public class ChatController {
 
     private static final long TIMEOUT_MS = Duration.ofMinutes(2).toMillis();
-    // SSE data must be written as UTF-8; the default String converter charset (ISO-8859-1)
-    // mangles non-ASCII (e.g. Polish characters) since browsers decode SSE as UTF-8.
     private static final MediaType UTF8_TEXT = new MediaType(MediaType.TEXT_PLAIN, StandardCharsets.UTF_8);
 
     private final ChatService chatService;
