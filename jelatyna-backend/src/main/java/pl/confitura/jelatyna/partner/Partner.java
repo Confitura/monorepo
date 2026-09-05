@@ -23,5 +23,6 @@ public class Partner {
     private String www;
     private String type;
     private String logo;
+    private String orientation;
     private boolean published;
 }

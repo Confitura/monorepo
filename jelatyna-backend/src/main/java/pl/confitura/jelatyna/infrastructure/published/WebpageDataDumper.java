@@ -14,6 +14,8 @@ import pl.confitura.jelatyna.api.model.InlinePresentationWithSpeakers;
 import pl.confitura.jelatyna.faq.FaqEntryDto;
 import pl.confitura.jelatyna.faq.FaqEntryRepository;
 import pl.confitura.jelatyna.news.NewsletterApi;
+import pl.confitura.jelatyna.partner.PartnerDto;
+import pl.confitura.jelatyna.partner.PartnerRepository;
 import pl.confitura.jelatyna.page.PageController;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
@@ -51,6 +53,7 @@ public class WebpageDataDumper {
     private final TimeSlotsRepository timeSlotsRepository;
     private final RoomRepository roomRepository;
     private final FaqEntryRepository faqEntryRepository;
+    private final PartnerRepository partnerRepository;
 
     private final AtomicReference<Instant> lastDumpAt = new AtomicReference<>();
 
@@ -66,6 +69,7 @@ public class WebpageDataDumper {
         dumpNews();
         dumpAgendaByDay();
         dumpFaqEntries();
+        dumpPartners();
         lastDumpAt.set(Instant.now());
     }
 
@@ -78,6 +82,13 @@ public class WebpageDataDumper {
                 .map(FaqEntryDto::from)
                 .toList();
         dumbData(entries, "/faq/entries.json");
+    }
+
+    void dumpPartners() {
+        var partners = partnerRepository.findPublished().stream()
+                .map(PartnerDto::from)
+                .toList();
+        dumbData(partners, "/partners/list.json");
     }
 
     void dumpPages() {
