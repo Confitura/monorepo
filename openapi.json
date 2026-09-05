@@ -2519,7 +2519,7 @@
     },
     "/faq-entries" : {
       "get" : {
-        "operationId" : "published",
+        "operationId" : "getPublishedFaqEntries",
         "responses" : {
           "200" : {
             "content" : {
@@ -2538,7 +2538,7 @@
         "tags" : [ "faq-entry-controller" ]
       },
       "post" : {
-        "operationId" : "create",
+        "operationId" : "createFaqEntry",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -2566,7 +2566,7 @@
     },
     "/faq-entries/all" : {
       "get" : {
-        "operationId" : "all",
+        "operationId" : "getAllFaqEntries",
         "responses" : {
           "200" : {
             "content" : {
@@ -2587,7 +2587,7 @@
     },
     "/faq-entries/order" : {
       "put" : {
-        "operationId" : "reorder",
+        "operationId" : "reorderFaqEntries",
         "requestBody" : {
           "content" : {
             "application/json" : {
@@ -2608,7 +2608,7 @@
     },
     "/faq-entries/{id}" : {
       "delete" : {
-        "operationId" : "delete",
+        "operationId" : "deleteFaqEntry",
         "parameters" : [ {
           "in" : "path",
           "name" : "id",
@@ -2625,7 +2625,7 @@
         "tags" : [ "faq-entry-controller" ]
       },
       "get" : {
-        "operationId" : "get",
+        "operationId" : "getFaqEntry",
         "parameters" : [ {
           "in" : "path",
           "name" : "id",
@@ -2649,7 +2649,7 @@
         "tags" : [ "faq-entry-controller" ]
       },
       "put" : {
-        "operationId" : "update",
+        "operationId" : "updateFaqEntry",
         "parameters" : [ {
           "in" : "path",
           "name" : "id",
@@ -2736,7 +2736,7 @@
     },
     "/likes/{id}" : {
       "delete" : {
-        "operationId" : "delete_1",
+        "operationId" : "delete",
         "parameters" : [ {
           "in" : "path",
           "name" : "id",

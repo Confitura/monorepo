@@ -28,25 +28,25 @@ public class FaqEntryController {
 
     /** Public: published entries, grouped-ready (ordered by category then displayOrder). */
     @GetMapping
-    public List<FaqEntryDto> published() {
+    public List<FaqEntryDto> getPublishedFaqEntries() {
         return repository.findPublishedOrdered().stream().map(FaqEntryDto::from).toList();
     }
 
     /** Admin: all entries including unpublished, for the management screen. */
     @GetMapping("/all")
     @PreAuthorize("@security.isAdmin()")
-    public List<FaqEntryDto> all() {
+    public List<FaqEntryDto> getAllFaqEntries() {
         return repository.findAllOrdered().stream().map(FaqEntryDto::from).toList();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<FaqEntryDto> get(@PathVariable String id) {
+    public ResponseEntity<FaqEntryDto> getFaqEntry(@PathVariable String id) {
         FaqEntry entry = repository.findById(id);
         return entry == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(FaqEntryDto.from(entry));
     }
 
     @PostMapping
-    public ResponseEntity<FaqEntryDto> create(@RequestBody FaqEntryRequest request) {
+    public ResponseEntity<FaqEntryDto> createFaqEntry(@RequestBody FaqEntryRequest request) {
         FaqEntry entry = new FaqEntry()
                 .setCategory(request.category())
                 .setQuestion(request.question())
@@ -57,7 +57,7 @@ public class FaqEntryController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<FaqEntryDto> update(@PathVariable String id, @RequestBody FaqEntryRequest request) {
+    public ResponseEntity<FaqEntryDto> updateFaqEntry(@PathVariable String id, @RequestBody FaqEntryRequest request) {
         FaqEntry entry = repository.findById(id);
         if (entry == null) {
             return ResponseEntity.notFound().build();
@@ -71,14 +71,14 @@ public class FaqEntryController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable String id) {
+    public ResponseEntity<Void> deleteFaqEntry(@PathVariable String id) {
         repository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
     /** Persists a new order: each id's displayOrder becomes its index in the list. */
     @PutMapping("/order")
-    public ResponseEntity<Void> reorder(@RequestBody ReorderRequest request) {
+    public ResponseEntity<Void> reorderFaqEntries(@RequestBody ReorderRequest request) {
         int order = 0;
         for (String id : request.ids()) {
             FaqEntry entry = repository.findById(id);

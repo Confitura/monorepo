@@ -59,6 +59,23 @@ export type DumpStatus = {
     lastDumpAt?: string;
 };
 
+export type FaqEntryDto = {
+    answer?: string;
+    category?: string;
+    displayOrder?: number;
+    id?: string;
+    published?: boolean;
+    question?: string;
+};
+
+export type FaqEntryRequest = {
+    answer?: string;
+    category?: string;
+    displayOrder?: number;
+    published?: boolean;
+    question?: string;
+};
+
 export type FullPresentation = {
     description: string;
     durationInMinutes: number;
@@ -331,6 +348,10 @@ export type RateRequest = {
 export type RegistrationError = {
     additionalInfo?: string;
     reason?: string;
+};
+
+export type ReorderRequest = {
+    ids?: Array<string>;
 };
 
 export type Room = {
@@ -1304,6 +1325,120 @@ export type UpdateDayResponses = {
 };
 
 export type UpdateDayResponse = UpdateDayResponses[keyof UpdateDayResponses];
+
+export type GetPublishedFaqEntriesData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/faq-entries';
+};
+
+export type GetPublishedFaqEntriesResponses = {
+    /**
+     * OK
+     */
+    200: Array<FaqEntryDto>;
+};
+
+export type GetPublishedFaqEntriesResponse = GetPublishedFaqEntriesResponses[keyof GetPublishedFaqEntriesResponses];
+
+export type CreateFaqEntryData = {
+    body: FaqEntryRequest;
+    path?: never;
+    query?: never;
+    url: '/faq-entries';
+};
+
+export type CreateFaqEntryResponses = {
+    /**
+     * OK
+     */
+    200: FaqEntryDto;
+};
+
+export type CreateFaqEntryResponse = CreateFaqEntryResponses[keyof CreateFaqEntryResponses];
+
+export type GetAllFaqEntriesData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/faq-entries/all';
+};
+
+export type GetAllFaqEntriesResponses = {
+    /**
+     * OK
+     */
+    200: Array<FaqEntryDto>;
+};
+
+export type GetAllFaqEntriesResponse = GetAllFaqEntriesResponses[keyof GetAllFaqEntriesResponses];
+
+export type ReorderFaqEntriesData = {
+    body: ReorderRequest;
+    path?: never;
+    query?: never;
+    url: '/faq-entries/order';
+};
+
+export type ReorderFaqEntriesResponses = {
+    /**
+     * OK
+     */
+    200: unknown;
+};
+
+export type DeleteFaqEntryData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/faq-entries/{id}';
+};
+
+export type DeleteFaqEntryResponses = {
+    /**
+     * OK
+     */
+    200: unknown;
+};
+
+export type GetFaqEntryData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/faq-entries/{id}';
+};
+
+export type GetFaqEntryResponses = {
+    /**
+     * OK
+     */
+    200: FaqEntryDto;
+};
+
+export type GetFaqEntryResponse = GetFaqEntryResponses[keyof GetFaqEntryResponses];
+
+export type UpdateFaqEntryData = {
+    body: FaqEntryRequest;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/faq-entries/{id}';
+};
+
+export type UpdateFaqEntryResponses = {
+    /**
+     * OK
+     */
+    200: FaqEntryDto;
+};
+
+export type UpdateFaqEntryResponse = UpdateFaqEntryResponses[keyof UpdateFaqEntryResponses];
 
 export type GetLikesData = {
     body?: never;
