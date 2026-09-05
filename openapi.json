@@ -128,6 +128,51 @@
         },
         "type" : "object"
       },
+      "FaqEntryDto" : {
+        "properties" : {
+          "answer" : {
+            "type" : "string"
+          },
+          "category" : {
+            "type" : "string"
+          },
+          "displayOrder" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "published" : {
+            "type" : "boolean"
+          },
+          "question" : {
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "FaqEntryRequest" : {
+        "properties" : {
+          "answer" : {
+            "type" : "string"
+          },
+          "category" : {
+            "type" : "string"
+          },
+          "displayOrder" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "published" : {
+            "type" : "boolean"
+          },
+          "question" : {
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
       "FullPresentation" : {
         "properties" : {
           "description" : {
@@ -934,6 +979,17 @@
           },
           "reason" : {
             "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "ReorderRequest" : {
+        "properties" : {
+          "ids" : {
+            "items" : {
+              "type" : "string"
+            },
+            "type" : "array"
           }
         },
         "type" : "object"
@@ -2459,6 +2515,194 @@
           }
         },
         "tags" : [ "day-controller" ]
+      }
+    },
+    "/faq-entries" : {
+      "get" : {
+        "operationId" : "getPublishedFaqEntries",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/FaqEntryDto"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "faq-entry-controller" ]
+      },
+      "post" : {
+        "operationId" : "createFaqEntry",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/FaqEntryRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/FaqEntryDto"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "faq-entry-controller" ]
+      }
+    },
+    "/faq-entries/all" : {
+      "get" : {
+        "operationId" : "getAllFaqEntries",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/FaqEntryDto"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "faq-entry-controller" ]
+      }
+    },
+    "/faq-entries/import" : {
+      "post" : {
+        "operationId" : "importFromFaqPage",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "additionalProperties" : {
+                    "format" : "int32",
+                    "type" : "integer"
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "faq-entry-controller" ]
+      }
+    },
+    "/faq-entries/order" : {
+      "put" : {
+        "operationId" : "reorderFaqEntries",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ReorderRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "faq-entry-controller" ]
+      }
+    },
+    "/faq-entries/{id}" : {
+      "delete" : {
+        "operationId" : "deleteFaqEntry",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "faq-entry-controller" ]
+      },
+      "get" : {
+        "operationId" : "getFaqEntry",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/FaqEntryDto"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "faq-entry-controller" ]
+      },
+      "put" : {
+        "operationId" : "updateFaqEntry",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/FaqEntryRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/FaqEntryDto"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "faq-entry-controller" ]
       }
     },
     "/likes" : {
