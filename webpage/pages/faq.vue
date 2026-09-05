@@ -12,13 +12,55 @@
           >contact us</a
         >. We will update the list for the benefit of all.
       </p>
-      <PageFragment class="questions" name="faq" />
+      <section v-if="hasEntries" class="questions" v-html="html" />
+      <PageFragment v-else class="questions" name="faq" />
     </Box>
     <Contact />
   </div>
 </template>
 
 <script setup lang="ts">
+import { marked } from 'marked'
+
+interface FaqEntry {
+  id: string
+  category: string
+  question: string
+  answer: string
+  displayOrder: number
+  published: boolean
+}
+
+// Structured FAQ entries published by the backend (WebpageDataDumper).
+const { data } = await useArchiveFetch('/faq/entries.json', { key: 'faq-entries' })
+const entries = computed<FaqEntry[]>(() => (data.value as FaqEntry[] | null) ?? [])
+const hasEntries = computed(() => entries.value.length > 0)
+
+// Group by category, preserving the order the backend returned (category, displayOrder).
+const grouped = computed(() => {
+  const map = new Map<string, FaqEntry[]>()
+  for (const entry of entries.value) {
+    const category = entry.category || 'General'
+    if (!map.has(category)) map.set(category, [])
+    map.get(category)!.push(entry)
+  }
+  return Array.from(map, ([category, items]) => ({ category, items }))
+})
+
+// Rebuild the same markdown shape the FAQ used to have (## category, ### question,
+// answer body) so the existing two-column grid styling applies unchanged.
+const html = computed(() => {
+  if (!hasEntries.value) return ''
+  const md = grouped.value
+    .map(
+      (g) =>
+        `## ${g.category}\n\n` +
+        g.items.map((e) => `### ${e.question}\n\n${e.answer ?? ''}`).join('\n\n'),
+    )
+    .join('\n\n')
+  return marked(md)
+})
+
 const title = 'FAQ — Confitura 2026';
 const description = 'Find answers to frequently asked questions about Confitura 2026: tickets, schedule, venue, and more.';
 useHead({

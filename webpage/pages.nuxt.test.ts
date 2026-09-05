@@ -3,10 +3,15 @@ import { describe, it, expect, vi } from 'vitest'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
 
 // Mock the archive/api fetch composable used by pages and PageFragment
+const FAQ_ENTRIES = [
+  { id: 'e1', category: 'Registration', question: 'How do I register?', answer: 'Buy a **ticket**.', displayOrder: 0, published: true },
+  { id: 'e2', category: 'Venue', question: 'Where is it?', answer: 'At the venue.', displayOrder: 0, published: true },
+]
+
 vi.mock('~/composables/useAPIFetch', async () => {
   const { ref } = await import('vue')
-  const createFetch = () => {
-    const data = ref(null)
+  const createFetch = (path?: string) => {
+    const data = ref(path === '/faq/entries.json' ? FAQ_ENTRIES : null)
     const result = { data, pending: ref(false), error: ref(null), refresh: vi.fn(), execute: vi.fn() }
     return Object.assign(Promise.resolve(result), result)
   }
@@ -51,9 +56,16 @@ describe('pages render without errors', () => {
     expect(wrapper.find('.about__page').exists()).toBe(true)
   })
 
-  it('renders the faq page', async () => {
+  it('renders the faq page from structured entries grouped by category', async () => {
     const wrapper = await mountSuspended(FaqPage)
-    expect(wrapper.html()).toBeDefined()
+    const questions = wrapper.find('.questions')
+    expect(questions.exists()).toBe(true)
+    const html = questions.html()
+    // categories as h2, questions as h3, answer markdown rendered
+    expect(html).toContain('Registration')
+    expect(html).toContain('Venue')
+    expect(html).toContain('How do I register?')
+    expect(html).toContain('<strong>ticket</strong>')
   })
 
   it('renders the news page', async () => {
