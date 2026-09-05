@@ -764,6 +764,9 @@
           "published" : {
             "type" : "boolean"
           },
+          "slug" : {
+            "type" : "string"
+          },
           "type" : {
             "type" : "string"
           },
@@ -786,6 +789,9 @@
           },
           "published" : {
             "type" : "boolean"
+          },
+          "slug" : {
+            "type" : "string"
           },
           "type" : {
             "type" : "string"

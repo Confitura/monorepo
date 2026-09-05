@@ -5,6 +5,7 @@ package pl.confitura.jelatyna.partner;
  * The logo is not set here — it is uploaded separately via POST /resources/partners/{id}.
  */
 public record PartnerRequest(
+        String slug,
         String name,
         String type,
         String www,
