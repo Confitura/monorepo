@@ -105,6 +105,20 @@ public class FaqEntryController {
         return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("imported", parsed.size()));
     }
 
+    /** Bulk-renames a category across all its questions. */
+    @PutMapping("/category")
+    @PreAuthorize("@security.isAdmin()")
+    public ResponseEntity<Map<String, Integer>> renameCategory(@RequestBody RenameCategoryRequest request) {
+        if (request.from() == null || request.to() == null || request.to().isBlank()) {
+            return ResponseEntity.badRequest().build();
+        }
+        int updated = repository.renameCategory(request.from(), request.to().strip());
+        return ResponseEntity.ok(Map.of("updated", updated));
+    }
+
+    public record RenameCategoryRequest(String from, String to) {
+    }
+
     /** Persists a new order: each id's displayOrder becomes its index in the list. */
     @PutMapping("/order")
     public ResponseEntity<Void> reorderFaqEntries(@RequestBody ReorderRequest request) {
