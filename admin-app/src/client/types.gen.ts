@@ -273,6 +273,26 @@ export type ParticipationData = {
     voucher?: Voucher;
 };
 
+export type PartnerDto = {
+    description?: string;
+    id?: string;
+    logo?: string;
+    name?: string;
+    orientation?: string;
+    published?: boolean;
+    type?: string;
+    www?: string;
+};
+
+export type PartnerRequest = {
+    description?: string;
+    name?: string;
+    orientation?: string;
+    published?: boolean;
+    type?: string;
+    www?: string;
+};
+
 export type PreSelectionRequest = {
     comment?: string;
     status?: 'NONE' | 'PRE_APPROVED' | 'PRE_REJECTED' | 'IN_RESERVE';
@@ -1735,6 +1755,106 @@ export type UpdatePageResponses = {
 };
 
 export type UpdatePageResponse = UpdatePageResponses[keyof UpdatePageResponses];
+
+export type GetPublishedPartnersData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/partners';
+};
+
+export type GetPublishedPartnersResponses = {
+    /**
+     * OK
+     */
+    200: Array<PartnerDto>;
+};
+
+export type GetPublishedPartnersResponse = GetPublishedPartnersResponses[keyof GetPublishedPartnersResponses];
+
+export type CreatePartnerData = {
+    body: PartnerRequest;
+    path?: never;
+    query?: never;
+    url: '/partners';
+};
+
+export type CreatePartnerResponses = {
+    /**
+     * OK
+     */
+    200: PartnerDto;
+};
+
+export type CreatePartnerResponse = CreatePartnerResponses[keyof CreatePartnerResponses];
+
+export type GetAllPartnersData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/partners/all';
+};
+
+export type GetAllPartnersResponses = {
+    /**
+     * OK
+     */
+    200: Array<PartnerDto>;
+};
+
+export type GetAllPartnersResponse = GetAllPartnersResponses[keyof GetAllPartnersResponses];
+
+export type DeletePartnerData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/partners/{id}';
+};
+
+export type DeletePartnerResponses = {
+    /**
+     * OK
+     */
+    200: unknown;
+};
+
+export type GetPartnerData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/partners/{id}';
+};
+
+export type GetPartnerResponses = {
+    /**
+     * OK
+     */
+    200: PartnerDto;
+};
+
+export type GetPartnerResponse = GetPartnerResponses[keyof GetPartnerResponses];
+
+export type UpdatePartnerData = {
+    body: PartnerRequest;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/partners/{id}';
+};
+
+export type UpdatePartnerResponses = {
+    /**
+     * OK
+     */
+    200: PartnerDto;
+};
+
+export type UpdatePartnerResponse = UpdatePartnerResponses[keyof UpdatePartnerResponses];
 
 export type GetAllPresentationsData = {
     body?: never;
