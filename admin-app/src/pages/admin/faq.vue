@@ -9,6 +9,7 @@ import {
   updateFaqEntry,
   deleteFaqEntry,
   reorderFaqEntries,
+  renameCategory as apiRenameCategory,
 } from '@/utils/api.ts'
 import type { FaqEntryDto } from '@/client'
 
@@ -33,6 +34,10 @@ const confirmDialog = useTemplateRef('confirmDialog')
 const dialog = ref(false)
 const editing = ref(false)
 const form = ref<FaqEntryDto>({ category: '', question: '', answer: '', published: true })
+
+const renameDialog = ref(false)
+const renameFrom = ref('')
+const renameTo = ref('')
 
 const requiredRule = (value: string) => !!value?.trim() || 'This field is required'
 const valid = computed(() => !!form.value.category?.trim() && !!form.value.question?.trim())
@@ -106,6 +111,30 @@ function confirmDelete(item: FaqEntryDto) {
   })
 }
 
+function openRenameCategory(category: string) {
+  renameFrom.value = category
+  renameTo.value = category
+  renameDialog.value = true
+}
+
+function renameCategoryConfirm() {
+  const to = renameTo.value.trim()
+  if (!to || to === renameFrom.value) {
+    renameDialog.value = false
+    return
+  }
+  apiRenameCategory({ body: { from: renameFrom.value, to } })
+    .then(() => {
+      Notify.success('Category renamed')
+      renameDialog.value = false
+      reload()
+    })
+    .catch((e) => {
+      console.error(e)
+      Notify.error('Failed to rename category')
+    })
+}
+
 // Persist the current order after a drag: categories in display order, entries in their order.
 function persistOrder() {
   const ids = grouped.value.flatMap((g) => g.items.map((i) => i.id!))
@@ -119,7 +148,21 @@ function persistOrder() {
 
 onMounted(reload)
 // Exposed for the parent and for interaction tests.
-defineExpose({ persistOrder, openCreate, openEdit, save, confirmDelete, reload, form, editing, grouped })
+defineExpose({
+  persistOrder,
+  openCreate,
+  openEdit,
+  save,
+  confirmDelete,
+  reload,
+  form,
+  editing,
+  grouped,
+  openRenameCategory,
+  renameCategoryConfirm,
+  renameFrom,
+  renameTo,
+})
 </script>
 
 <template>
@@ -136,7 +179,17 @@ defineExpose({ persistOrder, openCreate, openEdit, save, confirmDelete, reload, 
         </p>
 
         <div v-for="group in grouped" :key="group.category" class="mb-6">
-          <h3 class="text-h6 mb-2">{{ group.category }}</h3>
+          <div class="d-flex align-center mb-2">
+            <h3 class="text-h6">{{ group.category }}</h3>
+            <v-btn
+              icon="mdi-pencil-outline"
+              variant="text"
+              size="x-small"
+              class="ml-1"
+              title="Rename category"
+              @click="openRenameCategory(group.category)"
+            />
+          </div>
           <v-list density="comfortable" class="faq-list">
             <draggable
               v-model="group.items"
@@ -197,6 +250,30 @@ defineExpose({ persistOrder, openCreate, openEdit, save, confirmDelete, reload, 
           <v-spacer />
           <v-btn color="blue-darken-1" variant="text" @click="dialog = false">Cancel</v-btn>
           <v-btn color="blue-darken-1" variant="text" :disabled="!valid" @click="save">Save</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    <v-dialog v-model="renameDialog" max-width="500px">
+      <v-card>
+        <v-card-title>Rename category</v-card-title>
+        <v-card-text>
+          <p class="text-medium-emphasis mb-3">
+            Renames every question currently in "{{ renameFrom }}".
+          </p>
+          <v-text-field v-model="renameTo" label="Category name" :rules="[requiredRule]" />
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn color="blue-darken-1" variant="text" @click="renameDialog = false">Cancel</v-btn>
+          <v-btn
+            color="blue-darken-1"
+            variant="text"
+            :disabled="!renameTo.trim()"
+            @click="renameCategoryConfirm"
+          >
+            Save
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

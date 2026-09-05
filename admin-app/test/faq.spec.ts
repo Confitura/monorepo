@@ -23,6 +23,7 @@ const api = vi.hoisted(() => ({
   updateFaqEntry: vi.fn(),
   deleteFaqEntry: vi.fn(),
   reorderFaqEntries: vi.fn(),
+  renameCategory: vi.fn(),
 }))
 
 vi.mock('@/utils/api.ts', () => api)
@@ -64,6 +65,7 @@ describe('admin FAQ page', () => {
     api.updateFaqEntry.mockResolvedValue({ data: {}, status: 200 })
     api.deleteFaqEntry.mockResolvedValue({ status: 204 })
     api.reorderFaqEntries.mockResolvedValue({ status: 204 })
+    api.renameCategory.mockResolvedValue({ data: { updated: 2 }, status: 200 })
   })
 
   afterEach(() => vi.clearAllMocks())
@@ -114,6 +116,17 @@ describe('admin FAQ page', () => {
     vm.confirmDelete({ id: 'e2', question: 'Second' })
     await flushPromises()
     expect(api.deleteFaqEntry).toHaveBeenCalledWith({ path: { id: 'e2' } })
+  })
+
+  it('renames a category across all its questions', async () => {
+    const wrapper = mountPage()
+    await flushPromises()
+    const vm = wrapper.vm as any
+    vm.openRenameCategory('General')
+    vm.renameTo = 'Basics'
+    vm.renameCategoryConfirm()
+    await flushPromises()
+    expect(api.renameCategory).toHaveBeenCalledWith({ body: { from: 'General', to: 'Basics' } })
   })
 
   it('persists the new order on reorder', async () => {

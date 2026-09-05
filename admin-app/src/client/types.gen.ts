@@ -350,6 +350,11 @@ export type RegistrationError = {
     reason?: string;
 };
 
+export type RenameCategoryRequest = {
+    from?: string;
+    to?: string;
+};
+
 export type ReorderRequest = {
     ids?: Array<string>;
 };
@@ -1373,6 +1378,24 @@ export type GetAllFaqEntriesResponses = {
 };
 
 export type GetAllFaqEntriesResponse = GetAllFaqEntriesResponses[keyof GetAllFaqEntriesResponses];
+
+export type RenameCategoryData = {
+    body: RenameCategoryRequest;
+    path?: never;
+    query?: never;
+    url: '/faq-entries/category';
+};
+
+export type RenameCategoryResponses = {
+    /**
+     * OK
+     */
+    200: {
+        [key: string]: number;
+    };
+};
+
+export type RenameCategoryResponse = RenameCategoryResponses[keyof RenameCategoryResponses];
 
 export type ImportFromFaqPageData = {
     body?: never;
