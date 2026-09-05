@@ -85,6 +85,7 @@ vi.mock('@/utils/api.ts', () => {
     updateFaqEntry: ok({}),
     deleteFaqEntry: ok({}),
     reorderFaqEntries: ok({}),
+    renameCategory: ok({}),
     // dashboard
     usersStats: ok({ total: 0 }),
     submissionStats: ok({ total: 0, workshops: 0, presentations: 0 }),

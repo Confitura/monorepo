@@ -156,6 +156,22 @@ class FaqEntryControllerTest extends BaseIntegrationTest {
 
     @Test
     @WithMockUser(roles = "ADMIN")
+    void renamesCategoryAcrossAllItsQuestions() throws Exception {
+        mockMvc.perform(put("/faq-entries/category")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"from\":\"General\",\"to\":\"Basics\"}"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.updated", is(3)));
+
+        mockMvc.perform(get("/faq-entries/all"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(3)))
+                .andExpect(jsonPath("$[0].category", is("Basics")))
+                .andExpect(jsonPath("$[2].category", is("Basics")));
+    }
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
     void reordersEntries() throws Exception {
         String body = "{\"ids\":[\"" + second.getId() + "\",\"" + first.getId() + "\"]}";
         mockMvc.perform(put("/faq-entries/order")
