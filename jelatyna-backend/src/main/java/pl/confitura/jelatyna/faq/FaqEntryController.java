@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pl.confitura.jelatyna.page.PageController;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Manages FAQ questions individually. Public reads expose only published entries;
@@ -25,6 +27,8 @@ import java.util.List;
 public class FaqEntryController {
 
     private final FaqEntryRepository repository;
+    private final PageController pageController;
+    private final FaqMarkdownParser parser = new FaqMarkdownParser();
 
     /** Public: published entries, grouped-ready (ordered by category then displayOrder). */
     @GetMapping
@@ -74,6 +78,31 @@ public class FaqEntryController {
     public ResponseEntity<Void> deleteFaqEntry(@PathVariable String id) {
         repository.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    /**
+     * One-off migration: seeds entries from the legacy single-blob `faq` page.
+     * No-op (409) if entries already exist, so it is safe to run more than once.
+     * The old `faq` page is only read, never modified.
+     */
+    @PostMapping("/import")
+    @PreAuthorize("@security.isAdmin()")
+    public ResponseEntity<Map<String, Integer>> importFromFaqPage() {
+        if (!repository.findAllOrdered().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("imported", 0));
+        }
+        String content = pageController.getPage("faq").getBody();
+        var parsed = parser.parse(content);
+        int order = 0;
+        for (FaqMarkdownParser.ParsedFaqEntry p : parsed) {
+            repository.save(new FaqEntry()
+                    .setCategory(p.category())
+                    .setQuestion(p.question())
+                    .setAnswer(p.answer())
+                    .setDisplayOrder(order++)
+                    .setPublished(true));
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("imported", parsed.size()));
     }
 
     /** Persists a new order: each id's displayOrder becomes its index in the list. */

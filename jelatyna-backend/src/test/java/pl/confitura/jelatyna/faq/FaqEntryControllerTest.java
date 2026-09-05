@@ -8,6 +8,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.transaction.support.TransactionTemplate;
 import pl.confitura.jelatyna.BaseIntegrationTest;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
+import pl.confitura.jelatyna.page.PageController;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -22,6 +23,9 @@ class FaqEntryControllerTest extends BaseIntegrationTest {
 
     @Autowired
     private TransactionTemplate txTemplate;
+
+    @Autowired
+    private PageController pageController;
 
     private FaqEntry first;
     private FaqEntry second;
@@ -123,6 +127,31 @@ class FaqEntryControllerTest extends BaseIntegrationTest {
         mockMvc.perform(get("/faq-entries/all"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)));
+    }
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    void importsEntriesFromLegacyFaqPage() throws Exception {
+        // start from a clean slate and seed the legacy single-blob faq page
+        SecurityHelper.asAdmin();
+        txTemplate.executeWithoutResult(status ->
+                repository.findAllOrdered().forEach(e -> repository.deleteById(e.getId())));
+        txTemplate.executeWithoutResult(status -> pageController.createPage("faq",
+                new PageController.PageContent("## Registration\n### How to sign up?\nBuy a ticket.\n### Cost?\nFree.\n## Venue\n### Where?\nWarsaw.\n")));
+
+        mockMvc.perform(post("/faq-entries/import"))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.imported", is(3)));
+
+        mockMvc.perform(get("/faq-entries/all"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(3)))
+                .andExpect(jsonPath("$[0].category", is("Registration")))
+                .andExpect(jsonPath("$[0].question", is("How to sign up?")));
+
+        // running again is a no-op (entries already exist)
+        mockMvc.perform(post("/faq-entries/import"))
+                .andExpect(status().isConflict());
     }
 
     @Test

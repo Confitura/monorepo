@@ -1374,6 +1374,24 @@ export type GetAllFaqEntriesResponses = {
 
 export type GetAllFaqEntriesResponse = GetAllFaqEntriesResponses[keyof GetAllFaqEntriesResponses];
 
+export type ImportFromFaqPageData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/faq-entries/import';
+};
+
+export type ImportFromFaqPageResponses = {
+    /**
+     * OK
+     */
+    200: {
+        [key: string]: number;
+    };
+};
+
+export type ImportFromFaqPageResponse = ImportFromFaqPageResponses[keyof ImportFromFaqPageResponses];
+
 export type ReorderFaqEntriesData = {
     body: ReorderRequest;
     path?: never;

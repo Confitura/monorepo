@@ -2585,6 +2585,28 @@
         "tags" : [ "faq-entry-controller" ]
       }
     },
+    "/faq-entries/import" : {
+      "post" : {
+        "operationId" : "importFromFaqPage",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "additionalProperties" : {
+                    "format" : "int32",
+                    "type" : "integer"
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "faq-entry-controller" ]
+      }
+    },
     "/faq-entries/order" : {
       "put" : {
         "operationId" : "reorderFaqEntries",
