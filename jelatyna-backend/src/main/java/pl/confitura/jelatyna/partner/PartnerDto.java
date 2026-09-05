@@ -1,6 +1,5 @@
 package pl.confitura.jelatyna.partner;
 
-/** Public/admin view of a partner. */
 public record PartnerDto(
         String id,
         String name,

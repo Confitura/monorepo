@@ -23,7 +23,6 @@ public class Partner {
     private String www;
     private String type;
     private String logo;
-    /** Display hint for the logo: horizontal | vertical | box. */
     private String orientation;
     private boolean published;
 }
