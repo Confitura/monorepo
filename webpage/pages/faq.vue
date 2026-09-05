@@ -12,7 +12,9 @@
           >contact us</a
         >. We will update the list for the benefit of all.
       </p>
-      <section v-if="hasEntries" class="questions" v-html="html" />
+      <div v-if="hasEntries" class="questions">
+        <section v-html="html" />
+      </div>
       <PageFragment v-else class="questions" name="faq" />
     </Box>
     <Contact />

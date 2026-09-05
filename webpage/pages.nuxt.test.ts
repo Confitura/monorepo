@@ -60,6 +60,9 @@ describe('pages render without errors', () => {
     const wrapper = await mountSuspended(FaqPage)
     const questions = wrapper.find('.questions')
     expect(questions.exists()).toBe(true)
+    // the two-column grid CSS targets `.questions section`, so the rendered
+    // markdown must live inside a nested <section>
+    expect(wrapper.find('.questions section').exists()).toBe(true)
     const html = questions.html()
     // categories as h2, questions as h3, answer markdown rendered
     expect(html).toContain('Registration')
