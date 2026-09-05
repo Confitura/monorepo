@@ -27,13 +27,11 @@ public class PartnerController {
 
     private final PartnerRepository repository;
 
-    /** Public: published partners only. */
     @GetMapping
     public List<PartnerDto> getPublishedPartners() {
         return repository.findPublished().stream().map(PartnerDto::from).toList();
     }
 
-    /** Admin: all partners including unpublished, for the management screen. */
     @GetMapping("/all")
     @PreAuthorize("@security.isAdmin()")
     public List<PartnerDto> getAllPartners() {
