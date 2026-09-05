@@ -21,6 +21,7 @@ import AdminPage from '@/pages/admin.vue'
 import AdminAgendaPage from '@/pages/admin/agenda.vue'
 import AdminPagesPage from '@/pages/admin/pages.vue'
 import AdminFaqPage from '@/pages/admin/faq.vue'
+import AdminPartnersPage from '@/pages/admin/partners.vue'
 import AdminPresentationsPage from '@/pages/admin/presentations.vue'
 import AdminPresentationPreviewPage from '@/pages/admin/presentation-preview.[[id]].vue'
 import AdminRatesPage from '@/pages/admin/rates.vue'
@@ -86,6 +87,14 @@ vi.mock('@/utils/api.ts', () => {
     deleteFaqEntry: ok({}),
     reorderFaqEntries: ok({}),
     renameCategory: ok({}),
+    // partners
+    getAllPartners: ok([]),
+    getPublishedPartners: ok([]),
+    getPartner: ok({}),
+    createPartner: ok({}),
+    updatePartner: ok({}),
+    deletePartner: ok({}),
+    storePartnerLogo: ok({}),
     // dashboard
     usersStats: ok({ total: 0 }),
     submissionStats: ok({ total: 0, workshops: 0, presentations: 0 }),
@@ -292,6 +301,11 @@ describe('admin-app pages render without errors', () => {
 
   it('renders the admin faq page', async () => {
     const wrapper = await mountPage(AdminFaqPage)
+    expect(wrapper.html()).toBeDefined()
+  })
+
+  it('renders the admin partners page', async () => {
+    const wrapper = await mountPage(AdminPartnersPage)
     expect(wrapper.html()).toBeDefined()
   })
 
