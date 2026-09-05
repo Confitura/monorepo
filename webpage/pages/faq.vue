@@ -160,5 +160,9 @@ useHead({
       margin-top: 2em;
     }
   }
+
+  a {
+    color: $brand;
+  }
 }
 </style>
