@@ -8,10 +8,17 @@ const FAQ_ENTRIES = [
   { id: 'e2', category: 'Venue', question: 'Where is it?', answer: 'At the venue.', displayOrder: 0, published: true },
 ]
 
+const PARTNERS = [
+  { id: 'xtb', name: 'XTB', type: 'gold', www: 'https://xtb.com', logo: 'https://cdn/x.svg', description: 'x', orientation: 'horizontal', published: true },
+  { id: 'dpd', name: 'DPD', type: 'bronze', www: 'https://dpd.com', logo: 'https://cdn/d.svg', description: 'd', orientation: 'box', published: true },
+]
+
 vi.mock('~/composables/useAPIFetch', async () => {
   const { ref } = await import('vue')
   const createFetch = (path?: string) => {
-    const data = ref(path === '/faq/entries.json' ? FAQ_ENTRIES : null)
+    const data = ref(
+      path === '/faq/entries.json' ? FAQ_ENTRIES : path === '/partners/list.json' ? PARTNERS : null,
+    )
     const result = { data, pending: ref(false), error: ref(null), refresh: vi.fn(), execute: vi.fn() }
     return Object.assign(Promise.resolve(result), result)
   }
@@ -115,9 +122,14 @@ describe('pages render without errors', () => {
     expect(wrapper.html()).toBeDefined()
   })
 
-  it('renders the partners listing page', async () => {
+  it('renders the partners listing page from the backend dump, grouped by tier', async () => {
     const wrapper = await mountSuspended(PartnersIndexPage)
     expect(wrapper.find('.partners').exists()).toBe(true)
+    // partners came from /partners/list.json, grouped by tier
+    expect(wrapper.find('#gold').exists()).toBe(true)
+    expect(wrapper.find('#bronze').exists()).toBe(true)
+    expect(wrapper.html()).toContain('XTB')
+    expect(wrapper.html()).toContain('DPD')
   })
 
   it('renders the partner detail page', async () => {

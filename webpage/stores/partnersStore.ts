@@ -10,10 +10,10 @@ function descFor(id: string): string {
     return descriptions[`/content/partners/${id}.md`] ?? '';
 }
 
-const partners: Partner[] = getPartners();
 export const usePartnersStore = defineStore('partners', {
     state: () => ({
-        partners: partners
+        // Hardcoded list is the fallback until the backend dump is loaded.
+        partners: getPartners()
     }),
     getters: {
         platinum: ({partners}): Partner[] => filterBy(partners, "platinum"),
@@ -36,11 +36,41 @@ export const usePartnersStore = defineStore('partners', {
         }
     },
     actions: {
+        // Populate from the backend dump (/partners/list.json). Falls back to the
+        // hardcoded list when the dump is empty or unavailable.
+        setPartners(data: BackendPartner[] | null | undefined) {
+            this.partners = (data && data.length > 0)
+                ? data.map(toPartner)
+                : getPartners();
+        },
         getPartnerById(id: string) {
             return this.partners.find(partner => partner.id.toLowerCase() === id.toLowerCase());
         }
     }
 });
+
+interface BackendPartner {
+    id: string;
+    name: string;
+    type: string;
+    www: string;
+    logo: string;
+    description: string;
+    orientation?: string;
+    published?: boolean;
+}
+
+function toPartner(p: BackendPartner): Partner {
+    return {
+        id: p.id,
+        name: p.name,
+        description: p.description ?? '',
+        logo: p.logo ?? '',
+        www: p.www ?? '',
+        type: p.type as PartnerType,
+        orientation: p.orientation as Partner['orientation'],
+    };
+}
 
 function filterBy(partners: Partner[], type: string) {
     return shuffle(partners.filter(partner => partner.type === type));

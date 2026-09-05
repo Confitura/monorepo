@@ -34,9 +34,12 @@
 </template>
 
 <script setup lang="ts">
-import {type Partners, usePartnersStore} from '~/stores/partnersStore'
+import {usePartnersStore} from '~/stores/partnersStore'
 
-let partners: Partners = usePartnersStore().partnersMap
+const store = usePartnersStore()
+const {data} = await useArchiveFetch('/partners/list.json', {key: 'partners'})
+store.setPartners(data.value as never)
+const partners = computed(() => store.partnersMap)
 
 const imgUrls = import.meta.glob('~/assets/partners/2026/*', {
   import: 'default',
@@ -44,9 +47,10 @@ const imgUrls = import.meta.glob('~/assets/partners/2026/*', {
 })
 
 function resolveImage(path: string): string {
-  let resolved = `${imgUrls[path]}`;
-  console.log('resolved path', path, resolved, imgUrls)
-  return resolved
+  if (!path) return ''
+  // Uploaded logos are absolute URLs; hardcoded fallbacks resolve from local assets.
+  if (/^https?:\/\//.test(path)) return path
+  return `${imgUrls[path] ?? path}`
 }
 
 // SEO for partners listing page
