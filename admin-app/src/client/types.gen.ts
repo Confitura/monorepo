@@ -280,6 +280,7 @@ export type PartnerDto = {
     name?: string;
     orientation?: string;
     published?: boolean;
+    slug?: string;
     type?: string;
     www?: string;
 };
@@ -289,6 +290,7 @@ export type PartnerRequest = {
     name?: string;
     orientation?: string;
     published?: boolean;
+    slug?: string;
     type?: string;
     www?: string;
 };

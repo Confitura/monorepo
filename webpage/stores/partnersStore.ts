@@ -43,14 +43,17 @@ export const usePartnersStore = defineStore('partners', {
                 ? data.map(toPartner)
                 : getPartners();
         },
-        getPartnerById(id: string) {
-            return this.partners.find(partner => partner.id.toLowerCase() === id.toLowerCase());
+        getPartnerById(idOrSlug: string) {
+            const key = idOrSlug.toLowerCase();
+            return this.partners.find(partner =>
+                partner.slug?.toLowerCase() === key || partner.id.toLowerCase() === key);
         }
     }
 });
 
 interface BackendPartner {
     id: string;
+    slug?: string;
     name: string;
     type: string;
     www: string;
@@ -63,6 +66,7 @@ interface BackendPartner {
 function toPartner(p: BackendPartner): Partner {
     return {
         id: p.id,
+        slug: p.slug,
         name: p.name,
         description: p.description ?? '',
         logo: p.logo ?? '',
@@ -88,6 +92,7 @@ export type PartnerType = 'platinum' | 'gold' | 'silver' | 'media' | 'path' | 'b
 
 export interface Partner {
     id: string;
+    slug?: string;
     name: string;
     description: string;
     logo: string;

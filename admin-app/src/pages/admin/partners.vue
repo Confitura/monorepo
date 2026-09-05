@@ -31,6 +31,7 @@ const confirmDialog = useTemplateRef('confirmDialog')
 const dialog = ref(false)
 const editing = ref(false)
 const form = ref<PartnerDto>({
+  slug: '',
   name: '',
   type: 'gold',
   www: '',
@@ -61,7 +62,7 @@ function reload() {
 
 function openCreate() {
   editing.value = false
-  form.value = { name: '', type: 'gold', www: '', description: '', orientation: 'horizontal', published: true }
+  form.value = { slug: '', name: '', type: 'gold', www: '', description: '', orientation: 'horizontal', published: true }
   logoFile.value = null
   dialog.value = true
 }
@@ -76,6 +77,7 @@ function openEdit(item: PartnerDto) {
 async function save() {
   if (!valid.value) return
   const body = {
+    slug: form.value.slug,
     name: form.value.name,
     type: form.value.type,
     www: form.value.www,
@@ -156,6 +158,12 @@ defineExpose({ openCreate, openEdit, save, confirmDelete, reload, form, editing,
         <v-card-title>{{ editing ? 'Edit partner' : 'Add partner' }}</v-card-title>
         <v-card-text>
           <v-text-field v-model="form.name" label="Name" :rules="[requiredRule]" />
+          <v-text-field
+            v-model="form.slug"
+            label="URL slug"
+            hint="Used in the partner page URL, e.g. /partners/xtb"
+            persistent-hint
+          />
           <v-select v-model="form.type" :items="TIERS" label="Tier" :rules="[requiredRule]" />
           <v-text-field v-model="form.www" label="Website" />
           <v-select v-model="form.orientation" :items="ORIENTATIONS" label="Logo orientation" />
@@ -166,6 +174,11 @@ defineExpose({ openCreate, openEdit, save, confirmDelete, reload, form, editing,
             accept="image/png,image/jpeg,image/gif,image/webp,image/svg+xml"
             prepend-icon="mdi-image-outline"
           />
+          <p class="text-caption text-medium-emphasis mb-2">
+            Tip: optimise SVG logos with
+            <a href="https://svgomg.net/" target="_blank" rel="noopener noreferrer">svgomg.net</a>
+            before uploading.
+          </p>
           <img
             v-if="editing && form.logo && !logoFile"
             :src="form.logo"

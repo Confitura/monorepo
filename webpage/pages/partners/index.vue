@@ -11,7 +11,7 @@
             <router-link
                 v-for="partner in items"
                 :key="partner.id"
-                :to="`/partners/${partner.id}`"
+                :to="`/partners/${partner.slug || partner.id}`"
                 class="logo-link"
                 :class="`logo-link--${partner.type}`"
             >
