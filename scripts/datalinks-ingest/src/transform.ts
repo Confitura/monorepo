@@ -2,10 +2,29 @@ import type {
   Presentation,
   Page,
   AgendaDay,
+  Sponsor,
+  FaqEntry,
+  NewsFeed,
   TalkRow,
   PageRow,
   AgendaRow,
+  SponsorRow,
+  FaqRow,
+  NewsRow,
 } from './types'
+
+// Relative page URLs — the chat widget runs on the site, so these link in-place.
+function talkUrl(id: string, workshop: boolean): string {
+  return workshop ? `/workshops#${id}` : `/presentations#${id}`
+}
+
+function stripHtml(html: string): string {
+  return html
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+}
 
 // Turns accepted presentations/workshops into talk rows linked to speakers by
 // OPAQUE ID ONLY. Speaker name and photo are deliberately dropped so they are
@@ -22,12 +41,13 @@ export function toTalkRows(presentations: Presentation[]): TalkRow[] {
     durationInMinutes: p.durationInMinutes,
     tags: p.tags.map((t) => t.name),
     speakerIds: p.speakers.map((s) => s.id),
+    url: talkUrl(p.id, p.workshop),
   }))
 }
 
-// CMS pages (faq, venue, tickets, …) are ingested as their raw markdown body.
+// CMS pages (venue, about, …) are ingested as their raw markdown body.
 export function toPageRows(pages: Page[]): PageRow[] {
-  return pages.map((p) => ({ slug: p.slug, content: p.content }))
+  return pages.map((p) => ({ slug: p.slug, content: p.content, url: `/${p.slug}` }))
 }
 
 // Flattens the per-day agenda into "talk X is in room Y at time Z" rows, again
@@ -49,8 +69,39 @@ export function toAgendaRows(days: AgendaDay[]): AgendaRow[] {
         talkId: talk.id,
         talkTitle: talk.title,
         speakerIds: talk.speakers.map((s) => s.id),
+        url: talk.workshop ? `/schedule/workshops/${day.dayId}` : `/schedule/${day.dayId}`,
       })
     }
   }
   return rows
+}
+
+// Sponsors are companies — no PII. Linked to their partner page (slug when set,
+// else the id) and their external website.
+export function toSponsorRows(sponsors: Sponsor[]): SponsorRow[] {
+  return sponsors
+    .filter((s) => s.published)
+    .map((s) => ({
+      id: s.id,
+      name: s.name,
+      tier: s.type,
+      www: s.www,
+      description: s.description,
+      url: `/partners/${s.slug || s.id}`,
+    }))
+}
+
+export function toFaqRows(entries: FaqEntry[]): FaqRow[] {
+  return entries
+    .filter((e) => e.published)
+    .map((e) => ({ category: e.category, question: e.question, answer: e.answer, url: '/faq' }))
+}
+
+export function toNewsRows(feed: NewsFeed): NewsRow[] {
+  return (feed.all ?? []).map((n) => ({
+    title: n.title,
+    body: stripHtml(n.body ?? ''),
+    date: n.publishedAt,
+    url: '/news',
+  }))
 }

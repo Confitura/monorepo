@@ -67,7 +67,8 @@ class HttpDatalinksClientTest {
         assertThat(capturedBody.get())
                 .contains("\"webSearch\":false")
                 .contains("\"query\":\"who speaks about kafka?\"")
-                .contains("\"namespace\":\"confitura-2026\"");
+                .contains("\"namespace\":\"confitura-2026\"")
+                .contains("\"helperPrompt\":");
     }
 
     @Test

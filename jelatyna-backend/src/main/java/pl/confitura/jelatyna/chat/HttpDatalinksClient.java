@@ -20,6 +20,7 @@ import java.util.function.Consumer;
 public class HttpDatalinksClient implements DatalinksClient {
 
     private final ChatConfigurationProperties.Datalinks config;
+    private final String helperPrompt;
     private final ObjectMapper objectMapper;
     private final SseParser sseParser = new SseParser();
     private final HttpClient httpClient = HttpClient.newBuilder()
@@ -28,6 +29,7 @@ public class HttpDatalinksClient implements DatalinksClient {
 
     public HttpDatalinksClient(ChatConfigurationProperties properties, ObjectMapper objectMapper) {
         this.config = properties.getDatalinks();
+        this.helperPrompt = properties.getHelperPrompt();
         this.objectMapper = objectMapper;
     }
 
@@ -38,6 +40,9 @@ public class HttpDatalinksClient implements DatalinksClient {
         body.put("namespace", config.getNamespace());
         body.put("query", query);
         body.put("webSearch", false);
+        if (helperPrompt != null && !helperPrompt.isBlank()) {
+            body.put("helperPrompt", helperPrompt);
+        }
         if (conversationId != null && !conversationId.isBlank()) {
             body.put("conversationId", conversationId);
         }
