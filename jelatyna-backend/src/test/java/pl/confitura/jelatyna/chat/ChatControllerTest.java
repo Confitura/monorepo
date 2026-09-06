@@ -62,6 +62,40 @@ class ChatControllerTest extends BaseIntegrationTest {
     }
 
     @Test
+    void streamsNonAsciiAnswerAsUtf8Bytes() throws Exception {
+        when(speakerDirectory.idToName()).thenReturn(Map.of());
+        // "kłamstwa" — ł is U+0142 (UTF-8: 0xC5 0x82), unrepresentable in ISO-8859-1
+        stubDatalinksAnswer("{\"response\":\"kłamstwa\"}");
+
+        var mvcResult = mockMvc.perform(post("/chat/ask")
+                        .header("X-Forwarded-For", "10.0.0.9")
+                        .contentType(APPLICATION_JSON)
+                        .content("{\"question\":\"q\"}"))
+                .andReturn();
+        byte[] body = mockMvc.perform(asyncDispatch(mvcResult))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsByteArray();
+
+        // must contain the UTF-8 encoding of ł, and must NOT contain '?' (0x3F),
+        // which is what an ISO-8859-1 encoder emits for an unrepresentable char.
+        assertContainsSubsequence(body, new byte[]{(byte) 0xC5, (byte) 0x82});
+        org.junit.jupiter.api.Assertions.assertTrue(
+                new String(body, java.nio.charset.StandardCharsets.UTF_8).contains("kłamstwa"),
+                "decoded UTF-8 body should contain 'kłamstwa'");
+    }
+
+    private static void assertContainsSubsequence(byte[] haystack, byte[] needle) {
+        outer:
+        for (int i = 0; i + needle.length <= haystack.length; i++) {
+            for (int j = 0; j < needle.length; j++) {
+                if (haystack[i + j] != needle[j]) continue outer;
+            }
+            return;
+        }
+        throw new AssertionError("response bytes do not contain the expected UTF-8 sequence (SSE not UTF-8 encoded)");
+    }
+
+    @Test
     void translatesSpeakerNameInQuestionToIdBeforeCallingDatalinks() throws Exception {
         when(speakerDirectory.idToName()).thenReturn(Map.of("spk-1", "Artur Laskowski"));
         stubDatalinksAnswer("{\"response\":\"ok\"}");
