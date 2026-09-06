@@ -43,7 +43,9 @@ declare module 'vue-router/auto-routes' {
       Record<never, never>,
       Record<never, never>,
       | '/admin/agenda'
+      | '/admin/faq'
       | '/admin/pages'
+      | '/admin/partners'
       | '/admin/presentation-preview.[[id]]'
       | '/admin/presentations'
       | '/admin/rates'
@@ -57,9 +59,23 @@ declare module 'vue-router/auto-routes' {
       Record<never, never>,
       | never
     >,
+    '/admin/faq': RouteRecordInfo<
+      '/admin/faq',
+      '/admin/faq',
+      Record<never, never>,
+      Record<never, never>,
+      | never
+    >,
     '/admin/pages': RouteRecordInfo<
       '/admin/pages',
       '/admin/pages',
+      Record<never, never>,
+      Record<never, never>,
+      | never
+    >,
+    '/admin/partners': RouteRecordInfo<
+      '/admin/partners',
+      '/admin/partners',
       Record<never, never>,
       Record<never, never>,
       | never
@@ -198,7 +214,9 @@ declare module 'vue-router/auto-routes' {
       routes:
         | '/admin'
         | '/admin/agenda'
+        | '/admin/faq'
         | '/admin/pages'
+        | '/admin/partners'
         | '/admin/presentation-preview.[[id]]'
         | '/admin/presentations'
         | '/admin/rates'
@@ -213,9 +231,21 @@ declare module 'vue-router/auto-routes' {
       views:
         | never
     }
+    'src/pages/admin/faq.vue': {
+      routes:
+        | '/admin/faq'
+      views:
+        | never
+    }
     'src/pages/admin/pages.vue': {
       routes:
         | '/admin/pages'
+      views:
+        | never
+    }
+    'src/pages/admin/partners.vue': {
+      routes:
+        | '/admin/partners'
       views:
         | never
     }

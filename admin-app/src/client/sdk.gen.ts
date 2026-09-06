@@ -2,7 +2,7 @@
 
 import { type Client, type ClientMeta, formDataBodySerializer, type Options as Options2, type RequestResult, type ServerSentEventsResult, type TDataShape } from './client';
 import { client } from './client.gen';
-import type { AcceptData, AcceptedPresentationsData, AcceptedPresentationsResponses, AcceptedWorkshopsData, AcceptedWorkshopsResponses, AcceptResponses, AddCospeakerData, AddCospeakerResponses, AddPresentationToUserData, AddPresentationToUserResponses, AddRatingData, AddRatingResponses, AddWorkshopToUserData, AddWorkshopToUserResponses, AdminsData, AdminsResponses, AgendaData, AgendaResponses, ArrivalsData, ArrivalsResponses, AskData, AskResponse, AskResponses, AssignParticipationDataData, AssignParticipationDataResponses, AuthorizeData, AuthorizeResponses, Callback1Data, Callback1Responses, CallbackData, CallbackResponses, CanUseVoucherData, CanUseVoucherResponses, CountByPresentationData, CountByPresentationResponses, CreateManualData, CreateManualResponses, CreatePageData, CreatePageResponses, CreateRoomData, CreateRoomResponses, CreateTimeSlotData, CreateTimeSlotResponses, CreateVoteData, CreateVoteResponses, CreateVoucherData, CreateVoucherResponses, DeleteAgendaEntryData, DeleteAgendaEntryResponses, DeleteData, DeleteDayData, DeleteDayResponses, DeletePageData, DeletePageResponses, DeletePresentationData, DeletePresentationResponses, DeleteResponses, DeleteRoomData, DeleteRoomResponses, DeleteTimeSlotData, DeleteTimeSlotResponses, DeleteWorkshopData, DeleteWorkshopResponses, DoImportData, DoImportResponses, DoLoginWithTwitterData, DoLoginWithTwitterResponses, ExportIcalData, ExportIcalResponses, FindAllData, FindAllResponses, GetAdminsData, GetAdminsResponses, GetAgendaEntriesByDayData, GetAgendaEntriesByDayResponses, GetAgendaEntryByIdData, GetAgendaEntryByIdResponses, GetAllDays1Data, GetAllDays1Responses, GetAllDaysData, GetAllDaysResponses, GetAllPresentationsData, GetAllPresentationsResponses, GetAllRooms1Data, GetAllRooms1Responses, GetAllRoomsData, GetAllRoomsResponses, GetAllTagsData, GetAllTagsResponses, GetAllTimeSlotsData, GetAllTimeSlotsResponses, GetAllUsersData, GetAllUsersResponses, GetByIdData, GetByIdResponses, GetCospeakersData, GetCospeakersResponses, GetCurrentUserData, GetCurrentUserResponses, GetDayByIdData, GetDayByIdResponses, GetLastWebpageDumpData, GetLastWebpageDumpResponses, GetLikesData, GetLikesResponses, GetLikesSummaryData, GetLikesSummaryResponses, GetMealStatsData, GetMealStatsResponses, GetPageData, GetPageResponses, GetPagesData, GetPagesResponses, GetPresentationData, GetPresentationResponses, GetPublicByIdData, GetPublicByIdResponses, GetRegistrationStatsData, GetRegistrationStatsResponses, GetRoomByIdData, GetRoomByIdResponses, GetSpeakersData, GetSpeakersResponses, GetStatusData, GetStatusResponses, GetTemplatesData, GetTemplatesResponses, GetTShirtSizesData, GetTShirtSizesResponses, GetTweetsData, GetTweetsResponses, GetUserPresentationsData, GetUserPresentationsResponses, GetUserWorkshopsData, GetUserWorkshopsResponses, GetVolunteersData, GetVolunteersResponses, GetVoucherStatsData, GetVoucherStatsResponses, GetWorkshopData, GetWorkshopResponses, ImportFromAllegroData, ImportFromAllegroResponses, LoginInProviderData, LoginInProviderResponses, MarkAsAdminData, MarkAsAdminResponses, MarkAsVolunteerData, MarkAsVolunteerResponses, MoveAgendaEntryData, MoveAgendaEntryResponses, NewsData, NewsletterStatData, NewsletterStatResponses, NewsResponses, PageData, PageResponses, Rates1Data, Rates1Responses, RatesData, RatesResponses, RedirectToTwitterLoginData, RedirectToTwitterLoginResponses, RefreshTokenData, RefreshTokenResponses, RegistrationsData, RegistrationsResponses, RejectData, RejectResponses, RemoveCospeakerData, RemoveCospeakerResponses, RemoveRoomData, RemoveRoomResponses, ResendVoucherData, ResendVoucherResponses, ResultsData, ResultsResponses, Save1Data, Save1Responses, SaveAgendaEntryData, SaveAgendaEntryResponses, SaveData, SaveDayData, SaveDayResponses, SaveResponses, SaveRoomData, SaveRoomResponses, SaveTagsData, SaveTagsResponses, SendMailsData, SendMailsResponses, SendVouchersData, SendVouchersResponses, SetPreSelectionData, SetPreSelectionResponses, SpeakerData, SpeakerResponses, SpeakersData, SpeakersResponses, StartData, StartResponses, StatisticsData, StatisticsResponses, StorePartnerLogoData, StorePartnerLogoResponses, StoreUserProfilePictureData, StoreUserProfilePictureResponses, SubmissionStatsData, SubmissionStatsResponses, SubscribeIcalData, SubscribeIcalResponses, TriggerWebpageDumpData, TriggerWebpageDumpResponses, UpdateAgendaEntryData, UpdateAgendaEntryResponses, UpdateDayData, UpdateDayResponses, UpdatePageData, UpdatePageResponses, UpdatePresentationData, UpdatePresentationResponses, UpdateRatingData, UpdateRatingResponses, UpdateRoomData, UpdateRoomResponses, UpdateTimeSlotData, UpdateTimeSlotResponses, UpdateWorkshopData, UpdateWorkshopResponses, UsersStatsData, UsersStatsResponses, VotesData, VotesResponses } from './types.gen';
+import type { AcceptData, AcceptedPresentationsData, AcceptedPresentationsResponses, AcceptedWorkshopsData, AcceptedWorkshopsResponses, AcceptResponses, AddCospeakerData, AddCospeakerResponses, AddPresentationToUserData, AddPresentationToUserResponses, AddRatingData, AddRatingResponses, AddWorkshopToUserData, AddWorkshopToUserResponses, AdminsData, AdminsResponses, AgendaData, AgendaResponses, ArrivalsData, ArrivalsResponses, AskData, AskResponse, AskResponses, AssignParticipationDataData, AssignParticipationDataResponses, AuthorizeData, AuthorizeResponses, Callback1Data, Callback1Responses, CallbackData, CallbackResponses, CanUseVoucherData, CanUseVoucherResponses, CountByPresentationData, CountByPresentationResponses, CreateFaqEntryData, CreateFaqEntryResponses, CreateManualData, CreateManualResponses, CreatePageData, CreatePageResponses, CreatePartnerData, CreatePartnerResponses, CreateRoomData, CreateRoomResponses, CreateTimeSlotData, CreateTimeSlotResponses, CreateVoteData, CreateVoteResponses, CreateVoucherData, CreateVoucherResponses, DeleteAgendaEntryData, DeleteAgendaEntryResponses, DeleteData, DeleteDayData, DeleteDayResponses, DeleteFaqEntryData, DeleteFaqEntryResponses, DeletePageData, DeletePageResponses, DeletePartnerData, DeletePartnerResponses, DeletePresentationData, DeletePresentationResponses, DeleteResponses, DeleteRoomData, DeleteRoomResponses, DeleteTimeSlotData, DeleteTimeSlotResponses, DeleteWorkshopData, DeleteWorkshopResponses, DoImportData, DoImportResponses, DoLoginWithTwitterData, DoLoginWithTwitterResponses, ExportIcalData, ExportIcalResponses, FindAllData, FindAllResponses, GetAdminsData, GetAdminsResponses, GetAgendaEntriesByDayData, GetAgendaEntriesByDayResponses, GetAgendaEntryByIdData, GetAgendaEntryByIdResponses, GetAllDays1Data, GetAllDays1Responses, GetAllDaysData, GetAllDaysResponses, GetAllFaqEntriesData, GetAllFaqEntriesResponses, GetAllPartnersData, GetAllPartnersResponses, GetAllPresentationsData, GetAllPresentationsResponses, GetAllRooms1Data, GetAllRooms1Responses, GetAllRoomsData, GetAllRoomsResponses, GetAllTagsData, GetAllTagsResponses, GetAllTimeSlotsData, GetAllTimeSlotsResponses, GetAllUsersData, GetAllUsersResponses, GetByIdData, GetByIdResponses, GetCospeakersData, GetCospeakersResponses, GetCurrentUserData, GetCurrentUserResponses, GetDayByIdData, GetDayByIdResponses, GetFaqEntryData, GetFaqEntryResponses, GetLastWebpageDumpData, GetLastWebpageDumpResponses, GetLikesData, GetLikesResponses, GetLikesSummaryData, GetLikesSummaryResponses, GetMealStatsData, GetMealStatsResponses, GetPageData, GetPageResponses, GetPagesData, GetPagesResponses, GetPartnerData, GetPartnerResponses, GetPresentationData, GetPresentationResponses, GetPublicByIdData, GetPublicByIdResponses, GetPublishedFaqEntriesData, GetPublishedFaqEntriesResponses, GetPublishedPartnersData, GetPublishedPartnersResponses, GetRegistrationStatsData, GetRegistrationStatsResponses, GetRoomByIdData, GetRoomByIdResponses, GetSpeakersData, GetSpeakersResponses, GetStatusData, GetStatusResponses, GetTemplatesData, GetTemplatesResponses, GetTShirtSizesData, GetTShirtSizesResponses, GetTweetsData, GetTweetsResponses, GetUserPresentationsData, GetUserPresentationsResponses, GetUserWorkshopsData, GetUserWorkshopsResponses, GetVolunteersData, GetVolunteersResponses, GetVoucherStatsData, GetVoucherStatsResponses, GetWorkshopData, GetWorkshopResponses, ImportFromAllegroData, ImportFromAllegroResponses, ImportFromFaqPageData, ImportFromFaqPageResponses, LoginInProviderData, LoginInProviderResponses, MarkAsAdminData, MarkAsAdminResponses, MarkAsVolunteerData, MarkAsVolunteerResponses, MoveAgendaEntryData, MoveAgendaEntryResponses, NewsData, NewsletterStatData, NewsletterStatResponses, NewsResponses, PageData, PageResponses, Rates1Data, Rates1Responses, RatesData, RatesResponses, RedirectToTwitterLoginData, RedirectToTwitterLoginResponses, RefreshTokenData, RefreshTokenResponses, RegistrationsData, RegistrationsResponses, RejectData, RejectResponses, RemoveCospeakerData, RemoveCospeakerResponses, RemoveRoomData, RemoveRoomResponses, RenameCategoryData, RenameCategoryResponses, ReorderFaqEntriesData, ReorderFaqEntriesResponses, ResendVoucherData, ResendVoucherResponses, ResultsData, ResultsResponses, Save1Data, Save1Responses, SaveAgendaEntryData, SaveAgendaEntryResponses, SaveData, SaveDayData, SaveDayResponses, SaveResponses, SaveRoomData, SaveRoomResponses, SaveTagsData, SaveTagsResponses, SendMailsData, SendMailsResponses, SendVouchersData, SendVouchersResponses, SetPreSelectionData, SetPreSelectionResponses, SpeakerData, SpeakerResponses, SpeakersData, SpeakersResponses, StartData, StartResponses, StatisticsData, StatisticsResponses, StorePartnerLogoData, StorePartnerLogoResponses, StoreUserProfilePictureData, StoreUserProfilePictureResponses, SubmissionStatsData, SubmissionStatsResponses, SubscribeIcalData, SubscribeIcalResponses, TriggerWebpageDumpData, TriggerWebpageDumpResponses, UpdateAgendaEntryData, UpdateAgendaEntryResponses, UpdateDayData, UpdateDayResponses, UpdateFaqEntryData, UpdateFaqEntryResponses, UpdatePageData, UpdatePageResponses, UpdatePartnerData, UpdatePartnerResponses, UpdatePresentationData, UpdatePresentationResponses, UpdateRatingData, UpdateRatingResponses, UpdateRoomData, UpdateRoomResponses, UpdateTimeSlotData, UpdateTimeSlotResponses, UpdateWorkshopData, UpdateWorkshopResponses, UsersStatsData, UsersStatsResponses, VotesData, VotesResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean, TResponse = unknown> = Options2<TData, ThrowOnError, TResponse> & {
     /**
@@ -225,6 +225,52 @@ export const updateDay = <ThrowOnError extends boolean = false>(options: Options
     }
 });
 
+export const getPublishedFaqEntries = <ThrowOnError extends boolean = false>(options?: Options<GetPublishedFaqEntriesData, ThrowOnError>): RequestResult<GetPublishedFaqEntriesResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetPublishedFaqEntriesResponses, unknown, ThrowOnError>({ url: '/faq-entries', ...options });
+
+export const createFaqEntry = <ThrowOnError extends boolean = false>(options: Options<CreateFaqEntryData, ThrowOnError>): RequestResult<CreateFaqEntryResponses, unknown, ThrowOnError> => (options.client ?? client).post<CreateFaqEntryResponses, unknown, ThrowOnError>({
+    url: '/faq-entries',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const getAllFaqEntries = <ThrowOnError extends boolean = false>(options?: Options<GetAllFaqEntriesData, ThrowOnError>): RequestResult<GetAllFaqEntriesResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetAllFaqEntriesResponses, unknown, ThrowOnError>({ url: '/faq-entries/all', ...options });
+
+export const renameCategory = <ThrowOnError extends boolean = false>(options: Options<RenameCategoryData, ThrowOnError>): RequestResult<RenameCategoryResponses, unknown, ThrowOnError> => (options.client ?? client).put<RenameCategoryResponses, unknown, ThrowOnError>({
+    url: '/faq-entries/category',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const importFromFaqPage = <ThrowOnError extends boolean = false>(options?: Options<ImportFromFaqPageData, ThrowOnError>): RequestResult<ImportFromFaqPageResponses, unknown, ThrowOnError> => (options?.client ?? client).post<ImportFromFaqPageResponses, unknown, ThrowOnError>({ url: '/faq-entries/import', ...options });
+
+export const reorderFaqEntries = <ThrowOnError extends boolean = false>(options: Options<ReorderFaqEntriesData, ThrowOnError>): RequestResult<ReorderFaqEntriesResponses, unknown, ThrowOnError> => (options.client ?? client).put<ReorderFaqEntriesResponses, unknown, ThrowOnError>({
+    url: '/faq-entries/order',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const deleteFaqEntry = <ThrowOnError extends boolean = false>(options: Options<DeleteFaqEntryData, ThrowOnError>): RequestResult<DeleteFaqEntryResponses, unknown, ThrowOnError> => (options.client ?? client).delete<DeleteFaqEntryResponses, unknown, ThrowOnError>({ url: '/faq-entries/{id}', ...options });
+
+export const getFaqEntry = <ThrowOnError extends boolean = false>(options: Options<GetFaqEntryData, ThrowOnError>): RequestResult<GetFaqEntryResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetFaqEntryResponses, unknown, ThrowOnError>({ url: '/faq-entries/{id}', ...options });
+
+export const updateFaqEntry = <ThrowOnError extends boolean = false>(options: Options<UpdateFaqEntryData, ThrowOnError>): RequestResult<UpdateFaqEntryResponses, unknown, ThrowOnError> => (options.client ?? client).put<UpdateFaqEntryResponses, unknown, ThrowOnError>({
+    url: '/faq-entries/{id}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
 export const getLikes = <ThrowOnError extends boolean = false>(options: Options<GetLikesData, ThrowOnError>): RequestResult<GetLikesResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetLikesResponses, unknown, ThrowOnError>({ url: '/likes', ...options });
 
 export const getLikesSummary = <ThrowOnError extends boolean = false>(options?: Options<GetLikesSummaryData, ThrowOnError>): RequestResult<GetLikesSummaryResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetLikesSummaryResponses, unknown, ThrowOnError>({ url: '/likes/summary', ...options });
@@ -267,6 +313,32 @@ export const createPage = <ThrowOnError extends boolean = false>(options: Option
 
 export const updatePage = <ThrowOnError extends boolean = false>(options: Options<UpdatePageData, ThrowOnError>): RequestResult<UpdatePageResponses, unknown, ThrowOnError> => (options.client ?? client).put<UpdatePageResponses, unknown, ThrowOnError>({
     url: '/pages/{id}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const getPublishedPartners = <ThrowOnError extends boolean = false>(options?: Options<GetPublishedPartnersData, ThrowOnError>): RequestResult<GetPublishedPartnersResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetPublishedPartnersResponses, unknown, ThrowOnError>({ url: '/partners', ...options });
+
+export const createPartner = <ThrowOnError extends boolean = false>(options: Options<CreatePartnerData, ThrowOnError>): RequestResult<CreatePartnerResponses, unknown, ThrowOnError> => (options.client ?? client).post<CreatePartnerResponses, unknown, ThrowOnError>({
+    url: '/partners',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const getAllPartners = <ThrowOnError extends boolean = false>(options?: Options<GetAllPartnersData, ThrowOnError>): RequestResult<GetAllPartnersResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetAllPartnersResponses, unknown, ThrowOnError>({ url: '/partners/all', ...options });
+
+export const deletePartner = <ThrowOnError extends boolean = false>(options: Options<DeletePartnerData, ThrowOnError>): RequestResult<DeletePartnerResponses, unknown, ThrowOnError> => (options.client ?? client).delete<DeletePartnerResponses, unknown, ThrowOnError>({ url: '/partners/{id}', ...options });
+
+export const getPartner = <ThrowOnError extends boolean = false>(options: Options<GetPartnerData, ThrowOnError>): RequestResult<GetPartnerResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetPartnerResponses, unknown, ThrowOnError>({ url: '/partners/{id}', ...options });
+
+export const updatePartner = <ThrowOnError extends boolean = false>(options: Options<UpdatePartnerData, ThrowOnError>): RequestResult<UpdatePartnerResponses, unknown, ThrowOnError> => (options.client ?? client).put<UpdatePartnerResponses, unknown, ThrowOnError>({
+    url: '/partners/{id}',
     ...options,
     headers: {
         'Content-Type': 'application/json',

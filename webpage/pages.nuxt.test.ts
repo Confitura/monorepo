@@ -3,10 +3,22 @@ import { describe, it, expect, vi } from 'vitest'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
 
 // Mock the archive/api fetch composable used by pages and PageFragment
+const FAQ_ENTRIES = [
+  { id: 'e1', category: 'Registration', question: 'How do I register?', answer: 'Buy a **ticket**.', displayOrder: 0, published: true },
+  { id: 'e2', category: 'Venue', question: 'Where is it?', answer: 'At the venue.', displayOrder: 0, published: true },
+]
+
+const PARTNERS = [
+  { id: 'uuid-1', slug: 'xtb', name: 'XTB', type: 'gold', www: 'https://xtb.com', logo: 'https://cdn/x.svg', description: 'x', orientation: 'horizontal', published: true },
+  { id: 'uuid-2', slug: 'dpd', name: 'DPD', type: 'bronze', www: 'https://dpd.com', logo: 'https://cdn/d.svg', description: 'd', orientation: 'box', published: true },
+]
+
 vi.mock('~/composables/useAPIFetch', async () => {
   const { ref } = await import('vue')
-  const createFetch = () => {
-    const data = ref(null)
+  const createFetch = (path?: string) => {
+    const data = ref(
+      path === '/faq/entries.json' ? FAQ_ENTRIES : path === '/partners/list.json' ? PARTNERS : null,
+    )
     const result = { data, pending: ref(false), error: ref(null), refresh: vi.fn(), execute: vi.fn() }
     return Object.assign(Promise.resolve(result), result)
   }
@@ -51,9 +63,19 @@ describe('pages render without errors', () => {
     expect(wrapper.find('.about__page').exists()).toBe(true)
   })
 
-  it('renders the faq page', async () => {
+  it('renders the faq page from structured entries grouped by category', async () => {
     const wrapper = await mountSuspended(FaqPage)
-    expect(wrapper.html()).toBeDefined()
+    const questions = wrapper.find('.questions')
+    expect(questions.exists()).toBe(true)
+    // the two-column grid CSS targets `.questions section`, so the rendered
+    // markdown must live inside a nested <section>
+    expect(wrapper.find('.questions section').exists()).toBe(true)
+    const html = questions.html()
+    // categories as h2, questions as h3, answer markdown rendered
+    expect(html).toContain('Registration')
+    expect(html).toContain('Venue')
+    expect(html).toContain('How do I register?')
+    expect(html).toContain('<strong>ticket</strong>')
   })
 
   it('renders the news page', async () => {
@@ -100,9 +122,15 @@ describe('pages render without errors', () => {
     expect(wrapper.html()).toBeDefined()
   })
 
-  it('renders the partners listing page', async () => {
+  it('renders the partners listing page from the backend dump, grouped by tier', async () => {
     const wrapper = await mountSuspended(PartnersIndexPage)
     expect(wrapper.find('.partners').exists()).toBe(true)
+    // partners came from /partners/list.json, grouped by tier
+    expect(wrapper.find('#gold').exists()).toBe(true)
+    expect(wrapper.find('#bronze').exists()).toBe(true)
+    expect(wrapper.html()).toContain('XTB')
+    expect(wrapper.html()).toContain('DPD')
+    expect(wrapper.find('a[href="/partners/xtb"]').exists()).toBe(true)
   })
 
   it('renders the partner detail page', async () => {

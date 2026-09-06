@@ -59,6 +59,23 @@ export type DumpStatus = {
     lastDumpAt?: string;
 };
 
+export type FaqEntryDto = {
+    answer?: string;
+    category?: string;
+    displayOrder?: number;
+    id?: string;
+    published?: boolean;
+    question?: string;
+};
+
+export type FaqEntryRequest = {
+    answer?: string;
+    category?: string;
+    displayOrder?: number;
+    published?: boolean;
+    question?: string;
+};
+
 export type FullPresentation = {
     description: string;
     durationInMinutes: number;
@@ -256,6 +273,28 @@ export type ParticipationData = {
     voucher?: Voucher;
 };
 
+export type PartnerDto = {
+    description?: string;
+    id?: string;
+    logo?: string;
+    name?: string;
+    orientation?: string;
+    published?: boolean;
+    slug?: string;
+    type?: string;
+    www?: string;
+};
+
+export type PartnerRequest = {
+    description?: string;
+    name?: string;
+    orientation?: string;
+    published?: boolean;
+    slug?: string;
+    type?: string;
+    www?: string;
+};
+
 export type PreSelectionRequest = {
     comment?: string;
     status?: 'NONE' | 'PRE_APPROVED' | 'PRE_REJECTED' | 'IN_RESERVE';
@@ -331,6 +370,15 @@ export type RateRequest = {
 export type RegistrationError = {
     additionalInfo?: string;
     reason?: string;
+};
+
+export type RenameCategoryRequest = {
+    from?: string;
+    to?: string;
+};
+
+export type ReorderRequest = {
+    ids?: Array<string>;
 };
 
 export type Room = {
@@ -1305,6 +1353,156 @@ export type UpdateDayResponses = {
 
 export type UpdateDayResponse = UpdateDayResponses[keyof UpdateDayResponses];
 
+export type GetPublishedFaqEntriesData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/faq-entries';
+};
+
+export type GetPublishedFaqEntriesResponses = {
+    /**
+     * OK
+     */
+    200: Array<FaqEntryDto>;
+};
+
+export type GetPublishedFaqEntriesResponse = GetPublishedFaqEntriesResponses[keyof GetPublishedFaqEntriesResponses];
+
+export type CreateFaqEntryData = {
+    body: FaqEntryRequest;
+    path?: never;
+    query?: never;
+    url: '/faq-entries';
+};
+
+export type CreateFaqEntryResponses = {
+    /**
+     * OK
+     */
+    200: FaqEntryDto;
+};
+
+export type CreateFaqEntryResponse = CreateFaqEntryResponses[keyof CreateFaqEntryResponses];
+
+export type GetAllFaqEntriesData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/faq-entries/all';
+};
+
+export type GetAllFaqEntriesResponses = {
+    /**
+     * OK
+     */
+    200: Array<FaqEntryDto>;
+};
+
+export type GetAllFaqEntriesResponse = GetAllFaqEntriesResponses[keyof GetAllFaqEntriesResponses];
+
+export type RenameCategoryData = {
+    body: RenameCategoryRequest;
+    path?: never;
+    query?: never;
+    url: '/faq-entries/category';
+};
+
+export type RenameCategoryResponses = {
+    /**
+     * OK
+     */
+    200: {
+        [key: string]: number;
+    };
+};
+
+export type RenameCategoryResponse = RenameCategoryResponses[keyof RenameCategoryResponses];
+
+export type ImportFromFaqPageData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/faq-entries/import';
+};
+
+export type ImportFromFaqPageResponses = {
+    /**
+     * OK
+     */
+    200: {
+        [key: string]: number;
+    };
+};
+
+export type ImportFromFaqPageResponse = ImportFromFaqPageResponses[keyof ImportFromFaqPageResponses];
+
+export type ReorderFaqEntriesData = {
+    body: ReorderRequest;
+    path?: never;
+    query?: never;
+    url: '/faq-entries/order';
+};
+
+export type ReorderFaqEntriesResponses = {
+    /**
+     * OK
+     */
+    200: unknown;
+};
+
+export type DeleteFaqEntryData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/faq-entries/{id}';
+};
+
+export type DeleteFaqEntryResponses = {
+    /**
+     * OK
+     */
+    200: unknown;
+};
+
+export type GetFaqEntryData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/faq-entries/{id}';
+};
+
+export type GetFaqEntryResponses = {
+    /**
+     * OK
+     */
+    200: FaqEntryDto;
+};
+
+export type GetFaqEntryResponse = GetFaqEntryResponses[keyof GetFaqEntryResponses];
+
+export type UpdateFaqEntryData = {
+    body: FaqEntryRequest;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/faq-entries/{id}';
+};
+
+export type UpdateFaqEntryResponses = {
+    /**
+     * OK
+     */
+    200: FaqEntryDto;
+};
+
+export type UpdateFaqEntryResponse = UpdateFaqEntryResponses[keyof UpdateFaqEntryResponses];
+
 export type GetLikesData = {
     body?: never;
     path?: never;
@@ -1559,6 +1757,106 @@ export type UpdatePageResponses = {
 };
 
 export type UpdatePageResponse = UpdatePageResponses[keyof UpdatePageResponses];
+
+export type GetPublishedPartnersData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/partners';
+};
+
+export type GetPublishedPartnersResponses = {
+    /**
+     * OK
+     */
+    200: Array<PartnerDto>;
+};
+
+export type GetPublishedPartnersResponse = GetPublishedPartnersResponses[keyof GetPublishedPartnersResponses];
+
+export type CreatePartnerData = {
+    body: PartnerRequest;
+    path?: never;
+    query?: never;
+    url: '/partners';
+};
+
+export type CreatePartnerResponses = {
+    /**
+     * OK
+     */
+    200: PartnerDto;
+};
+
+export type CreatePartnerResponse = CreatePartnerResponses[keyof CreatePartnerResponses];
+
+export type GetAllPartnersData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/partners/all';
+};
+
+export type GetAllPartnersResponses = {
+    /**
+     * OK
+     */
+    200: Array<PartnerDto>;
+};
+
+export type GetAllPartnersResponse = GetAllPartnersResponses[keyof GetAllPartnersResponses];
+
+export type DeletePartnerData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/partners/{id}';
+};
+
+export type DeletePartnerResponses = {
+    /**
+     * OK
+     */
+    200: unknown;
+};
+
+export type GetPartnerData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/partners/{id}';
+};
+
+export type GetPartnerResponses = {
+    /**
+     * OK
+     */
+    200: PartnerDto;
+};
+
+export type GetPartnerResponse = GetPartnerResponses[keyof GetPartnerResponses];
+
+export type UpdatePartnerData = {
+    body: PartnerRequest;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/partners/{id}';
+};
+
+export type UpdatePartnerResponses = {
+    /**
+     * OK
+     */
+    200: PartnerDto;
+};
+
+export type UpdatePartnerResponse = UpdatePartnerResponses[keyof UpdatePartnerResponses];
 
 export type GetAllPresentationsData = {
     body?: never;
