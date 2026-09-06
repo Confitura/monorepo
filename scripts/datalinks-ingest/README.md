@@ -13,9 +13,18 @@ enforced by `test/transform.test.ts`.
 
 ## Datasets created
 
-- `talks` — accepted talks + workshops (title, abstract, level, language, tags, duration, speakerIds)
-- `pages` — CMS pages (faq, venue, tickets, …) as markdown
-- `agenda` — talk → day/time/room placement (optional; set `AGENDA_DAYS`)
+Every row carries a relative `url` to its page on the site (e.g. `/presentations#<id>`,
+`/partners/<slug>`, `/schedule/<dayId>`) so the assistant can link to it.
+
+- `talks` — accepted talks + workshops (title, abstract, level, language, tags, duration, speakerIds, url)
+- `agenda` — talk/workshop → day/time/room placement (`AGENDA_DAYS`, default `day-1,day-2`)
+- `sponsors` — partners (name, tier, description, website, url) — companies, no PII
+- `faq` — structured FAQ entries (category, question, answer, url) from `/faq/entries.json`
+- `pages` — info pages (venue, about, …) as markdown, with url (`RESOURCES_PAGES`)
+- `news` — announcements (title, body, date, url)
+
+The backend also sends Datalinks a `helperPrompt` (see `ChatConfigurationProperties`) that
+keeps answers on-topic, replies in the visitor's language, and links to each record's `url`.
 
 ## Usage
 

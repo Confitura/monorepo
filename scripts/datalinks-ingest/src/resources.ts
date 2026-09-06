@@ -1,4 +1,4 @@
-import type { Presentation, Page, AgendaDay } from './types'
+import type { Presentation, Page, AgendaDay, Sponsor, FaqEntry, NewsFeed } from './types'
 
 // Reads the public Confitura resource JSON (unauthenticated, static files).
 
@@ -25,6 +25,18 @@ export async function fetchPage(baseUrl: string, slug: string): Promise<Page | n
   if (res.status === 404) return null
   if (!res.ok) throw new Error(`GET ${url} -> ${res.status} ${res.statusText}`)
   return { slug, content: (await res.json()) as string }
+}
+
+export async function fetchSponsors(baseUrl: string): Promise<Sponsor[]> {
+  return getJson<Sponsor[]>(baseUrl, 'partners/list.json')
+}
+
+export async function fetchFaqEntries(baseUrl: string): Promise<FaqEntry[]> {
+  return getJson<FaqEntry[]>(baseUrl, 'faq/entries.json')
+}
+
+export async function fetchNews(baseUrl: string): Promise<NewsFeed> {
+  return getJson<NewsFeed>(baseUrl, 'news.json')
 }
 
 interface RawAgenda {

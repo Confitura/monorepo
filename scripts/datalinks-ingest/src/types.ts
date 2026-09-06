@@ -58,6 +58,39 @@ export interface Page {
   content: string
 }
 
+// Backend feed shapes (public resource JSON).
+
+export interface Sponsor {
+  id: string
+  slug: string | null
+  name: string
+  type: string
+  www: string | null
+  description: string | null
+  orientation: string | null
+  published: boolean
+}
+
+export interface FaqEntry {
+  id: string
+  category: string
+  question: string
+  answer: string
+  displayOrder: number
+  published: boolean
+}
+
+export interface NewsItem {
+  title: string
+  body: string
+  publishedAt: string
+}
+
+export interface NewsFeed {
+  latest: NewsItem | null
+  all: NewsItem[]
+}
+
 // Sanitized rows we send to Datalinks — no speaker PII, opaque ids only.
 
 export interface TalkRow {
@@ -71,11 +104,13 @@ export interface TalkRow {
   durationInMinutes: number | null
   tags: string[]
   speakerIds: string[]
+  url: string
 }
 
 export interface PageRow {
   slug: string
   content: string
+  url: string
 }
 
 export interface AgendaRow {
@@ -85,4 +120,28 @@ export interface AgendaRow {
   talkId: string
   talkTitle: string
   speakerIds: string[]
+  url: string
+}
+
+export interface SponsorRow {
+  id: string
+  name: string
+  tier: string
+  www: string | null
+  description: string | null
+  url: string
+}
+
+export interface FaqRow {
+  category: string
+  question: string
+  answer: string
+  url: string
+}
+
+export interface NewsRow {
+  title: string
+  body: string
+  date: string
+  url: string
 }
