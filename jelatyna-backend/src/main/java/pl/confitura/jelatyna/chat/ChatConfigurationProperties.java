@@ -27,6 +27,17 @@ public class ChatConfigurationProperties {
     /** Global monthly cap on paid Datalinks calls; when reached the chat is disabled. */
     private int monthlyCallCap = 5000;
 
+    /**
+     * Guidance passed to Datalinks as {@code helperPrompt}: keeps answers on-topic,
+     * replies in the visitor's language, and links to each record's {@code url}.
+     */
+    private String helperPrompt = """
+            You are the assistant for the Confitura conference. Answer only questions about \
+            Confitura — its talks, workshops, schedule, speakers, sponsors, tickets, venue, FAQ \
+            and news. If a question is unrelated, politely say you can only help with Confitura. \
+            Reply in the same language as the question. When you mention a talk, workshop, \
+            sponsor, or page that has a `url` field, link to it with a Markdown link.""";
+
     private Datalinks datalinks = new Datalinks();
 
     @Data
