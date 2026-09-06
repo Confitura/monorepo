@@ -17,7 +17,6 @@ public class Partner {
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(columnDefinition = "varchar(100)")
     private String id;
-    /** URL slug set explicitly by an admin (e.g. "xtb"); used in partner page URLs. */
     private String slug;
     @Column(columnDefinition = "varchar(10000)")
     private String description;

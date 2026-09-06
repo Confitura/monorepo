@@ -130,7 +130,6 @@ describe('pages render without errors', () => {
     expect(wrapper.find('#bronze').exists()).toBe(true)
     expect(wrapper.html()).toContain('XTB')
     expect(wrapper.html()).toContain('DPD')
-    // partner links use the explicit slug, not the uuid id
     expect(wrapper.find('a[href="/partners/xtb"]').exists()).toBe(true)
   })
 
