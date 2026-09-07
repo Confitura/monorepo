@@ -86,7 +86,12 @@ vi.mock('@/utils/api.ts', () => {
     updateFaqEntry: ok({}),
     deleteFaqEntry: ok({}),
     reorderFaqEntries: ok({}),
-    renameCategory: ok({}),
+    getFaqCategories: ok([]),
+    createFaqCategory: ok({}),
+    updateFaqCategory: ok({}),
+    reorderFaqCategories: ok({}),
+    mergeFaqCategories: ok({}),
+    deleteFaqCategory: ok({}),
     // partners
     getAllPartners: ok([]),
     getPublishedPartners: ok([]),

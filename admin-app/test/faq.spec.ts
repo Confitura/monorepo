@@ -17,13 +17,23 @@ const entries = [
   { id: 'e3', category: 'Venue', question: 'Where?', answer: 'A3', displayOrder: 0, published: false },
 ]
 
+const categories = [
+  { id: 'c1', name: 'General', displayOrder: 0, published: true },
+  { id: 'c2', name: 'Venue', displayOrder: 1, published: false },
+]
+
 const api = vi.hoisted(() => ({
   getAllFaqEntries: vi.fn(),
   createFaqEntry: vi.fn(),
   updateFaqEntry: vi.fn(),
   deleteFaqEntry: vi.fn(),
   reorderFaqEntries: vi.fn(),
-  renameCategory: vi.fn(),
+  getFaqCategories: vi.fn(),
+  createFaqCategory: vi.fn(),
+  updateFaqCategory: vi.fn(),
+  reorderFaqCategories: vi.fn(),
+  mergeFaqCategories: vi.fn(),
+  deleteFaqCategory: vi.fn(),
 }))
 
 vi.mock('@/utils/api.ts', () => api)
@@ -61,26 +71,31 @@ function mountPage() {
 describe('admin FAQ page', () => {
   beforeEach(() => {
     api.getAllFaqEntries.mockResolvedValue({ data: entries, status: 200 })
+    api.getFaqCategories.mockResolvedValue({ data: categories, status: 200 })
     api.createFaqEntry.mockResolvedValue({ data: {}, status: 201 })
     api.updateFaqEntry.mockResolvedValue({ data: {}, status: 200 })
     api.deleteFaqEntry.mockResolvedValue({ status: 204 })
     api.reorderFaqEntries.mockResolvedValue({ status: 204 })
-    api.renameCategory.mockResolvedValue({ data: { updated: 2 }, status: 200 })
+    api.createFaqCategory.mockResolvedValue({ data: {}, status: 201 })
+    api.updateFaqCategory.mockResolvedValue({ data: {}, status: 200 })
+    api.reorderFaqCategories.mockResolvedValue({ status: 204 })
+    api.mergeFaqCategories.mockResolvedValue({ status: 204 })
+    api.deleteFaqCategory.mockResolvedValue({ status: 204 })
   })
 
   afterEach(() => vi.clearAllMocks())
 
-  it('loads and groups entries by category', async () => {
+  it('builds groups from the category dictionary, attaching entries', async () => {
     const wrapper = mountPage()
     await flushPromises()
-    const groups = (wrapper.vm as any).grouped
-    expect(groups.map((g: any) => g.category)).toEqual(['General', 'Venue'])
+    const groups = (wrapper.vm as any).groups
+    expect(groups.map((g: any) => g.category.name)).toEqual(['General', 'Venue'])
     expect(groups[0].items).toHaveLength(2)
     expect(wrapper.text()).toContain('First')
     expect(wrapper.text()).toContain('Where?')
   })
 
-  it('creates a new entry', async () => {
+  it('creates a new entry, sending the category as a name', async () => {
     const wrapper = mountPage()
     await flushPromises()
     const vm = wrapper.vm as any
@@ -118,26 +133,72 @@ describe('admin FAQ page', () => {
     expect(api.deleteFaqEntry).toHaveBeenCalledWith({ path: { id: 'e2' } })
   })
 
-  it('renames a category across all its questions', async () => {
+  it('renames a category by id', async () => {
     const wrapper = mountPage()
     await flushPromises()
     const vm = wrapper.vm as any
-    vm.openRenameCategory('General')
+    vm.openRename(categories[0])
     vm.renameTo = 'Basics'
-    vm.renameCategoryConfirm()
+    vm.renameConfirm()
     await flushPromises()
-    expect(api.renameCategory).toHaveBeenCalledWith({ body: { from: 'General', to: 'Basics' } })
+    expect(api.updateFaqCategory).toHaveBeenCalledWith({ path: { id: 'c1' }, body: { name: 'Basics' } })
   })
 
-  it('persists the new order on reorder', async () => {
+  it('toggles category visibility', async () => {
     const wrapper = mountPage()
     await flushPromises()
     const vm = wrapper.vm as any
-    // simulate a drag: swap the two General entries
-    vm.grouped[0].items.reverse()
-    vm.persistOrder()
+    vm.toggleCategoryPublished(categories[0]) // currently published → hide
+    await flushPromises()
+    expect(api.updateFaqCategory).toHaveBeenCalledWith({ path: { id: 'c1' }, body: { published: false } })
+  })
+
+  it('reorders categories with the move buttons', async () => {
+    const wrapper = mountPage()
+    await flushPromises()
+    const vm = wrapper.vm as any
+    vm.moveCategory(0, 1) // General down, Venue up
+    await flushPromises()
+    expect(api.reorderFaqCategories).toHaveBeenCalledTimes(1)
+    expect(api.reorderFaqCategories.mock.calls[0][0].body.ids).toEqual(['c2', 'c1'])
+  })
+
+  it('merges one category into another', async () => {
+    const wrapper = mountPage()
+    await flushPromises()
+    const vm = wrapper.vm as any
+    vm.openMerge(categories[0])
+    vm.mergeTo = 'c2'
+    vm.mergeConfirm()
+    await flushPromises()
+    expect(api.mergeFaqCategories).toHaveBeenCalledWith({ body: { from: 'c1', to: 'c2' } })
+  })
+
+  it('deletes an empty category, refuses a non-empty one', async () => {
+    const wrapper = mountPage()
+    await flushPromises()
+    const vm = wrapper.vm as any
+    // Venue (c2) has one entry → refused (no API call)
+    vm.confirmDeleteCategory(vm.groups[1])
+    await flushPromises()
+    expect(api.deleteFaqCategory).not.toHaveBeenCalled()
+
+    // simulate an empty category
+    vm.groups[1].items = []
+    vm.confirmDeleteCategory(vm.groups[1])
+    await flushPromises()
+    expect(api.deleteFaqCategory).toHaveBeenCalledWith({ path: { id: 'c2' } })
+  })
+
+  it('persists entry order within one category', async () => {
+    const wrapper = mountPage()
+    await flushPromises()
+    const vm = wrapper.vm as any
+    // simulate a drag within General: swap the two entries
+    vm.groups[0].items.reverse()
+    vm.persistEntryOrder(vm.groups[0])
     await flushPromises()
     expect(api.reorderFaqEntries).toHaveBeenCalledTimes(1)
-    expect(api.reorderFaqEntries.mock.calls[0][0].body.ids).toEqual(['e2', 'e1', 'e3'])
+    expect(api.reorderFaqEntries.mock.calls[0][0].body.ids).toEqual(['e2', 'e1'])
   })
 })

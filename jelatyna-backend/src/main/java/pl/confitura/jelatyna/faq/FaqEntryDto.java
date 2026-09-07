@@ -12,7 +12,7 @@ public record FaqEntryDto(
     public static FaqEntryDto from(FaqEntry e) {
         return new FaqEntryDto(
                 e.getId(),
-                e.getCategory(),
+                e.getCategory() == null ? null : e.getCategory().getName(),
                 e.getQuestion(),
                 e.getAnswer(),
                 e.getDisplayOrder(),
