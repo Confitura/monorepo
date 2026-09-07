@@ -86,6 +86,7 @@ describe('toAgendaRows', () => {
   it('places talks by day/time/room using opaque ids only, no speaker PII', () => {
     const day: AgendaDay = {
       dayId: 'day-1',
+      date: '2026-07-11',
       timeSlots: [{ index: 0, label: '10:00 - 10:45' }],
       rooms: [{ id: 'room-a', label: 'Room A', displayOrder: 0 }],
       presentations: [presentation],
@@ -97,6 +98,7 @@ describe('toAgendaRows', () => {
     expect(rows).toHaveLength(1)
     const row = rows[0]
     expect(row.dayId).toBe('day-1')
+    expect(row.date).toBe('2026-07-11')
     expect(row.time).toBe('10:00 - 10:45')
     expect(row.room).toBe('Room A')
     expect(row.talkId).toBe('talk-1')
@@ -109,6 +111,7 @@ describe('toAgendaRows', () => {
   it('links workshop entries to the workshops schedule', () => {
     const day: AgendaDay = {
       dayId: 'day-2',
+      date: '2026-07-12',
       timeSlots: [{ index: 0, label: '10:00' }],
       rooms: [{ id: 'room-a', label: 'Room A', displayOrder: 0 }],
       presentations: [{ ...presentation, id: 'ws-1', workshop: true }],
