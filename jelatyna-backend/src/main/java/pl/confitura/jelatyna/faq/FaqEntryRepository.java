@@ -16,17 +16,20 @@ public interface FaqEntryRepository extends Repository<FaqEntry, String> {
 
     FaqEntry findById(String id);
 
-    /** Bulk-renames a category across every entry that has it. Returns rows updated. */
+    long countByCategoryId(String categoryId);
+
+    /** Moves every entry in {@code from} into {@code to} (used by category merge). */
     @PreAuthorize("@security.isAdmin()")
     @Modifying
     @Transactional
     @Query("update FaqEntry e set e.category = :to where e.category = :from")
-    int renameCategory(@Param("from") String from, @Param("to") String to);
+    int moveEntries(@Param("from") FaqCategory from, @Param("to") FaqCategory to);
 
-    @Query("select e from FaqEntry e order by e.category, e.displayOrder")
+    @Query("select e from FaqEntry e left join e.category c order by c.displayOrder, e.displayOrder")
     List<FaqEntry> findAllOrdered();
 
-    @Query("select e from FaqEntry e where e.published = true order by e.category, e.displayOrder")
+    @Query("select e from FaqEntry e where e.published = true and e.category.published = true "
+            + "order by e.category.displayOrder, e.displayOrder")
     List<FaqEntry> findPublishedOrdered();
 
     @PreAuthorize("@security.isAdmin()")

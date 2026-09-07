@@ -22,6 +22,9 @@ class FaqEntryControllerTest extends BaseIntegrationTest {
     private FaqEntryRepository repository;
 
     @Autowired
+    private FaqCategoryRepository categoryRepository;
+
+    @Autowired
     private TransactionTemplate txTemplate;
 
     @Autowired
@@ -34,18 +37,23 @@ class FaqEntryControllerTest extends BaseIntegrationTest {
     @BeforeEach
     public void setUp() {
         SecurityHelper.asAdmin();
-        txTemplate.executeWithoutResult(status ->
-                repository.findAllOrdered().forEach(e -> repository.deleteById(e.getId())));
+        txTemplate.executeWithoutResult(status -> {
+            repository.findAllOrdered().forEach(e -> repository.deleteById(e.getId()));
+            categoryRepository.findAllByOrderByDisplayOrderAsc()
+                    .forEach(c -> categoryRepository.deleteById(c.getId()));
+        });
 
         txTemplate.executeWithoutResult(status -> {
+            FaqCategory general = categoryRepository.save(
+                    new FaqCategory().setName("General").setDisplayOrder(0).setPublished(true));
             first = repository.save(new FaqEntry()
-                    .setCategory("General").setQuestion("First").setAnswer("A1")
+                    .setCategory(general).setQuestion("First").setAnswer("A1")
                     .setDisplayOrder(0).setPublished(true));
             second = repository.save(new FaqEntry()
-                    .setCategory("General").setQuestion("Second").setAnswer("A2")
+                    .setCategory(general).setQuestion("Second").setAnswer("A2")
                     .setDisplayOrder(1).setPublished(true));
             hidden = repository.save(new FaqEntry()
-                    .setCategory("General").setQuestion("Hidden").setAnswer("A3")
+                    .setCategory(general).setQuestion("Hidden").setAnswer("A3")
                     .setDisplayOrder(2).setPublished(false));
         });
     }
@@ -156,18 +164,24 @@ class FaqEntryControllerTest extends BaseIntegrationTest {
 
     @Test
     @WithMockUser(roles = "ADMIN")
-    void renamesCategoryAcrossAllItsQuestions() throws Exception {
-        mockMvc.perform(put("/faq-entries/category")
+    void reusesExistingCategoryCaseInsensitivelyWhenCreating() throws Exception {
+        // "general" (different casing) must reuse the existing "General" category, not create a new one.
+        String body = """
+                {
+                  "category":"  general  ",
+                  "question":"Casing?",
+                  "answer":"Reused.",
+                  "published":true
+                }""";
+        mockMvc.perform(post("/faq-entries")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"from\":\"General\",\"to\":\"Basics\"}"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.updated", is(3)));
+                        .content(body))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.category", is("General")));
 
-        mockMvc.perform(get("/faq-entries/all"))
+        mockMvc.perform(get("/faq-categories"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(3)))
-                .andExpect(jsonPath("$[0].category", is("Basics")))
-                .andExpect(jsonPath("$[2].category", is("Basics")));
+                .andExpect(jsonPath("$", hasSize(1)));
     }
 
     @Test

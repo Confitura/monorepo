@@ -59,6 +59,18 @@ export type DumpStatus = {
     lastDumpAt?: string;
 };
 
+export type FaqCategoryDto = {
+    displayOrder?: number;
+    id?: string;
+    name?: string;
+    published?: boolean;
+};
+
+export type FaqCategoryRequest = {
+    name?: string;
+    published?: boolean;
+};
+
 export type FaqEntryDto = {
     answer?: string;
     category?: string;
@@ -235,6 +247,11 @@ export type LikeResponse = {
     presentationId?: string;
 };
 
+export type MergeRequest = {
+    from?: string;
+    to?: string;
+};
+
 export type MessageInfo = {
     email?: string;
     ticket?: string;
@@ -370,11 +387,6 @@ export type RateRequest = {
 export type RegistrationError = {
     additionalInfo?: string;
     reason?: string;
-};
-
-export type RenameCategoryRequest = {
-    from?: string;
-    to?: string;
 };
 
 export type ReorderRequest = {
@@ -1353,6 +1365,100 @@ export type UpdateDayResponses = {
 
 export type UpdateDayResponse = UpdateDayResponses[keyof UpdateDayResponses];
 
+export type GetFaqCategoriesData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/faq-categories';
+};
+
+export type GetFaqCategoriesResponses = {
+    /**
+     * OK
+     */
+    200: Array<FaqCategoryDto>;
+};
+
+export type GetFaqCategoriesResponse = GetFaqCategoriesResponses[keyof GetFaqCategoriesResponses];
+
+export type CreateFaqCategoryData = {
+    body: FaqCategoryRequest;
+    path?: never;
+    query?: never;
+    url: '/faq-categories';
+};
+
+export type CreateFaqCategoryResponses = {
+    /**
+     * OK
+     */
+    200: FaqCategoryDto;
+};
+
+export type CreateFaqCategoryResponse = CreateFaqCategoryResponses[keyof CreateFaqCategoryResponses];
+
+export type MergeFaqCategoriesData = {
+    body: MergeRequest;
+    path?: never;
+    query?: never;
+    url: '/faq-categories/merge';
+};
+
+export type MergeFaqCategoriesResponses = {
+    /**
+     * OK
+     */
+    200: unknown;
+};
+
+export type ReorderFaqCategoriesData = {
+    body: ReorderRequest;
+    path?: never;
+    query?: never;
+    url: '/faq-categories/order';
+};
+
+export type ReorderFaqCategoriesResponses = {
+    /**
+     * OK
+     */
+    200: unknown;
+};
+
+export type DeleteFaqCategoryData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/faq-categories/{id}';
+};
+
+export type DeleteFaqCategoryResponses = {
+    /**
+     * OK
+     */
+    200: unknown;
+};
+
+export type UpdateFaqCategoryData = {
+    body: FaqCategoryRequest;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/faq-categories/{id}';
+};
+
+export type UpdateFaqCategoryResponses = {
+    /**
+     * OK
+     */
+    200: FaqCategoryDto;
+};
+
+export type UpdateFaqCategoryResponse = UpdateFaqCategoryResponses[keyof UpdateFaqCategoryResponses];
+
 export type GetPublishedFaqEntriesData = {
     body?: never;
     path?: never;
@@ -1400,24 +1506,6 @@ export type GetAllFaqEntriesResponses = {
 };
 
 export type GetAllFaqEntriesResponse = GetAllFaqEntriesResponses[keyof GetAllFaqEntriesResponses];
-
-export type RenameCategoryData = {
-    body: RenameCategoryRequest;
-    path?: never;
-    query?: never;
-    url: '/faq-entries/category';
-};
-
-export type RenameCategoryResponses = {
-    /**
-     * OK
-     */
-    200: {
-        [key: string]: number;
-    };
-};
-
-export type RenameCategoryResponse = RenameCategoryResponses[keyof RenameCategoryResponses];
 
 export type ImportFromFaqPageData = {
     body?: never;
