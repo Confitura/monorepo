@@ -59,9 +59,11 @@ export class DatalinksClient {
     data: object[],
     dataDescription: string,
   ): Promise<number> {
+    let link =  { "ExactMatch": {}}
     const res = await this.call('POST', `/ingest/${this.cfg.namespace}/${datasetName}`, {
       data,
       dataDescription,
+      link,
       curate: true,
     })
     const json = (await res.json()) as { indexed: number }
