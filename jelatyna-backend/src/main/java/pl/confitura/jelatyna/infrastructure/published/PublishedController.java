@@ -125,7 +125,7 @@ public class PublishedController {
                 .map(InlinePresentationWithSpeakers::new)
                 .toList();
         Map<Integer, List<InlineAgendaEntry>> byTimeSlot = entries.stream().collect(groupingBy(InlineAgendaEntry::timeSlotIndex));
-        InlineAgenda agenda = new InlineAgenda(timeSlots, rooms, presentations, entries, byTimeSlot);
+        InlineAgenda agenda = new InlineAgenda(dayOpt.get().getDate(), timeSlots, rooms, presentations, entries, byTimeSlot);
         return ResponseEntity.ok(agenda);
     }
 }

@@ -5,10 +5,12 @@ import pl.confitura.jelatyna.agenda.api.InlineRoom;
 import pl.confitura.jelatyna.agenda.api.InlineTimeSlot;
 import pl.confitura.jelatyna.api.model.InlinePresentationWithSpeakers;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
 public record InlineAgenda(
+        LocalDate date,
         List<InlineTimeSlot> timeSlots,
         List<InlineRoom> rooms,
         List<InlinePresentationWithSpeakers> presentations,
