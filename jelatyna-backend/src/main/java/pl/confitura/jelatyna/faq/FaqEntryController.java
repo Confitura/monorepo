@@ -27,8 +27,26 @@ import java.util.Map;
 public class FaqEntryController {
 
     private final FaqEntryRepository repository;
+    private final FaqCategoryRepository categoryRepository;
     private final PageController pageController;
     private final FaqMarkdownParser parser = new FaqMarkdownParser();
+
+    /**
+     * Resolves a category by name (trimmed, case-insensitive), creating it — appended to
+     * the end of the order, published — if none exists. This is what makes the admin's
+     * "pick existing or type a new one" dropdown work with a plain name string.
+     */
+    private FaqCategory resolveOrCreateCategory(String rawName) {
+        String name = rawName == null ? "" : rawName.strip();
+        if (name.isEmpty()) {
+            return null;
+        }
+        return categoryRepository.findByNameIgnoreCase(name)
+                .orElseGet(() -> categoryRepository.save(new FaqCategory()
+                        .setName(name)
+                        .setDisplayOrder((int) categoryRepository.count())
+                        .setPublished(true)));
+    }
 
     /** Public: published entries, grouped-ready (ordered by category then displayOrder). */
     @GetMapping
@@ -52,7 +70,7 @@ public class FaqEntryController {
     @PostMapping
     public ResponseEntity<FaqEntryDto> createFaqEntry(@RequestBody FaqEntryRequest request) {
         FaqEntry entry = new FaqEntry()
-                .setCategory(request.category())
+                .setCategory(resolveOrCreateCategory(request.category()))
                 .setQuestion(request.question())
                 .setAnswer(request.answer())
                 .setDisplayOrder(request.displayOrder() == null ? 0 : request.displayOrder())
@@ -66,7 +84,7 @@ public class FaqEntryController {
         if (entry == null) {
             return ResponseEntity.notFound().build();
         }
-        if (request.category() != null) entry.setCategory(request.category());
+        if (request.category() != null) entry.setCategory(resolveOrCreateCategory(request.category()));
         if (request.question() != null) entry.setQuestion(request.question());
         if (request.answer() != null) entry.setAnswer(request.answer());
         if (request.displayOrder() != null) entry.setDisplayOrder(request.displayOrder());
@@ -96,27 +114,13 @@ public class FaqEntryController {
         int order = 0;
         for (FaqMarkdownParser.ParsedFaqEntry p : parsed) {
             repository.save(new FaqEntry()
-                    .setCategory(p.category())
+                    .setCategory(resolveOrCreateCategory(p.category()))
                     .setQuestion(p.question())
                     .setAnswer(p.answer())
                     .setDisplayOrder(order++)
                     .setPublished(true));
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("imported", parsed.size()));
-    }
-
-    /** Bulk-renames a category across all its questions. */
-    @PutMapping("/category")
-    @PreAuthorize("@security.isAdmin()")
-    public ResponseEntity<Map<String, Integer>> renameCategory(@RequestBody RenameCategoryRequest request) {
-        if (request.from() == null || request.to() == null || request.to().isBlank()) {
-            return ResponseEntity.badRequest().build();
-        }
-        int updated = repository.renameCategory(request.from(), request.to().strip());
-        return ResponseEntity.ok(Map.of("updated", updated));
-    }
-
-    public record RenameCategoryRequest(String from, String to) {
     }
 
     /** Persists a new order: each id's displayOrder becomes its index in the list. */

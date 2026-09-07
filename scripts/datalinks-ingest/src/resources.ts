@@ -40,6 +40,7 @@ export async function fetchNews(baseUrl: string): Promise<NewsFeed> {
 }
 
 interface RawAgenda {
+  date?: string | null
   timeSlots: { displayOrder: number; label: string }[]
   rooms: { id: string; label: string; displayOrder: number }[]
   presentations: Presentation[]
@@ -56,6 +57,7 @@ export async function fetchAgendaDay(baseUrl: string, dayId: string): Promise<Ag
   const raw = await getJson<RawAgenda>(baseUrl, `agenda/${dayId}.json`)
   return {
     dayId,
+    date: raw.date ?? null,
     // Build lookups the transform expects straight from the entries so labels
     // always resolve even if timeSlots/rooms drift.
     timeSlots: raw.agendaEntries.map((e) => ({ index: e.timeSlotIndex, label: e.timeSlotLabel })),

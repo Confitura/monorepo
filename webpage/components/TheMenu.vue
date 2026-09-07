@@ -21,18 +21,18 @@
 
 let items: MenuItem[] = [
   { label: 'home', url: '/' },
+  { label: 'tickets', url: '/tickets' },
   { label: 'venue', url: '/venue' },
+  { label: 'news', url: '/news' },
   // { label: "vote", url: "https://app.confitura.pl/vote-for-papers" },
   { label: 'partners', url: '/partners' },
-  { label: 'news', url: '/news' },
   { label: 'schedule', url: '/schedule' },
   { label: 'speakers', url: '/speakers' },
   { label: 'presentations', url: '/presentations' },
   { label: 'workshops', url: '/workshops' },
   { label: 'about us', url: '/about' },
+  { label: 'FAQ', url: '/faq' },
   { label: '2025', url: 'http://2025.confitura.pl/' },
-  // { label: 'FAQ', url: '/faq' },
-  { label: 'tickets', url: '/tickets' },
   // { label: 'lean coffee', url: '/lean-coffee' },
   { label: 'LOGIN', url: 'https://app.confitura.pl/' },
 ]

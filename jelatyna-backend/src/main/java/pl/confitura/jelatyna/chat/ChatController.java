@@ -23,7 +23,6 @@ import java.util.concurrent.ExecutorService;
 public class ChatController {
 
     private static final long TIMEOUT_MS = Duration.ofMinutes(2).toMillis();
-    private static final MediaType UTF8_TEXT = new MediaType(MediaType.TEXT_PLAIN, StandardCharsets.UTF_8);
 
     private final ChatService chatService;
     private final ExecutorService chatExecutor;
@@ -43,13 +42,12 @@ public class ChatController {
         SseEmitter emitter = new SseEmitter(TIMEOUT_MS);
         chatExecutor.execute(() -> {
             try {
-                chatService.stream(request, event ->
-                        emitter.send(SseEmitter.event().name(event.event()).data(event.data(), UTF8_TEXT)));
+                chatService.stream(request, event -> emitter.send(utf8Event(event.event(), event.data())));
                 emitter.complete();
             } catch (Exception e) {
                 log.warn("Chat stream failed: {}", e.getMessage());
                 try {
-                    emitter.send(SseEmitter.event().name("error").data("{\"message\":\"chat failed\"}", UTF8_TEXT));
+                    emitter.send(utf8Event("error", "{\"message\":\"chat failed\"}"));
                 } catch (IOException ignored) {
                     // client already gone
                 }
@@ -57,6 +55,17 @@ public class ChatController {
             }
         });
         return emitter;
+    }
+
+    /**
+     * SSE data as pre-encoded UTF-8 bytes. Passing a String lets the default String
+     * message converter encode it as ISO-8859-1, which mangles non-ASCII (Polish
+     * characters); a byte[] is written verbatim, and browsers decode SSE as UTF-8.
+     */
+    private static SseEmitter.SseEventBuilder utf8Event(String name, String data) {
+        return SseEmitter.event()
+                .name(name)
+                .data(data.getBytes(StandardCharsets.UTF_8), MediaType.APPLICATION_OCTET_STREAM);
     }
 
     @ExceptionHandler(ChatException.class)

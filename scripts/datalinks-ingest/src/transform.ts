@@ -64,6 +64,7 @@ export function toAgendaRows(days: AgendaDay[]): AgendaRow[] {
       if (!talk) continue
       rows.push({
         dayId: day.dayId,
+        date: day.date,
         time: timeByIndex.get(entry.timeSlotIndex) ?? '',
         room: roomById.get(entry.roomId) ?? '',
         talkId: talk.id,

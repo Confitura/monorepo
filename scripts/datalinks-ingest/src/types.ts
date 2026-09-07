@@ -47,6 +47,7 @@ export interface AgendaEntry {
 
 export interface AgendaDay {
   dayId: string
+  date: string | null
   timeSlots: AgendaTimeSlot[]
   rooms: AgendaRoom[]
   presentations: Presentation[]
@@ -115,6 +116,7 @@ export interface PageRow {
 
 export interface AgendaRow {
   dayId: string
+  date: string | null
   time: string
   room: string
   talkId: string

@@ -128,6 +128,35 @@
         },
         "type" : "object"
       },
+      "FaqCategoryDto" : {
+        "properties" : {
+          "displayOrder" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "published" : {
+            "type" : "boolean"
+          }
+        },
+        "type" : "object"
+      },
+      "FaqCategoryRequest" : {
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "published" : {
+            "type" : "boolean"
+          }
+        },
+        "type" : "object"
+      },
       "FaqEntryDto" : {
         "properties" : {
           "answer" : {
@@ -633,6 +662,17 @@
         },
         "type" : "object"
       },
+      "MergeRequest" : {
+        "properties" : {
+          "from" : {
+            "type" : "string"
+          },
+          "to" : {
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
       "MessageInfo" : {
         "properties" : {
           "email" : {
@@ -1036,17 +1076,6 @@
             "type" : "string"
           },
           "reason" : {
-            "type" : "string"
-          }
-        },
-        "type" : "object"
-      },
-      "RenameCategoryRequest" : {
-        "properties" : {
-          "from" : {
-            "type" : "string"
-          },
-          "to" : {
             "type" : "string"
           }
         },
@@ -2586,6 +2615,148 @@
         "tags" : [ "day-controller" ]
       }
     },
+    "/faq-categories" : {
+      "get" : {
+        "operationId" : "getFaqCategories",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/FaqCategoryDto"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "faq-category-controller" ]
+      },
+      "post" : {
+        "operationId" : "createFaqCategory",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/FaqCategoryRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/FaqCategoryDto"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "faq-category-controller" ]
+      }
+    },
+    "/faq-categories/merge" : {
+      "post" : {
+        "operationId" : "mergeFaqCategories",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/MergeRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "faq-category-controller" ]
+      }
+    },
+    "/faq-categories/order" : {
+      "put" : {
+        "operationId" : "reorderFaqCategories",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ReorderRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "faq-category-controller" ]
+      }
+    },
+    "/faq-categories/{id}" : {
+      "delete" : {
+        "operationId" : "deleteFaqCategory",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "faq-category-controller" ]
+      },
+      "put" : {
+        "operationId" : "updateFaqCategory",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/FaqCategoryRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/FaqCategoryDto"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "faq-category-controller" ]
+      }
+    },
     "/faq-entries" : {
       "get" : {
         "operationId" : "getPublishedFaqEntries",
@@ -2645,38 +2816,6 @@
                     "$ref" : "#/components/schemas/FaqEntryDto"
                   },
                   "type" : "array"
-                }
-              }
-            },
-            "description" : "OK"
-          }
-        },
-        "tags" : [ "faq-entry-controller" ]
-      }
-    },
-    "/faq-entries/category" : {
-      "put" : {
-        "operationId" : "renameCategory",
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/RenameCategoryRequest"
-              }
-            }
-          },
-          "required" : true
-        },
-        "responses" : {
-          "200" : {
-            "content" : {
-              "*/*" : {
-                "schema" : {
-                  "additionalProperties" : {
-                    "format" : "int32",
-                    "type" : "integer"
-                  },
-                  "type" : "object"
                 }
               }
             },

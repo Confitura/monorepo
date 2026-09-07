@@ -21,6 +21,12 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -49,6 +55,8 @@ public class IcalExportService {
 
         ZoneId zone = ZoneId.of("Europe/Warsaw"); // using conference local timezone
 
+        // Entries with the same name, date and time are merged into a single event.
+        Map<String, MergedEvent> merged = new LinkedHashMap<>();
         for (AgendaEntry entry : entries) {
             if (entry.getTimeSlot() == null || entry.getTimeSlot().getStart() == null || entry.getTimeSlot().getEnd() == null) {
                 continue;
@@ -65,27 +73,65 @@ public class IcalExportService {
             ZonedDateTime end = endLdt.atZone(zone);
 
             String summary = buildSummary(entry);
-            VEvent event = new VEvent();
-            event.withProperty(new Summary(summary));
-            event.withProperty(new DtStart<>(start));
-            event.withProperty(new DtEnd<>(end));
+            String key = summary + "|" + start + "|" + end;
+            merged.computeIfAbsent(key, k -> new MergedEvent(summary, start, end))
+                    .add(entry);
+        }
 
-            if (entry.getRoom() != null && entry.getRoom().getLabel() != null) {
-                event.withProperty(new Location(entry.getRoom().getLabel()));
+        for (MergedEvent m : merged.values()) {
+            VEvent event = new VEvent();
+            event.withProperty(new Summary(m.summary));
+            event.withProperty(new DtStart<>(m.start));
+            event.withProperty(new DtEnd<>(m.end));
+
+            if (!m.roomLabels.isEmpty()) {
+                event.withProperty(new Location(String.join(", ", m.roomLabels)));
             } else {
-                log.info("No room for entry: {}", entry.getId());
+                log.info("No room for merged entry: {}", m.summary);
             }
 
-            String description = buildDescription(entry);
+            String description = m.description();
             if (description != null && !description.isBlank()) {
                 event.withProperty(new Description(description));
             }
 
-            event.withProperty(new Uid(UUID.nameUUIDFromBytes((entry.getId() == null ? (summary + start) : entry.getId()).getBytes(StandardCharsets.UTF_8)).toString()));
+            event.withProperty(new Uid(UUID.nameUUIDFromBytes(
+                    (m.summary + m.start).getBytes(StandardCharsets.UTF_8)).toString()));
 
             calendar.withComponent(event);
         }
         return calendar;
+    }
+
+    private static final class MergedEvent {
+        private final String summary;
+        private final ZonedDateTime start;
+        private final ZonedDateTime end;
+        private final Set<String> roomLabels = new LinkedHashSet<>();
+        private final List<AgendaEntry> entries = new ArrayList<>();
+
+        private MergedEvent(String summary, ZonedDateTime start, ZonedDateTime end) {
+            this.summary = summary;
+            this.start = start;
+            this.end = end;
+        }
+
+        private void add(AgendaEntry entry) {
+            entries.add(entry);
+            if (entry.getRoom() != null && entry.getRoom().getLabel() != null) {
+                roomLabels.add(entry.getRoom().getLabel());
+            }
+        }
+
+        private String description() {
+            for (AgendaEntry entry : entries) {
+                String description = buildDescription(entry);
+                if (description != null && !description.isBlank()) {
+                    return description;
+                }
+            }
+            return null;
+        }
     }
 
     private static String buildSummary(AgendaEntry entry) {

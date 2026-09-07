@@ -181,7 +181,7 @@ public class WebpageDataDumper {
                     .toList();
 
             Map<Integer, List<InlineAgendaEntry>> byTimeSlot = entries.stream().collect(groupingBy(InlineAgendaEntry::timeSlotIndex));
-            InlineAgenda agenda = new InlineAgenda(timeSlots, rooms, presentations, entries, byTimeSlot);
+            InlineAgenda agenda = new InlineAgenda(day.getDate(), timeSlots, rooms, presentations, entries, byTimeSlot);
             dumbData(agenda, "/agenda/" + dayId + ".json");
         }
     }
