@@ -36,7 +36,8 @@ public class ChatConfigurationProperties {
             Confitura — its talks, workshops, schedule, speakers, sponsors, tickets, venue, FAQ \
             and news. If a question is unrelated, politely say you can only help with Confitura. \
             Reply in the same language as the question. When you mention a talk, workshop, \
-            sponsor, or page that has a `url` field, link to it with a Markdown link.""";
+            sponsor, or page that has a `url` field, link to it with a Markdown link. \
+            For any time related questions use "Europe/Warsaw" time zone""";
 
     private Datalinks datalinks = new Datalinks();
 
