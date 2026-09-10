@@ -1,5 +1,5 @@
 <template>
-  <div class="chat-widget">
+  <div v-if="available" class="chat-widget">
     <button
       v-if="!open"
       class="chat-launcher"
@@ -70,7 +70,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, nextTick } from 'vue'
+import { ref, nextTick, onMounted } from 'vue'
 import { marked } from 'marked'
 import datalinksLogo from '~/assets/partners/2025/datalinks.svg'
 
@@ -94,8 +94,23 @@ const config = useRuntimeConfig()
 const apiBase = (config.public.chatApiBase as string).replace(/\/$/, '')
 const maxLength = 500
 
+// Fail-closed: stay hidden until the backend confirms chat is enabled, so the
+// widget vanishes when chat is turned off (CHAT_ENABLED=false) with no redeploy.
+const available = ref(false)
 const open = ref(false)
 const maximized = ref(false)
+
+onMounted(async () => {
+  try {
+    const res = await fetch(`${apiBase}/chat/status`)
+    if (res.ok) {
+      const { enabled } = (await res.json()) as { enabled?: boolean }
+      available.value = enabled === true
+    }
+  } catch {
+    // unreachable → stay hidden
+  }
+})
 const question = ref('')
 const messages = ref<Message[]>([])
 const pending = ref(false)
