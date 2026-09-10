@@ -16,7 +16,9 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.asyncDispatch;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @TestPropertySource(properties = {
@@ -35,6 +37,13 @@ class ChatControllerSecretTest extends BaseIntegrationTest {
 
     @MockitoBean
     private SpeakerDirectory speakerDirectory;
+
+    @Test
+    void statusIsPublicEvenWhenSecretConfigured() throws Exception {
+        mockMvc.perform(get("/chat/status"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.enabled").value(true));
+    }
 
     @Test
     void rejectsRequestWithoutTheSecretHeader() throws Exception {

@@ -5,7 +5,9 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import pl.confitura.jelatyna.BaseIntegrationTest;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /** With chat.enabled unset (default false) the endpoint is off: the spend kill-switch. */
@@ -20,5 +22,12 @@ class ChatControllerDisabledTest extends BaseIntegrationTest {
                         .contentType(APPLICATION_JSON)
                         .content("{\"question\":\"hi\"}"))
                 .andExpect(status().isServiceUnavailable());
+    }
+
+    @Test
+    void statusReportsDisabled() throws Exception {
+        mockMvc.perform(get("/chat/status"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.enabled").value(false));
     }
 }
