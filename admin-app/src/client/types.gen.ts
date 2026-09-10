@@ -23,6 +23,10 @@ export type AssignAgendaEntryRequest = {
     timeSlotIndex: number;
 };
 
+export type ChatStatus = {
+    enabled?: boolean;
+};
+
 export type CreateRoomRequest = {
     displayOrder?: number;
     label: string;
@@ -1090,6 +1094,22 @@ export type AskResponses = {
 };
 
 export type AskResponse = AskResponses[keyof AskResponses];
+
+export type GetChatStatusData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/chat/status';
+};
+
+export type GetChatStatusResponses = {
+    /**
+     * OK
+     */
+    200: ChatStatus;
+};
+
+export type GetChatStatusResponse = GetChatStatusResponses[keyof GetChatStatusResponses];
 
 export type GetCurrentUserData = {
     body?: never;

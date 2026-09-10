@@ -48,6 +48,14 @@
         "required" : [ "dayId", "label", "presentationId", "timeSlotIndex" ],
         "type" : "object"
       },
+      "ChatStatus" : {
+        "properties" : {
+          "enabled" : {
+            "type" : "boolean"
+          }
+        },
+        "type" : "object"
+      },
       "CreateRoomRequest" : {
         "properties" : {
           "displayOrder" : {
@@ -2254,6 +2262,24 @@
               "text/event-stream" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/SseEmitter"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "chat-controller" ]
+      }
+    },
+    "/chat/status" : {
+      "get" : {
+        "operationId" : "getChatStatus",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ChatStatus"
                 }
               }
             },

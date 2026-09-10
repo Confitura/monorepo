@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,6 +31,15 @@ public class ChatController {
     public ChatController(ChatService chatService, ExecutorService chatExecutor) {
         this.chatService = chatService;
         this.chatExecutor = chatExecutor;
+    }
+
+    /** Public, unauthenticated: lets the widget hide itself when chat is off. */
+    @GetMapping("/chat/status")
+    public ChatStatus getChatStatus() {
+        return new ChatStatus(chatService.isAvailable());
+    }
+
+    public record ChatStatus(boolean enabled) {
     }
 
     @PostMapping(value = "/chat/ask", produces = MediaType.TEXT_EVENT_STREAM_VALUE)

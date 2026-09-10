@@ -60,6 +60,11 @@ public class ChatService {
         }
     }
 
+    /** Whether the chat is currently serving: master switch on and monthly cap not reached. */
+    public boolean isAvailable() {
+        return properties.isEnabled() && !monthlyGate.isExhausted();
+    }
+
     /** Synchronous checks that must happen before streaming starts. Throws {@link ChatException}. */
     public void preflight(AskRequest request, String clientKey) {
         if (!properties.isEnabled()) {
