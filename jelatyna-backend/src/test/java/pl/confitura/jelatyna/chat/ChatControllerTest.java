@@ -20,8 +20,10 @@ import java.util.function.Consumer;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.asyncDispatch;
@@ -139,6 +141,13 @@ class ChatControllerTest extends BaseIntegrationTest {
                         .contentType(APPLICATION_JSON)
                         .content("{\"question\":\"" + longQuestion + "\"}"))
                 .andExpect(status().isPayloadTooLarge());
+    }
+
+    @Test
+    void statusReportsEnabledWhenChatIsOn() throws Exception {
+        mockMvc.perform(get("/chat/status"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.enabled").value(true));
     }
 
     private void stubDatalinksAnswer(String answerJson) {
