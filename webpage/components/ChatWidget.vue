@@ -13,7 +13,7 @@
     <section v-else class="chat-panel" :class="{ maximized }" aria-label="Conference assistant">
       <header class="chat-header">
         <div class="chat-header-main">
-          <span class="chat-title">Conference assistant</span>
+          <span class="chat-title">Conference assistant (experimental)</span>
           <a
             class="chat-powered"
             href="https://datalinks.com"
