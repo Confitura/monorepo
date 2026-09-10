@@ -1,5 +1,5 @@
 <template>
-  <div class="chat-widget">
+  <div v-if="available" class="chat-widget">
     <button
       v-if="!open"
       class="chat-launcher"
@@ -10,10 +10,31 @@
       <span aria-hidden="true">💬</span> Ask
     </button>
 
-    <section v-else class="chat-panel" aria-label="Conference assistant">
+    <section v-else class="chat-panel" :class="{ maximized }" aria-label="Conference assistant">
       <header class="chat-header">
-        <span>Conference assistant</span>
-        <button type="button" class="chat-close" aria-label="Close" @click="open = false">×</button>
+        <div class="chat-header-main">
+          <span class="chat-title">Conference assistant</span>
+          <a
+            class="chat-powered"
+            href="https://datalinks.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span>powered by</span>
+            <img :src="datalinksLogo" alt="DataLinks" class="chat-powered-logo" />
+          </a>
+        </div>
+        <div class="chat-header-controls">
+          <button
+            type="button"
+            class="chat-header-btn"
+            :aria-label="maximized ? 'Restore' : 'Maximize'"
+            @click="maximized = !maximized"
+          >
+            {{ maximized ? '🗗' : '🗖' }}
+          </button>
+          <button type="button" class="chat-header-btn" aria-label="Close" @click="open = false">×</button>
+        </div>
       </header>
 
       <div ref="log" class="chat-log">
@@ -26,7 +47,9 @@
           class="chat-msg"
           :class="m.role"
         >
-          <span class="chat-bubble">{{ m.text || (m.role === 'assistant' && pending ? '…' : '') }}</span>
+          <!-- eslint-disable-next-line vue/no-v-html -- source is HTML-escaped before marked -->
+          <span v-if="m.role === 'assistant'" class="chat-bubble markdown" v-html="renderAssistant(m)"></span>
+          <span v-else class="chat-bubble">{{ m.text }}</span>
         </div>
         <p v-if="error" class="chat-error">{{ error }}</p>
       </div>
@@ -47,18 +70,47 @@
 </template>
 
 <script setup lang="ts">
-import { ref, nextTick } from 'vue'
+import { ref, nextTick, onMounted } from 'vue'
+import { marked } from 'marked'
+import datalinksLogo from '~/assets/partners/2025/datalinks.svg'
 
 interface Message {
   role: 'user' | 'assistant'
   text: string
 }
 
+// Escape raw HTML so model output can't inject markup; marked then produces
+// only the safe structural HTML from the markdown itself.
+function escapeHtml(s: string): string {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+}
+
+function renderAssistant(m: Message): string {
+  if (!m.text) return pending.value ? '…' : ''
+  return marked.parse(escapeHtml(m.text), { async: false, breaks: true }) as string
+}
+
 const config = useRuntimeConfig()
 const apiBase = (config.public.chatApiBase as string).replace(/\/$/, '')
 const maxLength = 500
 
+// Fail-closed: stay hidden until the backend confirms chat is enabled, so the
+// widget vanishes when chat is turned off (CHAT_ENABLED=false) with no redeploy.
+const available = ref(false)
 const open = ref(false)
+const maximized = ref(false)
+
+onMounted(async () => {
+  try {
+    const res = await fetch(`${apiBase}/chat/status`)
+    if (res.ok) {
+      const { enabled } = (await res.json()) as { enabled?: boolean }
+      available.value = enabled === true
+    }
+  } catch {
+    // unreachable → stay hidden
+  }
+})
 const question = ref('')
 const messages = ref<Message[]>([])
 const pending = ref(false)
@@ -205,6 +257,11 @@ function handleEvent(raw: string, assistant: Message) {
   overflow: hidden;
 }
 
+.chat-panel.maximized {
+  width: min(900px, calc(100vw - 2rem));
+  height: calc(100vh - 2rem);
+}
+
 .chat-header {
   display: flex;
   justify-content: space-between;
@@ -212,16 +269,57 @@ function handleEvent(raw: string, assistant: Message) {
   padding: 0.75rem 1rem;
   background: #d81b60;
   color: #fff;
+}
+
+.chat-header-main {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.chat-title {
   font-weight: 600;
 }
 
-.chat-close {
+.chat-powered {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+}
+
+.chat-powered-logo {
+  height: 13px;
+  width: auto;
+  background: #fff;
+  border-radius: 3px;
+  padding: 2px 4px;
+}
+
+.chat-header-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.chat-header-btn {
   background: none;
   border: none;
   color: #fff;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   line-height: 1;
+  padding: 0 0.15em;
   cursor: pointer;
+  opacity: 0.9;
+}
+
+.chat-header-btn:hover {
+  opacity: 1;
 }
 
 .chat-log {
@@ -263,6 +361,61 @@ function handleEvent(raw: string, assistant: Message) {
 .chat-msg.assistant .chat-bubble {
   background: #f0f0f0;
   color: #1a1a1a;
+}
+
+.chat-bubble.markdown {
+  display: block;
+  max-width: 100%;
+}
+
+.markdown :first-child {
+  margin-top: 0;
+}
+
+.markdown :last-child {
+  margin-bottom: 0;
+}
+
+.markdown p {
+  margin: 0.4em 0;
+}
+
+.markdown ul,
+.markdown ol {
+  margin: 0.4em 0;
+  padding-left: 1.2em;
+}
+
+.markdown a {
+  color: #d81b60;
+}
+
+.markdown code {
+  background: rgba(0, 0, 0, 0.06);
+  padding: 0 0.25em;
+  border-radius: 3px;
+}
+
+.markdown pre {
+  background: rgba(0, 0, 0, 0.06);
+  padding: 0.5em;
+  border-radius: 6px;
+  overflow-x: auto;
+}
+
+.markdown table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  font-size: 0.9em;
+}
+
+.markdown th,
+.markdown td {
+  border: 1px solid #ccc;
+  padding: 0.3em 0.5em;
+  text-align: left;
 }
 
 .chat-error {
