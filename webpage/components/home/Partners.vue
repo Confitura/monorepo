@@ -3,24 +3,24 @@
     <h1 class="header">our partners</h1>
     <div class="partners-grid">
       <div class="partners-main">
-        <!--        <div class="platinum">
-                  <span class="type--platinum">Platinum</span>
-                  <a
-                      v-for="item in partners.platinum"
-                      :key="item.id"
-                      :href="'/partners/' + item.id "
-                      class="link"
-                      rel="noopener"
-                      target="_blank"
-                  >
-                    <img
-                        :src="resolveImage(item.logo)"
-                        :alt="item.name"
-                        class="logo__img--platinum"
-                        :class="item.id"
-                    />
-                  </a>
-                </div>-->
+        <div class="platinum">
+          <span class="type--platinum">Platinum</span>
+          <a
+              v-for="item in partners.platinum"
+              :key="item.id"
+              :href="'/partners/' + item.id "
+              class="link"
+              rel="noopener"
+              target="_blank"
+          >
+            <img
+                :src="resolveImage(item.logo)"
+                :alt="item.name"
+                class="logo__img--platinum"
+                :class="item.id"
+            />
+          </a>
+        </div>
         <!--        <div class="path">-->
         <!--          <span class="type&#45;&#45;path">Path</span>-->
         <!--          <a-->
@@ -89,11 +89,16 @@
 <script setup lang="ts">
 
 import {type PartnerType, usePartnersStore} from '~/stores/partnersStore'
+import {useArchiveFetch} from '~/composables/useAPIFetch'
 
-const types: PartnerType[] = ['gold']
+const types: PartnerType[] = ['gold', 'bronze']
 const active: Ref<PartnerType> = useState('active', () => 'gold')
 
-let partners: Partners = usePartnersStore().partnersMap
+const store = usePartnersStore()
+const {data} = await useArchiveFetch('/partners/list.json', {key: 'partners'})
+store.setPartners(data.value as never)
+
+const partners = computed(() => store.partnersMap)
 
 let intervalId: any | undefined = undefined
 
@@ -120,7 +125,6 @@ function startCarousel() {
 
 onMounted(() => {
   startCarousel()
-  console.log(partners)
 })
 
 onDeactivated(() => {
@@ -138,7 +142,9 @@ const imgUrls = import.meta.glob('~/assets/partners/2026/*', {
 })
 
 function resolveImage(path: string): string {
-  return `${imgUrls[path]}`
+  if (!path) return ''
+  if (/^https?:\/\//.test(path)) return path
+  return `${imgUrls[path] ?? path}`
 }
 
 </script>
