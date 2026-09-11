@@ -89,11 +89,16 @@
 <script setup lang="ts">
 
 import {type PartnerType, usePartnersStore} from '~/stores/partnersStore'
+import {useArchiveFetch} from '~/composables/useAPIFetch'
 
 const types: PartnerType[] = ['gold', 'bronze']
 const active: Ref<PartnerType> = useState('active', () => 'gold')
 
-let partners: Partners = usePartnersStore().partnersMap
+const store = usePartnersStore()
+const {data} = await useArchiveFetch('/partners/list.json', {key: 'partners'})
+store.setPartners(data.value as never)
+
+const partners = computed(() => store.partnersMap)
 
 let intervalId: any | undefined = undefined
 
@@ -120,7 +125,6 @@ function startCarousel() {
 
 onMounted(() => {
   startCarousel()
-  console.log(partners)
 })
 
 onDeactivated(() => {
@@ -138,7 +142,9 @@ const imgUrls = import.meta.glob('~/assets/partners/2026/*', {
 })
 
 function resolveImage(path: string): string {
-  return `${imgUrls[path]}`
+  if (!path) return ''
+  if (/^https?:\/\//.test(path)) return path
+  return `${imgUrls[path] ?? path}`
 }
 
 </script>
