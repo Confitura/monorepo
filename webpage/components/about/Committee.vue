@@ -137,6 +137,7 @@ interface UserProfile {
   font-size: 1.3rem;
   line-height: 1.5rem;
   margin-bottom: 1rem;
+  white-space: pre-wrap;
   @include xl() {
     font-size: 1.1rem;
     line-height: 1.2rem;

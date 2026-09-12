@@ -121,7 +121,7 @@ const enrichedAgenda = computed(() => {
     // Attach time slot label (and keep start/end if needed later)
     const slotObj: any = (slots.value || []).find((s: any) => String(s.id) === String(entry.timeSlotId))
     if (slotObj) {
-      enriched.timeSlotLabel = slotObj.label
+      if (!enriched.timeSlotLabel) enriched.timeSlotLabel = slotObj.label
       enriched.start = slotObj.start
       enriched.end = slotObj.end
       enriched._slotOrder = slots.value.indexOf(slotObj)
