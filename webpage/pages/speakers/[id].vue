@@ -30,9 +30,7 @@
         </div>
         <div class="speaker__right">
           <div class="speaker__name">{{ speaker.name }}</div>
-          <div class="speaker__bio">
-            {{ speaker.bio }}
-          </div>
+          <div class="speaker__bio">{{ speaker.bio }}</div>
           <div class="speaker__presentation" v-for="presentation in speaker.presentations">
             <nuxt-link :to="presentation.isWorkshop ? `/workshops#${presentation.id}` : `/presentations#${presentation.id}`">
               <h2>
@@ -153,6 +151,7 @@ useHead({
   font-size: 1.2rem;
   line-height: 1.7rem;
   margin-top: 2rem;
+  white-space: pre-wrap;
   @include md() {
     font-size: 1.5rem;
     line-height: 2rem;
