@@ -5,6 +5,7 @@
   "type": "module",
   "description": "Manual script that ingests Confitura conference resource data into Datalinks (no speaker PII).",
   "scripts": {
+    "download": "tsx src/download.ts",
     "ingest": "tsx src/ingest.ts",
     "test": "vitest run",
     "test:watch": "vitest",

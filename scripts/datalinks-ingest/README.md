@@ -31,9 +31,13 @@ keeps answers on-topic, replies in the visitor's language, and links to each rec
 ```bash
 pnpm install
 cp .env.example .env    # fill in DATALINKS_TOKEN, DATALINKS_USERNAME
-pnpm ingest             # fetch resources, transform, clear-then-reingest
+pnpm download           # fetch resources + transform -> data/datasets.json (no Datalinks calls)
+pnpm ingest             # read data/datasets.json, clear-then-reingest + link datasets in Datalinks
 pnpm test               # run the transform / PII-boundary tests
 pnpm typecheck
 ```
 
-Re-running `pnpm ingest` refreshes the data (clear-then-reingest).
+The flow is split in two: `download` only reads the public Confitura resources and writes the
+prepared, PII-free rows to `data/datasets.json`; `ingest` only talks to Datalinks (it makes no
+resource fetches). Re-running the pair refreshes the data (clear-then-reingest). Run `download`
+before `ingest`, or `ingest` fails with a "run `pnpm download` first" message.
