@@ -84,6 +84,17 @@ async function main() {
   await ingestDataset(client, DATASETS.pages, pageRows, 'Confitura info pages (venue, about, …) as markdown, each with its `url`.')
   await ingestDataset(client, DATASETS.news, newsRows, 'Confitura news/announcements with publish dates and a `url` to the news page.')
 
+  // Manual bidirectional link: agenda.talkId <-> talks.id (no auto discovery/curation).
+  console.log('- linking agenda.talkId <-> talks.id…')
+  await client.addLink(
+    { dataset: DATASETS.agenda, columnName: 'talkId' },
+    { dataset: DATASETS.talks, columnName: 'id' },
+  )
+  await client.addLink(
+    { dataset: DATASETS.talks, columnName: 'id' },
+    { dataset: DATASETS.agenda, columnName: 'talkId' },
+  )
+
   console.log('Done.')
 }
 

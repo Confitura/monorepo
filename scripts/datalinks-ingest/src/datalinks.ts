@@ -54,19 +54,43 @@ export class DatalinksClient {
   }
 
   // POST /ingest/{namespace}/{datasetName} -> { indexed }
+  // Link discovery and ontology curation are disabled: links between datasets are
+  // created explicitly via addLink() instead of being inferred at ingest time.
   async ingest(
     datasetName: string,
     data: object[],
     dataDescription: string,
   ): Promise<number> {
-    let link =  { "ExactMatch": {}}
     const res = await this.call('POST', `/ingest/${this.cfg.namespace}/${datasetName}`, {
       data,
       dataDescription,
-      link,
-      curate: true,
+      curate: false,
     })
     const json = (await res.json()) as { indexed: number }
     return json.indexed
+  }
+
+  // POST /links/add — manually link a column of one dataset to a column of another.
+  // /links/add is directional (from -> to), so callers add both directions for a
+  // bidirectional link.
+  async addLink(
+    from: { dataset: string; columnName: string },
+    to: { dataset: string; columnName: string },
+    matchType: 'ExactMatch' | 'GeoMatch' = 'ExactMatch',
+  ): Promise<void> {
+    await this.call('POST', '/links/add', {
+      from: this.column(from.dataset, from.columnName),
+      to: this.column(to.dataset, to.columnName),
+      matchType,
+    })
+  }
+
+  private column(dataset: string, columnName: string) {
+    return {
+      username: this.cfg.username,
+      namespace: this.cfg.namespace,
+      dataset,
+      columnName,
+    }
   }
 }
