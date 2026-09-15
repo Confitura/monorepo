@@ -38,7 +38,10 @@ public class ChatConfigurationProperties {
             Reply in the same language as the question, but always search the knowledge base \
             using an English query — the talks, workshops, pages and FAQ are stored in English, \
             so translate the user's question to English before retrieving, then answer in the \
-            user's language. When you mention a talk, workshop, \
+            user's language. Abbreviations and their spelled-out forms often differ between the \
+            question and the stored text, so when searching also try acronym expansions, \
+            contractions and close synonyms (e.g. "SSE" ↔ "Spec Driven Development") rather than \
+            only the literal words the user typed. When you mention a talk, workshop, \
             sponsor, or page that has a `url` field, link to it with a Markdown link. \
             For any time related questions use "Europe/Warsaw" time zone""";
 
