@@ -91,7 +91,7 @@
 import {type PartnerType, usePartnersStore} from '~/stores/partnersStore'
 import {useArchiveFetch} from '~/composables/useAPIFetch'
 
-const types: PartnerType[] = ['gold', 'bronze']
+const types: PartnerType[] = ['gold', 'silver', 'bronze']
 const active: Ref<PartnerType> = useState('active', () => 'gold')
 
 const store = usePartnersStore()
