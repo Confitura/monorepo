@@ -1,11 +1,11 @@
 <template>
   <div v-if="available" class="chat-widget">
     <button
-      v-if="!open"
-      class="chat-launcher"
-      type="button"
-      aria-label="Open conference assistant"
-      @click="open = true"
+        v-if="!open"
+        class="chat-launcher"
+        type="button"
+        aria-label="Open conference assistant"
+        @click="open = true"
     >
       <span aria-hidden="true">💬</span> Ask
     </button>
@@ -15,21 +15,19 @@
         <div class="chat-header-main">
           <span class="chat-title">Conference assistant (experimental)</span>
           <a
-            class="chat-powered"
-            href="https://datalinks.com"
-            target="_blank"
-            rel="noopener noreferrer"
+              class="chat-powered"
+              href="https://datalinks.com"
+              target="_blank"
+              rel="noopener noreferrer"
           >
-            <span>powered by</span>
-            <img :src="datalinksLogo" alt="DataLinks" class="chat-powered-logo" />
-          </a>
+            powered by Datalinks</a>
         </div>
         <div class="chat-header-controls">
           <button
-            type="button"
-            class="chat-header-btn"
-            :aria-label="maximized ? 'Restore' : 'Maximize'"
-            @click="maximized = !maximized"
+              type="button"
+              class="chat-header-btn"
+              :aria-label="maximized ? 'Restore' : 'Maximize'"
+              @click="maximized = !maximized"
           >
             {{ maximized ? '🗗' : '🗖' }}
           </button>
@@ -42,10 +40,10 @@
           Ask about talks, speakers, the agenda, the venue or FAQ.
         </p>
         <div
-          v-for="(m, i) in messages"
-          :key="i"
-          class="chat-msg"
-          :class="m.role"
+            v-for="(m, i) in messages"
+            :key="i"
+            class="chat-msg"
+            :class="m.role"
         >
           <!-- eslint-disable-next-line vue/no-v-html -- source is HTML-escaped before marked -->
           <span v-if="m.role === 'assistant'" class="chat-bubble markdown" v-html="renderAssistant(m)"></span>
@@ -56,12 +54,12 @@
 
       <form class="chat-input" @submit.prevent="send">
         <input
-          v-model="question"
-          type="text"
-          :maxlength="maxLength"
-          placeholder="Type your question…"
-          aria-label="Your question"
-          :disabled="pending"
+            v-model="question"
+            type="text"
+            :maxlength="maxLength"
+            placeholder="Type your question…"
+            aria-label="Your question"
+            :disabled="pending"
         />
         <button type="submit" :disabled="pending || !question.trim()">Send</button>
       </form>
@@ -70,9 +68,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, nextTick, onMounted } from 'vue'
-import { marked } from 'marked'
-import datalinksLogo from '~/assets/partners/2025/datalinks.svg'
+import {ref, nextTick, onMounted} from 'vue'
+import {marked} from 'marked'
 
 interface Message {
   role: 'user' | 'assistant'
@@ -87,7 +84,7 @@ function escapeHtml(s: string): string {
 
 function renderAssistant(m: Message): string {
   if (!m.text) return pending.value ? '…' : ''
-  return marked.parse(escapeHtml(m.text), { async: false, breaks: true }) as string
+  return marked.parse(escapeHtml(m.text), {async: false, breaks: true}) as string
 }
 
 const config = useRuntimeConfig()
@@ -104,7 +101,7 @@ onMounted(async () => {
   try {
     const res = await fetch(`${apiBase}/chat/status`)
     if (res.ok) {
-      const { enabled } = (await res.json()) as { enabled?: boolean }
+      const {enabled} = (await res.json()) as { enabled?: boolean }
       available.value = enabled === true
     }
   } catch {
@@ -127,8 +124,8 @@ async function send() {
   const text = question.value.trim()
   if (!text || pending.value) return
 
-  messages.value.push({ role: 'user', text })
-  const assistant: Message = { role: 'assistant', text: '' }
+  messages.value.push({role: 'user', text})
+  const assistant: Message = {role: 'assistant', text: ''}
   messages.value.push(assistant)
   question.value = ''
   pending.value = true
@@ -154,13 +151,13 @@ async function send() {
 
     if (!res.ok) {
       error.value =
-        res.status === 429
-          ? 'Too many questions — please wait a moment.'
-          : res.status === 503
-            ? 'The assistant is unavailable right now.'
-            : res.status === 401
-              ? 'The assistant is not available.'
-              : 'Something went wrong. Please try again.'
+          res.status === 429
+              ? 'Too many questions — please wait a moment.'
+              : res.status === 503
+                  ? 'The assistant is unavailable right now.'
+                  : res.status === 401
+                      ? 'The assistant is not available.'
+                      : 'Something went wrong. Please try again.'
       messages.value.pop()
       return
     }
@@ -181,10 +178,10 @@ async function readStream(res: Response, assistant: Message) {
   const decoder = new TextDecoder()
   let buffer = ''
 
-  for (;;) {
-    const { value, done } = await reader.read()
+  for (; ;) {
+    const {value, done} = await reader.read()
     if (done) break
-    buffer += decoder.decode(value, { stream: true })
+    buffer += decoder.decode(value, {stream: true})
 
     let sep: number
     // Events are separated by a blank line; process each complete one.
@@ -297,8 +294,8 @@ function handleEvent(raw: string, assistant: Message) {
   height: 13px;
   width: auto;
   background: #fff;
-  border-radius: 3px;
-  padding: 2px 4px;
+  border-radius: 0;
+  padding: 0;
 }
 
 .chat-header-controls {

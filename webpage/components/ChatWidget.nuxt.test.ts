@@ -49,8 +49,8 @@ describe('ChatWidget', () => {
     expect(wrapper.find('.chat-panel').exists()).toBe(true)
     const powered = wrapper.find('.chat-powered')
     expect(powered.exists()).toBe(true)
-    expect(powered.text()).toContain('powered by')
-    expect(powered.find('img').attributes('alt')).toBe('DataLinks')
+    expect(powered.text()).toContain('powered by Datalinks')
+    expect(powered.attributes('href')).toBe('https://datalinks.com')
   })
 
   it('stays hidden when the backend reports chat disabled', async () => {
