@@ -39,6 +39,7 @@ public class HttpDatalinksClient implements DatalinksClient {
         body.put("username", config.getUsername());
         body.put("namespace", config.getNamespace());
         body.put("query", query);
+        body.put("model", "gemini-3.5-flash-lite");
         body.put("webSearch", false);
         if (helperPrompt != null && !helperPrompt.isBlank()) {
             body.put("helperPrompt", helperPrompt);
