@@ -20,7 +20,7 @@
     "@pinia/nuxt": "^1.0.2",
     "@plausible-analytics/tracker": "^0.4.6",
     "dayjs": "^1.11.23",
-    "marked": "^18.0.12",
+    "marked": "^18.0.13",
     "modern-normalize": "^3.0.1",
     "nuxt": "^4.5.2",
     "pinia": "^4.0.3",
@@ -31,9 +31,9 @@
   "devDependencies": {
     "@nuxt/test-utils": "4.3.2",
     "@vue/test-utils": "^2.5.0",
-    "happy-dom": "^20.14.0",
+    "happy-dom": "^20.14.5",
     "playwright-core": "^1.63.0",
-    "sass-embedded": "^1.104.0",
+    "sass-embedded": "^1.104.1",
     "vitest": "^4.1.11"
   },
   "pnpm": {
