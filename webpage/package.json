@@ -34,7 +34,7 @@
     "happy-dom": "^20.14.5",
     "playwright-core": "^1.63.0",
     "sass-embedded": "^1.104.1",
-    "vitest": "^4.1.11"
+    "vitest": "^5.0.0"
   },
   "pnpm": {
     "overrides": {
