@@ -13,11 +13,25 @@ const PARTNERS = [
   { id: 'uuid-2', slug: 'dpd', name: 'DPD', type: 'bronze', www: 'https://dpd.com', logo: 'https://cdn/d.svg', description: 'd', orientation: 'box', published: true },
 ]
 
+// speaker '123' has one scheduled talk (p1) and one unscheduled talk (p2)
+const SPEAKER = {
+  id: '123', name: 'Jane Speaker', bio: 'Bio', photo: '',
+  presentations: [
+    { id: 'p1', name: 'Scheduled Talk', isWorkshop: false },
+    { id: 'p2', name: 'Unscheduled Talk', isWorkshop: false },
+  ],
+}
+const DAY1_AGENDA = { agendaEntries: [{ presentationId: 'p1' }] }
+
 vi.mock('~/composables/useAPIFetch', async () => {
   const { ref } = await import('vue')
   const createFetch = (path?: string) => {
     const data = ref(
-      path === '/faq/entries.json' ? FAQ_ENTRIES : path === '/partners/list.json' ? PARTNERS : null,
+      path === '/faq/entries.json' ? FAQ_ENTRIES
+      : path === '/partners/list.json' ? PARTNERS
+      : path === '/users/123/public.json' ? SPEAKER
+      : path === '/agenda/day-1.json' ? DAY1_AGENDA
+      : null,
     )
     const result = { data, pending: ref(false), error: ref(null), refresh: vi.fn(), execute: vi.fn() }
     return Object.assign(Promise.resolve(result), result)
@@ -156,6 +170,18 @@ describe('pages render without errors', () => {
       route: { params: { id: '123' } },
     })
     expect(wrapper.find('.speaker').exists()).toBe(true)
+  })
+
+  it('shows a calendar link only for the speaker\'s scheduled talk', async () => {
+    const wrapper = await mountSuspended(SpeakersDetailPage, {
+      route: { params: { id: '123' } },
+    })
+    const calendarLinks = wrapper.findAll('a.speaker__calendar')
+    // p1 is scheduled (in day-1 agenda), p2 is not
+    expect(calendarLinks.length).toBe(1)
+    expect(calendarLinks[0].attributes('href')).toBe(
+      'https://api.confitura.pl/api/agenda/ical/presentation/p1',
+    )
   })
 
   it('renders the schedule page (default day)', async () => {

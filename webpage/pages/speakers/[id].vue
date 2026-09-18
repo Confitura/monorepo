@@ -32,13 +32,18 @@
           <div class="speaker__name">{{ speaker.name }}</div>
           <div class="speaker__bio">{{ speaker.bio }}</div>
           <div class="speaker__presentation" v-for="presentation in speaker.presentations">
-            <nuxt-link :to="presentation.isWorkshop ? `/workshops#${presentation.id}` : `/presentations#${presentation.id}`">
-              <h2>
+            <h2 class="speaker__presentation-title">
+              <nuxt-link :to="presentation.isWorkshop ? `/workshops#${presentation.id}` : `/presentations#${presentation.id}`">
                 <i class=" fas fa-hammer" title="workshop" v-if="presentation.isWorkshop"></i>
                 <i class=" fas fa-microphone" title="presentation" v-else></i>
                 {{ presentation.name }}
-              </h2>
-            </nuxt-link>
+              </nuxt-link>
+              <a v-if="scheduledIds.has(presentation.id)" class="speaker__calendar"
+                 :href="icalUrl(presentation.id)" download
+                 title="Add this talk to your calendar">
+                <i class="fas fa-calendar-alt"></i>
+              </a>
+            </h2>
           </div>
         </div>
       </div>
@@ -49,10 +54,14 @@
 
 <script setup lang="ts">
 import {useArchiveFetch} from '~/composables/useAPIFetch'
+import {useScheduledPresentationIds} from '~/composables/useScheduledPresentationIds'
 import { computed } from 'vue'
 
 let route = useRoute()
 let {data: speaker} = useArchiveFetch(`/users/${route.params.id}/public.json`)
+
+const scheduledIds = useScheduledPresentationIds()
+const icalUrl = (id: string) => `https://api.confitura.pl/api/agenda/ical/presentation/${id}`
 
 // SEO: Dynamic head tags based on speaker data
 const title = computed(() => {
@@ -101,6 +110,12 @@ useHead({
       color: $brand;
     }
   }
+}
+
+.speaker__calendar {
+  margin-left: 1rem;
+  font-size: 0.9em;
+  cursor: pointer;
 }
 
 .speaker {

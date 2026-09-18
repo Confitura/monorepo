@@ -806,6 +806,24 @@ export type ExportIcalResponses = {
 
 export type ExportIcalResponse = ExportIcalResponses[keyof ExportIcalResponses];
 
+export type GetPresentationIcalData = {
+    body?: never;
+    path: {
+        presentationId: string;
+    };
+    query?: never;
+    url: '/agenda/ical/presentation/{presentationId}';
+};
+
+export type GetPresentationIcalResponses = {
+    /**
+     * OK
+     */
+    200: string;
+};
+
+export type GetPresentationIcalResponse = GetPresentationIcalResponses[keyof GetPresentationIcalResponses];
+
 export type SubscribeIcalData = {
     body?: never;
     path?: never;
