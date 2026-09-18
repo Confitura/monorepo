@@ -35,6 +35,7 @@ vi.mock('vue3-google-map', () => ({
 }))
 
 import IndexPage from '~/pages/index.vue'
+import CalendarPage from '~/pages/calendar.vue'
 import AboutPage from '~/pages/about.vue'
 import FaqPage from '~/pages/faq.vue'
 import NewsPage from '~/pages/news.vue'
@@ -56,6 +57,11 @@ describe('pages render without errors', () => {
   it('renders the home page', async () => {
     const wrapper = await mountSuspended(IndexPage)
     expect(wrapper.find('.home__container').exists()).toBe(true)
+  })
+
+  it('renders the calendar page', async () => {
+    const wrapper = await mountSuspended(CalendarPage)
+    expect(wrapper.find('.calendar__page').exists()).toBe(true)
   })
 
   it('renders the about page', async () => {
