@@ -36,10 +36,22 @@ public class IcalExportService {
 
     private final AgendaService agendaService;
     private final DayRepository dayRepository;
+    private final AgendaRepository agendaRepository;
 
     public byte[] generateIcs() {
         Iterable<AgendaEntry> entries = agendaService.findAllAndMerge();
-        Calendar calendar = buildCalendar(entries);
+        return serialize(buildCalendar(entries));
+    }
+
+    public byte[] generateIcsForPresentation(String presentationId) {
+        List<AgendaEntry> entries = agendaRepository.findByPresentationId(presentationId);
+        if (entries.isEmpty()) {
+            return null;
+        }
+        return serialize(buildCalendar(entries));
+    }
+
+    private byte[] serialize(Calendar calendar) {
         try {
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             new CalendarOutputter().output(calendar, out);

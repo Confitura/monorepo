@@ -22,6 +22,8 @@ class IcalExportServiceTest {
     AgendaService agendaService;
     @Mock
     DayRepository dayRepository;
+    @Mock
+    AgendaRepository agendaRepository;
 
     @InjectMocks
     IcalExportService service;
@@ -80,6 +82,35 @@ class IcalExportServiceTest {
         assertThat(countOccurrences(txt, "BEGIN:VEVENT")).isEqualTo(1);
         assertThat(countOccurrences(txt, "SUMMARY:Coffee Break")).isEqualTo(1);
         assertThat(txt).contains("LOCATION:Room A\\, Room B");
+    }
+
+    @Test
+    void generatesIcsForSinglePresentation() {
+        Day day = new Day().setId("day-1").setDate(LocalDate.of(2025, 9, 19)).setLabel("Day 1").setDisplayOrder(1);
+        TimeSlot slot = new TimeSlot()
+                .setId("day-1", 1)
+                .setStart(LocalTime.of(9, 10))
+                .setEnd(LocalTime.of(10, 0));
+        Room room = new Room().setId("ab-1").setLabel("AB").setDisplayOrder(1).setDay(day);
+        Presentation pres = new Presentation().setId("pres-1").setTitle("Awesome Talk").setShortDescription("Short");
+        AgendaEntry talk = new AgendaEntry().setId("1").setTimeSlot(slot).setRoom(room).setPresentation(pres);
+
+        when(agendaRepository.findByPresentationId("pres-1")).thenReturn(List.of(talk));
+        when(dayRepository.findById("day-1")).thenReturn(day);
+
+        byte[] ics = service.generateIcsForPresentation("pres-1");
+        String txt = new String(ics, StandardCharsets.UTF_8);
+
+        assertThat(countOccurrences(txt, "BEGIN:VEVENT")).isEqualTo(1);
+        assertThat(txt).contains("SUMMARY:Awesome Talk");
+        assertThat(txt).contains("LOCATION:AB");
+    }
+
+    @Test
+    void returnsNullForUnscheduledPresentation() {
+        when(agendaRepository.findByPresentationId("unscheduled")).thenReturn(List.of());
+
+        assertThat(service.generateIcsForPresentation("unscheduled")).isNull();
     }
 
     private static int countOccurrences(String text, String token) {

@@ -1834,6 +1834,33 @@
         "tags" : [ "agenda-controller" ]
       }
     },
+    "/agenda/ical/presentation/{presentationId}" : {
+      "get" : {
+        "operationId" : "getPresentationIcal",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "presentationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "text/calendar" : {
+                "schema" : {
+                  "format" : "byte",
+                  "type" : "string"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "agenda-controller" ]
+      }
+    },
     "/agenda/ical/subscribe" : {
       "get" : {
         "operationId" : "subscribeIcal",

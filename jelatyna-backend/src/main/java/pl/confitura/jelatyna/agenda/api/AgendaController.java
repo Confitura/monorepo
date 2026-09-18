@@ -236,4 +236,15 @@ public class AgendaController {
                 .body(body);
     }
 
+    @GetMapping(value = "/ical/presentation/{presentationId}", produces = "text/calendar")
+    public ResponseEntity<byte[]> getPresentationIcal(@PathVariable String presentationId) {
+        byte[] body = icalExportService.generateIcsForPresentation(presentationId);
+        if (body == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok()
+                .header("Content-Disposition", "attachment; filename=presentation.ics")
+                .body(body);
+    }
+
 }

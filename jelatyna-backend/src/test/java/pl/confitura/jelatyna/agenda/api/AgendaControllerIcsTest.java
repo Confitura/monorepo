@@ -55,4 +55,24 @@ class AgendaControllerIcsTest {
                 .andExpect(header().doesNotExist("Content-Disposition"))
                 .andExpect(content().string(org.hamcrest.Matchers.containsString("BEGIN:VCALENDAR")));
     }
+
+    @Test
+    void returnsCalendarForSinglePresentation() throws Exception {
+        when(icalExportService.generateIcsForPresentation("pres-1"))
+                .thenReturn("BEGIN:VCALENDAR\nEND:VCALENDAR".getBytes());
+
+        mvc.perform(get("/agenda/ical/presentation/pres-1"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("text/calendar"))
+                .andExpect(header().string("Content-Disposition", org.hamcrest.Matchers.containsString("attachment")))
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("BEGIN:VCALENDAR")));
+    }
+
+    @Test
+    void returns404WhenPresentationHasNoAgendaEntry() throws Exception {
+        when(icalExportService.generateIcsForPresentation("unscheduled")).thenReturn(null);
+
+        mvc.perform(get("/agenda/ical/presentation/unscheduled"))
+                .andExpect(status().isNotFound());
+    }
 }
