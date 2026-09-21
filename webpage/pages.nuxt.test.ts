@@ -50,6 +50,7 @@ vi.mock('vue3-google-map', () => ({
 
 import IndexPage from '~/pages/index.vue'
 import CalendarPage from '~/pages/calendar.vue'
+import WorkshopSignupPage from '~/pages/workshop-signup.vue'
 import AboutPage from '~/pages/about.vue'
 import FaqPage from '~/pages/faq.vue'
 import NewsPage from '~/pages/news.vue'
@@ -76,6 +77,12 @@ describe('pages render without errors', () => {
   it('renders the calendar page', async () => {
     const wrapper = await mountSuspended(CalendarPage)
     expect(wrapper.find('.calendar__page').exists()).toBe(true)
+  })
+
+  it('renders the workshop sign-up page', async () => {
+    const wrapper = await mountSuspended(WorkshopSignupPage)
+    expect(wrapper.find('.workshop-signup').exists()).toBe(true)
+    expect(wrapper.find('img[src="/workshop-signup/image7.png"]').exists()).toBe(true)
   })
 
   it('renders the about page', async () => {
