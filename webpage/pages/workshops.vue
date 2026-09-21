@@ -1,6 +1,12 @@
 <template>
   <div class="workshops">
     <PageHeader title="Workshops" type="coder"/>
+    <Box color="white" :full="false">
+      <p class="workshops__note">
+        Priority is given to attendees who registered by following the
+        <NuxtLink to="/workshop-signup">workshop sign-up instructions</NuxtLink>.
+      </p>
+    </Box>
     <div
         v-for="(workshop, $index) in workshops"
         :key="workshop.id"
@@ -109,6 +115,23 @@ useHead({
 
 .workshops {
   overflow: hidden;
+}
+
+.workshops__note {
+  margin: 0;
+  font-size: 1.3rem;
+  line-height: 1.7rem;
+  text-align: center;
+
+  a {
+    color: $brand;
+    font-weight: bold;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
 
 .workshop {
