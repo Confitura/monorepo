@@ -390,7 +390,9 @@ class AgendaControllerTest extends BaseIntegrationTest {
         mockMvc.perform(get("/agenda/ical/presentation/" + presentationId))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("text/calendar"))
-                .andExpect(content().string(org.hamcrest.Matchers.containsString("SUMMARY:Scheduled Talk")));
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("SUMMARY:Scheduled Talk")))
+                .andExpect(content().string(org.hamcrest.Matchers.containsString(
+                        "URL:https://confitura.pl/schedule#" + presentationId)));
     }
 
     @Test

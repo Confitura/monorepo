@@ -50,6 +50,7 @@
 <script setup lang="ts">
 
 import {useArchiveFetch} from '~/composables/useAPIFetch'
+import {usePresentationDayIndex} from '~/composables/usePresentationDayIndex'
 
 function name(room: string) {
   if (room.includes(' ')) {
@@ -123,6 +124,35 @@ function loadDayAgenda() {
 loadDayAgenda()
 
 const selectedPresentationId = useState('selectedPresentationId', () => null)
+
+// Deep link support: /schedule#<presentationId> opens the right day and its modal.
+const route = useRoute()
+const dayIndex = usePresentationDayIndex()
+
+function openFromHash() {
+  const raw = route.hash
+  if (!raw) return
+  const id = decodeURIComponent(raw.slice(1))
+  if (!id) return
+  // Wait until the day index has loaded before deciding which day the talk is on.
+  if (dayIndex.value.size === 0) return
+
+  const targetDay = dayIndex.value.get(id)
+  const currentDay = (route.params.dayId as string) || 'day-1'
+
+  // The talk is on another day — reload on the correct day, keeping the hash.
+  if (targetDay && targetDay !== currentDay) {
+    if (typeof window !== 'undefined') {
+      window.location.replace(`/schedule/${targetDay}#${id}`)
+    }
+    return
+  }
+
+  selectedPresentationId.value = id
+}
+
+// Fire once the index is available and whenever the hash changes.
+watch([dayIndex, () => route.hash], () => openFromHash(), {immediate: true})
 
 function getEntryFor(room: Room | null, slot: TimeSlot): AgendaEntry {
   const entry = agenda.value?.find(
