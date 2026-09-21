@@ -8,6 +8,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.transaction.support.TransactionTemplate;
 import pl.confitura.jelatyna.BaseIntegrationTest;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
+import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
 
 import java.time.LocalDate;
@@ -16,6 +17,7 @@ import java.time.LocalTime;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -366,6 +368,34 @@ class AgendaControllerTest extends BaseIntegrationTest {
     @WithMockUser(roles = "ADMIN")
     void shouldNotRemoveUnknownRoom() throws Exception {
         mockMvc.perform(delete("/agenda/rooms/non-existent-id"))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void shouldReturnIcalForScheduledPresentation() throws Exception {
+        String presentationId = txTemplate.execute(status -> {
+            Presentation presentation = presentationRepository.save(new Presentation()
+                    .setTitle("Scheduled Talk")
+                    .setShortDescription("short")
+                    .setDescription("description")
+                    .setLevel("easy")
+                    .setLanguage("pl"));
+            agendaRepository.save(new AgendaEntry()
+                    .setTimeSlot(timeSlot2)
+                    .setRoom(room1)
+                    .setPresentation(presentation));
+            return presentation.getId();
+        });
+
+        mockMvc.perform(get("/agenda/ical/presentation/" + presentationId))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("text/calendar"))
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("SUMMARY:Scheduled Talk")));
+    }
+
+    @Test
+    void shouldReturn404ForUnscheduledPresentation() throws Exception {
+        mockMvc.perform(get("/agenda/ical/presentation/non-existent-id"))
                 .andExpect(status().isNotFound());
     }
 }
