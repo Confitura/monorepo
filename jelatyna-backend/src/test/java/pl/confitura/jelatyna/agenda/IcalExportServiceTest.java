@@ -104,6 +104,7 @@ class IcalExportServiceTest {
         assertThat(countOccurrences(txt, "BEGIN:VEVENT")).isEqualTo(1);
         assertThat(txt).contains("SUMMARY:Awesome Talk");
         assertThat(txt).contains("LOCATION:AB");
+        assertThat(txt).contains("URL:https://confitura.pl/schedule#pres-1");
     }
 
     @Test

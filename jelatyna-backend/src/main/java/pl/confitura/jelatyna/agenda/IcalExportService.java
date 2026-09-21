@@ -12,10 +12,12 @@ import net.fortuna.ical4j.model.property.Location;
 import net.fortuna.ical4j.model.property.ProdId;
 import net.fortuna.ical4j.model.property.Summary;
 import net.fortuna.ical4j.model.property.Uid;
+import net.fortuna.ical4j.model.property.Url;
 import org.springframework.stereotype.Service;
 import pl.confitura.jelatyna.presentation.Presentation;
 
 import java.io.ByteArrayOutputStream;
+import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -60,6 +62,9 @@ public class IcalExportService {
             throw new RuntimeException("Failed to generate iCal", e);
         }
     }
+
+    // Public schedule page; a talk deep-links to /schedule#<presentationId>.
+    private static final String SCHEDULE_URL = "https://confitura.pl/schedule";
 
     Calendar buildCalendar(Iterable<AgendaEntry> entries) {
         Calendar calendar = new Calendar();
@@ -110,6 +115,11 @@ public class IcalExportService {
             event.withProperty(new Uid(UUID.nameUUIDFromBytes(
                     (m.summary + m.start).getBytes(StandardCharsets.UTF_8)).toString()));
 
+            String presentationId = m.presentationId();
+            if (presentationId != null) {
+                event.withProperty(new Url(URI.create(SCHEDULE_URL + "#" + presentationId)));
+            }
+
             calendar.withComponent(event);
         }
         return calendar;
@@ -140,6 +150,15 @@ public class IcalExportService {
                 String description = buildDescription(entry);
                 if (description != null && !description.isBlank()) {
                     return description;
+                }
+            }
+            return null;
+        }
+
+        private String presentationId() {
+            for (AgendaEntry entry : entries) {
+                if (entry.getPresentationId() != null) {
+                    return entry.getPresentationId();
                 }
             }
             return null;
