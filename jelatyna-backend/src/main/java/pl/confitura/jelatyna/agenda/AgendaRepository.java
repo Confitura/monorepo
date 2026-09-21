@@ -28,5 +28,6 @@ public interface AgendaRepository extends Repository<AgendaEntry, String> {
     @Query("from AgendaEntry where room.id = :roomId")
     List<AgendaEntry> findByRoomId(String roomId);
 
+    @Query("from AgendaEntry where presentation.id = :presentationId")
     List<AgendaEntry> findByPresentationId(String presentationId);
 }
