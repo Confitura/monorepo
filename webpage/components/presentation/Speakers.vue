@@ -47,6 +47,7 @@ function lastName(value: string) {
   flex-direction: column;
   @include md() {
     flex-direction: row;
+    flex-wrap: wrap;
   }
 }
 
