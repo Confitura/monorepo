@@ -20,6 +20,7 @@ public class Rate {
     private String id;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "`value`") // `value` is a reserved word in H2; backticks make Hibernate quote it per dialect
     private RateValue value;
 
     private String comment;
