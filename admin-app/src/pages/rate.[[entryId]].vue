@@ -55,7 +55,7 @@ async function loadRatingStatus() {
 }
 
 const opensAtLabel = computed(() => {
-  if (!ratingOpensAt.value) return 'Rating will be enabled on conference day'
+  if (!ratingOpensAt.value) return 'Rating is disabled on this presentation'
   const date = new Date(ratingOpensAt.value)
   const formatted = Number.isNaN(date.getTime())
     ? ratingOpensAt.value
