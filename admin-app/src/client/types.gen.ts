@@ -394,6 +394,11 @@ export type RatingEnabledResponse = {
     ratingEnabled?: boolean;
 };
 
+export type RatingStatusResponse = {
+    open?: boolean;
+    opensAt?: string;
+};
+
 export type RegistrationError = {
     additionalInfo?: string;
     reason?: string;
@@ -2423,6 +2428,22 @@ export type AcceptedWorkshopsResponses = {
 };
 
 export type AcceptedWorkshopsResponse = AcceptedWorkshopsResponses[keyof AcceptedWorkshopsResponses];
+
+export type GetRatingStatusData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/rating/status';
+};
+
+export type GetRatingStatusResponses = {
+    /**
+     * OK
+     */
+    200: RatingStatusResponse;
+};
+
+export type GetRatingStatusResponse = GetRatingStatusResponses[keyof GetRatingStatusResponses];
 
 export type RatesData = {
     body?: never;

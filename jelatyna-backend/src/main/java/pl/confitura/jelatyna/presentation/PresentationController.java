@@ -17,8 +17,11 @@ import org.springframework.web.bind.annotation.*;
 import pl.confitura.jelatyna.api.model.FullPresentation;
 import pl.confitura.jelatyna.presentation.rating.Rate;
 import pl.confitura.jelatyna.presentation.rating.RatingService;
+import pl.confitura.jelatyna.presentation.rating.RatingWindowService;
 import pl.confitura.jelatyna.presentation.rating.ViewPresentationRate;
 import pl.confitura.jelatyna.presentation.rating.ViewPresentationRateRepository;
+
+import java.time.LocalDate;
 import pl.confitura.jelatyna.user.User;
 import pl.confitura.jelatyna.user.UserRepository;
 
@@ -31,6 +34,7 @@ public class PresentationController {
     private final PresentationRepository repository;
     private final UserRepository userRepository;
     private final RatingService ratingService;
+    private final RatingWindowService ratingWindowService;
     private final TagRepository tagRepository;
     private final ViewPresentationRateRepository ratesRepository;
 
@@ -86,6 +90,9 @@ public class PresentationController {
         if (rate.getReviewerToken() == null) {
             return ResponseEntity.badRequest().body("Reviewer token is required");
         }
+        if (!ratingWindowService.isOpen()) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Rating is not open yet");
+        }
         Presentation presentation = repository.findById(presentationId);
         if (presentation == null) {
             return ResponseEntity.notFound().build();
@@ -130,6 +137,16 @@ public class PresentationController {
     }
 
     public record RatingEnabledResponse(boolean ratingEnabled) {
+    }
+
+    @GetMapping("/rating/status")
+    public RatingStatusResponse getRatingStatus() {
+        return new RatingStatusResponse(
+                ratingWindowService.isOpen(),
+                ratingWindowService.opensAt().orElse(null));
+    }
+
+    public record RatingStatusResponse(boolean open, LocalDate opensAt) {
     }
 
     @GetMapping("/tags")
