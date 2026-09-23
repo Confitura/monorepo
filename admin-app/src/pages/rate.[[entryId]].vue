@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 import {v4 as uuidv4} from 'uuid';
-import {ref, computed, onMounted} from 'vue'
+import {ref, computed, onMounted, onBeforeUnmount} from 'vue'
 import {useRoute} from 'vue-router'
 import {addRating, getRatingEnabled, getRatingStatus} from '@/utils/api.ts'
 
@@ -90,11 +90,33 @@ function submit() {
     })
 }
 
+// When embedded in the webpage modal (cross-origin iframe), report our real
+// content height so the parent can size the iframe to fit — a one-line banner
+// stays small, the full form gets the space it needs.
+let resizeObserver: ResizeObserver | null = null
+
+function reportHeight() {
+  if (typeof window === 'undefined' || window.parent === window) return
+  const height = Math.ceil(document.documentElement.scrollHeight)
+  window.parent.postMessage({ type: 'confitura:rate-height', height }, '*')
+}
+
 onMounted(() => {
   loadRatingStatus()
   if (entryId.value) {
     loadPresentation()
   }
+  if (typeof window !== 'undefined' && window.parent !== window) {
+    reportHeight()
+    if ('ResizeObserver' in window) {
+      resizeObserver = new ResizeObserver(() => reportHeight())
+      resizeObserver.observe(document.body)
+    }
+  }
+})
+
+onBeforeUnmount(() => {
+  resizeObserver?.disconnect()
 })
 
 const votingEnabled = computed(() => globalRatingOpen.value && ratingEnabled.value)
@@ -104,9 +126,9 @@ const labels = ref(['terrible', 'bad', 'it was fine', 'great', 'awesome'])
 
 <template>
   <v-app :theme="'light'">
-    <v-main style="height: 100%">
-      <v-container style="padding: 0; height: 100%">
-        <v-card style="height: 100%">
+    <v-main>
+      <v-container style="padding: 0">
+        <v-card>
           <div v-if="!entryId" class="pa-4">
             <v-alert
 type="error" title="Missing entryId"
