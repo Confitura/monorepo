@@ -1092,6 +1092,18 @@
         },
         "type" : "object"
       },
+      "RatingStatusResponse" : {
+        "properties" : {
+          "open" : {
+            "type" : "boolean"
+          },
+          "opensAt" : {
+            "format" : "date",
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
       "RegistrationError" : {
         "properties" : {
           "additionalInfo" : {
@@ -4174,6 +4186,24 @@
           }
         },
         "tags" : [ "published-controller" ]
+      }
+    },
+    "/rating/status" : {
+      "get" : {
+        "operationId" : "getRatingStatus",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/RatingStatusResponse"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "presentation-controller" ]
       }
     },
     "/ratings" : {

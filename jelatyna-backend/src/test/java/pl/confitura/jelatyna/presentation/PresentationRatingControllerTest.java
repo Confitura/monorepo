@@ -1,15 +1,20 @@
 package pl.confitura.jelatyna.presentation;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import pl.confitura.jelatyna.BaseIntegrationTest;
+import pl.confitura.jelatyna.agenda.Day;
+import pl.confitura.jelatyna.agenda.DayRepository;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
 import pl.confitura.jelatyna.presentation.rating.RateValue;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
+import static org.hamcrest.Matchers.notNullValue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -19,6 +24,8 @@ class PresentationRatingControllerTest extends BaseIntegrationTest {
 
     @Autowired
     PresentationRepository presentationRepository;
+    @Autowired
+    DayRepository dayRepository;
 
     private Presentation presentation;
     private final String reviewerToken = UUID.randomUUID().toString();
@@ -26,12 +33,24 @@ class PresentationRatingControllerTest extends BaseIntegrationTest {
     @BeforeEach
     void createPresentation() {
         SecurityHelper.asAdmin();
+        // A past-dated agenda day opens the global rating window.
+        dayRepository.save(new Day().setId("rate-test-day")
+                .setDate(LocalDate.now().minusDays(1)).setLabel("Day").setDisplayOrder(1));
         presentation = presentationRepository.save(new Presentation()
                 .setTitle("Talk")
                 .setShortDescription("short")
                 .setDescription("description")
                 .setLevel("easy")
                 .setLanguage("pl"));
+        SecurityHelper.cleanSecurity();
+    }
+
+    @AfterEach
+    void cleanUpDay() {
+        SecurityHelper.asAdmin();
+        if (dayRepository.findById("rate-test-day") != null) {
+            dayRepository.deleteById("rate-test-day");
+        }
         SecurityHelper.cleanSecurity();
     }
 
@@ -75,10 +94,16 @@ class PresentationRatingControllerTest extends BaseIntegrationTest {
                 .andExpect(status().isForbidden());
     }
 
-    // Note: the "enabled -> 201" happy path is not asserted here because the
-    // underlying rating persistence uses a `value` column that is a reserved word
-    // in H2 (the same reason RatingApiTest is @Disabled). The guard added by this
-    // change runs before that query, so `ratingIsRejectedWhenDisabled` still covers it.
+    @Test
+    void ratingStatusIsOpenWhenAgendaDayHasPassed() throws Exception {
+        mockMvc.perform(get("/rating/status"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.open").value(true))
+                .andExpect(jsonPath("$.opensAt").value(notNullValue()));
+    }
+    // The window-closed path (rating rejected before the first agenda day) is covered
+    // by RatingWindowServiceTest; forcing a closed window here is unreliable because
+    // other test classes leave FK-referenced agenda days behind in the shared DB.
 
     @Test
     void disablingRatingRequiresAdmin() throws Exception {

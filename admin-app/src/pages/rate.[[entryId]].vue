@@ -3,7 +3,7 @@
 import {v4 as uuidv4} from 'uuid';
 import {ref, computed, onMounted} from 'vue'
 import {useRoute} from 'vue-router'
-import {addRating, getRatingEnabled} from '@/utils/api.ts'
+import {addRating, getRatingEnabled, getRatingStatus} from '@/utils/api.ts'
 
 
 definePage({
@@ -28,6 +28,11 @@ const presError = ref<string | null>(null)
 // Defaults to true; the /rate form only shows when the global window is open AND this is true.
 const ratingEnabled = ref(true)
 
+// Global rating window, derived from the agenda: open once the conference's first
+// day has arrived. `ratingOpensAt` (ISO date) is shown in the "not open yet" banner.
+const globalRatingOpen = ref(false)
+const ratingOpensAt = ref<string | null>(null)
+
 async function loadPresentation() {
   presError.value = null
   if (!entryId.value) return
@@ -38,6 +43,25 @@ async function loadPresentation() {
     // leave the default; the global gate still applies
   }
 }
+
+async function loadRatingStatus() {
+  try {
+    const res = await getRatingStatus()
+    globalRatingOpen.value = res.data?.open ?? false
+    ratingOpensAt.value = res.data?.opensAt ?? null
+  } catch (_) {
+    // stay closed on error
+  }
+}
+
+const opensAtLabel = computed(() => {
+  if (!ratingOpensAt.value) return 'Rating will be enabled on conference day'
+  const date = new Date(ratingOpensAt.value)
+  const formatted = Number.isNaN(date.getTime())
+    ? ratingOpensAt.value
+    : date.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })
+  return `Rating will be enabled on ${formatted}`
+})
 
 function submit() {
   if (!entryId.value) return
@@ -67,14 +91,13 @@ function submit() {
 }
 
 onMounted(() => {
+  loadRatingStatus()
   if (entryId.value) {
     loadPresentation()
   }
 })
 
-// Global rating window (opens on conference day). Combined with the per-presentation flag.
-const globalRatingOpen = false
-const votingEnabled = computed(() => globalRatingOpen && ratingEnabled.value)
+const votingEnabled = computed(() => globalRatingOpen.value && ratingEnabled.value)
 
 const labels = ref(['terrible', 'bad', 'it was fine', 'great', 'awesome'])
 </script>
@@ -100,7 +123,7 @@ v-if="!ratingEnabled"
                       text="Rating is disabled for this session"/>
             <v-banner
 v-else-if="!votingEnabled"
-                      text="Rating will be enabled on conference day"/>
+                      :text="opensAtLabel"/>
             <v-container v-if="votingEnabled">
               <div class="mb-6">
                 <div class="mb-2">Your rating</div>
