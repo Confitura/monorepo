@@ -73,7 +73,7 @@ onMounted(() => {
 })
 
 // Global rating window (opens on conference day). Combined with the per-presentation flag.
-const globalRatingOpen = false
+const globalRatingOpen = true
 const votingEnabled = computed(() => globalRatingOpen && ratingEnabled.value)
 
 const labels = ref(['terrible', 'bad', 'it was fine', 'great', 'awesome'])
