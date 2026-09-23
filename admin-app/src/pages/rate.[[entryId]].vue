@@ -3,7 +3,7 @@
 import {v4 as uuidv4} from 'uuid';
 import {ref, computed, onMounted} from 'vue'
 import {useRoute} from 'vue-router'
-import {addRating} from '@/utils/api.ts'
+import {addRating, getRatingEnabled} from '@/utils/api.ts'
 
 
 definePage({
@@ -24,8 +24,19 @@ const loading = ref(false)
 
 const presError = ref<string | null>(null)
 
+// Whether rating is enabled for this specific presentation (admin-controlled).
+// Defaults to true; the /rate form only shows when the global window is open AND this is true.
+const ratingEnabled = ref(true)
+
 async function loadPresentation() {
   presError.value = null
+  if (!entryId.value) return
+  try {
+    const res = await getRatingEnabled({ path: { presentationId: entryId.value } })
+    ratingEnabled.value = res.data?.ratingEnabled ?? true
+  } catch (_) {
+    // leave the default; the global gate still applies
+  }
 }
 
 function submit() {
@@ -44,7 +55,7 @@ function submit() {
     }
   })
     .then((res) => {
-      if ((res.status ?? 0) >= 200 && (res.status ?? 0) <= 300) {
+      if ((res.status ?? 0) >= 200 && (res.status ?? 0) < 300) {
         submitted.value = true
       } else {
         presError.value = 'Failed to submit rating. Please try again later.'
@@ -53,13 +64,6 @@ function submit() {
     .finally(() => {
       loading.value = false
     })
-
-  loading.value = true
-  // For now, just simulate submit as backend API is not specified in the task
-  setTimeout(() => {
-    submitted.value = true
-    loading.value = false
-  }, 600)
 }
 
 onMounted(() => {
@@ -68,7 +72,9 @@ onMounted(() => {
   }
 })
 
-const votingEnabled = false
+// Global rating window (opens on conference day). Combined with the per-presentation flag.
+const globalRatingOpen = false
+const votingEnabled = computed(() => globalRatingOpen && ratingEnabled.value)
 
 const labels = ref(['terrible', 'bad', 'it was fine', 'great', 'awesome'])
 </script>
@@ -90,7 +96,10 @@ type="error" title="Missing entryId"
             </div>
 
             <v-banner
-v-if="!votingEnabled"
+v-if="!ratingEnabled"
+                      text="Rating is disabled for this session"/>
+            <v-banner
+v-else-if="!votingEnabled"
                       text="Rating will be enabled on conference day"/>
             <v-container v-if="votingEnabled">
               <div class="mb-6">

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import DialogConfirm from '@/components/DialogConfirm.vue'
 import type {DataTableHeaders} from '@/plugins/vuetify'
-import {accept, reject, getAllPresentations} from "@/utils/api.ts";
+import {accept, reject, enableRating, disableRating, getAllPresentations} from "@/utils/api.ts";
 import type {FullPresentation} from "@/utils/api";
 
 
@@ -39,6 +39,15 @@ function showDialogReject(presentation: FullPresentation) {
           .catch(_ => Notify.error('Failed to reject'))
       }
     })
+}
+
+function toggleRating(presentation: FullPresentation) {
+  const wasEnabled = presentation.ratingEnabled
+  const action = wasEnabled ? disableRating : enableRating
+  action({ path: { presentationId: presentation.id! } })
+    .then(_ => Notify.success(`Rating ${wasEnabled ? 'disabled' : 'enabled'} for ${presentation.title}`))
+    .then(_ => reloadPresentations())
+    .catch(_ => Notify.error('Failed to change rating state'))
 }
 
 const headers: DataTableHeaders = [
@@ -165,6 +174,18 @@ onMounted(() => {
                     />
                   </template>
                   <span>Rate</span>
+                </v-tooltip>
+
+                <v-tooltip location="top">
+                  <template #activator="{ props }">
+                    <v-btn
+                      :icon="item.ratingEnabled ? 'mdi-star-off-outline' : 'mdi-star-plus-outline'"
+                      :color="item.ratingEnabled ? '' : 'error'"
+                      v-bind="props"
+                      @click.stop="toggleRating(item)"
+                    />
+                  </template>
+                  <span>{{ item.ratingEnabled ? 'Disable rating' : 'Enable rating' }}</span>
                 </v-tooltip>
 
                 <v-tooltip location="top">

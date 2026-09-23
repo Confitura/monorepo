@@ -248,6 +248,9 @@
             "format" : "int32",
             "type" : "integer"
           },
+          "ratingEnabled" : {
+            "type" : "boolean"
+          },
           "shortDescription" : {
             "type" : "string"
           },
@@ -270,7 +273,7 @@
             "type" : "string"
           }
         },
-        "required" : [ "description", "durationInMinutes", "expectedPrice", "flatSpeakers", "flatTags", "id", "isFree", "isWorkshop", "language", "level", "maxGroupSize", "shortDescription", "speakers", "status", "tags", "title" ],
+        "required" : [ "description", "durationInMinutes", "expectedPrice", "flatSpeakers", "flatTags", "id", "isFree", "isWorkshop", "language", "level", "maxGroupSize", "ratingEnabled", "shortDescription", "speakers", "status", "tags", "title" ],
         "type" : "object"
       },
       "FullUser" : {
@@ -907,6 +910,9 @@
             "enum" : [ "NONE", "PRE_APPROVED", "PRE_REJECTED", "IN_RESERVE" ],
             "type" : "string"
           },
+          "ratingEnabled" : {
+            "type" : "boolean"
+          },
           "ratings" : {
             "items" : {
               "$ref" : "#/components/schemas/Rate"
@@ -1074,6 +1080,14 @@
           "value" : {
             "format" : "int32",
             "type" : "integer"
+          }
+        },
+        "type" : "object"
+      },
+      "RatingEnabledResponse" : {
+        "properties" : {
+          "ratingEnabled" : {
+            "type" : "boolean"
           }
         },
         "type" : "object"
@@ -3754,6 +3768,90 @@
           },
           "required" : true
         },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "tags" : [ "admin-presentation-controller" ]
+      }
+    },
+    "/presentations/{presentationId}/rating-enabled" : {
+      "get" : {
+        "operationId" : "getRatingEnabled",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "presentationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/RatingEnabledResponse"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "presentation-controller" ]
+      }
+    },
+    "/presentations/{presentationId}/rating/disable" : {
+      "post" : {
+        "operationId" : "disableRating",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "presentationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "tags" : [ "admin-presentation-controller" ]
+      }
+    },
+    "/presentations/{presentationId}/rating/enable" : {
+      "post" : {
+        "operationId" : "enableRating",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "presentationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
         "responses" : {
           "200" : {
             "content" : {
