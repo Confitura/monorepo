@@ -37,6 +37,22 @@ public class AdminPresentationController {
     }
 
     @PreAuthorize("@security.isAdmin()")
+    @PostMapping("/presentations/{presentationId}/rating/enable")
+    @Transactional
+    public ResponseEntity<?> enableRating(@PathVariable String presentationId) {
+        this.repository.findById(presentationId).setRatingEnabled(true);
+        return ResponseEntity.ok().build();
+    }
+
+    @PreAuthorize("@security.isAdmin()")
+    @PostMapping("/presentations/{presentationId}/rating/disable")
+    @Transactional
+    public ResponseEntity<?> disableRating(@PathVariable String presentationId) {
+        this.repository.findById(presentationId).setRatingEnabled(false);
+        return ResponseEntity.ok().build();
+    }
+
+    @PreAuthorize("@security.isAdmin()")
     @PostMapping("/presentations/{presentationId}/pre-selection")
     @Transactional
     public ResponseEntity<?> setPreSelection(@PathVariable String presentationId,
