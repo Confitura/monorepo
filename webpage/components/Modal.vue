@@ -1,6 +1,6 @@
 <template>
   <div class="modal__container" @click.self="$emit('close')">
-    <div class="modal" @keydown.esc.stop.prevent="$emit('close')" tabindex="-1" ref="modalRef">
+    <div class="modal" :class="{ 'modal--fit': fitContent }" @keydown.esc.stop.prevent="$emit('close')" tabindex="-1" ref="modalRef">
       <div class="modal__header">
         <span class="closeButton" @click="$emit('close')">
           <i class="fas fa-times"></i>
@@ -15,6 +15,8 @@
 
 <script setup lang="ts">
 import { onMounted, onBeforeUnmount, ref, nextTick } from 'vue'
+
+const { fitContent = false } = defineProps<{ fitContent?: boolean }>()
 
 const modalRef = ref<HTMLElement | null>(null)
 
@@ -77,6 +79,10 @@ onBeforeUnmount(() => {
     min-height: 500px;
     margin: auto;
   //}
+}
+
+.modal--fit {
+  min-height: unset;
 }
 
 .modal__header {
