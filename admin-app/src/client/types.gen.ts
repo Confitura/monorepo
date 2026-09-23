@@ -104,6 +104,7 @@ export type FullPresentation = {
     language: string;
     level: string;
     maxGroupSize: number;
+    ratingEnabled: boolean;
     shortDescription: string;
     speakers: Array<Speaker>;
     status: string;
@@ -334,6 +335,7 @@ export type Presentation = {
     new?: boolean;
     preSelectionComment?: string;
     preSelectionStatus?: 'NONE' | 'PRE_APPROVED' | 'PRE_REJECTED' | 'IN_RESERVE';
+    ratingEnabled?: boolean;
     ratings?: Array<Rate>;
     shortDescription: string;
     speakers: Array<User>;
@@ -386,6 +388,10 @@ export type RateRequest = {
     id?: string;
     reviewerToken?: string;
     value?: number;
+};
+
+export type RatingEnabledResponse = {
+    ratingEnabled?: boolean;
 };
 
 export type RegistrationError = {
@@ -608,6 +614,7 @@ export type PresentationWritable = {
     new?: boolean;
     preSelectionComment?: string;
     preSelectionStatus?: 'NONE' | 'PRE_APPROVED' | 'PRE_REJECTED' | 'IN_RESERVE';
+    ratingEnabled?: boolean;
     ratings?: Array<RateWritable>;
     shortDescription: string;
     speaker?: PresentationWritable;
@@ -2135,6 +2142,64 @@ export type SetPreSelectionResponses = {
 };
 
 export type SetPreSelectionResponse = SetPreSelectionResponses[keyof SetPreSelectionResponses];
+
+export type GetRatingEnabledData = {
+    body?: never;
+    path: {
+        presentationId: string;
+    };
+    query?: never;
+    url: '/presentations/{presentationId}/rating-enabled';
+};
+
+export type GetRatingEnabledResponses = {
+    /**
+     * OK
+     */
+    200: RatingEnabledResponse;
+};
+
+export type GetRatingEnabledResponse = GetRatingEnabledResponses[keyof GetRatingEnabledResponses];
+
+export type DisableRatingData = {
+    body?: never;
+    path: {
+        presentationId: string;
+    };
+    query?: never;
+    url: '/presentations/{presentationId}/rating/disable';
+};
+
+export type DisableRatingResponses = {
+    /**
+     * OK
+     */
+    200: {
+        [key: string]: unknown;
+    };
+};
+
+export type DisableRatingResponse = DisableRatingResponses[keyof DisableRatingResponses];
+
+export type EnableRatingData = {
+    body?: never;
+    path: {
+        presentationId: string;
+    };
+    query?: never;
+    url: '/presentations/{presentationId}/rating/enable';
+};
+
+export type EnableRatingResponses = {
+    /**
+     * OK
+     */
+    200: {
+        [key: string]: unknown;
+    };
+};
+
+export type EnableRatingResponse = EnableRatingResponses[keyof EnableRatingResponses];
 
 export type Rates1Data = {
     body?: never;

@@ -86,6 +86,13 @@ public class PresentationController {
         if (rate.getReviewerToken() == null) {
             return ResponseEntity.badRequest().body("Reviewer token is required");
         }
+        Presentation presentation = repository.findById(presentationId);
+        if (presentation == null) {
+            return ResponseEntity.notFound().build();
+        }
+        if (!presentation.isRatingEnabled()) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Rating is disabled for this presentation");
+        }
         Rate createdRate = ratingService.rate(presentationId, rate.toRate(rate.getReviewerToken()));
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -112,6 +119,18 @@ public class PresentationController {
                 .orElseGet(ResponseEntity.notFound()::build);
     }
 
+
+    @GetMapping("/presentations/{presentationId}/rating-enabled")
+    public ResponseEntity<RatingEnabledResponse> getRatingEnabled(@PathVariable String presentationId) {
+        Presentation presentation = repository.findById(presentationId);
+        if (presentation == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(new RatingEnabledResponse(presentation.isRatingEnabled()));
+    }
+
+    public record RatingEnabledResponse(boolean ratingEnabled) {
+    }
 
     @GetMapping("/tags")
     public ResponseEntity<List<Tag>> getAllTags() {
