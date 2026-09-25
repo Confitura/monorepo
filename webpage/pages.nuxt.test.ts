@@ -23,6 +23,16 @@ const SPEAKER = {
 }
 const DAY1_AGENDA = { agendaEntries: [{ presentationId: 'p1' }] }
 
+// one organizer/volunteer with a photo, one without (to exercise the placeholder)
+const ADMINS = [
+  { id: 'a1', name: 'With Photo', photo: 'https://cdn/a.jpg' },
+  { id: 'a2', name: 'No Photo', photo: undefined },
+]
+const VOLUNTEERS = [
+  { id: 'v1', name: 'Vol One', photo: 'https://cdn/v.jpg' },
+  { id: 'v2', name: 'Vol Two', photo: undefined },
+]
+
 vi.mock('~/composables/useAPIFetch', async () => {
   const { ref } = await import('vue')
   const createFetch = (path?: string) => {
@@ -31,6 +41,8 @@ vi.mock('~/composables/useAPIFetch', async () => {
       : path === '/partners/list.json' ? PARTNERS
       : path === '/users/123/public.json' ? SPEAKER
       : path === '/agenda/day-1.json' ? DAY1_AGENDA
+      : path === '/users/search/admins.json' ? ADMINS
+      : path === '/users/search/volunteers.json' ? VOLUNTEERS
       : null,
     )
     const result = { data, pending: ref(false), error: ref(null), refresh: vi.fn(), execute: vi.fn() }
@@ -88,6 +100,16 @@ describe('pages render without errors', () => {
   it('renders the about page', async () => {
     const wrapper = await mountSuspended(AboutPage)
     expect(wrapper.find('.about__page').exists()).toBe(true)
+  })
+
+  it('shows a placeholder for organizers/volunteers missing a photo', async () => {
+    const wrapper = await mountSuspended(AboutPage)
+    // organizer (a2) without a photo -> brand-square placeholder; with a photo -> <img>
+    expect(wrapper.find('.member__photo--placeholder').exists()).toBe(true)
+    expect(wrapper.find('img.member__photo').exists()).toBe(true)
+    // the volunteers grid renders its members (section is enabled)
+    expect(wrapper.find('.usersGrid').exists()).toBe(true)
+    expect(wrapper.findAll('.usersGrid .user').length).toBe(2)
   })
 
   it('renders the faq page from structured entries grouped by category', async () => {

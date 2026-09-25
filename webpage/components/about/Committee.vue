@@ -8,10 +8,12 @@
           :key="member.id"
       >
         <img
-            :src="member.photo "
+            v-if="member.photo"
+            :src="photoUrl(member.photo, 600)"
             :alt="member.name"
             class="member__photo"
         />
+        <div v-else class="member__photo member__photo--placeholder"></div>
         <div class="member__info">
           <div class="member__name">{{ member.name }}</div>
           <div class="member__bio">{{ member.bio }}</div>
@@ -116,6 +118,11 @@ interface UserProfile {
   height: auto;
   grid-area: photo;
   object-fit: cover;
+  background-color: $brand;
+}
+
+.member__photo--placeholder {
+  aspect-ratio: 1 / 1;
 }
 
 .member__info {
