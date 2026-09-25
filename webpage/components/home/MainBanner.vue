@@ -12,15 +12,15 @@
 <!--            socials</p>-->
 <!--        </div>-->
                 <div class="info__long">
-                  <TheTimer/>
+<!--                  <TheTimer/>-->
                   <p> Warsaw | September 25–26, 2026 </p>
                   <p>ADN Conference Center, Grzybowska 56</p>
                   <p><NuxtLink to="/calendar" class="banner__calendar-link"><i class="fas fa-calendar-plus"></i> Add to your calendar</NuxtLink></p>
                 </div>
 
-                <div class="info__live">
-                  <a class="info__live-text" href="/tickets">Tickets are here!</a>
-                </div>
+<!--                <div class="info__live">-->
+<!--                  <a class="info__live-text" href="/tickets">Tickets are here!</a>-->
+<!--                </div>-->
         <div class="info__long">
           <small>
             Want to sponsor Confitura? Drop us a line:
