@@ -11,6 +11,11 @@
         <!--          <p>subscribe to our <a href="https://newsletter.confitura.pl/subscription/form">newsletter</a> or follow as on-->
         <!--            socials</p>-->
         <!--        </div>-->
+        <div class="info__long slogan">
+          We are live! <br />
+          <a href="/schedule">Open the schedule</a>
+          and rate the presentations
+        </div>
         <div class="info__long">
           <!--                  <TheTimer/>-->
           <p> Warsaw | September 25–26, 2026 </p>
