@@ -3,31 +3,31 @@
     <!--    <HomeMainBannerStars />-->
     <div class="container">
       <div class="info">
-<!--        <div class="info__live">-->
-<!--          <div class="info__live-text">Thank you, and see you next time!</div>-->
-<!--        </div>-->
-<!--        <div class="slogan">-->
-<!--          don't want to miss next edition?-->
-<!--          <p>subscribe to our <a href="https://newsletter.confitura.pl/subscription/form">newsletter</a> or follow as on-->
-<!--            socials</p>-->
-<!--        </div>-->
-                <div class="info__long">
-<!--                  <TheTimer/>-->
-                  <p> Warsaw | September 25–26, 2026 </p>
-                  <p>ADN Conference Center, Grzybowska 56</p>
-                  <p><NuxtLink to="/calendar" class="banner__calendar-link"><i class="fas fa-calendar-plus"></i> Add to your calendar</NuxtLink></p>
-                </div>
-
-<!--                <div class="info__live">-->
-<!--                  <a class="info__live-text" href="/tickets">Tickets are here!</a>-->
-<!--                </div>-->
+        <!--        <div class="info__live">-->
+        <!--          <div class="info__live-text">Thank you, and see you next time!</div>-->
+        <!--        </div>-->
+        <!--        <div class="slogan">-->
+        <!--          don't want to miss next edition?-->
+        <!--          <p>subscribe to our <a href="https://newsletter.confitura.pl/subscription/form">newsletter</a> or follow as on-->
+        <!--            socials</p>-->
+        <!--        </div>-->
         <div class="info__long">
-          <small>
-            Want to sponsor Confitura? Drop us a line:
-            <a href="mailto:confitura[at]confitura[dot]pl">confitura[at]confitura[dot]pl</a>
-            - let’s team up!
-          </small>
+          <!--                  <TheTimer/>-->
+          <p> Warsaw | September 25–26, 2026 </p>
+          <p>ADN Conference Center, Grzybowska 56</p>
+          <!--                  <p><NuxtLink to="/calendar" class="banner__calendar-link"><i class="fas fa-calendar-plus"></i> Add to your calendar</NuxtLink></p>-->
         </div>
+
+        <!--                <div class="info__live">-->
+        <!--                  <a class="info__live-text" href="/tickets">Tickets are here!</a>-->
+        <!--                </div>-->
+        <!--        <div class="info__long">-->
+        <!--          <small>-->
+        <!--            Want to sponsor Confitura? Drop us a line:-->
+        <!--            <a href="mailto:confitura[at]confitura[dot]pl">confitura[at]confitura[dot]pl</a>-->
+        <!--            - let’s team up!-->
+        <!--          </small>-->
+        <!--        </div>-->
       </div>
       <HomeMainBannerYtVideo/>
     </div>
