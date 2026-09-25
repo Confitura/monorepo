@@ -6,7 +6,7 @@
         :key="user.id"
         @click="show(user)"
     >
-      <img :src="user.photo" alt="" class="user__photo" loading="lazy"/>
+      <img :src="photoUrl(user.photo, 200)" alt="" class="user__photo" loading="lazy"/>
       <div class="user__name">
         <span>{{ firstName(user.name) }}</span>
         <span>{{ lastName(user.name) }}</span>
@@ -16,7 +16,7 @@
       <div class="volunteer__modal">
         <div class="volunteers__member">
           <img
-              :src="user.photo "
+              :src="photoUrl(user.photo, 600)"
               :alt="user.name"
               class="volunteer__photo"
           />
@@ -229,6 +229,7 @@ function lastName(value: string) {
   aspect-ratio: 1/1;
   grid-area: photo;
   object-fit: cover;
+  background-color: $brand;
 }
 
 .volunteer__info {

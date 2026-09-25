@@ -11,10 +11,10 @@
     </Box>
     <AboutCommittee :committee="committee"></AboutCommittee>
 
-<!--    <Box color="white" class="about__volunteers no-padding">
+    <Box color="white" class="about__volunteers no-padding">
       <h3 class="volunteers__header">volunteers</h3>
       <AboutVolunteersGrid :users="volunteers"></AboutVolunteersGrid>
-    </Box>-->
+    </Box>
 
     <Box color="white">
       <div class="bcc">
@@ -47,7 +47,7 @@ async function fetchUsers(type: string) {
       let users = response;
       users = users.map(user => {
         let photo = user.photo;
-        if (photo.startsWith('/')) {
+        if (photo && photo.startsWith('/')) {
           photo = config.public.fileServer + photo;
         }
         return ({...user, photo})
