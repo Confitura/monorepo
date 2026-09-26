@@ -20,8 +20,8 @@ const newUser = reactive({
   email: '',
   bio: '',
   origin: 'manual',
-  isAdmin: false,
-  isVolunteer: false,
+  admin: false,
+  volunteer: false,
 })
 
 async function createUser() {
@@ -40,8 +40,8 @@ async function createUser() {
     newUser.email = ''
     newUser.bio = ''
     newUser.origin = 'manual'
-    newUser.isAdmin = false
-    newUser.isVolunteer = false
+    newUser.admin = false
+    newUser.volunteer = false
     reloadUsers()
   } catch (e) {
     console.error(e)
@@ -205,8 +205,8 @@ onMounted(() => {
           <v-textarea v-model="newUser.bio" label="Bio" rows="3" />
           <v-text-field v-model="newUser.origin" label="Origin" />
           <div class="d-flex gap-4 mt-2">
-            <v-checkbox v-model="newUser.isAdmin" label="Admin" hide-details />
-            <v-checkbox v-model="newUser.isVolunteer" label="Volunteer" hide-details />
+            <v-checkbox v-model="newUser.admin" label="Admin" hide-details />
+            <v-checkbox v-model="newUser.volunteer" label="Volunteer" hide-details />
           </div>
         </v-card-text>
         <v-card-actions>
