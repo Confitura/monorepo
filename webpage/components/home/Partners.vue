@@ -4,22 +4,24 @@
     <div class="partners-grid">
       <div class="partners-main">
         <div class="platinum">
+          <div class="platinum-logos">
+            <a
+                v-for="item in partners.platinum"
+                :key="item.id"
+                :href="'/partners/' + item.id "
+                class="link"
+                rel="noopener"
+                target="_blank"
+            >
+              <img
+                  :src="resolveImage(item.logo)"
+                  :alt="item.name"
+                  class="logo__img--platinum"
+                  :class="item.id"
+              />
+            </a>
+          </div>
           <span class="type--platinum">Platinum</span>
-          <a
-              v-for="item in partners.platinum"
-              :key="item.id"
-              :href="'/partners/' + item.id "
-              class="link"
-              rel="noopener"
-              target="_blank"
-          >
-            <img
-                :src="resolveImage(item.logo)"
-                :alt="item.name"
-                class="logo__img--platinum"
-                :class="item.id"
-            />
-          </a>
         </div>
         <!--        <div class="path">-->
         <!--          <span class="type&#45;&#45;path">Path</span>-->
@@ -91,7 +93,7 @@
 import {type PartnerType, usePartnersStore} from '~/stores/partnersStore'
 import {useArchiveFetch} from '~/composables/useAPIFetch'
 
-const types: PartnerType[] = ['gold', 'silver', 'bronze']
+const types: PartnerType[] = ['gold', 'silver', 'bronze', 'tech', 'media']
 const active: Ref<PartnerType> = useState('active', () => 'gold')
 
 const store = usePartnersStore()
@@ -242,6 +244,15 @@ function resolveImage(path: string): string {
     margin: 1.5rem;
   }
 
+  .partners-main {
+    @include md() {
+      flex: 1 1 0;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
   .other-types {
     flex-grow: 1;
     display: flex;
@@ -250,6 +261,8 @@ function resolveImage(path: string): string {
 
     @include md() {
       flex-direction: column;
+      flex: 1 1 0;
+      min-width: 0;
     }
   }
 
@@ -262,7 +275,8 @@ function resolveImage(path: string): string {
   }
 
   .logo__img--platinum {
-    width: 250px;
+    width: 400px;
+    max-width: 90%;
 
     &.ey,
     &.softwareplant {
@@ -301,6 +315,24 @@ function resolveImage(path: string): string {
     justify-content: center;
     padding-top: 2rem;
     row-gap: 2rem;
+
+    @include md() {
+      flex-grow: 1;
+      justify-content: flex-start;
+      padding-top: 0;
+    }
+  }
+
+  .platinum-logos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: 2rem;
+
+    @include md() {
+      flex-grow: 1;
+    }
   }
 
   .type {
