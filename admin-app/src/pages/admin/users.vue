@@ -179,6 +179,18 @@ onMounted(() => {
                 <v-tooltip location="top">
                   <template #activator="{ props }">
                     <v-btn
+                        icon="mdi-account-edit"
+                        v-bind="props"
+                        :href="`/profile-form/${item.id}`"
+                        target="_blank"
+                        rel="noopener"
+                    />
+                  </template>
+                  <span>Edit user</span>
+                </v-tooltip>
+                <v-tooltip location="top">
+                  <template #activator="{ props }">
+                    <v-btn
                         icon="mdi-magnify-expand"
                         v-bind="props"
                         :to="`/homepage/${item.id}`"
