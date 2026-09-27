@@ -111,30 +111,8 @@ export interface Partners {
     media?: Partner[];
 }
 
+// Fallback shown until the backend dump has partners. Empty for a new edition —
+// add hardcoded entries here (logos under assets/partners/<year>/) only if needed.
 function getPartners(): Partner[] {
-    return [{
-        id: "xtb",
-        name: "XTB",
-        description: descFor("xtb"),
-        logo: "/assets/partners/2026/xtb.svg",
-        www: "https://www.xtb.com/",
-        type: "gold",
-        orientation: "horizontal"
-    },{
-        id: "dpd",
-        name: "DPD",
-        description: descFor("dpd"),
-        logo: "/assets/partners/2026/dpd.svg",
-        www: "https://dpdgroupitsolutions.pl/",
-        type: "bronze",
-        orientation: "box"
-    },{
-        id: "cantor",
-        name: "CANTOR",
-        description: descFor("cantor"),
-        logo: "/assets/partners/2026/cantor.png",
-        www: "https://www.cantor.com/",
-        type: "bronze",
-        orientation: "vertical"
-    }];
+    return [];
 }
