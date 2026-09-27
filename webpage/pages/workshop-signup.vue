@@ -76,8 +76,8 @@
 </template>
 
 <script setup lang="ts">
-const title = 'Workshop sign-up — Confitura 2026';
-const description = 'Step-by-step guide to registering for a Confitura 2026 workshop via eBilet.';
+const title = 'Workshop sign-up — Confitura 2027';
+const description = 'Step-by-step guide to registering for a Confitura 2027 workshop via eBilet.';
 useHead({
   title,
   meta: [
