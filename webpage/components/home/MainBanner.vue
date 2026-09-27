@@ -12,9 +12,8 @@
         <!--            socials</p>-->
         <!--        </div>-->
         <div class="info__long slogan">
-          We are live! <br />
-          <a href="/schedule">Open the schedule</a>
-          and rate the presentations
+          Thank you! <br />
+          And see you next time!
         </div>
         <div class="info__long">
           <!--                  <TheTimer/>-->
