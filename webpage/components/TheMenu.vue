@@ -34,7 +34,7 @@ let items: MenuItem[] = [
   { label: 'FAQ', url: '/faq' },
   { label: '2025', url: 'http://2025.confitura.pl/' },
   // { label: 'lean coffee', url: '/lean-coffee' },
-  { label: 'LOGIN', url: 'https://app.confitura.pl/' },
+  { label: '2027', url: 'https://confitura.pl/' },
 ]
 
 function isVisible(item: MenuItem): boolean {

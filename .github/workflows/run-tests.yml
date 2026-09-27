@@ -6,7 +6,7 @@ name: run tests
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, archive-2026 ]
   pull_request:
     branches: [ master ]
 
