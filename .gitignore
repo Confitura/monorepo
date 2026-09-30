@@ -14,3 +14,6 @@ confitura-page
 
 # AI agent tooling working dir
 .ai/
+
+# Node compile cache (written when running tests/builds)
+node-compile-cache/
