@@ -13,7 +13,7 @@ export default defineNuxtConfig({
             fileServer: "https://api.confitura.pl",
             appUrl: "https://app.confitura.pl",
             googleMapsApiKey:  "",
-            // Chat assistant: toggle with NUXT_PUBLIC_CHAT_ENABLED, backend proxy base with NUXT_PUBLIC_CHAT_API_BASE
+            // Chat assistant: currently disabled (widget removed from app.vue); was toggled with NUXT_PUBLIC_CHAT_ENABLED, backend proxy base with NUXT_PUBLIC_CHAT_API_BASE
             chatEnabled: false,
             chatApiBase: "https://api.confitura.pl/api",
             // Optional shared secret sent as X-Chat-Secret. WARNING: this ships to the

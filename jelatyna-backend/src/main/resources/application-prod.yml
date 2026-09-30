@@ -74,7 +74,9 @@ allegro:
   uri: https://allegro.pl
 
 chat:
-  enabled: ${CHAT_ENABLED:false}
+  # AI chat is disabled; hardcoded so a leftover CHAT_ENABLED env var cannot turn it back on.
+  # To re-enable, restore `enabled: ${CHAT_ENABLED:false}` and the <ChatWidget> in webpage/app.vue.
+  enabled: false
   # Optional shared secret; when set, callers must send it in the X-Chat-Secret header.
   secret: ${CHAT_SECRET:}
   max-question-length: ${CHAT_MAX_QUESTION_LENGTH:500}
