@@ -81,6 +81,34 @@ You need the age private key to run `sops`. It is a GitHub Actions secret and a
 Paperclip secret, exposed as `SOPS_AGE_KEY`. It is not in this repo and must not
 be pasted anywhere.
 
+> **Key rotation is in progress — do not add a real secret value yet.**
+> `infra/.sops.yaml` currently lists two age recipients. The first (v1,
+> `age13eqrs...`) was exposed in an agent run transcript on 2026-10-05 and is
+> being retired; the second (v2, `age1vjdke...`) replaces it and is pending
+> owner approval. Both are listed so the repo always decrypts, which also means
+> the exposed key still works. Nothing of value is encrypted with it — the file
+> holds one placeholder — so the exposure currently guards nothing. Finish the
+> rotation before the first real value goes in:
+>
+> 1. Confirm the v2 secret version is active: `GET /api/agents/me/secrets`.
+> 2. Delete the v1 line from `infra/.sops.yaml`.
+> 3. `sops updatekeys infra/production/secrets.enc.yaml`, then commit.
+>
+> Tracked on BCC-2. If you are adding a secret and these two recipients are
+> still both present, stop and finish the rotation first.
+
+#### If a private key is ever exposed again
+
+Rotate rather than hope. The procedure above is the whole cost when nothing
+real is encrypted yet, which is the argument for rotating immediately instead
+of waiting: once production values are in the file, rotation also means
+re-encrypting every one of them. Note that `SOPS_AGE_KEY` is injected in
+multi-line age *key-file* form (`# created:` / `# public key:` /
+`AGE-SECRET-KEY-...`), so a command that prints only environment variable
+*names* — `env | cut -d= -f1` — still prints the key body. Redact with
+`sed -E 's/AGE-SECRET-KEY-1[0-9A-Z]+/<REDACTED>/'` when inspecting the
+environment.
+
 ### Changing a variable's name
 
 Renaming forces Coolify to replace the variable: the old one is deleted and a

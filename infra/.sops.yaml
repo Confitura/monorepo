@@ -1,9 +1,10 @@
 # SOPS rules for the Confitura infrastructure configuration.
 #
-# The key below is the age PUBLIC key. It is safe in git - it can only encrypt.
-# The matching private key is held as a Paperclip secret (bound to the Platform
-# agent as SOPS_AGE_KEY) and as a GitHub Actions secret. It is never committed,
-# never pasted into an issue, and never written to a file in this repo.
+# The keys below are age PUBLIC keys. They are safe in git - they can only
+# encrypt. The matching private keys are held as Paperclip secrets (bound to
+# the Platform agent as SOPS_AGE_KEY) and as GitHub Actions secrets. A private
+# key is never committed, never pasted into an issue, and never written to a
+# file in this repo.
 #
 # Generated 2026-10-05 by the Platform agent on BCC-2.
 #
@@ -11,7 +12,29 @@
 # leaves YAML keys in clear, which is what we want - a diff on a secrets file
 # shows which variable changed without revealing what it changed to. (SOPS
 # regexes are RE2, so a negative lookahead would not compile anyway.)
+#
+# ---------------------------------------------------------------------------
+# KEY ROTATION IN PROGRESS - both recipients are listed deliberately.
+#
+# v1 (age13eqrs...) is the key currently bound to the Platform agent. It was
+# exposed in a Paperclip run transcript on 2026-10-05, so it is being retired.
+# v2 (age1vjdke...) replaces it; its private half is pending owner approval as
+# a new version of the `confitura/sops/age-private-key` secret.
+#
+# Listing both means any file encrypted now decrypts with either key, so there
+# is no window in which this repo cannot be read. That also means v1 - the
+# exposed key - can still decrypt these files.
+#
+# GATE: do NOT encrypt a real secret value into this repo until v1 is removed
+# from the list below. Right now secrets.enc.yaml holds only a placeholder, so
+# the exposed key guards nothing. Remove the v1 line and re-encrypt
+# (`sops updatekeys infra/production/secrets.enc.yaml`) as soon as the v2
+# secret version is confirmed active via GET /api/agents/me/secrets. Tracked
+# on BCC-2.
+# ---------------------------------------------------------------------------
 
 creation_rules:
   - path_regex: secrets\.enc\.ya?ml$
-    age: age13eqrswezlp5932t5dv494n6t6wj3rsa4vf5kjt7mcewhp0xuzs8sj26qfx
+    age: >-
+      age13eqrswezlp5932t5dv494n6t6wj3rsa4vf5kjt7mcewhp0xuzs8sj26qfx,
+      age1vjdkezph9mp67te2reg8yqxqk3txyhxj800x74ucxr25704dxpjs0p6zed
