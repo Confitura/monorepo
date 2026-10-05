@@ -14,6 +14,9 @@
 #   3. COOLIFY_TOKEN has read:sensitive (or root).
 #   4. AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY are set for the state bucket,
 #      and infra/backend-proof has already proved the backend works.
+#   5. Coolify reports build_pack "dockerimage" for all three applications. This
+#      one is checked below and the script refuses to import without it, because
+#      the resource type cannot be changed later without a destroy and recreate.
 #
 # Import only. This script never applies. If a later plan wants to destroy or
 # replace an application, stop: prevent_destroy in the module will fail the
@@ -49,22 +52,62 @@ run() {
   fi
 }
 
+# Pre-flight: validate all three applications before importing any of them.
+#
+# This runs as its own pass on purpose. A check inside the import loop would
+# refuse the third application only after the first two were already in state,
+# leaving a half-adopted environment to unpick by hand. Everything that can be
+# known from the inventory alone is therefore settled here, while the cost of
+# stopping is still zero.
 for key in webpage admin_app backend; do
   app_json="${INV}/app-${key}.json"
   envs_json="${INV}/envs-${key}.json"
-  [[ -f "$app_json" ]] || { echo "missing ${app_json}; run coolify-inventory.sh first" >&2; exit 1; }
+  for f in "$app_json" "$envs_json"; do
+    [[ -f "$f" ]] || { echo "missing ${f}; run coolify-inventory.sh first" >&2; exit 1; }
+  done
 
-  app_uuid=$(jq -r '.uuid' "$app_json")
+  # Coolify usually omits project_uuid and server_uuid from the application GET.
+  # They come from the projects/servers listing instead; fill them in the
+  # inventory rather than guessing. A wrong server_uuid is not corrected on
+  # refresh and would recreate the app on the wrong server.
   project_uuid=$(jq -r '.project_uuid // empty' "$app_json")
   server_uuid=$(jq -r '.server_uuid // empty' "$app_json")
-  env_name=$(jq -r '.environment_name // "production"' "$app_json")
-
-  # Coolify usually omits these two from the application GET. They come from
-  # the projects/servers listing instead; fill them in the inventory document
-  # and pass them here rather than guessing. A wrong server_uuid is not
-  # corrected on refresh and would recreate the app on the wrong server.
   : "${project_uuid:?project_uuid for ${key} not in inventory - resolve it from projects.json}"
   : "${server_uuid:?server_uuid for ${key} not in inventory - resolve it from servers.json}"
+  app_uuid=$(jq -r '.uuid // empty' "$app_json")
+  : "${app_uuid:?uuid for ${key} not in inventory - re-run coolify-inventory.sh}"
+
+  # The resource type is the one irreversible choice on this task: changing an
+  # application's type later destroys and recreates it. modules/coolify-app uses
+  # coolify_application_docker_image, which is only the right type if Coolify
+  # reports build_pack "dockerimage". That is still unconfirmed against the live
+  # API - the module's type is an expectation, not a verified fact - so assert it
+  # here, where it would otherwise be acted on, instead of trusting the module.
+  build_pack=$(jq -r '.build_pack // empty' "$app_json")
+  if [[ "$build_pack" != "dockerimage" ]]; then
+    cat >&2 <<EOF
+refusing to import: Coolify reports build_pack "${build_pack:-<absent>}" for ${key}, expected "dockerimage".
+
+modules/coolify-app declares coolify_application_docker_image. If the live build
+pack is anything else, that resource type is wrong for this application, and
+importing into it risks a destroy-and-recreate of a running conference service.
+
+Nothing has been imported - this check runs before the first import. Take the raw
+inventory for ${key} to Reviewer and settle the resource type before importing.
+Do not relax this check to let the import through.
+EOF
+    exit 1
+  fi
+done
+
+for key in webpage admin_app backend; do
+  app_json="${INV}/app-${key}.json"
+  envs_json="${INV}/envs-${key}.json"
+
+  app_uuid=$(jq -r '.uuid' "$app_json")
+  project_uuid=$(jq -r '.project_uuid' "$app_json")
+  server_uuid=$(jq -r '.server_uuid' "$app_json")
+  env_name=$(jq -r '.environment_name // "production"' "$app_json")
 
   run "module.app[\"${key}\"].coolify_application_docker_image.this" \
       "${project_uuid}:${server_uuid}:${env_name}:${app_uuid}"
