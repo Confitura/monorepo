@@ -26,7 +26,7 @@
         <scribejava.version>8.3.3</scribejava.version>
         <expiringmap.version>0.5.11</expiringmap.version>
         <jjwt.version>0.13.0</jjwt.version>
-        <guava.version>33.7.1-jre</guava.version>
+        <guava.version>33.7.2-jre</guava.version>
         <querydsl.version>5.1.0</querydsl.version>
     </properties>
 
@@ -202,7 +202,7 @@
         <dependency>
             <groupId>org.mnode.ical4j</groupId>
             <artifactId>ical4j</artifactId>
-            <version>4.3.0</version>
+            <version>4.4.0</version>
         </dependency>
 
         <dependency>
