@@ -65,7 +65,7 @@ const description = computed(() => {
   return marked(partner.value.description)
 })
 
-const imgUrls = import.meta.glob('~/assets/partners/2026/*', {
+const imgUrls = import.meta.glob('~/assets/partners/2027/*', {
   import: 'default',
   eager: true
 })
@@ -102,11 +102,11 @@ function plainText(input: string): string {
 const seoTitle = computed(() => {
   const name = partner.value?.name
   const type = capitalizeFirst(partner.value?.type || '')
-  return name ? `${name} — ${type ? type + ' ' : ''}Partner — Confitura 2026` : 'Partner — Confitura 2026'
+  return name ? `${name} — ${type ? type + ' ' : ''}Partner — Confitura 2027` : 'Partner — Confitura 2027'
 })
 
 const seoDescription = computed(() => {
-  const base = plainText(partner.value?.description || 'Learn more about our partners and sponsors at Confitura 2026.')
+  const base = plainText(partner.value?.description || 'Learn more about our partners and sponsors at Confitura 2027.')
   return base.length > 160 ? base.slice(0, 157) + '...' : base
 })
 

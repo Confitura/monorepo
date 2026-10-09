@@ -63,8 +63,8 @@ const html = computed(() => {
   return marked(md)
 })
 
-const title = 'FAQ — Confitura 2026';
-const description = 'Find answers to frequently asked questions about Confitura 2026: tickets, schedule, venue, and more.';
+const title = 'FAQ — Confitura 2027';
+const description = 'Find answers to frequently asked questions about Confitura 2027: tickets, schedule, venue, and more.';
 useHead({
   title,
   meta: [

@@ -6,7 +6,7 @@
       <h2 class="header">Partner with us</h2>
       <div class="main-info">
         <div class="body">
-          Confitura 2026 is coming on <b>September 25–26</b>, and we’re currently working on delivering another
+          Confitura 2027 is coming, and we’re currently working on delivering another
           outstanding event for our growing community. Now is the perfect moment to join us as a partner and become part
           of something truly special.
           <br/>
