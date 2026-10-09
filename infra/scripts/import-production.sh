@@ -118,9 +118,21 @@ for key in webpage admin_app backend; do
   # non-secret and its value goes in production.auto.tfvars in clear.
   # Getting this list wrong in the safe direction (listing too much) only costs
   # readability; getting it wrong the other way commits a secret.
+  #
+  # Not imported at all:
+  #   - preview copies (is_preview). Coolify keeps one per variable under the
+  #     same name, so importing them would put two variables on one address.
+  #   - names that are not shell identifiers (dots, brackets). The provider
+  #     rejects them, so they cannot have a configuration address.
+  #   - names listed in <inventory-dir>/unmanaged.txt, same format as
+  #     secrets.txt, for variables left out of production.auto.tfvars on purpose.
   secret_list="${INV}/secrets.txt"
+  unmanaged_list="${INV}/unmanaged.txt"
   while IFS=$'\t' read -r name env_uuid; do
     [[ -z "$name" ]] && continue
+    if [[ -f "$unmanaged_list" ]] && grep -qxF "${key}:${name}" "$unmanaged_list"; then
+      continue
+    fi
     if [[ -f "$secret_list" ]] && grep -qxF "${key}:${name}" "$secret_list"; then
       addr_res=secret
     else
@@ -128,7 +140,9 @@ for key in webpage admin_app backend; do
     fi
     run "module.app[\"${key}\"].coolify_environment_variable.${addr_res}[\"${name}\"]" \
         "application:${app_uuid}:${env_uuid}"
-  done < <(jq -r '.[] | [.key, .uuid] | @tsv' "$envs_json")
+  done < <(jq -r '.[]
+    | select((.is_preview | not) and (.key | test("^[A-Za-z_][A-Za-z0-9_]*$")))
+    | [.key, .uuid] | @tsv' "$envs_json")
 done
 
 if [[ "$EXECUTE" != "--execute" ]]; then
