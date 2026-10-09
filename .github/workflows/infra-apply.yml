@@ -1,0 +1,91 @@
+name: infra apply
+
+# Applies infra/production when a change to it lands on master.
+#
+# The concurrency group below is the state lock. Backblaze B2 cannot lock
+# OpenTofu state (it answers the conditional write with 501), so this group
+# is the only thing stopping two applies from writing state at once. Keep
+# cancel-in-progress false: cancelling an apply mid-write is worse than
+# waiting for it. Do not run `tofu apply` by hand while this can be running.
+#
+# Secrets come from the infra-production environment, which holds the Coolify
+# token with write access. Restrict that environment to the master branch.
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - 'infra/production/**'
+      - 'infra/modules/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tofu-apply-production
+  cancel-in-progress: false
+
+env:
+  TOFU_VERSION: 1.13.1
+  AWS_REQUEST_CHECKSUM_CALCULATION: when_required
+  AWS_RESPONSE_CHECKSUM_VALIDATION: when_required
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    environment: infra-production
+    defaults:
+      run:
+        working-directory: infra/production
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.B2_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.B2_APPLICATION_KEY }}
+      COOLIFY_TOKEN: ${{ secrets.COOLIFY_TOKEN }}
+      SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: opentofu/setup-opentofu@v2
+        with:
+          tofu_version: ${{ env.TOFU_VERSION }}
+          tofu_wrapper: false
+
+      - name: Init
+        run: tofu init -input=false -lock=false
+
+      # Apply exactly the plan that was printed, not a fresh one.
+      - name: Plan
+        id: plan
+        run: |
+          set +e
+          tofu plan -lock=false -input=false -no-color -detailed-exitcode -out=tfplan > plan.txt 2>&1
+          code=$?
+          set -e
+          cat plan.txt
+          echo "exitcode=${code}" >> "$GITHUB_OUTPUT"
+          [[ "$code" == 0 || "$code" == 2 ]]
+
+      - name: Apply
+        if: steps.plan.outputs.exitcode == '2'
+        run: tofu apply -lock=false -input=false -no-color tfplan
+
+      # An apply that leaves a diff behind is unfinished, not done.
+      - name: Verify no drift remains
+        run: tofu plan -lock=false -input=false -no-color -detailed-exitcode
+
+      - name: Summary
+        if: always()
+        env:
+          CODE: ${{ steps.plan.outputs.exitcode }}
+        run: |
+          {
+            echo "### OpenTofu apply: infra/production"
+            case "$CODE" in
+              0) echo "No changes; nothing applied." ;;
+              2) echo "Applied: $(grep -E '^Plan:' plan.txt || true)"
+                 echo
+                 echo "Coolify does not restart a container when a variable changes. Redeploy the affected application for the new value to take effect." ;;
+              *) echo "**Plan failed** - see the job log." ;;
+            esac
+          } >> "$GITHUB_STEP_SUMMARY"

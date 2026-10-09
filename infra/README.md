@@ -24,10 +24,8 @@ their environment variables were imported into state, and `tofu plan` reports
 
 Still to do:
 
-- **CI.** `infra-plan.yml` and `infra-apply.yml`, which the runbook below
-  relies on (including the apply concurrency group that stands in for a state
-  lock), do not exist yet. Until they do, every change is a hand-run plan and
-  apply.
+- **CI secrets.** `infra-plan.yml` and `infra-apply.yml` exist but need the
+  secrets and environment described under [CI](#ci) before they can run.
 - **15 backend variables with dotted names** (`SPRING.DATASOURCE.URL`,
   `APP.CORS.ORIGINS[0]`, ...) are unmanaged because the provider only accepts
   shell identifiers. They need renaming to their Spring relaxed-binding form
@@ -70,7 +68,9 @@ infra/
 2. Open a pull request. The plan workflow comments the `tofu plan` on the PR.
    Read it. It should show exactly one variable being added and nothing else.
 3. Merge. The apply workflow applies it.
-4. Check it in Coolify, and check the service still answers.
+4. **Redeploy the application in Coolify.** Changing a variable does not
+   restart the container, so the running service keeps the old value until it
+   is redeployed. Then check the service still answers.
 
 ### A secret one
 
@@ -126,6 +126,32 @@ as a restart, not an edit.
 build time as `--build-arg` in `deploy-images.yml`. Coolify does hold
 variables with those names, but they have no effect and are left unmanaged. Changing them is a code change to that workflow plus a
 rebuild.
+
+## CI
+
+| Workflow | When | What |
+| --- | --- | --- |
+| `.github/workflows/infra-plan.yml` | PR touching `infra/` | fmt, validate, plan; posts the plan as one PR comment, updated on each push |
+| `.github/workflows/infra-apply.yml` | push to master touching `infra/production` or `infra/modules`; manual dispatch | plan to a file, apply that file, then re-plan and fail if any diff remains |
+
+The repository is public, so **plan comments are public**. Plain values are
+public anyway (they are in `production.auto.tfvars`); secret values print as
+`(sensitive value)`. Fork and dependabot PRs get no secrets and skip the plan.
+
+Secrets to set up once:
+
+| Where | Name | Value |
+| --- | --- | --- |
+| Repository secret | `COOLIFY_TOKEN_READ` | Coolify token with `read:sensitive`, **no write** (plan only) |
+| Repository secret | `B2_KEY_ID` | B2 key ID for bucket `bcc-opentofu-coolify` |
+| Repository secret | `B2_APPLICATION_KEY` | B2 application key |
+| Repository secret | `SOPS_AGE_KEY` | full contents of the age key file (all three lines) |
+| Environment `infra-production` | `COOLIFY_TOKEN` | Coolify token with `read:sensitive` **and write** |
+
+Restrict the `infra-production` environment to the `master` branch
+(Settings → Environments → Deployment branches), so the write token is only
+reachable from merged code. Adding a required reviewer there turns every apply
+into a manual approval, if you want that.
 
 ## Running tofu by hand
 
