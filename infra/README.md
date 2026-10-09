@@ -18,17 +18,30 @@ limits, health checks.
 
 ## Status
 
-Scaffolding and verified groundwork. **Nothing is imported yet and nothing has
-been applied.** `production.auto.tfvars` is deliberately empty until the Coolify
-inventory has been read, so a "No changes" plan from this directory currently
-proves nothing. Tracking issue: BCC-2.
+**Imported, not yet applied.** On 2026-10-09 the three applications and 38 of
+their environment variables were imported into state, and `tofu plan` reports
+"No changes". Nothing has ever been applied from here.
+
+Still to do:
+
+- **CI.** `infra-plan.yml` and `infra-apply.yml`, which the runbook below
+  relies on (including the apply concurrency group that stands in for a state
+  lock), do not exist yet. Until they do, every change is a hand-run plan and
+  apply.
+- **15 backend variables with dotted names** (`SPRING.DATASOURCE.URL`,
+  `APP.CORS.ORIGINS[0]`, ...) are unmanaged because the provider only accepts
+  shell identifiers. They need renaming to their Spring relaxed-binding form
+  (`SPRING_DATASOURCE_URL`, `APP_CORS_ORIGINS_0`), which restarts the backend.
+  The full list is in `production.auto.tfvars`.
+- **Preview copies** of every variable, and admin_app's `VITE_API_URL` /
+  `VITE_SELF_URL` (which exist in Coolify but do nothing, see below), are
+  deliberately unmanaged.
 
 ## Layout
 
 ```
 infra/
   .sops.yaml                      age public key + encryption rules
-  backend-proof/                  throwaway root that proves the state backend
   modules/coolify-app/            the shared shape of a Confitura application
   production/
     versions.tf                   provider pins + the B2 state backend
@@ -110,8 +123,8 @@ as a restart, not an edit.
 ### What you cannot change here
 
 `admin-app`'s `VITE_API_URL` and `VITE_SELF_URL` are baked into the image at
-build time as `--build-arg` in `deploy-images.yml`. They are not Coolify
-environment variables. Changing them is a code change to that workflow plus a
+build time as `--build-arg` in `deploy-images.yml`. Coolify does hold
+variables with those names, but they have no effect and are left unmanaged. Changing them is a code change to that workflow plus a
 rebuild.
 
 ## Running tofu by hand

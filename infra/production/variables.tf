@@ -15,35 +15,14 @@ variable "applications" {
     non-secret environment variable.
   EOT
 
-  type = map(object({
-    # Mirrors the Coolify application. See modules/coolify-app/variables.tf for
-    # why each attribute is listed there rather than defaulted.
-    app = any
-
-    # Non-secret environment variables: name => { value, flags... }
-    env_vars = optional(map(object({
-      value         = string
-      is_build      = optional(bool)
-      is_runtime    = optional(bool)
-      is_preview    = optional(bool)
-      is_literal    = optional(bool)
-      is_multiline  = optional(bool)
-      is_shown_once = optional(bool)
-      comment       = optional(string)
-    })), {})
-
-    # Flags for the secret variables, whose values live in secrets.enc.yaml.
-    # Flags are not secret and belong in the readable file.
-    secret_env_var_flags = optional(map(object({
-      is_build      = optional(bool)
-      is_runtime    = optional(bool)
-      is_preview    = optional(bool)
-      is_literal    = optional(bool)
-      is_multiline  = optional(bool)
-      is_shown_once = optional(bool)
-      comment       = optional(string)
-    })), {})
-  }))
+  # Deliberately `any`, not map(object({ app = any, ... })). A map's elements
+  # must share one type, and the applications' `app` objects differ (only the
+  # backend sets noindex_domains), so a typed map rejects the whole file with
+  # "cannot find a common base type". modules/coolify-app types app, env_vars
+  # and secret_env_var_flags strictly, so nothing goes unchecked.
+  #
+  # Each entry: { app = {...}, env_vars = optional, secret_env_var_flags = optional }
+  type = any
 
   default = {}
 }

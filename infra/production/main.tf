@@ -29,7 +29,7 @@ module "app" {
   for_each = var.applications
 
   app                  = each.value.app
-  env_vars             = each.value.env_vars
+  env_vars             = try(each.value.env_vars, {})
   secret_env_vars      = local.secrets_for[each.key]
-  secret_env_var_flags = each.value.secret_env_var_flags
+  secret_env_var_flags = try(each.value.secret_env_var_flags, {})
 }
