@@ -150,8 +150,12 @@ Secrets to set up once:
 
 Restrict the `infra-production` environment to the `master` branch
 (Settings → Environments → Deployment branches), so the write token is only
-reachable from merged code. Adding a required reviewer there turns every apply
-into a manual approval, if you want that.
+reachable from merged code. The environment also has a required reviewer, so
+**every apply waits for approval**: after a merge, the `infra apply` run pauses
+until a reviewer clicks *Review deployments → Approve* on it. Read the plan
+comment on the merged PR before approving. To apply without a merge (e.g. to
+correct drift), start `infra apply` by hand from the Actions tab; it waits for
+the same approval.
 
 ## Running tofu by hand
 
