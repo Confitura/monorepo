@@ -59,8 +59,11 @@
   },
   "pnpm": {
     "overrides": {
-      "js-yaml@>=4.0.0 <4.3.1": "4.3.1",
-      "linkify-it@<=5.0.1": "5.0.2"
+      "linkify-it@<=5.0.1": "5.0.2",
+      "js-yaml@>=4.0.0 <4.3.2": "4.3.2",
+      "markdown-it@<14.3.1": "14.3.2",
+      "postcss-selector-parser@<7.1.6": "7.1.6",
+      "source-map-js@>=1.0.0 <1.2.2": "1.2.2"
     },
     "ignoredBuiltDependencies": [
       "unrs-resolver",
