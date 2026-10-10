@@ -38,8 +38,9 @@
   },
   "pnpm": {
     "overrides": {
-      "brace-expansion@>=2.0.0 <2.1.4": "2.1.4",
-      "js-cookie@<=3.0.5": "3.0.7"
+      "js-cookie@<=3.0.5": "3.0.7",
+      "brace-expansion@>=2.0.0 <2.1.7": "2.1.7",
+      "source-map-js@>=1.0.0 <1.2.2": "1.2.2"
     }
   }
 }
