@@ -1,0 +1,165 @@
+# Confitura infrastructure as code
+
+Declared state of the three Coolify applications that run Confitura:
+
+| Service | Coolify app | Directory in this repo |
+| --- | --- | --- |
+| https://confitura.pl/ | `webpage` | `webpage/` |
+| https://app.confitura.pl/ | `admin_app` | `admin-app/` |
+| https://api.confitura.pl/ | `backend` | `jelatyna-backend/` |
+
+Configuration changes land as commits here, not as clicks in the Coolify UI.
+
+**Building and deploying images is not this directory's job.**
+`.github/workflows/deploy-images.yml` builds each service, pushes it to GHCR and
+calls Coolify's deploy endpoint. That keeps working exactly as it does today.
+This directory owns configuration only: environment variables, domains, ports,
+limits, health checks.
+
+## Status
+
+Scaffolding and verified groundwork. **Nothing is imported yet and nothing has
+been applied.** `production.auto.tfvars` is deliberately empty until the Coolify
+inventory has been read, so a "No changes" plan from this directory currently
+proves nothing. Tracking issue: BCC-2.
+
+## Layout
+
+```
+infra/
+  .sops.yaml                      age public key + encryption rules
+  backend-proof/                  throwaway root that proves the state backend
+  modules/coolify-app/            the shared shape of a Confitura application
+  production/
+    versions.tf                   provider pins + the B2 state backend
+    providers.tf                  Coolify endpoint; token comes from the env
+    main.tf                       SOPS decryption + one module call per app
+    production.auto.tfvars        >>> non-secret config, edit this one <<<
+    secrets.enc.yaml              SOPS-encrypted secret values
+  scripts/
+    coolify-inventory.sh          read-only dump of the live configuration
+    import-production.sh          tofu import of the live applications
+```
+
+## How do I add an environment variable?
+
+### A non-secret one
+
+1. Edit `infra/production/production.auto.tfvars` and add an entry under the
+   right application's `env_vars`:
+
+   ```hcl
+   env_vars = {
+     FEATURE_NEW_AGENDA = { value = "true", is_runtime = true }
+   }
+   ```
+
+2. Open a pull request. The plan workflow comments the `tofu plan` on the PR.
+   Read it. It should show exactly one variable being added and nothing else.
+3. Merge. The apply workflow applies it.
+4. Check it in Coolify, and check the service still answers.
+
+### A secret one
+
+1. Add the name (not the value) to the application's `secret_env_var_flags` in
+   `production.auto.tfvars` if it needs a flag; otherwise skip this step.
+2. Add the value to the encrypted file:
+
+   ```bash
+   sops infra/production/secrets.enc.yaml
+   ```
+
+   The layout is `<application key>.<VAR_NAME>: value`, e.g. a `DB_PASSWORD`
+   for the backend is `backend: { DB_PASSWORD: ... }`. SOPS encrypts values and
+   leaves the names readable, so a diff shows *which* secret changed without
+   showing what it changed to.
+
+3. Commit the encrypted file. Never commit a decrypted copy; `.gitignore`
+   covers the usual names but it cannot save you from a new one.
+
+You need the age private key to run `sops`. It is a GitHub Actions secret and a
+Paperclip secret, exposed as `SOPS_AGE_KEY`. It is not in this repo and must not
+be pasted anywhere.
+
+> **Key rotation is in progress — do not add a real secret value yet.**
+> `infra/.sops.yaml` currently lists two age recipients. The first (v1,
+> `age13eqrs...`) was exposed in an agent run transcript on 2026-10-05 and is
+> being retired; the second (v2, `age1vjdke...`) replaces it and is pending
+> owner approval. Both are listed so the repo always decrypts, which also means
+> the exposed key still works. Nothing of value is encrypted with it — the file
+> holds one placeholder — so the exposure currently guards nothing. Finish the
+> rotation before the first real value goes in:
+>
+> 1. Confirm the v2 secret version is active: `GET /api/agents/me/secrets`.
+> 2. Delete the v1 line from `infra/.sops.yaml`.
+> 3. `sops updatekeys infra/production/secrets.enc.yaml`, then commit.
+>
+> Tracked on BCC-2. If you are adding a secret and these two recipients are
+> still both present, stop and finish the rotation first.
+
+#### If a private key is ever exposed again
+
+Rotate rather than hope. The procedure above is the whole cost when nothing
+real is encrypted yet, which is the argument for rotating immediately instead
+of waiting: once production values are in the file, rotation also means
+re-encrypting every one of them. Note that `SOPS_AGE_KEY` is injected in
+multi-line age *key-file* form (`# created:` / `# public key:` /
+`AGE-SECRET-KEY-...`), so a command that prints only environment variable
+*names* — `env | cut -d= -f1` — still prints the key body. Redact with
+`sed -E 's/AGE-SECRET-KEY-1[0-9A-Z]+/<REDACTED>/'` when inspecting the
+environment.
+
+### Changing a variable's name
+
+Renaming forces Coolify to replace the variable: the old one is deleted and a
+new one created. For a variable the running container reads at startup, treat it
+as a restart, not an edit.
+
+### What you cannot change here
+
+`admin-app`'s `VITE_API_URL` and `VITE_SELF_URL` are baked into the image at
+build time as `--build-arg` in `deploy-images.yml`. They are not Coolify
+environment variables. Changing them is a code change to that workflow plus a
+rebuild.
+
+## Running tofu by hand
+
+Normally you do not: applies go through the pipeline, and a hand-run apply is
+for emergencies.
+
+```bash
+export COOLIFY_TOKEN=...                       # needs read:sensitive or root
+export AWS_ACCESS_KEY_ID=...                   # Backblaze B2 key id
+export AWS_SECRET_ACCESS_KEY=...               # Backblaze B2 application key
+export AWS_REQUEST_CHECKSUM_CALCULATION=when_required
+export AWS_RESPONSE_CHECKSUM_VALIDATION=when_required
+export SOPS_AGE_KEY=...                        # age private key
+
+cd infra/production
+tofu init
+tofu plan -lock=false
+```
+
+### Why `-lock=false` on every command
+
+The state lives in Backblaze B2, which does not implement the conditional write
+that OpenTofu's S3 lock needs; it answers `501`. DynamoDB locking is AWS-only,
+so there is no second mechanism. The owner decided on 2026-10-05 to stay on B2
+and serialise applies in the pipeline instead:
+`infra-apply.yml` carries `concurrency: { group: tofu-apply-production,
+cancel-in-progress: false }`, and that group is the only thing preventing two
+concurrent applies from corrupting state. Bucket versioning is on, which is the
+recovery path if it happens anyway. Do not enable Object Lock on that bucket.
+
+**So: never run `tofu apply` by hand while a pipeline apply might be running.**
+
+## Safety rules that are not negotiable
+
+- The three applications are adopted by import, never recreated. The module
+  carries `prevent_destroy`, so a plan that would destroy or replace one fails
+  at plan time. If you hit that, something is wrong with the config - do not
+  remove the guard.
+- An empty plan is the proof of correctness. A leftover diff is unfinished
+  work, not noise.
+- State is never committed. Secret values are never committed in clear.
+- DNS, the server OS and database schemas are out of scope for this directory.
