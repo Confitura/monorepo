@@ -1,0 +1,106 @@
+name: infra plan
+
+# Plans infra/production on every pull request that touches infra/ and posts
+# the plan as a PR comment. Read-only: uses a Coolify token without write and
+# never applies. Applying is infra-apply.yml, on merge to master.
+#
+# This repository is public, so the plan comment is public. That is fine as
+# long as the configuration keeps to the rule in infra/README.md: values in
+# production.auto.tfvars are public anyway, and secret values come from
+# secrets.enc.yaml and print as "(sensitive value)".
+
+on:
+  pull_request:
+    paths:
+      - 'infra/**'
+      - '.github/workflows/infra-plan.yml'
+      - '.github/workflows/infra-apply.yml'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: infra-plan-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+env:
+  TOFU_VERSION: 1.13.1
+  # Backblaze B2 behind the S3 backend. See infra/production/versions.tf.
+  AWS_ACCESS_KEY_ID: ${{ secrets.B2_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.B2_APPLICATION_KEY }}
+  AWS_REQUEST_CHECKSUM_CALCULATION: when_required
+  AWS_RESPONSE_CHECKSUM_VALIDATION: when_required
+
+jobs:
+  plan:
+    # Fork and dependabot PRs get no secrets, so a plan cannot run there.
+    if: github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: infra/production
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: opentofu/setup-opentofu@v2
+        with:
+          tofu_version: ${{ env.TOFU_VERSION }}
+          tofu_wrapper: false
+
+      - name: Format
+        run: tofu fmt -check -recursive -diff ..
+
+      - name: Init
+        run: tofu init -input=false -lock=false
+
+      - name: Validate
+        run: tofu validate -no-color
+
+      # -lock=false: B2 cannot lock state. A plan only reads it.
+      - name: Plan
+        id: plan
+        env:
+          COOLIFY_TOKEN: ${{ secrets.COOLIFY_TOKEN_READ }}
+          SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
+        run: |
+          set +e
+          tofu plan -lock=false -input=false -no-color -detailed-exitcode > plan.txt 2>&1
+          code=$?
+          set -e
+          echo "exitcode=${code}" >> "$GITHUB_OUTPUT"
+          # Drop the per-resource refresh noise; keep the diff and any errors.
+          grep -v -E '^[^ ].*: (Refreshing state|Reading|Read complete after)' plan.txt > plan.clean.txt || true
+
+      - name: Comment plan on the PR
+        if: always() && steps.plan.outputs.exitcode != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+          CODE: ${{ steps.plan.outputs.exitcode }}
+          SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          case "$CODE" in
+            0) status="No changes." ;;
+            2) status="$(grep -E '^Plan:' plan.clean.txt || echo 'Changes planned.')" ;;
+            *) status="**Plan failed.**" ;;
+          esac
+          {
+            echo "### OpenTofu plan: infra/production"
+            echo
+            echo "${status} (\`${SHA:0:7}\`)"
+            echo
+            echo "<details><summary>Full plan</summary>"
+            echo
+            echo '```'
+            head -c 60000 plan.clean.txt
+            echo '```'
+            echo
+            echo "</details>"
+          } > comment.md
+          cat comment.md >> "$GITHUB_STEP_SUMMARY"
+          gh pr comment "$PR" --edit-last --create-if-none --body-file comment.md
+
+      - name: Fail on plan error
+        if: steps.plan.outputs.exitcode == '1'
+        run: exit 1

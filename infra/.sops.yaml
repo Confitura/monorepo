@@ -1,0 +1,21 @@
+# SOPS rules for the Confitura infrastructure configuration.
+#
+# The key below is an age PUBLIC key. It is safe in git - it can only encrypt.
+# The matching private key is held by the owner (~/.config/sops/age/keys.txt,
+# backed up in a password manager) and, for CI, as the GitHub Actions secret
+# SOPS_AGE_KEY. A private key is never committed, never pasted into an issue
+# or a chat, and never written to a file in this repo.
+#
+# Rotated 2026-10-09: both earlier recipients (age13eqrs..., exposed in an
+# agent run transcript on 2026-10-05, and its pending replacement age1vjdke...)
+# were removed. secrets.enc.yaml held only a placeholder at the time, so it was
+# re-created for the new recipient rather than re-keyed.
+#
+# No encrypted_regex / unencrypted_regex: SOPS already encrypts values and
+# leaves YAML keys in clear, which is what we want - a diff on a secrets file
+# shows which variable changed without revealing what it changed to. (SOPS
+# regexes are RE2, so a negative lookahead would not compile anyway.)
+
+creation_rules:
+  - path_regex: secrets\.enc\.ya?ml$
+    age: age1ng3cmz76z97epjj26zyx202puzsv2ljqhyfw0629j5yctj9nrv5st6p9wg
