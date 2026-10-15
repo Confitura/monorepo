@@ -24,7 +24,35 @@ useHead({
     { name: 'twitter:card', content: 'summary' },
     { name: 'twitter:title', content: title },
     { name: 'twitter:description', content: description }
-  ]
+  ],
+  script: [{
+    type: 'application/ld+json',
+    innerHTML: JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Event',
+      name: 'Confitura 2026',
+      startDate: '2026-09-25',
+      endDate: '2026-09-26',
+      eventStatus: 'https://schema.org/EventScheduled',
+      eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+      location: {
+        '@type': 'Place',
+        name: 'BCC — Warsaw',
+        address: {
+          '@type': 'PostalAddress',
+          addressCountry: 'PL',
+          addressLocality: 'Warsaw'
+        }
+      },
+      url: 'https://confitura.pl',
+      organizer: {
+        '@type': 'Organization',
+        name: 'Confitura',
+        url: 'https://confitura.pl'
+      },
+      description: description,
+    })
+  }]
 });
 </script>
 

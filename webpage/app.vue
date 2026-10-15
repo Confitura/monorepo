@@ -8,6 +8,8 @@
 import 'modern-normalize'
 import { useThemeStore } from '~/stores/themeStore'
 
+useCanonical()
+
 const themeStore = useThemeStore()
 
 onMounted(() => {

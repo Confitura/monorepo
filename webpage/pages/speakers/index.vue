@@ -10,6 +10,19 @@
 
 <script setup lang="ts">
 
+useHead({
+  title: 'Speakers | Confitura 2026',
+  meta: [
+    { name: 'description', content: 'Meet the speakers of Confitura 2026 — the biggest Java community conference in Poland.' },
+    { property: 'og:title', content: 'Speakers | Confitura 2026' },
+    { property: 'og:description', content: 'Meet the speakers of Confitura 2026 — the biggest Java community conference in Poland.' },
+    { property: 'og:type', content: 'website' },
+    { name: 'twitter:card', content: 'summary' },
+    { name: 'twitter:title', content: 'Speakers | Confitura 2026' },
+    { name: 'twitter:description', content: 'Meet the speakers of Confitura 2026 — the biggest Java community conference in Poland.' },
+  ],
+})
+
 let {data: speakers} = useArchiveFetch('/users/search/speakers.json', {
   transform: (data) => {
     const shuffleArray = (array) => {
