@@ -17,7 +17,7 @@ useHead({
     { property: 'og:title', content: 'Speakers | Confitura 2026' },
     { property: 'og:description', content: 'Meet the speakers of Confitura 2026 — the biggest Java community conference in Poland.' },
     { property: 'og:type', content: 'website' },
-    { name: 'twitter:card', content: 'summary' },
+    { name: 'twitter:card', content: 'summary_large_image' },
     { name: 'twitter:title', content: 'Speakers | Confitura 2026' },
     { name: 'twitter:description', content: 'Meet the speakers of Confitura 2026 — the biggest Java community conference in Poland.' },
   ],
