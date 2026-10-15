@@ -39,5 +39,11 @@ export default defineNuxtConfig({
             }]
         }
     },
-    modules: ['@pinia/nuxt', '@nuxt/test-utils/module']
+    site: {
+        url: 'https://confitura.pl',
+    },
+    sitemap: {
+        sources: ['/api/__sitemap__/urls'],
+    },
+    modules: ['@pinia/nuxt', '@nuxt/test-utils/module', '@nuxtjs/sitemap']
 })

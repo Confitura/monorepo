@@ -31,17 +31,24 @@ useHead({
       '@context': 'https://schema.org',
       '@type': 'Event',
       name: 'Confitura 2026',
-      startDate: '2026-09-25',
-      endDate: '2026-09-26',
+      startDate: '2026-09-25T08:00:00+02:00',
+      endDate: '2026-09-26T18:15:00+02:00',
       eventStatus: 'https://schema.org/EventScheduled',
       eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
       location: {
         '@type': 'Place',
-        name: 'BCC — Warsaw',
+        name: 'ADN Centrum Konferencyjne',
         address: {
           '@type': 'PostalAddress',
-          addressCountry: 'PL',
-          addressLocality: 'Warsaw'
+          streetAddress: 'ul. Grzybowska 56',
+          postalCode: '00-844',
+          addressLocality: 'Warszawa',
+          addressCountry: 'PL'
+        },
+        geo: {
+          '@type': 'GeoCoordinates',
+          latitude: 52.23522478133525,
+          longitude: 20.987968556704143
         }
       },
       url: 'https://confitura.pl',
