@@ -22,10 +22,45 @@ useHead({
     { property: 'og:title', content: title },
     { property: 'og:description', content: description },
     { property: 'og:type', content: 'website' },
-    { name: 'twitter:card', content: 'summary' },
+    { name: 'twitter:card', content: 'summary_large_image' },
     { name: 'twitter:title', content: title },
     { name: 'twitter:description', content: description }
-  ]
+  ],
+  script: [{
+    type: 'application/ld+json',
+    innerHTML: JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Event',
+      name: 'Confitura 2026',
+      startDate: '2026-09-25T08:00:00+02:00',
+      endDate: '2026-09-26T18:15:00+02:00',
+      eventStatus: 'https://schema.org/EventScheduled',
+      eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+      location: {
+        '@type': 'Place',
+        name: 'ADN Centrum Konferencyjne',
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: 'ul. Grzybowska 56',
+          postalCode: '00-844',
+          addressLocality: 'Warszawa',
+          addressCountry: 'PL'
+        },
+        geo: {
+          '@type': 'GeoCoordinates',
+          latitude: 52.23522478133525,
+          longitude: 20.987968556704143
+        }
+      },
+      url: 'https://confitura.pl',
+      organizer: {
+        '@type': 'Organization',
+        name: 'Confitura',
+        url: 'https://confitura.pl'
+      },
+      description: description,
+    })
+  }]
 });
 </script>
 

@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import pl.confitura.jelatyna.api.model.FullPresentation;
+import pl.confitura.jelatyna.infrastructure.security.Security;
 import pl.confitura.jelatyna.presentation.rating.Rate;
 import pl.confitura.jelatyna.presentation.rating.RatingService;
 import pl.confitura.jelatyna.presentation.rating.RatingWindowService;
@@ -37,6 +38,7 @@ public class PresentationController {
     private final RatingWindowService ratingWindowService;
     private final TagRepository tagRepository;
     private final ViewPresentationRateRepository ratesRepository;
+    private final Security security;
 
 
     @PreAuthorize("@security.presentationOwnedByUser(#presentationId) || @security.isAdmin()")
@@ -156,6 +158,9 @@ public class PresentationController {
 
     @GetMapping("/presentations")
     public ResponseEntity<List<FullPresentation>> getAllPresentations() {
-        return ResponseEntity.ok(repository.findAll().stream().map(FullPresentation::new).collect(toList()));
+        List<Presentation> presentations = security.isAdmin()
+                ? repository.findAll()
+                : repository.findAccepted();
+        return ResponseEntity.ok(presentations.stream().map(FullPresentation::new).collect(toList()));
     }
 }
