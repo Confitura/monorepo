@@ -5,12 +5,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Optional;
 
 import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.NOT_REQUIRED;
-import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 
 /**
  * Request payload for updating a room. All fields are optional; only provided fields will be updated.
  */
 public record UpdateRoomRequest(
-        @Schema(requiredMode = REQUIRED) String label
+        @Schema(requiredMode = NOT_REQUIRED) Optional<String> label,
+        @Schema(requiredMode = NOT_REQUIRED) Optional<Integer> displayOrder
 ) {
 }

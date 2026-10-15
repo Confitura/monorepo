@@ -1,11 +1,20 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import { usersApi, presentationApi } from '@/utils/api.ts'
+import {
+  getUserPresentations,
+  getUserWorkshops,
+  getById,
+  getCospeakers,
+  addCospeaker as apiAddCospeaker,
+  removeCospeaker as apiRemoveCospeaker,
+  deleteWorkshop,
+  deletePresentation,
+} from '@/utils/api.ts'
 import type {
   InlinePresentation,
   InlineWorkshop,
   User,
-} from '@/utils/api-axios-client'
+} from '@/utils/api'
 import { useRoute } from 'vue-router'
 import Rating from '@/components/homepage/rating.vue'
 
@@ -34,22 +43,19 @@ const user = useAuthStore().user
 const userId = (route?.params as { id?: string })?.id || user?.jti || ''
 
 function loadPresentations() {
-  usersApi
-    .getUserPresentations(userId)
+  getUserPresentations({ path: { id: userId } })
     .then((res) => res.data)
-    .then((data) => (presentations.value = data))
+    .then((data) => (presentations.value = data ?? []))
 
-  usersApi
-    .getUserWorkshops(userId)
+  getUserWorkshops({ path: { id: userId } })
     .then((res) => res.data)
-    .then((data) => (workshops.value = data))
+    .then((data) => (workshops.value = data ?? []))
 }
 
 function loadUserProfile() {
-  usersApi
-    .getById(userId)
+  getById({ path: { id: userId } })
     .then((res) => res.data)
-    .then((data) => (profile.value = data))
+    .then((data) => { if (data) profile.value = data })
 }
 
 function loadCospeakers(id: string, workshop: boolean = false) {
@@ -64,11 +70,10 @@ function loadCospeakers(id: string, workshop: boolean = false) {
     selectedWorkshop.value = null
   }
 
-  presentationApi
-    .getCospeakers(id)
+  getCospeakers({ path: { presentationId: id } })
     .then((res) => res.data)
     .then((data) => {
-      cospeakers.value = Array.from(data)
+      cospeakers.value = Array.from(data ?? [])
       cospeakersDialogVisible.value = true
     })
     .catch((error) => {
@@ -82,8 +87,7 @@ function addCospeaker(id: string) {
     return
   }
 
-  presentationApi
-    .addCospeaker(id, newCospeakerEmail.value)
+  apiAddCospeaker({ path: { presentationId: id, email: newCospeakerEmail.value } })
     .then((res) => {
       Notify.success(`Cospeaker added`)
       newCospeakerEmail.value = ''
@@ -95,8 +99,7 @@ function addCospeaker(id: string) {
 }
 
 function removeCospeaker(id: string, cospeakerId: string) {
-  presentationApi
-    .removeCospeaker(id, cospeakerId)
+  apiRemoveCospeaker({ path: { presentationId: id, id: cospeakerId } })
     .then((_) => {
       Notify.success(`Cospeaker removed`)
       loadCospeakers(id, isWorkshop.value)
@@ -111,16 +114,14 @@ function deleteItem(
   isWorkshop: boolean = false,
 ) {
   if (isWorkshop) {
-    usersApi
-      .deleteWorkshop(userId, item.id!)
+    deleteWorkshop({ path: { userId, workshopId: item.id! } })
       .then((_) => Notify.success(`"${item.title}" deleted`))
       .then((_) => loadPresentations())
       .catch((error) => {
         Notify.error(error.response?.data || 'Failed to delete workshop')
       })
   } else {
-    usersApi
-      .deletePresentation(userId, item.id!)
+    deletePresentation({ path: { userId, presentationId: item.id! } })
       .then((_) => Notify.success(`"${item.title}" deleted`))
       .then((_) => loadPresentations())
       .catch((error) => {

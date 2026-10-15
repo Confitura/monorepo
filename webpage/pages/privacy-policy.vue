@@ -1,5 +1,5 @@
 <template>
-  <div class="faq">
+  <div class="terms">
     <PageHeader title="Privacy Policy" />
     <Box class="content" color="white">
       <PageFragment class="questions" name="privacy-policy" />
@@ -25,85 +25,35 @@ useHead({
 })
 </script>
 
-<style lang="scss" scoped>
-@use "~/assets/colors" as *;
-@use "~/assets/sizes" as *;
-@use "~/assets/media" as *;
-@use "~/assets/fonts" as *;
-
-.faq {
-  overflow: hidden;
-}
-
-.content {
-  .foreword {
-    text-align: left;
-    color: #000000;
-    font-size: 1.5rem;
-    @include md() {
-      width: 50%;
-    }
-
-    &__link {
-      color: $brand;
-    }
-  }
-}
-</style>
 <style lang="scss">
 @use "~/assets/colors" as *;
-@use "~/assets/sizes" as *;
-@use "~/assets/media" as *;
-@use "~/assets/fonts" as *;
 
-.questions section {
-  display: grid;
-  text-align: left;
-  grid-template-columns: 1fr;
-  @include md() {
-    grid-template-columns: 1fr 1fr;
-  }
+.terms__info {
+  font-size: 1.5rem;
+  line-height: 2rem;
 
-  h2 {
-    font-size: 2.2rem;
+  a {
     color: $brand;
-    @include md() {
-      grid-column: 1 / 2;
-      &,
-      + h3 {
-        margin-top: 4rem;
-        margin-bottom: 1rem;
-      }
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
     }
   }
 
-  h3 {
-    font-size: 1.5rem;
-    font-weight: bold;
-    align-self: center;
-    margin: 0 0 1rem;
-    @include md() {
-      grid-column: 2 / 3;
-    }
-  }
+  .table {
+    width: 100%;
+    border-collapse: collapse;
 
-  p,
-  ul {
-    font-size: 1.5rem;
-    margin: 0;
-    @include md() {
-      grid-column: 2 / 3;
+    td,
+    th {
+      padding: 0.75rem;
+      border-bottom: 1px #dee2e6 solid;
+      box-sizing: border-box;
     }
 
-    + h3 {
-      margin-top: 2em;
-    }
-  }
-
-  h2 + {
-    p,
-    ul {
-      margin-top: 2em;
+    tr {
+      box-sizing: border-box;
     }
   }
 }

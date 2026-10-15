@@ -142,6 +142,59 @@ class AgendaServiceTest {
     }
 
     @Test
+    void mergeWorkshopSlotsAcrossBreak() {
+        var workshop = new Presentation();
+        workshop.setId("workshop1");
+        workshop.setWorkshop(true);
+
+        var ts1 = new TimeSlot()
+                .setStart(LocalTime.of(10, 0))
+                .setEnd(LocalTime.of(11, 0))
+                .setId(new TimeSlot.TimeSlotId("day-1", 1));
+        var breakSlot = new TimeSlot()
+                .setStart(LocalTime.of(11, 0))
+                .setEnd(LocalTime.of(11, 15))
+                .setId(new TimeSlot.TimeSlotId("day-1", 2));
+        var ts2 = new TimeSlot()
+                .setStart(LocalTime.of(11, 15))
+                .setEnd(LocalTime.of(12, 0))
+                .setId(new TimeSlot.TimeSlotId("day-1", 3));
+        AgendaEntry a1 = new AgendaEntry().setTimeSlot(ts1).setRoom(room).setPresentation(workshop);
+        AgendaEntry breakEntry = new AgendaEntry().setTimeSlot(breakSlot).setRoom(room).setLabel("break");
+        AgendaEntry a2 = new AgendaEntry().setTimeSlot(ts2).setRoom(room).setPresentation(workshop);
+        when(agendaRepository.findAll()).thenReturn(List.of(a1, breakEntry, a2));
+
+        var merged = agendaService.findAllAndMerge();
+
+        assertThat(merged).hasSize(2);
+        var mergedWorkshop = merged.stream().filter(AgendaEntry::hasPresentation).findFirst().orElseThrow();
+        assertThat(mergedWorkshop.getTimeSlot().getStart()).isEqualTo(LocalTime.of(10, 0));
+        assertThat(mergedWorkshop.getTimeSlot().getEnd()).isEqualTo(LocalTime.of(12, 0));
+        var breakResult = merged.stream().filter(e -> !e.hasPresentation()).findFirst().orElseThrow();
+        assertThat(breakResult.getTimeSlot().getStart()).isEqualTo(LocalTime.of(11, 0));
+        assertThat(breakResult.getTimeSlot().getEnd()).isEqualTo(LocalTime.of(11, 15));
+    }
+
+    @Test
+    void notMergeNonWorkshopSlotsAcrossBreak() {
+        var ts1 = new TimeSlot()
+                .setStart(LocalTime.of(10, 0))
+                .setEnd(LocalTime.of(11, 0))
+                .setId(new TimeSlot.TimeSlotId("day-1", 1));
+        var ts2 = new TimeSlot()
+                .setStart(LocalTime.of(11, 15))
+                .setEnd(LocalTime.of(12, 0))
+                .setId(new TimeSlot.TimeSlotId("day-1", 3));
+        AgendaEntry a1 = new AgendaEntry().setTimeSlot(ts1).setRoom(room).setPresentation(presentation);
+        AgendaEntry a2 = new AgendaEntry().setTimeSlot(ts2).setRoom(room).setPresentation(presentation);
+        when(agendaRepository.findAll()).thenReturn(List.of(a1, a2));
+
+        var merged = agendaService.findAllAndMerge();
+
+        assertThat(merged).hasSize(2);
+    }
+
+    @Test
     void notMergeLabels() {
         var ts1 = new TimeSlot()
                 .setStart(LocalTime.of(9, 0))

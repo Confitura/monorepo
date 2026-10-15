@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import DialogConfirm from '@/components/DialogConfirm.vue'
 import type {DataTableHeaders} from '@/plugins/vuetify'
-import {adminPresentationApi, presentationApi} from "@/utils/api.ts";
+import {rates} from "@/utils/api.ts";
 import type {
   FullPresentation,
   ViewPresentationRate
-} from "@/utils/api-axios-client";
+} from "@/utils/api";
 
 
 definePage({
@@ -35,8 +35,8 @@ const presentations = ref<ViewPresentationRate[]>([])
 
 
 function reloadRates() {
-  adminPresentationApi.rates()
-    .then(res => res.data)
+  rates()
+    .then(res => res.data ?? [])
     .then((data: Array<ViewPresentationRate>) => presentations.value = data)
     .catch(e => console.error(e))
 }

@@ -2,15 +2,15 @@
 import type {
   InlinePresentation,
   InlineWorkshop, User, ViewPresentationRate
-} from "@/utils/api-axios-client";
-import {presentationApi} from "@/utils/api.ts";
+} from "@/utils/api";
+import {rates1} from "@/utils/api.ts";
 
 const {presentation} = defineProps<{
   presentation: InlinePresentation | InlineWorkshop;
 }>();
 
-let ratings = ref<ViewPresentationRate>()
-let ratingsStats = ref([
+const ratings = ref<ViewPresentationRate>()
+const ratingsStats = ref([
   {'count': 0, 'label': 'TERRIBLE'},
   {'count': 0, 'label': 'BAD'},
   {'count': 0, 'label': 'IT_WAS_FINE'},
@@ -20,9 +20,9 @@ let ratingsStats = ref([
 
 
 function loadRates(presentation: InlinePresentation | InlineWorkshop) {
-  presentationApi.rates1(presentation.id)
+  rates1({ path: { presentationId: presentation.id } })
     .then((data) => {
-      let value = data.data;
+      const value = data.data!;
       ratings.value = value
       ratingsStats.value = [
         {'count': value.ratingCountTerrible!, 'label': 'TERRIBLE'},
@@ -44,7 +44,7 @@ onMounted(() => {
 
 <template>
 
-  <v-card class="container" v-if="ratings">
+  <v-card v-if="ratings" class="container">
     <v-card
       class="summary"
       elevation="10"
@@ -62,7 +62,7 @@ onMounted(() => {
           :model-value="ratings.avgRating"
           color="yellow-darken-3"
           half-increments
-        ></v-rating>
+        />
         <div class="px-3">{{ ratings.ratingCount }} ratings</div>
       </div>
 
@@ -79,15 +79,15 @@ onMounted(() => {
             color="yellow-darken-3"
             height="20"
             rounded
-          ></v-progress-linear>
+          />
 
-          <template v-slot:prepend>
+          <template #prepend>
             <span class="rating-label">
               {{ ratingsStats[i].label }} ({{ rating }})
             </span>
           </template>
 
-          <template v-slot:append>
+          <template #append>
             <div class="rating-values">
               <span class="d-flex justify-end"> {{
                   ratingsStats[i].count
@@ -105,7 +105,7 @@ onMounted(() => {
           :key="r.id"
           :title="r.value"
           :subtitle="r.comment"
-        ></v-list-item>
+        />
       </v-list>
     </div>
   </v-card>

@@ -3,18 +3,18 @@
 import VueMarkdown from 'vue-markdown-render'
 import {useRoute} from 'vue-router';
 
+import {ref, onMounted} from 'vue';
+import {getPage} from "@/utils/api.ts";
+
 const route = useRoute();
 console.log('Current route:', route);
-
-import {ref, onMounted} from 'vue';
-import {pagesApi} from "@/utils/api.ts";
 
 const pageData = ref<string | null>(null);
 
 onMounted(async () => {
   try {
     const routePath = (route.params as { all: string })["all"];
-    const response = await pagesApi.getPage(routePath);
+    const response = await getPage({ path: { id: routePath } });
     pageData.value = response.data || "";
   } catch (error) {
     console.error('Failed to fetch page data:', error);
@@ -25,7 +25,7 @@ onMounted(async () => {
 
 <template>
 
-  <v-container fluid v-if="pageData">
+  <v-container v-if="pageData" fluid>
     <v-row>
       <vue-markdown :source="pageData"/>
     </v-row>

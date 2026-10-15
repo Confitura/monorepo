@@ -3,7 +3,7 @@ import ChartUserTypes from "@/components/demo-charts/ChartUserTypes.vue";
 import ChartVotesOverTime from "@/components/demo-charts/ChartVotesOverTime.vue";
 
 import {onMounted, ref, computed} from 'vue';
-import {dashboardApi, adminTasksApi} from "@/utils/api.ts";
+import {usersStats, submissionStats, newsletterStat, votes, getLastWebpageDump, triggerWebpageDump} from "@/utils/api.ts";
 
 definePage({
   meta: {
@@ -29,8 +29,8 @@ const formattedLastUpdate = computed(() => {
 
 async function loadLastWebpageDump() {
   try {
-    const { data } = await adminTasksApi.getLastWebpageDump();
-    lastWebpageUpdate.value = data.lastDumpAt ? new Date(data.lastDumpAt) : null;
+    const { data } = await getLastWebpageDump();
+    lastWebpageUpdate.value = data?.lastDumpAt ? new Date(data.lastDumpAt) : null;
   } catch (e) {
     console.error('Failed to load last webpage dump info', e);
   }
@@ -38,7 +38,7 @@ async function loadLastWebpageDump() {
 
 async function triggerWebpageUpdate() {
   try {
-    await adminTasksApi.triggerWebpageDump();
+    await triggerWebpageDump();
     await loadLastWebpageDump();
   } catch (e) {
     console.error('Failed to trigger webpage update', e);
@@ -46,15 +46,15 @@ async function triggerWebpageUpdate() {
 }
 
 async function loadStats() {
-  const {data: users} = await dashboardApi.usersStats();
-  const {data: submissions} = await dashboardApi.submissionStats();
-  const {data: newsletter} = await dashboardApi.newsletterStat();
+  const {data: users} = await usersStats();
+  const {data: submissions} = await submissionStats();
+  const {data: newsletter} = await newsletterStat();
 
   stats.value = [
     {
       icon: 'mdi-account',
       title: 'Users',
-      value: users.total!,
+      value: users?.total ?? 0,
       unit: '',
       color: 'primary',
       caption: 'Registered',
@@ -62,13 +62,13 @@ async function loadStats() {
     {
       icon: 'mdi-presentation',
       title: 'Submissions',
-      value: submissions.total!,
+      value: submissions?.total ?? 0,
       color: 'primary',
-      caption: `Workshops: ${submissions.workshops}, prestations: ${submissions.presentations}`,
+      caption: `Workshops: ${submissions?.workshops}, prestations: ${submissions?.presentations}`,
     }, {
       icon: 'mdi-mail',
       title: 'Newsletter',
-      value: newsletter.subscribersCount || 0,
+      value: newsletter?.subscribersCount || 0,
       color: 'primary',
       caption: 'subscribers',
     }]
@@ -80,7 +80,7 @@ const hasVotes = computed(() => votesData.value.length > 1);
 
 async function loadVotes() {
   try {
-    const {data} = await dashboardApi.votes();
+    const {data} = await votes();
     votesData.value = data as unknown as unknown[];
   } catch (e) {
     console.error('Failed to load votes over time', e);
@@ -234,7 +234,7 @@ async function copyV4PToken() {
             <div class="text-body-2">{{ formattedLastUpdate }}</div>
           </div>
           <div class="mt-4">
-            <v-btn color="primary" @click="triggerWebpageUpdate" prepend-icon="mdi-reload">
+            <v-btn color="primary" prepend-icon="mdi-reload" @click="triggerWebpageUpdate">
               Trigger update
             </v-btn>
           </div>
@@ -246,8 +246,8 @@ async function copyV4PToken() {
           <div
             class="text-body-2"
             style="word-break: break-all; font-family: monospace; cursor: pointer;"
-            @click="copyV4PToken"
             title="Click to copy to clipboard"
+            @click="copyV4PToken"
           >{{ displayV4PToken }}</div>
           <v-snackbar v-model="copySnackbar" timeout="2000" color="success">
             Token copied to clipboard

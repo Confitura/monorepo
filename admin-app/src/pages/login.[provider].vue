@@ -1,6 +1,5 @@
 <script setup lang="ts">
 
-import {useRoute} from 'vue-router'
 import router from "@/plugins/router.ts";
 
 definePage({
@@ -15,16 +14,17 @@ definePage({
 })
 
 
-const route = useRoute()
-
 import {onMounted} from 'vue';
+import {useUrlSearchParams} from "@vueuse/core";
+
+const params = useUrlSearchParams('hash-params')
 
 onMounted(() => {
-  let accessToken = route.query["access_token"];
+  const accessToken = params.access_token as string
   if (accessToken == null) {
     router.push('/login');
   } else {
-    useAuthStore().login(accessToken.toString());
+    useAuthStore().login(accessToken);
   }
 });
 </script>

@@ -1,9 +1,19 @@
 import {defineStore} from 'pinia'
 
-const partners: Partner[] = getPartners();
+const descriptions = import.meta.glob('~/content/partners/*.md', {
+    query: '?raw',
+    import: 'default',
+    eager: true
+}) as Record<string, string>
+
+function descFor(id: string): string {
+    return descriptions[`/content/partners/${id}.md`] ?? '';
+}
+
 export const usePartnersStore = defineStore('partners', {
     state: () => ({
-        partners: partners
+        // Hardcoded list is the fallback until the backend dump is loaded.
+        partners: getPartners()
     }),
     getters: {
         platinum: ({partners}): Partner[] => filterBy(partners, "platinum"),
@@ -26,11 +36,45 @@ export const usePartnersStore = defineStore('partners', {
         }
     },
     actions: {
-        getPartnerById(id: string) {
-            return this.partners.find(partner => partner.id.toLowerCase() === id.toLowerCase());
+        // Populate from the backend dump (/partners/list.json). Falls back to the
+        // hardcoded list when the dump is empty or unavailable.
+        setPartners(data: BackendPartner[] | null | undefined) {
+            this.partners = (data && data.length > 0)
+                ? data.map(toPartner)
+                : getPartners();
+        },
+        getPartnerById(idOrSlug: string) {
+            const key = idOrSlug.toLowerCase();
+            return this.partners.find(partner =>
+                partner.slug?.toLowerCase() === key || partner.id.toLowerCase() === key);
         }
     }
 });
+
+interface BackendPartner {
+    id: string;
+    slug?: string;
+    name: string;
+    type: string;
+    www: string;
+    logo: string;
+    description: string;
+    orientation?: string;
+    published?: boolean;
+}
+
+function toPartner(p: BackendPartner): Partner {
+    return {
+        id: p.id,
+        slug: p.slug,
+        name: p.name,
+        description: p.description ?? '',
+        logo: p.logo ?? '',
+        www: p.www ?? '',
+        type: p.type as PartnerType,
+        orientation: p.orientation as Partner['orientation'],
+    };
+}
 
 function filterBy(partners: Partner[], type: string) {
     return shuffle(partners.filter(partner => partner.type === type));
@@ -48,6 +92,7 @@ export type PartnerType = 'platinum' | 'gold' | 'silver' | 'media' | 'path' | 'b
 
 export interface Partner {
     id: string;
+    slug?: string;
     name: string;
     description: string;
     logo: string;
@@ -68,20 +113,28 @@ export interface Partners {
 
 function getPartners(): Partner[] {
     return [{
-        id: "join-us",
-        name: "Join Us",
-        description: `Join Us`,
-        logo: "/assets/partners/2026/join-us.svg",
-        www: "mailto:confitura@confitura.pl",
+        id: "xtb",
+        name: "XTB",
+        description: descFor("xtb"),
+        logo: "/assets/partners/2026/xtb.svg",
+        www: "https://www.xtb.com/",
         type: "gold",
         orientation: "horizontal"
-    }, {
-        id: "join-us",
-        name: "Join Us",
-        description: `Join Us`,
-        logo: "/assets/partners/2026/join-us.svg",
-        www: "mailto:confitura@confitura.pl",
-        type: "silver",
-        orientation: "horizontal"
+    },{
+        id: "dpd",
+        name: "DPD",
+        description: descFor("dpd"),
+        logo: "/assets/partners/2026/dpd.svg",
+        www: "https://dpdgroupitsolutions.pl/",
+        type: "bronze",
+        orientation: "box"
+    },{
+        id: "cantor",
+        name: "CANTOR",
+        description: descFor("cantor"),
+        logo: "/assets/partners/2026/cantor.png",
+        www: "https://www.cantor.com/",
+        type: "bronze",
+        orientation: "vertical"
     }];
 }

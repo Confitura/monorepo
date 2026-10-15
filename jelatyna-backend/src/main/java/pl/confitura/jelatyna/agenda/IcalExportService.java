@@ -12,15 +12,23 @@ import net.fortuna.ical4j.model.property.Location;
 import net.fortuna.ical4j.model.property.ProdId;
 import net.fortuna.ical4j.model.property.Summary;
 import net.fortuna.ical4j.model.property.Uid;
+import net.fortuna.ical4j.model.property.Url;
 import org.springframework.stereotype.Service;
 import pl.confitura.jelatyna.presentation.Presentation;
 
 import java.io.ByteArrayOutputStream;
+import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -30,10 +38,22 @@ public class IcalExportService {
 
     private final AgendaService agendaService;
     private final DayRepository dayRepository;
+    private final AgendaRepository agendaRepository;
 
     public byte[] generateIcs() {
         Iterable<AgendaEntry> entries = agendaService.findAllAndMerge();
-        Calendar calendar = buildCalendar(entries);
+        return serialize(buildCalendar(entries));
+    }
+
+    public byte[] generateIcsForPresentation(String presentationId) {
+        List<AgendaEntry> entries = agendaRepository.findByPresentationId(presentationId);
+        if (entries.isEmpty()) {
+            return null;
+        }
+        return serialize(buildCalendar(entries));
+    }
+
+    private byte[] serialize(Calendar calendar) {
         try {
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             new CalendarOutputter().output(calendar, out);
@@ -43,12 +63,17 @@ public class IcalExportService {
         }
     }
 
+    // Public schedule page; a talk deep-links to /schedule#<presentationId>.
+    private static final String SCHEDULE_URL = "https://confitura.pl/schedule";
+
     Calendar buildCalendar(Iterable<AgendaEntry> entries) {
         Calendar calendar = new Calendar();
         calendar.withProperty(new ProdId("-//Jelatyna//Conference Schedule//EN"));
 
         ZoneId zone = ZoneId.of("Europe/Warsaw"); // using conference local timezone
 
+        // Entries with the same name, date and time are merged into a single event.
+        Map<String, MergedEvent> merged = new LinkedHashMap<>();
         for (AgendaEntry entry : entries) {
             if (entry.getTimeSlot() == null || entry.getTimeSlot().getStart() == null || entry.getTimeSlot().getEnd() == null) {
                 continue;
@@ -65,27 +90,79 @@ public class IcalExportService {
             ZonedDateTime end = endLdt.atZone(zone);
 
             String summary = buildSummary(entry);
-            VEvent event = new VEvent();
-            event.withProperty(new Summary(summary));
-            event.withProperty(new DtStart<>(start));
-            event.withProperty(new DtEnd<>(end));
+            String key = summary + "|" + start + "|" + end;
+            merged.computeIfAbsent(key, k -> new MergedEvent(summary, start, end))
+                    .add(entry);
+        }
 
-            if (entry.getRoom() != null && entry.getRoom().getLabel() != null) {
-                event.withProperty(new Location(entry.getRoom().getLabel()));
+        for (MergedEvent m : merged.values()) {
+            VEvent event = new VEvent();
+            event.withProperty(new Summary(m.summary));
+            event.withProperty(new DtStart<>(m.start));
+            event.withProperty(new DtEnd<>(m.end));
+
+            if (!m.roomLabels.isEmpty()) {
+                event.withProperty(new Location(String.join(", ", m.roomLabels)));
             } else {
-                log.info("No room for entry: {}", entry.getId());
+                log.info("No room for merged entry: {}", m.summary);
             }
 
-            String description = buildDescription(entry);
+            String description = m.description();
             if (description != null && !description.isBlank()) {
                 event.withProperty(new Description(description));
             }
 
-            event.withProperty(new Uid(UUID.nameUUIDFromBytes((entry.getId() == null ? (summary + start) : entry.getId()).getBytes(StandardCharsets.UTF_8)).toString()));
+            event.withProperty(new Uid(UUID.nameUUIDFromBytes(
+                    (m.summary + m.start).getBytes(StandardCharsets.UTF_8)).toString()));
+
+            String presentationId = m.presentationId();
+            if (presentationId != null) {
+                event.withProperty(new Url(URI.create(SCHEDULE_URL + "#" + presentationId)));
+            }
 
             calendar.withComponent(event);
         }
         return calendar;
+    }
+
+    private static final class MergedEvent {
+        private final String summary;
+        private final ZonedDateTime start;
+        private final ZonedDateTime end;
+        private final Set<String> roomLabels = new LinkedHashSet<>();
+        private final List<AgendaEntry> entries = new ArrayList<>();
+
+        private MergedEvent(String summary, ZonedDateTime start, ZonedDateTime end) {
+            this.summary = summary;
+            this.start = start;
+            this.end = end;
+        }
+
+        private void add(AgendaEntry entry) {
+            entries.add(entry);
+            if (entry.getRoom() != null && entry.getRoom().getLabel() != null) {
+                roomLabels.add(entry.getRoom().getLabel());
+            }
+        }
+
+        private String description() {
+            for (AgendaEntry entry : entries) {
+                String description = buildDescription(entry);
+                if (description != null && !description.isBlank()) {
+                    return description;
+                }
+            }
+            return null;
+        }
+
+        private String presentationId() {
+            for (AgendaEntry entry : entries) {
+                if (entry.getPresentationId() != null) {
+                    return entry.getPresentationId();
+                }
+            }
+            return null;
+        }
     }
 
     private static String buildSummary(AgendaEntry entry) {

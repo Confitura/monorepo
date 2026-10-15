@@ -10,6 +10,9 @@ on:
   pull_request:
     branches: [ master ]
 
+permissions:
+  contents: read
+
 jobs:
   changes:
     runs-on: ubuntu-latest
@@ -25,10 +28,12 @@ jobs:
           filters: |
             backend:
               - 'jelatyna-backend/**'
+              - 'openapi.json'
             frontend:
               - 'webpage/**'
             admin-app:
               - 'admin-app/**'
+              - 'openapi.json'
 
   test-backend:
     needs: changes
@@ -44,13 +49,18 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - name: Set up JDK 21
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@v6
         with:
           java-version: '21'
           distribution: 'temurin'
           cache: maven
       - name: run Maven
         run: mvn -B package
+      # The test suite regenerates the committed OpenAPI contract at the repo root
+      # (OpenApiSpecDumpTest). Fail if it drifts from what the controllers now produce.
+      - name: Verify OpenAPI spec is up to date
+        working-directory: ${{ github.workspace }}
+        run: git diff --exit-code openapi.json
 
 #      - name: Publish Test Report
 #        if: success() || failure()
@@ -103,6 +113,12 @@ jobs:
           cache: 'pnpm'
           cache-dependency-path: admin-app/pnpm-lock.yaml
       - run: pnpm install --frozen-lockfile
+      # Regenerate the typed client from the committed spec and fail if it drifts from
+      # what is checked in — keeps admin-app/src/client in sync with openapi.json.
+      - name: Verify generated API client is up to date
+        run: |
+          pnpm run codegen
+          git diff --exit-code src/client
       - run: pnpm run typecheck
       - run: pnpm run test:unit
 

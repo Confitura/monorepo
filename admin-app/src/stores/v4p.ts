@@ -1,10 +1,10 @@
 import {defineStore} from 'pinia'
-import type {InlineVote} from "@/utils/api-axios-client";
+import type {InlineVote} from "@/utils/api";
 
 export const useV4PStore = defineStore('v4p', {
   state: () => {
-    let currentPosition: number = -1;
-    let votes: InlineVote[] = []
+    const currentPosition: number = -1;
+    const votes: InlineVote[] = []
     return {
       currentPosition, votes
     }

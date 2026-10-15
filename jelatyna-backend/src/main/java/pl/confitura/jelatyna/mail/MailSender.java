@@ -36,7 +36,7 @@ public class MailSender {
 
     public void send(String template, MessageInfo messageInfo) throws MandrillApiError, IOException {
         String address = messageInfo.getEmail();
-        log.info("Sending email of template {} to {}", template, address);
+        log.info("Sending email of template {} to {}", template, messageInfo.maskedEmail());
         MandrillMessage message = new MandrillMessage();
         MandrillTemplate info = api.templates().info(template);
         message.setHtml(api.templates().render(template, ImmutableMap.of("content", "fake"), messageInfo.getVariables()));

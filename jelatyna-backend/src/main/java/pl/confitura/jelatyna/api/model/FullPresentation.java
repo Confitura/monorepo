@@ -25,6 +25,7 @@ public record FullPresentation(
         @Schema(requiredMode = REQUIRED) Integer durationInMinutes,
         @Schema(requiredMode = REQUIRED) Integer maxGroupSize,
         @Schema(requiredMode = REQUIRED) String status,
+        @Schema(requiredMode = REQUIRED) Boolean ratingEnabled,
         @Schema(requiredMode = REQUIRED) List<Speaker> speakers,
         @Schema(requiredMode = REQUIRED) String flatSpeakers
 ) {
@@ -44,6 +45,7 @@ public record FullPresentation(
                 presentation.getDurationInMinutes(),
                 presentation.getMaxGroupSize(),
                 presentation.getStatus(),
+                presentation.isRatingEnabled(),
                 presentation.getSpeakers().stream().map(Speaker::new).toList(),
                 presentation.getSpeakers().stream().map(User::getName).collect(Collectors.joining(", "))
         );

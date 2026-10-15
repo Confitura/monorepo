@@ -1,0 +1,17 @@
+# OpenTofu working files. State lives in Backblaze B2, never in git.
+.terraform/
+.terraform.tfstate.lock.info
+*.tfstate
+*.tfstate.*
+*.tfplan
+crash.log
+crash.*.log
+
+# Decrypted output must never be committed. Only *.enc.yaml belongs in git.
+secrets.yaml
+secrets.dec.yaml
+*.decrypted
+*.decrypted.*
+
+# Keep .terraform.lock.hcl: provider pinning is part of the declared state.
+!.terraform.lock.hcl

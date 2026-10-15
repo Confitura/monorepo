@@ -3,10 +3,48 @@ import { describe, it, expect, vi } from 'vitest'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
 
 // Mock the archive/api fetch composable used by pages and PageFragment
+const FAQ_ENTRIES = [
+  { id: 'e1', category: 'Registration', question: 'How do I register?', answer: 'Buy a **ticket**.', displayOrder: 0, published: true },
+  { id: 'e2', category: 'Venue', question: 'Where is it?', answer: 'At the venue.', displayOrder: 0, published: true },
+]
+
+const PARTNERS = [
+  { id: 'uuid-1', slug: 'xtb', name: 'XTB', type: 'gold', www: 'https://xtb.com', logo: 'https://cdn/x.svg', description: 'x', orientation: 'horizontal', published: true },
+  { id: 'uuid-2', slug: 'dpd', name: 'DPD', type: 'bronze', www: 'https://dpd.com', logo: 'https://cdn/d.svg', description: 'd', orientation: 'box', published: true },
+]
+
+// speaker '123' has one scheduled talk (p1) and one unscheduled talk (p2)
+const SPEAKER = {
+  id: '123', name: 'Jane Speaker', bio: 'Bio', photo: '',
+  presentations: [
+    { id: 'p1', name: 'Scheduled Talk', isWorkshop: false },
+    { id: 'p2', name: 'Unscheduled Talk', isWorkshop: false },
+  ],
+}
+const DAY1_AGENDA = { agendaEntries: [{ presentationId: 'p1' }] }
+
+// one organizer/volunteer with a photo, one without (to exercise the placeholder)
+const ADMINS = [
+  { id: 'a1', name: 'With Photo', photo: 'https://cdn/a.jpg' },
+  { id: 'a2', name: 'No Photo', photo: undefined },
+]
+const VOLUNTEERS = [
+  { id: 'v1', name: 'Vol One', photo: 'https://cdn/v.jpg' },
+  { id: 'v2', name: 'Vol Two', photo: undefined },
+]
+
 vi.mock('~/composables/useAPIFetch', async () => {
   const { ref } = await import('vue')
-  const createFetch = () => {
-    const data = ref(null)
+  const createFetch = (path?: string) => {
+    const data = ref(
+      path === '/faq/entries.json' ? FAQ_ENTRIES
+      : path === '/partners/list.json' ? PARTNERS
+      : path === '/users/123/public.json' ? SPEAKER
+      : path === '/agenda/day-1.json' ? DAY1_AGENDA
+      : path === '/users/search/admins.json' ? ADMINS
+      : path === '/users/search/volunteers.json' ? VOLUNTEERS
+      : null,
+    )
     const result = { data, pending: ref(false), error: ref(null), refresh: vi.fn(), execute: vi.fn() }
     return Object.assign(Promise.resolve(result), result)
   }
@@ -23,6 +61,8 @@ vi.mock('vue3-google-map', () => ({
 }))
 
 import IndexPage from '~/pages/index.vue'
+import CalendarPage from '~/pages/calendar.vue'
+import WorkshopSignupPage from '~/pages/workshop-signup.vue'
 import AboutPage from '~/pages/about.vue'
 import FaqPage from '~/pages/faq.vue'
 import NewsPage from '~/pages/news.vue'
@@ -46,14 +86,45 @@ describe('pages render without errors', () => {
     expect(wrapper.find('.home__container').exists()).toBe(true)
   })
 
+  it('renders the calendar page', async () => {
+    const wrapper = await mountSuspended(CalendarPage)
+    expect(wrapper.find('.calendar__page').exists()).toBe(true)
+  })
+
+  it('renders the workshop sign-up page', async () => {
+    const wrapper = await mountSuspended(WorkshopSignupPage)
+    expect(wrapper.find('.workshop-signup').exists()).toBe(true)
+    expect(wrapper.find('img[src="/workshop-signup/image7.png"]').exists()).toBe(true)
+  })
+
   it('renders the about page', async () => {
     const wrapper = await mountSuspended(AboutPage)
     expect(wrapper.find('.about__page').exists()).toBe(true)
   })
 
-  it('renders the faq page', async () => {
+  it('shows a placeholder for organizers/volunteers missing a photo', async () => {
+    const wrapper = await mountSuspended(AboutPage)
+    // organizer (a2) without a photo -> brand-square placeholder; with a photo -> <img>
+    expect(wrapper.find('.member__photo--placeholder').exists()).toBe(true)
+    expect(wrapper.find('img.member__photo').exists()).toBe(true)
+    // the volunteers grid renders its members (section is enabled)
+    expect(wrapper.find('.usersGrid').exists()).toBe(true)
+    expect(wrapper.findAll('.usersGrid .user').length).toBe(2)
+  })
+
+  it('renders the faq page from structured entries grouped by category', async () => {
     const wrapper = await mountSuspended(FaqPage)
-    expect(wrapper.html()).toBeDefined()
+    const questions = wrapper.find('.questions')
+    expect(questions.exists()).toBe(true)
+    // the two-column grid CSS targets `.questions section`, so the rendered
+    // markdown must live inside a nested <section>
+    expect(wrapper.find('.questions section').exists()).toBe(true)
+    const html = questions.html()
+    // categories as h2, questions as h3, answer markdown rendered
+    expect(html).toContain('Registration')
+    expect(html).toContain('Venue')
+    expect(html).toContain('How do I register?')
+    expect(html).toContain('<strong>ticket</strong>')
   })
 
   it('renders the news page', async () => {
@@ -100,9 +171,15 @@ describe('pages render without errors', () => {
     expect(wrapper.html()).toBeDefined()
   })
 
-  it('renders the partners listing page', async () => {
+  it('renders the partners listing page from the backend dump, grouped by tier', async () => {
     const wrapper = await mountSuspended(PartnersIndexPage)
     expect(wrapper.find('.partners').exists()).toBe(true)
+    // partners came from /partners/list.json, grouped by tier
+    expect(wrapper.find('#gold').exists()).toBe(true)
+    expect(wrapper.find('#bronze').exists()).toBe(true)
+    expect(wrapper.html()).toContain('XTB')
+    expect(wrapper.html()).toContain('DPD')
+    expect(wrapper.find('a[href="/partners/xtb"]').exists()).toBe(true)
   })
 
   it('renders the partner detail page', async () => {
@@ -122,6 +199,18 @@ describe('pages render without errors', () => {
       route: { params: { id: '123' } },
     })
     expect(wrapper.find('.speaker').exists()).toBe(true)
+  })
+
+  it('shows a calendar link only for the speaker\'s scheduled talk', async () => {
+    const wrapper = await mountSuspended(SpeakersDetailPage, {
+      route: { params: { id: '123' } },
+    })
+    const calendarLinks = wrapper.findAll('a.speaker__calendar')
+    // p1 is scheduled (in day-1 agenda), p2 is not
+    expect(calendarLinks.length).toBe(1)
+    expect(calendarLinks[0].attributes('href')).toBe(
+      'https://api.confitura.pl/api/agenda/ical/presentation/p1',
+    )
   })
 
   it('renders the schedule page (default day)', async () => {

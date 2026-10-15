@@ -25,7 +25,8 @@
             </span>
         </div>
         <router-link to="privacy-policy" class="contact__privacy">Privacy policy</router-link>
-        <a href="https://api.confitura.pl/api/resources/edition-2025/docs/Regulamin%20Confitura%2025.pdf" class="contact__regulamin" target="_blank">Regulamin wydarzenia</a>
+        <router-link to="tickets" class="contact__privacy">Ticket options explained</router-link>
+        <router-link to="terms-and-conditions" class="contact__privacy">Terms and Conditions</router-link>
         <SocialLinks class="mobile"/>
       </div>
     </div>

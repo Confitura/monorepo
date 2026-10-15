@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Locale;
+import java.util.Set;
 
 import jakarta.transaction.Transactional;
 
@@ -22,6 +24,8 @@ import static com.google.common.io.Files.*;
 @Service
 @RequiredArgsConstructor
 public class ResourceStorage {
+
+    private static final Set<String> ALLOWED_EXTENSIONS = Set.of("png", "jpg", "jpeg", "gif", "webp", "svg");
 
     private final ResourceConfigurationProperties properties;
     private final UserRepository repository;
@@ -46,8 +50,15 @@ public class ResourceStorage {
     }
 
     private String doStore(String fileName, MultipartFile file, String... paths) throws IOException {
-        Path path = Files.createDirectories(Paths.get(properties.folder(), paths));
-        Path filePath = Paths.get(path.toString(), fileName + "." + getFileExtension(file.getOriginalFilename()));
+        Path baseDir = Files.createDirectories(Paths.get(properties.folder(), paths)).normalize();
+        String extension = getFileExtension(file.getOriginalFilename()).toLowerCase(Locale.ROOT);
+        if (!ALLOWED_EXTENSIONS.contains(extension)) {
+            throw new IllegalArgumentException("Unsupported file extension: " + extension);
+        }
+        Path filePath = baseDir.resolve(fileName + "." + extension).normalize();
+        if (!filePath.startsWith(baseDir)) {
+            throw new IllegalArgumentException("Resolved path escapes the storage directory");
+        }
         Files.write(filePath, file.getBytes());
         return properties.resourcesBaseUrl() + "/" + properties.path() + filePath.toString().replace(properties.folder(), "");
     }

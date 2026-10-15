@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.SchemaProperty;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,7 +31,10 @@ public class ResourceController {
                     description = "File to upload",
                     content = @Content(
                             mediaType = "multipart/form-data",
-                            schema = @Schema(implementation = MultipartFile.class)
+                            schemaProperties = @SchemaProperty(
+                                    name = "file",
+                                    schema = @Schema(type = "string", format = "binary")
+                            )
                     )
             ),
             parameters = @Parameter(name = "userId", description = "ID of the user", required = true)
@@ -47,7 +51,10 @@ public class ResourceController {
                     description = "File to upload",
                     content = @Content(
                             mediaType = "multipart/form-data",
-                            schema = @Schema(implementation = MultipartFile.class)
+                            schemaProperties = @SchemaProperty(
+                                    name = "file",
+                                    schema = @Schema(type = "string", format = "binary")
+                            )
                     )
             ),
             parameters = @Parameter(name = "id", description = "ID of the partner", required = true)

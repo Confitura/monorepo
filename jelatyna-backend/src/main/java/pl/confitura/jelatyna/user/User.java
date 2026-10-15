@@ -49,7 +49,6 @@ public class User extends AuditedEntity {
     @Column(columnDefinition = "text")
     private String www;
     @Column(columnDefinition = "text")
-    @ToString.Include
     private String photo;
     @ToString.Include
     private boolean isAdmin;

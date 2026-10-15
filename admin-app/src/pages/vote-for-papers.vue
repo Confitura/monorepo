@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import {voteForPapersApi} from "@/utils/api.ts";
+import {start, save} from "@/utils/api.ts";
 import {v4 as uuidv4} from 'uuid';
-import type {InlineVote, InlineVoteSpeaker} from "@/utils/api-axios-client";
+import type {InlineVote, InlineVoteSpeaker} from "@/utils/api";
 import {useV4PStore} from "@/stores/v4p.ts";
 
 definePage({
@@ -36,18 +36,18 @@ function showBio(speaker: InlineVoteSpeaker | null) {
 }
 
 function getV4Ptoken(): string {
-  let token = localStorage.getItem('v4p-token')
+  const token = localStorage.getItem('v4p-token')
   if (!token) {
     localStorage.setItem('v4p-token', uuidv4())
-    return localStorage.getItem('v4p-token')!!
+    return localStorage.getItem('v4p-token')!
   }
   return token;
 }
 
 async function startVoting() {
-  let token = getV4Ptoken();
-  let result = await voteForPapersApi.start(token)
-  votes.value = result.data.map(it => {
+  const token = getV4Ptoken();
+  const result = await start({ path: { token } })
+  votes.value = (result.data ?? []).map((it: InlineVote) => {
     if (it.rate == undefined) {
       it.rate = 0
     }
@@ -55,7 +55,7 @@ async function startVoting() {
   })
 
   const savedPosition = localStorage.getItem('v4p-position');
-  if (savedPosition !== null && parseInt(savedPosition) >= 0 && parseInt(savedPosition) < result.data.length) {
+  if (savedPosition !== null && parseInt(savedPosition) >= 0 && parseInt(savedPosition) < votes.value.length) {
     currentPosition.value = parseInt(savedPosition);
   } else {
     currentPosition.value = 0;
@@ -97,11 +97,11 @@ function doc_keyUp(e: any) {
 
   if (currentVote.value) {
     if (e.code === 'ArrowLeft' || e.code === 'KeyA') {
-      let rate = currentVote.value.rate || 0;
+      const rate = currentVote.value.rate || 0;
       currentVote.value.rate = Math.max(rate - 1, -1);
     }
     if (e.code === 'ArrowRight' || e.code === 'KeyD') {
-      let rate = currentVote.value.rate || 0;
+      const rate = currentVote.value.rate || 0;
       currentVote.value.rate = Math.min(rate + 1, 1);
     }
     if (e.code === 'Enter') {
@@ -126,7 +126,7 @@ function toggleDescription() {
 
 async function vote(vote: InlineVote, value: number) {
   vote.rate = value;
-  await voteForPapersApi.save(vote)
+  await save({ body: { id: vote.id, rate: vote.rate } })
   goToPosition(currentPosition.value + 1);
 }
 </script>
@@ -170,7 +170,7 @@ async function vote(vote: InlineVote, value: number) {
             </v-btn>
           </div>
           <br/>
-          <div class="text-body-1	" v-if="!isMobile">
+          <div v-if="!isMobile" class="text-body-1	">
             <p>
               btw. you can also vote with keyboard shortcuts. <b>press '?'</b> to check them out
             </p>
@@ -199,12 +199,12 @@ async function vote(vote: InlineVote, value: number) {
         </div>
       </div>
       <v-card
+        v-if="currentVote"
         class="mx-auto vote"
         height="100%"
-        v-if="currentVote"
         :title="currentVote?.presentation?.title"
       >
-        <template v-slot:prepend>
+        <template #prepend>
           <v-chip
             v-if="currentVote?.presentation?.workshop"
             color="purple"
@@ -228,44 +228,47 @@ async function vote(vote: InlineVote, value: number) {
           v-for="speaker in currentVote?.presentation?.speakers"
           :key="speaker.id"
           @click="showBio(speaker)">
-          <template v-slot:title>{{ speaker.name }}</template>
-          <template v-slot:prepend>
+          <template #title>{{ speaker.name }}</template>
+          <template #prepend>
             <v-avatar color="blue-darken-2">
               <v-img
                 :alt="speaker.name + ' photo'"
                 :src="speaker.photo"
-              ></v-img>
+              />
             </v-avatar>
           </template>
         </v-list-item>
 
 
-        <v-card-text class="pt-4" v-if="showShort">
+        <v-card-text v-if="showShort" class="pt-4">
           {{ currentVote?.presentation?.shortDescription }}
         </v-card-text>
-        <v-card-text class="pt-4" v-else>
+        <v-card-text v-else class="pt-4">
           {{ currentVote?.presentation?.longDescription }}
         </v-card-text>
         <v-card-actions>
-          <v-btn @click="toggleDescription" block>toggle description</v-btn>
+          <v-btn block @click="toggleDescription">toggle description</v-btn>
         </v-card-actions>
         <v-card-actions>
           <v-container>
             <v-row align="center" justify="center">
               <v-col cols="auto">
-                <v-btn color="red-darken-1"
+                <v-btn
+color="red-darken-1"
                        :variant="currentVote?.rate == -1 ? 'tonal':'text' "
                        @click="vote(currentVote, -1)">-1
                 </v-btn>
               </v-col>
               <v-col cols="auto">
-                <v-btn color="blue-lighten"
+                <v-btn
+color="blue-lighten"
                        :variant="currentVote?.rate == 0 ? 'tonal':'text' "
                        @click="vote(currentVote, 0)">0
                 </v-btn>
               </v-col>
               <v-col cols="auto">
-                <v-btn color="light-green"
+                <v-btn
+color="light-green"
                        :variant="currentVote?.rate == 1 ? 'tonal':'text' "
                        @click="vote(currentVote, 1)">+1
                 </v-btn>
@@ -291,7 +294,7 @@ async function vote(vote: InlineVote, value: number) {
                 text="Close"
                 variant="text"
                 @click="showBio(null)"
-              ></v-btn>
+              />
             </v-card-actions>
           </div>
         </v-expand-transition>
@@ -302,7 +305,7 @@ async function vote(vote: InlineVote, value: number) {
           height="10"
           striped
         >
-          <template v-slot:default="{ value }">
+          <template #default="{ value }">
             <strong>{{ Math.ceil(value) }}%</strong>
           </template>
         </v-progress-linear>
@@ -325,7 +328,7 @@ d | right    -> +1
 
 ?            -> self
       </pre>
-      <template v-slot:actions>
+      <template #actions>
         <v-btn
           color="white"
           variant="text"

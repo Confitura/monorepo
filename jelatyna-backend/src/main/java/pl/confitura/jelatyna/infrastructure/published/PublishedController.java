@@ -110,7 +110,7 @@ public class PublishedController {
             return ResponseEntity.notFound().build();
         }
         var timeSlots = timeSlotsRepository.findByIdDayId(dayId).stream()
-                .sorted(Comparator.comparing(pl.confitura.jelatyna.agenda.TimeSlot::getDisplayOrder))
+                .sorted(pl.confitura.jelatyna.agenda.TimeSlot.CHRONOLOGICALLY)
                 .map(InlineTimeSlot::from)
                 .toList();
         var rooms = roomRepository.findByDayId(dayId).stream()
@@ -125,7 +125,7 @@ public class PublishedController {
                 .map(InlinePresentationWithSpeakers::new)
                 .toList();
         Map<Integer, List<InlineAgendaEntry>> byTimeSlot = entries.stream().collect(groupingBy(InlineAgendaEntry::timeSlotIndex));
-        InlineAgenda agenda = new InlineAgenda(timeSlots, rooms, presentations, entries, byTimeSlot);
+        InlineAgenda agenda = new InlineAgenda(dayOpt.get().getDate(), timeSlots, rooms, presentations, entries, byTimeSlot);
         return ResponseEntity.ok(agenda);
     }
 }

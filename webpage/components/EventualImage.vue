@@ -8,22 +8,7 @@
 
 const { src, size = 90 } = defineProps<{ src?: string; size?: number }>()
 
-let fullSizeSrc = computed(() => resizeTo(size))
-
-function resizeTo(size: number) {
-  if (!src) {
-    return ''
-  }
-  if (src.includes('/photos/')) {
-    return `${src}${src.includes('?') ? '&' : '?'}size=${size}`.replace("api.confitura.pl/api/resources", "resources.confitura.pl")
-  } else if (src.includes('githubusercontent.com')) {
-    return `${src}&s=${size}`
-  } else if (src.includes('gravatar.com')) {
-    return src.replace('s=300', `s=${size}`)
-  } else {
-    return src
-  }
-}
+let fullSizeSrc = computed(() => photoUrl(src, size))
 </script>
 
 <style scoped lang="scss">

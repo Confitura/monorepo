@@ -26,7 +26,7 @@ public class AllegroVoucherSender {
                 sendMessage(message);
                 Thread.sleep(333);
             } catch (Exception ex) {
-                log.warn("sending message to {} failed", message.getBuyerLogin(), ex);
+                log.warn("sending voucher message {} failed", message.getId(), ex);
             }
         }
     }
@@ -38,7 +38,7 @@ public class AllegroVoucherSender {
             message.sent();
             repository.save(message);
         } else {
-            log.warn("sending message to {} failed", message.getBuyerLogin());
+            log.warn("sending voucher message {} failed", message.getId());
         }
     }
 }

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type {DataTableHeaders} from '@/plugins/vuetify'
-import {adminPresentationApi, adminVoteApi} from '@/utils/api.ts'
-import type {VoteResult} from '@/utils/api-axios-client'
+import {results as fetchResults, setPreSelection as apiSetPreSelection, accept, reject} from '@/utils/api.ts'
+import type {VoteResult} from '@/utils/api'
 
 definePage({
   meta: {
@@ -116,8 +116,8 @@ const loading = ref(false)
 function reload() {
   loading.value = true
   const tokens = voters.value.map(v => v.token)
-  adminVoteApi.results(tokens.length ? tokens : undefined)
-    .then(res => results.value = res.data)
+  fetchResults({ query: { tokens: tokens.length ? tokens : undefined } })
+    .then(res => results.value = res.data ?? [])
     .catch(e => console.error(e))
     .finally(() => loading.value = false)
 }
@@ -136,9 +136,12 @@ function scoreColor(value: number | undefined): string {
 }
 
 function savePreSelection(item: VoteResult) {
-  return adminPresentationApi.setPreSelection(item.presentationId, {
-    status: item.preSelectionStatus as any,
-    comment: item.preSelectionComment ?? '',
+  return apiSetPreSelection({
+    path: { presentationId: item.presentationId },
+    body: {
+      status: item.preSelectionStatus as any,
+      comment: item.preSelectionComment ?? '',
+    },
   })
 }
 
@@ -163,8 +166,8 @@ function toggleAccepted(item: VoteResult) {
   const next = !item.accepted
   item.accepted = next
   const request = next
-    ? adminPresentationApi.accept(item.presentationId)
-    : adminPresentationApi.reject(item.presentationId)
+    ? accept({ path: { presentationId: item.presentationId } })
+    : reject({ path: { presentationId: item.presentationId } })
   request
     .then(() => Notify.success(`${next ? 'Accepted' : 'Reported'} ${item.title}`))
     .catch(() => {

@@ -6,7 +6,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import pl.confitura.jelatyna.agenda.*;
+import pl.confitura.jelatyna.faq.FaqEntryRepository;
 import pl.confitura.jelatyna.news.NewsletterApi;
+import pl.confitura.jelatyna.partner.PartnerRepository;
 import pl.confitura.jelatyna.page.PageController;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
 import pl.confitura.jelatyna.resource.ResourceConfigurationProperties;
@@ -27,6 +29,8 @@ public class ArchiveConfiguration {
     private final DayRepository dayRepository;
     private final TimeSlotsRepository timeSlotsRepository;
     private final RoomRepository roomRepository;
+    private final FaqEntryRepository faqEntryRepository;
+    private final PartnerRepository partnerRepository;
 
     @Bean
     WebpageDataDumper webpageDataDumper() {
@@ -40,7 +44,9 @@ public class ArchiveConfiguration {
                 agendaService,
                 dayRepository,
                 timeSlotsRepository,
-                roomRepository
+                roomRepository,
+                faqEntryRepository,
+                partnerRepository
         );
     }
 }

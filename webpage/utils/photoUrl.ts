@@ -10,9 +10,17 @@ export function photoUrl(src: string | undefined | null, size: number): string {
   if (src.includes('/photos/')) {
     return `${src}${src.includes('?') ? '&' : '?'}size=${size}`
       .replace('api.confitura.pl/api/resources', 'resources.confitura.pl')
-  } else if (src.includes('githubusercontent.com')) {
+  }
+
+  let host = ''
+  try {
+    host = new URL(src).hostname
+  } catch {
+    return src
+  }
+  if (host === 'githubusercontent.com' || host.endsWith('.githubusercontent.com')) {
     return `${src}&s=${size}`
-  } else if (src.includes('gravatar.com')) {
+  } else if (host === 'gravatar.com' || host.endsWith('.gravatar.com')) {
     return src.replace('s=300', `s=${size}`)
   }
   return src

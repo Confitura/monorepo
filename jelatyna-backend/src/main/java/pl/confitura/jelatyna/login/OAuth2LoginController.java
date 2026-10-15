@@ -52,7 +52,8 @@ public class OAuth2LoginController {
             @RequestParam("code") String code) {
         User user = services.get(provider).getUserFor(code);
         String token = URLEncoder.encode(tokenService.asToken(user), StandardCharsets.UTF_8);
-        String uri = "https://app.confitura.pl/login/" + provider + "?access_token=" + token + "&state=" + state;
+        String encodedState = URLEncoder.encode(state, StandardCharsets.UTF_8);
+        String uri = "https://app.confitura.pl/login/" + provider + "?state=" + encodedState + "#access_token=" + token;
 
         return ResponseEntity
                 .status(PERMANENT_REDIRECT)

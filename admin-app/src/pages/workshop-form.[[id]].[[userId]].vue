@@ -1,13 +1,12 @@
 <script setup lang="ts">
-import {usersApi, presentationApi} from "@/utils/api.ts";
-import {ref} from 'vue'
-import type {WorkshopRequest, Tag} from "@/utils/api-axios-client";
+import {getAllTags, getWorkshop, updateWorkshop, addWorkshopToUser} from "@/utils/api.ts";
+import {ref,onMounted} from 'vue'
+import type {WorkshopRequest, Tag} from "@/utils/api";
 import {useAuthStore} from "@/stores/auth.ts";
-import {onMounted} from 'vue'
 import {useRoute} from "vue-router";
 import router from "@/plugins/router.ts";
 
-let user = useAuthStore().user
+const user = useAuthStore().user
 const route = useRoute()
 const workshopId = (route.params as { id?: string; userId?: string }).id
 const userId = (route.params as { id?: string; userId?: string }).userId
@@ -38,21 +37,21 @@ const workshop = ref<WorkshopRequest>({
   maxGroupSize: 10,
 })
 
-let availableTags = ref<Tag[]>([])
+const availableTags = ref<Tag[]>([])
 
 // Validation rules
 const requiredRule = (value: string) => !!value.trim() || 'This field is required'
 
 onMounted(async () => {
-  presentationApi.getAllTags()
+  getAllTags()
     .then(response => response.data)
-    .then(data => availableTags.value = data)
+    .then(data => availableTags.value = data ?? [])
     .catch(error => console.error(error))
 
   if (workshopId && workshopId != 'new') {
-    usersApi.getWorkshop(actualUserId.value!, workshopId!)
+    getWorkshop({ path: { id: actualUserId.value!, workshopId: workshopId! } })
       .then(response => response.data)
-      .then(data => workshop.value = data)
+      .then(data => { if (data) workshop.value = data })
   } else {
     console.log('no id')
   }
@@ -61,9 +60,9 @@ onMounted(async () => {
 
 function doSubmit() {
   if (workshopId && workshopId != 'new') {
-    return usersApi.updateWorkshop(actualUserId.value!, workshopId!, workshop.value)
+    return updateWorkshop({ path: { userId: actualUserId.value!, workshopId: workshopId! }, body: workshop.value })
   } else {
-    return usersApi.addWorkshopToUser(actualUserId.value!, workshop.value);
+    return addWorkshopToUser({ path: { userId: actualUserId.value! }, body: workshop.value });
   }
 }
 
@@ -80,14 +79,14 @@ function handleSubmit() {
 </script>
 <template>
 
-  <v-form @submit.prevent="handleSubmit" v-model="formValid">
+  <v-form v-model="formValid" @submit.prevent="handleSubmit">
     <v-text-field
       v-model="workshop.title"
       label="Title"
       outlined
       required
       :rules="[requiredRule]"
-    ></v-text-field>
+    />
 
     <v-text-field
       v-model="workshop.shortDescription"
@@ -95,7 +94,7 @@ function handleSubmit() {
       outlined
       required
       :rules="[requiredRule]"
-    ></v-text-field>
+    />
 
     <v-textarea
       v-model="workshop.description"
@@ -104,7 +103,7 @@ function handleSubmit() {
       rows="4"
       required
       :rules="[requiredRule]"
-    ></v-textarea>
+    />
 
     <v-select
       v-model="workshop.level"
@@ -113,7 +112,7 @@ function handleSubmit() {
       outlined
       required
       :rules="[requiredRule]"
-    ></v-select>
+    />
 
     <v-select
       v-model="workshop.language"
@@ -122,7 +121,7 @@ function handleSubmit() {
       outlined
       required
       :rules="[requiredRule]"
-    ></v-select>
+    />
 
 
     <v-select
@@ -133,14 +132,14 @@ function handleSubmit() {
       item-title="name"
       item-value="id"
       outlined
-    ></v-select>
+    />
 
     <v-switch
       v-model="workshop.isFree"
       label="Is the workshop free?"
       inset
       outlined
-    ></v-switch>
+    />
 
     <v-text-field
       v-if="!workshop.isFree"
@@ -149,7 +148,7 @@ function handleSubmit() {
       outlined
       required
       type="number"
-    ></v-text-field>
+    />
 
     <v-text-field
       v-model="workshop.durationInMinutes"
@@ -157,7 +156,7 @@ function handleSubmit() {
       outlined
       required
       type="number"
-    ></v-text-field>
+    />
 
     <v-text-field
       v-model="workshop.maxGroupSize"
@@ -165,7 +164,7 @@ function handleSubmit() {
       outlined
       required
       type="number"
-    ></v-text-field>
+    />
 
     <v-btn type="submit" color="primary" class="mt-4" :disabled="!formValid">
       Submit

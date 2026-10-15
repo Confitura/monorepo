@@ -1,99 +1,8 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { mount, flushPromises } from '@vue/test-utils'
-
-// jsdom doesn't implement ResizeObserver, required by Vuetify's VSlideGroup, VPagination, etc.
-global.ResizeObserver = class ResizeObserver {
-  observe() {}
-  unobserve() {}
-  disconnect() {}
-}
 import { createVuetify } from 'vuetify'
 import { createTestingPinia } from '@pinia/testing'
 import { createRouter, createWebHistory } from 'vue-router'
-
-// ---------------------------------------------------------------------------
-// Mock all API clients — pages call these in onMounted, we don't want real HTTP
-// ---------------------------------------------------------------------------
-vi.mock('@/utils/api.ts', () => ({
-  api: {
-    defaults: { headers: { common: {} } },
-    post: vi.fn().mockResolvedValue({ data: {} }),
-    get: vi.fn().mockResolvedValue({ data: {} }),
-  },
-  usersApi: {
-    save1: vi.fn().mockResolvedValue({ data: {} }),
-    getUser: vi.fn().mockResolvedValue({ data: {} }),
-    getUserPresentations: vi.fn().mockResolvedValue({ data: [] }),
-    getUserWorkshops: vi.fn().mockResolvedValue({ data: [] }),
-    getCospeakers: vi.fn().mockResolvedValue({ data: [] }),
-    addCospeaker: vi.fn().mockResolvedValue({ data: {} }),
-    removeCospeaker: vi.fn().mockResolvedValue({ data: {} }),
-  },
-  pagesApi: {
-    getPage: vi.fn().mockResolvedValue({ data: '' }),
-    getPages: vi.fn().mockResolvedValue({ data: [] }),
-    savePage: vi.fn().mockResolvedValue({ data: {} }),
-    deletePage: vi.fn().mockResolvedValue({ data: {} }),
-  },
-  presentationApi: {
-    getAllPresentations: vi.fn().mockResolvedValue({ data: [] }),
-    getAllTags: vi.fn().mockResolvedValue({ data: [] }),
-    addRating: vi.fn().mockResolvedValue({ data: {} }),
-    getCospeakers: vi.fn().mockResolvedValue({ data: [] }),
-    rates1: vi.fn().mockResolvedValue({ data: {} }),
-  },
-  adminPresentationApi: {
-    accept: vi.fn().mockResolvedValue({ data: {} }),
-    reject: vi.fn().mockResolvedValue({ data: {} }),
-    rates: vi.fn().mockResolvedValue({ data: [] }),
-  },
-  adminUsersApi: {
-    markAsAdmin: vi.fn().mockResolvedValue({ data: {} }),
-    markAsVolunteer: vi.fn().mockResolvedValue({ data: {} }),
-    getUsers: vi.fn().mockResolvedValue({ data: [] }),
-    getAllUsers: vi.fn().mockResolvedValue({ data: [] }),
-  },
-  dashboardApi: {
-    usersStats: vi.fn().mockResolvedValue({ data: { total: 0 } }),
-    submissionStats: vi.fn().mockResolvedValue({ data: { total: 0, workshops: 0, presentations: 0 } }),
-    newsletterStat: vi.fn().mockResolvedValue({ data: { subscribersCount: 0 } }),
-    votes: vi.fn().mockResolvedValue({ data: [['date', 'total']] }),
-  },
-  tokenAPi: {
-    refreshToken: vi.fn().mockResolvedValue({ data: '' }),
-  },
-  resourcesApi: {
-    storeUserProfilePicture: vi.fn().mockResolvedValue({ data: {} }),
-  },
-  voteForPapersApi: {
-    start: vi.fn().mockResolvedValue({ data: [] }),
-  },
-  adminTasksApi: {
-    getLastWebpageDump: vi.fn().mockResolvedValue({ data: {} }),
-    triggerWebpageDump: vi.fn().mockResolvedValue({ data: {} }),
-  },
-  daysApi: {
-    getAllDays: vi.fn().mockResolvedValue({ data: [] }),
-    getDayById: vi.fn().mockResolvedValue({ data: {} }),
-  },
-  agendaApi: {
-    getAllTimeSlots: vi.fn().mockResolvedValue({ data: [] }),
-    getAllRooms1: vi.fn().mockResolvedValue({ data: [] }),
-    getAgendaEntriesByDay: vi.fn().mockResolvedValue({ data: [] }),
-  },
-  roomsApi: { getRooms: vi.fn().mockResolvedValue({ data: [] }) },
-  publishedApi: { getPublished: vi.fn().mockResolvedValue({ data: {} }) },
-}))
-
-// login.vue and login.[provider].vue import the router singleton directly
-vi.mock('@/plugins/router.ts', async () => {
-  const { createRouter, createWebHistory } = await import('vue-router')
-  const router = createRouter({
-    history: createWebHistory(),
-    routes: [{ path: '/:pathMatch(.*)*', component: { template: '<div/>' } }],
-  })
-  return { default: router }
-})
 
 // ---------------------------------------------------------------------------
 // Page imports (after mocks are hoisted)
@@ -111,10 +20,129 @@ import VoteForPapersPage from '@/pages/vote-for-papers.vue'
 import AdminPage from '@/pages/admin.vue'
 import AdminAgendaPage from '@/pages/admin/agenda.vue'
 import AdminPagesPage from '@/pages/admin/pages.vue'
+import AdminFaqPage from '@/pages/admin/faq.vue'
+import AdminPartnersPage from '@/pages/admin/partners.vue'
 import AdminPresentationsPage from '@/pages/admin/presentations.vue'
 import AdminPresentationPreviewPage from '@/pages/admin/presentation-preview.[[id]].vue'
 import AdminRatesPage from '@/pages/admin/rates.vue'
 import AdminUsersPage from '@/pages/admin/users.vue'
+
+// jsdom doesn't implement ResizeObserver, required by Vuetify's VSlideGroup, VPagination, etc.
+global.ResizeObserver = class ResizeObserver {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+}
+
+// ---------------------------------------------------------------------------
+// Mock all API clients — pages call these in onMounted, we don't want real HTTP
+// ---------------------------------------------------------------------------
+// The generated hey-api SDK exposes one flat function per operation, each resolving to a
+// hey-api result that spreads the axios response ({ data, status, ... }). Mock them here.
+vi.mock('@/utils/api.ts', () => {
+  const ok = (data: unknown) => vi.fn().mockResolvedValue({ data, status: 200 })
+  return {
+    // presentations & workshops
+    getAllPresentations: ok([]),
+    getAllTags: ok([]),
+    getCospeakers: ok([]),
+    getPresentation: ok({}),
+    updatePresentation: ok({}),
+    addPresentationToUser: ok({}),
+    deletePresentation: ok({}),
+    getWorkshop: ok({}),
+    updateWorkshop: ok({}),
+    addWorkshopToUser: ok({}),
+    deleteWorkshop: ok({}),
+    addCospeaker: ok({}),
+    removeCospeaker: ok({}),
+    addRating: ok({}),
+    rates1: ok({}),
+    accept: ok({}),
+    reject: ok({}),
+    rates: ok([]),
+    setPreSelection: ok({}),
+    results: ok([]),
+    // users
+    save1: ok({}),
+    getById: ok({}),
+    getUserPresentations: ok([]),
+    getUserWorkshops: ok([]),
+    getAllUsers: ok([]),
+    createManual: ok({}),
+    markAsAdmin: ok({}),
+    markAsVolunteer: ok({}),
+    // pages
+    getPage: ok(''),
+    getPages: ok([]),
+    createPage: ok({}),
+    updatePage: ok({}),
+    deletePage: ok({}),
+    // faq
+    getAllFaqEntries: ok([]),
+    getPublishedFaqEntries: ok([]),
+    getFaqEntry: ok({}),
+    createFaqEntry: ok({}),
+    updateFaqEntry: ok({}),
+    deleteFaqEntry: ok({}),
+    reorderFaqEntries: ok({}),
+    getFaqCategories: ok([]),
+    createFaqCategory: ok({}),
+    updateFaqCategory: ok({}),
+    reorderFaqCategories: ok({}),
+    mergeFaqCategories: ok({}),
+    deleteFaqCategory: ok({}),
+    // partners
+    getAllPartners: ok([]),
+    getPublishedPartners: ok([]),
+    getPartner: ok({}),
+    createPartner: ok({}),
+    updatePartner: ok({}),
+    deletePartner: ok({}),
+    storePartnerLogo: ok({}),
+    // dashboard
+    usersStats: ok({ total: 0 }),
+    submissionStats: ok({ total: 0, workshops: 0, presentations: 0 }),
+    newsletterStat: ok({ subscribersCount: 0 }),
+    votes: ok([['date', 'total']]),
+    // tokens / resources / votes / tasks
+    refreshToken: ok(''),
+    storeUserProfilePicture: ok({}),
+    start: ok([]),
+    save: ok({}),
+    getLastWebpageDump: ok({}),
+    triggerWebpageDump: ok({}),
+    // days & agenda
+    getAllDays: ok([]),
+    getDayById: ok({}),
+    saveDay: ok({}),
+    updateDay: ok({}),
+    deleteDay: ok({}),
+    getAllTimeSlots: ok([]),
+    getAllRooms1: ok([]),
+    getAgendaEntriesByDay: ok([]),
+  }
+})
+
+// vuedraggable renders its #item slot per element; stub it to a simple passthrough
+vi.mock('vuedraggable', () => ({
+  default: {
+    name: 'draggable',
+    props: ['modelValue'],
+    template:
+      '<div><template v-for="element in modelValue" :key="element.id"><slot name="item" :element="element" /></template></div>',
+  },
+}))
+
+// login.vue and login.[provider].vue import the router singleton directly
+vi.mock('@/plugins/router.ts', async () => {
+  const { createRouter, createWebHistory } = await import('vue-router')
+  const router = createRouter({
+    history: createWebHistory(),
+    routes: [{ path: '/:pathMatch(.*)*', component: { template: '<div/>' } }],
+  })
+  return { default: router }
+})
 
 // ---------------------------------------------------------------------------
 // Mount helper + lifecycle
@@ -123,6 +151,12 @@ import AdminUsersPage from '@/pages/admin/users.vue'
 // Vue's reactive system is fully torn down before the next test starts,
 // preventing "update after unmount" unhandled rejections.
 // ---------------------------------------------------------------------------
+function fakeJwt() {
+  const part = (o: object) =>
+    btoa(JSON.stringify(o)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
+  return `${part({ alg: 'HS256' })}.${part({ jti: 'u1', sub: 'Test', isAdmin: false })}.sig`
+}
+
 let _wrapper: ReturnType<typeof mount> | null = null
 let _container: HTMLElement | null = null
 let _appBar: HTMLElement | null = null
@@ -195,6 +229,25 @@ describe('admin-app pages render without errors', () => {
     expect(wrapper.html()).toBeDefined()
   })
 
+  it('takes the OAuth token from the URL fragment', async () => {
+    const jwt = fakeJwt()
+    try {
+      await mountPage(LoginProviderPage, `/login/google#access_token=${jwt}`)
+      expect(localStorage.getItem('token')).toBe(jwt)
+    } finally {
+      localStorage.removeItem('token')
+    }
+  })
+
+  it('ignores an OAuth token passed in the query string', async () => {
+    try {
+      await mountPage(LoginProviderPage, `/login/google?access_token=${fakeJwt()}`)
+      expect(localStorage.getItem('token')).toBeNull()
+    } finally {
+      localStorage.removeItem('token')
+    }
+  })
+
   it('renders the catch-all / 404 page', async () => {
     const wrapper = await mountPage(CatchAllPage, '/some-unknown-path')
     expect(wrapper.html()).toBeDefined()
@@ -248,6 +301,16 @@ describe('admin-app pages render without errors', () => {
 
   it('renders the admin pages management page', async () => {
     const wrapper = await mountPage(AdminPagesPage)
+    expect(wrapper.html()).toBeDefined()
+  })
+
+  it('renders the admin faq page', async () => {
+    const wrapper = await mountPage(AdminFaqPage)
+    expect(wrapper.html()).toBeDefined()
+  })
+
+  it('renders the admin partners page', async () => {
+    const wrapper = await mountPage(AdminPartnersPage)
     expect(wrapper.html()).toBeDefined()
   })
 

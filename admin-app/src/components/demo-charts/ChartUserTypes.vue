@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import type {ECOption} from '@/plugins/echarts'
-import {dashboardApi} from "@/utils/api.ts";
+import {usersStats} from "@/utils/api.ts";
 
-dashboardApi.usersStats()
+usersStats()
   .then(res => {
-    let data = {
-      admins: res.data.admins || 0,
-      volunteers: res.data.volunteers || 0,
-      total: res.data.total || 0,
+    const data = {
+      admins: res.data?.admins || 0,
+      volunteers: res.data?.volunteers || 0,
+      total: res.data?.total || 0,
     };
     option.value.series = [
       {
@@ -55,5 +55,5 @@ const option = ref<ECOption>({
 </script>
 
 <template>
-  <v-chart :option="option" autoresize ref="chart"/>
+  <v-chart ref="chart" :option="option" autoresize/>
 </template>

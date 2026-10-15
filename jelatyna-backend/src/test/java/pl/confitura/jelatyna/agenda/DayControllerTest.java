@@ -10,6 +10,7 @@ import pl.confitura.jelatyna.BaseIntegrationTest;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -118,6 +119,25 @@ class DayControllerTest extends BaseIntegrationTest {
 
     @Test
     @WithMockUser(roles = "ADMIN")
+    void shouldUpdateDay() throws Exception {
+        String dayJson = """
+                {
+                  "label":"Friday",
+                  "date":"2026-09-18",
+                  "displayOrder":7
+                }""";
+
+        mockMvc.perform(put("/days/" + day1.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(dayJson))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.label", is("Friday")))
+                .andExpect(jsonPath("$.date", is("2026-09-18")))
+                .andExpect(jsonPath("$.displayOrder", is(7)));
+    }
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
     void shouldDeleteDay() throws Exception {
         mockMvc.perform(delete("/days/" + day1.getId()))
                 .andExpect(status().isNoContent());
@@ -126,5 +146,37 @@ class DayControllerTest extends BaseIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].label", is("Day 2")));
+    }
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    void shouldDeleteDayWithItsRoomsTimeSlotsAndEntries() throws Exception {
+        txTemplate.executeWithoutResult(status -> {
+            Room room = roomRepository.save(new Room()
+                    .setId("room-1")
+                    .setLabel("Main Hall")
+                    .setDisplayOrder(1)
+                    .setDay(day1));
+            TimeSlot slot = timeSlotsRepository.save(new TimeSlot()
+                    .setId(new TimeSlot.TimeSlotId(day1.getId(), 1))
+                    .setStart(LocalTime.of(9, 0))
+                    .setEnd(LocalTime.of(10, 0)));
+            agendaRepository.save(new AgendaEntry()
+                    .setTimeSlot(slot)
+                    .setRoom(room)
+                    .setLabel("Opening Keynote"));
+        });
+
+        mockMvc.perform(delete("/days/" + day1.getId()))
+                .andExpect(status().isNoContent());
+
+        mockMvc.perform(get("/agenda/" + day1.getId() + "/rooms"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(0)));
+        mockMvc.perform(get("/agenda/" + day1.getId() + "/time-slots"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(0)));
+        mockMvc.perform(get("/days/" + day1.getId()))
+                .andExpect(status().isNotFound());
     }
 }

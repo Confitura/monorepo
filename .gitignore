@@ -11,3 +11,9 @@ confitura-vue
 confitura-page
 
 **/package-lock.json
+
+# AI agent tooling working dir
+.ai/
+
+# Node compile cache (written when running tests/builds)
+node-compile-cache/

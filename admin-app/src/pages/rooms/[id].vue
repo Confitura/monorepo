@@ -1,10 +1,14 @@
 <script setup lang="ts">
-import { agendaApi, daysApi, presentationApi } from '@/utils/api.ts'
-import type {
-  FullPresentation,
-  InlineAgendaEntry,
-  InlineTimeSlot,
-} from '@/utils/api-axios-client'
+import {
+  getAgendaEntriesByDay,
+  getAllDays,
+  getAllPresentations,
+  getAllRooms1,
+  getAllTimeSlots,
+  type FullPresentation,
+  type InlineAgendaEntry,
+  type InlineTimeSlot,
+} from '@/utils/api.ts'
 
 definePage({
   meta: {
@@ -13,7 +17,7 @@ definePage({
   },
 })
 
-const route = useRoute()
+const route = useRoute('/rooms/[id]')
 const roomId = route.params.id as string
 
 const loading = ref(true)
@@ -215,7 +219,7 @@ function tick() {
 onMounted(async () => {
   try {
     const today = new Date().toISOString().split('T')[0]
-    const daysResponse = await daysApi.getAllDays()
+    const daysResponse = await getAllDays({ throwOnError: true })
     const days = daysResponse.data
 
     const todayDay =
@@ -231,10 +235,10 @@ onMounted(async () => {
     }
 
     const [roomsRes, slotsRes, entriesRes, presRes] = await Promise.all([
-      agendaApi.getAllRooms1(todayDay.id),
-      agendaApi.getAllTimeSlots(todayDay.id),
-      agendaApi.getAgendaEntriesByDay(todayDay.id),
-      presentationApi.getAllPresentations(),
+      getAllRooms1({ path: { dayId: todayDay.id }, throwOnError: true }),
+      getAllTimeSlots({ path: { dayId: todayDay.id }, throwOnError: true }),
+      getAgendaEntriesByDay({ path: { dayId: todayDay.id }, throwOnError: true }),
+      getAllPresentations({ throwOnError: true }),
     ])
 
     const room = roomsRes.data.find((r) => r.id === roomId)

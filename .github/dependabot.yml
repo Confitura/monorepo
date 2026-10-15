@@ -4,18 +4,38 @@ updates:
     directory: /jelatyna-backend
     schedule:
       interval: weekly
+    groups:
+      maven-minor-patch:
+        update-types:
+          - minor
+          - patch
 
   - package-ecosystem: npm
     directory: /webpage
     schedule:
       interval: weekly
+    groups:
+      npm-minor-patch:
+        update-types:
+          - minor
+          - patch
 
   - package-ecosystem: npm
     directory: /admin-app
     schedule:
       interval: weekly
+    groups:
+      npm-minor-patch:
+        update-types:
+          - minor
+          - patch
 
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: weekly
+    groups:
+      github-actions:
+        update-types:
+          - minor
+          - patch

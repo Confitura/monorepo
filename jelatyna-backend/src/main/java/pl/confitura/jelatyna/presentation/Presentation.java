@@ -15,6 +15,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.GenericGenerator;
 
 import lombok.Data;
@@ -72,6 +73,10 @@ public class Presentation {
     private String preSelectionComment;
 
     private boolean workshop = false;
+
+    @Column(nullable = false)
+    @ColumnDefault("true")
+    private boolean ratingEnabled = true;
 
     private Boolean isFree = null;
     private Double expectedPrice = null;
