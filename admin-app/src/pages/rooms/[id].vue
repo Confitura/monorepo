@@ -192,14 +192,6 @@ const roomState = computed((): RoomState => {
   return { type: 'ended' }
 })
 
-const targetTime = computed((): string | null => {
-  const s = roomState.value
-  if (s.type === 'current') return s.endsAt
-  if (s.type === 'break') return s.endsAt
-  if (s.type === 'upcoming') return s.next.startsAt
-  return null
-})
-
 // --- Adaptive timer ---
 
 let timer: ReturnType<typeof setInterval> | null = null
