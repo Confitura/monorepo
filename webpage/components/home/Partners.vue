@@ -138,7 +138,7 @@ function stopCarousel() {
   intervalId = undefined
 }
 
-const imgUrls = import.meta.glob('~/assets/partners/2026/*', {
+const imgUrls = import.meta.glob('~/assets/partners/2027/*', {
   import: 'default',
   eager: true
 })

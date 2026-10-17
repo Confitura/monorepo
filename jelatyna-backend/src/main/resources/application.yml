@@ -37,7 +37,6 @@ management:
 
 conference.c4p:
   start: "2019-01-01T00:00:00.0+02:00[Europe/Warsaw]"
-  end: "2027-01-01T00:00:00.0+02:00[Europe/Warsaw]"
+  end: "2028-01-01T00:00:00.0+02:00[Europe/Warsaw]"
 
 
-ui.origin: "https://2025.confitura.pl/"

@@ -1,9 +1,31 @@
 # Preparing the next edition (webpage)
 
+> Last rollover: 2026 → 2027 (September 2026). Values below still quote the 2026 examples;
+> the 2027 date/venue were not known at rollover, so `TODO(2027)` markers flag what is pending
+> (`TheTimer.vue`, `calendar.vue` → `dateAnnounced`, `admin-app/src/pages/login.vue`).
+
+## 0. Archive the finished edition first
+
+Done once per year, before any of the steps below (see the `archive-2025` / `archive-2026` branches):
+
+1. Branch `archive-<year>` from `master` and push it.
+2. On that branch, reduce `.github/workflows/deploy-images.yml` to the **webpage job only**,
+   triggered by pushes to `archive-<year>`. Tag the image `confitura-webpage:archive-<year>`
+   (never `:latest` — master owns it) and keep the **current** webpage Coolify UUID.
+   Backend and admin-app are shared across editions and deploy from `master` only.
+3. Add `archive-<year>` to the push branches in `.github/workflows/run-tests.yml` on that branch.
+4. In Coolify: point the existing webpage resource at the `:archive-<year>` image and the
+   `<year>.confitura.pl` domain; create a new webpage resource on `:latest` / `confitura.pl`.
+5. On `master`, put the new resource's UUID in the webpage job of `deploy-images.yml`.
+6. Backend: bump `edition-<year>` in `ArchiveConfiguration.java` so the old edition's dump folder
+   freezes (the archive keeps reading it). Before the first dump, unpublish/clear last year's
+   FAQ, partners and agenda in the admin, or they are republished for the new edition.
+7. `components/TheMenu.vue`: link the archived year (`https://<year>.confitura.pl/`).
+
 Checklist of the edition-specific values hardcoded in the webpage. Update these when
 rolling over to a new Confitura year. Paths are relative to `webpage/`.
 
-Quick audit any time: `grep -rn "2026\|September 2\|Grzybowska\|edition-2026\|partners/2026" components pages public stores nuxt.config.ts`
+Quick audit any time: `grep -rn "2027\|TODO(2027)\|September 2\|Grzybowska\|edition-2027\|partners/2027" components pages public stores nuxt.config.ts`
 
 ## 1. Core event data — date, time & venue
 

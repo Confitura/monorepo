@@ -9,8 +9,8 @@
 </template>
 
 <script setup>
-const title = 'Terms and Conditions — Confitura 2026';
-const description = 'Read the terms and conditions for participating in Confitura 2026.';
+const title = 'Terms and Conditions — Confitura 2027';
+const description = 'Read the terms and conditions for participating in Confitura 2027.';
 useHead({
   title,
   meta: [

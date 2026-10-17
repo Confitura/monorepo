@@ -66,11 +66,11 @@ const icalUrl = (id: string) => `https://api.confitura.pl/api/agenda/ical/presen
 // SEO: Dynamic head tags based on speaker data
 const title = computed(() => {
   const name = (speaker as any)?.value?.name
-  return name ? `${name} — Confitura 2026 Speaker` : 'Speaker — Confitura 2026'
+  return name ? `${name} — Confitura 2027 Speaker` : 'Speaker — Confitura 2027'
 })
 
 const description = computed(() => {
-  const base = ((speaker as any)?.value?.bio || 'Discover speakers and sessions at Confitura 2026.') as string
+  const base = ((speaker as any)?.value?.bio || 'Discover speakers and sessions at Confitura 2027.') as string
   const text = String(base)
   return text.length > 160 ? `${text.slice(0, 157)}...` : text
 })

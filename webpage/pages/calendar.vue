@@ -4,12 +4,15 @@
     <Box color="white" :full="false">
       <div class="calendar__content">
         <p class="calendar__summary">
-          <b>Confitura 2026</b><br/>
-          Warsaw | September 25–26, 2026<br/>
-          ADN Conference Center, Grzybowska 56
+          <b>Confitura 2027</b><br/>
+          <template v-if="dateAnnounced">
+            Warsaw | September 25–26, 2026<br/>
+            ADN Conference Center, Grzybowska 56
+          </template>
+          <template v-else>Warsaw | date to be announced</template>
         </p>
 
-        <div class="calendar__buttons">
+        <div v-if="dateAnnounced" class="calendar__buttons">
           <a class="calendar__button" :href="googleUrl" target="_blank" rel="noopener">
             <i class="fab fa-google"></i> Google Calendar
           </a>
@@ -42,19 +45,23 @@
 
 <script setup lang="ts">
 
+// TODO(2027): once the date and venue are announced, update the summary above, googleUrl/outlookUrl
+// dates, location, the description below and rename public/confitura-2026.ics — then set this to true.
+const dateAnnounced = false
+
 const location = 'ADN Conference Center, Grzybowska 56, Warsaw'
-const details = 'Confitura 2026 — Java Conference in Warsaw. https://confitura.pl'
+const details = 'Confitura 2027 — Java Conference in Warsaw. https://confitura.pl'
 
 const googleUrl =
     'https://calendar.google.com/calendar/render?action=TEMPLATE' +
-    '&text=' + encodeURIComponent('Confitura 2026') +
+    '&text=' + encodeURIComponent('Confitura 2027') +
     '&dates=20260925/20260927' +
     '&location=' + encodeURIComponent(location) +
     '&details=' + encodeURIComponent(details)
 
 const outlookUrl =
     'https://outlook.live.com/calendar/0/action/compose?rru=addevent' +
-    '&subject=' + encodeURIComponent('Confitura 2026') +
+    '&subject=' + encodeURIComponent('Confitura 2027') +
     '&allday=true' +
     '&startdt=2026-09-25&enddt=2026-09-27' +
     '&location=' + encodeURIComponent(location) +
@@ -63,8 +70,8 @@ const outlookUrl =
 const icsFile = '/confitura-2026.ics'
 const agendaFeed = 'webcal://api.confitura.pl/api/agenda/ical/subscribe'
 
-const title = 'Add to calendar — Confitura 2026'
-const description = 'Add Confitura 2026 (Warsaw, September 25–26) to Google, Apple, or Outlook calendars.'
+const title = 'Add to calendar — Confitura 2027'
+const description = 'Add Confitura 2027 (Warsaw) to Google, Apple, or Outlook calendars.'
 useHead({
   title,
   meta: [

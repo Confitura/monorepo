@@ -41,7 +41,7 @@ const {data} = await useArchiveFetch('/partners/list.json', {key: 'partners'})
 store.setPartners(data.value as never)
 const partners = computed(() => store.partnersMap)
 
-const imgUrls = import.meta.glob('~/assets/partners/2026/*', {
+const imgUrls = import.meta.glob('~/assets/partners/2027/*', {
   import: 'default',
   eager: true
 })
@@ -54,8 +54,8 @@ function resolveImage(path: string): string {
 }
 
 // SEO for partners listing page
-const title = 'Partners — Confitura 2026 Sponsors & Supporters';
-const description = 'Meet the partners and sponsors supporting Confitura 2026: platinum, gold, silver, and community partners.';
+const title = 'Partners — Confitura 2027 Sponsors & Supporters';
+const description = 'Meet the partners and sponsors supporting Confitura 2027: platinum, gold, silver, and community partners.';
 useHead({
   title,
   meta: [

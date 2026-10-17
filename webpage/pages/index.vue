@@ -12,8 +12,8 @@
 
 <script setup lang="ts">
 
-const title = 'Confitura 2026 — Java Conference in Warsaw';
-const description = 'Join the largest Java community conference in Poland. Talks, workshops, and networking in Warsaw — Confitura 2026.';
+const title = 'Confitura 2027 — Java Conference in Warsaw';
+const description = 'Join the largest Java community conference in Poland. Talks, workshops, and networking in Warsaw — Confitura 2027.';
 
 useHead({
   title,

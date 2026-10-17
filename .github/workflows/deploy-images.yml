@@ -83,10 +83,13 @@ jobs:
             --push \
             webpage
       - name: Trigger Coolify deployment
+        # Webpage resource for the current (2027) edition. The previous edition's resource
+        # (jjbrvlzsq0ck1oqx46b0i0v6) now serves the 2026 archive and deploys from archive-2026.
+        # TODO(2027): replace the placeholder with the new Coolify resource UUID before merging.
         run: |
           curl -fsS -X POST \
             -H "Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}" \
-            "https://admin.confitura.pl/api/v1/deploy?uuid=jjbrvlzsq0ck1oqx46b0i0v6&force=true"
+            "https://admin.confitura.pl/api/v1/deploy?uuid=TODO_WEBPAGE_2027_UUID&force=true"
 
   push-admin-app:
     needs: changes

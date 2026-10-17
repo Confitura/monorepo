@@ -110,4 +110,4 @@ The FAQ CMS (#563) and Sponsors CMS (#564) established the pattern for content t
 5. **Webpage**: fetch `/things/….json` via `useArchiveFetch`, render with `marked`; fall back to any prior hardcoded data while the dump is empty.
 6. **Tests**: a `*ControllerTest` mirroring `FaqEntryControllerTest`/`PartnerControllerTest`; admin render + interaction spec mirroring `faq.spec.ts`/`partners.spec.ts`; a webpage assertion in `pages.nuxt.test.ts`.
 
-Data lands via the scheduled `WebpageDataDumper.dumpAll()` (~10 min) into the resource feed the webpage reads (`api.confitura.pl/api/resources/edition-2026/…`). No DB migration is needed for new columns — prod runs `ddl-auto: update`.
+Data lands via the scheduled `WebpageDataDumper.dumpAll()` (~10 min) into the resource feed the webpage reads (`api.confitura.pl/api/resources/edition-2027/…`). No DB migration is needed for new columns — prod runs `ddl-auto: update`.
