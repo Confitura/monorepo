@@ -79,6 +79,7 @@ import SpeakersIndexPage from '~/pages/speakers/index.vue'
 import SpeakersDetailPage from '~/pages/speakers/[id].vue'
 import SchedulePage from '~/pages/schedule/[[dayId]].vue'
 import ScheduleWorkshopsPage from '~/pages/schedule/workshops/[[dayId]].vue'
+import AgendaFlowPreviewPage from '~/pages/preview/agenda-flow.vue'
 
 describe('pages render without errors', () => {
   it('renders the home page', async () => {
@@ -235,5 +236,20 @@ describe('pages render without errors', () => {
       route: { params: { dayId: 'day-2' } },
     })
     expect(wrapper.find('.agendaPage').exists()).toBe(true)
+  })
+
+  it('renders the agenda flow preview: four steps in order, split into your part and our part', async () => {
+    const wrapper = await mountSuspended(AgendaFlowPreviewPage)
+    expect(wrapper.find('.agenda-flow-preview').exists()).toBe(true)
+    const titles = wrapper.findAll('.agenda-flow__step-title').map((t) => t.text())
+    expect(titles).toEqual(['Call for Papers', 'Vote for Papers', 'Speaker preferences', 'The agenda'])
+    const labels = wrapper.findAll('.agenda-flow__phase-label').map((l) => l.text())
+    expect(labels).toEqual(['your part', 'our part'])
+    // the second list continues the numbering, and each list is named by its phase label
+    const lists = wrapper.findAll('ol.agenda-flow__steps')
+    expect(lists[1].attributes('start')).toBe('3')
+    const labelId = wrapper.find('.agenda-flow__phase-label').attributes('id')
+    expect(lists[0].attributes('aria-labelledby')).toBe(labelId)
+    expect(wrapper.find('abbr[title="Call for Papers"]').text()).toBe('C4P')
   })
 })
