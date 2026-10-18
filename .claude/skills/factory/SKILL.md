@@ -56,8 +56,8 @@ Board: `backlog browser` → http://localhost:6420. Tracker conventions: `docs/a
 ### 2. Start
 
 1. `backlog task view <id> --plain` → keep the full text (title, description, acceptance criteria).
-2. Branch `B = factory/<id lowercase>-<slug>` where slug is the title in `[a-z0-9-]`, ≤40 chars.
-3. `git switch -c <B> origin/master`
+2. Branch `B = factory/<id lowercase>-<slug>` where slug is the title in `[a-z0-9-]`, ≤40 chars. If `B` already exists (`git rev-parse --verify --quiet <B>` or `origin/<B>` succeeds — an earlier attempt), append `-2`, `-3`, … until it's free. A retry always starts fresh from `origin/master`; the earlier branch stays for reference and `sync` deletes it once the task is merged.
+3. `git switch --no-track -c <B> origin/master` (`--no-track` so the branch never tracks `master`)
 4. `backlog task edit <id> -s "In Progress" --append-notes "factory: started <YYYY-MM-DD> on <B>"`
 
 ### 3. Implement
@@ -106,7 +106,7 @@ Don't push. `backlog task edit <id> -s "To Do" --remove-label ready-for-agent --
 ## sync
 
 1. `backlog task list -s "In Review" --plain`. For each task, read its PR url from `References:` in `backlog task view <id> --plain`, then `gh pr view <url> --json state,headRefName,isDraft`.
-   - `MERGED` → `backlog task edit <id> -s "Done" --append-notes "factory: merged <YYYY-MM-DD>"`; delete the local branch with `git branch -D <headRefName>` if it exists and isn't checked out (squash merges aren't ancestors, so `-d` fails).
+   - `MERGED` → `backlog task edit <id> -s "Done" --append-notes "factory: merged <YYYY-MM-DD>"`; delete the task's local branches — `<headRefName>` plus any earlier attempts from `git branch --list 'factory/<id lowercase>-*'` — with `git branch -D`, skipping one that is checked out (squash merges aren't ancestors, so `-d` fails).
    - `CLOSED` → `backlog task edit <id> -s "To Do" --remove-label ready-for-agent --add-label ready-for-human --append-notes "factory: PR closed unmerged"`.
    - `OPEN` → report draft state and a one-line `gh pr checks <url>` summary.
 2. `git fetch origin --prune`.
