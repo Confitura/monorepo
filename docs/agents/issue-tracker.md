@@ -4,6 +4,8 @@ Specs and tickets for this repo live on a local [Backlog.md](https://github.com/
 
 Statuses: `To Do` → `In Progress` → `In Review` (draft PR open) → `Done` (merged). Triage roles are labels — see `triage-labels.md`.
 
+Optional labels `model:<haiku|sonnet|opus|fable>` and `effort:<low|medium|high|xhigh|max>` pick the model and effort `/factory run` uses for a task's implementer. Leave them off and the factory assigns a tier and adds them itself; set one or both to override. The reviewer is always `opus` / `xhigh`.
+
 ## Conventions
 
 - **Create a ticket**: `backlog task create "<title>" -d "<body>" --ac "<criterion>" --ac "<criterion>" -l ready-for-agent --dep task-3 --doc "<spec doc path>" --plain`. One `--ac` per acceptance criterion (not in the body). Put real newlines in `-d`; wrap text containing backticks in single quotes.

@@ -2,7 +2,8 @@
 name: factory-reviewer
 description: Code-factory reviewer. Independently reviews the checked-out factory branch against its Backlog.md task (Spec) and this repo's documented standards (Standards); returns PASS/FAIL with findings. Read-only. Dispatched only by the /factory skill.
 tools: Read, Grep, Glob, Bash
-model: inherit
+model: opus
+effort: xhigh
 color: purple
 ---
 
