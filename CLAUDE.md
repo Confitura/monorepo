@@ -79,11 +79,15 @@ Docker Compose (`docker-compose.yml`) provides MySQL (3306), backend (8080), and
 
 ## CI/CD
 
-GitHub Actions (`.github/workflows/run-tests.yml`) runs on pushes to `master` and on PRs:
+GitHub Actions (`.github/workflows/run-tests.yml`) runs on pushes to `master` and on PRs. A `changes` job (`dorny/paths-filter`) gates each test job, so a job runs only when its paths change (backend: `jelatyna-backend/**` or `openapi.json`; webpage: `webpage/**`; admin-app: `admin-app/**` or `openapi.json`):
 
-- **test-backend**: JDK 21, `mvn package`, Surefire reports
-- **test-frontend**: Node 20, `npm ci → lint → build → test` (webpage)
-- **test-admin-app**: Node 22, pnpm 10.5.2, `typecheck → test:unit`
+- **test-backend**: JDK 21, `mvn -B package`, then `git diff --exit-code openapi.json` (fails if the regenerated spec drifts from the committed one)
+- **test-frontend** (webpage): Node 24, pnpm 10.5.2, `pnpm install --frozen-lockfile → build → test`
+- **test-admin-app**: Node 24, pnpm 10.5.2, `pnpm install --frozen-lockfile → codegen + git diff --exit-code src/client (drift check) → typecheck → test:unit`
+
+`.github/workflows/check-builds.yml` runs on the same triggers with its own paths filter (module directories only, not `openapi.json`) and builds the deployable images: Docker builds of webpage and admin-app, a nixpacks build of the backend.
+
+Each workflow ends in an aggregator job — `all-tests-passed` and `all-builds-passed` — that fails if any job failed and passes if they passed or were skipped. These two are the required checks on `master`.
 
 ## Observability
 
