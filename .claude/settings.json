@@ -4,7 +4,7 @@
     "allow": [
       "Bash(backlog task *)",
       "Bash(backlog doc *)",
-      "Bash(git switch -c factory/*)",
+      "Bash(git switch --no-track -c factory/*)",
       "Bash(git push -u origin factory/*)",
       "Bash(pnpm install --frozen-lockfile*)",
       "Bash(pnpm codegen*)",
