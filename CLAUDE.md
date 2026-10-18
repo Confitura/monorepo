@@ -97,7 +97,7 @@ Backend instrumentation (structured ECS logging, Prometheus metrics on a separat
 
 - **CI enforces that the committed client matches `openapi.json`.** Any PR that changes a controller (hence `openapi.json`) **must also run `cd admin-app && pnpm codegen` and commit `admin-app/src/client/`** — in the *same* PR. Splitting the spec change and the client regen across two PRs makes the spec-only PR fail CI. (Learned the hard way on the Sponsors CMS.)
 - **Name controller methods specifically** — the method name becomes the OpenAPI `operationId`, which becomes the SDK function name. Use `getPublishedFaqEntries`/`createPartner`, not generic `get`/`create` (which produce unusable client names like `get`/`create`/`delete_`).
-- `docs/agents/issue-tracker.md` (if present) and the `ready-for-agent` label drive the spec→tickets workflow.
+- Work is tracked on a local, private Backlog.md board (`backlog/`, gitignored); `docs/agents/issue-tracker.md` and the `ready-for-agent` label drive spec → tickets → `/factory`.
 
 ## Adding a CMS-managed, published entity (playbook)
 
@@ -111,3 +111,23 @@ The FAQ CMS (#563) and Sponsors CMS (#564) established the pattern for content t
 6. **Tests**: a `*ControllerTest` mirroring `FaqEntryControllerTest`/`PartnerControllerTest`; admin render + interaction spec mirroring `faq.spec.ts`/`partners.spec.ts`; a webpage assertion in `pages.nuxt.test.ts`.
 
 Data lands via the scheduled `WebpageDataDumper.dumpAll()` (~10 min) into the resource feed the webpage reads (`api.confitura.pl/api/resources/edition-2026/…`). No DB migration is needed for new columns — prod runs `ddl-auto: update`.
+
+## Agent skills
+
+### Issue tracker
+
+Local, private Backlog.md board in `backlog/` (gitignored). See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+The default five roles (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`). See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context: root `CONTEXT.md` + `docs/adr/`. See `docs/agents/domain.md`.
+
+## Code factory
+
+`/factory` (`.claude/skills/factory/SKILL.md`) works the Backlog.md board **one task at a time**: `run [task-id]` takes the next `ready-for-agent` task whose dependencies are `Done`, branches `factory/<id>-<slug>` off `origin/master`, has the `factory-implementer` subagent build it, the separate `factory-reviewer` subagent check it, and opens a **draft** PR (task → `In Review`). A human reviews and merges; `sync` marks merged tasks `Done`. `setup` creates the board once. Watch it with `backlog browser` (http://localhost:6420).
+
+Factory subagents never start dev servers, e2e, or docker, never run `backlog`/`git push`/`gh`, and run only the checks for the modules they touched. `.claude/settings.json` denies `gh pr merge`, `gh pr ready`, force pushes, and pushes to `master`.
