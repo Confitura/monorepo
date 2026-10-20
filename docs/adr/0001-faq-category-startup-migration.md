@@ -2,7 +2,7 @@
 
 ## Status
 
-accepted
+superseded by ADR-0002 (migration mechanism only; the FAQ category model stands)
 
 ## Context
 
