@@ -23,3 +23,40 @@ _Avoid_: Group, Section, Tag
 **Merge (categories)**:
 Recovery operation that moves every FAQ Entry from one Category into another and then
 removes the emptied Category. Used to fix duplicates created by mistake.
+
+## Users and logins
+
+**User**:
+A person known to Jelatyna: the owner of a profile, roles (admin, volunteer), talks and
+registration. One per person; has zero or more Logins.
+_Avoid_: Account, member
+
+**Login**:
+One identity-provider account (a provider plus that provider's id for the person, e.g.
+GitHub user 12345) that signs in as exactly one User.
+_Avoid_: Account, social account, identity
+
+**Manual User**:
+A User created by an admin instead of through sign-in, so it has no Login yet, e.g. a
+speaker added before they ever log in.
+_Avoid_: Fake user, placeholder
+
+**Link (a Login)**:
+Attaching a Login that belongs to no User yet to the signed-in User, proven by completing
+that provider's sign-in while signed in.
+_Avoid_: Connect, add account
+
+**Merge (users)**:
+Folding one User (the absorbed User) into another (the survivor) when both are the same
+person: every Login, talk and the ticket move to the survivor, which keeps its own profile
+values and takes the absorbed User's only where its own are empty; roles and privacy
+consent combine (either one counts). The absorbed User is then deleted. Self-service when
+the person proves both by signing in (the signed-in User survives); otherwise an admin
+merges and picks the survivor. Blocked when both Users hold a ticket. Irreversible; a
+wrong merge is repaired by hand (e.g. moving a talk by adding and removing a co-speaker).
+_Avoid_: Combine, join, dedupe
+
+**Unlink (a Login)**:
+Removing a Login from a User; the Login is deleted. A User can unlink any Login except
+their last; an admin can unlink any, which can leave the User with no Login.
+_Avoid_: Disconnect, remove account
