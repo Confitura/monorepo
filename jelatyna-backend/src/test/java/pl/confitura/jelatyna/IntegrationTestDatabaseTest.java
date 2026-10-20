@@ -3,14 +3,15 @@ package pl.confitura.jelatyna;
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.MigrationInfo;
 import org.flywaydb.core.api.MigrationState;
-import org.flywaydb.core.api.MigrationVersion;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -32,9 +33,25 @@ class IntegrationTestDatabaseTest extends BaseIntegrationTest {
     }
 
     @Test
-    void schemaIsTheFlywayBaselineMigration() {
+    void schemaIsBuiltByEveryFlywayMigration() {
         MigrationInfo current = flyway.info().current();
-        assertThat(current.getVersion()).isEqualTo(MigrationVersion.fromVersion("1"));
         assertThat(current.getState()).isEqualTo(MigrationState.SUCCESS);
+        assertThat(flyway.info().pending()).isEmpty();
+    }
+
+    @Test
+    void legacyTablesAndColumnsNoEntityMapsAreDropped() throws SQLException {
+        try (Connection connection = dataSource.getConnection()) {
+            DatabaseMetaData metaData = connection.getMetaData();
+            for (String table : List.of("admin", "news", "presentation_ratings", "rate", "tag",
+                    "users_performed_rate", "users_personal_agenda", "volunteer")) {
+                try (ResultSet tables = metaData.getTables(null, "public", table, null)) {
+                    assertThat(tables.next()).as("table %s", table).isFalse();
+                }
+            }
+            try (ResultSet columns = metaData.getColumns(null, "public", "faq_entry", "category")) {
+                assertThat(columns.next()).as("column faq_entry.category").isFalse();
+            }
+        }
     }
 }
