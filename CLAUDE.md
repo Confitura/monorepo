@@ -23,7 +23,7 @@ cd jelatyna-backend
 ```
 
 **Development profiles:**
-- `fake-db` — **in tests** runs on a **Testcontainers PostgreSQL** (`postgres:16.10`, prod's major version), so `./mvnw test` needs a running Docker. `BaseIntegrationTest` declares it as a static `@ServiceConnection` container, so one container serves every cached test context; Hibernate creates the schema (`ddl-auto: create-drop` in `src/test/resources/application-fake-db.yml`, which shadows the main one). The **main** `fake-db` profile (`src/main/resources/application-fake-db.yml`) points at a local **PostgreSQL** on `localhost:5432` (db/user `jelatyna`, pass `password`) with `ddl-auto: create-drop`.
+- `fake-db` — **in tests** runs on a **Testcontainers PostgreSQL** (`postgres:16.10`, prod's major version), so `./mvnw test` needs a running Docker. `BaseIntegrationTest` declares it as a static `@ServiceConnection` container, so one container serves every cached test context (`src/test/resources/application-fake-db.yml` shadows the main one). The **main** `fake-db` profile (`src/main/resources/application-fake-db.yml`) points at a local **PostgreSQL** on `localhost:5432` (db/user `jelatyna`, pass `password`). In both, Flyway **cleans the schema and re-applies every migration on each start** (`FakeDbFlywayConfiguration`), because the fake-data seeders insert unconditionally; `spring.flyway.clean-disabled: false` is set only in the two `application-fake-db.yml` files, so no other profile can clean. Flyway owns the schema (`src/main/resources/db/migration`, ADR-0002) and Hibernate only validates it (`ddl-auto: validate`) in every profile.
 - `fake-security` — enables fake OAuth users (Google admin, Facebook volunteer)
 
 Run locally with both: `./mvnw spring-boot:run -Dspring-boot.run.profiles=fake-db,fake-security` — this needs a Postgres running, e.g. `docker run -d --name pg -e POSTGRES_DB=jelatyna -e POSTGRES_USER=jelatyna -e POSTGRES_PASSWORD=password -p 5432:5432 postgres:16`.
@@ -134,7 +134,7 @@ The FAQ CMS (#563) and Sponsors CMS (#564) established the pattern for content t
 5. **Webpage**: fetch `/things/….json` via `useArchiveFetch`, render with `marked`; fall back to any prior hardcoded data while the dump is empty.
 6. **Tests**: a `*ControllerTest` mirroring `FaqEntryControllerTest`/`PartnerControllerTest`; admin render + interaction spec mirroring `faq.spec.ts`/`partners.spec.ts`; a webpage assertion in `pages.nuxt.test.ts`.
 
-Data lands via the scheduled `WebpageDataDumper.dumpAll()` (~10 min) into the resource feed the webpage reads (`api.confitura.pl/api/resources/edition-2026/…`). No DB migration is needed for new columns — prod runs `ddl-auto: update`.
+Data lands via the scheduled `WebpageDataDumper.dumpAll()` (~10 min) into the resource feed the webpage reads (`api.confitura.pl/api/resources/edition-2026/…`). Every schema change (new table, column, index, constraint) needs a new Flyway migration in `jelatyna-backend/src/main/resources/db/migration` **in the same PR**, named with the next zero-padded sequential version: `V002__add_things.sql`, `V003__…`. Never edit a migration that is already on master. Hibernate only validates (`ddl-auto: validate`), so the Testcontainers suite fails if the migration is missing.
 
 ## Agent skills
 
