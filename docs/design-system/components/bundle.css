@@ -1,0 +1,169 @@
+/* Confitura components. Load after tokens.css; every colour, radius and step comes from a token.
+   Square corners, no shadows, no gradients: the way confitura.pl is built. */
+
+body { margin: 0; background: var(--surface); color: var(--ink); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+
+.cf-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Preview stages (used by the component previews) */
+.cf-stage { box-sizing: border-box; padding: var(--space-6); display: flex; flex-wrap: wrap; gap: var(--space-4); align-items: flex-start; }
+.cf-stage-col { box-sizing: border-box; padding: var(--space-6); display: grid; gap: var(--space-8); }
+.cf-stage-grid { box-sizing: border-box; padding: var(--space-6); display: grid; gap: var(--space-6); grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+.cf-stage-sunk { background: var(--surface-sunk); }
+.cf-stage-black { background: var(--black); }
+
+/* Programme flavours: each tone sets one fill and one tint */
+.cf-tone-jam { --cf-tone: var(--jam); --cf-tone-soft: var(--jam-soft); }
+.cf-tone-plum { --cf-tone: var(--plum); --cf-tone-soft: var(--plum-soft); }
+.cf-tone-apricot { --cf-tone: var(--apricot); --cf-tone-soft: var(--apricot-soft); }
+.cf-tone-gooseberry { --cf-tone: var(--gooseberry); --cf-tone-soft: var(--gooseberry-soft); }
+.cf-tone-blueberry { --cf-tone: var(--blueberry); --cf-tone-soft: var(--blueberry-soft); }
+.cf-tone-neutral { --cf-tone: var(--ink-muted); --cf-tone-soft: var(--line); }
+
+/* The marker: a small square lid */
+.cf-marker { display: inline-block; flex: none; width: 8px; height: 8px; border-radius: var(--radius-none); background: var(--cf-tone, var(--jam)); }
+
+/* Keyboard focus */
+.cf-btn:focus-visible,
+.cf-tab:focus-visible,
+.cf-session a:focus-visible,
+.cf-speaker a:focus-visible,
+.cf-tier a:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.cf-header a:focus-visible { outline: 2px solid var(--white); outline-offset: 2px; }
+
+/* Button: white on jam needs 19px bold, so labels are 20px bold */
+.cf-btn { box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2); min-height: 48px; padding: 0 var(--space-6); border: 2px solid transparent; border-radius: var(--radius-none); font-family: var(--font-display); font-size: 20px; font-weight: 700; line-height: 1; text-decoration: none; white-space: nowrap; cursor: pointer; transition: background-color .15s ease, border-color .15s ease, color .15s ease; }
+.cf-btn-lg { min-height: 60px; padding: 0 var(--space-8); font-size: 24px; }
+.cf-btn-primary { background: var(--jam); color: var(--on-jam); }
+.cf-btn-primary:hover { background: var(--jam-press); }
+.cf-btn-secondary { background: var(--ink); color: var(--on-ink); }
+.cf-btn-secondary:hover { background: var(--ink-muted); }
+.cf-btn-ghost { background: transparent; color: var(--ink); border-color: var(--control); }
+.cf-btn-ghost:hover { border-color: var(--ink); }
+.cf-btn:disabled,
+.cf-btn[aria-disabled="true"] { cursor: not-allowed; background: var(--line); color: var(--ink-muted); border-color: transparent; }
+
+/* Tag */
+.cf-tag { box-sizing: border-box; display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 10px; border-radius: var(--radius-none); font-family: var(--font-sans); font-size: 14px; font-weight: 700; line-height: 1; color: var(--ink); white-space: nowrap; }
+.cf-tag-soft { background: var(--cf-tone-soft, var(--line)); }
+.cf-tag-outline { background: transparent; border: 1px solid var(--control); padding: 0 8px; font-family: var(--font-mono); font-size: 12px; font-weight: 600; letter-spacing: .04em; }
+
+/* SectionHeading: the lid over a lowercase title in jam */
+.cf-sh { display: flex; flex-direction: column; align-items: flex-start; max-width: 56rem; }
+.cf-sh-center { align-items: center; text-align: center; margin-inline: auto; }
+.cf-lid { display: block; width: var(--lid-width); height: var(--lid-height); border-radius: var(--radius-none); background: var(--jam); margin-bottom: var(--lid-gap); }
+.cf-sh-eyebrow { margin: var(--space-2) 0 0; font-size: 14px; line-height: 1.15; font-weight: 700; color: var(--ink-muted); }
+.cf-sh-title { margin: var(--space-2) 0 0; font-family: var(--font-display); font-size: 48px; line-height: 1.15; font-weight: 700; color: var(--jam); text-wrap: balance; }
+.cf-sh-lead { margin: var(--space-6) 0 0; max-width: 44rem; font-size: 28px; line-height: 1.15; color: var(--ink); }
+
+/* SiteHeader: black in both themes, lowercase jam links, reversed logo */
+.cf-header { box-sizing: border-box; display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4) var(--space-8); padding: var(--space-4) var(--space-6); background: var(--black); }
+.cf-header-home { display: inline-flex; flex: none; }
+.cf-header-home img { display: block; height: 40px; width: auto; }
+.cf-header-nav { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-4); flex: 1 1 auto; min-width: 0; }
+.cf-header-link { position: relative; padding: var(--space-2) 0; font-family: var(--font-display); font-size: 16px; line-height: 1.15; font-weight: 700; color: var(--jam); text-decoration: none; }
+.cf-header-link:hover { color: var(--white); }
+.cf-header-link[aria-current="page"] { color: var(--white); }
+.cf-header-link[aria-current="page"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: var(--white); }
+.cf-header-end { display: flex; align-items: center; gap: var(--space-4); margin-left: auto; }
+.cf-header-date { font-family: var(--font-mono); font-size: 14px; font-weight: 500; color: var(--white); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* Tabs: square bars under lowercase labels, like the partner tiers on confitura.pl */
+.cf-tabs { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: var(--space-2); }
+.cf-tab { box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: var(--space-2); padding: var(--space-2) 0 0; border: 0; background: none; font-family: var(--font-sans); font-size: 18px; line-height: 1.15; color: var(--ink-muted); cursor: pointer; text-decoration: none; min-width: 0; }
+.cf-tab::after { content: ""; align-self: stretch; height: var(--lid-height); background: var(--line); }
+.cf-tab:hover { color: var(--ink); }
+.cf-tab[aria-selected="true"] { color: var(--jam-ink); font-weight: 700; }
+.cf-tab[aria-selected="true"]::after { background: var(--jam); }
+
+/* Cards are jars: a square lid, a gap, a square body */
+.cf-session,
+.cf-ticket { display: flex; flex-direction: column; align-items: center; gap: var(--lid-gap); min-width: 0; }
+.cf-card-lid { display: block; width: var(--lid-ratio); height: var(--lid-height); border-radius: var(--radius-none); background: var(--cf-tone, var(--jam)); }
+.cf-card-body { box-sizing: border-box; align-self: stretch; flex: 1 1 auto; display: flex; flex-direction: column; gap: var(--space-3); min-width: 0; padding: var(--space-6); background: var(--surface-raised); border: 1px solid var(--line); border-radius: var(--radius-none); }
+
+/* SessionCard */
+.cf-session-meta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-2) var(--space-4); }
+.cf-time { font-family: var(--font-mono); font-size: 14px; line-height: 20px; font-weight: 500; font-variant-numeric: tabular-nums; color: var(--ink); }
+.cf-session-room { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; line-height: 1.15; font-weight: 700; color: var(--ink-muted); }
+.cf-session-title { margin: 0; font-family: var(--font-display); font-size: 22px; line-height: 1.15; font-weight: 700; text-wrap: balance; overflow-wrap: anywhere; }
+.cf-session-keynote .cf-session-title { font-size: 26px; }
+.cf-session-title a,
+.cf-speaker-name a { color: inherit; text-decoration: none; }
+.cf-session-title a:hover,
+.cf-speaker-name a:hover { text-decoration: underline; text-decoration-color: var(--jam); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+.cf-session-speakers { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.cf-session-speakers li { display: flex; flex-wrap: wrap; gap: 0 var(--space-2); font-size: 16px; line-height: 1.4; }
+.cf-session-speaker { font-weight: 700; }
+.cf-session-company { color: var(--ink-muted); }
+.cf-session-tags { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: auto; padding-top: var(--space-1); }
+.cf-session-tags:empty { display: none; }
+
+/* SpeakerCard: the photo sits in the jar's own proportions */
+.cf-speaker { margin: 0; display: flex; flex-direction: column; gap: var(--space-3); min-width: 0; max-width: 240px; }
+.cf-jar { display: flex; flex-direction: column; align-items: center; }
+.cf-jar-lid { display: block; width: 69%; aspect-ratio: 645 / 187; margin-bottom: 10%; border-radius: var(--radius-none); background: var(--jam); }
+.cf-jar-body { width: 100%; aspect-ratio: 935 / 820; border-radius: 28.9% / 32.9%; overflow: hidden; display: grid; place-items: center; background: var(--jam-soft); }
+.cf-jar-body img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.cf-jar-initials { font-family: var(--font-display); font-size: 56px; line-height: 1; font-weight: 700; color: var(--jam-ink); }
+.cf-speaker-caption { display: flex; flex-direction: column; gap: 2px; }
+.cf-speaker-name { font-family: var(--font-display); font-size: 20px; line-height: 1.15; font-weight: 700; }
+.cf-speaker-company { font-size: 15px; line-height: 1.4; color: var(--ink-muted); }
+.cf-speaker-talk { margin-top: var(--space-1); font-size: 15px; line-height: 1.4; color: var(--ink); }
+
+/* TicketCard */
+.cf-ticket { --cf-tone: var(--line); }
+.cf-ticket-featured { --cf-tone: var(--jam); }
+.cf-ticket-featured .cf-card-body { border: 2px solid var(--jam); padding: calc(var(--space-6) - 1px); }
+.cf-ticket-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-2); }
+.cf-ticket-duration { margin: 0; font-family: var(--font-mono); font-size: 13px; line-height: 16px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-muted); }
+.cf-ticket-name { margin: 0; font-family: var(--font-display); font-size: 24px; line-height: 1.15; font-weight: 700; }
+.cf-ticket-price { margin: 0; font-family: var(--font-display); font-size: 40px; line-height: 1; font-weight: 700; font-variant-numeric: tabular-nums; }
+.cf-ticket-list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-2); }
+.cf-ticket-list li { position: relative; padding-left: 20px; font-size: 16px; line-height: 1.4; }
+.cf-ticket-list li::before { content: ""; box-sizing: border-box; position: absolute; left: 0; top: 7px; width: 8px; height: 8px; border-radius: var(--radius-none); }
+.cf-in::before { background: var(--jam); }
+.cf-out { color: var(--ink-muted); }
+.cf-out::before { border: 2px solid var(--control); }
+.cf-ticket-note { margin: 0; font-size: 15px; line-height: 1.4; color: var(--ink-muted); }
+.cf-ticket-cta { margin-top: auto; align-self: stretch; }
+
+/* Callout */
+.cf-callout { box-sizing: border-box; display: grid; gap: var(--space-1); max-width: 40rem; padding: var(--space-4) var(--space-6); border-radius: var(--radius-none); background: var(--jam-soft); color: var(--ink); }
+.cf-callout-neutral { background: var(--surface-sunk); border: 1px solid var(--line); }
+.cf-callout-title { margin: 0; font-family: var(--font-display); font-size: 16px; line-height: 1.15; font-weight: 700; text-transform: uppercase; color: var(--jam-ink); }
+.cf-callout-neutral .cf-callout-title { color: var(--ink); }
+.cf-callout-body { font-size: 16px; line-height: 1.45; }
+.cf-callout-body p { margin: 0; }
+.cf-callout-body p + p { margin-top: var(--space-2); }
+
+/* StatGrid: the jam band with white pictograms and numbers, as on confitura.pl */
+.cf-stats { box-sizing: border-box; display: grid; gap: var(--space-8); padding: var(--space-12) var(--space-6); }
+.cf-stats-band { background: var(--jam); color: var(--on-jam); }
+.cf-stats-title { margin: 0; font-family: var(--font-display); font-size: 48px; line-height: 1.15; font-weight: 700; color: var(--jam); }
+.cf-stats-band .cf-stats-title { color: var(--on-jam); }
+.cf-stats-lead { margin: 0; max-width: 44rem; font-size: 28px; line-height: 1.15; }
+.cf-stats-grid { margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--space-12) var(--space-6); }
+.cf-stat { display: flex; flex-direction: column; align-items: center; gap: var(--space-2); text-align: center; min-width: 0; }
+.cf-stat-icon { display: block; height: 96px; width: auto; max-width: 100%; margin-bottom: var(--space-4); }
+.cf-stat-value { order: 1; display: flex; flex-direction: column; align-items: center; margin: 0; font-family: var(--font-display); font-size: 64px; line-height: 1.15; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--jam); }
+.cf-stat-label { order: 2; font-size: 20px; line-height: 1.15; font-weight: 700; color: var(--ink-muted); }
+.cf-stats-band .cf-stat-value,
+.cf-stats-band .cf-stat-label { color: var(--on-jam); }
+
+/* PartnerTier */
+.cf-tier { display: grid; gap: var(--space-4); }
+.cf-tier-name { margin: 0; display: flex; align-items: center; gap: var(--space-2); font-family: var(--font-display); font-size: 24px; line-height: 1.15; font-weight: 700; color: var(--ink); }
+.cf-tier-name .cf-marker { width: 10px; height: 10px; }
+.cf-tier-grid { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-4); grid-template-columns: repeat(auto-fill, minmax(min(var(--cf-slot), 100%), 1fr)); }
+.cf-tier-lg { --cf-slot: 280px; }
+.cf-tier-md { --cf-slot: 200px; }
+.cf-tier-sm { --cf-slot: 140px; }
+.cf-tier-slot { box-sizing: border-box; aspect-ratio: 2 / 1; display: grid; place-items: center; padding: var(--space-4); background: var(--surface-raised); border: 1px solid var(--line); border-radius: var(--radius-none); }
+.cf-tier-slot a { display: grid; place-items: center; width: 100%; height: 100%; color: inherit; text-decoration: none; }
+.cf-tier-slot img { max-width: 80%; max-height: 60%; object-fit: contain; }
+.cf-tier-fallback { font-family: var(--font-display); font-size: 18px; line-height: 1.15; font-weight: 700; color: var(--ink-muted); text-align: center; }
+
+@media (prefers-reduced-motion: reduce) {
+  .cf-btn { transition: none; }
+}

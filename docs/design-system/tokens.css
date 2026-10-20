@@ -1,0 +1,72 @@
+/* Confitura design tokens, generated from tokens.json. Edit tokens.json, not this file.
+   Light values sit on :root; set data-theme="dark" on <html> for the dark values. */
+
+:root {
+  --surface: #ffffff;
+  --surface-sunk: #f6f2f3;
+  --surface-raised: #ffffff;
+  --line: #eaeaea;
+  --control: #8a8084;
+  --ink: #000000;
+  --ink-muted: #5f575a;
+  --on-ink: #ffffff;
+  --jam: #ee1f46;
+  --jam-press: #cb0f33;
+  --jam-ink: #d60036;
+  --jam-soft: #ffe6ed;
+  --on-jam: #ffffff;
+  --jam-logo: #ff0040;
+  --black: #000000;
+  --white: #ffffff;
+  --focus: var(--ink);
+  --plum: #7a3b9c;
+  --plum-soft: #f1e6f6;
+  --apricot: #cc7000;
+  --apricot-soft: #ffefd6;
+  --gooseberry: #4e8a1a;
+  --gooseberry-soft: #e7f2da;
+  --blueberry: #2f55d4;
+  --blueberry-soft: #e4eafb;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-24: 96px;
+  --radius-none: 0px;
+  --radius-jar: 20px;
+  --lid-height: 8px;
+  --lid-gap: 4px;
+  --lid-width: 48px;
+  --lid-ratio: 69%;
+  --content-max: 1440px;
+
+  --font-display: "NeuzeitGro-Bol", "Neuzeit Grotesk", "Outfit", Arial, sans-serif;
+  --font-sans: "NeuzeitGro-Reg", "Neuzeit Grotesk", "Outfit", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+[data-theme="dark"] {
+  --surface: #000000;
+  --surface-sunk: #0e0c0d;
+  --surface-raised: #171415;
+  --line: #2e292b;
+  --control: #7e7477;
+  --ink: #ffffff;
+  --ink-muted: #aba2a5;
+  --on-ink: #000000;
+  --jam-ink: #ff3d6b;
+  --jam-soft: #3d0012;
+  --plum: #c08ae0;
+  --plum-soft: #2a1636;
+  --apricot: #ffb547;
+  --apricot-soft: #33220a;
+  --gooseberry: #94cf5f;
+  --gooseberry-soft: #1a2810;
+  --blueberry: #7f9cff;
+  --blueberry-soft: #151d3a;
+}
