@@ -18,7 +18,7 @@ spring:
     password: confitura
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
 
 logging:
   level:

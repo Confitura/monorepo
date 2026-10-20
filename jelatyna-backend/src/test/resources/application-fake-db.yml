@@ -2,4 +2,7 @@
 spring:
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: validate
+  # Shadows the main application-fake-db.yml, so clean has to be enabled here too.
+  flyway:
+    clean-disabled: false
