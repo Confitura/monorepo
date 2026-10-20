@@ -13,13 +13,17 @@ The root `docker-compose.yml` provides one, pinned to prod's version (`postgres:
 
 `docker compose up -d postgres`
 
-Then start the backend with the `fake-db` and `fake-security` profiles:
+Then start the backend. A plain run activates the `fake-db` and `fake-security` profiles, which **wipes and re-seeds the local database on every start**:
 
 ### *nix:
-`./mvnw spring-boot:run -Dspring-boot.run.profiles=fake-db,fake-security`
+`./mvnw spring-boot:run`
 
 ### Windows:
-`mvnw.cmd spring-boot:run -Dspring-boot.run.profiles=fake-db,fake-security`
+`mvnw.cmd spring-boot:run`
+
+To keep local data between runs, override the profiles (the `-D` property replaces the pom's list):
+
+`./mvnw spring-boot:run -Dspring-boot.run.profiles=fake-security`
 
 ## users
 When starting app in development mode application will not use real oAuth providers. 
