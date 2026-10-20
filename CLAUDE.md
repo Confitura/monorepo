@@ -17,7 +17,6 @@ This is a monorepo for the **Confitura** conference management system, consistin
 ```bash
 cd jelatyna-backend
 ./mvnw spring-boot:run                        # Run local dev server (fake-db + fake-security by default; wipes and re-seeds the local DB on every start)
-./mvnw spring-boot:run -Dspring-boot.run.profiles=fake-security   # Same, but keep local data (needs a real DB configured)
 ./mvnw test                                   # Run all tests
 ./mvnw test -Dtest=MyTest                     # Run a single test class
 ./mvnw package                                # Build JAR
@@ -27,7 +26,7 @@ cd jelatyna-backend
 - `fake-db` — **in tests** runs on a **Testcontainers PostgreSQL** (`postgres:16.10`, prod's major version), so `./mvnw test` needs a running Docker. `BaseIntegrationTest` declares it as a static `@ServiceConnection` container, so one container serves every cached test context (`src/test/resources/application-fake-db.yml` shadows the main one). The **main** `fake-db` profile (`src/main/resources/application-fake-db.yml`) points at a local **PostgreSQL** on `localhost:5432` (db/user `jelatyna`, pass `password`). In both, Flyway **cleans the schema and re-applies every migration on each start** (`FakeDbFlywayConfiguration`), because the fake-data seeders insert unconditionally; `spring.flyway.clean-disabled: false` is set only in the two `application-fake-db.yml` files, so no other profile can clean. Flyway owns the schema (`src/main/resources/db/migration`, ADR-0002) and Hibernate only validates it (`ddl-auto: validate`) in every profile.
 - `fake-security` — enables fake OAuth users (Google admin, Facebook volunteer)
 
-Run locally: a plain `./mvnw spring-boot:run` activates both (the spring-boot-maven-plugin `<profiles>` in `pom.xml` list `fake-db` and `fake-security`; note `-P` selects Maven profiles, not Spring ones). **It wipes and re-seeds the local database on every start.** To keep local data, run `./mvnw spring-boot:run -Dspring-boot.run.profiles=fake-security`; the `-D` user property overrides the pom's list. It needs a Postgres running, e.g. `docker run -d --name pg -e POSTGRES_DB=jelatyna -e POSTGRES_USER=jelatyna -e POSTGRES_PASSWORD=password -p 5432:5432 postgres:16`.
+Run locally: a plain `./mvnw spring-boot:run` activates both (the spring-boot-maven-plugin `<profiles>` in `pom.xml` list `fake-db` and `fake-security`; note `-P` selects Maven profiles, not Spring ones). **It wipes and re-seeds the local database on every start.** `-Dspring-boot.run.profiles=…` overrides the pom's list if you need other profiles. It needs a Postgres running, e.g. `docker run -d --name pg -e POSTGRES_DB=jelatyna -e POSTGRES_USER=jelatyna -e POSTGRES_PASSWORD=password -p 5432:5432 postgres:16`.
 
 ### admin-app
 

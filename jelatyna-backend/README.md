@@ -21,10 +21,6 @@ Then start the backend. A plain run activates the `fake-db` and `fake-security` 
 ### Windows:
 `mvnw.cmd spring-boot:run`
 
-To keep local data between runs, override the profiles (the `-D` property replaces the pom's list):
-
-`./mvnw spring-boot:run -Dspring-boot.run.profiles=fake-security`
-
 ## users
 When starting app in development mode application will not use real oAuth providers. 
 Instead there are few fake accounts. Details are below
