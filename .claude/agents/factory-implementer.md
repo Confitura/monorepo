@@ -49,10 +49,17 @@ CHECKS:
 ACCEPTANCE:
 - [x] <criterion> — <evidence: test name or file:line>
 - [ ] <criterion> — <why not>
-SUMMARY: <2–5 lines, safe for a public PR — no private notes>
+TLDR: <1–3 plain lines: what changes>
+WHY:
+- Problem: <what was wrong or missing, and for whom>
+- Approach: <what you did and why this way>
+- Alternatives considered: <each option you rejected and why — or none>
+- Trade-offs / follow-ups: <known limits, risks, deliberate omissions — or none>
 QUESTIONS/RISKS: <or none>
 ```
 
+TLDR and WHY become the public PR description (see `## Pull requests` in `CLAUDE.md`), and the task they came from will be archived. Write them so someone reading only the PR a year from now understands why each non-obvious choice in the diff was made. Use your own words; never copy private task notes.
+
 ## Remediation
 
-If you are resumed with reviewer findings, fix exactly those, re-run the affected checks, add new commits (don't amend), and send a fresh report.
+If you are resumed with reviewer findings, fix exactly those, re-run the affected checks, add new commits (don't amend), and send a fresh report — update WHY if a fix changed a decision.
