@@ -16,17 +16,23 @@ This is a monorepo for the **Confitura** conference management system, consistin
 
 ```bash
 cd jelatyna-backend
-./mvnw spring-boot:run                        # Run local dev server (fake-db + fake-security by default; wipes and re-seeds the local DB on every start)
+./mvnw spring-boot:run                        # Run local dev server (local + fake-db + fake-security by default; wipes and re-seeds the local DB on every start)
+./mvnw spring-boot:run -Dspring-boot.run.profiles=local,fake-security  # Run local dev server keeping the local DB between restarts
 ./mvnw test                                   # Run all tests
 ./mvnw test -Dtest=MyTest                     # Run a single test class
 ./mvnw package                                # Build JAR
 ```
 
 **Development profiles:**
-- `fake-db` — **in tests** runs on a **Testcontainers PostgreSQL** (`postgres:16.10`, prod's major version), so `./mvnw test` needs a running Docker. `BaseIntegrationTest` declares it as a static `@ServiceConnection` container, so one container serves every cached test context (`src/test/resources/application-fake-db.yml` shadows the main one). The **main** `fake-db` profile (`src/main/resources/application-fake-db.yml`) points at a local **PostgreSQL** on `localhost:5432` (db/user `jelatyna`, pass `password`). In both, Flyway **cleans the schema and re-applies every migration on each start** (`FakeDbFlywayConfiguration`), because the fake-data seeders insert unconditionally; `spring.flyway.clean-disabled: false` is set only in the two `application-fake-db.yml` files, so no other profile can clean. Flyway owns the schema (`src/main/resources/db/migration`, ADR-0002) and Hibernate only validates it (`ddl-auto: validate`) in every profile.
-- `fake-security` — enables fake OAuth users (Google admin, Facebook volunteer)
+- `local` — the local-dev settings, all dummies (`src/main/resources/application-local.yml`): a local **PostgreSQL** on `localhost:5432` (db/user `jelatyna`, pass `password`), the JWT secret, the resource folder (`/tmp/confitura`), mail and listmonk keys, and the admin-app CORS origin. It neither cleans nor seeds, so data survives restarts. It holds dummy secrets: never activate it in prod.
+- `fake-db` — the destructive demo mode, layered on `local` (or on `test` in tests). Flyway **cleans the schema and re-applies every migration on each start** (`FakeDbFlywayConfiguration`), because the fake-data seeder (`FakePresentations`) inserts unconditionally. `application-fake-db.yml` holds nothing but `spring.flyway.clean-disabled: false`, so `fake-db` cannot run alone and no other profile can clean. **In tests** (`BaseIntegrationTest` activates `test` + `fake-db`) the database is a **Testcontainers PostgreSQL** (`postgres:16.10`, prod's major version), so `./mvnw test` needs a running Docker; it is a static `@ServiceConnection` container, so one container serves every cached test context, and `application-test.yml` supplies the other settings. Flyway owns the schema (`src/main/resources/db/migration`, ADR-0002) and Hibernate only validates it (`ddl-auto: validate`) in every profile.
+- `fake-security` — enables fake OAuth users (Google admin, Facebook volunteer, GitHub speaker). `FakeLoginUsers` re-saves the three accounts on every start (undoing edits to them) and gives the speaker a test talk and a test workshop only while they have no presentations, so keep-data restarts don't pile up duplicates.
 
-Run locally: a plain `./mvnw spring-boot:run` activates both (the spring-boot-maven-plugin `<profiles>` in `pom.xml` list `fake-db` and `fake-security`; note `-P` selects Maven profiles, not Spring ones). **It wipes and re-seeds the local database on every start.** `-Dspring-boot.run.profiles=…` overrides the pom's list if you need other profiles. It needs a Postgres running, e.g. `docker run -d --name pg -e POSTGRES_DB=jelatyna -e POSTGRES_USER=jelatyna -e POSTGRES_PASSWORD=password -p 5432:5432 postgres:16`.
+Run locally in one of two modes (note `-P` selects Maven profiles, not Spring ones):
+- **Fresh demo data** — a plain `./mvnw spring-boot:run` activates `local`, `fake-db` and `fake-security` (the spring-boot-maven-plugin `<profiles>` in `pom.xml`). **It wipes and re-seeds the local database on every start.**
+- **Keep data** — `./mvnw spring-boot:run -Dspring-boot.run.profiles=local,fake-security`. `-Dspring-boot.run.profiles=…` replaces the pom's list, so always include `local`.
+
+Both need a Postgres running, e.g. `docker run -d --name pg -e POSTGRES_DB=jelatyna -e POSTGRES_USER=jelatyna -e POSTGRES_PASSWORD=password -p 5432:5432 postgres:16`.
 
 ### admin-app
 
@@ -61,8 +67,8 @@ Spring Boot app with a layered architecture:
 
 - **Controllers** (`pl.confitura.jelatyna.*`) — REST endpoints under `/api`
 - **Security** — OAuth 2.0 login (Google, Facebook, GitHub, Twitter) via ScribeJava; JWT tokens via JJWT
-- **Database** — JPA/Hibernate with QueryDSL; PostgreSQL in prod, locally (`fake-db`) and in tests (Testcontainers)
-- **Fake users** — `FakeLoginUsers` and `application-fake-db.yml` allow local development without real OAuth credentials
+- **Database** — JPA/Hibernate with QueryDSL; PostgreSQL in prod, locally (`local`) and in tests (Testcontainers)
+- **Fake users** — `FakeLoginUsers` and `application-local.yml` allow local development without real OAuth credentials
 
 OpenAPI/Swagger UI available at `/api/swagger-ui.html` when running.
 

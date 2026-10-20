@@ -1,8 +1,0 @@
-# The datasource comes from the Testcontainers PostgreSQL in BaseIntegrationTest (@ServiceConnection).
-spring:
-  jpa:
-    hibernate:
-      ddl-auto: validate
-  # Shadows the main application-fake-db.yml, so clean has to be enabled here too.
-  flyway:
-    clean-disabled: false

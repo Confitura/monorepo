@@ -13,13 +13,23 @@ The root `docker-compose.yml` provides one, pinned to prod's version (`postgres:
 
 `docker compose up -d postgres`
 
-Then start the backend. A plain run activates the `fake-db` and `fake-security` profiles, which **wipes and re-seeds the local database on every start**:
+Then start the backend in one of two modes.
 
-### *nix:
-`./mvnw spring-boot:run`
+### fresh demo data on every start (default)
+A plain run activates the `local`, `fake-db` and `fake-security` profiles, which **wipes and re-seeds the local database on every start**:
 
-### Windows:
-`mvnw.cmd spring-boot:run`
+*nix: `./mvnw spring-boot:run`
+
+Windows: `mvnw.cmd spring-boot:run`
+
+### keep data between restarts
+Leave out `fake-db`:
+
+*nix: `./mvnw spring-boot:run -Dspring-boot.run.profiles=local,fake-security`
+
+Windows: `mvnw.cmd spring-boot:run "-Dspring-boot.run.profiles=local,fake-security"`
+
+`-Dspring-boot.run.profiles` replaces the default list, so always include `local`: it holds the local settings (database, dummy JWT secret, mail and listmonk keys, CORS origin). Those secrets are dummies, so never activate `local` in prod.
 
 ## users
 When starting app in development mode application will not use real oAuth providers. 
@@ -37,5 +47,7 @@ to be volunteer login with facebook
 Connect an external tool like the IDEA Database tool using the `jdbc:postgresql://localhost:5432/jelatyna` url, `jelatyna` as user and `password` as password.
 
 ### store changes
-The `fake-db` profile resets the database and seeds fake speakers and presentations on every start. This means that with every restart application state is the same.
+In the default mode the `fake-db` profile resets the database and seeds fake speakers and presentations on every start. This means that with every restart application state is the same.
+
+In keep-data mode nothing is reset. `fake-security` re-saves the three fake accounts on every start (undoing edits to them) and adds the fake speaker's test talk and workshop only while the speaker has no presentations, so restarts don't create duplicates.
 
