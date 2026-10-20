@@ -77,6 +77,8 @@ const description = computed(() => {
 
 const image = computed(() => (speaker as any)?.value?.photo || '')
 
+const speakerId = computed(() => (speaker as any)?.value?.id || route.params.id)
+
 useHead({
   title,
   meta: [
@@ -89,7 +91,18 @@ useHead({
     { name: 'twitter:title', content: title },
     { name: 'twitter:description', content: description },
     { name: 'twitter:image', content: image },
-  ]
+  ],
+  script: computed(() => [{
+    type: 'application/ld+json',
+    innerHTML: JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Person',
+      name: (speaker as any)?.value?.name,
+      image: (speaker as any)?.value?.photo,
+      description: description.value,
+      url: `https://confitura.pl/speakers/${speakerId.value}`,
+    })
+  }])
 })
 </script>
 
