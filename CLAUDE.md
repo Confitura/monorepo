@@ -23,10 +23,10 @@ cd jelatyna-backend
 ```
 
 **Development profiles:**
-- `fake-db` — **in tests** uses H2 in-memory (`src/test/resources/application-fake-db.yml`). The **main** `fake-db` profile (`src/main/resources/application-fake-db.yml`) points at a local **PostgreSQL** on `localhost:5432` (db/user `jelatyna`, pass `password`) with `ddl-auto: create-drop`. H2 is a **test-scoped** dependency, so `spring-boot:run` cannot use it.
+- `fake-db` — **in tests** runs on a **Testcontainers PostgreSQL** (`postgres:16.10`, prod's major version), so `./mvnw test` needs a running Docker. `BaseIntegrationTest` declares it as a static `@ServiceConnection` container, so one container serves every cached test context; Hibernate creates the schema (`ddl-auto: create-drop` in `src/test/resources/application-fake-db.yml`, which shadows the main one). The **main** `fake-db` profile (`src/main/resources/application-fake-db.yml`) points at a local **PostgreSQL** on `localhost:5432` (db/user `jelatyna`, pass `password`) with `ddl-auto: create-drop`.
 - `fake-security` — enables fake OAuth users (Google admin, Facebook volunteer)
 
-Run locally with both: `./mvnw spring-boot:run -Dspring-boot.run.profiles=fake-db,fake-security` — this needs a Postgres running, e.g. `docker run -d --name pg -e POSTGRES_DB=jelatyna -e POSTGRES_USER=jelatyna -e POSTGRES_PASSWORD=password -p 5432:5432 postgres:16`. (Or override the datasource to H2 via `SPRING_DATASOURCE_URL`, but H2 isn't on the runtime classpath by default.)
+Run locally with both: `./mvnw spring-boot:run -Dspring-boot.run.profiles=fake-db,fake-security` — this needs a Postgres running, e.g. `docker run -d --name pg -e POSTGRES_DB=jelatyna -e POSTGRES_USER=jelatyna -e POSTGRES_PASSWORD=password -p 5432:5432 postgres:16`.
 
 ### admin-app
 
@@ -61,7 +61,7 @@ Spring Boot app with a layered architecture:
 
 - **Controllers** (`pl.confitura.jelatyna.*`) — REST endpoints under `/api`
 - **Security** — OAuth 2.0 login (Google, Facebook, GitHub, Twitter) via ScribeJava; JWT tokens via JJWT
-- **Database** — JPA/Hibernate with QueryDSL; MySQL (prod) or H2 (dev)
+- **Database** — JPA/Hibernate with QueryDSL; PostgreSQL in prod, locally (`fake-db`) and in tests (Testcontainers)
 - **Fake users** — `FakeLoginUsers` and `application-fake-db.yml` allow local development without real OAuth credentials
 
 OpenAPI/Swagger UI available at `/api/swagger-ui.html` when running.

@@ -54,7 +54,7 @@ class RatePersistenceTest extends BaseIntegrationTest {
 
     @Test
     void ratingCanBeCreatedAndUpserted() throws Exception {
-        // Reaching 201 proves the reserved-word `value` column now maps on H2: both the
+        // Reaching 201 proves the quoted `value` column maps: both the
         // upsert lookup (SELECT ... "value" ...) and the INSERT run without a SQL syntax error.
 
         // insert
