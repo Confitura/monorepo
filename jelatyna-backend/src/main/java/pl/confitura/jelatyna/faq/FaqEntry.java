@@ -24,8 +24,8 @@ public class FaqEntry extends AuditedEntity {
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private String id;
 
-    // Nullable at the DB level so the value→entity backfill can add the column to
-    // existing rows (see FaqCategoryMigration); always set for entries the app creates.
+    // Nullable at the DB level (the column was added to existing rows by the one-off
+    // value→entity backfill, see ADR-0001); always set for entries the app creates.
     @ManyToOne
     @JoinColumn(name = "category_id")
     private FaqCategory category;

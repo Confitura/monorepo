@@ -41,4 +41,4 @@ everywhere.
   suite fails if one is missing.
 - Dead columns live in V001 and are dropped by a later migration, not by the baseline.
 - Startup `CommandLineRunner` migrations (ADR-0001's pattern) are no longer used;
-  `FaqCategoryMigration` is deleted once prod is confirmed migrated.
+  `FaqCategoryMigration` has been deleted (prod confirmed migrated).
