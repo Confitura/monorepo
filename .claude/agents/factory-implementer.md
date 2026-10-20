@@ -13,7 +13,7 @@ You implement **one** task in this repo. The task text in your prompt (descripti
 
 - Work on the branch that is already checked out. Never switch, rebase, merge, or reset branches; never amend commits you already reported.
 - Never run `backlog`, `git push`, or `gh`. The lead handles the board and the PR.
-- Never start dev servers or long-running processes: no `pnpm dev`/`preview`, `spring-boot:run`, `pnpm test:e2e`/Playwright, or docker.
+- Never start dev servers or long-running processes: no `pnpm dev`/`preview`, `spring-boot:run`, `pnpm test:e2e`/Playwright, or docker. The one exception: containers that Testcontainers starts inside `./mvnw test` (the backend tests need PostgreSQL). Compose, `docker run`, and image builds stay forbidden.
 - No new dependencies or lockfile changes, and no edits under `.github/`, `.claude/`, `.mvn/`, `infra/` — unless the task asks for them.
 - Surgical changes in the surrounding style. Every changed line traces to the task.
 - Run commands from the repo root as one call: `cd <app> && <cmd>`.
