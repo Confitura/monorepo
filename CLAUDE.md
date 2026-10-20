@@ -16,7 +16,7 @@ This is a monorepo for the **Confitura** conference management system, consistin
 
 ```bash
 cd jelatyna-backend
-./mvnw spring-boot:run                        # Run dev server (add -Pfake-db,fake-security for local dev)
+./mvnw spring-boot:run                        # Run dev server (for local dev add -Dspring-boot.run.profiles=fake-db,fake-security; -P would select Maven profiles)
 ./mvnw test                                   # Run all tests
 ./mvnw test -Dtest=MyTest                     # Run a single test class
 ./mvnw package                                # Build JAR
@@ -134,7 +134,7 @@ The FAQ CMS (#563) and Sponsors CMS (#564) established the pattern for content t
 5. **Webpage**: fetch `/things/….json` via `useArchiveFetch`, render with `marked`; fall back to any prior hardcoded data while the dump is empty.
 6. **Tests**: a `*ControllerTest` mirroring `FaqEntryControllerTest`/`PartnerControllerTest`; admin render + interaction spec mirroring `faq.spec.ts`/`partners.spec.ts`; a webpage assertion in `pages.nuxt.test.ts`.
 
-Data lands via the scheduled `WebpageDataDumper.dumpAll()` (~10 min) into the resource feed the webpage reads (`api.confitura.pl/api/resources/edition-2026/…`). Every schema change (new table, column, index, constraint) needs a new Flyway migration in `jelatyna-backend/src/main/resources/db/migration` **in the same PR**, named with the next zero-padded sequential version: `V002__add_things.sql`, `V003__…`. Never edit a migration that is already on master. Hibernate only validates (`ddl-auto: validate`), so the Testcontainers suite fails if the migration is missing.
+Data lands via the scheduled `WebpageDataDumper.dumpAll()` (~10 min) into the resource feed the webpage reads (`api.confitura.pl/api/resources/edition-2026/…`). Every schema change (new table, column, index, constraint) needs a new Flyway migration in `jelatyna-backend/src/main/resources/db/migration` **in the same PR**, named with the next zero-padded sequential version: `V00N__add_things.sql` (N = the next free number). Never edit a migration that is already on master. Hibernate only validates (`ddl-auto: validate`), so the Testcontainers suite fails if the migration is missing.
 
 ## Agent skills
 
