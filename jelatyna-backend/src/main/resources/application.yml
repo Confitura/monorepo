@@ -13,9 +13,9 @@ spring:
   application:
     name: jelatyna-backend
   datasource:
-    url: jdbc:mysql://localhost:33061/confitura?useLegacyDatetimeCode=false&serverTimezone=Europe/Warsaw&useUnicode=yes&characterEncoding=UTF-8
-    username: confitura
-    password: confitura
+    url: jdbc:postgresql://localhost:5432/jelatyna
+    username: jelatyna
+    password: password
   jpa:
     hibernate:
       ddl-auto: validate
