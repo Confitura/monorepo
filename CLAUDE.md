@@ -152,6 +152,6 @@ Single-context: root `CONTEXT.md` + `docs/adr/`. See `docs/agents/domain.md`.
 
 ## Code factory
 
-`/factory` (`.claude/skills/factory/SKILL.md`) works the Backlog.md board **one task at a time**: `run [task-id]` takes the next `ready-for-agent` task whose dependencies are `Done`, branches `factory/<id>-<slug>` off `origin/master`, has the `factory-implementer` subagent build it, the separate `factory-reviewer` subagent check it, and opens a **draft** PR (task → `In Review`). A human reviews and merges; `sync` marks merged tasks `Done`. `setup` creates the board once. Watch it with `backlog browser` (http://localhost:6420).
+`/factory` (`.claude/skills/factory/SKILL.md`) works the Backlog.md board **one task at a time**: `run [task-id]` takes the next `ready-for-agent` task whose dependencies are `Done`, branches `factory/<id>-<slug>` off `origin/master`, has the `factory-implementer` subagent build it, the separate `factory-reviewer` subagent check it, and only on a reviewer PASS opens a PR **ready for review** (task → `In Review`). A human still reviews and merges; `sync` marks merged tasks `Done`. `setup` creates the board once. Watch it with `backlog browser` (http://localhost:6420).
 
 Factory subagents never start dev servers, e2e, or docker (except containers Testcontainers starts inside `./mvnw test`), never run `backlog`/`git push`/`gh`, and run only the checks for the modules they touched. `.claude/settings.json` denies `gh pr merge`, `gh pr ready`, force pushes, and pushes to `master`.

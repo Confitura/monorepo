@@ -2,7 +2,7 @@
 
 Specs and tickets for this repo live on a local [Backlog.md](https://github.com/MrLesk/Backlog.md) board in `backlog/`. The directory is **gitignored** (the repo is public) and initialized filesystem-only (`--no-git`, no auto-commit). Use the `backlog` CLI from the repo root; don't hand-edit task files. Run `/factory setup` once to create the board, and `backlog browser` to view it at http://localhost:6420.
 
-Statuses: `To Do` → `In Progress` → `In Review` (draft PR open) → `Done` (merged). Triage roles are labels — see `triage-labels.md`.
+Statuses: `To Do` → `In Progress` → `In Review` (PR open, awaiting human review) → `Done` (merged). Triage roles are labels — see `triage-labels.md`.
 
 Optional labels `model:<haiku|sonnet|opus|fable>` and `effort:<low|medium|high|xhigh|max>` pick the model and effort `/factory run` uses for a task's implementer. Leave them off and the factory assigns a tier and adds them itself; set one or both to override. The reviewer is always `opus` / `xhigh`.
 

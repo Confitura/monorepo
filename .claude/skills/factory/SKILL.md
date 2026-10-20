@@ -1,6 +1,6 @@
 ---
 name: factory
-description: Local code factory over the private Backlog.md board. `setup` initializes the board; `run [task-id]` implements one ready task on a fresh branch, has it reviewed, and opens a draft PR; `sync` closes out merged PRs. Run only when the user types /factory.
+description: Local code factory over the private Backlog.md board. `setup` initializes the board; `run [task-id]` implements one ready task on a fresh branch, has it reviewed, and on a PASS opens a PR ready for review; `sync` closes out merged PRs. Run only when the user types /factory.
 disable-model-invocation: true
 argument-hint: "setup | run [task-id] | sync"
 ---
@@ -9,7 +9,7 @@ argument-hint: "setup | run [task-id] | sync"
 
 Subcommand: `$0` (default `run`). Arguments: `$ARGUMENTS`.
 
-Pipeline: Backlog.md task (`ready-for-agent`) → branch `factory/<id>-<slug>` from `origin/master` → `factory-implementer` subagent → independent `factory-reviewer` subagent → draft PR → human merges → `/factory sync` marks it Done.
+Pipeline: Backlog.md task (`ready-for-agent`) → branch `factory/<id>-<slug>` from `origin/master` → `factory-implementer` subagent → independent `factory-reviewer` subagent → PR ready for review → human reviews and merges → `/factory sync` marks it Done.
 
 Board: `backlog browser` → http://localhost:6420. Tracker conventions: `docs/agents/issue-tracker.md`.
 
@@ -17,7 +17,7 @@ Board: `backlog browser` → http://localhost:6420. Tracker conventions: `docs/a
 
 1. **One task at a time.** Never start a task while another is `In Progress`.
 2. Only you (the lead) run `backlog`. Subagents get the task text in their prompt.
-3. Never merge, mark a PR ready, push to `master`, or force-push. PRs are always drafts.
+3. Never merge, push to `master`, or force-push. Open a PR only after a reviewer PASS, and open it ready for review, never as a draft. Never mark an existing PR ready: a draft means a human put it there. A human still reviews and merges every PR.
 4. The repo is **public**: PR titles, bodies, and commits contain only the task title, acceptance criteria, the implementer's TLDR and WHY, the review outcome, and the checks. Never paste backlog notes, spec text, or anything private.
 5. Every PR follows `## Pull requests` in `CLAUDE.md`: TL;DR first, then `## Why`, so the PR still explains itself after the task is archived.
 6. No `Co-Authored-By` trailers.
@@ -100,7 +100,7 @@ BRANCH: <B> (already checked out)
 ### 6. Publish (on PASS)
 
 1. `git push -u origin <B>`
-2. `gh pr create --draft --base master --head <B> --title "<task title>" --body-file <tmp file>` with:
+2. `gh pr create --base master --head <B> --title "<task title>" --body-file <tmp file>` with:
    ```
    <implementer TLDR>
 
@@ -115,10 +115,10 @@ BRANCH: <B> (already checked out)
    - Automated review: PASS on first round | PASS after one fix round (<what the first review caught and how it was fixed>)
    - Implementer: <m> / <e> (tier <X>) · Reviewer: opus / xhigh
 
-   Draft opened by the local code factory. Needs human review and merge.
+   Opened by the local code factory after an automated review PASS. Needs human review and merge.
    ```
    If the WHY doesn't answer an obvious "why this way?" about the diff, ask the implementer to complete it before publishing — never fill it in from backlog notes.
-3. `backlog task edit <id> -s "In Review" --ref <PR url> --append-notes "factory: draft PR <url>, reviewer PASS"` plus `--check-ac <n>` for each criterion the reviewer marked MET.
+3. `backlog task edit <id> -s "In Review" --ref <PR url> --append-notes "factory: PR <url> (ready for review), reviewer PASS"` plus `--check-ac <n>` for each criterion the reviewer marked MET.
 
 ### Hand to human
 
@@ -133,6 +133,6 @@ Don't push. `backlog task edit <id> -s "To Do" --remove-label ready-for-agent --
 1. `backlog task list -s "In Review" --plain`. For each task, read its PR url from `References:` in `backlog task view <id> --plain`, then `gh pr view <url> --json state,headRefName,isDraft`.
    - `MERGED` → `backlog task edit <id> -s "Done" --append-notes "factory: merged <YYYY-MM-DD>"`; delete the task's local branches — `<headRefName>` plus any earlier attempts from `git branch --list 'factory/<id lowercase>-*'` — with `git branch -D`, skipping one that is checked out (squash merges aren't ancestors, so `-d` fails).
    - `CLOSED` → `backlog task edit <id> -s "To Do" --remove-label ready-for-agent --add-label ready-for-human --append-notes "factory: PR closed unmerged"`.
-   - `OPEN` → report draft state and a one-line `gh pr checks <url>` summary.
+   - `OPEN` → report whether it's ready or a draft (a draft means a human turned it back) and a one-line `gh pr checks <url>` summary.
 2. `git fetch origin --prune`.
 3. Print a table of what changed and the new frontier (`backlog task list -s "To Do" -l ready-for-agent --ready --plain`).
