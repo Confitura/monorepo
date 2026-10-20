@@ -266,6 +266,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <profiles>
+                        <profile>local</profile>
                         <profile>fake-db</profile>
                         <profile>fake-security</profile>
                     </profiles>

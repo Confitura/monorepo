@@ -67,8 +67,11 @@ public class FakeLoginUsers {
             log.info("saved fake users {},{},{}", FAKE_ADMIN, FAKE_VOLUNTEER, FAKE_SPEAKER);
             var description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Non consectetur enim aliqua nibh sadipscing consetetur diam dolor aliquyam pariatur suscipit esse adipisici. Elit sea nonummy facilisis invidunt sadipscing elitr gubergren, aute commodi quis est iriure voluptua lorem laborum te eleifend duo, consectetur fugiat ullamco suscipit eros id facilisi assum suscipit veniam eirmod lobortis euismod lobortis proident. Gubergren labore blandit. Id qui placerat aliquyam luptatum qui sit liber, elitr sunt anim delenit cum nonumy aliquip, facilisi incidunt voluptate mollit odio invidunt sit dolor elitr. Laoreet commodo liber lorem nonumy laoreet. Eu luptatum aute.\n";
             var shortDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Congue consectetuer incidunt magna. Nulla gubergren rebum sunt. Luptatum sunt gubergren. Ad nisl soluta.";
-            presentationRepository.save(Presentation.from(new PresentationRequest("test", shortDescription, description, "begingner", "Polish", new String[]{"java"}), FAKE_SPEAKER, Set.of()));
-            presentationRepository.save(Presentation.from(new WorkshopRequest("test", "test", "description", "begingner", "Polish", new String[]{"java"}, false, 12.20, 45, 21), FAKE_SPEAKER, Set.of()));
+            // Without fake-db the database survives restarts, so seed the presentations only once.
+            if (presentationRepository.findBySpeakersContains(FAKE_SPEAKER).isEmpty()) {
+                presentationRepository.save(Presentation.from(new PresentationRequest("test", shortDescription, description, "begingner", "Polish", new String[]{"java"}), FAKE_SPEAKER, Set.of()));
+                presentationRepository.save(Presentation.from(new WorkshopRequest("test", "test", "description", "begingner", "Polish", new String[]{"java"}, false, 12.20, 45, 21), FAKE_SPEAKER, Set.of()));
+            }
 
             String token = tokenService.asToken(FAKE_ADMIN);
             log.info("fake admin token ===================\n{}\n====================", token);

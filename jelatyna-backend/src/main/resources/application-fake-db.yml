@@ -1,32 +1,5 @@
-server:
-  port: 8080
+# Destructive demo mode on top of local (or test): every start wipes the schema and re-seeds fake data.
 spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/jelatyna
-    username: jelatyna
-    password: password
-
-  jpa:
-    hibernate:
-      ddl-auto: validate
   # FakeDbFlywayConfiguration cleans the schema on every start; nothing outside fake-db may clean.
   flyway:
     clean-disabled: false
-resources:
-  resources-base-url: "http://localhost:8080/api"
-  path: files
-  folder: /tmp/confitura
-
-mail.apiKey: 123
-
-app:
-  cors:
-    origins:
-      - http://localhost:5173/
-  jwt:
-    secret-key: c1c29b861174cd979e5bcd2dc1acf89ac2bc9a30d7307b6949dfd26f2bdc6fed
-
-listmonk:
-  base-url: http://localhost:8000/api/v1/
-  api-key: 123
-  list-id: 123

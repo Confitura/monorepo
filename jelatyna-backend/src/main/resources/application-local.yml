@@ -1,0 +1,31 @@
+# Local development settings with dummy secrets. Never activate this profile in prod.
+# It keeps the database between restarts; add fake-db to wipe and re-seed it on every start.
+server:
+  port: 8080
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/jelatyna
+    username: jelatyna
+    password: password
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+resources:
+  resources-base-url: "http://localhost:8080/api"
+  path: files
+  folder: /tmp/confitura
+
+mail.apiKey: 123
+
+app:
+  cors:
+    origins:
+      - http://localhost:5173/
+  jwt:
+    secret-key: c1c29b861174cd979e5bcd2dc1acf89ac2bc9a30d7307b6949dfd26f2bdc6fed
+
+listmonk:
+  base-url: http://localhost:8000/api/v1/
+  api-key: 123
+  list-id: 123
