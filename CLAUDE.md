@@ -89,6 +89,22 @@ GitHub Actions (`.github/workflows/run-tests.yml`) runs on pushes to `master` an
 
 Each workflow ends in an aggregator job — `all-tests-passed` and `all-builds-passed` — that fails if any job failed and passes if they passed or were skipped. These two are the required checks on `master`.
 
+## Pull requests
+
+A PR description must stand on its own: the chat or Backlog.md task behind it will be forgotten or deleted, so every "why is it done this way?" has to be answerable from the PR alone. Applies to every PR — by hand, in a Claude session, or from `/factory`.
+
+1. **TL;DR first** — one to three plain lines saying what changes. No heading, no preamble.
+2. **`## Why`** — the reasoning, in your own words:
+   - **Problem:** what was wrong or missing, and for whom.
+   - **Approach:** what was done and why this way.
+   - **Alternatives considered:** each rejected option and why it lost.
+   - **Trade-offs / follow-ups:** known limits, risks, and what was left out on purpose.
+
+   Skip a point only when there is genuinely nothing to say.
+3. Then whatever helps review: acceptance criteria, verification, screenshots.
+
+The repo is public: explain decisions, never paste private notes, task text, or chat excerpts.
+
 ## Observability
 
 Backend instrumentation (structured ECS logging, Prometheus metrics on a separate management port, OTLP traces) is implemented and verified locally but **not deployed**; no Grafana Cloud stack or Alloy container exists yet. `docs/observability.md` records what was verified, the Boot 4.1 gotchas that cost the most time (tracing needs `spring-boot-starter-opentelemetry`; the OTLP endpoint property is `management.opentelemetry.tracing.export.otlp.endpoint`), and what remains. Build the backend with **JDK 21** — JDK 23+ silently disables Lombok/QueryDSL annotation processing.

@@ -18,8 +18,9 @@ Board: `backlog browser` → http://localhost:6420. Tracker conventions: `docs/a
 1. **One task at a time.** Never start a task while another is `In Progress`.
 2. Only you (the lead) run `backlog`. Subagents get the task text in their prompt.
 3. Never merge, mark a PR ready, push to `master`, or force-push. PRs are always drafts.
-4. The repo is **public**: PR titles, bodies, and commits contain only the task title, acceptance criteria, the implementer's SUMMARY, and the checks. Never paste backlog notes, spec text, or anything private.
-5. No `Co-Authored-By` trailers.
+4. The repo is **public**: PR titles, bodies, and commits contain only the task title, acceptance criteria, the implementer's TLDR and WHY, the review outcome, and the checks. Never paste backlog notes, spec text, or anything private.
+5. Every PR follows `## Pull requests` in `CLAUDE.md`: TL;DR first, then `## Why`, so the PR still explains itself after the task is archived.
+6. No `Co-Authored-By` trailers.
 
 ## setup
 
@@ -101,18 +102,22 @@ BRANCH: <B> (already checked out)
 1. `git push -u origin <B>`
 2. `gh pr create --draft --base master --head <B> --title "<task title>" --body-file <tmp file>` with:
    ```
-   ## Summary
-   <implementer SUMMARY>
+   <implementer TLDR>
+
+   ## Why
+   <implementer WHY — Problem / Approach / Alternatives considered / Trade-offs / follow-ups>
 
    ## Acceptance criteria
    - [x] <each criterion>
 
    ## Verification
    - <each CHECKS line>
+   - Automated review: PASS on first round | PASS after one fix round (<what the first review caught and how it was fixed>)
    - Implementer: <m> / <e> (tier <X>) · Reviewer: opus / xhigh
 
-   Draft opened by the local code factory after an automated review PASS. Needs human review and merge.
+   Draft opened by the local code factory. Needs human review and merge.
    ```
+   If the WHY doesn't answer an obvious "why this way?" about the diff, ask the implementer to complete it before publishing — never fill it in from backlog notes.
 3. `backlog task edit <id> -s "In Review" --ref <PR url> --append-notes "factory: draft PR <url>, reviewer PASS"` plus `--check-ac <n>` for each criterion the reviewer marked MET.
 
 ### Hand to human

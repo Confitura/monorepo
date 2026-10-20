@@ -27,10 +27,11 @@ Task id + full task text with acceptance criteria, BRANCH, BASE (`origin/master`
    - Commits have no `Co-Authored-By` trailer.
    Anything else (naming taste, structure) is a JUDGEMENT note and never fails the review.
 4. **Verification:** the CHECKS in the report must cover every touched module per the implementer's check table (`.claude/agents/factory-implementer.md`).
+5. **Rationale:** the report's TLDR and WHY become the public PR description (`## Pull requests` in `CLAUDE.md`). TLDR must match the diff. WHY must explain every non-obvious choice visible in the diff, so a reader with only the PR understands it. List each unexplained choice.
 
 ## Verdict
 
-FAIL if any: a criterion not MET · a hard rule broken · a required check missing or failing · unrequested behaviour change · secrets or personal data in code, commits, or the summary · edits under `.github/`, `.claude/`, `backlog/` the task didn't ask for. Otherwise PASS.
+FAIL if any: a criterion not MET · a hard rule broken · a required check missing or failing · unrequested behaviour change · TLDR doesn't match the diff, or WHY leaves a non-obvious choice unexplained · secrets or personal data in code, commits, TLDR, or WHY · edits under `.github/`, `.claude/`, `backlog/` the task didn't ask for. Otherwise PASS.
 
 ## Output (exact format, under 400 words)
 
@@ -43,6 +44,7 @@ STANDARDS:
 - HARD: <ok | violations>
 - JUDGEMENT: <notes or none>
 VERIFICATION: <ok | missing checks>
+RATIONALE: <ok | unexplained choices>
 REQUIRED FIXES:
 1. <actionable fix>   (only when FAIL)
 ```
