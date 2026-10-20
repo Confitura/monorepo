@@ -27,12 +27,14 @@ Still to do:
 - **CI secrets.** `infra-plan.yml` and `infra-apply.yml` exist but need the
   secrets and environment described under [CI](#ci) before they can run.
 - **The renamed backend variables.** The 15 backend variables that had dotted
-  names (`SPRING.DATASOURCE.URL`, `APP.CORS.ORIGINS[0]`, ...) were renamed in
-  Coolify to their Spring relaxed-binding form (`SPRING_DATASOURCE_URL`,
-  `APP_CORS_ORIGINS_0_`). The 13 non-secret ones are declared in
-  `production.auto.tfvars`; the two secrets (`APP_JWT_SECRETKEY`,
-  `LISTMONK_PASSWORD`) still need adding to `secrets.enc.yaml`, and the
-  existing ones imported into state.
+  names (`SPRING.DATASOURCE.URL`, `APP.CORS.ORIGINS[0]`, ...) move to their
+  Spring relaxed-binding form (`SPRING_DATASOURCE_URL`, `APP_CORS_ORIGINS_0_`).
+  12 were renamed in Coolify and get imported (11 plain, plus the secret
+  `LISTMONK_PASSWORD`). The other 3 (`SPRING_PROFILES_ACTIVE`,
+  `MANAGEMENT_OPENTELEMETRY_TRACING_EXPORT_OTLP_ENDPOINT`, `APP_JWT_SECRETKEY`)
+  are created by OpenTofu. The 13 non-secret ones are declared in
+  `production.auto.tfvars`; the two secrets still need adding to
+  `secrets.enc.yaml`.
 - **Preview copies** of every variable, and admin_app's `VITE_API_URL` /
   `VITE_SELF_URL` (which exist in Coolify but do nothing, see below), are
   deliberately unmanaged.
