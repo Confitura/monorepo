@@ -14,7 +14,22 @@
       "Bash(pnpm build*)",
       "Bash(gh pr create --base master --head factory/*)",
       "Bash(gh pr view *)",
-      "Bash(gh pr checks *)"
+      "Bash(gh pr checks *)",
+      "Bash(gh auth status*)",
+      "Bash(git fetch origin --prune*)",
+      "Bash(git merge --ff-only origin/master*)",
+      "Bash(git status*)",
+      "Bash(git log *)",
+      "Bash(git diff *)",
+      "Bash(git rev-parse *)",
+      "Bash(git branch --show-current*)",
+      "Bash(git branch --list *)",
+      "Bash(git branch -D factory/*)",
+      "Bash(git switch master*)",
+      "Bash(cd jelatyna-backend && ./mvnw *)",
+      "Bash(cd admin-app && pnpm *)",
+      "Bash(cd webpage && pnpm *)",
+      "Bash(java -version*)"
     ],
     "deny": [
       "Bash(gh pr merge *)",

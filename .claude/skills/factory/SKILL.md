@@ -2,7 +2,7 @@
 name: factory
 description: Local code factory over the private Backlog.md board. `setup` initializes the board; `run [task-id]` implements one ready task on a fresh branch, has it reviewed, and on a PASS opens a PR ready for review; `sync` closes out merged PRs. Run only when the user types /factory.
 disable-model-invocation: true
-argument-hint: "setup | run [task-id] | sync"
+argument-hint: "setup | run [task-id] | sync | auto"
 ---
 
 # /factory
@@ -136,3 +136,20 @@ Don't push. `backlog task edit <id> -s "To Do" --remove-label ready-for-agent --
    - `OPEN` → report whether it's ready or a draft (a draft means a human turned it back) and a one-line `gh pr checks <url>` summary.
 2. `git fetch origin --prune`.
 3. Print a table of what changed and the new frontier (`backlog task list -s "To Do" -l ready-for-agent --ready --plain`).
+
+## auto
+
+One unattended iteration, meant for `/loop /factory auto` in a dedicated clone of the repo (so it never switches branches under someone's IDE). It does `sync`, then at most one `run`, and tells the human only when they're needed.
+
+**Notifications.** Send them with the `PushNotification` tool, one short line each (what happened, the id or PR, what to do). Send each event once: keep the keys already sent in `backlog/.factory-auto.json` (gitignored with the board) and skip a key that's there. Keys: `pr-opened:<pr>`, `pr-checks-failed:<pr>:<head sha>`, `pr-conflict:<pr>:<head sha>`, `handed:<task>`, `human-ready:<task>`, `stuck:<task>`, `idle:<sorted open PR numbers>`, `clone-dirty`.
+
+1. **Clone check.** The tree must be clean and on `master`. If not, notify `clone-dirty` and stop. Then `git fetch origin --prune` and fast-forward `master` (`git merge --ff-only origin/master`); if that fails, notify `clone-dirty` and stop.
+2. **`sync`** as above.
+3. **Open PRs.** For each task still `In Review`: if `gh pr checks <url>` shows a failure, notify `pr-checks-failed`; if `gh pr view <url> --json mergeable` says `CONFLICTING`, notify `pr-conflict`. Don't fix either yourself.
+4. **Interrupted work.** If a task is `In Progress`, an earlier iteration didn't finish. Notify `stuck:<task>` and stop; never reset it alone.
+5. **Human tasks.** For each `To Do` task labelled `ready-for-human` whose dependencies are all `Done`, notify `human-ready:<task>`.
+6. **Pick.** Take the first task from the ready frontier. If there is none, notify `idle:<open PRs>` ("nothing ready; waiting on your merges of #…") and stop.
+7. **`run`** that task exactly as in `run` (preflight through Finish; the remembered branch is `master`). After Publish, notify `pr-opened:<pr>`. After Hand to human, notify `handed:<task>` with the blocker in one line.
+8. Stop after that one task. In `/loop` dynamic mode, schedule the next iteration soon (about a minute) if the frontier still has a ready task, otherwise 20–30 minutes.
+
+All invariants apply unchanged: one task at a time, never merge, never push to `master`, PRs ready for review only after a PASS.
