@@ -1,5 +1,8 @@
+# The datasource comes from the Testcontainers PostgreSQL in BaseIntegrationTest (@ServiceConnection).
 spring:
-  datasource:
-    url: jdbc:h2:mem:jelatyna
-    username: confitura
-    password: confitura
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  # Shadows the main application-fake-db.yml, so clean has to be enabled here too.
+  flyway:
+    clean-disabled: false

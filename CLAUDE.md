@@ -23,10 +23,10 @@ cd jelatyna-backend
 ```
 
 **Development profiles:**
-- `fake-db` — **in tests** uses H2 in-memory (`src/test/resources/application-fake-db.yml`). The **main** `fake-db` profile (`src/main/resources/application-fake-db.yml`) points at a local **PostgreSQL** on `localhost:5432` (db/user `jelatyna`, pass `password`) with `ddl-auto: create-drop`. H2 is a **test-scoped** dependency, so `spring-boot:run` cannot use it.
+- `fake-db` — **in tests** runs on a **Testcontainers PostgreSQL** (`postgres:16.10`, prod's major version), so `./mvnw test` needs a running Docker. `BaseIntegrationTest` declares it as a static `@ServiceConnection` container, so one container serves every cached test context (`src/test/resources/application-fake-db.yml` shadows the main one). The **main** `fake-db` profile (`src/main/resources/application-fake-db.yml`) points at a local **PostgreSQL** on `localhost:5432` (db/user `jelatyna`, pass `password`). In both, Flyway **cleans the schema and re-applies every migration on each start** (`FakeDbFlywayConfiguration`), because the fake-data seeders insert unconditionally; `spring.flyway.clean-disabled: false` is set only in the two `application-fake-db.yml` files, so no other profile can clean. Flyway owns the schema (`src/main/resources/db/migration`, ADR-0002) and Hibernate only validates it (`ddl-auto: validate`) in every profile.
 - `fake-security` — enables fake OAuth users (Google admin, Facebook volunteer)
 
-Run locally with both: `./mvnw spring-boot:run -Dspring-boot.run.profiles=fake-db,fake-security` — this needs a Postgres running, e.g. `docker run -d --name pg -e POSTGRES_DB=jelatyna -e POSTGRES_USER=jelatyna -e POSTGRES_PASSWORD=password -p 5432:5432 postgres:16`. (Or override the datasource to H2 via `SPRING_DATASOURCE_URL`, but H2 isn't on the runtime classpath by default.)
+Run locally with both: `./mvnw spring-boot:run -Dspring-boot.run.profiles=fake-db,fake-security` — this needs a Postgres running, e.g. `docker run -d --name pg -e POSTGRES_DB=jelatyna -e POSTGRES_USER=jelatyna -e POSTGRES_PASSWORD=password -p 5432:5432 postgres:16`.
 
 ### admin-app
 
@@ -61,7 +61,7 @@ Spring Boot app with a layered architecture:
 
 - **Controllers** (`pl.confitura.jelatyna.*`) — REST endpoints under `/api`
 - **Security** — OAuth 2.0 login (Google, Facebook, GitHub, Twitter) via ScribeJava; JWT tokens via JJWT
-- **Database** — JPA/Hibernate with QueryDSL; MySQL (prod) or H2 (dev)
+- **Database** — JPA/Hibernate with QueryDSL; PostgreSQL in prod, locally (`fake-db`) and in tests (Testcontainers)
 - **Fake users** — `FakeLoginUsers` and `application-fake-db.yml` allow local development without real OAuth credentials
 
 OpenAPI/Swagger UI available at `/api/swagger-ui.html` when running.
@@ -75,15 +75,35 @@ Both frontends communicate with the backend REST API. They use file-based routin
 
 ### Local Infrastructure
 
-Docker Compose (`docker-compose.yml`) provides MySQL (3306), backend (8080), and nginx. For frontend-only work, running the backend locally with fake profiles is simpler.
+Docker Compose (`docker-compose.yml`) provides PostgreSQL (5432, `postgres:16.10`), backend (8080), and nginx. For frontend-only work, running the backend locally with fake profiles is simpler.
 
 ## CI/CD
 
-GitHub Actions (`.github/workflows/run-tests.yml`) runs on pushes to `master` and on PRs:
+GitHub Actions (`.github/workflows/run-tests.yml`) runs on pushes to `master` and on PRs. A `changes` job (`dorny/paths-filter`) gates each test job, so a job runs only when its paths change (backend: `jelatyna-backend/**` or `openapi.json`; webpage: `webpage/**`; admin-app: `admin-app/**` or `openapi.json`):
 
-- **test-backend**: JDK 21, `mvn package`, Surefire reports
-- **test-frontend**: Node 20, `npm ci → lint → build → test` (webpage)
-- **test-admin-app**: Node 22, pnpm 10.5.2, `typecheck → test:unit`
+- **test-backend**: JDK 21, `mvn -B package`, then `git diff --exit-code openapi.json` (fails if the regenerated spec drifts from the committed one)
+- **test-frontend** (webpage): Node 24, pnpm 10.5.2, `pnpm install --frozen-lockfile → build → test`
+- **test-admin-app**: Node 24, pnpm 10.5.2, `pnpm install --frozen-lockfile → codegen + git diff --exit-code src/client (drift check) → typecheck → test:unit`
+
+`.github/workflows/check-builds.yml` runs on the same triggers with its own paths filter (module directories only, not `openapi.json`) and builds the deployable images: Docker builds of webpage and admin-app, a nixpacks build of the backend.
+
+Each workflow ends in an aggregator job — `all-tests-passed` and `all-builds-passed` — that fails if any job failed and passes if they passed or were skipped. These two are the required checks on `master`.
+
+## Pull requests
+
+A PR description must stand on its own: the chat or Backlog.md task behind it will be forgotten or deleted, so every "why is it done this way?" has to be answerable from the PR alone. Applies to every PR — by hand, in a Claude session, or from `/factory`.
+
+1. **TL;DR first** — one to three plain lines saying what changes. No heading, no preamble.
+2. **`## Why`** — the reasoning, in your own words:
+   - **Problem:** what was wrong or missing, and for whom.
+   - **Approach:** what was done and why this way.
+   - **Alternatives considered:** each rejected option and why it lost.
+   - **Trade-offs / follow-ups:** known limits, risks, and what was left out on purpose.
+
+   Skip a point only when there is genuinely nothing to say.
+3. Then whatever helps review: acceptance criteria, verification, screenshots.
+
+The repo is public: explain decisions, never paste private notes, task text, or chat excerpts.
 
 ## Observability
 
@@ -91,13 +111,17 @@ Backend instrumentation (structured ECS logging, Prometheus metrics on a separat
 
 `docs/pii-in-logs.md` documents which log statements leaked personal data, the S1–S7 fixes applied, and the conventions to follow when adding logging: log entity ids rather than emails, mask an address when no id exists (`MessageInfo.maskedEmail()`), use allowlist `@ToString(onlyExplicitlyIncluded = true)` on anything holding PII, log third-party error envelopes rather than response bodies, and never put credentials in a query string.
 
+## Design system
+
+`docs/design-system/` holds Confitura's brand rules, design tokens and logo files. Read `docs/design-system/brand.md` before UI work in `webpage` or `admin-app`. Values live in `docs/design-system/tokens.json` (and `tokens.css`); `jam` #EE1F46 is the webpage's `$brand`.
+
 ## OpenAPI spec & generated admin client
 
 `openapi.json` (repo root) is **generated** by `OpenApiSpecDumpTest` — it is rewritten whenever backend tests run, and it is committed. The admin-app consumes it: `admin-app` has an `@hey-api/openapi-ts` client under `admin-app/src/client/` generated by `pnpm codegen` (reads `../openapi.json`, output `src/client/`).
 
 - **CI enforces that the committed client matches `openapi.json`.** Any PR that changes a controller (hence `openapi.json`) **must also run `cd admin-app && pnpm codegen` and commit `admin-app/src/client/`** — in the *same* PR. Splitting the spec change and the client regen across two PRs makes the spec-only PR fail CI. (Learned the hard way on the Sponsors CMS.)
 - **Name controller methods specifically** — the method name becomes the OpenAPI `operationId`, which becomes the SDK function name. Use `getPublishedFaqEntries`/`createPartner`, not generic `get`/`create` (which produce unusable client names like `get`/`create`/`delete_`).
-- `docs/agents/issue-tracker.md` (if present) and the `ready-for-agent` label drive the spec→tickets workflow.
+- Work is tracked on a local, private Backlog.md board (`backlog/`, gitignored); `docs/agents/issue-tracker.md` and the `ready-for-agent` label drive spec → tickets → `/factory`.
 
 ## Adding a CMS-managed, published entity (playbook)
 
@@ -110,4 +134,24 @@ The FAQ CMS (#563) and Sponsors CMS (#564) established the pattern for content t
 5. **Webpage**: fetch `/things/….json` via `useArchiveFetch`, render with `marked`; fall back to any prior hardcoded data while the dump is empty.
 6. **Tests**: a `*ControllerTest` mirroring `FaqEntryControllerTest`/`PartnerControllerTest`; admin render + interaction spec mirroring `faq.spec.ts`/`partners.spec.ts`; a webpage assertion in `pages.nuxt.test.ts`.
 
-Data lands via the scheduled `WebpageDataDumper.dumpAll()` (~10 min) into the resource feed the webpage reads (`api.confitura.pl/api/resources/edition-2026/…`). No DB migration is needed for new columns — prod runs `ddl-auto: update`.
+Data lands via the scheduled `WebpageDataDumper.dumpAll()` (~10 min) into the resource feed the webpage reads (`api.confitura.pl/api/resources/edition-2026/…`). Every schema change (new table, column, index, constraint) needs a new Flyway migration in `jelatyna-backend/src/main/resources/db/migration` **in the same PR**, named with the next zero-padded sequential version: `V002__add_things.sql`, `V003__…`. Never edit a migration that is already on master. Hibernate only validates (`ddl-auto: validate`), so the Testcontainers suite fails if the migration is missing.
+
+## Agent skills
+
+### Issue tracker
+
+Local, private Backlog.md board in `backlog/` (gitignored). See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+The default five roles (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`). See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context: root `CONTEXT.md` + `docs/adr/`. See `docs/agents/domain.md`.
+
+## Code factory
+
+`/factory` (`.claude/skills/factory/SKILL.md`) works the Backlog.md board **one task at a time**: `run [task-id]` takes the next `ready-for-agent` task whose dependencies are `Done`, branches `factory/<id>-<slug>` off `origin/master`, has the `factory-implementer` subagent build it, the separate `factory-reviewer` subagent check it, and only on a reviewer PASS opens a PR **ready for review** (task → `In Review`). A human still reviews and merges; `sync` marks merged tasks `Done`. `setup` creates the board once. Watch it with `backlog browser` (http://localhost:6420).
+
+Factory subagents never start dev servers, e2e, or docker (except containers Testcontainers starts inside `./mvnw test`), never run `backlog`/`git push`/`gh`, and run only the checks for the modules they touched. `.claude/settings.json` denies `gh pr merge`, `gh pr ready`, force pushes, and pushes to `master`.

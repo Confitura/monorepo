@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(backlog task *)",
+      "Bash(backlog doc *)",
+      "Bash(git switch --no-track -c factory/*)",
+      "Bash(git push -u origin factory/*)",
+      "Bash(pnpm install --frozen-lockfile*)",
+      "Bash(pnpm codegen*)",
+      "Bash(pnpm typecheck*)",
+      "Bash(pnpm test:unit*)",
+      "Bash(pnpm test --run*)",
+      "Bash(pnpm build*)",
+      "Bash(gh pr create --base master --head factory/*)",
+      "Bash(gh pr view *)",
+      "Bash(gh pr checks *)"
+    ],
+    "deny": [
+      "Bash(gh pr merge *)",
+      "Bash(gh pr ready *)",
+      "Bash(git push *--force*)",
+      "Bash(git push -f*)",
+      "Bash(git push * -f*)",
+      "Bash(git push *+*)",
+      "Bash(git push *master*)"
+    ]
+  }
+}

@@ -17,3 +17,6 @@ confitura-page
 
 # Node compile cache (written when running tests/builds)
 node-compile-cache/
+
+# Backlog.md: local, private task board (repo is public)
+/backlog/

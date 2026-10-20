@@ -172,7 +172,6 @@ applications = {
       "CHAT_ENABLED"             = { value = "true" }
       "DB_HOST"                  = { value = "q8w8sgsk8cgk0gcc084csw00" }
       "DB_NAME"                  = { value = "confitura" }
-      "DB_PORT"                  = { value = "3306" }
       "DB_USER"                  = { value = "confitura" }
       "FACEBOOK_CALLBACK"        = { value = "https://api.confitura.pl/api/login/facebook/callback" }
       "FACEBOOK_KEY"             = { value = "1767792773823045" }

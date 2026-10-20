@@ -11,16 +11,15 @@ services:
     volumes:
       - ./jelatyna-backend/src:/opt/app/src
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/confitura?useLegacyDatetimeCode=false&serverTimezone=Europe/Warsaw&useUnicode=yes&characterEncoding=UTF-8
-      SPRING_DATASOURCE_USERNAME: confitura
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/jelatyna
+      SPRING_DATASOURCE_USERNAME: jelatyna
       SPRING_DATASOURCE_PASSWORD: password
       JWT_KEY: /tmp
-      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQL8Dialect
       MAIL_API_KEY: 123
       RESOURCES_PATH: /tmp
       RESOURCES_FOLDER: /tmp
     links:
-      - mysql
+      - postgres
 
   nginx:
     image: nginx
@@ -33,17 +32,19 @@ services:
 #      - frontend
       - backend
 
-  mysql:
-    image: mysql:8.0
+  postgres:
+    image: postgres:16.10
     restart: always
     environment:
-      MYSQL_DATABASE: 'confitura'
-      MYSQL_USER: 'confitura'
-      MYSQL_PASSWORD: 'password'
-      MYSQL_ROOT_PASSWORD: 'password'
+      POSTGRES_DB: 'jelatyna'
+      POSTGRES_USER: 'jelatyna'
+      POSTGRES_PASSWORD: 'password'
     ports:
-      - '3306:3306'
+      - '5432:5432'
     expose:
-      - '3306'
+      - '5432'
     volumes:
-      - ./docker/mysql/data:/var/lib/mysql
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
