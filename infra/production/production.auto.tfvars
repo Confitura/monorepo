@@ -152,7 +152,7 @@ applications = {
       "CHAT_DATALINKS_BASE_URL"                               = { value = "https://api.prod.datalinks.com/api/v1" }
       "CHAT_DATALINKS_NAMESPACE"                              = { value = "confitura-2026" }
       "CHAT_DATALINKS_USERNAME"                               = { value = "confiturapl" }
-      "CHAT_ENABLED"                                          = { value = "true" }
+      "CHAT_ENABLED"                                          = { value = "false" }
       "CONFERENCE_C4P_END"                                    = { value = "2026-08-06T23:59:59.0+02:00[Europe/Warsaw]" }
       "CONFERENCE_C4P_START"                                  = { value = "2026-02-01T00:00:00.0+02:00[Europe/Warsaw]" }
       "DB_HOST"                                               = { value = "q8w8sgsk8cgk0gcc084csw00" }
