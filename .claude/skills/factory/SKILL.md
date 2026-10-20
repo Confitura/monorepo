@@ -1,7 +1,6 @@
 ---
 name: factory
-description: Local code factory over the private Backlog.md board. `setup` initializes the board; `run [task-id]` implements one ready task on a fresh branch, has it reviewed, and on a PASS opens a PR ready for review; `sync` closes out merged PRs. Run only when the user types /factory.
-disable-model-invocation: true
+description: Local code factory over the private Backlog.md board. `setup` initializes the board; `run [task-id]` implements one ready task on a fresh branch, has it reviewed, and on a PASS opens a PR ready for review; `sync` closes out merged PRs; `auto` runs one unattended iteration. Run only when  the user types /factory, or from a /loop the user started with /factory auto.
 argument-hint: "setup | run [task-id] | sync | auto"
 ---
 
