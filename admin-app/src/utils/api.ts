@@ -11,5 +11,14 @@ client.instance.interceptors.request.use((config) => {
   return config
 })
 
+// A 401 means the backend no longer accepts the token (it expired, or its User was deleted or merged
+// into another), so the user is signed out: the auth store clears the token and goes to the login page.
+client.instance.interceptors.response.use(undefined, (error) => {
+  if (error.response?.status === 401) {
+    useAuthStore().logout()
+  }
+  return Promise.reject(error)
+})
+
 // Single import surface for the generated client: SDK functions, types, and the client instance.
 export * from '@/client'
