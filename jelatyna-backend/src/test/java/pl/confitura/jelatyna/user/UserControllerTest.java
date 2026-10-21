@@ -1,20 +1,26 @@
 package pl.confitura.jelatyna.user;
 
+import static java.time.temporal.ChronoUnit.DAYS;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static pl.confitura.jelatyna.infrastructure.security.SecurityHelper.admin;
 import static pl.confitura.jelatyna.infrastructure.security.SecurityHelper.user;
 
-import java.time.ZonedDateTime;
+import java.time.Instant;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.RequestPostProcessor;
 import pl.confitura.jelatyna.BaseIntegrationTest;
-import pl.confitura.jelatyna.ConferenceConfigurationProperties;
 import pl.confitura.jelatyna.api.model.PresentationRequest;
 import pl.confitura.jelatyna.api.model.WorkshopRequest;
+import pl.confitura.jelatyna.edition.Edition;
+import pl.confitura.jelatyna.edition.EditionRepository;
+import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
 
 // 403, not 401, once the call for papers closes: the admin app treats a 401 as a rejected token
 // and signs the user out.
@@ -24,40 +30,77 @@ class UserControllerTest extends BaseIntegrationTest {
     private UserRepository userRepository;
 
     @Autowired
-    private ConferenceConfigurationProperties conference;
+    private EditionRepository editionRepository;
 
-    private ZonedDateTime c4pEnd;
+    private Edition before;
 
     @BeforeEach
-    void closeTheCallForPapers() {
-        c4pEnd = conference.getC4p().getEnd();
-        conference.getC4p().setEnd(ZonedDateTime.now().minusDays(1));
+    void rememberTheCallForPapers() {
+        before = editionRepository.findCurrent();
     }
 
     @AfterEach
-    void reopenTheCallForPapers() {
-        conference.getC4p().setEnd(c4pEnd);
+    void restoreTheCallForPapers() {
+        setCallForPapers(before.getC4pStart(), before.getC4pEnd());
+    }
+
+    @Test
+    void addingATalkWhileTheCallForPapersIsOpenIsAllowed() throws Exception {
+        setCallForPapers(Instant.now().minus(1, DAYS), Instant.now().plus(1, DAYS));
+        User speaker = userRepository.save(new User().setName("Speaker"));
+
+        addTalk(speaker, user(speaker)).andExpect(status().isOk());
     }
 
     @Test
     void addingATalkAfterTheCallForPapersClosedIsForbidden() throws Exception {
+        setCallForPapers(Instant.now().minus(2, DAYS), Instant.now().minus(1, DAYS));
         User speaker = userRepository.save(new User().setName("Late Speaker"));
 
-        mockMvc.perform(post("/users/" + speaker.getId() + "/presentations")
-                        .with(user(speaker))
-                        .contentType(APPLICATION_JSON)
-                        .content(json(new PresentationRequest("Late talk", "short", "long", "beginner", "Polish", new String[]{}))))
-                .andExpect(status().isForbidden());
+        addTalk(speaker, user(speaker)).andExpect(status().isForbidden());
+    }
+
+    @Test
+    void addingATalkWithoutACallForPapersIsForbidden() throws Exception {
+        setCallForPapers(null, null);
+        User speaker = userRepository.save(new User().setName("Early Speaker"));
+
+        addTalk(speaker, user(speaker)).andExpect(status().isForbidden());
+    }
+
+    @Test
+    void anAdminCanAddATalkAfterTheCallForPapersClosed() throws Exception {
+        setCallForPapers(Instant.now().minus(2, DAYS), Instant.now().minus(1, DAYS));
+        User speaker = userRepository.save(new User().setName("Invited Speaker"));
+
+        addTalk(speaker, admin()).andExpect(status().isOk());
     }
 
     @Test
     void addingAWorkshopAfterTheCallForPapersClosedIsForbidden() throws Exception {
+        setCallForPapers(Instant.now().minus(2, DAYS), Instant.now().minus(1, DAYS));
         User speaker = userRepository.save(new User().setName("Late Speaker"));
 
-        mockMvc.perform(post("/users/" + speaker.getId() + "/workshops")
-                        .with(user(speaker))
-                        .contentType(APPLICATION_JSON)
-                        .content(json(new WorkshopRequest("Late workshop", "short", "long", "beginner", "Polish", new String[]{}, true, 0.0, 180, 20))))
-                .andExpect(status().isForbidden());
+        addWorkshop(speaker).andExpect(status().isForbidden());
+    }
+
+    private ResultActions addTalk(User speaker, RequestPostProcessor signedIn) throws Exception {
+        return mockMvc.perform(post("/users/" + speaker.getId() + "/presentations")
+                .with(signedIn)
+                .contentType(APPLICATION_JSON)
+                .content(json(new PresentationRequest("Talk", "short", "long", "beginner", "Polish", new String[]{}))));
+    }
+
+    private ResultActions addWorkshop(User speaker) throws Exception {
+        return mockMvc.perform(post("/users/" + speaker.getId() + "/workshops")
+                .with(user(speaker))
+                .contentType(APPLICATION_JSON)
+                .content(json(new WorkshopRequest("Workshop", "short", "long", "beginner", "Polish", new String[]{}, true, 0.0, 180, 20))));
+    }
+
+    private void setCallForPapers(Instant start, Instant end) {
+        SecurityHelper.asAdmin();
+        editionRepository.save(editionRepository.findCurrent().setC4pStart(start).setC4pEnd(end));
+        SecurityHelper.cleanSecurity();
     }
 }

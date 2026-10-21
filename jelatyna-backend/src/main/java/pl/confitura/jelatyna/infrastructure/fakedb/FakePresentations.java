@@ -13,6 +13,7 @@ import org.springframework.security.web.authentication.preauth.PreAuthenticatedA
 import pl.confitura.jelatyna.agenda.*;
 import pl.confitura.jelatyna.agenda.TimeSlot.TimeSlotId;
 import pl.confitura.jelatyna.api.model.PresentationRequest;
+import pl.confitura.jelatyna.edition.EditionRepository;
 import pl.confitura.jelatyna.infrastructure.security.JelatynaPrincipal;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
@@ -21,12 +22,14 @@ import pl.confitura.jelatyna.user.UserRepository;
 
 import jakarta.transaction.Transactional;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import static java.time.temporal.ChronoUnit.DAYS;
 import static pl.confitura.jelatyna.infrastructure.Profiles.FAKE_DB;
 
 @Slf4j
@@ -44,11 +47,13 @@ public class FakePresentations {
     private final DayRepository dayRepository;
     private final TimeSlotsRepository timeSlotsRepository;
     private final RoomRepository roomRepository;
+    private final EditionRepository editionRepository;
 
     @Transactional
     @EventListener
     public void onApplicationReady(ApplicationReadyEvent event) {
         loginAsAdmin();
+        openTheCallForPapers();
         clearExistingData();
         createTodaySchedule();
         createPresentations();
@@ -60,6 +65,14 @@ public class FakePresentations {
         SecurityContextHolder.getContext().setAuthentication(
                 new PreAuthenticatedAuthenticationToken(principal, "", Collections.emptyList())
         );
+    }
+
+    // The migration gives the Current Edition prod's C4P period; open it so the fake speaker can add talks.
+    private void openTheCallForPapers() {
+        Instant now = Instant.now();
+        editionRepository.save(editionRepository.findCurrent()
+                .setC4pStart(now.minus(365, DAYS))
+                .setC4pEnd(now.plus(365, DAYS)));
     }
 
     private void clearExistingData() {

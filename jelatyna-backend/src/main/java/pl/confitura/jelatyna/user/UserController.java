@@ -25,11 +25,11 @@ import org.springframework.web.bind.annotation.*;
 
 import com.timgroup.jgravatar.Gravatar;
 import lombok.RequiredArgsConstructor;
-import pl.confitura.jelatyna.ConferenceConfigurationProperties;
 import pl.confitura.jelatyna.api.model.InlinePresentation;
 import pl.confitura.jelatyna.api.model.InlineWorkshop;
 import pl.confitura.jelatyna.api.model.PresentationRequest;
 import pl.confitura.jelatyna.api.model.WorkshopRequest;
+import pl.confitura.jelatyna.edition.EditionRepository;
 import pl.confitura.jelatyna.infrastructure.security.JelatynaPrincipal;
 import pl.confitura.jelatyna.infrastructure.security.Security;
 import pl.confitura.jelatyna.presentation.Presentation;
@@ -47,7 +47,7 @@ public class UserController {
     private final UserRepository repository;
     private final PresentationRepository presentationRepository;
     private final Security security;
-    private final ConferenceConfigurationProperties conferenceConfiguration;
+    private final EditionRepository editionRepository;
     private final ParticipationRepository participationRepository;
     private final TagRepository tagRepository;
 
@@ -252,7 +252,7 @@ public class UserController {
     }
 
     private boolean canCreatePresentation() {
-        return conferenceConfiguration.getC4p().isEnabled() || security.isAdmin();
+        return editionRepository.findCurrent().isC4pOpen() || security.isAdmin();
     }
 
     private User updateUser(User user) {
