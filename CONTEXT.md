@@ -77,3 +77,27 @@ _Avoid_: Combine, join, dedupe
 Removing a Login from a User; the Login is deleted. A User can unlink any Login except
 their last; an admin can unlink any, which can leave the User with no Login.
 _Avoid_: Disconnect, remove account
+
+## Editions
+
+**Edition**:
+One yearly Confitura conference, e.g. 2027, with a name, its conference dates and its C4P
+period (open while now is inside it; unset means closed). Owns its talks and workshops
+(and through them their votes, rates and likes) and its agenda. Users, FAQ, partners,
+pages and News Entries are not per Edition.
+_Avoid_: Year, conference, event
+
+**Current Edition**:
+The one Edition the system works on now: the webpage dumps are written for it, new talks
+are submitted into it (while its C4P period is open), voting and rating use its talks, and
+admin pages and the speaker homepage open on it. Making another Edition current switches
+all of these at once: the previous one's dumps become its Archive, and its votes lose the
+voters' IP addresses. Nothing of a past Edition is deleted otherwise.
+_Avoid_: Default edition, active edition
+
+**Archive (of an Edition)**:
+The public data dumps of an Edition, frozen once it is no longer the Current Edition. How
+a past Edition's webpage keeps showing that year's content, including its
+speakers, the organisers (admins) and volunteers, and the FAQ, partners and pages it had
+then, as they were when the next Edition became current.
+_Avoid_: Backup, snapshot
