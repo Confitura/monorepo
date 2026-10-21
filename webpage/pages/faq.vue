@@ -22,8 +22,6 @@
 </template>
 
 <script setup lang="ts">
-import { marked } from 'marked'
-
 interface FaqEntry {
   id: string
   category: string
@@ -60,7 +58,7 @@ const html = computed(() => {
         g.items.map((e) => `### ${e.question}\n\n${e.answer ?? ''}`).join('\n\n'),
     )
     .join('\n\n')
-  return marked(md)
+  return renderMarkdown(md)
 })
 
 const title = 'FAQ — Confitura 2026';
