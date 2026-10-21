@@ -87,6 +87,7 @@ public class UserLoginsController {
         User survivor = userRepository.findById(principal.getId());
         survivor.absorb(absorbed);
         int talksMoved = survivor.takeTalks(absorbed);
+        survivor.takeTicket(absorbed);
         loginRepository.findByUserId(absorbed.getId()).forEach(login -> {
             login.moveTo(survivor);
             // Ids only: names and emails stay out of the logs.
@@ -145,9 +146,9 @@ public class UserLoginsController {
         if (absorbed == null) {
             throw new ResponseStatusException(NOT_FOUND);
         }
-        // Moving the ticket comes later.
-        if (absorbed.isParticipant()) {
-            throw new ResponseStatusException(CONFLICT, "The other user has a ticket, which cannot be merged yet");
+        // A User holds at most one ticket, so two block the merge; the reason sends the person to an admin.
+        if (absorbed.isParticipant() && userRepository.findById(principal.getId()).isParticipant()) {
+            throw new ResponseStatusException(CONFLICT, "Both users have a ticket, so they cannot be merged. Please contact an admin.");
         }
         return absorbed;
     }

@@ -78,7 +78,7 @@ function refusalMessage(error: unknown) {
   if (status === 403) {
     return `This ${provider} sign-in is too old to use. Please add the login again.`
   }
-  // A 409 names what the other User holds that cannot be merged yet.
+  // A 409 says why the Users cannot be merged, e.g. both hold a ticket.
   return status === 409 && typeof response?.data === 'string' ? response.data : `Failed to add the ${provider} login`
 }
 

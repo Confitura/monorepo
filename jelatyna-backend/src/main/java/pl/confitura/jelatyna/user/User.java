@@ -108,7 +108,7 @@ public class User extends AuditedEntity {
     }
 
     // Merge (users): keeps this User's own profile values and takes the absorbed User's only where these are empty;
-    // roles and privacy consent combine. The caller moves the Logins and the talks (takeTalks).
+    // roles and privacy consent combine. The caller moves the Logins, the talks (takeTalks) and the ticket (takeTicket).
     void absorb(User absorbed) {
         name = ownOr(name, absorbed.name);
         email = ownOr(email, absorbed.email);
@@ -137,6 +137,13 @@ public class User extends AuditedEntity {
         // Also the inverse side, read by isSpeaker() for the survivor's fresh token.
         presentations.addAll(gained);
         return gained.size();
+    }
+
+    // Moves the absorbed User's ticket to this one, which keeps its own if it has one; the merge refuses two tickets.
+    void takeTicket(User absorbed) {
+        if (!isParticipant()) {
+            participationData = absorbed.participationData;
+        }
     }
 
     private boolean speaksAt(Presentation talk) {
