@@ -5,7 +5,9 @@
       "Bash(backlog task *)",
       "Bash(backlog doc *)",
       "Bash(git switch --no-track -c factory/*)",
+      "Bash(git switch --no-track -C factory/*)",
       "Bash(git push -u origin factory/*)",
+      "Bash(git push origin factory/*)",
       "Bash(pnpm install --frozen-lockfile*)",
       "Bash(pnpm codegen*)",
       "Bash(pnpm typecheck*)",
@@ -15,6 +17,9 @@
       "Bash(gh pr create --base master --head factory/*)",
       "Bash(gh pr view *)",
       "Bash(gh pr checks *)",
+      "Bash(gh pr edit * --body-file *)",
+      "Bash(gh run view *)",
+      "Bash(gh api \"repos/{owner}/{repo}/code-scanning/alerts?pr=*)",
       "Bash(gh auth status*)",
       "Bash(git fetch origin --prune*)",
       "Bash(git merge --ff-only origin/master*)",
@@ -38,7 +43,8 @@
       "Bash(git push -f*)",
       "Bash(git push * -f*)",
       "Bash(git push *+*)",
-      "Bash(git push *master*)"
+      "Bash(git push *master*)",
+      "Bash(gh api *code-scanning/alerts/*)"
     ]
   }
 }
