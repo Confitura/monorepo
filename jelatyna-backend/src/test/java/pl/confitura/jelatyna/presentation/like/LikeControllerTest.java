@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
 import pl.confitura.jelatyna.BaseIntegrationTest;
+import pl.confitura.jelatyna.edition.EditionRepository;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
 import pl.confitura.jelatyna.user.User;
@@ -34,6 +35,9 @@ class LikeControllerTest extends BaseIntegrationTest {
 
     @Autowired
     LikeRepository likeRepository;
+
+    @Autowired
+    EditionRepository editionRepository;
 
     private Presentation presentation;
 
@@ -177,6 +181,7 @@ class LikeControllerTest extends BaseIntegrationTest {
         presentation.setLanguage("language");
         User speaker = userRepository.save(new User());
         presentation.setSpeaker(speaker);
+        presentation.setEdition(editionRepository.findCurrent());
         return presentationRepository.save(presentation);
     }
 

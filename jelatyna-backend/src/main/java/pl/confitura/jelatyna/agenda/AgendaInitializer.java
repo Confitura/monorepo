@@ -9,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.stereotype.Component;
 import pl.confitura.jelatyna.agenda.TimeSlot.TimeSlotId;
+import pl.confitura.jelatyna.edition.EditionRepository;
 import pl.confitura.jelatyna.infrastructure.security.JelatynaPrincipal;
 
 import java.time.LocalDate;
@@ -26,6 +27,7 @@ public class AgendaInitializer {
     private final DayRepository dayRepository;
     private final RoomRepository roomRepository;
     private final TimeSlotsRepository timeSlotsRepository;
+    private final EditionRepository editionRepository;
 
     @EventListener
     public void onApplicationReady(ApplicationReadyEvent event) {
@@ -49,7 +51,8 @@ public class AgendaInitializer {
                 .setId("day-1-workshops")
                 .setLabel("Day 1 Workshops")
                 .setDate(LocalDate.of(2025, 9, 19))
-                .setDisplayOrder(3));
+                .setDisplayOrder(3)
+                .setEdition(editionRepository.findCurrent()));
 
         createRoom("6-1", "6", 1, day);
         createRoom("18-1", "18", 2, day);
@@ -68,7 +71,8 @@ public class AgendaInitializer {
                 .setId("day-2-workshops")
                 .setLabel("Day 2 Workshops")
                 .setDate(LocalDate.of(2025, 9, 20))
-                .setDisplayOrder(4));
+                .setDisplayOrder(4)
+                .setEdition(editionRepository.findCurrent()));
 
         createRoom("6-2", "Room 6", 1, day);
         createRoom("18-2", "Room 18", 2, day);
@@ -88,7 +92,8 @@ public class AgendaInitializer {
                 .setId("day-2")
                 .setLabel("Day 2")
                 .setDate(LocalDate.of(2025, 9, 20))
-                .setDisplayOrder(2);
+                .setDisplayOrder(2)
+                .setEdition(editionRepository.findCurrent());
 
         day2 = dayRepository.save(day2);
 
@@ -110,7 +115,8 @@ public class AgendaInitializer {
                 .setId("day-1")
                 .setLabel("Day 1")
                 .setDate(LocalDate.of(2025, 9, 19))
-                .setDisplayOrder(1));
+                .setDisplayOrder(1)
+                .setEdition(editionRepository.findCurrent()));
 
         createRoom("ab-1", "AB", 1, day1);
         createRoom("cde-1", "CDE", 2, day1);
