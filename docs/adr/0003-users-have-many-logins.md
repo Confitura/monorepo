@@ -36,17 +36,20 @@ header, so the callback cannot tell who is already signed in. The admin app sent
 - **Two tokens prove both Users.** The OAuth callback is unchanged: the second sign-in
   goes through the normal flow and yields a second JWT (for a never-seen Login, the normal
   flow creates an empty User). `POST /users/merge` takes the current JWT as the survivor
-  and the second JWT as proof of the absorbed User, which must be freshly issued (`iat`
-  within minutes), so an old or leaked token can't be used. Carrying a signed link intent
-  through the OAuth `state` was rejected: it would branch the security-sensitive callback
-  and add two token types to avoid one short-lived User row.
+  and the second JWT as proof of the absorbed User, which must come from a fresh sign-in
+  (`auth_time`, OpenID Connect's claim for when the person authenticated, within minutes),
+  so an old or leaked token can't be used. Not `iat`: refreshing re-issues a token with a
+  new `iat` but the same `auth_time`, and a token without `auth_time` is never proof.
+  Carrying a signed link intent through the OAuth `state` was rejected: it would branch
+  the security-sensitive callback and add two token types to avoid one short-lived User
+  row.
 - **Forged sign-ins are blocked.** The front end sends a random `state` per sign-in
   attempt, stores it with the intent (sign in vs. add login) in `sessionStorage`, and
   accepts a returned token only when both match. The merge confirmation is always shown,
   even when the other User is brand new and empty; cancelling deletes such a User.
 - **Tokens follow the merge.** The survivor gets a freshly issued JWT, since its roles may
-  have changed. Requests with a token whose User no longer exists get `401`; no alias
-  from absorbed to survivor ids is kept.
+  have changed; it keeps the survivor's own `auth_time`. Requests with a token whose User
+  no longer exists get `401`; no alias from absorbed to survivor ids is kept.
 - No automatic duplicate detection or auto-merge by email: email ownership isn't verified
   the same way by every provider. Admins merge when a duplicate is reported. Each merge,
   link and unlink logs one structured line with ids only.

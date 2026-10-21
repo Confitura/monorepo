@@ -31,15 +31,26 @@ import javax.crypto.SecretKey;
 @RequiredArgsConstructor
 public class TokenService {
 
+    // OpenID Connect's name for when the person authenticated, in seconds since the epoch. Unlike iat it
+    // survives refreshing, so it proves a fresh sign-in (ADR-0003).
+    private static final String AUTH_TIME = "auth_time";
+
     private final JwtProperties properties;
 
+    /** A token for a person who has just signed in with a provider. */
     public String asToken(User user) {
+        return asToken(user, Instant.now());
+    }
+
+    /** A token for a person who signed in at {@code authTime}; null for tokens issued before it was recorded. */
+    public String asToken(User user, Instant authTime) {
         log.info("Transforming user to token {}", user);
         return Jwts.builder()
                 .claim("isAdmin", user.isAdmin())
                 .claim("isVolunteer", user.isVolunteer())
                 .claim("isSpeaker", user.isSpeaker())
                 .claim("isNew", !user.getPrivacyPolicyAccepted())
+                .claim(AUTH_TIME, authTime == null ? null : authTime.getEpochSecond())
                 .id(user.getId())
                 .subject(user.getName())
                 .issuedAt(new Date())
@@ -60,23 +71,29 @@ public class TokenService {
                                 .setId(body.getId())
                                 .setAdmin((Boolean) body.get("isAdmin"))
                                 .setVolunteer((Boolean) body.get("isVolunteer"))
+                                .setAuthTime(authTime(body))
                                 ;
                     }
                 });
     }
 
-    /** The id of the User a genuine token names, provided it was issued at most {@code maxAge} ago. */
-    public Optional<String> userIdIfIssuedWithin(String token, Duration maxAge) {
+    /** The id of the User a genuine token names, provided the person signed in at most {@code maxAge} ago. */
+    public Optional<String> userIdIfSignedInWithin(String token, Duration maxAge) {
         try {
             Claims claims = Jwts.parser().verifyWith(getKey()).build().parseSignedClaims(token).getPayload();
-            Date issuedAt = claims.getIssuedAt();
-            if (issuedAt == null || issuedAt.toInstant().isBefore(Instant.now().minus(maxAge))) {
+            Instant authTime = authTime(claims);
+            if (authTime == null || authTime.isBefore(Instant.now().minus(maxAge))) {
                 return Optional.empty();
             }
             return Optional.of(claims.getId());
         } catch (JwtException | IllegalArgumentException e) {
             return Optional.empty();
         }
+    }
+
+    private static Instant authTime(Claims claims) {
+        Long seconds = claims.get(AUTH_TIME, Long.class);
+        return seconds == null ? null : Instant.ofEpochSecond(seconds);
     }
 
     private SecretKey getKey() {
