@@ -122,8 +122,8 @@ export type FullUser = {
     isParticipant?: boolean;
     isSpeaker?: boolean;
     isVolunteer?: boolean;
+    loginProviders?: Array<string>;
     name?: string;
-    origin?: string;
     photo?: string;
     privacyPolicyAccepted?: boolean;
     twitter?: string;

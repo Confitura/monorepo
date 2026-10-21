@@ -305,10 +305,13 @@
           "isVolunteer" : {
             "type" : "boolean"
           },
-          "name" : {
-            "type" : "string"
+          "loginProviders" : {
+            "items" : {
+              "type" : "string"
+            },
+            "type" : "array"
           },
-          "origin" : {
+          "name" : {
             "type" : "string"
           },
           "photo" : {

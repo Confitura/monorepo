@@ -1,7 +1,5 @@
 package pl.confitura.jelatyna.login.twitter;
 
-import java.util.Base64;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -33,11 +31,10 @@ public class TwitterUser extends OAuthUserBase {
                 .setTwitter(userName);
     }
 
+    // Keyed by username, as before Logins existed, so a rename yields a new Login.
     @Override
-    public String encodeId() {
-        return Base64.getEncoder()
-                .encodeToString((getSystem() + "/" + userName)
-                        .getBytes());
+    public String getExternalId() {
+        return userName;
     }
 
 }

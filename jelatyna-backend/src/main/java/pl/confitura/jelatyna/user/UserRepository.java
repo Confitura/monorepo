@@ -17,11 +17,7 @@ public interface UserRepository extends Repository<User, String> {
 
     User getReferenceById(String id);
 
-    User findBySocialId(String socialId);
-
     boolean existsById(String id);
-
-    boolean existsBySocialId(String socialId);
 
     @Query("FROM User WHERE isAdmin = true")
     Collection<User> findAdmins();

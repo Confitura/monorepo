@@ -38,32 +38,6 @@ public class UserRepositoryTest extends BaseIntegrationTest {
                 .isEqualToComparingOnlyGivenFields(user, "origin", "socialId");
     }
 
-    @Test
-    void should_find_a_user_by_social_id() {
-        User user = repository.save(new User()
-                .setOrigin("twitter")
-                .setSocialId("1"));
-        repository.save(new User()
-                .setOrigin("twitter")
-                .setSocialId("2"));
-
-        User found = repository.findBySocialId("1");
-
-        assertThat(found).isEqualTo(user);
-    }
-
-    @Test
-    void should_check_if_exists_by_social_id() {
-        repository.save(new User()
-                .setOrigin("twitter")
-                .setSocialId("1"));
-
-        assertThat(repository
-                .existsBySocialId("1")).isTrue();
-        assertThat(repository
-                .existsBySocialId("2")).isFalse();
-    }
-
     @Autowired
     VoucherService voucherService;
 
