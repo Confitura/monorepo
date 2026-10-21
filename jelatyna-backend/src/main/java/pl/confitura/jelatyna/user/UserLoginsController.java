@@ -31,7 +31,7 @@ import pl.confitura.jelatyna.presentation.Presentation;
 /**
  * A User's Logins, and linking another one (ADR-0003): the person completes that provider's sign-in
  * while signed in, which yields a second token, and the User it names is merged into the signed-in one.
- * A User unlinks any Login but their last; an admin unlinks any.
+ * An admin merges any two Users by id instead. A User unlinks any Login but their last; an admin unlinks any.
  */
 @RestController
 @RequiredArgsConstructor
@@ -85,24 +85,37 @@ public class UserLoginsController {
                                              @RequestBody MergeUsersRequest request) {
         User absorbed = userToAbsorb(principal, request);
         User survivor = userRepository.findById(principal.getId());
-        survivor.absorb(absorbed);
-        int talksMoved = survivor.takeTalks(absorbed);
-        survivor.takeTicket(absorbed);
-        loginRepository.findByUserId(absorbed.getId()).forEach(login -> {
-            login.moveTo(survivor);
-            // Ids only: names and emails stay out of the logs.
-            log.atInfo().setMessage("Linked login")
-                    .addKeyValue("actorUserId", principal.getId())
-                    .addKeyValue("survivorUserId", survivor.getId())
-                    .addKeyValue("absorbedUserId", absorbed.getId())
-                    .addKeyValue("provider", login.getProvider())
-                    .addKeyValue("loginId", login.getId())
-                    .addKeyValue("talksMoved", talksMoved)
-                    .log();
-        });
-        userRepository.delete(absorbed);
+        Moved moved = merge(survivor, absorbed);
+        // Ids only: names and emails stay out of the logs.
+        moved.logins().forEach(login -> log.atInfo().setMessage("Linked login")
+                .addKeyValue("actorUserId", principal.getId())
+                .addKeyValue("survivorUserId", survivor.getId())
+                .addKeyValue("absorbedUserId", absorbed.getId())
+                .addKeyValue("provider", login.getProvider())
+                .addKeyValue("loginId", login.getId())
+                .addKeyValue("talksMoved", moved.talks())
+                .log());
         // Fresh because its roles may have changed; the survivor didn't just sign in, so it keeps its sign-in time.
         return ResponseEntity.ok(tokenService.asToken(survivor, principal.getAuthTime()));
+    }
+
+    /** An admin merges any two Users, keeping the one they choose: the only way to join a Manual User, which has no Login. */
+    @PostMapping("/users/{survivorId}/merge/{absorbedId}")
+    @PreAuthorize("@security.isAdmin()")
+    @Transactional
+    public ResponseEntity<Void> adminMergeUsers(@AuthenticationPrincipal JelatynaPrincipal principal,
+                                                @PathVariable String survivorId, @PathVariable String absorbedId) {
+        User survivor = survivorForAdmin(survivorId, absorbedId);
+        Moved moved = merge(survivor, userToAbsorb(survivor, absorbedId));
+        log.atInfo().setMessage("Merged users")
+                .addKeyValue("actorUserId", principal.getId())
+                .addKeyValue("byAdmin", true)
+                .addKeyValue("survivorUserId", survivorId)
+                .addKeyValue("absorbedUserId", absorbedId)
+                .addKeyValue("loginsMoved", moved.logins().size())
+                .addKeyValue("talksMoved", moved.talks())
+                .log();
+        return ResponseEntity.noContent().build();
     }
 
     /** What {@link #mergeUsers} would make of the signed-in User, shown before the person confirms; changes nothing. */
@@ -141,16 +154,48 @@ public class UserLoginsController {
         if (absorbedId.equals(principal.getId())) {
             throw new ResponseStatusException(CONFLICT, "The login already belongs to the signed-in user");
         }
+        return userToAbsorb(userRepository.findById(principal.getId()), absorbedId);
+    }
+
+    // An admin names both Users by id, so the survivor may be missing too.
+    private User survivorForAdmin(String survivorId, String absorbedId) {
+        if (survivorId.equals(absorbedId)) {
+            throw new ResponseStatusException(CONFLICT, "A user cannot be merged with itself");
+        }
+        User survivor = userRepository.findById(survivorId);
+        if (survivor == null) {
+            throw new ResponseStatusException(NOT_FOUND);
+        }
+        return survivor;
+    }
+
+    // The refusals every merge shares, self-service or by an admin, once the two Users differ.
+    private User userToAbsorb(User survivor, String absorbedId) {
         User absorbed = userRepository.findById(absorbedId);
         // Already merged (e.g. Confirm sent twice) or cancelled in another tab.
         if (absorbed == null) {
             throw new ResponseStatusException(NOT_FOUND);
         }
         // A User holds at most one ticket, so two block the merge; the reason sends the person to an admin.
-        if (absorbed.isParticipant() && userRepository.findById(principal.getId()).isParticipant()) {
+        if (absorbed.isParticipant() && survivor.isParticipant()) {
             throw new ResponseStatusException(CONFLICT, "Both users have a ticket, so they cannot be merged. Please contact an admin.");
         }
         return absorbed;
+    }
+
+    // Merge (users): the survivor absorbs the other User's profile gaps, roles, talks, ticket and Logins, and the other
+    // User is deleted. Answers what moved, for the log.
+    private Moved merge(User survivor, User absorbed) {
+        survivor.absorb(absorbed);
+        int talksMoved = survivor.takeTalks(absorbed);
+        survivor.takeTicket(absorbed);
+        List<Login> logins = loginRepository.findByUserId(absorbed.getId());
+        logins.forEach(login -> login.moveTo(survivor));
+        userRepository.delete(absorbed);
+        return new Moved(logins, talksMoved);
+    }
+
+    private record Moved(List<Login> logins, int talks) {
     }
 
     // Boot's error page drops the reason; the admin app shows it, e.g. what blocks a merge.
