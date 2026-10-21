@@ -76,6 +76,7 @@ vi.mock('@/utils/api.ts', () => {
     markAsAdmin: ok({}),
     markAsVolunteer: ok({}),
     getUserLogins: ok([]),
+    unlinkLogin: ok({}),
     mergeUsers: ok(''),
     cancelMerge: ok({}),
     // pages
@@ -366,6 +367,38 @@ describe('admin-app pages render without errors', () => {
       expect(api.getById).toHaveBeenCalledWith({ path: { id: 'u2' } })
       expect(api.getUserLogins).not.toHaveBeenCalled()
       expect(wrapper.find('[aria-label="Logins"]').exists()).toBe(false)
+    } finally {
+      localStorage.removeItem('token')
+    }
+  })
+
+  it('removes a Login from the signed-in User, offering to add it again', async () => {
+    localStorage.setItem('token', fakeJwt())
+    vi.mocked(api.getUserLogins).mockResolvedValueOnce({
+      data: [{ id: 'l1', provider: 'github' }, { id: 'l2', provider: 'google' }],
+      status: 200,
+    } as any)
+    try {
+      const wrapper = await mountPage(ProfileFormPage, '/profile-form')
+
+      await wrapper.get('[aria-label="Remove GitHub login"]').trigger('click')
+      await flushPromises()
+
+      expect(api.unlinkLogin).toHaveBeenCalledWith(expect.objectContaining({ path: { id: 'u1', loginId: 'l1' } }))
+      expect(wrapper.find('[aria-label="Remove GitHub login"]').exists()).toBe(false)
+      expect(wrapper.find('[aria-label="Add GitHub login"]').exists()).toBe(true)
+    } finally {
+      localStorage.removeItem('token')
+    }
+  })
+
+  it('does not let the signed-in User remove their last Login', async () => {
+    localStorage.setItem('token', fakeJwt())
+    vi.mocked(api.getUserLogins).mockResolvedValueOnce({ data: [{ id: 'l1', provider: 'github' }], status: 200 } as any)
+    try {
+      const wrapper = await mountPage(ProfileFormPage, '/profile-form')
+
+      expect(wrapper.get('[aria-label="Remove GitHub login"]').attributes('disabled')).toBeDefined()
     } finally {
       localStorage.removeItem('token')
     }

@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.tuple;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -267,6 +268,94 @@ class UserLoginsControllerTest extends BaseIntegrationTest {
         cancelMerge(signedIn, tokenIssuedAgo(brandNew, Duration.ofMinutes(10))).andExpect(status().isForbidden());
 
         assertThat(userRepository.existsById(brandNew.getId())).isTrue();
+    }
+
+    @Test
+    void aUserRemovesOneOfTheirLoginsAndSigningInWithItLaterStartsANewUser() throws Exception {
+        User user = userRepository.save(new User().setName("Signed in twice"));
+        String githubId = uniqueId();
+        Login github = loginRepository.save(new Login(user, "github", githubId));
+        loginRepository.save(new Login(user, "google", uniqueId()));
+
+        unlink(user, user, github).andExpect(status().isNoContent());
+
+        mockMvc.perform(get("/users/" + user.getId() + "/logins").header(AUTHORIZATION, bearer(user)))
+                .andExpect(jsonPath("$[*].provider").value(containsInAnyOrder("google")));
+        assertThat(oauthUserService.mapToUser(gitHubUser(githubId)).getId()).isNotEqualTo(user.getId());
+    }
+
+    @Test
+    void aUserCannotRemoveTheirLastLogin() throws Exception {
+        User user = userRepository.save(new User().setName("Signed in once"));
+        String githubId = uniqueId();
+        Login github = loginRepository.save(new Login(user, "github", githubId));
+
+        unlink(user, user, github).andExpect(status().isConflict());
+
+        assertThat(oauthUserService.mapToUser(gitHubUser(githubId)).getId()).isEqualTo(user.getId());
+    }
+
+    @Test
+    void anAdminRemovesAnyUsersLoginIncludingTheLast() throws Exception {
+        User admin = userRepository.save(new User().setName("Admin").setAdmin(true));
+        User user = userRepository.save(new User().setName("Signed in once"));
+        Login github = loginRepository.save(new Login(user, "github", uniqueId()));
+
+        unlink(admin, user, github).andExpect(status().isNoContent());
+
+        mockMvc.perform(get("/users/" + user.getId() + "/logins").header(AUTHORIZATION, bearer(admin)))
+                .andExpect(jsonPath("$").isEmpty());
+    }
+
+    @Test
+    void anotherUsersLoginCannotBeRemoved() throws Exception {
+        User owner = userRepository.save(new User().setName("Owner"));
+        User someoneElse = userRepository.save(new User().setName("Someone else"));
+        Login github = loginRepository.save(new Login(owner, "github", uniqueId()));
+        loginRepository.save(new Login(owner, "google", uniqueId()));
+
+        unlink(someoneElse, owner, github).andExpect(status().isForbidden());
+        // Their own id in the path does not reach another User's Login either.
+        mockMvc.perform(delete("/users/" + someoneElse.getId() + "/logins/" + github.getId())
+                        .header(AUTHORIZATION, bearer(someoneElse)))
+                .andExpect(status().isNotFound());
+
+        mockMvc.perform(get("/users/" + owner.getId() + "/logins").header(AUTHORIZATION, bearer(owner)))
+                .andExpect(jsonPath("$.length()").value(2));
+    }
+
+    @Test
+    void eachUnlinkLogsOneLineWithIdsOnly() throws Exception {
+        User admin = userRepository.save(new User().setName("Admin").setAdmin(true));
+        User user = userRepository.save(new User().setName("Signed in").setEmail("signed.in@example.com"));
+        String githubId = uniqueId();
+        Login github = loginRepository.save(new Login(user, "github", githubId));
+        Logger logger = (Logger) LoggerFactory.getLogger(UserLoginsController.class);
+        ListAppender<ILoggingEvent> appender = new ListAppender<>();
+        appender.start();
+        logger.addAppender(appender);
+
+        try {
+            unlink(admin, user, github).andExpect(status().isNoContent());
+        } finally {
+            logger.detachAppender(appender);
+        }
+
+        assertThat(appender.list).singleElement().satisfies(event -> {
+            assertThat(event.getKeyValuePairs())
+                    .extracting(pair -> pair.key, pair -> pair.value)
+                    .containsExactlyInAnyOrder(
+                            tuple("actorUserId", admin.getId()),
+                            tuple("userId", user.getId()),
+                            tuple("provider", "github"),
+                            tuple("loginId", github.getId()));
+            assertThat(event.getFormattedMessage()).doesNotContain("Signed in", "signed.in@example.com", githubId);
+        });
+    }
+
+    private ResultActions unlink(User actor, User owner, Login login) throws Exception {
+        return mockMvc.perform(delete("/users/" + owner.getId() + "/logins/" + login.getId())
+                .header(AUTHORIZATION, bearer(actor)));
     }
 
     private ResultActions cancelMerge(User signedIn, String secondToken) throws Exception {

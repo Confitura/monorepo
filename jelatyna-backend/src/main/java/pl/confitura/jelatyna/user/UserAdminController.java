@@ -45,10 +45,10 @@ public class UserAdminController {
 
     @GetMapping("/users")
     public List<FullUser> getAllUsers() {
-        Map<String, List<String>> providersByUserId = loginRepository.findAll().stream()
-                .collect(groupingBy(login -> login.getUser().getId(), mapping(Login::getProvider, toList())));
+        Map<String, List<LoginDto>> loginsByUserId = loginRepository.findAll().stream()
+                .collect(groupingBy(login -> login.getUser().getId(), mapping(LoginDto::from, toList())));
         return repository.findAll().stream()
-                .map(user -> new FullUser(user, providersByUserId.getOrDefault(user.getId(), List.of())))
+                .map(user -> new FullUser(user, loginsByUserId.getOrDefault(user.getId(), List.of())))
                 .collect(toList());
     }
 
@@ -69,7 +69,7 @@ public class UserAdminController {
 
     public record FullUser(
             String id,
-            List<String> loginProviders,
+            List<LoginDto> logins,
             String name,
             String email,
             String bio,
@@ -85,10 +85,10 @@ public class UserAdminController {
             boolean isParticipant,
             boolean hasAcceptedPresentation) {
 
-        public FullUser(User user, List<String> loginProviders) {
+        public FullUser(User user, List<LoginDto> logins) {
             this(
                     user.getId(),
-                    loginProviders,
+                    logins,
                     user.getName(),
                     user.getEmail(),
                     user.getBio(),

@@ -122,7 +122,7 @@ export type FullUser = {
     isParticipant?: boolean;
     isSpeaker?: boolean;
     isVolunteer?: boolean;
-    loginProviders?: Array<string>;
+    logins?: Array<LoginDto>;
     name?: string;
     photo?: string;
     privacyPolicyAccepted?: boolean;
@@ -2808,6 +2808,23 @@ export type GetUserLoginsResponses = {
 };
 
 export type GetUserLoginsResponse = GetUserLoginsResponses[keyof GetUserLoginsResponses];
+
+export type UnlinkLoginData = {
+    body?: never;
+    path: {
+        id: string;
+        loginId: string;
+    };
+    query?: never;
+    url: '/users/{id}/logins/{loginId}';
+};
+
+export type UnlinkLoginResponses = {
+    /**
+     * OK
+     */
+    200: unknown;
+};
 
 export type GetUserPresentationsData = {
     body?: never;

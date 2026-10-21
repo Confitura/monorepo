@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import DialogConfirm from '@/components/DialogConfirm.vue'
 import type {DataTableHeaders} from '@/plugins/vuetify'
-import {createManual, markAsAdmin, markAsVolunteer, getAllUsers} from "@/utils/api.ts";
-import type {FullUser} from "@/utils/api";
+import {createManual, markAsAdmin, markAsVolunteer, getAllUsers, unlinkLogin} from "@/utils/api.ts";
+import type {FullUser, LoginDto} from "@/utils/api";
+import {providerLabel} from "@/utils/sign-in-attempt.ts";
 
 
 definePage({
@@ -82,14 +83,31 @@ function dialogFlipVolunteer(user: FullUser) {
       })
 }
 
+// Unlike the User themselves, an admin may remove the last Login, which leaves the User like a Manual User.
+function dialogUnlinkLogin(user: FullUser, login: LoginDto) {
+  const provider = providerLabel(login.provider)
+  const message = user.logins?.length === 1
+      ? `Remove ${user.name}'s ${provider} login? It is their last one: they will not be able to sign in.`
+      : `Remove ${user.name}'s ${provider} login?`;
+
+  confirmDialog.value
+      ?.open(message)
+      .then(async (confirmed: boolean) => {
+        if (confirmed) {
+          unlinkLogin({ path: { id: user.id!, loginId: login.id! }, throwOnError: true })
+              .then(_ => reloadUsers())
+              .catch(_ => Notify.error('Failed to remove the login'))
+        }
+      })
+}
 
 const headers: DataTableHeaders = [
   {title: 'Name', key: 'name'},
   {title: 'Email', key: 'email'},
   {
     title: 'Logins',
-    key: 'loginProviders',
-    value: (user: FullUser) => user.loginProviders?.length ? user.loginProviders.join(', ') : 'Manual',
+    key: 'logins',
+    value: (user: FullUser) => user.logins?.length ? user.logins.map((login) => login.provider).join(', ') : 'Manual',
   },
   {title: 'Admin', key: 'isAdmin'},
   {title: 'Volunteer', key: 'isVolunteer'},
@@ -145,6 +163,19 @@ onMounted(() => {
               :filter-keys="['name','email']"
               :search="search"
           >
+            <template #item.logins="{ item }">
+              <v-btn
+                  v-for="login in item.logins"
+                  :key="login.id"
+                  size="x-small"
+                  variant="tonal"
+                  class="mr-1"
+                  append-icon="mdi-close"
+                  :aria-label="`Remove ${providerLabel(login.provider)} login`"
+                  @click.stop="dialogUnlinkLogin(item, login)"
+              >{{ providerLabel(login.provider) }}</v-btn>
+              <template v-if="!item.logins?.length">Manual</template>
+            </template>
             <template #item.actions="{ item }">
               <v-defaults-provider
                   :defaults="{

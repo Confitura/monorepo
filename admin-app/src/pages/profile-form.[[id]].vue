@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import {storeUserProfilePicture, refreshToken, save1, getById, getUserLogins} from "@/utils/api.ts";
+import {storeUserProfilePicture, refreshToken, save1, getById, getUserLogins, unlinkLogin} from "@/utils/api.ts";
 import type {LoginDto} from "@/utils/api.ts";
 import {SIGN_IN_PROVIDERS, goToSignIn, providerLabel} from "@/utils/sign-in-attempt.ts";
 import {ref, onMounted, computed} from 'vue';
@@ -26,6 +26,16 @@ const unlinkedProviders = computed(() =>
 
 function addedOn(login: LoginDto) {
   return login.createdDate ? `Added ${new Date(login.createdDate).toLocaleDateString()}` : ''
+}
+
+// The Login is deleted; adding it again later means signing in with it, as for any new Login.
+async function removeLogin(login: LoginDto) {
+  try {
+    await unlinkLogin({ path: { id: effectiveUserId.value!, loginId: login.id! }, throwOnError: true })
+    logins.value = logins.value.filter((other) => other.id !== login.id)
+  } catch (error) {
+    Notify.error(`Failed to remove the ${providerLabel(login.provider)} login`)
+  }
 }
 
 const validationRules = {
@@ -202,7 +212,18 @@ v-model="form.privacyPolicyAccepted"
           :key="login.id"
           :title="providerLabel(login.provider)"
           :subtitle="addedOn(login)"
-        />
+        >
+          <template #append>
+            <!-- The last Login stays: without it the User could not sign in again. -->
+            <v-btn
+              variant="text"
+              size="small"
+              :disabled="logins.length === 1"
+              :aria-label="`Remove ${providerLabel(login.provider)} login`"
+              @click="removeLogin(login)"
+            >Remove</v-btn>
+          </template>
+        </v-list-item>
       </v-list>
       <v-btn
         v-for="provider in unlinkedProviders"
