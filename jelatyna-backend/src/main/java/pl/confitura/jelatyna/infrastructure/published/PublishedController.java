@@ -11,14 +11,14 @@ import pl.confitura.jelatyna.agenda.api.InlineAgendaEntry;
 import pl.confitura.jelatyna.agenda.api.InlineRoom;
 import pl.confitura.jelatyna.agenda.api.InlineTimeSlot;
 import pl.confitura.jelatyna.api.model.InlinePresentationWithSpeakers;
-import pl.confitura.jelatyna.news.NewsletterApi;
+import pl.confitura.jelatyna.news.NewsEntryRepository;
 import pl.confitura.jelatyna.page.PageController;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
 import pl.confitura.jelatyna.user.PublicSpeaker;
 import pl.confitura.jelatyna.user.UserController;
 
-import java.io.IOException;
+import java.time.Instant;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +33,7 @@ public class PublishedController {
 
     private final UserController userController;
     private final PageController pageController;
-    private final NewsletterApi newsletterApi;
+    private final NewsEntryRepository newsEntryRepository;
     private final PresentationRepository presentationRepository;
 
     // Agenda related (may be null in some profiles)
@@ -93,11 +93,7 @@ public class PublishedController {
 
     @GetMapping("/news")
     public ResponseEntity<?> news() {
-        try {
-            return ResponseEntity.ok(DumpedNews.from(newsletterApi.getWebpageNews()));
-        } catch (IOException e) {
-            return ResponseEntity.internalServerError().body("Couldn't fetch news");
-        }
+        return ResponseEntity.ok(DumpedNews.from(newsEntryRepository.findPublicAt(Instant.now())));
     }
 
     @GetMapping("/agenda/{dayId}")
