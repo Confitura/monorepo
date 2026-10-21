@@ -453,7 +453,7 @@ class UserLoginsControllerTest extends BaseIntegrationTest {
     }
 
     @Test
-    void anAdminCannotMergeTwoUsersWithATicketNorAUserWithItself() throws Exception {
+    void anAdminCannotMergeTwoUsersWithATicketNorAUserWithItselfNorIntoAMissingUser() throws Exception {
         User admin = userRepository.save(new User().setName("Admin").setAdmin(true));
         User survivor = give(Content.TICKET, userRepository.save(new User().setName("Survivor")));
         User absorbed = give(Content.TICKET, userRepository.save(new User().setName("Absorbed")));
@@ -461,7 +461,11 @@ class UserLoginsControllerTest extends BaseIntegrationTest {
         adminMerge(admin, survivor, absorbed)
                 .andExpect(status().isConflict())
                 .andExpect(content().string(containsString("Both users have a ticket")));
-        adminMerge(admin, survivor, survivor).andExpect(status().isConflict());
+        // Both hold a ticket too, so only the reason shows which refusal answered.
+        adminMerge(admin, survivor, survivor)
+                .andExpect(status().isConflict())
+                .andExpect(content().string(containsString("cannot be merged with itself")));
+        adminMerge(admin, new User(), absorbed).andExpect(status().isNotFound());
 
         assertThat(userRepository.existsById(absorbed.getId())).isTrue();
         assertThat(userRepository.existsById(survivor.getId())).isTrue();
