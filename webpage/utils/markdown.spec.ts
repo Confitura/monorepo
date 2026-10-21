@@ -18,6 +18,11 @@ describe('plainText', () => {
     expect(plainText('## Hello\n\nSee *you* there')).toBe('Hello See you there')
   })
 
+  it('never returns markup, even from an unclosed tag or escaped angle brackets', () => {
+    expect(plainText('Hi <script')).toBe('Hi script')
+    expect(plainText('Use &lt;script&gt;alert(1)&lt;/script&gt; here')).toBe('Use scriptalert(1)/script here')
+  })
+
   it('cuts a long body at a word boundary with an ellipsis', () => {
     const text = plainText('word '.repeat(100), 20)
     expect(text).toBe('word word word word…')
