@@ -13,6 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -83,6 +84,7 @@ public class UserLoginsController {
                                              @RequestBody MergeUsersRequest request) {
         User absorbed = userToAbsorb(principal, request);
         User survivor = userRepository.findById(principal.getId());
+        survivor.absorb(absorbed);
         loginRepository.findByUserId(absorbed.getId()).forEach(login -> {
             login.moveTo(survivor);
             // Ids only: names and emails stay out of the logs.
@@ -95,19 +97,32 @@ public class UserLoginsController {
                     .log();
         });
         userRepository.delete(absorbed);
-        // The survivor didn't just sign in, so its token keeps the survivor's sign-in time.
+        // Fresh because its roles may have changed; the survivor didn't just sign in, so it keeps its sign-in time.
         return ResponseEntity.ok(tokenService.asToken(survivor, principal.getAuthTime()));
+    }
+
+    /** What {@link #mergeUsers} would make of the signed-in User, shown before the person confirms; changes nothing. */
+    @PostMapping("/users/merge/preview")
+    @Transactional(readOnly = true)
+    public MergePreview previewMerge(@AuthenticationPrincipal JelatynaPrincipal principal,
+                                     @RequestBody MergeUsersRequest request) {
+        User absorbed = userToAbsorb(principal, request);
+        User survivor = userRepository.findById(principal.getId());
+        return MergePreview.of(survivor, survivor.mergedWith(absorbed));
     }
 
     /**
      * The person declined the merge: deletes the User the second sign-in created, with its Login, so nothing is
-     * left behind. Refuses exactly when {@link #mergeUsers} would, so it never deletes a User with content.
+     * left behind. Refuses a User with content, which {@link #mergeUsers} may absorb but cancelling must not delete.
      */
     @PostMapping("/users/merge/cancel")
     @Transactional
     public ResponseEntity<Void> cancelMerge(@AuthenticationPrincipal JelatynaPrincipal principal,
                                             @RequestBody MergeUsersRequest request) {
         User absorbed = userToAbsorb(principal, request);
+        if (absorbed.hasContent()) {
+            throw new ResponseStatusException(CONFLICT, "The other user has a profile or roles");
+        }
         loginRepository.findByUserId(absorbed.getId()).forEach(loginRepository::delete);
         userRepository.delete(absorbed);
         return ResponseEntity.noContent().build();
@@ -127,13 +142,32 @@ public class UserLoginsController {
         if (absorbed == null) {
             throw new ResponseStatusException(NOT_FOUND);
         }
-        // Merging two Users that both hold something comes later.
-        if (absorbed.hasContent()) {
-            throw new ResponseStatusException(CONFLICT, "The other user has a profile, talks, roles or a ticket");
+        // Moving talks and the ticket comes later.
+        if (absorbed.isSpeaker() || absorbed.isParticipant()) {
+            String which = absorbed.isSpeaker() && absorbed.isParticipant() ? "talks and a ticket"
+                    : absorbed.isSpeaker() ? "talks" : "a ticket";
+            throw new ResponseStatusException(CONFLICT, "The other user has " + which + ", which cannot be merged yet");
         }
         return absorbed;
     }
 
+    // Boot's error page drops the reason; the admin app shows it, e.g. what blocks a merge.
+    @ExceptionHandler(ResponseStatusException.class)
+    ResponseEntity<String> refusal(ResponseStatusException refusal) {
+        return ResponseEntity.status(refusal.getStatusCode()).body(refusal.getReason());
+    }
+
     public record MergeUsersRequest(String token) {
+    }
+
+    /** The signed-in User's profile after a merge, and the roles it would gain. */
+    public record MergePreview(String name, String email, String bio, String username, String twitter, String github,
+                               String www, String photo, boolean becomesAdmin, boolean becomesVolunteer) {
+
+        static MergePreview of(User survivor, User merged) {
+            return new MergePreview(merged.getName(), merged.getEmail(), merged.getBio(), merged.getUsername(),
+                    merged.getTwitter(), merged.getGithub(), merged.getWww(), merged.getPhoto(),
+                    merged.isAdmin() && !survivor.isAdmin(), merged.isVolunteer() && !survivor.isVolunteer());
+        }
     }
 }

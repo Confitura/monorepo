@@ -1,5 +1,7 @@
 package pl.confitura.jelatyna.user;
 
+import static org.springframework.util.StringUtils.hasText;
+
 import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -97,10 +99,39 @@ public class User extends AuditedEntity {
         return isParticipant() && getParticipationData().getArrivalDate() != null;
     }
 
-    // Whether a merge would have to carry anything over. Sign-in fills in the provider's name and photo,
-    // but the privacy policy is accepted only by saving the profile, so it marks a profile the person made.
+    // Whether the User holds anything worth keeping, so a cancelled merge must not delete it. Sign-in fills in the
+    // provider's name and photo, but the privacy policy is accepted only by saving the profile, so it marks a
+    // profile the person made.
     boolean hasContent() {
         return Boolean.TRUE.equals(privacyPolicyAccepted) || isAdmin || isVolunteer || isSpeaker() || isParticipant();
+    }
+
+    // Merge (users): keeps this User's own profile values and takes the absorbed User's only where these are empty;
+    // roles and privacy consent combine. The caller moves the Logins.
+    void absorb(User absorbed) {
+        name = ownOr(name, absorbed.name);
+        email = ownOr(email, absorbed.email);
+        bio = ownOr(bio, absorbed.bio);
+        username = ownOr(username, absorbed.username);
+        twitter = ownOr(twitter, absorbed.twitter);
+        github = ownOr(github, absorbed.github);
+        www = ownOr(www, absorbed.www);
+        photo = ownOr(photo, absorbed.photo);
+        isAdmin = isAdmin || absorbed.isAdmin;
+        isVolunteer = isVolunteer || absorbed.isVolunteer;
+        privacyPolicyAccepted = Boolean.TRUE.equals(privacyPolicyAccepted) || Boolean.TRUE.equals(absorbed.privacyPolicyAccepted);
+    }
+
+    // What absorbing the other User would make of this one, on an unsaved copy, so this User stays as it is.
+    User mergedWith(User absorbed) {
+        User merged = new User().setAdmin(isAdmin).setVolunteer(isVolunteer);
+        merged.updateFields(this);
+        merged.absorb(absorbed);
+        return merged;
+    }
+
+    private static String ownOr(String own, String absorbed) {
+        return hasText(own) ? own : absorbed;
     }
 
     interface Edit {
