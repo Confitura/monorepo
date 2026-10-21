@@ -27,14 +27,18 @@ export const useAuthStore = defineStore('auth', {
   },
   actions: {
     login(token: string) {
-      localStorage.setItem('token', token)
-      this.token = token
-      this.user = extractUser(token)
+      this.replaceToken(token)
       if (this.user?.isAdmin) {
         router.push('/dashboard')
       } else {
         router.push('/homepage')
       }
+    },
+    // Swaps in a newly issued token for the signed-in User (e.g. after a merge) without leaving the page.
+    replaceToken(token: string) {
+      localStorage.setItem('token', token)
+      this.token = token
+      this.user = extractUser(token)
     },
     logout() {
       localStorage.removeItem('token')

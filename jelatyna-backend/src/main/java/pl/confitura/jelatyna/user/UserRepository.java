@@ -19,6 +19,8 @@ public interface UserRepository extends Repository<User, String> {
 
     boolean existsById(String id);
 
+    void delete(User user);
+
     @Query("FROM User WHERE isAdmin = true")
     Collection<User> findAdmins();
 

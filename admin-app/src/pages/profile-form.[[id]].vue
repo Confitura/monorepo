@@ -1,6 +1,8 @@
 <script setup lang="ts">
 
-import {storeUserProfilePicture, refreshToken, save1, getById} from "@/utils/api.ts";
+import {storeUserProfilePicture, refreshToken, save1, getById, getUserLogins} from "@/utils/api.ts";
+import type {LoginDto} from "@/utils/api.ts";
+import {SIGN_IN_PROVIDERS, goToSignIn, providerLabel} from "@/utils/sign-in-attempt.ts";
 import {ref, onMounted, computed} from 'vue';
 import {storeToRefs} from 'pinia';
 import {useAuthStore} from '@/stores/auth';
@@ -14,6 +16,16 @@ const effectiveUserId = computed(() => {
   const routeId = (route.params as { id?: string })?.id
   return routeId || user.value?.jti
 })
+
+// Logins can only be added to the signed-in User: the new one is proven by signing in with it.
+const isOwnProfile = computed(() => effectiveUserId.value === user.value?.jti)
+const logins = ref<LoginDto[]>([])
+const unlinkedProviders = computed(() =>
+  SIGN_IN_PROVIDERS.filter((provider) => !logins.value.some((login) => login.provider === provider.id)))
+
+function addedOn(login: LoginDto) {
+  return login.createdDate ? `Added ${new Date(login.createdDate).toLocaleDateString()}` : ''
+}
 
 const validationRules = {
   name: [(v: string) => !!v || 'Name is required'],
@@ -93,9 +105,15 @@ const fetchUserData = async (userId: string) => {
 };
 
 
+const fetchLogins = async (userId: string) => {
+  const response = await getUserLogins({ path: { id: userId } });
+  logins.value = response.data ?? [];
+};
+
 onMounted(() => {
   if (effectiveUserId.value) {
     fetchUserData(effectiveUserId.value);
+    fetchLogins(effectiveUserId.value);
   }
 });
 
@@ -172,4 +190,28 @@ v-model="form.privacyPolicyAccepted"
       <v-btn type="submit" color="primary">Submit</v-btn>
     </v-container>
   </v-form>
+  <v-container>
+    <section aria-label="Logins">
+      <h3 class="text-h6">Logins</h3>
+      <v-list density="compact">
+        <v-list-item
+          v-for="login in logins"
+          :key="login.id"
+          :title="providerLabel(login.provider)"
+          :subtitle="addedOn(login)"
+        />
+      </v-list>
+      <template v-if="isOwnProfile">
+        <v-btn
+          v-for="provider in unlinkedProviders"
+          :key="provider.id"
+          class="mr-2"
+          variant="outlined"
+          prepend-icon="mdi-plus"
+          :aria-label="`Add ${provider.label} login`"
+          @click="goToSignIn(provider.id, 'add-login')"
+        >{{ provider.label }}</v-btn>
+      </template>
+    </section>
+  </v-container>
 </template>

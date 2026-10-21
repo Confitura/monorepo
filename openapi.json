@@ -676,12 +676,35 @@
         },
         "type" : "object"
       },
+      "LoginDto" : {
+        "properties" : {
+          "createdDate" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "provider" : {
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
       "MergeRequest" : {
         "properties" : {
           "from" : {
             "type" : "string"
           },
           "to" : {
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "MergeUsersRequest" : {
+        "properties" : {
+          "token" : {
             "type" : "string"
           }
         },
@@ -4552,6 +4575,61 @@
         "tags" : [ "user-admin-controller" ]
       }
     },
+    "/users/merge" : {
+      "post" : {
+        "operationId" : "mergeUsers",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/MergeUsersRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "tags" : [ "user-logins-controller" ]
+      }
+    },
+    "/users/merge/cancel" : {
+      "post" : {
+        "operationId" : "cancelMerge",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/MergeUsersRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "tags" : [ "user-logins-controller" ]
+      }
+    },
     "/users/search/admins" : {
       "get" : {
         "operationId" : "getAdmins",
@@ -4634,6 +4712,38 @@
           }
         },
         "tags" : [ "user-controller" ]
+      }
+    },
+    "/users/{id}/logins" : {
+      "get" : {
+        "operationId" : "getUserLogins",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/LoginDto"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "tags" : [ "user-logins-controller" ]
       }
     },
     "/users/{id}/presentations" : {

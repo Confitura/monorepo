@@ -27,6 +27,8 @@ import AdminPresentationPreviewPage from '@/pages/admin/presentation-preview.[[i
 import AdminRatesPage from '@/pages/admin/rates.vue'
 import AdminUsersPage from '@/pages/admin/users.vue'
 import { startSignInAttempt } from '@/utils/sign-in-attempt.ts'
+import * as api from '@/utils/api.ts'
+import appRouter from '@/plugins/router.ts'
 
 // jsdom doesn't implement ResizeObserver, required by Vuetify's VSlideGroup, VPagination, etc.
 global.ResizeObserver = class ResizeObserver {
@@ -73,6 +75,9 @@ vi.mock('@/utils/api.ts', () => {
     createManual: ok({}),
     markAsAdmin: ok({}),
     markAsVolunteer: ok({}),
+    getUserLogins: ok([]),
+    mergeUsers: ok(''),
+    cancelMerge: ok({}),
     // pages
     getPage: ok(''),
     getPages: ok([]),
@@ -152,10 +157,10 @@ vi.mock('@/plugins/router.ts', async () => {
 // Vue's reactive system is fully torn down before the next test starts,
 // preventing "update after unmount" unhandled rejections.
 // ---------------------------------------------------------------------------
-function fakeJwt() {
+function fakeJwt(claims: object = { jti: 'u1', sub: 'Test', isAdmin: false }) {
   const part = (o: object) =>
     btoa(JSON.stringify(o)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
-  return `${part({ alg: 'HS256' })}.${part({ jti: 'u1', sub: 'Test', isAdmin: false })}.sig`
+  return `${part({ alg: 'HS256' })}.${part(claims)}.sig`
 }
 
 let _wrapper: ReturnType<typeof mount> | null = null
@@ -167,7 +172,11 @@ async function mountPage(component: any, route = '/') {
   const pinia = createTestingPinia({ stubActions: false })
   const router = createRouter({
     history: createWebHistory(),
-    routes: [{ path: '/:pathMatch(.*)*', component: { template: '<div/>' } }],
+    routes: [
+      // The OAuth callback page reads the provider from its route.
+      { path: '/login/:provider', component: { template: '<div/>' } },
+      { path: '/:pathMatch(.*)*', component: { template: '<div/>' } },
+    ],
   })
 
   await router.push(route)
@@ -208,6 +217,12 @@ async function clickAndCaptureNavigation(wrapper: ReturnType<typeof mount>, sele
   return new URL(assign.mock.calls[0][0])
 }
 
+function button(wrapper: ReturnType<typeof mount>, text: string) {
+  const found = wrapper.findAll('button').find((b) => b.text() === text)
+  expect(found, `a "${text}" button`).toBeDefined()
+  return found!
+}
+
 // ---------------------------------------------------------------------------
 // Tests
 // ---------------------------------------------------------------------------
@@ -230,6 +245,7 @@ describe('admin-app pages render without errors', () => {
     _appBar?.remove()
     _appBar = null
     sessionStorage.clear()
+    vi.clearAllMocks()
     // Drain any final microtasks scheduled during unmount
     await flushPromises()
   })
@@ -313,6 +329,159 @@ describe('admin-app pages render without errors', () => {
     try {
       await mountPage(LoginProviderPage, `/login/google?access_token=${fakeJwt()}`)
       expect(localStorage.getItem('token')).toBeNull()
+    } finally {
+      localStorage.removeItem('token')
+    }
+  })
+
+  it("lists the signed-in User's Logins and offers Add for each provider not yet linked", async () => {
+    localStorage.setItem('token', fakeJwt())
+    vi.mocked(api.getUserLogins).mockResolvedValueOnce({
+      data: [{ id: 'l1', provider: 'github', createdDate: '2026-03-14T10:00:00Z' }],
+      status: 200,
+    } as any)
+    try {
+      const wrapper = await mountPage(ProfileFormPage, '/profile-form')
+
+      expect(api.getUserLogins).toHaveBeenCalledWith({ path: { id: 'u1' } })
+      const logins = wrapper.get('[aria-label="Logins"]')
+      expect(logins.text()).toContain('GitHub')
+      expect(logins.text()).toContain('2026')
+      expect(wrapper.find('[aria-label="Add GitHub login"]').exists()).toBe(false)
+      for (const label of ['Google', 'Facebook', 'X']) {
+        expect(wrapper.find(`[aria-label="Add ${label} login"]`).exists()).toBe(true)
+      }
+    } finally {
+      localStorage.removeItem('token')
+    }
+  })
+
+  it('adds a Login by signing in with its provider under the add-login intent', async () => {
+    localStorage.setItem('token', fakeJwt())
+    try {
+      const wrapper = await mountPage(ProfileFormPage, '/profile-form')
+
+      const sent = await clickAndCaptureNavigation(wrapper, '[aria-label="Add Google login"]')
+
+      expect(`${sent.origin}${sent.pathname}`).toBe(`${import.meta.env.VITE_API_URL}/login/google`)
+      expect(sent.searchParams.get('redirect_uri')).toBe(`${import.meta.env.VITE_SELF_URL}/login/google`)
+      expect(JSON.parse(sessionStorage.getItem('sign-in-attempt')!)).toEqual({
+        state: sent.searchParams.get('state'),
+        intent: 'add-login',
+      })
+    } finally {
+      localStorage.removeItem('token')
+    }
+  })
+
+  it('asks to confirm adding the Login instead of signing in with the second token', async () => {
+    const signedIn = fakeJwt()
+    localStorage.setItem('token', signedIn)
+    const state = startSignInAttempt('add-login')
+    // A Login never seen before signs in as a brand-new User.
+    const second = fakeJwt({ jti: 'u2', sub: 'New', isAdmin: false })
+    try {
+      const wrapper = await mountPage(LoginProviderPage, `/login/google?state=${state}#access_token=${second}`)
+
+      expect(wrapper.text()).toContain('Add your Google login to this account?')
+      button(wrapper, 'Add login')
+      button(wrapper, 'Cancel')
+      expect(localStorage.getItem('token')).toBe(signedIn)
+    } finally {
+      localStorage.removeItem('token')
+    }
+  })
+
+  it('never offers to add a Login from a callback this tab did not start', async () => {
+    localStorage.setItem('token', fakeJwt())
+    startSignInAttempt('add-login')
+    try {
+      const second = fakeJwt({ jti: 'attacker', sub: 'Attacker', isAdmin: false })
+      const wrapper = await mountPage(LoginProviderPage, `/login/google?state=forged#access_token=${second}`)
+
+      expect(wrapper.text()).toContain('Sign-in failed')
+      expect(wrapper.text()).not.toContain('Add login')
+    } finally {
+      localStorage.removeItem('token')
+    }
+  })
+
+  it('confirming merges with the second token and swaps in the fresh token it returns', async () => {
+    localStorage.setItem('token', fakeJwt())
+    const state = startSignInAttempt('add-login')
+    const second = fakeJwt({ jti: 'u2', sub: 'New', isAdmin: false })
+    const fresh = fakeJwt({ jti: 'u1', sub: 'Test', isAdmin: false, iat: 1 })
+    vi.mocked(api.mergeUsers).mockResolvedValueOnce({ data: fresh, status: 200 } as any)
+    try {
+      const wrapper = await mountPage(LoginProviderPage, `/login/google?state=${state}#access_token=${second}`)
+
+      await button(wrapper, 'Add login').trigger('click')
+      await flushPromises()
+
+      expect(api.mergeUsers).toHaveBeenCalledWith(expect.objectContaining({ body: { token: second } }))
+      expect(localStorage.getItem('token')).toBe(fresh)
+      expect(appRouter.currentRoute.value.path).toBe('/profile-form')
+    } finally {
+      localStorage.removeItem('token')
+    }
+  })
+
+  it('a refused merge says why and keeps the signed-in token', async () => {
+    const signedIn = fakeJwt()
+    localStorage.setItem('token', signedIn)
+    const state = startSignInAttempt('add-login')
+    const second = fakeJwt({ jti: 'u2', sub: 'Speaker', isAdmin: false })
+    vi.mocked(api.mergeUsers).mockRejectedValueOnce({ status: 409 })
+    try {
+      const wrapper = await mountPage(LoginProviderPage, `/login/google?state=${state}#access_token=${second}`)
+
+      await button(wrapper, 'Add login').trigger('click')
+      await flushPromises()
+
+      expect(useNotificationStore().notifications.at(-1)).toMatchObject({
+        type: 'error',
+        text: expect.stringContaining('Merging such accounts is not available yet'),
+      })
+      expect(localStorage.getItem('token')).toBe(signedIn)
+      button(wrapper, 'Cancel')
+    } finally {
+      localStorage.removeItem('token')
+    }
+  })
+
+  it('cancelling discards the User the second sign-in created and keeps the signed-in token', async () => {
+    const signedIn = fakeJwt()
+    localStorage.setItem('token', signedIn)
+    const state = startSignInAttempt('add-login')
+    const second = fakeJwt({ jti: 'u2', sub: 'New', isAdmin: false })
+    try {
+      const wrapper = await mountPage(LoginProviderPage, `/login/google?state=${state}#access_token=${second}`)
+
+      await button(wrapper, 'Cancel').trigger('click')
+      await flushPromises()
+
+      expect(api.cancelMerge).toHaveBeenCalledWith(expect.objectContaining({ body: { token: second } }))
+      expect(api.mergeUsers).not.toHaveBeenCalled()
+      expect(localStorage.getItem('token')).toBe(signedIn)
+      expect(appRouter.currentRoute.value.path).toBe('/profile-form')
+    } finally {
+      localStorage.removeItem('token')
+    }
+  })
+
+  it('signing in again with a Login of the signed-in User changes nothing and says so', async () => {
+    const signedIn = fakeJwt()
+    localStorage.setItem('token', signedIn)
+    const state = startSignInAttempt('add-login')
+    try {
+      const wrapper = await mountPage(LoginProviderPage, `/login/google?state=${state}#access_token=${fakeJwt()}`)
+
+      expect(wrapper.text()).toContain('This Google login already signs in to your account.')
+      expect(wrapper.find('button').exists()).toBe(false)
+      expect(wrapper.get('a[href="/profile-form"]').text()).toBe('Back to profile')
+      expect(api.mergeUsers).not.toHaveBeenCalled()
+      expect(api.cancelMerge).not.toHaveBeenCalled()
+      expect(localStorage.getItem('token')).toBe(signedIn)
     } finally {
       localStorage.removeItem('token')
     }

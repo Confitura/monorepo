@@ -252,9 +252,19 @@ export type LikeResponse = {
     presentationId?: string;
 };
 
+export type LoginDto = {
+    createdDate?: string;
+    id?: string;
+    provider?: string;
+};
+
 export type MergeRequest = {
     from?: string;
     to?: string;
+};
+
+export type MergeUsersRequest = {
+    token?: string;
 };
 
 export type MessageInfo = {
@@ -2681,6 +2691,36 @@ export type CreateManualResponses = {
 
 export type CreateManualResponse = CreateManualResponses[keyof CreateManualResponses];
 
+export type MergeUsersData = {
+    body: MergeUsersRequest;
+    path?: never;
+    query?: never;
+    url: '/users/merge';
+};
+
+export type MergeUsersResponses = {
+    /**
+     * OK
+     */
+    200: string;
+};
+
+export type MergeUsersResponse = MergeUsersResponses[keyof MergeUsersResponses];
+
+export type CancelMergeData = {
+    body: MergeUsersRequest;
+    path?: never;
+    query?: never;
+    url: '/users/merge/cancel';
+};
+
+export type CancelMergeResponses = {
+    /**
+     * OK
+     */
+    200: unknown;
+};
+
 export type GetAdminsData = {
     body?: never;
     path?: never;
@@ -2750,6 +2790,24 @@ export type GetByIdResponses = {
 };
 
 export type GetByIdResponse = GetByIdResponses[keyof GetByIdResponses];
+
+export type GetUserLoginsData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/users/{id}/logins';
+};
+
+export type GetUserLoginsResponses = {
+    /**
+     * OK
+     */
+    200: Array<LoginDto>;
+};
+
+export type GetUserLoginsResponse = GetUserLoginsResponses[keyof GetUserLoginsResponses];
 
 export type GetUserPresentationsData = {
     body?: never;

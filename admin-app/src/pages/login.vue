@@ -1,10 +1,8 @@
 <script setup lang="ts">
 import router from "@/plugins/router.ts";
-import {startSignInAttempt} from "@/utils/sign-in-attempt.ts";
+import {goToSignIn} from "@/utils/sign-in-attempt.ts";
 
 const name = ref('')
-const apiUrl = import.meta.env.VITE_API_URL;
-const selfUrl = import.meta.env.VITE_SELF_URL;
 
 function sayHi() {
   localStorage.setItem('token', name.value)
@@ -26,13 +24,8 @@ definePage({
   },
 })
 
-// The state is created on click, not at render, so every attempt gets its own.
 function signIn(provider: string) {
-
-  const url = new URL(`${apiUrl}/login/${provider}`);
-  url.searchParams.set('redirect_uri', `${selfUrl}/login/${provider}`);
-  url.searchParams.set('state', startSignInAttempt('sign-in'));
-  window.location.assign(url.toString());
+  goToSignIn(provider, 'sign-in');
 }
 </script>
 

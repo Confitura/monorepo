@@ -97,6 +97,12 @@ public class User extends AuditedEntity {
         return isParticipant() && getParticipationData().getArrivalDate() != null;
     }
 
+    // Whether a merge would have to carry anything over. Sign-in fills in the provider's name and photo,
+    // but the privacy policy is accepted only by saving the profile, so it marks a profile the person made.
+    boolean hasContent() {
+        return Boolean.TRUE.equals(privacyPolicyAccepted) || isAdmin || isVolunteer || isSpeaker() || isParticipant();
+    }
+
     interface Edit {
 
     }
