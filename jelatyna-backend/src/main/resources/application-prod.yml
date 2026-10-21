@@ -50,9 +50,6 @@ logging:
 management:
   server:
     port: 9090
-  tracing:
-    sampling:
-      probability: 1.0
 #  opentelemetry:
 #    tracing:
 #      export:
