@@ -135,12 +135,12 @@ The FAQ CMS (#563) and Sponsors CMS (#564) established the pattern for content t
 
 1. **Entity** (uuid2 id; add `published`, and `displayOrder` only if manual ordering is wanted) + **repository** with `@PreAuthorize("@security.isAdmin()")` on `save`/`deleteById`, a public `findPublished…`, and an admin `findAll…`.
 2. **Controller** `@RequestMapping("/things")`: `GET` (public, published only), `GET /all` (admin), `GET /{id}`, `POST`, `PUT /{id}`, `DELETE /{id}`; DTO (no audit fields) + nullable request record.
-3. **Publish**: add `dumpThings()` to `WebpageDataDumper` (writes `/things/….json`) and wire the repository into the `ArchiveConfiguration` dumper-bean constructor. Keep any legacy dump alive during a transition so consumers don't break.
+3. **Publish**: add `dumpThings(folder)` to `WebpageDataDumper` (writes `/things/….json`) and wire the repository into the `ArchiveConfiguration` dumper-bean constructor. Keep any legacy dump alive during a transition so consumers don't break.
 4. **Admin**: a `src/pages/admin/things.vue` (auto-routed via `definePage`) mirroring `admin/faq.vue`/`partners.vue` — list, create/edit dialog, `DialogConfirm` delete; `md-editor-v3` for markdown, `v-file-input` + the existing `POST /resources/…` for image upload. Regenerate the client (see above).
 5. **Webpage**: fetch `/things/….json` via `useArchiveFetch`, render with `marked`; fall back to any prior hardcoded data while the dump is empty.
 6. **Tests**: a `*ControllerTest` mirroring `FaqEntryControllerTest`/`PartnerControllerTest`; admin render + interaction spec mirroring `faq.spec.ts`/`partners.spec.ts`; a webpage assertion in `pages.nuxt.test.ts`.
 
-Data lands via the scheduled `WebpageDataDumper.dumpAll()` (~10 min) into the resource feed the webpage reads (`api.confitura.pl/api/resources/edition-2026/…`). Every schema change (new table, column, index, constraint) needs a new Flyway migration in `jelatyna-backend/src/main/resources/db/migration` **in the same PR**, named with the next zero-padded sequential version: `V00N__add_things.sql` (N = the next free number). Never edit a migration that is already on master. Hibernate only validates (`ddl-auto: validate`), so the Testcontainers suite fails if the migration is missing.
+Data lands via the scheduled `WebpageDataDumper.dumpAll()` (~10 min) into the Current Edition's folder of the resource feed (`api.confitura.pl/api/resources/edition-<year>/…`, ADR-0004); the webpage reads the folder named in its own config. Every schema change (new table, column, index, constraint) needs a new Flyway migration in `jelatyna-backend/src/main/resources/db/migration` **in the same PR**, named with the next zero-padded sequential version: `V00N__add_things.sql` (N = the next free number). Never edit a migration that is already on master. Hibernate only validates (`ddl-auto: validate`), so the Testcontainers suite fails if the migration is missing.
 
 ## Agent skills
 

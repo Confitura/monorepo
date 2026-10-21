@@ -63,6 +63,13 @@ export type DumpStatus = {
     lastDumpAt?: string;
 };
 
+export type DumpedEdition = {
+    conferenceStart?: string;
+    lastDay?: string;
+    name?: string;
+    year?: number;
+};
+
 export type FaqCategoryDto = {
     displayOrder?: number;
     id?: string;
@@ -2411,6 +2418,22 @@ export type AgendaResponses = {
 };
 
 export type AgendaResponse = AgendaResponses[keyof AgendaResponses];
+
+export type GetPublishedEditionData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/published/edition';
+};
+
+export type GetPublishedEditionResponses = {
+    /**
+     * OK
+     */
+    200: DumpedEdition;
+};
+
+export type GetPublishedEditionResponse = GetPublishedEditionResponses[keyof GetPublishedEditionResponses];
 
 export type NewsData = {
     body?: never;

@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import pl.confitura.jelatyna.agenda.*;
+import pl.confitura.jelatyna.edition.EditionRepository;
 import pl.confitura.jelatyna.faq.FaqEntryRepository;
 import pl.confitura.jelatyna.news.NewsEntryRepository;
 import pl.confitura.jelatyna.partner.PartnerRepository;
@@ -13,6 +14,7 @@ import pl.confitura.jelatyna.page.PageController;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
 import pl.confitura.jelatyna.resource.ResourceConfigurationProperties;
 import pl.confitura.jelatyna.user.UserController;
+import pl.confitura.jelatyna.user.UserRepository;
 
 @Configuration
 @RequiredArgsConstructor
@@ -21,8 +23,10 @@ public class ArchiveConfiguration {
 
     private final ObjectMapper objectMapper;
     private final UserController userController;
+    private final UserRepository userRepository;
     private final PageController pageController;
     private final ResourceConfigurationProperties resourceConfigurationProperties;
+    private final EditionRepository editionRepository;
     private final NewsEntryRepository newsEntryRepository;
     private final PresentationRepository presentationRepository;
     private final AgendaService agendaService;
@@ -36,8 +40,10 @@ public class ArchiveConfiguration {
     WebpageDataDumper webpageDataDumper() {
         return new WebpageDataDumper(
                 objectMapper,
-                resourceConfigurationProperties.folder() + "/edition-2026",
+                resourceConfigurationProperties.folder(),
+                editionRepository,
                 userController,
+                userRepository,
                 pageController,
                 newsEntryRepository,
                 presentationRepository,

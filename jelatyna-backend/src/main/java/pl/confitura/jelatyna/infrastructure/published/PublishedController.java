@@ -11,6 +11,7 @@ import pl.confitura.jelatyna.agenda.api.InlineAgendaEntry;
 import pl.confitura.jelatyna.agenda.api.InlineRoom;
 import pl.confitura.jelatyna.agenda.api.InlineTimeSlot;
 import pl.confitura.jelatyna.api.model.InlinePresentationWithSpeakers;
+import pl.confitura.jelatyna.edition.EditionRepository;
 import pl.confitura.jelatyna.news.NewsEntryRepository;
 import pl.confitura.jelatyna.page.PageController;
 import pl.confitura.jelatyna.presentation.Presentation;
@@ -31,6 +32,7 @@ import static java.util.stream.Collectors.toList;
 @RequiredArgsConstructor
 public class PublishedController {
 
+    private final EditionRepository editionRepository;
     private final UserController userController;
     private final PageController pageController;
     private final NewsEntryRepository newsEntryRepository;
@@ -41,6 +43,11 @@ public class PublishedController {
     private final DayRepository dayRepository;
     private final TimeSlotsRepository timeSlotsRepository;
     private final RoomRepository roomRepository;
+
+    @GetMapping("/edition")
+    public DumpedEdition getPublishedEdition() {
+        return DumpedEdition.from(editionRepository.findCurrent());
+    }
 
     @GetMapping("/users/search/admins")
     public ResponseEntity<?> admins() {
