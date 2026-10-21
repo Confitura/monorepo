@@ -57,18 +57,19 @@ Board: `backlog browser` → http://localhost:6420. Tracker conventions: `docs/a
 
 `backlog task view <id> --plain` → keep the full text (title, description, acceptance criteria, labels).
 
-**Size budget.** A PR stays around **300 changed lines** (added plus deleted), hand-written only. Generated or vendored files don't count: `openapi.json`, `admin-app/src/client/**`, lockfiles (`pnpm-lock.yaml`), and verbatim schema dumps such as the Flyway baseline (`V001__baseline.sql`). The measure, run from the branch against `origin/master`:
+**Size budget.** A PR stays around **300 changed lines** (added plus deleted), hand-written only. Generated or vendored files don't count: `openapi.json`, `admin-app/src/client/**`, lockfiles (`pnpm-lock.yaml`, `.terraform.lock.hcl`), and verbatim schema dumps such as the Flyway baseline (`V001__baseline.sql`). The measure, run from the branch against `origin/master`:
 
 ```
-git diff --shortstat origin/master...HEAD -- . ':(exclude)openapi.json' ':(exclude)admin-app/src/client' ':(exclude)*pnpm-lock.yaml' ':(exclude)jelatyna-backend/src/main/resources/db/migration/V001__baseline.sql'
+git diff --shortstat origin/master...HEAD -- . ':(exclude)openapi.json' ':(exclude)admin-app/src/client' ':(exclude)*pnpm-lock.yaml' ':(exclude)*.terraform.lock.hcl' ':(exclude)jelatyna-backend/src/main/resources/db/migration/V001__baseline.sql'
 ```
 
 If the task clearly won't fit in about 300 counted lines, split it **before branching**; the maintainer prefers several small PRs over one big one. Only split where each slice is a complete, green, reviewable change that leaves `master` working and wired (a migration and the entity change that uses it stay together, and may exceed the budget if the PR says why):
 
-1. Cut sequential slices. The original task becomes the first slice: `backlog task edit <id> --description "<slice 1>" --acceptance-criteria "<criterion>" …` (repeat the flag per criterion).
-2. Create each later slice with `backlog task create "<title>" -d "<description>" --ac "<criterion>" … -l ready-for-agent --dep <previous slice id>` (carry over the human-set `model:` / `effort:` labels), so each depends on the one before and the `--ready` frontier keeps them in order.
-3. Record it: `backlog task edit <id> --append-notes "factory: split into <id>, <new ids> — <one-line reason>"`.
-4. Run only the first slice (the original task) through the rest of `run`. In `auto` mode, also notify `split:<id>`.
+1. Cut sequential slices. The original task becomes the first slice, retitled to what it now covers (its PR takes the task title): `backlog task edit <id> --title "<slice 1 title>" --description "<slice 1>" --acceptance-criteria "<criterion>" …` (repeat `--acceptance-criteria` per criterion). It **replaces the whole acceptance-criteria list**; it doesn't append (`--ac` adds one, `--remove-ac <index>` removes one).
+2. Create each later slice with `backlog task create "<title>" -d "<description>" --ac "<criterion>" … -l ready-for-agent --dep <previous slice id>`, so each depends on the one before and the `--ready` frontier keeps them in order. Carry over a `model:` / `effort:` label only if the human set it on the original; leave the rest unlabelled so each slice is tiered on its own when it runs.
+3. Tasks that depended on the original would otherwise become ready as soon as slice 1 merges. Find them (`backlog task list --plain`, then `backlog task view <id> --plain` for each) and add the last slice to their dependencies: `backlog task edit <dependent> --dep <its existing dependencies>,<last slice id>` (`--dep` replaces the list, so repeat the existing ones).
+4. Record it: `backlog task edit <id> --append-notes "factory: split into <id>, <new ids> — <one-line reason>"`.
+5. Run only the first slice (the original task) through the rest of `run`. In `auto` mode, also notify `split:<id>`.
 
 When in doubt, don't split: the implementer stops at a green checkpoint if the diff runs over (see step 5).
 
@@ -108,7 +109,7 @@ BRANCH: <B> (already checked out)
 
 - `STATUS: BLOCKED` → go to **Hand to human**.
 - `STATUS: DONE` → confirm `git log --oneline origin/master..HEAD` is non-empty and `git status --porcelain` is clean, then spawn a `factory-reviewer` subagent with: the task text, `BRANCH: <B>`, `BASE: origin/master`, and the implementer's report.
-- `REMAINING WORK` in the report that isn't `none` means the implementer stopped at a green checkpoint to stay near the size budget. Review and publish what's done as usual, then in **Publish** create the follow-up task for the remainder.
+- `REMAINING WORK` in the report that isn't `none` means the implementer stopped at a green checkpoint to stay near the size budget. The reviewer marks the criteria listed there `DEFERRED`, which is not a FAIL. Publish what's done as usual, then in **Publish** create the follow-up task for the remainder.
 - `VERDICT: FAIL` (first time) → resume the same implementer with `SendMessage` (agent id from its result) carrying the REQUIRED FIXES — it keeps its model and effort. If resuming isn't possible, spawn a fresh `factory-implementer` with the same `model` / `effort`, the task text, the findings, and "remediation mode: the branch already has your earlier commits". Then run a **new** reviewer.
 - Second FAIL → **Hand to human**.
 
@@ -123,7 +124,8 @@ BRANCH: <B> (already checked out)
    <implementer WHY — Problem / Approach / Alternatives considered / Trade-offs / follow-ups>
 
    ## Acceptance criteria
-   - [x] <each criterion>
+   - [x] <each criterion the reviewer marked MET>
+   - [ ] <each criterion marked DEFERRED> — deferred to a follow-up task
 
    ## Verification
    - <each CHECKS line>
@@ -134,8 +136,8 @@ BRANCH: <B> (already checked out)
    Opened by the local code factory after an automated review PASS. Needs human review and merge.
    ```
    If the WHY doesn't answer an obvious "why this way?" about the diff, ask the implementer to complete it before publishing — never fill it in from backlog notes.
-3. `backlog task edit <id> -s "In Review" --ref <PR url> --append-notes "factory: PR <url> (ready for review), reviewer PASS"` plus `--check-ac <n>` for each criterion the reviewer marked MET.
-4. If the report's `REMAINING WORK` isn't `none`, create the follow-up: `backlog task create "<title>" -d "<what's left>" --ac "<criterion>" … -l ready-for-agent --dep <id>` (carry over the `model:` / `effort:` labels), and append `factory: remaining work split off as <new id>` to the task's notes. It depends on this task, so it stays off the frontier until the PR merges.
+3. `backlog task edit <id> -s "In Review" --ref <PR url> --append-notes "factory: PR <url> (ready for review), reviewer PASS"` plus `--check-ac <n>` for each criterion the reviewer marked MET (not the DEFERRED ones).
+4. If the report's `REMAINING WORK` isn't `none`, create the follow-up: `backlog task create "<title>" -d "<what's left>" --ac "<criterion>" … -l ready-for-agent --dep <id>` with the deferred criteria as its `--ac`s. Carry over a `model:` / `effort:` label only if the human set it (the ones the factory added are recorded in a `factory: tier` note; leave those off so the follow-up is tiered on its own). Append `factory: remaining work split off as <new id>` to the task's notes. It depends on this task, so it stays off the frontier until the PR merges. As in a split, add the new task to the dependencies of any task that depended on this one (`--dep` replaces the list, so repeat the existing ones).
 
 ### Hand to human
 
