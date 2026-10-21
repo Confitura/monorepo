@@ -14,7 +14,6 @@ import pl.confitura.jelatyna.agenda.*;
 import pl.confitura.jelatyna.agenda.TimeSlot.TimeSlotId;
 import pl.confitura.jelatyna.api.model.PresentationRequest;
 import pl.confitura.jelatyna.infrastructure.security.JelatynaPrincipal;
-import pl.confitura.jelatyna.login.github.GithubService;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
 import pl.confitura.jelatyna.user.User;
@@ -161,7 +160,6 @@ public class FakePresentations {
         String fullName = faker.name().fullName();
         return userRepository.save(new User()
                 .setId("00000000-0000-0000-%d-000000000000".formatted(i))
-                .setOrigin(GithubService.SYSTEM)
                 .setName(fullName)
                 .setEmail(fullName.replace(" ", ".") + "@example.com")
                 .setBio(faker.text().text())

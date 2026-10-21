@@ -54,4 +54,16 @@ class IntegrationTestDatabaseTest extends BaseIntegrationTest {
             }
         }
     }
+
+    // Logins are the only record of how a User signs in (ADR-0003).
+    @Test
+    void usersNoLongerHoldTheirSignInNowThatLoginsDo() throws SQLException {
+        try (Connection connection = dataSource.getConnection()) {
+            for (String column : List.of("social_id", "origin")) {
+                try (ResultSet columns = connection.getMetaData().getColumns(null, "public", "users", column)) {
+                    assertThat(columns.next()).as("column users.%s", column).isFalse();
+                }
+            }
+        }
+    }
 }

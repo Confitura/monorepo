@@ -55,9 +55,6 @@ public class UserAdminController {
     @PostMapping("/users/manual")
     @Transactional
     public ResponseEntity<FullUser> createManual(@RequestBody User user) {
-        if (user.getOrigin() == null || user.getOrigin().isBlank()) {
-            user.setOrigin("manual");
-        }
         if (user.getPhoto() == null || user.getPhoto().isBlank()) {
             var gravatar = new com.timgroup.jgravatar.Gravatar(300, com.timgroup.jgravatar.GravatarRating.GENERAL_AUDIENCES, com.timgroup.jgravatar.GravatarDefaultImage.BLANK);
             String url = gravatar.getUrl(user.getEmail());

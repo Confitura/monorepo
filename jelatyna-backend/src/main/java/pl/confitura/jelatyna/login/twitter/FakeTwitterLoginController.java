@@ -61,7 +61,6 @@ public class FakeTwitterLoginController {
         if (userId == null) {
             user = userRepository.save(new User()
                     .setName("Fake User")
-                    .setOrigin("twitter")
                     .setTwitter("fake_user")
                     .setBio("Fake bio"));
             userId = user.getId();

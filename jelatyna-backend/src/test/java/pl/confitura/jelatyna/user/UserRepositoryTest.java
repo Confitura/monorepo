@@ -29,13 +29,13 @@ public class UserRepositoryTest extends BaseIntegrationTest {
     @Test
     void should_save_a_user() {
         User user = new User()
-                .setOrigin("twitter")
-                .setSocialId("1234");
+                .setName("Jane")
+                .setTwitter("jane");
 
         User saved = repository.save(user);
 
         assertThat(repository.findById(saved.getId()))
-                .isEqualToComparingOnlyGivenFields(user, "origin", "socialId");
+                .isEqualToComparingOnlyGivenFields(user, "name", "twitter");
     }
 
     @Autowired

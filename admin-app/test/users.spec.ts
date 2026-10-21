@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { mount, flushPromises } from '@vue/test-utils'
 import { createVuetify } from 'vuetify'
 import { createTestingPinia } from '@pinia/testing'
-import { VAutocomplete, VBtn, VCard, VRadioGroup } from 'vuetify/components'
+import { VAutocomplete, VBtn, VCard, VRadioGroup, VTextField } from 'vuetify/components'
 import UsersPage from '@/pages/admin/users.vue'
 
 global.ResizeObserver = class ResizeObserver {
@@ -95,6 +95,27 @@ describe('admin users page', () => {
     const headers = wrapper.findAll('thead th').map((th) => th.text())
     expect(headers).toContain('Logins')
     expect(headers).not.toContain('Origin')
+  })
+
+  it('adds a Manual User from a name and email, with no Origin to fill in', async () => {
+    let sent: Record<string, unknown> = {}
+    api.createManual.mockImplementation(async ({ body }) => {
+      sent = { ...body }
+      return { status: 200 }
+    })
+    const wrapper = mountPage()
+    await flushPromises()
+
+    await wrapper.findAllComponents(VBtn).find((button) => button.text() === 'Add User')!.trigger('click')
+    await flushPromises()
+    const fields = wrapper.findAllComponents(VTextField)
+    expect(fields.map((field) => field.props('label'))).not.toContain('Origin')
+    await fields.find((field) => field.props('label') === 'Name')!.setValue('Eve')
+    await fields.find((field) => field.props('label') === 'Email')!.setValue('eve@example.com')
+    await wrapper.findAllComponents(VBtn).find((button) => button.text() === 'Create')!.trigger('click')
+    await flushPromises()
+
+    expect(sent).toEqual({ name: 'Eve', email: 'eve@example.com', bio: '', admin: false, volunteer: false })
   })
 
   it("lists each user's login providers", async () => {

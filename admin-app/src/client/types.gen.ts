@@ -525,12 +525,10 @@ export type User = {
     lastModifiedBy?: string;
     lastModifiedDate?: string;
     name?: string;
-    origin?: string;
     participant?: boolean;
     participationData?: ParticipationData;
     photo?: string;
     privacyPolicyAccepted?: boolean;
-    socialId?: string;
     speaker?: boolean;
     twitter?: string;
     username?: string;
