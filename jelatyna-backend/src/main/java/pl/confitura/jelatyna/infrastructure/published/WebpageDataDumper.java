@@ -3,7 +3,6 @@ package pl.confitura.jelatyna.infrastructure.published;
 import tools.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.transaction.annotation.Transactional;
 import pl.confitura.jelatyna.agenda.*;
@@ -13,7 +12,7 @@ import pl.confitura.jelatyna.agenda.api.InlineTimeSlot;
 import pl.confitura.jelatyna.api.model.InlinePresentationWithSpeakers;
 import pl.confitura.jelatyna.faq.FaqEntryDto;
 import pl.confitura.jelatyna.faq.FaqEntryRepository;
-import pl.confitura.jelatyna.news.NewsletterApi;
+import pl.confitura.jelatyna.news.NewsEntryRepository;
 import pl.confitura.jelatyna.partner.PartnerDto;
 import pl.confitura.jelatyna.partner.PartnerRepository;
 import pl.confitura.jelatyna.page.PageController;
@@ -22,7 +21,6 @@ import pl.confitura.jelatyna.presentation.PresentationRepository;
 import pl.confitura.jelatyna.user.PublicSpeaker;
 import pl.confitura.jelatyna.user.UserController;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Instant;
@@ -35,7 +33,6 @@ import java.util.concurrent.atomic.AtomicReference;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
 
-@Slf4j
 @RequiredArgsConstructor
 public class WebpageDataDumper {
 
@@ -44,7 +41,7 @@ public class WebpageDataDumper {
 
     private final UserController userController;
     private final PageController pageController;
-    private final NewsletterApi newsletterApi;
+    private final NewsEntryRepository newsEntryRepository;
     private final PresentationRepository presentationRepository;
 
     // Agenda-related repositories
@@ -145,11 +142,7 @@ public class WebpageDataDumper {
     }
 
     private void dumpNews() {
-        try {
-            dumbData(DumpedNews.from(newsletterApi.getWebpageNews()), "news.json");
-        } catch (IOException e) {
-            log.warn("Couldn't dump news", e);
-        }
+        dumbData(DumpedNews.from(newsEntryRepository.findPublicAt(Instant.now())), "news.json");
     }
 
     public void dumpAgendaByDay() {

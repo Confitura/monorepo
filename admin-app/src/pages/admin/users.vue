@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import DialogConfirm from '@/components/DialogConfirm.vue'
+import MergePreviewDetails from '@/components/MergePreviewDetails.vue'
 import type {DataTableHeaders} from '@/plugins/vuetify'
-import {adminMergeUsers, createManual, markAsAdmin, markAsVolunteer, getAllUsers, unlinkLogin} from "@/utils/api.ts";
-import type {FullUser, LoginDto} from "@/utils/api";
+import {adminMergeUsers, createManual, markAsAdmin, markAsVolunteer, getAllUsers, previewAdminMerge, unlinkLogin} from "@/utils/api.ts";
+import type {FullUser, LoginDto, MergePreview} from "@/utils/api";
 import {providerLabel} from "@/utils/sign-in-attempt.ts";
 
 
@@ -110,7 +111,7 @@ const mergeSurvivorId = ref<string | null>(null)
 const mergeCandidates = computed(() => users.value.filter((user) => user.id !== mergeUser.value?.id))
 const mergeOther = computed(() => users.value.find((user) => user.id === mergeOtherId.value))
 // Two Users of one person often share a name and email, so the choice of which to keep also shows their Logins.
-const userLabel = (user: FullUser) => `${user.name} (${user.email})`
+const userLabel = (user: FullUser) => user.email ? `${user.name} (${user.email})` : user.name ?? ''
 const loginsLabel = (user: FullUser) => user.logins?.length ? user.logins.map((login) => login.provider).join(', ') : 'Manual'
 
 function openMerge(user: FullUser) {
@@ -120,18 +121,46 @@ function openMerge(user: FullUser) {
   mergeDialog.value = true
 }
 
+// Both Users, once the other User and the one to keep are chosen.
+const mergePair = computed(() => {
+  if (!mergeOtherId.value || !mergeSurvivorId.value) return null
+  const survivorId = mergeSurvivorId.value
+  const absorbedId = survivorId === mergeUser.value!.id ? mergeOtherId.value : mergeUser.value!.id!
+  return { survivorId, absorbedId }
+})
+// What the merge would make of the kept User, or why the backend would refuse it.
+const mergePreview = ref<MergePreview | null>(null)
+const mergeRefusal = ref<string | null>(null)
+
+// A 409 says why, e.g. both users hold a ticket.
+function refusalMessage(error: unknown, fallback: string) {
+  const { status, response } = error as { status?: number, response?: { data?: unknown } }
+  return status === 409 && typeof response?.data === 'string' ? response.data : fallback
+}
+
+// The backend refuses the preview exactly when it would refuse the merge. A newer choice discards an older answer.
+watch(mergePair, async (pair, _, onCleanup) => {
+  let stale = false
+  onCleanup(() => stale = true)
+  mergePreview.value = null
+  mergeRefusal.value = null
+  if (!pair) return
+  try {
+    const response = await previewAdminMerge({ path: pair, throwOnError: true })
+    if (!stale) mergePreview.value = response.data
+  } catch (error) {
+    if (!stale) mergeRefusal.value = refusalMessage(error, 'Failed to preview the merge')
+  }
+})
+
 function confirmMerge() {
-  const survivorId = mergeSurvivorId.value!
-  const absorbedId = survivorId === mergeUser.value!.id ? mergeOtherId.value! : mergeUser.value!.id!
-  adminMergeUsers({ path: { survivorId, absorbedId }, throwOnError: true })
+  adminMergeUsers({ path: mergePair.value!, throwOnError: true })
       .then(_ => {
         Notify.success('Users merged')
         mergeDialog.value = false
         reloadUsers()
       })
-      // A 409 says why, e.g. both users hold a ticket.
-      .catch(error => Notify.error(error.status === 409 && typeof error.response?.data === 'string'
-          ? error.response.data : 'Failed to merge the users'))
+      .catch(error => Notify.error(refusalMessage(error, 'Failed to merge the users')))
 }
 
 const headers: DataTableHeaders = [
@@ -328,6 +357,15 @@ onMounted(() => {
                 :value="user.id"
             />
           </v-radio-group>
+          <template v-if="mergePreview">
+            <p>The kept user will be:</p>
+            <MergePreviewDetails
+                :preview="mergePreview"
+                roles-lead="The kept user also becomes"
+                talks-heading="These talks move to the kept user:"
+            />
+          </template>
+          <v-alert v-if="mergeRefusal" type="error" variant="tonal" class="mb-2" :text="mergeRefusal" />
           <v-alert
               type="warning"
               variant="tonal"
@@ -337,7 +375,7 @@ onMounted(() => {
         <v-card-actions>
           <v-spacer />
           <v-btn variant="text" @click="mergeDialog = false">Cancel</v-btn>
-          <v-btn color="primary" :disabled="!mergeSurvivorId" @click="confirmMerge">Merge</v-btn>
+          <v-btn v-if="!mergeRefusal" color="primary" :disabled="!mergePreview" @click="confirmMerge">Merge</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import pl.confitura.jelatyna.agenda.*;
 import pl.confitura.jelatyna.faq.FaqEntryRepository;
-import pl.confitura.jelatyna.news.NewsletterApi;
+import pl.confitura.jelatyna.news.NewsEntryRepository;
 import pl.confitura.jelatyna.partner.PartnerRepository;
 import pl.confitura.jelatyna.page.PageController;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
@@ -23,7 +23,7 @@ public class ArchiveConfiguration {
     private final UserController userController;
     private final PageController pageController;
     private final ResourceConfigurationProperties resourceConfigurationProperties;
-    private final NewsletterApi newsletterApi;
+    private final NewsEntryRepository newsEntryRepository;
     private final PresentationRepository presentationRepository;
     private final AgendaService agendaService;
     private final DayRepository dayRepository;
@@ -39,7 +39,7 @@ public class ArchiveConfiguration {
                 resourceConfigurationProperties.folder() + "/edition-2026",
                 userController,
                 pageController,
-                newsletterApi,
+                newsEntryRepository,
                 presentationRepository,
                 agendaService,
                 dayRepository,

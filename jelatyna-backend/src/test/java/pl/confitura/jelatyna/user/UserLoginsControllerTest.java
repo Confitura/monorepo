@@ -504,6 +504,45 @@ class UserLoginsControllerTest extends BaseIntegrationTest {
     }
 
     @Test
+    void anAdminPreviewsWhatTheMergeWouldMakeOfTheSurvivorWithoutMerging() throws Exception {
+        User admin = userRepository.save(new User().setName("Admin").setAdmin(true));
+        User survivor = userRepository.save(new User().setName("Survivor").setVolunteer(true));
+        User absorbed = userRepository.save(new User().setName("Absorbed").setEmail("absorbed@example.com")
+                .setAdmin(true).setVolunteer(true));
+        talk("Absorbed's talk", absorbed);
+
+        adminPreviewMerge(admin, survivor, absorbed)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value("Survivor"))
+                .andExpect(jsonPath("$.email").value("absorbed@example.com"))
+                .andExpect(jsonPath("$.becomesAdmin").value(true))
+                .andExpect(jsonPath("$.becomesVolunteer").value(false))
+                .andExpect(jsonPath("$.talksToMove").value(contains("Absorbed's talk")));
+
+        assertThat(userRepository.existsById(absorbed.getId())).isTrue();
+        mockMvc.perform(get("/users/" + survivor.getId()).header(AUTHORIZATION, bearer(admin)))
+                .andExpect(jsonPath("$.email").isEmpty());
+    }
+
+    // The admin preview refuses exactly what the admin merge refuses, with the same reasons.
+    @Test
+    void theAdminPreviewRefusesTwoTicketsAUserWithItselfAMissingUserAndANonAdmin() throws Exception {
+        User admin = userRepository.save(new User().setName("Admin").setAdmin(true));
+        User survivor = give(Content.TICKET, userRepository.save(new User().setName("Survivor")));
+        User absorbed = give(Content.TICKET, userRepository.save(new User().setName("Absorbed")));
+
+        adminPreviewMerge(admin, survivor, absorbed)
+                .andExpect(status().isConflict())
+                .andExpect(content().string(containsString("Both users have a ticket")));
+        adminPreviewMerge(admin, survivor, survivor)
+                .andExpect(status().isConflict())
+                .andExpect(content().string(containsString("cannot be merged with itself")));
+        adminPreviewMerge(admin, new User(), absorbed).andExpect(status().isNotFound());
+        adminPreviewMerge(admin, survivor, new User()).andExpect(status().isNotFound());
+        adminPreviewMerge(survivor, survivor, absorbed).andExpect(status().isForbidden());
+    }
+
+    @Test
     void onlyAnAdminMergesUsersByTheirIds() throws Exception {
         User signedIn = userRepository.save(new User().setName("Not an admin"));
         User other = userRepository.save(new User().setName("Other"));
@@ -664,6 +703,11 @@ class UserLoginsControllerTest extends BaseIntegrationTest {
 
     private ResultActions adminMerge(User actor, User survivor, User absorbed) throws Exception {
         return mockMvc.perform(post("/users/" + survivor.getId() + "/merge/" + absorbed.getId())
+                .header(AUTHORIZATION, bearer(actor)));
+    }
+
+    private ResultActions adminPreviewMerge(User actor, User survivor, User absorbed) throws Exception {
+        return mockMvc.perform(get("/users/" + survivor.getId() + "/merge/" + absorbed.getId() + "/preview")
                 .header(AUTHORIZATION, bearer(actor)));
     }
 

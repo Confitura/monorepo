@@ -2967,6 +2967,25 @@ export type AdminMergeUsersResponses = {
     200: unknown;
 };
 
+export type PreviewAdminMergeData = {
+    body?: never;
+    path: {
+        survivorId: string;
+        absorbedId: string;
+    };
+    query?: never;
+    url: '/users/{survivorId}/merge/{absorbedId}/preview';
+};
+
+export type PreviewAdminMergeResponses = {
+    /**
+     * OK
+     */
+    200: MergePreview;
+};
+
+export type PreviewAdminMergeResponse = PreviewAdminMergeResponses[keyof PreviewAdminMergeResponses];
+
 export type MarkAsAdminData = {
     body?: never;
     path: {
