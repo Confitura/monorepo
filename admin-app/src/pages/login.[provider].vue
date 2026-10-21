@@ -137,6 +137,12 @@ async function cancelLink() {
       <v-list-item v-for="[key, label] in previewFields" :key="key" :subtitle="label" :title="preview[key]" />
     </v-list>
     <p v-if="gainedRoles.length">You also become {{ gainedRoles.join(' and ') }}.</p>
+    <template v-if="preview.talksToMove?.length">
+      <p>These talks move to this account:</p>
+      <v-list density="compact">
+        <v-list-item v-for="(title, index) in preview.talksToMove" :key="index" :title="title" />
+      </v-list>
+    </template>
     <v-alert type="warning" variant="tonal" text="This cannot be undone." />
     <template #actions>
       <v-btn @click="cancelLink">Cancel</v-btn>

@@ -3,6 +3,7 @@ package pl.confitura.jelatyna.user;
 import static java.time.temporal.ChronoUnit.SECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
@@ -16,6 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
@@ -26,7 +28,6 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.read.ListAppender;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -202,8 +203,8 @@ class UserLoginsControllerTest extends BaseIntegrationTest {
     enum Content { SAVED_PROFILE, TALK, ADMIN_ROLE, VOLUNTEER_ROLE, TICKET }
 
     @ParameterizedTest
-    @EnumSource(names = {"SAVED_PROFILE", "ADMIN_ROLE", "VOLUNTEER_ROLE"})
-    void aUserWithAProfileOrARoleIsMergedAndDeleted(Content content) throws Exception {
+    @EnumSource(names = {"SAVED_PROFILE", "TALK", "ADMIN_ROLE", "VOLUNTEER_ROLE"})
+    void aUserWithAProfileARoleOrTalksIsMergedAndDeleted(Content content) throws Exception {
         User signedIn = userRepository.save(new User().setName("Signed in"));
         String githubId = uniqueId();
         User other = give(content, oauthUserService.mapToUser(gitHubUser(githubId)));
@@ -266,20 +267,55 @@ class UserLoginsControllerTest extends BaseIntegrationTest {
                 .andExpect(jsonPath("$.email").isEmpty());
     }
 
-    // Moving talks and the ticket comes later; until then the merge, and so its preview, refuses a User with either.
-    @ParameterizedTest
-    @CsvSource({"TALK, has talks", "TICKET, has a ticket"})
-    void aUserWithTalksOrATicketIsNotMergedYetAndTheRefusalSaysWhich(Content content, String which) throws Exception {
+    @Test
+    void theOthersTalksMoveToTheSurvivorWhichStaysASpeakerOnceOfATalkTheyBothGive() throws Exception {
+        User signedIn = userRepository.save(new User().setName("Signed in"));
+        User other = oauthUserService.mapToUser(gitHubUser(uniqueId()));
+        userRepository.save(other.setEmail("other@example.com"));
+        talk("Other's talk", other);
+        Presentation shared = talk("Shared talk", other, signedIn);
+
+        String survivorToken = merge(signedIn, tokenService.asToken(other))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+
+        mockMvc.perform(get("/users/" + signedIn.getId() + "/presentations").header(AUTHORIZATION, "Bearer " + survivorToken))
+                .andExpect(jsonPath("$[*].title").value(containsInAnyOrder("Other's talk", "Shared talk")));
+        mockMvc.perform(get("/presentations/" + shared.getId() + "/cospeakers").header(AUTHORIZATION, "Bearer " + survivorToken))
+                .andExpect(jsonPath("$[*].id").value(contains(signedIn.getId())));
+        assertThat(Jwts.parser().verifyWith(serverKey()).build().parseSignedClaims(survivorToken).getPayload()
+                .get("isSpeaker", Boolean.class)).isTrue();
+    }
+
+    @Test
+    void thePreviewListsTheTalksThatWillMoveWithoutMovingThem() throws Exception {
+        User signedIn = userRepository.save(new User().setName("Signed in"));
+        User other = oauthUserService.mapToUser(gitHubUser(uniqueId()));
+        talk("Other's talk", other);
+        // The survivor already speaks at it, so nothing moves.
+        talk("Shared talk", other, signedIn);
+
+        previewMerge(signedIn, tokenService.asToken(other))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.talksToMove").value(contains("Other's talk")));
+
+        mockMvc.perform(get("/users/" + other.getId() + "/presentations").header(AUTHORIZATION, bearer(other)))
+                .andExpect(jsonPath("$[*].title").value(containsInAnyOrder("Other's talk", "Shared talk")));
+    }
+
+    // Moving the ticket comes later; until then the merge, and so its preview, refuses a User with one.
+    @Test
+    void aUserWithATicketIsNotMergedYetAndTheRefusalSaysWhy() throws Exception {
         User signedIn = userRepository.save(new User().setName("Signed in"));
         String githubId = uniqueId();
-        User other = give(content, oauthUserService.mapToUser(gitHubUser(githubId)));
+        User other = give(Content.TICKET, oauthUserService.mapToUser(gitHubUser(githubId)));
 
         merge(signedIn, tokenService.asToken(other))
                 .andExpect(status().isConflict())
-                .andExpect(content().string(containsString(which)));
+                .andExpect(content().string(containsString("has a ticket")));
         previewMerge(signedIn, tokenService.asToken(other))
                 .andExpect(status().isConflict())
-                .andExpect(content().string(containsString(which)));
+                .andExpect(content().string(containsString("has a ticket")));
 
         assertThat(oauthUserService.mapToUser(gitHubUser(githubId)).getId()).isEqualTo(other.getId());
     }
@@ -287,8 +323,7 @@ class UserLoginsControllerTest extends BaseIntegrationTest {
     private User give(Content content, User user) {
         switch (content) {
             case SAVED_PROFILE -> userRepository.save(user.setPrivacyPolicyAccepted(true));
-            case TALK -> presentationRepository.save(Presentation.from(
-                    new PresentationRequest("Talk", "short", "long", "beginner", "Polish", new String[]{}), user, Set.of()));
+            case TALK -> talk("Talk", user);
             case ADMIN_ROLE -> userRepository.save(user.setAdmin(true));
             case VOLUNTEER_ROLE -> userRepository.save(user.setVolunteer(true));
             case TICKET -> {
@@ -302,6 +337,13 @@ class UserLoginsControllerTest extends BaseIntegrationTest {
         return user;
     }
 
+    private Presentation talk(String title, User speaker, User... coSpeakers) {
+        Presentation talk = Presentation.from(
+                new PresentationRequest(title, "short", "long", "beginner", "Polish", new String[]{}), speaker, Set.of());
+        Arrays.stream(coSpeakers).forEach(talk::setSpeaker);
+        return presentationRepository.save(talk);
+    }
+
     @Test
     void aSecondSignInThatWasAlreadyMergedIsNotFound() throws Exception {
         User signedIn = userRepository.save(new User().setName("Signed in"));
@@ -312,10 +354,12 @@ class UserLoginsControllerTest extends BaseIntegrationTest {
     }
 
     @Test
-    void eachLinkLogsOneLineWithIdsOnly() throws Exception {
+    void eachLinkLogsOneLineWithIdsAndHowManyTalksMoved() throws Exception {
         User signedIn = userRepository.save(new User().setName("Signed in").setEmail("signed.in@example.com"));
         String githubId = uniqueId();
         User brandNew = oauthUserService.mapToUser(gitHubUser(githubId));
+        talk("Other's talk", brandNew);
+        talk("Shared talk", brandNew, signedIn);
         Login login = loginRepository.findByProviderAndExternalId("github", githubId).orElseThrow();
         Logger logger = (Logger) LoggerFactory.getLogger(UserLoginsController.class);
         ListAppender<ILoggingEvent> appender = new ListAppender<>();
@@ -336,7 +380,8 @@ class UserLoginsControllerTest extends BaseIntegrationTest {
                             tuple("survivorUserId", signedIn.getId()),
                             tuple("absorbedUserId", brandNew.getId()),
                             tuple("provider", "github"),
-                            tuple("loginId", login.getId()));
+                            tuple("loginId", login.getId()),
+                            tuple("talksMoved", 1));
             assertThat(event.getFormattedMessage()).doesNotContain("Signed in", "signed.in@example.com", "Octo Cat", githubId);
         });
     }

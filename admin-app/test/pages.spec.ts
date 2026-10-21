@@ -449,6 +449,25 @@ describe('admin-app pages render without errors', () => {
     }
   })
 
+  it('lists the talks that will move to the signed-in User', async () => {
+    localStorage.setItem('token', fakeJwt())
+    const state = startSignInAttempt('add-login')
+    const second = fakeJwt({ jti: 'u2', sub: 'Speaker', isAdmin: false })
+    vi.mocked(api.previewMerge).mockResolvedValueOnce({
+      data: { name: 'Test', talksToMove: ['Kotlin in prod', 'Testing with style'] },
+      status: 200,
+    } as any)
+    try {
+      const wrapper = await mountPage(LoginProviderPage, `/login/google?state=${state}#access_token=${second}`)
+
+      expect(wrapper.text()).toContain('These talks move to this account:')
+      expect(wrapper.text()).toContain('Kotlin in prod')
+      expect(wrapper.text()).toContain('Testing with style')
+    } finally {
+      localStorage.removeItem('token')
+    }
+  })
+
   it('never offers to add a Login from a callback this tab did not start', async () => {
     localStorage.setItem('token', fakeJwt())
     startSignInAttempt('add-login')
@@ -487,8 +506,8 @@ describe('admin-app pages render without errors', () => {
     const signedIn = fakeJwt()
     localStorage.setItem('token', signedIn)
     const state = startSignInAttempt('add-login')
-    const second = fakeJwt({ jti: 'u2', sub: 'Speaker', isAdmin: false })
-    const reason = 'The other user has talks, which cannot be merged yet'
+    const second = fakeJwt({ jti: 'u2', sub: 'Participant', isAdmin: false })
+    const reason = 'The other user has a ticket, which cannot be merged yet'
     vi.mocked(api.previewMerge).mockRejectedValueOnce({ status: 409, response: { data: reason } })
     try {
       const wrapper = await mountPage(LoginProviderPage, `/login/google?state=${state}#access_token=${second}`)

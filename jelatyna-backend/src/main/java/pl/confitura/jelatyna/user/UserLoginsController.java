@@ -26,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import pl.confitura.jelatyna.infrastructure.security.JelatynaPrincipal;
 import pl.confitura.jelatyna.infrastructure.security.TokenService;
+import pl.confitura.jelatyna.presentation.Presentation;
 
 /**
  * A User's Logins, and linking another one (ADR-0003): the person completes that provider's sign-in
@@ -85,6 +86,7 @@ public class UserLoginsController {
         User absorbed = userToAbsorb(principal, request);
         User survivor = userRepository.findById(principal.getId());
         survivor.absorb(absorbed);
+        int talksMoved = survivor.takeTalks(absorbed);
         loginRepository.findByUserId(absorbed.getId()).forEach(login -> {
             login.moveTo(survivor);
             // Ids only: names and emails stay out of the logs.
@@ -94,6 +96,7 @@ public class UserLoginsController {
                     .addKeyValue("absorbedUserId", absorbed.getId())
                     .addKeyValue("provider", login.getProvider())
                     .addKeyValue("loginId", login.getId())
+                    .addKeyValue("talksMoved", talksMoved)
                     .log();
         });
         userRepository.delete(absorbed);
@@ -108,7 +111,7 @@ public class UserLoginsController {
                                      @RequestBody MergeUsersRequest request) {
         User absorbed = userToAbsorb(principal, request);
         User survivor = userRepository.findById(principal.getId());
-        return MergePreview.of(survivor, survivor.mergedWith(absorbed));
+        return MergePreview.of(survivor, absorbed);
     }
 
     /**
@@ -142,11 +145,9 @@ public class UserLoginsController {
         if (absorbed == null) {
             throw new ResponseStatusException(NOT_FOUND);
         }
-        // Moving talks and the ticket comes later.
-        if (absorbed.isSpeaker() || absorbed.isParticipant()) {
-            String which = absorbed.isSpeaker() && absorbed.isParticipant() ? "talks and a ticket"
-                    : absorbed.isSpeaker() ? "talks" : "a ticket";
-            throw new ResponseStatusException(CONFLICT, "The other user has " + which + ", which cannot be merged yet");
+        // Moving the ticket comes later.
+        if (absorbed.isParticipant()) {
+            throw new ResponseStatusException(CONFLICT, "The other user has a ticket, which cannot be merged yet");
         }
         return absorbed;
     }
@@ -160,14 +161,17 @@ public class UserLoginsController {
     public record MergeUsersRequest(String token) {
     }
 
-    /** The signed-in User's profile after a merge, and the roles it would gain. */
+    /** The signed-in User's profile after a merge, the roles it would gain, and the titles of the talks it would gain. */
     public record MergePreview(String name, String email, String bio, String username, String twitter, String github,
-                               String www, String photo, boolean becomesAdmin, boolean becomesVolunteer) {
+                               String www, String photo, boolean becomesAdmin, boolean becomesVolunteer,
+                               List<String> talksToMove) {
 
-        static MergePreview of(User survivor, User merged) {
+        static MergePreview of(User survivor, User absorbed) {
+            User merged = survivor.mergedWith(absorbed);
             return new MergePreview(merged.getName(), merged.getEmail(), merged.getBio(), merged.getUsername(),
                     merged.getTwitter(), merged.getGithub(), merged.getWww(), merged.getPhoto(),
-                    merged.isAdmin() && !survivor.isAdmin(), merged.isVolunteer() && !survivor.isVolunteer());
+                    merged.isAdmin() && !survivor.isAdmin(), merged.isVolunteer() && !survivor.isVolunteer(),
+                    survivor.talksToTake(absorbed).stream().map(Presentation::getTitle).toList());
         }
     }
 }
