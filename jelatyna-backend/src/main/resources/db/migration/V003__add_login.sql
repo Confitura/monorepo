@@ -13,6 +13,7 @@ CREATE TABLE public.login (
 
 -- One Login per users.social_id, which is base64 of "<provider>/<id>" (Twitter's id is the username).
 -- The Login is as old as its User, the only record of when that sign-in first happened.
+-- A blank social_id names no sign-in, so its User stays a Manual User (no Login).
 -- No dedup: two Users sharing a social_id fail the unique key and so the whole migration.
 INSERT INTO public.login (id, user_id, provider, external_id, created_date)
 SELECT gen_random_uuid()::text,
@@ -22,4 +23,4 @@ SELECT gen_random_uuid()::text,
        created_date
 FROM (SELECT id, created_date, convert_from(decode(social_id, 'base64'), 'UTF8') AS decoded
       FROM public.users
-      WHERE social_id IS NOT NULL) AS users_with_social_id;
+      WHERE social_id IS NOT NULL AND social_id <> '') AS users_with_social_id;

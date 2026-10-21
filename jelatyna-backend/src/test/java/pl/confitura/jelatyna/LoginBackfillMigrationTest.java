@@ -44,14 +44,15 @@ class LoginBackfillMigrationTest {
                     ('google-user', false, false, 'google', 'Z29vZ2xlLzEyMzQ1Njc4OTA=', '2020-06-02 11:00:00'),
                     ('facebook-user', false, false, 'facebook', 'ZmFjZWJvb2svMTAxNTY3ODk=', '2021-07-03 12:00:00'),
                     ('twitter-user', false, false, 'twitter', 'dHdpdHRlci9jb25maXR1cmE=', NULL),
-                    ('manual-user', false, false, 'manual', NULL, '2022-08-04 13:00:00')
+                    ('manual-user', false, false, 'manual', NULL, '2022-08-04 13:00:00'),
+                    ('blank-social-id-user', false, false, 'manual', '', '2023-09-05 14:00:00')
                     """);
         }
         flyway().load().migrate();
     }
 
     @Test
-    void backfillsOneDecodedLoginPerSocialId() throws SQLException {
+    void backfillsOneDecodedLoginPerNonBlankSocialId() throws SQLException {
         List<List<Object>> logins = new ArrayList<>();
         try (Connection connection = connect(DATABASE);
              Statement statement = connection.createStatement();
