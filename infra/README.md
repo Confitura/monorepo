@@ -18,9 +18,9 @@ limits, health checks.
 
 ## Status
 
-**Imported, not yet applied.** On 2026-10-09 the three applications and 38 of
+**Imported and applied by CI.** On 2026-10-09 the three applications and 38 of
 their environment variables were imported into state, and `tofu plan` reports
-"No changes". Nothing has ever been applied from here.
+"No changes". The `infra-apply` workflow has since run on the merge of #671.
 
 Still to do:
 
@@ -29,9 +29,9 @@ Still to do:
 - **The renamed backend variables.** The 15 backend variables that had dotted
   names (`SPRING.DATASOURCE.URL`, `APP.CORS.ORIGINS[0]`, ...) move to their
   Spring relaxed-binding form (`SPRING_DATASOURCE_URL`, `APP_CORS_ORIGINS_0_`).
-  12 plain ones were renamed in Coolify and are adopted by `import {}` blocks
+  10 plain ones were renamed in Coolify and are adopted by `import {}` blocks
   in `production/imports.tf`, not by hand-run `tofu import`; the CI apply
-  imports them. `SPRING_PROFILES_ACTIVE` was created by OpenTofu. The 13
+  imports them. `SPRING_PROFILES_ACTIVE` was created by OpenTofu. The 11
   non-secret ones are declared in `production.auto.tfvars`. The two secrets
   (`LISTMONK_PASSWORD`, `APP_JWT_SECRETKEY`) already exist in Coolify but still
   need adding to `secrets.enc.yaml`, and their import blocks go into

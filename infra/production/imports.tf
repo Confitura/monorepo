@@ -1,10 +1,12 @@
 # Adopt the backend environment variables that already exist in Coolify.
 #
-# The 12 variables below were renamed by hand in Coolify (dotted Spring names to
+# The 10 variables below were renamed by hand in Coolify (dotted Spring names to
 # relaxed-binding names) before they were declared in production.auto.tfvars.
 # Without these blocks OpenTofu plans to create them, and Coolify rejects each
 # one because the key already exists. An import block makes the plan read
 # "to import" instead, and the apply adopts them into state.
+# CONFERENCE_C4P_START and _END were adopted too and later removed, once the
+# backend read the C4P period from the Current Edition.
 #
 # MANAGEMENT_OPENTELEMETRY_TRACING_EXPORT_OTLP_ENDPOINT was renamed in place from
 # its lower-case form, so it keeps the same variable id.
@@ -36,16 +38,6 @@ import {
 import {
   to = module.app["backend"].coolify_environment_variable.plain["APP_CORS_ORIGINS_3_"]
   id = "application:wqwwmtfjn4xuhsgj4uzwfd4x:i12qwj0qm52qqodn0bkbxcq3"
-}
-
-import {
-  to = module.app["backend"].coolify_environment_variable.plain["CONFERENCE_C4P_START"]
-  id = "application:wqwwmtfjn4xuhsgj4uzwfd4x:a9bfiafmwhe4duus9l2d69f9"
-}
-
-import {
-  to = module.app["backend"].coolify_environment_variable.plain["CONFERENCE_C4P_END"]
-  id = "application:wqwwmtfjn4xuhsgj4uzwfd4x:fnfclsx2memn8okhquatybir"
 }
 
 import {
