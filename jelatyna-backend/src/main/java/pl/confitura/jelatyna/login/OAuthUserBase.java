@@ -16,8 +16,13 @@ public abstract class OAuthUserBase {
         this.system = system;
     }
 
+    /** The provider's id for the person, as a Login stores it. */
+    public String getExternalId() {
+        return id;
+    }
+
     public String encodeId() {
-        return Base64.getEncoder().encodeToString((system + "/" + id).getBytes());
+        return Base64.getEncoder().encodeToString((system + "/" + getExternalId()).getBytes());
     }
 
 }

@@ -1,0 +1,90 @@
+package pl.confitura.jelatyna.login;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import pl.confitura.jelatyna.BaseIntegrationTest;
+import pl.confitura.jelatyna.login.github.GitHubUser;
+import pl.confitura.jelatyna.login.twitter.TwitterUser;
+import pl.confitura.jelatyna.user.Login;
+import pl.confitura.jelatyna.user.LoginRepository;
+import pl.confitura.jelatyna.user.User;
+import pl.confitura.jelatyna.user.UserRepository;
+
+import java.util.Base64;
+import java.util.UUID;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+class OAuthUserServiceTest extends BaseIntegrationTest {
+
+    @Autowired
+    private OAuthUserService oauthUserService;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private LoginRepository loginRepository;
+
+    @Test
+    void signInReturnsTheUserThatOwnsTheLogin() {
+        String githubId = uniqueId();
+        User owner = userRepository.save(new User().setName("Manual speaker").setOrigin("manual"));
+        loginRepository.save(new Login(owner, "github", githubId));
+
+        User signedIn = oauthUserService.mapToUser(gitHubUser(githubId, "Someone"));
+
+        assertThat(signedIn.getId()).isEqualTo(owner.getId());
+        assertThat(signedIn.getName()).isEqualTo("Manual speaker");
+    }
+
+    @Test
+    void anUnknownLoginCreatesAUserAndItsLogin() {
+        String githubId = uniqueId();
+
+        User created = oauthUserService.mapToUser(gitHubUser(githubId, "Octo Cat"));
+
+        assertThat(created.getName()).isEqualTo("Octo Cat");
+        assertThat(loginRepository.findByProviderAndExternalId("github", githubId))
+                .hasValueSatisfying(login -> assertThat(login.getUser().getId()).isEqualTo(created.getId()));
+        assertThat(oauthUserService.mapToUser(gitHubUser(githubId, "Octo Cat")).getId())
+                .isEqualTo(created.getId());
+    }
+
+    @Test
+    void aNewSignInStillFillsSocialIdAndOrigin() {
+        String githubId = uniqueId();
+
+        User created = oauthUserService.mapToUser(gitHubUser(githubId, "Octo Cat"));
+
+        User stored = userRepository.findById(created.getId());
+        assertThat(stored.getOrigin()).isEqualTo("github");
+        assertThat(new String(Base64.getDecoder().decode(stored.getSocialId()))).isEqualTo("github/" + githubId);
+    }
+
+    @Test
+    void twitterLoginsAreKeyedByUsername() {
+        String username = "confitura_" + uniqueId();
+        TwitterUser twitterUser = new TwitterUser();
+        twitterUser.setId("1234567");
+        twitterUser.setUserName(username);
+
+        User created = oauthUserService.mapToUser(twitterUser);
+
+        assertThat(loginRepository.findByProviderAndExternalId("twitter", username))
+                .hasValueSatisfying(login -> assertThat(login.getUser().getId()).isEqualTo(created.getId()));
+        assertThat(new String(Base64.getDecoder().decode(userRepository.findById(created.getId()).getSocialId())))
+                .isEqualTo("twitter/" + username);
+    }
+
+    private static GitHubUser gitHubUser(String id, String name) {
+        GitHubUser user = new GitHubUser();
+        user.setId(id);
+        user.setName(name);
+        return user;
+    }
+
+    private static String uniqueId() {
+        return UUID.randomUUID().toString();
+    }
+}

@@ -9,7 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.mapping;
 import static java.util.stream.Collectors.toList;
 
 @RestController
@@ -20,6 +23,7 @@ import static java.util.stream.Collectors.toList;
 public class UserAdminController {
 
     private final UserRepository repository;
+    private final LoginRepository loginRepository;
 
     @PostMapping("/users/{userId}/volunteer/{isVolunteer}")
     @Transactional
@@ -41,7 +45,11 @@ public class UserAdminController {
 
     @GetMapping("/users")
     public List<FullUser> getAllUsers() {
-        return repository.findAll().stream().map(FullUser::new).collect(toList());
+        Map<String, List<String>> providersByUserId = loginRepository.findAll().stream()
+                .collect(groupingBy(login -> login.getUser().getId(), mapping(Login::getProvider, toList())));
+        return repository.findAll().stream()
+                .map(user -> new FullUser(user, providersByUserId.getOrDefault(user.getId(), List.of())))
+                .collect(toList());
     }
 
     @PostMapping("/users/manual")
@@ -56,12 +64,12 @@ public class UserAdminController {
             user.setPhoto(url.replace("http:", "https:"));
         }
         var saved = repository.save(user);
-        return ResponseEntity.ok(new FullUser(saved));
+        return ResponseEntity.ok(new FullUser(saved, List.of()));
     }
 
     public record FullUser(
             String id,
-            String origin,
+            List<String> loginProviders,
             String name,
             String email,
             String bio,
@@ -77,10 +85,10 @@ public class UserAdminController {
             boolean isParticipant,
             boolean hasAcceptedPresentation) {
 
-        public FullUser(User user) {
+        public FullUser(User user, List<String> loginProviders) {
             this(
                     user.getId(),
-                    user.getOrigin(),
+                    loginProviders,
                     user.getName(),
                     user.getEmail(),
                     user.getBio(),

@@ -1,23 +1,33 @@
 package pl.confitura.jelatyna.login;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import pl.confitura.jelatyna.user.Login;
+import pl.confitura.jelatyna.user.LoginRepository;
 import pl.confitura.jelatyna.user.User;
 import pl.confitura.jelatyna.user.UserRepository;
 
 @Service
 public class OAuthUserService {
     private final UserRepository userRepository;
+    private final LoginRepository loginRepository;
 
-    public OAuthUserService(UserRepository userRepository) {
+    public OAuthUserService(UserRepository userRepository, LoginRepository loginRepository) {
         this.userRepository = userRepository;
+        this.loginRepository = loginRepository;
     }
 
+    @Transactional
     public User mapToUser(OAuthUserBase oauthUser) {
-        String id = oauthUser.encodeId();
-        if (!userRepository.existsBySocialId(id)) {
-            userRepository.save(oauthUser.toUser());
-        }
-        return userRepository.findBySocialId(id);
+        return loginRepository.findByProviderAndExternalId(oauthUser.getSystem(), oauthUser.getExternalId())
+                .map(Login::getUser)
+                .orElseGet(() -> createUserWithLogin(oauthUser));
+    }
+
+    private User createUserWithLogin(OAuthUserBase oauthUser) {
+        User user = userRepository.save(oauthUser.toUser());
+        loginRepository.save(new Login(user, oauthUser.getSystem(), oauthUser.getExternalId()));
+        return user;
     }
 }
