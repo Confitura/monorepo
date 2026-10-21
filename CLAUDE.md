@@ -113,7 +113,12 @@ The repo is public: explain decisions, never paste private notes, task text, or 
 
 ## Observability
 
-Backend instrumentation (structured ECS logging, Prometheus metrics on a separate management port, OTLP traces) is implemented and verified locally but **not deployed**; no Grafana Cloud stack or Alloy container exists yet. `docs/observability.md` records what was verified, the Boot 4.1 gotchas that cost the most time (tracing needs `spring-boot-starter-opentelemetry`; the OTLP endpoint property is `management.opentelemetry.tracing.export.otlp.endpoint`), and what remains. Build the backend with **JDK 21** — JDK 23+ silently disables Lombok/QueryDSL annotation processing.
+The backend logs structured ECS in prod, serves Prometheus metrics on a separate management port, and traces every request with OpenTelemetry. Traces leave the process over OTLP only when a run asks for it; otherwise (local runs, tests, prod by default) no OTLP exporter exists. Micrometer's OTLP metrics push is off everywhere.
+
+- **See traces in IntelliJ IDEA:** enable the OpenTelemetry plugin for the backend's run configuration and run it. The plugin sets `OTEL_EXPORTER_OTLP_*` variables pointing at its own receiver, which accepts **gRPC only**; Boot turns them into a gRPC span exporter, and each request appears in the plugin's tool window. Only traces go there: metrics stay on Prometheus, and logs are not forwarded.
+- **Prod opt-in:** prod exports nothing until `MANAGEMENT_TRACING_EXPORT_OTLP_ENABLED=true` is set. Coolify's `MANAGEMENT_OPENTELEMETRY_TRACING_EXPORT_OTLP_ENDPOINT` (`http://alloy:4318/v1/traces`, OTLP over HTTP) alone does nothing. Set the opt-in once a collector runs; no Grafana Cloud stack or Alloy container exists yet.
+
+gRPC goes through `opentelemetry-exporter-sender-grpc-managed-channel` on `grpc-netty-shaded`, HTTP through `opentelemetry-exporter-sender-jdk`. OTel's okhttp sender stays excluded in `pom.xml`: it needs okhttp 5, and scribejava pins okhttp 4. Boot 4.1 gotchas: tracing needs `spring-boot-starter-opentelemetry`; the OTLP endpoint property is `management.opentelemetry.tracing.export.otlp.endpoint`. Build the backend with **JDK 21** — JDK 23+ silently disables Lombok/QueryDSL annotation processing.
 
 `docs/pii-in-logs.md` documents which log statements leaked personal data, the S1–S7 fixes applied, and the conventions to follow when adding logging: log entity ids rather than emails, mask an address when no id exists (`MessageInfo.maskedEmail()`), use allowlist `@ToString(onlyExplicitlyIncluded = true)` on anything holding PII, log third-party error envelopes rather than response bodies, and never put credentials in a query string.
 
