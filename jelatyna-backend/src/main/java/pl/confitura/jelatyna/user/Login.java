@@ -50,4 +50,9 @@ public class Login {
         this.provider = provider;
         this.externalId = externalId;
     }
+
+    /** Hands this Login to another User, e.g. the survivor of a merge. */
+    void moveTo(User user) {
+        this.user = user;
+    }
 }

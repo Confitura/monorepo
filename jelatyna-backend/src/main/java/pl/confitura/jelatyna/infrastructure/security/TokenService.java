@@ -1,8 +1,11 @@
 package pl.confitura.jelatyna.infrastructure.security;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Date;
+import java.util.Optional;
 
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -13,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.JwtHandlerAdapter;
 import io.jsonwebtoken.Jwts;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +42,7 @@ public class TokenService {
                 .claim("isNew", !user.getPrivacyPolicyAccepted())
                 .id(user.getId())
                 .subject(user.getName())
+                .issuedAt(new Date())
                 .expiration(Date.from(LocalDateTime.now().plusMonths(12).toInstant(ZoneOffset.UTC)))
                 .signWith(getKey())
                 .compact();
@@ -58,6 +63,20 @@ public class TokenService {
                                 ;
                     }
                 });
+    }
+
+    /** The id of the User a genuine token names, provided it was issued at most {@code maxAge} ago. */
+    public Optional<String> userIdIfIssuedWithin(String token, Duration maxAge) {
+        try {
+            Claims claims = Jwts.parser().verifyWith(getKey()).build().parseSignedClaims(token).getPayload();
+            Date issuedAt = claims.getIssuedAt();
+            if (issuedAt == null || issuedAt.toInstant().isBefore(Instant.now().minus(maxAge))) {
+                return Optional.empty();
+            }
+            return Optional.of(claims.getId());
+        } catch (JwtException | IllegalArgumentException e) {
+            return Optional.empty();
+        }
     }
 
     private SecretKey getKey() {
