@@ -7,11 +7,13 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.transaction.support.TransactionTemplate;
 import pl.confitura.jelatyna.BaseIntegrationTest;
+import pl.confitura.jelatyna.edition.EditionRepository;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -34,6 +36,9 @@ class DayControllerTest extends BaseIntegrationTest {
 
     @Autowired
     private TransactionTemplate txTemplate;
+
+    @Autowired
+    private EditionRepository editionRepository;
 
     private Day day1;
     private Day day2;
@@ -61,13 +66,15 @@ class DayControllerTest extends BaseIntegrationTest {
                 .setId("day-1")
                 .setLabel("Day 1")
                 .setDate(LocalDate.of(2025, 9, 1))
-                .setDisplayOrder(1);
+                .setDisplayOrder(1)
+                .setEdition(editionRepository.findCurrent());
 
         day2 = new Day()
                 .setId("day-2")
                 .setLabel("Day 2")
                 .setDate(LocalDate.of(2025, 9, 2))
-                .setDisplayOrder(2);
+                .setDisplayOrder(2)
+                .setEdition(editionRepository.findCurrent());
 
         txTemplate.executeWithoutResult(status -> {
             day1 = dayRepository.save(day1);
@@ -115,6 +122,18 @@ class DayControllerTest extends BaseIntegrationTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.label", is("Day 3")))
                 .andExpect(jsonPath("$.displayOrder", is(3)));
+    }
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    void aCreatedDayIsInTheCurrentEdition() throws Exception {
+        mockMvc.perform(post("/days")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"id":"day-3","label":"Day 3","date":"2025-09-03","displayOrder":3}"""))
+                .andExpect(status().isCreated());
+
+        assertThat(dayRepository.findById("day-3").getEdition().getId()).isEqualTo(editionRepository.findCurrent().getId());
     }
 
     @Test

@@ -13,6 +13,7 @@ import org.springframework.security.web.authentication.preauth.PreAuthenticatedA
 import pl.confitura.jelatyna.agenda.*;
 import pl.confitura.jelatyna.agenda.TimeSlot.TimeSlotId;
 import pl.confitura.jelatyna.api.model.PresentationRequest;
+import pl.confitura.jelatyna.edition.Edition;
 import pl.confitura.jelatyna.edition.EditionRepository;
 import pl.confitura.jelatyna.infrastructure.security.JelatynaPrincipal;
 import pl.confitura.jelatyna.login.github.GithubService;
@@ -90,7 +91,8 @@ public class FakePresentations {
                 .setId(TODAY_DAY_ID)
                 .setLabel("Today")
                 .setDate(LocalDate.now())
-                .setDisplayOrder(1));
+                .setDisplayOrder(1)
+                .setEdition(editionRepository.findCurrent()));
 
         createRoom("today-a", "Room A", 1, today);
         createRoom("today-b", "Room B", 2, today);
@@ -136,13 +138,14 @@ public class FakePresentations {
     }
 
     private void createPresentations() {
+        Edition edition = editionRepository.findCurrent();
         for (int i = 0; i < 40; i++) {
-            presentation(speaker(i));
+            presentation(speaker(i), edition);
         }
         List<Slot> slots = getTalkSlots();
         for (int i = 0; i < 60; i++) {
             var u = speaker(i + 40);
-            var p = presentation(u);
+            var p = presentation(u, edition);
             p.setAccepted(true);
             p = presentationRepository.save(p);
             if (i < slots.size()) {
@@ -183,14 +186,14 @@ public class FakePresentations {
                 .setPrivacyPolicyAccepted(true));
     }
 
-    private Presentation presentation(User user) {
+    private Presentation presentation(User user, Edition edition) {
         return presentationRepository.save(Presentation.from(new PresentationRequest(
                 faker.movie().name(),
                 faker.movie().quote(),
                 faker.brooklynNineNine().quotes(),
                 "beginner",
                 "Polish",
-                new String[]{"java"}), user, Set.of()));
+                new String[]{"java"}), user, Set.of()).setEdition(edition));
     }
 
     private record Slot(TimeSlot timeSlot, Room room) {

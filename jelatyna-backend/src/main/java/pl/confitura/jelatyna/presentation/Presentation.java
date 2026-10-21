@@ -11,6 +11,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -18,11 +19,13 @@ import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.GenericGenerator;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 import pl.confitura.jelatyna.api.model.WorkshopRequest;
+import pl.confitura.jelatyna.edition.Edition;
 import pl.confitura.jelatyna.presentation.rating.Rate;
 import pl.confitura.jelatyna.api.model.PresentationRequest;
 import pl.confitura.jelatyna.user.User;
@@ -60,6 +63,12 @@ public class Presentation {
     @ManyToMany
     @NotNull
     private Set<User> speakers = new HashSet<>();
+
+    // The Edition that owns this talk (ADR-0004): the Current Edition when it was created.
+    @ManyToOne
+    @NotNull
+    @JsonIgnore
+    private Edition edition;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "presentation")
     private Set<Rate> ratings = new HashSet<>();

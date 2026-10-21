@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.confitura.jelatyna.agenda.AgendaService;
 import pl.confitura.jelatyna.agenda.Day;
 import pl.confitura.jelatyna.agenda.DayRepository;
+import pl.confitura.jelatyna.edition.EditionRepository;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -18,10 +19,12 @@ public class DayController {
 
     private final DayRepository dayRepository;
     private final AgendaService agendaService;
+    private final EditionRepository editionRepository;
 
-    public DayController(DayRepository dayRepository, AgendaService agendaService) {
+    public DayController(DayRepository dayRepository, AgendaService agendaService, EditionRepository editionRepository) {
         this.dayRepository = dayRepository;
         this.agendaService = agendaService;
+        this.editionRepository = editionRepository;
     }
 
     @GetMapping
@@ -40,7 +43,7 @@ public class DayController {
 
     @PostMapping
     public ResponseEntity<InlineDay> saveDay(@RequestBody Day day) {
-        Day savedDay = dayRepository.save(day);
+        Day savedDay = dayRepository.save(day.setEdition(editionRepository.findCurrent()));
         return ResponseEntity.status(CREATED).body(InlineDay.from(savedDay));
     }
 

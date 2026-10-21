@@ -9,6 +9,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import pl.confitura.jelatyna.BaseIntegrationTest;
 import pl.confitura.jelatyna.agenda.Day;
 import pl.confitura.jelatyna.agenda.DayRepository;
+import pl.confitura.jelatyna.edition.EditionRepository;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
@@ -26,6 +27,8 @@ class RatePersistenceTest extends BaseIntegrationTest {
     PresentationRepository presentationRepository;
     @Autowired
     DayRepository dayRepository;
+    @Autowired
+    EditionRepository editionRepository;
 
     private Presentation presentation;
     private final String reviewerToken = UUID.randomUUID().toString();
@@ -35,13 +38,14 @@ class RatePersistenceTest extends BaseIntegrationTest {
         SecurityHelper.asAdmin();
         // A past-dated agenda day opens the global rating window.
         dayRepository.save(new Day().setId("rate-test-day")
-                .setDate(LocalDate.now().minusDays(1)).setLabel("Day").setDisplayOrder(1));
+                .setDate(LocalDate.now().minusDays(1)).setLabel("Day").setDisplayOrder(1).setEdition(editionRepository.findCurrent()));
         presentation = presentationRepository.save(new Presentation()
                 .setTitle("Talk")
                 .setShortDescription("short")
                 .setDescription("description")
                 .setLevel("easy")
-                .setLanguage("pl"));
+                .setLanguage("pl")
+                .setEdition(editionRepository.findCurrent()));
         SecurityHelper.cleanSecurity();
     }
 

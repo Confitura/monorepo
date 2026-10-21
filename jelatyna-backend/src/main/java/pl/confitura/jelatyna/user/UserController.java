@@ -129,6 +129,7 @@ public class UserController {
         Set<Tag> tags = getTags(presentationRequest.tags());
         var presentation = Presentation.from(presentationRequest, speaker, tags);
         presentation.setSpeaker(speaker);
+        presentation.setEdition(editionRepository.findCurrent());
         retainStatus(presentation);
         Presentation saved = presentationRepository.save(presentation);
         return ResponseEntity.ok(new InlinePresentation(saved));
@@ -168,6 +169,7 @@ public class UserController {
         Set<Tag> tags = getTags(workshopRequest.tags());
         var workshop = Presentation.from(workshopRequest, speaker, tags);
         workshop.setSpeaker(speaker);
+        workshop.setEdition(editionRepository.findCurrent());
         retainStatus(workshop);
         Presentation saved = presentationRepository.save(workshop);
         return ResponseEntity.ok(new InlineWorkshop(saved));
