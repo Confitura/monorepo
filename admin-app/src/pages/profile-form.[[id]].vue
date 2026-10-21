@@ -17,7 +17,8 @@ const effectiveUserId = computed(() => {
   return routeId || user.value?.jti
 })
 
-// Logins can only be added to the signed-in User: the new one is proven by signing in with it.
+// Logins show on the signed-in User's own profile only: a new one is proven by signing in with it, so it
+// can only be added there.
 const isOwnProfile = computed(() => effectiveUserId.value === user.value?.jti)
 const logins = ref<LoginDto[]>([])
 const unlinkedProviders = computed(() =>
@@ -113,7 +114,9 @@ const fetchLogins = async (userId: string) => {
 onMounted(() => {
   if (effectiveUserId.value) {
     fetchUserData(effectiveUserId.value);
-    fetchLogins(effectiveUserId.value);
+    if (isOwnProfile.value) {
+      fetchLogins(effectiveUserId.value);
+    }
   }
 });
 
@@ -190,7 +193,7 @@ v-model="form.privacyPolicyAccepted"
       <v-btn type="submit" color="primary">Submit</v-btn>
     </v-container>
   </v-form>
-  <v-container>
+  <v-container v-if="isOwnProfile">
     <section aria-label="Logins">
       <h3 class="text-h6">Logins</h3>
       <v-list density="compact">
@@ -201,17 +204,15 @@ v-model="form.privacyPolicyAccepted"
           :subtitle="addedOn(login)"
         />
       </v-list>
-      <template v-if="isOwnProfile">
-        <v-btn
-          v-for="provider in unlinkedProviders"
-          :key="provider.id"
-          class="mr-2"
-          variant="outlined"
-          prepend-icon="mdi-plus"
-          :aria-label="`Add ${provider.label} login`"
-          @click="goToSignIn(provider.id, 'add-login')"
-        >{{ provider.label }}</v-btn>
-      </template>
+      <v-btn
+        v-for="provider in unlinkedProviders"
+        :key="provider.id"
+        class="mr-2"
+        variant="outlined"
+        prepend-icon="mdi-plus"
+        :aria-label="`Add ${provider.label} login`"
+        @click="goToSignIn(provider.id, 'add-login')"
+      >{{ provider.label }}</v-btn>
     </section>
   </v-container>
 </template>

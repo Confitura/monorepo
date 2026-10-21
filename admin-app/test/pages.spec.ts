@@ -173,8 +173,9 @@ async function mountPage(component: any, route = '/') {
   const router = createRouter({
     history: createWebHistory(),
     routes: [
-      // The OAuth callback page reads the provider from its route.
+      // The OAuth callback page reads the provider from its route, the profile page the User's id.
       { path: '/login/:provider', component: { template: '<div/>' } },
+      { path: '/profile-form/:id?', component: { template: '<div/>' } },
       { path: '/:pathMatch(.*)*', component: { template: '<div/>' } },
     ],
   })
@@ -351,6 +352,20 @@ describe('admin-app pages render without errors', () => {
       for (const label of ['Google', 'Facebook', 'X']) {
         expect(wrapper.find(`[aria-label="Add ${label} login"]`).exists()).toBe(true)
       }
+    } finally {
+      localStorage.removeItem('token')
+    }
+  })
+
+  it("shows no Logins section on someone else's profile", async () => {
+    // An admin opening another User's profile: Logins can only be added to the signed-in User.
+    localStorage.setItem('token', fakeJwt({ jti: 'u1', sub: 'Admin', isAdmin: true }))
+    try {
+      const wrapper = await mountPage(ProfileFormPage, '/profile-form/u2')
+
+      expect(api.getById).toHaveBeenCalledWith({ path: { id: 'u2' } })
+      expect(api.getUserLogins).not.toHaveBeenCalled()
+      expect(wrapper.find('[aria-label="Logins"]').exists()).toBe(false)
     } finally {
       localStorage.removeItem('token')
     }
