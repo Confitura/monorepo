@@ -1,9 +1,9 @@
 <template>
   <Box color="red" class="latest-news" v-if="content && content.latest">
     <div class="latest-news-container">
-      <h2 class="header">{{ content.latest.title }}</h2>
+      <h2 class="header"><NuxtLink :to="`/news/${content.latest.slug}`">{{ content.latest.title }}</NuxtLink></h2>
       <div class="main-info">
-        <div class="body" v-html="content.latest.body"></div>
+        <div class="body" v-html="renderMarkdown(content.latest.body)"></div>
       </div>
     </div>
   </Box>

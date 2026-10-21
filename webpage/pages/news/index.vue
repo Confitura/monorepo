@@ -6,11 +6,11 @@
          v-for="(content, $index) in content.all">
       <div class="latest-news-container">
         <div class="header">
-          <h2>{{ content.title }}</h2>
-          <small>{{ formatDate(content.publishedAt) }}</small>
+          <h2><NuxtLink :to="`/news/${content.slug}`">{{ content.title }}</NuxtLink></h2>
+          <small>{{ formatNewsDate(content.publishedAt) }}</small>
         </div>
         <div class="main-info">
-          <div class="body" v-html="content.body"></div>
+          <div class="body" v-html="renderMarkdown(content.body)"></div>
         </div>
       </div>
     </Box>
@@ -21,15 +21,6 @@
 <script setup lang="ts">
 const content = await useArchiveFetch(`/news.json`)
     .then(response => response.data.value)
-
-function formatDate(date: string) {
-  const options: Intl.DateTimeFormatOptions = {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  };
-  return new Date(date).toLocaleDateString('en-US', options);
-}
 
 const title = 'News — Confitura 2026';
 const description = 'Follow the latest news about Confitura 2026: tickets, schedule, venue, and more.';
