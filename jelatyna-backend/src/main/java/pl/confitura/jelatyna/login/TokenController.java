@@ -18,6 +18,7 @@ public class TokenController {
     @PostMapping("/tokens/refresh-token")
     String refreshToken(@AuthenticationPrincipal JelatynaPrincipal principal) {
         User user = userRepository.findById(principal.id);
-        return tokenService.asToken(user);
+        // Refreshing is not signing in, so the sign-in time carries over and an old token can't pass for a fresh one.
+        return tokenService.asToken(user, principal.getAuthTime());
     }
 }

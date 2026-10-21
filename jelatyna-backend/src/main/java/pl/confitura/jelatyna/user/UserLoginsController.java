@@ -35,7 +35,7 @@ import pl.confitura.jelatyna.infrastructure.security.TokenService;
 @SecurityRequirement(name = "bearerAuth")
 public class UserLoginsController {
 
-    // The second token proves the person has just signed in as the other User, so it must be this recent.
+    // The second token proves the person has just signed in as the other User, so its auth_time must be this recent.
     static final Duration PROOF_MAX_AGE = Duration.ofMinutes(5);
 
     private final UserRepository userRepository;
@@ -67,7 +67,8 @@ public class UserLoginsController {
                     .log();
         });
         userRepository.delete(absorbed);
-        return ResponseEntity.ok(tokenService.asToken(survivor));
+        // The survivor didn't just sign in, so its token keeps the survivor's sign-in time.
+        return ResponseEntity.ok(tokenService.asToken(survivor, principal.getAuthTime()));
     }
 
     /**
@@ -88,7 +89,7 @@ public class UserLoginsController {
         if (principal == null) {
             throw new ResponseStatusException(UNAUTHORIZED);
         }
-        String absorbedId = tokenService.userIdIfIssuedWithin(request.token(), PROOF_MAX_AGE)
+        String absorbedId = tokenService.userIdIfSignedInWithin(request.token(), PROOF_MAX_AGE)
                 .orElseThrow(() -> new ResponseStatusException(FORBIDDEN, "The second sign-in is not recent enough"));
         if (absorbedId.equals(principal.getId())) {
             throw new ResponseStatusException(CONFLICT, "The login already belongs to the signed-in user");

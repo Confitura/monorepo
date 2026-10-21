@@ -1,5 +1,7 @@
 package pl.confitura.jelatyna.infrastructure.security;
 
+import java.time.Instant;
+
 import lombok.Data;
 import lombok.ToString;
 import lombok.experimental.Accessors;
@@ -15,4 +17,6 @@ public class JelatynaPrincipal {
     public boolean admin;
     @ToString.Include
     public boolean volunteer;
+    // When the person signed in; null for tokens issued before it was recorded.
+    public Instant authTime;
 }

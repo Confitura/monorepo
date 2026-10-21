@@ -1,5 +1,6 @@
 package pl.confitura.jelatyna.user;
 
+import static java.time.temporal.ChronoUnit.SECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
 import static org.hamcrest.Matchers.containsInAnyOrder;
@@ -15,6 +16,7 @@ import java.time.Instant;
 import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
+import javax.crypto.SecretKey;
 
 import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.spi.ILoggingEvent;
@@ -114,10 +116,49 @@ class UserLoginsControllerTest extends BaseIntegrationTest {
         String githubId = uniqueId();
         User brandNew = oauthUserService.mapToUser(gitHubUser(githubId));
 
-        merge(signedIn, tokenIssuedAgo(brandNew, Duration.ofMinutes(10)))
+        merge(signedIn, tokenSignedInAt(brandNew, Instant.now().minus(Duration.ofMinutes(10))))
                 .andExpect(status().isForbidden());
 
         assertThat(oauthUserService.mapToUser(gitHubUser(githubId)).getId()).isEqualTo(brandNew.getId());
+    }
+
+    @Test
+    void aRefreshedOldTokenIsNotProofOfAFreshSignIn() throws Exception {
+        User signedIn = userRepository.save(new User().setName("Signed in"));
+        User brandNew = oauthUserService.mapToUser(gitHubUser(uniqueId()));
+        // A leaked token: refreshing it issues a new one, but nobody has signed in again.
+        String refreshed = refresh(tokenSignedInAt(brandNew, Instant.now().minus(Duration.ofMinutes(10))));
+
+        merge(signedIn, refreshed).andExpect(status().isForbidden());
+        cancelMerge(signedIn, refreshed).andExpect(status().isForbidden());
+
+        assertThat(userRepository.existsById(brandNew.getId())).isTrue();
+    }
+
+    @Test
+    void aTokenThatDoesNotSayWhenThePersonSignedInIsNeverProof() throws Exception {
+        User signedIn = userRepository.save(new User().setName("Signed in"));
+        User brandNew = oauthUserService.mapToUser(gitHubUser(uniqueId()));
+        // Issued just now, but without auth_time, as tokens were before it was recorded.
+        String legacy = Jwts.builder().claim("isAdmin", false).claim("isVolunteer", false)
+                .id(brandNew.getId()).issuedAt(new Date()).signWith(serverKey()).compact();
+
+        merge(signedIn, legacy).andExpect(status().isForbidden());
+        merge(signedIn, refresh(legacy)).andExpect(status().isForbidden());
+    }
+
+    @Test
+    void theTokenMergeReturnsKeepsWhenTheSurvivorSignedIn() throws Exception {
+        User signedIn = userRepository.save(new User().setName("Signed in"));
+        Instant anHourAgo = Instant.now().minus(Duration.ofHours(1)).truncatedTo(SECONDS);
+        String secondToken = tokenService.asToken(oauthUserService.mapToUser(gitHubUser(uniqueId())));
+
+        String survivorToken = merge(tokenSignedInAt(signedIn, anHourAgo), secondToken)
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+
+        assertThat(Jwts.parser().verifyWith(serverKey()).build().parseSignedClaims(survivorToken).getPayload()
+                .get("auth_time", Long.class)).isEqualTo(anHourAgo.getEpochSecond());
     }
 
     @Test
@@ -134,7 +175,8 @@ class UserLoginsControllerTest extends BaseIntegrationTest {
     void aSecondTokenNotSignedByUsIsRejected() throws Exception {
         User signedIn = userRepository.save(new User().setName("Signed in"));
         User brandNew = oauthUserService.mapToUser(gitHubUser(uniqueId()));
-        String forged = Jwts.builder().id(brandNew.getId()).issuedAt(new Date()).signWith(Jwts.SIG.HS256.key().build()).compact();
+        String forged = Jwts.builder().id(brandNew.getId()).issuedAt(new Date())
+                .claim("auth_time", Instant.now().getEpochSecond()).signWith(Jwts.SIG.HS256.key().build()).compact();
 
         merge(signedIn, forged)
                 .andExpect(status().isForbidden());
@@ -264,7 +306,7 @@ class UserLoginsControllerTest extends BaseIntegrationTest {
         User signedIn = userRepository.save(new User().setName("Signed in"));
         User brandNew = oauthUserService.mapToUser(gitHubUser(uniqueId()));
 
-        cancelMerge(signedIn, tokenIssuedAgo(brandNew, Duration.ofMinutes(10))).andExpect(status().isForbidden());
+        cancelMerge(signedIn, tokenSignedInAt(brandNew, Instant.now().minus(Duration.ofMinutes(10)))).andExpect(status().isForbidden());
 
         assertThat(userRepository.existsById(brandNew.getId())).isTrue();
     }
@@ -277,8 +319,12 @@ class UserLoginsControllerTest extends BaseIntegrationTest {
     }
 
     private ResultActions merge(User signedIn, String secondToken) throws Exception {
+        return merge(tokenService.asToken(signedIn), secondToken);
+    }
+
+    private ResultActions merge(String signedInToken, String secondToken) throws Exception {
         return mockMvc.perform(post("/users/merge")
-                .header(AUTHORIZATION, bearer(signedIn))
+                .header(AUTHORIZATION, "Bearer " + signedInToken)
                 .contentType(APPLICATION_JSON)
                 .content(json(new UserLoginsController.MergeUsersRequest(secondToken))));
     }
@@ -287,13 +333,26 @@ class UserLoginsControllerTest extends BaseIntegrationTest {
         return "Bearer " + tokenService.asToken(user);
     }
 
+    private String refresh(String token) throws Exception {
+        return mockMvc.perform(post("/tokens/refresh-token").header(AUTHORIZATION, "Bearer " + token))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+    }
+
     // Signed with the server's key, as an old or leaked token would be.
-    private String tokenIssuedAgo(User user, Duration age) {
+    private String tokenSignedInAt(User user, Instant signedInAt) {
         return Jwts.builder()
+                .claim("isAdmin", false)
+                .claim("isVolunteer", false)
+                .claim("auth_time", signedInAt.getEpochSecond())
                 .id(user.getId())
-                .issuedAt(Date.from(Instant.now().minus(age)))
-                .signWith(Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecretKey)))
+                .issuedAt(Date.from(signedInAt))
+                .signWith(serverKey())
                 .compact();
+    }
+
+    private SecretKey serverKey() {
+        return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecretKey));
     }
 
     private static GitHubUser gitHubUser(String id) {
