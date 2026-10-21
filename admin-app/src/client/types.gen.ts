@@ -258,6 +258,19 @@ export type LoginDto = {
     provider?: string;
 };
 
+export type MergePreview = {
+    becomesAdmin?: boolean;
+    becomesVolunteer?: boolean;
+    bio?: string;
+    email?: string;
+    github?: string;
+    name?: string;
+    photo?: string;
+    twitter?: string;
+    username?: string;
+    www?: string;
+};
+
 export type MergeRequest = {
     from?: string;
     to?: string;
@@ -2720,6 +2733,22 @@ export type CancelMergeResponses = {
      */
     200: unknown;
 };
+
+export type PreviewMergeData = {
+    body: MergeUsersRequest;
+    path?: never;
+    query?: never;
+    url: '/users/merge/preview';
+};
+
+export type PreviewMergeResponses = {
+    /**
+     * OK
+     */
+    200: MergePreview;
+};
+
+export type PreviewMergeResponse = PreviewMergeResponses[keyof PreviewMergeResponses];
 
 export type GetAdminsData = {
     body?: never;

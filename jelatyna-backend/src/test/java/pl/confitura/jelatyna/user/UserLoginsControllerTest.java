@@ -4,11 +4,13 @@ import static java.time.temporal.ChronoUnit.SECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
 import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.containsString;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -24,6 +26,7 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.read.ListAppender;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +38,7 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import pl.confitura.jelatyna.BaseIntegrationTest;
 import pl.confitura.jelatyna.api.model.PresentationRequest;
+import pl.confitura.jelatyna.infrastructure.security.JelatynaPrincipal;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
 import pl.confitura.jelatyna.infrastructure.security.TokenService;
 import pl.confitura.jelatyna.login.OAuthUserService;
@@ -131,6 +135,8 @@ class UserLoginsControllerTest extends BaseIntegrationTest {
         String refreshed = refresh(tokenSignedInAt(brandNew, Instant.now().minus(Duration.ofMinutes(10))));
 
         merge(signedIn, refreshed).andExpect(status().isForbidden());
+        // The preview shows the other User's profile, so it needs the same proof.
+        previewMerge(signedIn, refreshed).andExpect(status().isForbidden());
         cancelMerge(signedIn, refreshed).andExpect(status().isForbidden());
 
         assertThat(userRepository.existsById(brandNew.getId())).isTrue();
@@ -195,16 +201,85 @@ class UserLoginsControllerTest extends BaseIntegrationTest {
 
     enum Content { SAVED_PROFILE, TALK, ADMIN_ROLE, VOLUNTEER_ROLE, TICKET }
 
-    // Merging two Users that both hold something comes later; for now only an empty one is absorbed.
     @ParameterizedTest
-    @EnumSource
-    void aUserWithContentIsNotMergedYet(Content content) throws Exception {
+    @EnumSource(names = {"SAVED_PROFILE", "ADMIN_ROLE", "VOLUNTEER_ROLE"})
+    void aUserWithAProfileOrARoleIsMergedAndDeleted(Content content) throws Exception {
+        User signedIn = userRepository.save(new User().setName("Signed in"));
+        String githubId = uniqueId();
+        User other = give(content, oauthUserService.mapToUser(gitHubUser(githubId)));
+
+        merge(signedIn, tokenService.asToken(other)).andExpect(status().isOk());
+
+        assertThat(oauthUserService.mapToUser(gitHubUser(githubId)).getId()).isEqualTo(signedIn.getId());
+        assertThat(userRepository.existsById(other.getId())).isFalse();
+    }
+
+    @Test
+    void theSurvivorKeepsItsOwnProfileValuesAndTakesTheOthersOnlyWhereItsOwnAreEmpty() throws Exception {
+        User signedIn = userRepository.save(new User().setName("Signed in").setBio("").setTwitter("own_twitter"));
+        User other = oauthUserService.mapToUser(gitHubUser(uniqueId()));
+        userRepository.save(other.setEmail("other@example.com").setBio("Other bio").setTwitter("other_twitter")
+                .setPrivacyPolicyAccepted(true));
+
+        String survivorToken = merge(signedIn, tokenService.asToken(other))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+
+        mockMvc.perform(get("/users/" + signedIn.getId()).header(AUTHORIZATION, "Bearer " + survivorToken))
+                .andExpect(jsonPath("$.name").value("Signed in"))
+                .andExpect(jsonPath("$.twitter").value("own_twitter"))
+                .andExpect(jsonPath("$.email").value("other@example.com"))
+                .andExpect(jsonPath("$.bio").value("Other bio"))
+                .andExpect(jsonPath("$.privacyPolicyAccepted").value(true));
+    }
+
+    @Test
+    void rolesCombineInTheSurvivorsFreshToken() throws Exception {
+        User signedIn = userRepository.save(new User().setName("Signed in").setVolunteer(true));
+        User other = oauthUserService.mapToUser(gitHubUser(uniqueId()));
+        userRepository.save(other.setAdmin(true));
+
+        String survivorToken = merge(signedIn, tokenService.asToken(other))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+
+        assertThat(tokenService.toUser(survivorToken))
+                .returns(true, JelatynaPrincipal::isAdmin)
+                .returns(true, JelatynaPrincipal::isVolunteer);
+    }
+
+    @Test
+    void thePreviewShowsTheResultingProfileAndRoleChangeWithoutMerging() throws Exception {
+        User signedIn = userRepository.save(new User().setName("Signed in").setVolunteer(true));
+        User other = oauthUserService.mapToUser(gitHubUser(uniqueId()));
+        userRepository.save(other.setEmail("other@example.com").setAdmin(true).setVolunteer(true));
+
+        previewMerge(signedIn, tokenService.asToken(other))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value("Signed in"))
+                .andExpect(jsonPath("$.email").value("other@example.com"))
+                .andExpect(jsonPath("$.becomesAdmin").value(true))
+                .andExpect(jsonPath("$.becomesVolunteer").value(false));
+
+        assertThat(userRepository.existsById(other.getId())).isTrue();
+        mockMvc.perform(get("/users/" + signedIn.getId()).header(AUTHORIZATION, bearer(signedIn)))
+                .andExpect(jsonPath("$.email").isEmpty());
+    }
+
+    // Moving talks and the ticket comes later; until then the merge, and so its preview, refuses a User with either.
+    @ParameterizedTest
+    @CsvSource({"TALK, has talks", "TICKET, has a ticket"})
+    void aUserWithTalksOrATicketIsNotMergedYetAndTheRefusalSaysWhich(Content content, String which) throws Exception {
         User signedIn = userRepository.save(new User().setName("Signed in"));
         String githubId = uniqueId();
         User other = give(content, oauthUserService.mapToUser(gitHubUser(githubId)));
 
         merge(signedIn, tokenService.asToken(other))
-                .andExpect(status().isConflict());
+                .andExpect(status().isConflict())
+                .andExpect(content().string(containsString(which)));
+        previewMerge(signedIn, tokenService.asToken(other))
+                .andExpect(status().isConflict())
+                .andExpect(content().string(containsString(which)));
 
         assertThat(oauthUserService.mapToUser(gitHubUser(githubId)).getId()).isEqualTo(other.getId());
     }
@@ -281,11 +356,12 @@ class UserLoginsControllerTest extends BaseIntegrationTest {
         assertThat(userRepository.existsById(signedIn.getId())).isTrue();
     }
 
-    @Test
-    void cancellingLeavesAUserWithContentAlone() throws Exception {
+    @ParameterizedTest
+    @EnumSource
+    void cancellingLeavesAUserWithContentAlone(Content content) throws Exception {
         User signedIn = userRepository.save(new User().setName("Signed in"));
         String githubId = uniqueId();
-        User other = give(Content.SAVED_PROFILE, oauthUserService.mapToUser(gitHubUser(githubId)));
+        User other = give(content, oauthUserService.mapToUser(gitHubUser(githubId)));
 
         cancelMerge(signedIn, tokenService.asToken(other)).andExpect(status().isConflict());
 
@@ -402,6 +478,13 @@ class UserLoginsControllerTest extends BaseIntegrationTest {
 
     private ResultActions cancelMerge(User signedIn, String secondToken) throws Exception {
         return mockMvc.perform(post("/users/merge/cancel")
+                .header(AUTHORIZATION, bearer(signedIn))
+                .contentType(APPLICATION_JSON)
+                .content(json(new UserLoginsController.MergeUsersRequest(secondToken))));
+    }
+
+    private ResultActions previewMerge(User signedIn, String secondToken) throws Exception {
+        return mockMvc.perform(post("/users/merge/preview")
                 .header(AUTHORIZATION, bearer(signedIn))
                 .contentType(APPLICATION_JSON)
                 .content(json(new UserLoginsController.MergeUsersRequest(secondToken))));

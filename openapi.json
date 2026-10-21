@@ -691,6 +691,41 @@
         },
         "type" : "object"
       },
+      "MergePreview" : {
+        "properties" : {
+          "becomesAdmin" : {
+            "type" : "boolean"
+          },
+          "becomesVolunteer" : {
+            "type" : "boolean"
+          },
+          "bio" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          },
+          "github" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "photo" : {
+            "type" : "string"
+          },
+          "twitter" : {
+            "type" : "string"
+          },
+          "username" : {
+            "type" : "string"
+          },
+          "www" : {
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
       "MergeRequest" : {
         "properties" : {
           "from" : {
@@ -4621,6 +4656,37 @@
         },
         "responses" : {
           "200" : {
+            "description" : "OK"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "tags" : [ "user-logins-controller" ]
+      }
+    },
+    "/users/merge/preview" : {
+      "post" : {
+        "operationId" : "previewMerge",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/MergeUsersRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MergePreview"
+                }
+              }
+            },
             "description" : "OK"
           }
         },
