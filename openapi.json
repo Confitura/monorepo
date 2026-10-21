@@ -714,6 +714,12 @@
           "photo" : {
             "type" : "string"
           },
+          "talksToMove" : {
+            "items" : {
+              "type" : "string"
+            },
+            "type" : "array"
+          },
           "twitter" : {
             "type" : "string"
           },

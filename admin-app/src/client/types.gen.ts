@@ -266,6 +266,7 @@ export type MergePreview = {
     github?: string;
     name?: string;
     photo?: string;
+    talksToMove?: Array<string>;
     twitter?: string;
     username?: string;
     www?: string;

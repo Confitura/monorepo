@@ -3,6 +3,7 @@ package pl.confitura.jelatyna.user;
 import static org.springframework.util.StringUtils.hasText;
 
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -107,7 +108,7 @@ public class User extends AuditedEntity {
     }
 
     // Merge (users): keeps this User's own profile values and takes the absorbed User's only where these are empty;
-    // roles and privacy consent combine. The caller moves the Logins.
+    // roles and privacy consent combine. The caller moves the Logins and the talks (takeTalks).
     void absorb(User absorbed) {
         name = ownOr(name, absorbed.name);
         email = ownOr(email, absorbed.email);
@@ -120,6 +121,26 @@ public class User extends AuditedEntity {
         isAdmin = isAdmin || absorbed.isAdmin;
         isVolunteer = isVolunteer || absorbed.isVolunteer;
         privacyPolicyAccepted = Boolean.TRUE.equals(privacyPolicyAccepted) || Boolean.TRUE.equals(absorbed.privacyPolicyAccepted);
+    }
+
+    // The absorbed User's talks this User would gain: not those it already speaks at alongside the absorbed User.
+    List<Presentation> talksToTake(User absorbed) {
+        return absorbed.presentations.stream().filter(talk -> !speaksAt(talk)).toList();
+    }
+
+    // Moves the absorbed User's talks to this one, which stays a single speaker of a talk both gave, and answers
+    // how many it gained. Speakers are matched by id: absorbing may have changed this User's equality fields.
+    int takeTalks(User absorbed) {
+        List<Presentation> gained = talksToTake(absorbed);
+        absorbed.presentations.forEach(talk -> talk.getSpeakers().removeIf(speaker -> speaker.getId().equals(absorbed.id)));
+        gained.forEach(talk -> talk.getSpeakers().add(this));
+        // Also the inverse side, read by isSpeaker() for the survivor's fresh token.
+        presentations.addAll(gained);
+        return gained.size();
+    }
+
+    private boolean speaksAt(Presentation talk) {
+        return talk.getSpeakers().stream().anyMatch(speaker -> speaker.getId().equals(id));
     }
 
     // What absorbing the other User would make of this one, on an unsaved copy, so this User stays as it is.
