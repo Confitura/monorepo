@@ -24,6 +24,23 @@ _Avoid_: Group, Section, Tag
 Recovery operation that moves every FAQ Entry from one Category into another and then
 removes the emptied Category. Used to fix duplicates created by mistake.
 
+## News
+
+**News Entry**:
+A dated announcement published on the public webpage's news page; the newest one also
+headlines the home page. Written and edited by admins in Jelatyna. Not an email: it
+reaches no subscriber's inbox. Its date (a moment, with time of day) is both the date
+shown and when it goes public: an entry is public once it is published and its date has
+passed, so a future date schedules it. Entries are listed newest date first. Each has its
+own page, addressed by a slug that an admin may change but that never follows edits to the
+title, and may have a cover image.
+_Avoid_: Campaign, post
+
+**Newsletter**:
+An email sent to subscribers from the newsletter platform (Listmonk), written there.
+Independent of News Entries: an announcement that should be both is written twice.
+_Avoid_: News
+
 ## Users and logins
 
 **User**:
