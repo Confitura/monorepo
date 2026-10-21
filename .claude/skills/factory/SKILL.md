@@ -57,6 +57,22 @@ Board: `backlog browser` → http://localhost:6420. Tracker conventions: `docs/a
 
 `backlog task view <id> --plain` → keep the full text (title, description, acceptance criteria, labels).
 
+**Size budget.** A PR stays around **300 changed lines** (added plus deleted), hand-written only. Generated or vendored files don't count: `openapi.json`, `admin-app/src/client/**`, lockfiles (`pnpm-lock.yaml`, `.terraform.lock.hcl`), and verbatim schema dumps such as the Flyway baseline (`V001__baseline.sql`). The measure, run from the branch against `origin/master`:
+
+```
+git diff --shortstat origin/master...HEAD -- . ':(exclude)openapi.json' ':(exclude)admin-app/src/client' ':(exclude)*pnpm-lock.yaml' ':(exclude)*.terraform.lock.hcl' ':(exclude)jelatyna-backend/src/main/resources/db/migration/V001__baseline.sql'
+```
+
+If the task clearly won't fit in about 300 counted lines, split it **before branching**; the maintainer prefers several small PRs over one big one. Only split where each slice is a complete, green, reviewable change that leaves `master` working and wired (a migration and the entity change that uses it stay together, and may exceed the budget if the PR says why):
+
+1. Cut sequential slices. The original task becomes the first slice, retitled to what it now covers (its PR takes the task title): `backlog task edit <id> --title "<slice 1 title>" --description "<slice 1>" --acceptance-criteria "<criterion>" …` (repeat `--acceptance-criteria` per criterion). It **replaces the whole acceptance-criteria list**; it doesn't append (`--ac` adds one, `--remove-ac <index>` removes one).
+2. Create each later slice with `backlog task create "<title>" -d "<description>" --ac "<criterion>" … -l ready-for-agent --dep <previous slice id>`, so each depends on the one before and the `--ready` frontier keeps them in order. Carry over a `model:` / `effort:` label only if the human set it on the original; leave the rest unlabelled so each slice is tiered on its own when it runs.
+3. Tasks that depended on the original would otherwise become ready as soon as slice 1 merges. Find them (`backlog task list --plain`, then `backlog task view <id> --plain` for each) and add the last slice to their dependencies: `backlog task edit <dependent> --dep <its existing dependencies>,<last slice id>` (`--dep` replaces the list, so repeat the existing ones).
+4. Record it: `backlog task edit <id> --append-notes "factory: split into <id>, <new ids> — <one-line reason>"`.
+5. Run only the first slice (the original task) through the rest of `run`. In `auto` mode, also notify `split:<id>`.
+
+When in doubt, don't split: the implementer stops at a green checkpoint if the diff runs over (see step 5).
+
 The implementer runs on the model and effort in two task labels: `model:<haiku|sonnet|opus|fable>` and `effort:<low|medium|high|xhigh|max>`. Labels the human already set win; fill any missing one from the tier you pick:
 
 | Tier | Model / effort | When the task… |
@@ -66,7 +82,7 @@ The implementer runs on the model and effort in two task labels: `model:<haiku|s
 | M | `sonnet` / `high` | touches one module and needs tests |
 | L | `opus` / `xhigh` | touches 2+ modules, changes the API (`openapi.json` + client), or touches security/auth, schema, or data |
 
-Judge from the description and acceptance criteria; when torn between two tiers, pick the higher.
+Judge from the description and acceptance criteria (of the first slice, after any split); when torn between two tiers, pick the higher.
 
 1. A `model:` or `effort:` label with any other value → stop (before branching) and tell the user which label is invalid.
 2. Add only the missing labels and record why: `backlog task edit <id> --add-label model:<m> --add-label effort:<e> --append-notes "factory: tier <X> (<m> / <e>) — <one-line reason>"`. If the human set both labels, the tier is `override`; just append the note.
@@ -93,6 +109,7 @@ BRANCH: <B> (already checked out)
 
 - `STATUS: BLOCKED` → go to **Hand to human**.
 - `STATUS: DONE` → confirm `git log --oneline origin/master..HEAD` is non-empty and `git status --porcelain` is clean, then spawn a `factory-reviewer` subagent with: the task text, `BRANCH: <B>`, `BASE: origin/master`, and the implementer's report.
+- `REMAINING WORK` in the report that isn't `none` means the implementer stopped at a green checkpoint to stay near the size budget. The reviewer marks the criteria listed there `DEFERRED`, which is not a FAIL. Publish what's done as usual, then in **Publish** create the follow-up task for the remainder.
 - `VERDICT: FAIL` (first time) → resume the same implementer with `SendMessage` (agent id from its result) carrying the REQUIRED FIXES — it keeps its model and effort. If resuming isn't possible, spawn a fresh `factory-implementer` with the same `model` / `effort`, the task text, the findings, and "remediation mode: the branch already has your earlier commits". Then run a **new** reviewer.
 - Second FAIL → **Hand to human**.
 
@@ -107,17 +124,20 @@ BRANCH: <B> (already checked out)
    <implementer WHY — Problem / Approach / Alternatives considered / Trade-offs / follow-ups>
 
    ## Acceptance criteria
-   - [x] <each criterion>
+   - [x] <each criterion the reviewer marked MET>
+   - [ ] <each criterion marked DEFERRED> — deferred to a follow-up task
 
    ## Verification
    - <each CHECKS line>
+   - Size: <N> counted changed lines (<shortstat output>, generated files excluded)<; over budget because <the implementer's stated reason>, if over 300>
    - Automated review: PASS on first round | PASS after one fix round (<what the first review caught and how it was fixed>)
    - Implementer: <m> / <e> (tier <X>) · Reviewer: opus / xhigh
 
    Opened by the local code factory after an automated review PASS. Needs human review and merge.
    ```
    If the WHY doesn't answer an obvious "why this way?" about the diff, ask the implementer to complete it before publishing — never fill it in from backlog notes.
-3. `backlog task edit <id> -s "In Review" --ref <PR url> --append-notes "factory: PR <url> (ready for review), reviewer PASS"` plus `--check-ac <n>` for each criterion the reviewer marked MET.
+3. `backlog task edit <id> -s "In Review" --ref <PR url> --append-notes "factory: PR <url> (ready for review), reviewer PASS"` plus `--check-ac <n>` for each criterion the reviewer marked MET (not the DEFERRED ones).
+4. If the report's `REMAINING WORK` isn't `none`, create the follow-up: `backlog task create "<title>" -d "<what's left>" --ac "<criterion>" … -l ready-for-agent --dep <id>` with the deferred criteria as its `--ac`s. Carry over a `model:` / `effort:` label only if the human set it (the ones the factory added are recorded in a `factory: tier` note; leave those off so the follow-up is tiered on its own). Append `factory: remaining work split off as <new id>` to the task's notes. It depends on this task, so it stays off the frontier until the PR merges. As in a split, add the new task to the dependencies of any task that depended on this one (`--dep` replaces the list, so repeat the existing ones).
 
 ### Hand to human
 
@@ -140,7 +160,7 @@ Don't push. `backlog task edit <id> -s "To Do" --remove-label ready-for-agent --
 
 One unattended iteration, meant for `/loop /factory auto` in a dedicated clone of the repo (so it never switches branches under someone's IDE). It does `sync`, then at most one `run`, and tells the human only when they're needed.
 
-**Notifications.** Send them with the `PushNotification` tool, one short line each (what happened, the id or PR, what to do). Send each event once: keep the keys already sent in `backlog/.factory-auto.json` (gitignored with the board) and skip a key that's there. Keys: `pr-opened:<pr>`, `pr-checks-failed:<pr>:<head sha>`, `pr-conflict:<pr>:<head sha>`, `handed:<task>`, `human-ready:<task>`, `stuck:<task>`, `idle:<sorted open PR numbers>`, `clone-dirty`.
+**Notifications.** Send them with the `PushNotification` tool, one short line each (what happened, the id or PR, what to do). Send each event once: keep the keys already sent in `backlog/.factory-auto.json` (gitignored with the board) and skip a key that's there. Keys: `pr-opened:<pr>`, `pr-checks-failed:<pr>:<head sha>`, `pr-conflict:<pr>:<head sha>`, `handed:<task>`, `split:<task>`, `human-ready:<task>`, `stuck:<task>`, `idle:<sorted open PR numbers>`, `clone-dirty`.
 
 1. **Clone check.** The tree must be clean and on `master`. If not, notify `clone-dirty` and stop. Then `git fetch origin --prune` and fast-forward `master` (`git merge --ff-only origin/master`); if that fails, notify `clone-dirty` and stop.
 2. **`sync`** as above.
@@ -148,7 +168,7 @@ One unattended iteration, meant for `/loop /factory auto` in a dedicated clone o
 4. **Interrupted work.** If a task is `In Progress`, an earlier iteration didn't finish. Notify `stuck:<task>` and stop; never reset it alone.
 5. **Human tasks.** For each `To Do` task labelled `ready-for-human` whose dependencies are all `Done`, notify `human-ready:<task>`.
 6. **Pick.** Take the first task from the ready frontier. If there is none, notify `idle:<open PRs>` ("nothing ready; waiting on your merges of #…") and stop.
-7. **`run`** that task exactly as in `run` (preflight through Finish; the remembered branch is `master`). After Publish, notify `pr-opened:<pr>`. After Hand to human, notify `handed:<task>` with the blocker in one line.
+7. **`run`** that task exactly as in `run` (preflight through Finish; the remembered branch is `master`). After Publish, notify `pr-opened:<pr>`. After Hand to human, notify `handed:<task>` with the blocker in one line. If the size check split the task, notify `split:<task>` with the new task ids in one line.
 8. Stop after that one task. In `/loop` dynamic mode, schedule the next iteration soon (about a minute) if the frontier still has a ready task, otherwise 20–30 minutes.
 
 All invariants apply unchanged: one task at a time, never merge, never push to `master`, PRs ready for review only after a PASS.

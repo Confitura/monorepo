@@ -16,6 +16,7 @@ You implement **one** task in this repo. The task text in your prompt (descripti
 - Never start dev servers or long-running processes: no `pnpm dev`/`preview`, `spring-boot:run`, `pnpm test:e2e`/Playwright, or docker. The one exception: containers that Testcontainers starts inside `./mvnw test` (the backend tests need PostgreSQL). Compose, `docker run`, and image builds stay forbidden.
 - No new dependencies or lockfile changes, and no edits under `.github/`, `.claude/`, `.mvn/`, `infra/` — unless the task asks for them.
 - Surgical changes in the surrounding style. Every changed line traces to the task.
+- **Size budget: about 300 changed lines** (added plus deleted), hand-written only. `openapi.json`, `admin-app/src/client/**`, lockfiles (`pnpm-lock.yaml`, `.terraform.lock.hcl`), and verbatim schema dumps such as the Flyway baseline don't count. Measure with `git diff --shortstat origin/master...HEAD -- . ':(exclude)openapi.json' ':(exclude)admin-app/src/client' ':(exclude)*pnpm-lock.yaml' ':(exclude)*.terraform.lock.hcl' ':(exclude)jelatyna-backend/src/main/resources/db/migration/V001__baseline.sql'`. If the diff would clearly go over, stop at a coherent, green checkpoint (checks pass, nothing half-wired), commit that, and list what's left under `REMAINING WORK`; the lead publishes what's done and files the rest as a follow-up task. A change that can't be split without leaving `master` broken or half-wired (one migration plus its entity change) may exceed the budget; say why in WHY.
 - Run commands from the repo root as one call: `cd <app> && <cmd>`.
 
 ## Procedure
@@ -24,8 +25,8 @@ You implement **one** task in this repo. The task text in your prompt (descripti
 2. Read `CONTEXT.md` and any `docs/adr/` touching the area. Explore the code.
 3. Work test-first at existing seams (the `tdd` skill). Run single tests while iterating.
 4. Run the final checks for every module you touched (table below). All must pass.
-5. Commit with an imperative subject ≤72 chars matching repo history ("Add …", "Fix …"), a body explaining why, and a final line `Backlog: <task-id>`. **No `Co-Authored-By` trailer.**
-6. Reply with the report.
+5. Commit with an imperative subject ≤72 chars matching repo history ("Add …", "Fix …"), a body explaining why, and a final line `Backlog: <task-id>`. **No `Co-Authored-By` trailer.** Commit green checkpoints as you go and run the size measure after each commit: it counts committed work only, so it reads 0 before the first one. Stop at a checkpoint if the total clearly runs over.
+6. Take the `SIZE` figure from a final run of the measure on the finished HEAD, then reply with the report.
 
 ## Checks (mirror `.github/workflows/run-tests.yml`)
 
@@ -44,6 +45,7 @@ TASK: <id>
 BRANCH: <git branch --show-current>
 HEAD: <git rev-parse --short HEAD>
 MODULES: <touched modules or none>
+SIZE: <N> counted changed lines — <shortstat output of the measure above>
 CHECKS:
 - <exact command> — PASS|FAIL (<test counts>)
 ACCEPTANCE:
@@ -55,10 +57,11 @@ WHY:
 - Approach: <what you did and why this way>
 - Alternatives considered: <each option you rejected and why — or none>
 - Trade-offs / follow-ups: <known limits, risks, deliberate omissions — or none>
+REMAINING WORK: <none | what is left, as sequential slices that each would be green and reviewable, with the acceptance criteria each covers>
 QUESTIONS/RISKS: <or none>
 ```
 
-TLDR and WHY become the public PR description (see `## Pull requests` in `CLAUDE.md`), and the task they came from will be archived. Write them so someone reading only the PR a year from now understands why each non-obvious choice in the diff was made. Use your own words; never copy private task notes.
+TLDR and WHY become the public PR description (see `## Pull requests` in `CLAUDE.md`), and the task they came from will be archived. Write them so someone reading only the PR a year from now understands why each non-obvious choice in the diff was made. Use your own words; never copy private task notes. If `SIZE` is over 300, WHY must say why it couldn't be split.
 
 ## Remediation
 
