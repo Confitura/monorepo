@@ -128,6 +128,15 @@ public class UserLoginsController {
         return MergePreview.of(survivor, absorbed);
     }
 
+    /** What {@link #adminMergeUsers} would make of the survivor, shown before the admin confirms; changes nothing. */
+    @GetMapping("/users/{survivorId}/merge/{absorbedId}/preview")
+    @PreAuthorize("@security.isAdmin()")
+    @Transactional(readOnly = true)
+    public MergePreview previewAdminMerge(@PathVariable String survivorId, @PathVariable String absorbedId) {
+        User survivor = survivorForAdmin(survivorId, absorbedId);
+        return MergePreview.of(survivor, userToAbsorb(survivor, absorbedId));
+    }
+
     /**
      * The person declined the merge: deletes the User the second sign-in created, with its Login, so nothing is
      * left behind. Refuses a User with content, which {@link #mergeUsers} may absorb but cancelling must not delete.
@@ -207,7 +216,7 @@ public class UserLoginsController {
     public record MergeUsersRequest(String token) {
     }
 
-    /** The signed-in User's profile after a merge, the roles it would gain, and the titles of the talks it would gain. */
+    /** The survivor's profile after a merge, the roles it would gain, and the titles of the talks it would gain. */
     public record MergePreview(String name, String email, String bio, String username, String twitter, String github,
                                String www, String photo, boolean becomesAdmin, boolean becomesVolunteer,
                                List<String> talksToMove) {

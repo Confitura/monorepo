@@ -5026,6 +5026,42 @@
         "tags" : [ "user-logins-controller" ]
       }
     },
+    "/users/{survivorId}/merge/{absorbedId}/preview" : {
+      "get" : {
+        "operationId" : "previewAdminMerge",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "survivorId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "absorbedId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MergePreview"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "tags" : [ "user-logins-controller" ]
+      }
+    },
     "/users/{userId}/admin/{isAdmin}" : {
       "post" : {
         "operationId" : "markAsAdmin",
