@@ -77,6 +77,7 @@ vi.mock('@/utils/api.ts', () => {
     markAsVolunteer: ok({}),
     getUserLogins: ok([]),
     unlinkLogin: ok({}),
+    previewMerge: ok({}),
     mergeUsers: ok(''),
     cancelMerge: ok({}),
     // pages
@@ -422,16 +423,24 @@ describe('admin-app pages render without errors', () => {
     }
   })
 
-  it('asks to confirm adding the Login instead of signing in with the second token', async () => {
+  it('asks to confirm adding the Login, previewing the resulting profile, role change and that it is final', async () => {
     const signedIn = fakeJwt()
     localStorage.setItem('token', signedIn)
     const state = startSignInAttempt('add-login')
-    // A Login never seen before signs in as a brand-new User.
-    const second = fakeJwt({ jti: 'u2', sub: 'New', isAdmin: false })
+    const second = fakeJwt({ jti: 'u2', sub: 'Other', isAdmin: true })
+    vi.mocked(api.previewMerge).mockResolvedValueOnce({
+      data: { name: 'Test', email: 'other@example.com', becomesAdmin: true, becomesVolunteer: false },
+      status: 200,
+    } as any)
     try {
       const wrapper = await mountPage(LoginProviderPage, `/login/google?state=${state}#access_token=${second}`)
 
+      expect(api.previewMerge).toHaveBeenCalledWith(expect.objectContaining({ body: { token: second } }))
       expect(wrapper.text()).toContain('Add your Google login to this account?')
+      expect(wrapper.text()).toContain('other@example.com')
+      expect(wrapper.text()).toContain('You also become an admin.')
+      expect(wrapper.text()).not.toContain('volunteer')
+      expect(wrapper.text()).toContain('This cannot be undone.')
       button(wrapper, 'Add login')
       button(wrapper, 'Cancel')
       expect(localStorage.getItem('token')).toBe(signedIn)
@@ -474,24 +483,21 @@ describe('admin-app pages render without errors', () => {
     }
   })
 
-  it('a refused merge says why and keeps the signed-in token', async () => {
+  it('a refused merge says why, offers no merge and keeps the signed-in token', async () => {
     const signedIn = fakeJwt()
     localStorage.setItem('token', signedIn)
     const state = startSignInAttempt('add-login')
     const second = fakeJwt({ jti: 'u2', sub: 'Speaker', isAdmin: false })
-    vi.mocked(api.mergeUsers).mockRejectedValueOnce({ status: 409 })
+    const reason = 'The other user has talks, which cannot be merged yet'
+    vi.mocked(api.previewMerge).mockRejectedValueOnce({ status: 409, response: { data: reason } })
     try {
       const wrapper = await mountPage(LoginProviderPage, `/login/google?state=${state}#access_token=${second}`)
 
-      await button(wrapper, 'Add login').trigger('click')
-      await flushPromises()
-
-      expect(useNotificationStore().notifications.at(-1)).toMatchObject({
-        type: 'error',
-        text: expect.stringContaining('Merging such accounts is not available yet'),
-      })
+      expect(wrapper.text()).toContain(reason)
+      expect(wrapper.findAll('button').some((b) => b.text() === 'Add login')).toBe(false)
+      expect(wrapper.get('a[href="/profile-form"]').text()).toBe('Back to profile')
+      expect(api.mergeUsers).not.toHaveBeenCalled()
       expect(localStorage.getItem('token')).toBe(signedIn)
-      button(wrapper, 'Cancel')
     } finally {
       localStorage.removeItem('token')
     }
