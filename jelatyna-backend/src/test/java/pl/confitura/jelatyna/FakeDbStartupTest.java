@@ -4,7 +4,10 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
+import pl.confitura.jelatyna.agenda.DayRepository;
 import pl.confitura.jelatyna.edition.EditionRepository;
+import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
+import pl.confitura.jelatyna.presentation.PresentationRepository;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -27,6 +30,12 @@ class FakeDbStartupTest extends BaseIntegrationTest {
     @Autowired
     EditionRepository editionRepository;
 
+    @Autowired
+    PresentationRepository presentationRepository;
+
+    @Autowired
+    DayRepository dayRepository;
+
     @BeforeAll
     static void leaveATableFromAPreviousRun() throws SQLException {
         postgres.start();
@@ -47,5 +56,16 @@ class FakeDbStartupTest extends BaseIntegrationTest {
     @Test
     void startingUnderFakeDbOpensTheCurrentEditionsCallForPapers() {
         assertThat(editionRepository.findCurrent().isC4pOpen()).isTrue();
+    }
+
+    @Test
+    void startingUnderFakeDbPutsTheFakeTalksAndAgendaInTheCurrentEdition() {
+        String current = editionRepository.findCurrent().getId();
+        SecurityHelper.asAdmin();
+
+        assertThat(presentationRepository.findAll()).isNotEmpty()
+                .allSatisfy(talk -> assertThat(talk.getEdition().getId()).isEqualTo(current));
+        assertThat(dayRepository.findAll()).isNotEmpty()
+                .allSatisfy(day -> assertThat(day.getEdition().getId()).isEqualTo(current));
     }
 }

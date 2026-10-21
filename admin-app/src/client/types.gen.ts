@@ -289,6 +289,23 @@ export type MessageInfo = {
     };
 };
 
+export type NewsEntryDto = {
+    body?: string;
+    date?: string;
+    id?: string;
+    published?: boolean;
+    slug?: string;
+    title?: string;
+};
+
+export type NewsEntryRequest = {
+    body?: string;
+    date?: string;
+    published?: boolean;
+    slug?: string;
+    title?: string;
+};
+
 export type NewsletterStat = {
     subscribersCount?: number;
 };
@@ -1827,6 +1844,72 @@ export type GetTemplatesResponses = {
 };
 
 export type GetTemplatesResponse = GetTemplatesResponses[keyof GetTemplatesResponses];
+
+export type GetAllNewsEntriesData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/news-entries';
+};
+
+export type GetAllNewsEntriesResponses = {
+    /**
+     * OK
+     */
+    200: Array<NewsEntryDto>;
+};
+
+export type GetAllNewsEntriesResponse = GetAllNewsEntriesResponses[keyof GetAllNewsEntriesResponses];
+
+export type CreateNewsEntryData = {
+    body: NewsEntryRequest;
+    path?: never;
+    query?: never;
+    url: '/news-entries';
+};
+
+export type CreateNewsEntryResponses = {
+    /**
+     * OK
+     */
+    200: NewsEntryDto;
+};
+
+export type CreateNewsEntryResponse = CreateNewsEntryResponses[keyof CreateNewsEntryResponses];
+
+export type DeleteNewsEntryData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/news-entries/{id}';
+};
+
+export type DeleteNewsEntryResponses = {
+    /**
+     * OK
+     */
+    200: unknown;
+};
+
+export type GetNewsEntryData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/news-entries/{id}';
+};
+
+export type GetNewsEntryResponses = {
+    /**
+     * OK
+     */
+    200: NewsEntryDto;
+};
+
+export type GetNewsEntryResponse = GetNewsEntryResponses[keyof GetNewsEntryResponses];
 
 export type GetPagesData = {
     body?: never;

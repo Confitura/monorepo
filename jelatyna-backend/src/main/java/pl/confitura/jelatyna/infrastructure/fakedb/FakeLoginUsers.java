@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import pl.confitura.jelatyna.api.model.PresentationRequest;
 import pl.confitura.jelatyna.api.model.WorkshopRequest;
+import pl.confitura.jelatyna.edition.Edition;
+import pl.confitura.jelatyna.edition.EditionRepository;
 import pl.confitura.jelatyna.infrastructure.security.TokenService;
 import pl.confitura.jelatyna.login.facebook.FacebookService;
 import pl.confitura.jelatyna.login.github.GithubService;
@@ -39,6 +41,7 @@ public class FakeLoginUsers {
 
     private final UserRepository userRepository;
     private final PresentationRepository presentationRepository;
+    private final EditionRepository editionRepository;
     private final TokenService tokenService;
 
     public User getBySystem(String provider) {
@@ -61,8 +64,9 @@ public class FakeLoginUsers {
             var shortDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Congue consectetuer incidunt magna. Nulla gubergren rebum sunt. Luptatum sunt gubergren. Ad nisl soluta.";
             // Without fake-db the database survives restarts, so seed the presentations only once.
             if (presentationRepository.findBySpeakersContains(FAKE_SPEAKER).isEmpty()) {
-                presentationRepository.save(Presentation.from(new PresentationRequest("test", shortDescription, description, "begingner", "Polish", new String[]{"java"}), FAKE_SPEAKER, Set.of()));
-                presentationRepository.save(Presentation.from(new WorkshopRequest("test", "test", "description", "begingner", "Polish", new String[]{"java"}, false, 12.20, 45, 21), FAKE_SPEAKER, Set.of()));
+                Edition edition = editionRepository.findCurrent();
+                presentationRepository.save(Presentation.from(new PresentationRequest("test", shortDescription, description, "begingner", "Polish", new String[]{"java"}), FAKE_SPEAKER, Set.of()).setEdition(edition));
+                presentationRepository.save(Presentation.from(new WorkshopRequest("test", "test", "description", "begingner", "Polish", new String[]{"java"}, false, 12.20, 45, 21), FAKE_SPEAKER, Set.of()).setEdition(edition));
             }
 
             String token = tokenService.asToken(FAKE_ADMIN);

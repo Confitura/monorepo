@@ -1,9 +1,11 @@
 package pl.confitura.jelatyna.agenda;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.GenericGenerator;
+import pl.confitura.jelatyna.edition.Edition;
 import pl.confitura.jelatyna.infrastructure.db.AuditedEntity;
 
 import jakarta.persistence.*;
@@ -29,4 +31,10 @@ public class Day extends AuditedEntity {
 
     @NotNull
     private int displayOrder;
+
+    // The Edition whose agenda this Day is (ADR-0004): the Current Edition when it was created.
+    @ManyToOne
+    @NotNull
+    @JsonIgnore
+    private Edition edition;
 }

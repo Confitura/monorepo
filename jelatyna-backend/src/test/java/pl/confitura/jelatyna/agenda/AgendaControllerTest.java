@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.transaction.support.TransactionTemplate;
 import pl.confitura.jelatyna.BaseIntegrationTest;
+import pl.confitura.jelatyna.edition.EditionRepository;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
@@ -40,6 +41,9 @@ class AgendaControllerTest extends BaseIntegrationTest {
 
     @Autowired
     private TransactionTemplate txTemplate;
+
+    @Autowired
+    private EditionRepository editionRepository;
 
     private Day day1;
     private Day day2;
@@ -94,13 +98,15 @@ class AgendaControllerTest extends BaseIntegrationTest {
                 .setId("day-1")
                 .setLabel("Day 1")
                 .setDate(LocalDate.of(2025, 9, 1))
-                .setDisplayOrder(1);
+                .setDisplayOrder(1)
+                .setEdition(editionRepository.findCurrent());
 
         day2 = new Day()
                 .setId("day-2")
                 .setLabel("Day 2")
                 .setDate(LocalDate.of(2025, 9, 2))
-                .setDisplayOrder(2);
+                .setDisplayOrder(2)
+                .setEdition(editionRepository.findCurrent());
 
         day1 = dayRepository.save(day1);
         day2 = dayRepository.save(day2);
@@ -379,7 +385,8 @@ class AgendaControllerTest extends BaseIntegrationTest {
                     .setShortDescription("short")
                     .setDescription("description")
                     .setLevel("easy")
-                    .setLanguage("pl"));
+                    .setLanguage("pl")
+                    .setEdition(editionRepository.findCurrent()));
             agendaRepository.save(new AgendaEntry()
                     .setTimeSlot(timeSlot2)
                     .setRoom(room1)

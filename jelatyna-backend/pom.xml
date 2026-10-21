@@ -81,6 +81,18 @@
             <artifactId>opentelemetry-exporter-sender-jdk</artifactId>
             <scope>runtime</scope>
         </dependency>
+        <!-- IDEA's OpenTelemetry plugin receives OTLP over gRPC only. This sender carries gRPC on
+             grpc-java; the shaded Netty transport keeps it clear of scribejava's okhttp. -->
+        <dependency>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-exporter-sender-grpc-managed-channel</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-netty-shaded</artifactId>
+            <scope>runtime</scope>
+        </dependency>
 
         <dependency>
             <groupId>com.github.scribejava</groupId>

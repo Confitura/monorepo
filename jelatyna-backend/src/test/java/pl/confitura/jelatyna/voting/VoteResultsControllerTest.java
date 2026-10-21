@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
 import pl.confitura.jelatyna.BaseIntegrationTest;
+import pl.confitura.jelatyna.edition.EditionRepository;
 import pl.confitura.jelatyna.presentation.PreSelectionStatus;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
@@ -34,6 +35,9 @@ class VoteResultsControllerTest extends BaseIntegrationTest {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    EditionRepository editionRepository;
 
     private Presentation presentation;
 
@@ -121,6 +125,7 @@ class VoteResultsControllerTest extends BaseIntegrationTest {
         p.setLevel("advanced");
         p.setLanguage("en");
         p.setSpeaker(speaker);
+        p.setEdition(editionRepository.findCurrent());
         return presentationRepository.save(p);
     }
 }

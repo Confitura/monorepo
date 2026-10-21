@@ -10,6 +10,7 @@ import org.springframework.boot.testcontainers.service.connection.ServiceConnect
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.testcontainers.postgresql.PostgreSQLContainer;
+import pl.confitura.jelatyna.edition.EditionRepository;
 import pl.confitura.jelatyna.infrastructure.fakedb.FakeLoginUsers;
 import pl.confitura.jelatyna.login.github.GithubService;
 import pl.confitura.jelatyna.presentation.Presentation;
@@ -51,6 +52,9 @@ class KeepDataStartupTest {
 
     @Autowired
     PresentationRepository presentationRepository;
+
+    @Autowired
+    EditionRepository editionRepository;
 
     @BeforeAll
     static void leaveATableFromAPreviousRun() throws SQLException {
@@ -95,5 +99,13 @@ class KeepDataStartupTest {
         assertThat(fakeLoginUsers.getBySystem("google").getName()).isEqualTo("Admin");
         assertThat(fakeLoginUsers.getBySystem("facebook").getName()).isEqualTo("volunteer");
         assertThat(fakeLoginUsers.getBySystem("github").getName()).isEqualTo("Speaker");
+    }
+
+    @Test
+    void theFakeSpeakersTalkAndWorkshopAreInTheCurrentEdition() {
+        User speaker = fakeLoginUsers.getBySystem(GithubService.SYSTEM);
+        assertThat(presentationRepository.findBySpeakersContains(speaker))
+                .extracting(talk -> talk.getEdition().getId())
+                .containsOnly(editionRepository.findCurrent().getId());
     }
 }

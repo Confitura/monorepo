@@ -40,6 +40,7 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import pl.confitura.jelatyna.BaseIntegrationTest;
 import pl.confitura.jelatyna.api.model.PresentationRequest;
+import pl.confitura.jelatyna.edition.EditionRepository;
 import pl.confitura.jelatyna.infrastructure.security.JelatynaPrincipal;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
 import pl.confitura.jelatyna.infrastructure.security.TokenService;
@@ -67,6 +68,9 @@ class UserLoginsControllerTest extends BaseIntegrationTest {
 
     @Autowired
     private PresentationRepository presentationRepository;
+
+    @Autowired
+    private EditionRepository editionRepository;
 
     @Autowired
     private VoucherService voucherService;
@@ -368,7 +372,7 @@ class UserLoginsControllerTest extends BaseIntegrationTest {
         Presentation talk = Presentation.from(
                 new PresentationRequest(title, "short", "long", "beginner", "Polish", new String[]{}), speaker, Set.of());
         Arrays.stream(coSpeakers).forEach(talk::setSpeaker);
-        return presentationRepository.save(talk);
+        return presentationRepository.save(talk.setEdition(editionRepository.findCurrent()));
     }
 
     @Test

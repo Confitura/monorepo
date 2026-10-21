@@ -13,6 +13,13 @@ const PARTNERS = [
   { id: 'uuid-2', slug: 'dpd', name: 'DPD', type: 'bronze', www: 'https://dpd.com', logo: 'https://cdn/d.svg', description: 'd', orientation: 'box', published: true },
 ]
 
+// newest first, as the backend dumps it
+const NEWS_ENTRIES = [
+  { title: 'Agenda is live', slug: 'agenda-is-live', body: 'See the **agenda** & plan your day.\n\nMore soon.', publishedAt: '2026-09-01T10:00:00Z' },
+  { title: 'Tickets', slug: 'tickets', body: '<p>Old <a href="https://x.pl">HTML</a> body</p>', publishedAt: '2026-08-20T19:12:42Z' },
+]
+const NEWS = { latest: NEWS_ENTRIES[0], all: NEWS_ENTRIES }
+
 // speaker '123' has one scheduled talk (p1) and one unscheduled talk (p2)
 const SPEAKER = {
   id: '123', name: 'Jane Speaker', bio: 'Bio', photo: '',
@@ -38,6 +45,7 @@ vi.mock('~/composables/useAPIFetch', async () => {
   const createFetch = (path?: string) => {
     const data = ref(
       path === '/faq/entries.json' ? FAQ_ENTRIES
+      : path === '/news.json' ? NEWS
       : path === '/partners/list.json' ? PARTNERS
       : path === '/users/123/public.json' ? SPEAKER
       : path === '/agenda/day-1.json' ? DAY1_AGENDA
@@ -60,12 +68,14 @@ vi.mock('vue3-google-map', () => ({
   AdvancedMarker: { template: '<div><slot name="content" /></div>' },
 }))
 
+import { useArchiveFetch } from '~/composables/useAPIFetch'
 import IndexPage from '~/pages/index.vue'
 import CalendarPage from '~/pages/calendar.vue'
 import WorkshopSignupPage from '~/pages/workshop-signup.vue'
 import AboutPage from '~/pages/about.vue'
 import FaqPage from '~/pages/faq.vue'
-import NewsPage from '~/pages/news.vue'
+import NewsPage from '~/pages/news/index.vue'
+import NewsEntryPage from '~/pages/news/[slug].vue'
 import PresentationsPage from '~/pages/presentations.vue'
 import PrivacyPolicyPage from '~/pages/privacy-policy.vue'
 import SpoinaPage from '~/pages/spoina.vue'
@@ -128,11 +138,52 @@ describe('pages render without errors', () => {
     expect(html).toContain('<strong>ticket</strong>')
   })
 
-  it('renders the news page', async () => {
-    // news page uses v-if="content" — with mocked null data the container is hidden,
-    // but the component itself should mount without throwing
+  it('lists news with titles linking to the entry pages and bodies rendered as Markdown', async () => {
     const wrapper = await mountSuspended(NewsPage)
-    expect(wrapper.html()).toBeDefined()
+    const links = wrapper.findAll('.latest-news h2 a')
+    expect(links.map((l) => l.attributes('href'))).toEqual(['/news/agenda-is-live', '/news/tickets'])
+    expect(links[0].text()).toBe('Agenda is live')
+    expect(wrapper.html()).toContain('<strong>agenda</strong>')
+    expect(wrapper.html()).toContain('<a href="https://x.pl">HTML</a>')
+  })
+
+  it('links the home page banner to the newest news entry', async () => {
+    const wrapper = await mountSuspended(IndexPage)
+    const link = wrapper.find('.latest-news h2 a')
+    expect(link.attributes('href')).toBe('/news/agenda-is-live')
+    expect(wrapper.find('.latest-news .body').html()).toContain('<strong>agenda</strong>')
+  })
+
+  it('renders a news entry page with its title, day and Markdown body', async () => {
+    const wrapper = await mountSuspended(NewsEntryPage, { route: '/news/agenda-is-live' })
+    expect(wrapper.find('.news-entry h2').text()).toBe('Agenda is live')
+    expect(wrapper.find('.news-entry__date').text()).toBe('September 1, 2026')
+    expect(wrapper.find('.news-entry__body').html()).toContain('<strong>agenda</strong>')
+  })
+
+  it('sets the page title and share tags for a news entry', async () => {
+    await mountSuspended(NewsEntryPage, { route: '/news/agenda-is-live' })
+    const meta = (key: string) => document.head.querySelector(`meta[property="${key}"]`)?.getAttribute('content')
+    await vi.waitFor(() => expect(document.title).toBe('Agenda is live — Confitura'))
+    expect(meta('og:title')).toBe('Agenda is live')
+    expect(meta('og:description')).toBe('See the agenda & plan your day. More soon.')
+    expect(meta('og:type')).toBe('article')
+    expect(meta('og:url')).toBe('https://confitura.pl/news/agenda-is-live')
+  })
+
+  it('answers 404 for an unknown news slug', async () => {
+    await mountSuspended(NewsEntryPage, { route: '/news/nope' })
+    expect(useError().value?.statusCode).toBe(404)
+    clearError()
+  })
+
+  it('answers 503, not 404, when the news feed cannot be fetched', async () => {
+    const data = ref(null)
+    const failed = { data, pending: ref(false), error: ref(new Error('down')), refresh: vi.fn(), execute: vi.fn() }
+    vi.mocked(useArchiveFetch).mockImplementationOnce((() => Object.assign(Promise.resolve(failed), failed)) as never)
+    await mountSuspended(NewsEntryPage, { route: '/news/agenda-is-live' })
+    expect(useError().value?.statusCode).toBe(503)
+    clearError()
   })
 
   it('renders the presentations page', async () => {

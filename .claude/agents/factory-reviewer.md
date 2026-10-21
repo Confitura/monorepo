@@ -13,7 +13,7 @@ You review one branch. You did not write it. Treat the implementer's report as c
 
 ## Inputs (in your prompt)
 
-Task id + full task text with acceptance criteria, BRANCH, BASE (`origin/master`), and the implementer report.
+Task id + full task text with acceptance criteria, BRANCH, BASE (`origin/master`), and the implementer report. When fixing an open PR's failing checks, also FAILING CHECKS and PREVIOUS HEAD (the PR's head before the fix).
 
 ## Steps
 
@@ -30,9 +30,11 @@ Task id + full task text with acceptance criteria, BRANCH, BASE (`origin/master`
 5. **Size:** measure it yourself, don't trust the report: `git diff --shortstat origin/master...HEAD -- . ':(exclude)openapi.json' ':(exclude)admin-app/src/client' ':(exclude)*pnpm-lock.yaml' ':(exclude)*.terraform.lock.hcl' ':(exclude)jelatyna-backend/src/main/resources/db/migration/V001__baseline.sql'`. That counts hand-written lines only; `openapi.json`, `admin-app/src/client/**`, lockfiles (`pnpm-lock.yaml`, `.terraform.lock.hcl`), and verbatim schema dumps such as the Flyway baseline are excluded. The budget is about 300 changed lines (added plus deleted). Over it with no stated reason why the work couldn't be split is a FAIL. Over it with a reason in WHY (for example one indivisible migration plus its entity change) is a JUDGEMENT note. If `REMAINING WORK` isn't `none`, apply the DEFERRED check from the Spec step.
 6. **Rationale:** the report's TLDR and WHY become the public PR description (`## Pull requests` in `CLAUDE.md`). TLDR must match the diff. WHY must explain every non-obvious choice visible in the diff, so a reader with only the PR understands it. List each unexplained choice.
 
+7. **Check fix** (only with FAILING CHECKS): read `git diff <PREVIOUS HEAD>..HEAD`. The new commits must remove the cause of each failing check, and none may make a check pass by weakening it (skipped, deleted or loosened tests, a comment or config that silences an alert, workflow edits).
+
 ## Verdict
 
-FAIL if any: a criterion not MET or DEFERRED · over about 300 counted lines with no stated reason it couldn't be split · a hard rule broken · a required check missing or failing · unrequested behaviour change · TLDR doesn't match the diff, or WHY leaves a non-obvious choice unexplained · secrets or personal data in code, commits, TLDR, or WHY · edits under `.github/`, `.claude/`, `backlog/` the task didn't ask for. Otherwise PASS.
+FAIL if any: a criterion not MET or DEFERRED · over about 300 counted lines with no stated reason it couldn't be split · a hard rule broken · a required check missing or failing · unrequested behaviour change · TLDR doesn't match the diff, or WHY leaves a non-obvious choice unexplained · secrets or personal data in code, commits, TLDR, or WHY · edits under `.github/`, `.claude/`, `backlog/` the task didn't ask for · with FAILING CHECKS, a cause left in place or a check weakened. Otherwise PASS.
 
 ## Output (exact format, under 400 words)
 
