@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.tuple;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -24,10 +25,10 @@ class UserAdminControllerTest extends BaseIntegrationTest {
     private LoginRepository loginRepository;
 
     @Test
-    void listsEachUsersLoginProvidersAndNoneForAManualUser() throws Exception {
+    void listsEachUsersLoginsAndNoneForAManualUser() throws Exception {
         User twoLogins = userRepository.save(new User().setName("Signed in twice").setOrigin("google"));
-        loginRepository.save(new Login(twoLogins, "google", UUID.randomUUID().toString()));
-        loginRepository.save(new Login(twoLogins, "github", UUID.randomUUID().toString()));
+        Login google = loginRepository.save(new Login(twoLogins, "google", UUID.randomUUID().toString()));
+        Login github = loginRepository.save(new Login(twoLogins, "github", UUID.randomUUID().toString()));
         User manual = userRepository.save(new User().setName("Added by an admin").setOrigin("manual"));
 
         SecurityHelper.asAdmin();
@@ -39,10 +40,12 @@ class UserAdminControllerTest extends BaseIntegrationTest {
         UserAdminController.FullUser[] users = fromJson(body, UserAdminController.FullUser[].class);
         assertThat(Arrays.stream(users).filter(user -> user.id().equals(twoLogins.getId())))
                 .singleElement()
-                .satisfies(user -> assertThat(user.loginProviders()).containsExactly("github", "google"));
+                // Ids too: an admin unlinks a Login from this list.
+                .satisfies(user -> assertThat(user.logins()).extracting(LoginDto::id, LoginDto::provider)
+                        .containsExactly(tuple(github.getId(), "github"), tuple(google.getId(), "google")));
         assertThat(Arrays.stream(users).filter(user -> user.id().equals(manual.getId())))
                 .singleElement()
-                .satisfies(user -> assertThat(user.loginProviders()).isEmpty());
+                .satisfies(user -> assertThat(user.logins()).isEmpty());
     }
 
     @Test

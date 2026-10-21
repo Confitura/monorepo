@@ -11,8 +11,9 @@ global.ResizeObserver = class ResizeObserver {
 }
 
 const users = [
-  { id: 'u1', name: 'Ada', email: 'ada@example.com', loginProviders: ['github', 'google'] },
-  { id: 'u2', name: 'Bob', email: 'bob@example.com', loginProviders: [] },
+  { id: 'u1', name: 'Ada', email: 'ada@example.com', logins: [{ id: 'l1', provider: 'github' }, { id: 'l2', provider: 'google' }] },
+  { id: 'u2', name: 'Bob', email: 'bob@example.com', logins: [] },
+  { id: 'u3', name: 'Cy', email: 'cy@example.com', logins: [{ id: 'l3', provider: 'facebook' }] },
 ]
 
 const api = vi.hoisted(() => ({
@@ -20,9 +21,23 @@ const api = vi.hoisted(() => ({
   createManual: vi.fn(),
   markAsAdmin: vi.fn(),
   markAsVolunteer: vi.fn(),
+  unlinkLogin: vi.fn(),
 }))
 
 vi.mock('@/utils/api.ts', () => api)
+
+// The confirm dialog answers yes, and records what it asked.
+const confirm = vi.hoisted(() => vi.fn())
+vi.mock('@/components/DialogConfirm.vue', () => ({
+  default: {
+    name: 'DialogConfirm',
+    template: '<div />',
+    setup(_: unknown, { expose }: { expose: (o: unknown) => void }) {
+      expose({ open: confirm })
+      return {}
+    },
+  },
+}))
 
 let appBar: HTMLElement
 
@@ -43,6 +58,7 @@ describe('admin users page', () => {
     appBar.id = 'app-bar'
     document.body.appendChild(appBar)
     api.getAllUsers.mockResolvedValue({ data: users, status: 200 })
+    confirm.mockResolvedValue(true)
   })
 
   afterEach(() => {
@@ -61,12 +77,38 @@ describe('admin users page', () => {
   it("lists each user's login providers", async () => {
     const wrapper = mountPage()
     await flushPromises()
-    expect(rowOf(wrapper, 'Ada').text()).toContain('github, google')
+    expect(rowOf(wrapper, 'Ada').text()).toContain('GitHub')
+    expect(rowOf(wrapper, 'Ada').text()).toContain('Google')
   })
 
   it('shows Manual for a user with no login', async () => {
     const wrapper = mountPage()
     await flushPromises()
     expect(rowOf(wrapper, 'Bob').text()).toContain('Manual')
+  })
+
+  it("removes a user's Login after confirming", async () => {
+    api.unlinkLogin.mockResolvedValue({ status: 204 })
+    const wrapper = mountPage()
+    await flushPromises()
+
+    await rowOf(wrapper, 'Ada').get('[aria-label="Remove GitHub login"]').trigger('click')
+    await flushPromises()
+
+    expect(confirm).toHaveBeenCalledWith("Remove Ada's GitHub login?")
+    expect(api.unlinkLogin).toHaveBeenCalledWith(expect.objectContaining({ path: { id: 'u1', loginId: 'l1' } }))
+    expect(api.getAllUsers).toHaveBeenCalledTimes(2)
+  })
+
+  it("removes a user's last Login too, warning they can no longer sign in", async () => {
+    api.unlinkLogin.mockResolvedValue({ status: 204 })
+    const wrapper = mountPage()
+    await flushPromises()
+
+    await rowOf(wrapper, 'Cy').get('[aria-label="Remove Facebook login"]').trigger('click')
+    await flushPromises()
+
+    expect(confirm).toHaveBeenCalledWith(expect.stringContaining('will not be able to sign in'))
+    expect(api.unlinkLogin).toHaveBeenCalledWith(expect.objectContaining({ path: { id: 'u3', loginId: 'l3' } }))
   })
 })

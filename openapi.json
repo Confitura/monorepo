@@ -305,9 +305,9 @@
           "isVolunteer" : {
             "type" : "boolean"
           },
-          "loginProviders" : {
+          "logins" : {
             "items" : {
-              "type" : "string"
+              "$ref" : "#/components/schemas/LoginDto"
             },
             "type" : "array"
           },
@@ -4737,6 +4737,35 @@
                 }
               }
             },
+            "description" : "OK"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "tags" : [ "user-logins-controller" ]
+      }
+    },
+    "/users/{id}/logins/{loginId}" : {
+      "delete" : {
+        "operationId" : "unlinkLogin",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "loginId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
             "description" : "OK"
           }
         },
