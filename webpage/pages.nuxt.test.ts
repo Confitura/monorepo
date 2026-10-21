@@ -68,6 +68,7 @@ vi.mock('vue3-google-map', () => ({
   AdvancedMarker: { template: '<div><slot name="content" /></div>' },
 }))
 
+import { useArchiveFetch } from '~/composables/useAPIFetch'
 import IndexPage from '~/pages/index.vue'
 import CalendarPage from '~/pages/calendar.vue'
 import WorkshopSignupPage from '~/pages/workshop-signup.vue'
@@ -173,6 +174,15 @@ describe('pages render without errors', () => {
   it('answers 404 for an unknown news slug', async () => {
     await mountSuspended(NewsEntryPage, { route: '/news/nope' })
     expect(useError().value?.statusCode).toBe(404)
+    clearError()
+  })
+
+  it('answers 503, not 404, when the news feed cannot be fetched', async () => {
+    const data = ref(null)
+    const failed = { data, pending: ref(false), error: ref(new Error('down')), refresh: vi.fn(), execute: vi.fn() }
+    vi.mocked(useArchiveFetch).mockImplementationOnce((() => Object.assign(Promise.resolve(failed), failed)) as never)
+    await mountSuspended(NewsEntryPage, { route: '/news/agenda-is-live' })
+    expect(useError().value?.statusCode).toBe(503)
     clearError()
   })
 

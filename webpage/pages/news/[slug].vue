@@ -15,7 +15,11 @@
 <script setup lang="ts">
 const slug = useRoute().params.slug as string
 const news = await useArchiveFetch(`/news.json`).then(response => response.data.value)
-const entry = news?.all?.find((candidate: { slug: string }) => candidate.slug === slug)
+// No feed at all means the fetch failed: answer 503 (retry later), not a 404 that scrapers may cache.
+if (!news) {
+  throw createError({statusCode: 503, statusMessage: 'News is unavailable', fatal: true})
+}
+const entry = news.all?.find((candidate: { slug: string }) => candidate.slug === slug)
 if (!entry) {
   throw createError({statusCode: 404, statusMessage: 'News entry not found', fatal: true})
 }
