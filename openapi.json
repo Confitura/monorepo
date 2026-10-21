@@ -777,6 +777,51 @@
         },
         "type" : "object"
       },
+      "NewsEntryDto" : {
+        "properties" : {
+          "body" : {
+            "type" : "string"
+          },
+          "date" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "published" : {
+            "type" : "boolean"
+          },
+          "slug" : {
+            "type" : "string"
+          },
+          "title" : {
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "NewsEntryRequest" : {
+        "properties" : {
+          "body" : {
+            "type" : "string"
+          },
+          "date" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "published" : {
+            "type" : "boolean"
+          },
+          "slug" : {
+            "type" : "string"
+          },
+          "title" : {
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
       "NewsletterStat" : {
         "properties" : {
           "subscribersCount" : {
@@ -3340,6 +3385,96 @@
           }
         },
         "tags" : [ "mail-controller" ]
+      }
+    },
+    "/news-entries" : {
+      "get" : {
+        "operationId" : "getAllNewsEntries",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/NewsEntryDto"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "news-entry-controller" ]
+      },
+      "post" : {
+        "operationId" : "createNewsEntry",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/NewsEntryRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/NewsEntryDto"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "news-entry-controller" ]
+      }
+    },
+    "/news-entries/{id}" : {
+      "delete" : {
+        "operationId" : "deleteNewsEntry",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "news-entry-controller" ]
+      },
+      "get" : {
+        "operationId" : "getNewsEntry",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/NewsEntryDto"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "news-entry-controller" ]
       }
     },
     "/pages" : {
