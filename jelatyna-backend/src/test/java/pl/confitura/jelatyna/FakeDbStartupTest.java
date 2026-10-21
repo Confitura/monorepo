@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
+import pl.confitura.jelatyna.edition.EditionRepository;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -23,6 +24,9 @@ class FakeDbStartupTest extends BaseIntegrationTest {
     @Autowired
     DataSource dataSource;
 
+    @Autowired
+    EditionRepository editionRepository;
+
     @BeforeAll
     static void leaveATableFromAPreviousRun() throws SQLException {
         postgres.start();
@@ -38,5 +42,10 @@ class FakeDbStartupTest extends BaseIntegrationTest {
              ResultSet tables = connection.getMetaData().getTables(null, "public", LEFTOVER_TABLE, null)) {
             assertThat(tables.next()).isFalse();
         }
+    }
+
+    @Test
+    void startingUnderFakeDbOpensTheCurrentEditionsCallForPapers() {
+        assertThat(editionRepository.findCurrent().isC4pOpen()).isTrue();
     }
 }
