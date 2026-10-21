@@ -66,3 +66,12 @@ TLDR and WHY become the public PR description (see `## Pull requests` in `CLAUDE
 ## Remediation
 
 If you are resumed with reviewer findings, fix exactly those, re-run the affected checks, add new commits (don't amend), and send a fresh report — update WHY if a fix changed a decision.
+
+## Fixing failing checks
+
+If your prompt has `FAILING CHECKS`, the branch is an open PR that already does the task. Your job is to make those checks pass, not to rebuild it.
+
+- Find the cause in the log or alert and fix it in the code. Add or adjust a test that would have caught it, where one fits.
+- Never make a check pass by weakening it: no skipped, deleted or loosened tests, no comment or config that silences an alert, no workflow edits.
+- If the failure isn't caused by this branch (a flaky test, an outage, `master` failing the same way), or it's a false positive with no sensible code fix, report `STATUS: BLOCKED` and say which.
+- Commit and check as in the procedure, then send the full report. TLDR names the failing check, its cause and what you changed; the lead adds it to the PR's Verification.
