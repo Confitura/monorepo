@@ -507,7 +507,7 @@ describe('admin-app pages render without errors', () => {
     localStorage.setItem('token', signedIn)
     const state = startSignInAttempt('add-login')
     const second = fakeJwt({ jti: 'u2', sub: 'Participant', isAdmin: false })
-    const reason = 'The other user has a ticket, which cannot be merged yet'
+    const reason = 'Both users have a ticket, so they cannot be merged. Please contact an admin.'
     vi.mocked(api.previewMerge).mockRejectedValueOnce({ status: 409, response: { data: reason } })
     try {
       const wrapper = await mountPage(LoginProviderPage, `/login/google?state=${state}#access_token=${second}`)
