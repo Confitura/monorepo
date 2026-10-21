@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { mount, flushPromises } from '@vue/test-utils'
 import { createVuetify } from 'vuetify'
 import { createTestingPinia } from '@pinia/testing'
+import { VAutocomplete, VBtn, VRadioGroup } from 'vuetify/components'
 import UsersPage from '@/pages/admin/users.vue'
 
 global.ResizeObserver = class ResizeObserver {
@@ -22,6 +23,7 @@ const api = vi.hoisted(() => ({
   markAsAdmin: vi.fn(),
   markAsVolunteer: vi.fn(),
   unlinkLogin: vi.fn(),
+  adminMergeUsers: vi.fn(),
 }))
 
 vi.mock('@/utils/api.ts', () => api)
@@ -45,6 +47,14 @@ function mountPage() {
   return mount(UsersPage, {
     global: { plugins: [createVuetify(), createTestingPinia({ createSpy: vi.fn })] },
   })
+}
+
+// The merge dialog is teleported out of the page, so it is reached through its components.
+async function merge(wrapper: ReturnType<typeof mountPage>, otherId: string, survivorId: string) {
+  await wrapper.findComponent(VAutocomplete).setValue(otherId)
+  await wrapper.findComponent(VRadioGroup).setValue(survivorId)
+  await wrapper.findAllComponents(VBtn).find((button) => button.text() === 'Merge')!.trigger('click')
+  await flushPromises()
 }
 
 function rowOf(wrapper: ReturnType<typeof mountPage>, name: string) {
@@ -110,5 +120,37 @@ describe('admin users page', () => {
 
     expect(confirm).toHaveBeenCalledWith(expect.stringContaining('will not be able to sign in'))
     expect(api.unlinkLogin).toHaveBeenCalledWith(expect.objectContaining({ path: { id: 'u3', loginId: 'l3' } }))
+  })
+
+  it('merges a user with another one found by email, keeping the one the admin chooses', async () => {
+    api.adminMergeUsers.mockResolvedValue({ status: 204 })
+    const wrapper = mountPage()
+    await flushPromises()
+
+    await rowOf(wrapper, 'Bob').get('[aria-label="Merge Bob"]').trigger('click')
+    const search = wrapper.findComponent(VAutocomplete).find('input')
+    await search.trigger('focus')
+    await search.setValue('@example.com')
+    await flushPromises()
+    // Everyone but Bob himself.
+    expect([...document.querySelectorAll('.v-list-item')].map((item) => item.textContent))
+      .toEqual(['Ada (ada@example.com)', 'Cy (cy@example.com)'])
+    await merge(wrapper, 'u3', 'u3')
+
+    expect(api.adminMergeUsers).toHaveBeenCalledWith(expect.objectContaining({ path: { survivorId: 'u3', absorbedId: 'u2' } }))
+    expect(api.getAllUsers).toHaveBeenCalledTimes(2)
+  })
+
+  it('shows why the backend refuses a merge', async () => {
+    const reason = 'Both users have a ticket, so they cannot be merged. Please contact an admin.'
+    api.adminMergeUsers.mockRejectedValue({ status: 409, response: { data: reason } })
+    const wrapper = mountPage()
+    await flushPromises()
+
+    await rowOf(wrapper, 'Bob').get('[aria-label="Merge Bob"]').trigger('click')
+    await merge(wrapper, 'u3', 'u2')
+
+    expect(api.adminMergeUsers).toHaveBeenCalledWith(expect.objectContaining({ path: { survivorId: 'u2', absorbedId: 'u3' } }))
+    expect(useNotificationStore().addNotification).toHaveBeenCalledWith(reason, 'error')
   })
 })

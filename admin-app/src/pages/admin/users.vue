@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import DialogConfirm from '@/components/DialogConfirm.vue'
 import type {DataTableHeaders} from '@/plugins/vuetify'
-import {createManual, markAsAdmin, markAsVolunteer, getAllUsers, unlinkLogin} from "@/utils/api.ts";
+import {adminMergeUsers, createManual, markAsAdmin, markAsVolunteer, getAllUsers, unlinkLogin} from "@/utils/api.ts";
 import type {FullUser, LoginDto} from "@/utils/api";
 import {providerLabel} from "@/utils/sign-in-attempt.ts";
 
@@ -101,13 +101,46 @@ function dialogUnlinkLogin(user: FullUser, login: LoginDto) {
       })
 }
 
+// Merge (ADR-0003): the admin picks the other User and which of the two to keep; the other is deleted. The only way
+// to join a Manual User, which has no Login to sign in with, to that person's other User.
+const mergeDialog = ref(false)
+const mergeUser = ref<FullUser | null>(null)
+const mergeOtherId = ref<string | null>(null)
+const mergeSurvivorId = ref<string | null>(null)
+const mergeCandidates = computed(() => users.value.filter((user) => user.id !== mergeUser.value?.id))
+const mergeOther = computed(() => users.value.find((user) => user.id === mergeOtherId.value))
+// Two Users of one person often share a name and email, so the choice of which to keep also shows their Logins.
+const userLabel = (user: FullUser) => `${user.name} (${user.email})`
+const loginsLabel = (user: FullUser) => user.logins?.length ? user.logins.map((login) => login.provider).join(', ') : 'Manual'
+
+function openMerge(user: FullUser) {
+  mergeUser.value = user
+  mergeOtherId.value = null
+  mergeSurvivorId.value = null
+  mergeDialog.value = true
+}
+
+function confirmMerge() {
+  const survivorId = mergeSurvivorId.value!
+  const absorbedId = survivorId === mergeUser.value!.id ? mergeOtherId.value! : mergeUser.value!.id!
+  adminMergeUsers({ path: { survivorId, absorbedId }, throwOnError: true })
+      .then(_ => {
+        Notify.success('Users merged')
+        mergeDialog.value = false
+        reloadUsers()
+      })
+      // A 409 says why, e.g. both users hold a ticket.
+      .catch(error => Notify.error(error.status === 409 && typeof error.response?.data === 'string'
+          ? error.response.data : 'Failed to merge the users'))
+}
+
 const headers: DataTableHeaders = [
   {title: 'Name', key: 'name'},
   {title: 'Email', key: 'email'},
   {
     title: 'Logins',
     key: 'logins',
-    value: (user: FullUser) => user.logins?.length ? user.logins.map((login) => login.provider).join(', ') : 'Manual',
+    value: loginsLabel,
   },
   {title: 'Admin', key: 'isAdmin'},
   {title: 'Volunteer', key: 'isVolunteer'},
@@ -233,6 +266,17 @@ onMounted(() => {
                   </template>
                   <span>show user</span>
                 </v-tooltip>
+                <v-tooltip location="top">
+                  <template #activator="{ props }">
+                    <v-btn
+                        icon="mdi-call-merge"
+                        v-bind="props"
+                        :aria-label="`Merge ${item.name}`"
+                        @click.stop="openMerge(item)"
+                    />
+                  </template>
+                  <span>Merge with another user</span>
+                </v-tooltip>
 
 
               </v-defaults-provider>
@@ -260,6 +304,40 @@ onMounted(() => {
           <v-spacer />
           <v-btn variant="text" @click="addDialog = false">Cancel</v-btn>
           <v-btn color="primary" @click="createUser">Create</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    <v-dialog v-model="mergeDialog" max-width="600">
+      <v-card v-if="mergeUser">
+        <v-card-title>Merge {{ mergeUser.name }} with another user</v-card-title>
+        <v-card-text>
+          <v-autocomplete
+              v-model="mergeOtherId"
+              :items="mergeCandidates"
+              :item-title="userLabel"
+              item-value="id"
+              label="Other user (search by name or email)"
+              @update:model-value="mergeSurvivorId = null"
+          />
+          <v-radio-group v-if="mergeOther" v-model="mergeSurvivorId" label="Keep">
+            <v-radio
+                v-for="user in [mergeUser, mergeOther]"
+                :key="user.id"
+                :label="`${userLabel(user)}, logins: ${loginsLabel(user)}`"
+                :value="user.id"
+            />
+          </v-radio-group>
+          <v-alert
+              type="warning"
+              variant="tonal"
+              text="The other user is deleted: its logins, talks and ticket move to the one kept. This cannot be undone."
+          />
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn variant="text" @click="mergeDialog = false">Cancel</v-btn>
+          <v-btn color="primary" :disabled="!mergeSurvivorId" @click="confirmMerge">Merge</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
