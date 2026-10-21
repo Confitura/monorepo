@@ -39,16 +39,6 @@ import {
 }
 
 import {
-  to = module.app["backend"].coolify_environment_variable.plain["CONFERENCE_C4P_START"]
-  id = "application:wqwwmtfjn4xuhsgj4uzwfd4x:a9bfiafmwhe4duus9l2d69f9"
-}
-
-import {
-  to = module.app["backend"].coolify_environment_variable.plain["CONFERENCE_C4P_END"]
-  id = "application:wqwwmtfjn4xuhsgj4uzwfd4x:fnfclsx2memn8okhquatybir"
-}
-
-import {
   to = module.app["backend"].coolify_environment_variable.plain["LISTMONK_BASE_URL"]
   id = "application:wqwwmtfjn4xuhsgj4uzwfd4x:d13ehyun9ukki01rfqhoewiw"
 }
