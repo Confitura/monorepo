@@ -111,7 +111,7 @@ const mergeSurvivorId = ref<string | null>(null)
 const mergeCandidates = computed(() => users.value.filter((user) => user.id !== mergeUser.value?.id))
 const mergeOther = computed(() => users.value.find((user) => user.id === mergeOtherId.value))
 // Two Users of one person often share a name and email, so the choice of which to keep also shows their Logins.
-const userLabel = (user: FullUser) => `${user.name} (${user.email})`
+const userLabel = (user: FullUser) => user.email ? `${user.name} (${user.email})` : user.name ?? ''
 const loginsLabel = (user: FullUser) => user.logins?.length ? user.logins.map((login) => login.provider).join(', ') : 'Manual'
 
 function openMerge(user: FullUser) {

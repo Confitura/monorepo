@@ -206,6 +206,18 @@ describe('admin users page', () => {
     expect(mergeDialogText(wrapper)).not.toContain('earlier@example.com')
   })
 
+  it('names a user with no email by name alone', async () => {
+    api.getAllUsers.mockResolvedValue({ data: [...users, { id: 'u4', name: 'Dee', logins: [] }], status: 200 })
+    const wrapper = mountPage()
+    await flushPromises()
+
+    await rowOf(wrapper, 'Bob').get('[aria-label="Merge Bob"]').trigger('click')
+    await choose(wrapper, 'u4', 'u4')
+
+    expect(mergeDialogText(wrapper)).toContain('Dee, logins: Manual')
+    expect(mergeDialogText(wrapper)).not.toContain('undefined')
+  })
+
   // The merge itself may still be refused after its preview, e.g. when a ticket was issued in between.
   it('shows why the backend refuses a merge', async () => {
     const reason = 'Both users have a ticket, so they cannot be merged. Please contact an admin.'
