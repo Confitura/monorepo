@@ -3,6 +3,7 @@ package pl.confitura.jelatyna.infrastructure.security;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -43,6 +44,15 @@ public class SecurityConfiguration {
                 .formLogin(AbstractHttpConfigurer::disable);
 
         return http.build();
+    }
+
+    // Boot also registers every Filter bean with the servlet container, which would run the token
+    // check (and its User lookup) a second time after the security chain.
+    @Bean
+    public FilterRegistrationBean<JwtAuthenticationFilter> jwtAuthenticationFilterRegistration(JwtAuthenticationFilter filter) {
+        FilterRegistrationBean<JwtAuthenticationFilter> registration = new FilterRegistrationBean<>(filter);
+        registration.setEnabled(false);
+        return registration;
     }
 
 }
