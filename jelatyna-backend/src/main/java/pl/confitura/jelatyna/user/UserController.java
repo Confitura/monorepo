@@ -4,6 +4,7 @@ import static com.timgroup.jgravatar.GravatarDefaultImage.BLANK;
 import static com.timgroup.jgravatar.GravatarRating.GENERAL_AUDIENCES;
 import static java.util.function.Predicate.not;
 import static java.util.stream.Collectors.toSet;
+import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static org.springframework.util.StringUtils.hasText;
 
@@ -121,7 +122,7 @@ public class UserController {
 
         if (!canCreatePresentation()) {
             log.info("User {} tried to add presentation after v4p is closed", userId);
-            return ResponseEntity.status(UNAUTHORIZED).build();
+            return ResponseEntity.status(FORBIDDEN).build();
         }
 
         User speaker = repository.findById(userId);
@@ -160,7 +161,7 @@ public class UserController {
 
         if (!canCreatePresentation()) {
             log.info("User {} tried to add presentation after v4p is closed", userId);
-            return ResponseEntity.status(UNAUTHORIZED).build();
+            return ResponseEntity.status(FORBIDDEN).build();
         }
 
         User speaker = repository.findById(userId);

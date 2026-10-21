@@ -5,6 +5,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.security.autoconfigure.web.servlet.SecurityFilterProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,7 +24,11 @@ public class JelatynaCorsConfiguration {
         final CorsConfiguration config = buildCorsConfiguration();
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
-        return new FilterRegistrationBean<>(new CorsFilter(source));
+        FilterRegistrationBean<CorsFilter> registration = new FilterRegistrationBean<>(new CorsFilter(source));
+        // Before Spring Security, so responses it writes itself (e.g. the 401 for a rejected token)
+        // carry CORS headers too; otherwise the browser hides them from the admin app.
+        registration.setOrder(SecurityFilterProperties.DEFAULT_FILTER_ORDER - 1);
+        return registration;
     }
 
     private CorsConfiguration buildCorsConfiguration() {
