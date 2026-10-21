@@ -16,6 +16,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.not;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -52,6 +53,13 @@ public class VoteControllerTest extends BaseIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*].presentation.id", hasItem(currentTalk.getId())))
                 .andExpect(jsonPath("$[*].presentation.id", not(hasItem(pastTalk.getId()))));
+
+        // The response is read back through an Edition-scoped query, so check what was stored too.
+        assertThat(voteRepository.findAll())
+                .filteredOn(vote -> "new-voter".equals(vote.getToken()))
+                .extracting(vote -> vote.getPresentation().getId())
+                .contains(currentTalk.getId())
+                .doesNotContain(pastTalk.getId());
     }
 
     @Test
