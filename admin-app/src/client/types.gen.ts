@@ -2950,6 +2950,23 @@ export type GetWorkshopResponses = {
 
 export type GetWorkshopResponse = GetWorkshopResponses[keyof GetWorkshopResponses];
 
+export type AdminMergeUsersData = {
+    body?: never;
+    path: {
+        survivorId: string;
+        absorbedId: string;
+    };
+    query?: never;
+    url: '/users/{survivorId}/merge/{absorbedId}';
+};
+
+export type AdminMergeUsersResponses = {
+    /**
+     * OK
+     */
+    200: unknown;
+};
+
 export type MarkAsAdminData = {
     body?: never;
     path: {

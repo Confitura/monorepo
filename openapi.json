@@ -4997,6 +4997,35 @@
         "tags" : [ "user-controller" ]
       }
     },
+    "/users/{survivorId}/merge/{absorbedId}" : {
+      "post" : {
+        "operationId" : "adminMergeUsers",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "survivorId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "absorbedId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ],
+        "tags" : [ "user-logins-controller" ]
+      }
+    },
     "/users/{userId}/admin/{isAdmin}" : {
       "post" : {
         "operationId" : "markAsAdmin",

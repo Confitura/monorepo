@@ -29,6 +29,7 @@ import ch.qos.logback.core.read.ListAppender;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -412,6 +413,102 @@ class UserLoginsControllerTest extends BaseIntegrationTest {
         });
     }
 
+    // A Manual User has no Login to sign in with, so only an admin can merge it, and either User may survive.
+    @ParameterizedTest
+    @ValueSource(booleans = {true, false})
+    void anAdminMergesAManualUserWithAUserThatHasALoginEitherWayRound(boolean manualSurvives) throws Exception {
+        User admin = userRepository.save(new User().setName("Admin").setAdmin(true));
+        User manual = userRepository.save(new User().setName("Added by an admin").setOrigin("manual"));
+        talk("Manual's talk", manual);
+        String githubId = uniqueId();
+        User signedIn = oauthUserService.mapToUser(gitHubUser(githubId));
+        User survivor = manualSurvives ? manual : signedIn;
+        User absorbed = manualSurvives ? signedIn : manual;
+
+        adminMerge(admin, survivor, absorbed).andExpect(status().isNoContent());
+
+        assertThat(oauthUserService.mapToUser(gitHubUser(githubId)).getId()).isEqualTo(survivor.getId());
+        assertThat(userRepository.existsById(absorbed.getId())).isFalse();
+        mockMvc.perform(get("/users/" + survivor.getId() + "/presentations").header(AUTHORIZATION, bearer(admin)))
+                .andExpect(jsonPath("$[*].title").value(contains("Manual's talk")));
+    }
+
+    @Test
+    void anAdminMergeFillsTheSurvivorsProfileGapsCombinesRolesAndMovesTheTicket() throws Exception {
+        User admin = userRepository.save(new User().setName("Admin").setAdmin(true));
+        User survivor = userRepository.save(new User().setName("Survivor").setBio("").setVolunteer(true));
+        User absorbed = give(Content.TICKET, userRepository.save(new User().setName("Absorbed")
+                .setEmail("absorbed@example.com").setBio("Absorbed bio").setAdmin(true).setPrivacyPolicyAccepted(true)));
+
+        adminMerge(admin, survivor, absorbed).andExpect(status().isNoContent());
+
+        mockMvc.perform(get("/users/" + survivor.getId()).header(AUTHORIZATION, bearer(admin)))
+                .andExpect(jsonPath("$.name").value("Survivor"))
+                .andExpect(jsonPath("$.email").value("absorbed@example.com"))
+                .andExpect(jsonPath("$.bio").value("Absorbed bio"))
+                .andExpect(jsonPath("$.admin").value(true))
+                .andExpect(jsonPath("$.volunteer").value(true))
+                .andExpect(jsonPath("$.privacyPolicyAccepted").value(true))
+                .andExpect(jsonPath("$.participationData.id").value(absorbed.getParticipationData().getId()));
+    }
+
+    @Test
+    void anAdminCannotMergeTwoUsersWithATicketNorAUserWithItself() throws Exception {
+        User admin = userRepository.save(new User().setName("Admin").setAdmin(true));
+        User survivor = give(Content.TICKET, userRepository.save(new User().setName("Survivor")));
+        User absorbed = give(Content.TICKET, userRepository.save(new User().setName("Absorbed")));
+
+        adminMerge(admin, survivor, absorbed)
+                .andExpect(status().isConflict())
+                .andExpect(content().string(containsString("Both users have a ticket")));
+        adminMerge(admin, survivor, survivor).andExpect(status().isConflict());
+
+        assertThat(userRepository.existsById(absorbed.getId())).isTrue();
+        assertThat(userRepository.existsById(survivor.getId())).isTrue();
+    }
+
+    @Test
+    void eachAdminMergeLogsOneLineWithIdsMarkedAsDoneByAnAdmin() throws Exception {
+        User admin = userRepository.save(new User().setName("Admin").setAdmin(true));
+        User survivor = userRepository.save(new User().setName("Survivor").setEmail("survivor@example.com"));
+        String githubId = uniqueId();
+        User absorbed = oauthUserService.mapToUser(gitHubUser(githubId));
+        talk("Absorbed's talk", absorbed);
+        Logger logger = (Logger) LoggerFactory.getLogger(UserLoginsController.class);
+        ListAppender<ILoggingEvent> appender = new ListAppender<>();
+        appender.start();
+        logger.addAppender(appender);
+
+        try {
+            adminMerge(admin, survivor, absorbed).andExpect(status().isNoContent());
+        } finally {
+            logger.detachAppender(appender);
+        }
+
+        assertThat(appender.list).singleElement().satisfies(event -> {
+            assertThat(event.getKeyValuePairs())
+                    .extracting(pair -> pair.key, pair -> pair.value)
+                    .containsExactlyInAnyOrder(
+                            tuple("actorUserId", admin.getId()),
+                            tuple("byAdmin", true),
+                            tuple("survivorUserId", survivor.getId()),
+                            tuple("absorbedUserId", absorbed.getId()),
+                            tuple("loginsMoved", 1),
+                            tuple("talksMoved", 1));
+            assertThat(event.getFormattedMessage()).doesNotContain("Survivor", "survivor@example.com", "Octo Cat", githubId);
+        });
+    }
+
+    @Test
+    void onlyAnAdminMergesUsersByTheirIds() throws Exception {
+        User signedIn = userRepository.save(new User().setName("Not an admin"));
+        User other = userRepository.save(new User().setName("Other"));
+
+        adminMerge(signedIn, signedIn, other).andExpect(status().isForbidden());
+
+        assertThat(userRepository.existsById(other.getId())).isTrue();
+    }
+
     @Test
     void cancellingDeletesTheUserTheSecondSignInCreated() throws Exception {
         User signedIn = userRepository.save(new User().setName("Signed in"));
@@ -559,6 +656,11 @@ class UserLoginsControllerTest extends BaseIntegrationTest {
                 .header(AUTHORIZATION, bearer(signedIn))
                 .contentType(APPLICATION_JSON)
                 .content(json(new UserLoginsController.MergeUsersRequest(secondToken))));
+    }
+
+    private ResultActions adminMerge(User actor, User survivor, User absorbed) throws Exception {
+        return mockMvc.perform(post("/users/" + survivor.getId() + "/merge/" + absorbed.getId())
+                .header(AUTHORIZATION, bearer(actor)));
     }
 
     private ResultActions merge(User signedIn, String secondToken) throws Exception {
