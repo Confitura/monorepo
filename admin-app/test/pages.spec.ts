@@ -26,6 +26,7 @@ import AdminPresentationsPage from '@/pages/admin/presentations.vue'
 import AdminPresentationPreviewPage from '@/pages/admin/presentation-preview.[[id]].vue'
 import AdminRatesPage from '@/pages/admin/rates.vue'
 import AdminUsersPage from '@/pages/admin/users.vue'
+import { startSignInAttempt } from '@/utils/sign-in-attempt.ts'
 
 // jsdom doesn't implement ResizeObserver, required by Vuetify's VSlideGroup, VPagination, etc.
 global.ResizeObserver = class ResizeObserver {
@@ -194,6 +195,19 @@ async function mountPage(component: any, route = '/') {
   return _wrapper
 }
 
+// jsdom can't leave the page, so capture where a click sends the browser instead
+async function clickAndCaptureNavigation(wrapper: ReturnType<typeof mount>, selector: string) {
+  const assign = vi.fn()
+  vi.stubGlobal('location', { ...window.location, assign })
+  try {
+    await wrapper.get(selector).trigger('click')
+  } finally {
+    vi.unstubAllGlobals()
+  }
+  expect(assign).toHaveBeenCalledOnce()
+  return new URL(assign.mock.calls[0][0])
+}
+
 // ---------------------------------------------------------------------------
 // Tests
 // ---------------------------------------------------------------------------
@@ -215,12 +229,27 @@ describe('admin-app pages render without errors', () => {
     _container = null
     _appBar?.remove()
     _appBar = null
+    sessionStorage.clear()
     // Drain any final microtasks scheduled during unmount
     await flushPromises()
   })
   it('renders the login page', async () => {
     const wrapper = await mountPage(LoginPage)
     expect(wrapper.html()).toContain('Call for Papers')
+  })
+
+  it('starts every sign-in with a fresh random state, stored with its intent for this tab', async () => {
+    const wrapper = await mountPage(LoginPage)
+
+    const first = await clickAndCaptureNavigation(wrapper, '[aria-label="Sign in with GitHub"]')
+    const second = await clickAndCaptureNavigation(wrapper, '[aria-label="Sign in with GitHub"]')
+
+    expect(`${second.origin}${second.pathname}`).toBe(`${import.meta.env.VITE_API_URL}/login/github`)
+    expect(second.searchParams.get('redirect_uri')).toBe(`${import.meta.env.VITE_SELF_URL}/login/github`)
+    const state = second.searchParams.get('state')
+    expect(state).toMatch(/^[\w-]{32,}$/)
+    expect(state).not.toBe(first.searchParams.get('state'))
+    expect(JSON.parse(sessionStorage.getItem('sign-in-attempt')!)).toEqual({ state, intent: 'sign-in' })
   })
 
   it('renders the OAuth callback page', async () => {
@@ -231,8 +260,49 @@ describe('admin-app pages render without errors', () => {
 
   it('takes the OAuth token from the URL fragment', async () => {
     const jwt = fakeJwt()
+    const state = startSignInAttempt('sign-in')
     try {
-      await mountPage(LoginProviderPage, `/login/google#access_token=${jwt}`)
+      await mountPage(LoginProviderPage, `/login/google?state=${state}#access_token=${jwt}`)
+      expect(localStorage.getItem('token')).toBe(jwt)
+    } finally {
+      localStorage.removeItem('token')
+    }
+  })
+
+  it('discards the OAuth token when the returned state is not the sign-in attempt\'s', async () => {
+    startSignInAttempt('sign-in')
+    try {
+      const wrapper = await mountPage(LoginProviderPage, `/login/google?state=forged#access_token=${fakeJwt()}`)
+      expect(localStorage.getItem('token')).toBeNull()
+      expect(wrapper.text()).toContain('Sign-in failed')
+      expect(wrapper.get('a[href="/login"]').text()).toBe('Back to login')
+    } finally {
+      localStorage.removeItem('token')
+    }
+  })
+
+  it('discards the OAuth token when this tab never started a sign-in', async () => {
+    try {
+      const wrapper = await mountPage(LoginProviderPage, `/login/google?state=forged#access_token=${fakeJwt()}`)
+      expect(localStorage.getItem('token')).toBeNull()
+      expect(wrapper.get('a[href="/login"]').text()).toBe('Back to login')
+    } finally {
+      localStorage.removeItem('token')
+    }
+  })
+
+  it.each([
+    ['github', 'GitHub'],
+    ['google', 'Google'],
+    ['facebook', 'Facebook'],
+    ['twitter', 'X'],
+  ])('signs in with %s when the callback returns the state the login page sent', async (provider, label) => {
+    const loginPage = await mountPage(LoginPage)
+    const sent = await clickAndCaptureNavigation(loginPage, `[aria-label="Sign in with ${label}"]`)
+    loginPage.unmount()
+    const jwt = fakeJwt()
+    try {
+      await mountPage(LoginProviderPage, `/login/${provider}?state=${sent.searchParams.get('state')}#access_token=${jwt}`)
       expect(localStorage.getItem('token')).toBe(jwt)
     } finally {
       localStorage.removeItem('token')

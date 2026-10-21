@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import router from "@/plugins/router.ts";
+import {startSignInAttempt} from "@/utils/sign-in-attempt.ts";
 
 const name = ref('')
 const apiUrl = import.meta.env.VITE_API_URL;
@@ -25,12 +26,13 @@ definePage({
   },
 })
 
-function loginUrl(provider: string) {
+// The state is created on click, not at render, so every attempt gets its own.
+function signIn(provider: string) {
 
   const url = new URL(`${apiUrl}/login/${provider}`);
   url.searchParams.set('redirect_uri', `${selfUrl}/login/${provider}`);
-  url.searchParams.set('state', "static-state");
-  return url.toString();
+  url.searchParams.set('state', startSignInAttempt('sign-in'));
+  window.location.assign(url.toString());
 }
 </script>
 
@@ -45,19 +47,23 @@ function loginUrl(provider: string) {
     <v-row align="center" justify="center">
       <v-col cols="auto">
         <v-btn icon="mdi-github" size="x-large"
-               :href="loginUrl('github')"></v-btn>
+               aria-label="Sign in with GitHub"
+               @click="signIn('github')"></v-btn>
       </v-col>
       <v-col cols="auto">
         <v-btn icon="mdi-google" size="x-large"
-               :href="loginUrl('google')"></v-btn>
+               aria-label="Sign in with Google"
+               @click="signIn('google')"></v-btn>
       </v-col>
       <v-col cols="auto">
         <v-btn icon="mdi-facebook" size="x-large"
-               :href="loginUrl('facebook')"></v-btn>
+               aria-label="Sign in with Facebook"
+               @click="signIn('facebook')"></v-btn>
       </v-col>
       <v-col cols="auto">
         <v-btn icon="mdi-alpha-x" size="x-large"
-               :href="loginUrl('twitter')"></v-btn>
+               aria-label="Sign in with X"
+               @click="signIn('twitter')"></v-btn>
       </v-col>
     </v-row>
 
