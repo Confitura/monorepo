@@ -3,6 +3,7 @@ package pl.confitura.jelatyna.news;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.time.Instant;
 import java.util.List;
@@ -16,4 +17,16 @@ public interface NewsEntryRepository extends Repository<NewsEntry, String> {
      */
     @Query("select e from NewsEntry e where e.published = true and e.date <= :now order by e.date desc")
     List<NewsEntry> findPublicAt(@Param("now") Instant now);
+
+    @PreAuthorize("@security.isAdmin()")
+    NewsEntry save(NewsEntry entry);
+
+    NewsEntry findById(String id);
+
+    boolean existsBySlug(String slug);
+
+    List<NewsEntry> findAllByOrderByDateDesc();
+
+    @PreAuthorize("@security.isAdmin()")
+    void deleteById(String id);
 }
