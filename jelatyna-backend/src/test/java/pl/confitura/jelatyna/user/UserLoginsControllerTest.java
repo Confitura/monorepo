@@ -203,8 +203,8 @@ class UserLoginsControllerTest extends BaseIntegrationTest {
     enum Content { SAVED_PROFILE, TALK, ADMIN_ROLE, VOLUNTEER_ROLE, TICKET }
 
     @ParameterizedTest
-    @EnumSource(names = {"SAVED_PROFILE", "TALK", "ADMIN_ROLE", "VOLUNTEER_ROLE"})
-    void aUserWithAProfileARoleOrTalksIsMergedAndDeleted(Content content) throws Exception {
+    @EnumSource
+    void aUserWithAProfileARoleTalksOrATicketIsMergedAndDeleted(Content content) throws Exception {
         User signedIn = userRepository.save(new User().setName("Signed in"));
         String githubId = uniqueId();
         User other = give(content, oauthUserService.mapToUser(gitHubUser(githubId)));
@@ -303,19 +303,45 @@ class UserLoginsControllerTest extends BaseIntegrationTest {
                 .andExpect(jsonPath("$[*].title").value(containsInAnyOrder("Other's talk", "Shared talk")));
     }
 
-    // Moving the ticket comes later; until then the merge, and so its preview, refuses a User with one.
     @Test
-    void aUserWithATicketIsNotMergedYetAndTheRefusalSaysWhy() throws Exception {
+    void theOthersTicketMovesToTheSurvivorWhenOnlyTheOtherHasOne() throws Exception {
         User signedIn = userRepository.save(new User().setName("Signed in"));
+        User other = give(Content.TICKET, oauthUserService.mapToUser(gitHubUser(uniqueId())));
+
+        String survivorToken = merge(signedIn, tokenService.asToken(other))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+
+        mockMvc.perform(get("/users/" + signedIn.getId()).header(AUTHORIZATION, "Bearer " + survivorToken))
+                .andExpect(jsonPath("$.participationData.id").value(other.getParticipationData().getId()));
+    }
+
+    @Test
+    void theSurvivorKeepsItsOwnTicketWhenTheOtherHasNone() throws Exception {
+        User signedIn = give(Content.TICKET, userRepository.save(new User().setName("Signed in")));
+        String secondToken = tokenService.asToken(oauthUserService.mapToUser(gitHubUser(uniqueId())));
+
+        String survivorToken = merge(signedIn, secondToken)
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+
+        mockMvc.perform(get("/users/" + signedIn.getId()).header(AUTHORIZATION, "Bearer " + survivorToken))
+                .andExpect(jsonPath("$.participationData.id").value(signedIn.getParticipationData().getId()));
+    }
+
+    // The merge, and so its preview, refuses two tickets.
+    @Test
+    void whenBothUsersHaveATicketTheMergeIsRefusedWithAMessageToContactAnAdmin() throws Exception {
+        User signedIn = give(Content.TICKET, userRepository.save(new User().setName("Signed in")));
         String githubId = uniqueId();
         User other = give(Content.TICKET, oauthUserService.mapToUser(gitHubUser(githubId)));
 
         merge(signedIn, tokenService.asToken(other))
                 .andExpect(status().isConflict())
-                .andExpect(content().string(containsString("has a ticket")));
+                .andExpect(content().string(containsString("contact an admin")));
         previewMerge(signedIn, tokenService.asToken(other))
                 .andExpect(status().isConflict())
-                .andExpect(content().string(containsString("has a ticket")));
+                .andExpect(content().string(containsString("contact an admin")));
 
         assertThat(oauthUserService.mapToUser(gitHubUser(githubId)).getId()).isEqualTo(other.getId());
     }
