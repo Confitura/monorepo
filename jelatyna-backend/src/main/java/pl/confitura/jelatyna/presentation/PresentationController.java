@@ -48,7 +48,8 @@ public class PresentationController {
         return ResponseEntity.ok(cospeakers);
     }
 
-    @PreAuthorize("@security.presentationOwnedByUser(#presentationId) || @security.isAdmin()")
+    @PreAuthorize("(@security.presentationOwnedByUser(#presentationId) || @security.isAdmin())"
+            + " && @security.canChangePresentation(#presentationId)")
     @DeleteMapping("/presentations/{presentationId}/cospeakers/{id:.+}")
     public ResponseEntity<?> removeCospeaker(@PathVariable String presentationId, @PathVariable String id) {
         Presentation presentation = this.repository.findById(presentationId);
@@ -60,7 +61,8 @@ public class PresentationController {
         return ResponseEntity.ok().build();
     }
 
-    @PreAuthorize("@security.presentationOwnedByUser(#presentationId) || @security.isAdmin()")
+    @PreAuthorize("(@security.presentationOwnedByUser(#presentationId) || @security.isAdmin())"
+            + " && @security.canChangePresentation(#presentationId)")
     @PostMapping("/presentations/{presentationId}/cospeakers/{email:.+}")
     @Transactional
     public ResponseEntity<?> addCospeaker(@PathVariable String presentationId, @PathVariable String email) {

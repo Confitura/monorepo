@@ -36,6 +36,12 @@ public class Security {
                 .anyMatch(owner -> owner.getId().equals(getUserId()));
     }
 
+    // A past Edition's talks and workshops are read-only for speakers; admins can still change them
+    // (ADR-0004). Says nothing about ownership: combine it with an owner check.
+    public boolean canChangePresentation(String presentationId) {
+        return isAdmin() || presentationRepository.findById(presentationId).getEdition().isCurrent();
+    }
+
     public boolean isAdmin() {
         return getPrincipal().isAdmin();
     }
