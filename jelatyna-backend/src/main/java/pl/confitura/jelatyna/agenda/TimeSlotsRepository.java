@@ -20,14 +20,15 @@ public interface TimeSlotsRepository extends Repository<TimeSlot, String> {
     @PreAuthorize("@security.isAdmin()")
     void deleteById(TimeSlotId id);
 
-    List<TimeSlot> findByIdDayId(String dayId);
+    @Query("select slot from TimeSlot slot where slot.id.editionId = :#{#day.edition.id} and slot.id.dayId = :#{#day.id}")
+    List<TimeSlot> findByDay(Day day);
 
     // A time slot follows its Day's Edition: the admin agenda edits only the Current Edition's (ADR-0004).
-    @Query("select slot from TimeSlot slot where slot.id = :id " +
-           "and slot.id.dayId in (select day.id from Day day where day.edition.current = true)")
-    TimeSlot findInCurrentEditionById(TimeSlotId id);
+    @Query("select slot from TimeSlot slot where slot.id.dayId = :dayId and slot.id.displayOrder = :displayOrder " +
+           "and slot.id.editionId in (select edition.id from Edition edition where edition.current = true)")
+    TimeSlot findInCurrentEditionById(String dayId, int displayOrder);
 
     @Query("select slot from TimeSlot slot where slot.id.dayId = :dayId " +
-           "and slot.id.dayId in (select day.id from Day day where day.edition.current = true)")
+           "and slot.id.editionId in (select edition.id from Edition edition where edition.current = true)")
     List<TimeSlot> findInCurrentEditionByDayId(String dayId);
 }

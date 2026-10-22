@@ -80,7 +80,7 @@ public class FakePresentations {
         agendaRepository.findAll().forEach(e -> agendaRepository.deleteById(e.getId()));
         roomRepository.findAll().forEach(r -> roomRepository.deleteById(r.getId()));
         timeSlotsRepository.findAll().forEach(ts -> timeSlotsRepository.deleteById(ts.getId()));
-        dayRepository.findAll().forEach(d -> dayRepository.deleteById(d.getId()));
+        dayRepository.findAll().forEach(dayRepository::delete);
     }
 
     private void createTodaySchedule() {
@@ -114,14 +114,14 @@ public class FakePresentations {
 
     private void createTimeSlot(String dayId, int displayOrder, LocalTime start, LocalTime end, boolean forAllRooms) {
         timeSlotsRepository.save(new TimeSlot()
-                .setId(new TimeSlotId(dayId, displayOrder))
+                .setId(new TimeSlotId(editionRepository.findCurrent().getId(), dayId, displayOrder))
                 .setStart(start)
                 .setEnd(end)
                 .setForAllRooms(forAllRooms));
     }
 
     private void createBreakEntry(String dayId, int displayOrder, String label) {
-        TimeSlot breakSlot = timeSlotsRepository.findById(new TimeSlotId(dayId, displayOrder));
+        TimeSlot breakSlot = timeSlotsRepository.findById(new TimeSlotId(editionRepository.findCurrent().getId(), dayId, displayOrder));
         AgendaEntry entry = new AgendaEntry();
         entry.setTimeSlot(breakSlot);
         entry.setLabel(label);
@@ -154,8 +154,9 @@ public class FakePresentations {
     }
 
     private List<Slot> getTalkSlots() {
-        List<Room> rooms = roomRepository.findByDayId(TODAY_DAY_ID);
-        List<TimeSlot> talkSlots = timeSlotsRepository.findByIdDayId(TODAY_DAY_ID)
+        Day today = dayRepository.findInCurrentEditionById(TODAY_DAY_ID);
+        List<Room> rooms = roomRepository.findByDay(today);
+        List<TimeSlot> talkSlots = timeSlotsRepository.findByDay(today)
                 .stream()
                 .filter(ts -> !ts.isForAllRooms())
                 .toList();

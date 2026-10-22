@@ -88,7 +88,7 @@ class AgendaControllerTest extends BaseIntegrationTest {
         // Clear existing days
         Iterable<Day> existingDays = dayRepository.findAll();
         for (Day day : existingDays) {
-            dayRepository.deleteById(day.getId());
+            dayRepository.delete(day);
         }
     }
 
@@ -124,17 +124,17 @@ class AgendaControllerTest extends BaseIntegrationTest {
         TimeSlot day1Slot1 = new TimeSlot()
                 .setStart(LocalTime.of(9, 0))
                 .setEnd(LocalTime.of(10, 0))
-                .setId(new TimeSlot.TimeSlotId(day1.getId(), 1));
+                .setId(day1, 1);
 
         TimeSlot day1Slot2 = new TimeSlot()
                 .setStart(LocalTime.of(10, 15))
                 .setEnd(LocalTime.of(11, 15))
-                .setId(new TimeSlot.TimeSlotId(day1.getId(), 2));
+                .setId(day1, 2);
 
         TimeSlot day2Slot1 = new TimeSlot()
                 .setStart(LocalTime.of(9, 0))
                 .setEnd(LocalTime.of(10, 0))
-                .setId(new TimeSlot.TimeSlotId(day2.getId(), 1));
+                .setId(day2, 1);
 
         day1Slot1 = timeSlotsRepository.save(day1Slot1);
         day1Slot2 = timeSlotsRepository.save(day1Slot2);

@@ -3,6 +3,7 @@ package pl.confitura.jelatyna.agenda;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import pl.confitura.jelatyna.edition.EditionRepository;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import static pl.confitura.jelatyna.infrastructure.security.SecurityHelper.ADMIN
 public class TimeSlotUtils {
 
     private final TimeSlotsRepository timeSlotsRepository;
+    private final EditionRepository editionRepository;
 
 
     public List<TimeSlot> createSlots(List<String> timeSlotNames, List<List<String>> presentationNames) {
@@ -28,7 +30,7 @@ public class TimeSlotUtils {
             var end = LocalTime.of(Integer.parseInt(slotString[1]), 0);
 
             TimeSlot timeSlot = new TimeSlot()
-                    .setId("day-1", i)
+                    .setId(new TimeSlot.TimeSlotId(editionRepository.findCurrent().getId(), "day-1", i))
                     .setStart(start)
                     .setEnd(end)
                     .setForAllRooms(allRoomsSlot);

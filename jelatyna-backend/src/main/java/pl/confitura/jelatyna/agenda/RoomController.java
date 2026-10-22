@@ -34,7 +34,8 @@ public class RoomController {
 
     @PostMapping
     public ResponseEntity<Room> saveRoom(@RequestBody Room room) {
-        if (dayRepository.findInCurrentEditionById(room.getDay().getId()) == null) {
+        Day day = dayRepository.findInCurrentEditionById(room.getDay().getId());
+        if (day == null) {
             return ResponseEntity.notFound().build();
         }
         // Room ids are global: saving another Edition's room id would take that room over (ADR-0004).
@@ -42,7 +43,7 @@ public class RoomController {
         if (existing != null && !existing.getDay().getEdition().isCurrent()) {
             return ResponseEntity.status(CONFLICT).build();
         }
-        Room savedRoom = roomRepository.save(room);
+        Room savedRoom = roomRepository.save(room.setDay(day));
         return ResponseEntity.status(CREATED).body(savedRoom);
     }
 

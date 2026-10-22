@@ -25,5 +25,9 @@ public class Room extends AuditedEntity {
 
     @ManyToOne
     @NotNull
+    @JoinColumns({
+            @JoinColumn(name = "edition_id", referencedColumnName = "edition_id"),
+            @JoinColumn(name = "day_id", referencedColumnName = "id"),
+    })
     private Day day;
 }

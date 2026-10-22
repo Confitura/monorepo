@@ -7,12 +7,12 @@ import pl.confitura.jelatyna.edition.Edition;
 
 import java.util.List;
 
-public interface DayRepository extends Repository<Day, String> {
+public interface DayRepository extends Repository<Day, Day.DayId> {
 
     @PreAuthorize("@security.isAdmin()")
     Day save(Day day);
 
-    Day findById(String id);
+    Day findById(Day.DayId id);
 
     @Query("select day from Day day order by day.displayOrder")
     List<Day> findAll();
@@ -30,5 +30,5 @@ public interface DayRepository extends Repository<Day, String> {
     Day findInCurrentEditionById(String id);
 
     @PreAuthorize("@security.isAdmin()")
-    void deleteById(String id);
+    void delete(Day day);
 }
