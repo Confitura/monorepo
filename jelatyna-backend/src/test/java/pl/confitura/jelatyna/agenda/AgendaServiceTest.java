@@ -74,8 +74,8 @@ class AgendaServiceTest {
         presentation.setId("presentation1");
 
         lenient().when(dayRepository.findById(dayId)).thenReturn(day);
-        lenient().when(timeSlotsRepository.findById(new TimeSlot.TimeSlotId(dayId, timeSlotIndex))).thenReturn(timeSlot);
-        lenient().when(roomRepository.findById(roomId)).thenReturn(room);
+        lenient().when(timeSlotsRepository.findInCurrentEditionById(new TimeSlot.TimeSlotId(dayId, timeSlotIndex))).thenReturn(timeSlot);
+        lenient().when(roomRepository.findInCurrentEditionById(roomId)).thenReturn(room);
         lenient().when(presentationRepository.findById(presentationId)).thenReturn(presentation);
     }
 

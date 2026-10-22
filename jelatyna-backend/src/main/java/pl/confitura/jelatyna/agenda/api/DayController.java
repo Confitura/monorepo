@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 
+import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
@@ -29,12 +30,12 @@ public class DayController {
 
     @GetMapping
     public List<InlineDay> getAllDays() {
-        return dayRepository.findAll().stream().map(InlineDay::from).toList();
+        return dayRepository.findAllInCurrentEdition().stream().map(InlineDay::from).toList();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<InlineDay> getDayById(@PathVariable String id) {
-        Day day = dayRepository.findById(id);
+        Day day = dayRepository.findInCurrentEditionById(id);
         if (day == null) {
             return ResponseEntity.notFound().build();
         }
@@ -43,13 +44,18 @@ public class DayController {
 
     @PostMapping
     public ResponseEntity<InlineDay> saveDay(@RequestBody Day day) {
+        // Day ids are global: saving another Edition's Day id would take that Day over (ADR-0004).
+        Day existing = dayRepository.findById(day.getId());
+        if (existing != null && !existing.getEdition().isCurrent()) {
+            return ResponseEntity.status(CONFLICT).build();
+        }
         Day savedDay = dayRepository.save(day.setEdition(editionRepository.findCurrent()));
         return ResponseEntity.status(CREATED).body(InlineDay.from(savedDay));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<InlineDay> updateDay(@PathVariable String id, @RequestBody UpdateDayRequest request) {
-        Day day = dayRepository.findById(id);
+        Day day = dayRepository.findInCurrentEditionById(id);
         if (day == null) {
             return ResponseEntity.notFound().build();
         }
@@ -68,6 +74,9 @@ public class DayController {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteDay(@PathVariable String id) {
+        if (dayRepository.findInCurrentEditionById(id) == null) {
+            return ResponseEntity.notFound().build();
+        }
         agendaService.deleteDay(id);
         return ResponseEntity.noContent().build();
     }

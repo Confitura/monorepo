@@ -21,8 +21,8 @@ public class AgendaService {
     private final DayRepository dayRepository;
 
     public AgendaEntry createAgendaEntry(String dayId, int timeSlotPosition, String roomId, String label, String presentationId) {
-        TimeSlot timeSlot = timeSlotsRepository.findById(new TimeSlot.TimeSlotId(dayId, timeSlotPosition));
-        Room room = roomId != null ? roomRepository.findById(roomId) : null;
+        TimeSlot timeSlot = timeSlotsRepository.findInCurrentEditionById(new TimeSlot.TimeSlotId(dayId, timeSlotPosition));
+        Room room = roomId != null ? roomRepository.findInCurrentEditionById(roomId) : null;
         Presentation presentation = presentationId != null ? presentationRepository.findById(presentationId) : null;
 
         return new AgendaEntry()

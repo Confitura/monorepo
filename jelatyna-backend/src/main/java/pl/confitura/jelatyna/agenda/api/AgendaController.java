@@ -30,7 +30,7 @@ public class AgendaController {
 
     @GetMapping("/{dayId}/entries")
     public ResponseEntity<List<InlineAgendaEntry>> getAgendaEntriesByDay(@PathVariable String dayId) {
-        Day day = dayRepository.findById(dayId);
+        Day day = dayRepository.findInCurrentEditionById(dayId);
         if (day == null) {
             return ResponseEntity.notFound().build();
         }
@@ -42,7 +42,7 @@ public class AgendaController {
 
     @GetMapping("/entries/{id}")
     public ResponseEntity<InlineAgendaEntry> getAgendaEntryById(@PathVariable String id) {
-        AgendaEntry agendaEntry = agendaRepository.findById(id);
+        AgendaEntry agendaEntry = agendaRepository.findInCurrentEditionById(id);
         if (agendaEntry == null) {
             return ResponseEntity.notFound().build();
         }
@@ -58,26 +58,32 @@ public class AgendaController {
                 request.label(),
                 request.presentationId()
         );
+        if (agendaEntry.getTimeSlot() == null) {
+            return ResponseEntity.notFound().build();
+        }
         AgendaEntry savedAgendaEntry = agendaRepository.save(agendaEntry);
         return ResponseEntity.status(CREATED).body(InlineAgendaEntry.from(savedAgendaEntry));
     }
 
     @DeleteMapping("/entries/{id}")
     public ResponseEntity<Void> deleteAgendaEntry(@PathVariable String id) {
+        if (agendaRepository.findInCurrentEditionById(id) == null) {
+            return ResponseEntity.notFound().build();
+        }
         agendaRepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/entries/{id}")
     public ResponseEntity<InlineAgendaEntry> updateAgendaEntry(@PathVariable String id, @RequestBody UpdateAgendaEntryRequest request) {
-        AgendaEntry existing = agendaRepository.findById(id);
+        AgendaEntry existing = agendaRepository.findInCurrentEditionById(id);
         if (existing == null) {
             return ResponseEntity.notFound().build();
         }
 
         existing.setLabel(request.label().orElse(null));
         existing.setPresentation(request.presentationId().map(presentationRepository::findById).orElse(null));
-        existing.setRoom(request.roomId().map(roomRepository::findById).orElse(null));
+        existing.setRoom(request.roomId().map(roomRepository::findInCurrentEditionById).orElse(null));
 
         AgendaEntry saved = agendaRepository.save(existing);
         return ResponseEntity.ok(InlineAgendaEntry.from(saved));
@@ -85,7 +91,7 @@ public class AgendaController {
 
     @GetMapping("/days")
     public List<InlineDay> getAllDays() {
-        return dayRepository.findAll().stream()
+        return dayRepository.findAllInCurrentEdition().stream()
                 .sorted(comparing(Day::getDisplayOrder))
                 .map(InlineDay::from)
                 .toList();
@@ -93,16 +99,16 @@ public class AgendaController {
 
     @PutMapping("/entries/{id}/slot")
     public ResponseEntity<InlineAgendaEntry> moveAgendaEntry(@PathVariable String id, @RequestBody UpdateAgendaEntrySlotRequest request) {
-        AgendaEntry existing = agendaRepository.findById(id);
+        AgendaEntry existing = agendaRepository.findInCurrentEditionById(id);
         if (existing == null) {
             return ResponseEntity.notFound().build();
         }
-        TimeSlot timeSlot = timeSlotsRepository.findById(new TimeSlot.TimeSlotId(request.dayId(), request.timeSlotIndex()));
+        TimeSlot timeSlot = timeSlotsRepository.findInCurrentEditionById(new TimeSlot.TimeSlotId(request.dayId(), request.timeSlotIndex()));
         if (timeSlot == null) {
             return ResponseEntity.notFound().build();
         }
         existing.setTimeSlot(timeSlot);
-        existing.setRoom(request.roomId().map(roomRepository::findById).orElse(null));
+        existing.setRoom(request.roomId().map(roomRepository::findInCurrentEditionById).orElse(null));
 
         AgendaEntry saved = agendaRepository.save(existing);
         return ResponseEntity.ok(InlineAgendaEntry.from(saved));
@@ -110,7 +116,7 @@ public class AgendaController {
 
     @GetMapping("/{dayId}/time-slots")
     public List<InlineTimeSlot> getAllTimeSlots(@PathVariable String dayId) {
-        return timeSlotsRepository.findByIdDayId(dayId).stream()
+        return timeSlotsRepository.findInCurrentEditionByDayId(dayId).stream()
                 .sorted(TimeSlot.CHRONOLOGICALLY)
                 .map(InlineTimeSlot::from)
                 .toList();
@@ -119,7 +125,7 @@ public class AgendaController {
     @PostMapping("/{dayId}/time-slots")
     public ResponseEntity<InlineTimeSlot> createTimeSlot(@PathVariable String dayId,
                                                          @RequestBody CreateTimeSlotRequest request) {
-        if (dayRepository.findById(dayId) == null) {
+        if (dayRepository.findInCurrentEditionById(dayId) == null) {
             return ResponseEntity.notFound().build();
         }
         LocalTime start;
@@ -139,7 +145,7 @@ public class AgendaController {
      */
     @DeleteMapping("/{dayId}/time-slots/{displayOrder}")
     public ResponseEntity<Void> deleteTimeSlot(@PathVariable String dayId, @PathVariable int displayOrder) {
-        if (timeSlotsRepository.findById(new TimeSlot.TimeSlotId(dayId, displayOrder)) == null) {
+        if (timeSlotsRepository.findInCurrentEditionById(new TimeSlot.TimeSlotId(dayId, displayOrder)) == null) {
             return ResponseEntity.notFound().build();
         }
         agendaService.deleteTimeSlot(dayId, displayOrder);
@@ -148,7 +154,7 @@ public class AgendaController {
 
     @GetMapping("/{dayId}/rooms")
     public List<InlineRoom> getAllRooms(@PathVariable String dayId) {
-        return roomRepository.findByDayId(dayId).stream()
+        return roomRepository.findInCurrentEditionByDayId(dayId).stream()
                 .sorted(Comparator.comparing(Room::getDisplayOrder))
                 .map(InlineRoom::from)
                 .toList();
@@ -156,7 +162,7 @@ public class AgendaController {
 
     @PostMapping("/{dayId}/rooms")
     public ResponseEntity<InlineRoom> createRoom(@PathVariable String dayId, @RequestBody CreateRoomRequest request) {
-        if (dayRepository.findById(dayId) == null) {
+        if (dayRepository.findInCurrentEditionById(dayId) == null) {
             return ResponseEntity.notFound().build();
         }
         Room created = agendaService.createRoom(dayId, request.label(), request.displayOrder().orElse(null));
@@ -166,7 +172,7 @@ public class AgendaController {
     // New endpoint: update Room
     @PutMapping("/rooms/{id}")
     public ResponseEntity<InlineRoom> updateRoom(@PathVariable String id, @RequestBody UpdateRoomRequest request) {
-        Room room = roomRepository.findById(id);
+        Room room = roomRepository.findInCurrentEditionById(id);
         if (room == null) {
             return ResponseEntity.notFound().build();
         }
@@ -185,7 +191,7 @@ public class AgendaController {
      */
     @DeleteMapping("/rooms/{id}")
     public ResponseEntity<Void> removeRoom(@PathVariable String id) {
-        if (roomRepository.findById(id) == null) {
+        if (roomRepository.findInCurrentEditionById(id) == null) {
             return ResponseEntity.notFound().build();
         }
         agendaService.deleteRoom(id);
@@ -198,7 +204,7 @@ public class AgendaController {
                                                          @PathVariable int displayOrder,
                                                          @RequestBody UpdateTimeSlotRequest request) {
         TimeSlot.TimeSlotId timeSlotId = new TimeSlot.TimeSlotId(dayId, displayOrder);
-        TimeSlot slot = timeSlotsRepository.findById(timeSlotId);
+        TimeSlot slot = timeSlotsRepository.findInCurrentEditionById(timeSlotId);
         if (slot == null) {
             return ResponseEntity.notFound().build();
         }

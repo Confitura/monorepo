@@ -139,7 +139,8 @@ public class UserController {
 
     @PostMapping("/users/{userId}/presentations/{presentationId}")
     @PreAuthorize("@security.isOwner(#userId) && @security.presentationOwnedByUser(#presentationId)"
-            + " && !@security.isWorkshop(#presentationId)")
+            + " && !@security.isWorkshop(#presentationId)"
+            + " && @security.canChangePresentation(#presentationId)")
     public ResponseEntity<InlinePresentation> updatePresentation(@Valid @RequestBody PresentationRequest presentationRequest,
                                                                  @PathVariable String userId,
                                                                  @PathVariable String presentationId) {
@@ -153,7 +154,8 @@ public class UserController {
 
     @DeleteMapping("/users/{userId}/presentations/{presentationId}")
     @PreAuthorize("@security.isOwner(#userId) && @security.presentationOwnedByUser(#presentationId)"
-            + " && !@security.isWorkshop(#presentationId)")
+            + " && !@security.isWorkshop(#presentationId)"
+            + " && @security.canChangePresentation(#presentationId)")
     public void deletePresentation(@PathVariable String userId, @PathVariable String presentationId) {
         presentationRepository.deleteById(presentationId);
     }
@@ -181,7 +183,8 @@ public class UserController {
 
     @PostMapping("/users/{userId}/workshops/{workshopId}")
     @PreAuthorize("@security.isOwner(#userId) && @security.presentationOwnedByUser(#workshopId)"
-            + " && @security.isWorkshop(#workshopId)")
+            + " && @security.isWorkshop(#workshopId)"
+            + " && @security.canChangePresentation(#workshopId)")
     public ResponseEntity<InlineWorkshop> updateWorkshop(@Valid @RequestBody WorkshopRequest workshopRequest,
                                                          @PathVariable String userId,
                                                          @PathVariable String workshopId) {
@@ -195,7 +198,8 @@ public class UserController {
 
     @DeleteMapping("/users/{userId}/workshops/{workshopId}")
     @PreAuthorize("@security.isOwner(#userId) && @security.presentationOwnedByUser(#workshopId)"
-            + " && @security.isWorkshop(#workshopId)")
+            + " && @security.isWorkshop(#workshopId)"
+            + " && @security.canChangePresentation(#workshopId)")
     public void deleteWorkshop(@PathVariable String userId, @PathVariable String workshopId) {
         presentationRepository.deleteById(workshopId);
     }
