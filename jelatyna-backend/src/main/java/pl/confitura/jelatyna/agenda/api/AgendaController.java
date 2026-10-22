@@ -30,7 +30,7 @@ public class AgendaController {
 
     @GetMapping("/{dayId}/entries")
     public ResponseEntity<List<InlineAgendaEntry>> getAgendaEntriesByDay(@PathVariable String dayId) {
-        Day day = dayRepository.findById(dayId);
+        Day day = dayRepository.findInCurrentEditionById(dayId);
         if (day == null) {
             return ResponseEntity.notFound().build();
         }
@@ -42,7 +42,7 @@ public class AgendaController {
 
     @GetMapping("/entries/{id}")
     public ResponseEntity<InlineAgendaEntry> getAgendaEntryById(@PathVariable String id) {
-        AgendaEntry agendaEntry = agendaRepository.findById(id);
+        AgendaEntry agendaEntry = agendaRepository.findInCurrentEditionById(id);
         if (agendaEntry == null) {
             return ResponseEntity.notFound().build();
         }
@@ -85,7 +85,7 @@ public class AgendaController {
 
     @GetMapping("/days")
     public List<InlineDay> getAllDays() {
-        return dayRepository.findAll().stream()
+        return dayRepository.findAllInCurrentEdition().stream()
                 .sorted(comparing(Day::getDisplayOrder))
                 .map(InlineDay::from)
                 .toList();
@@ -110,7 +110,7 @@ public class AgendaController {
 
     @GetMapping("/{dayId}/time-slots")
     public List<InlineTimeSlot> getAllTimeSlots(@PathVariable String dayId) {
-        return timeSlotsRepository.findByIdDayId(dayId).stream()
+        return timeSlotsRepository.findInCurrentEditionByDayId(dayId).stream()
                 .sorted(TimeSlot.CHRONOLOGICALLY)
                 .map(InlineTimeSlot::from)
                 .toList();
@@ -148,7 +148,7 @@ public class AgendaController {
 
     @GetMapping("/{dayId}/rooms")
     public List<InlineRoom> getAllRooms(@PathVariable String dayId) {
-        return roomRepository.findByDayId(dayId).stream()
+        return roomRepository.findInCurrentEditionByDayId(dayId).stream()
                 .sorted(Comparator.comparing(Room::getDisplayOrder))
                 .map(InlineRoom::from)
                 .toList();

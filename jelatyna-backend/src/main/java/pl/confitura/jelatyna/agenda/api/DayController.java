@@ -29,12 +29,12 @@ public class DayController {
 
     @GetMapping
     public List<InlineDay> getAllDays() {
-        return dayRepository.findAll().stream().map(InlineDay::from).toList();
+        return dayRepository.findAllInCurrentEdition().stream().map(InlineDay::from).toList();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<InlineDay> getDayById(@PathVariable String id) {
-        Day day = dayRepository.findById(id);
+        Day day = dayRepository.findInCurrentEditionById(id);
         if (day == null) {
             return ResponseEntity.notFound().build();
         }
