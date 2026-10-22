@@ -32,8 +32,9 @@ public class AgendaEntry {
     @ManyToOne
     @NotNull
     @JoinColumns({
-            @JoinColumn(name = "time_slot_day_id"),
-            @JoinColumn(name = "time_slot_display_order"),
+            @JoinColumn(name = "time_slot_edition_id", referencedColumnName = "edition_id"),
+            @JoinColumn(name = "time_slot_day_id", referencedColumnName = "day_id"),
+            @JoinColumn(name = "time_slot_display_order", referencedColumnName = "display_order"),
     })
     private TimeSlot timeSlot;
 

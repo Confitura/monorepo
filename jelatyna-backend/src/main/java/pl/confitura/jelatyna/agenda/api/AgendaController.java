@@ -34,7 +34,7 @@ public class AgendaController {
         if (day == null) {
             return ResponseEntity.notFound().build();
         }
-        var result = agendaRepository.findByTimeSlotIdDayId(day.getId()).stream()
+        var result = agendaRepository.findByDay(day).stream()
                 .map(InlineAgendaEntry::from)
                 .toList();
         return ResponseEntity.ok(result);
@@ -103,7 +103,7 @@ public class AgendaController {
         if (existing == null) {
             return ResponseEntity.notFound().build();
         }
-        TimeSlot timeSlot = timeSlotsRepository.findInCurrentEditionById(new TimeSlot.TimeSlotId(request.dayId(), request.timeSlotIndex()));
+        TimeSlot timeSlot = timeSlotsRepository.findInCurrentEditionById(request.dayId(), request.timeSlotIndex());
         if (timeSlot == null) {
             return ResponseEntity.notFound().build();
         }
@@ -125,7 +125,8 @@ public class AgendaController {
     @PostMapping("/{dayId}/time-slots")
     public ResponseEntity<InlineTimeSlot> createTimeSlot(@PathVariable String dayId,
                                                          @RequestBody CreateTimeSlotRequest request) {
-        if (dayRepository.findInCurrentEditionById(dayId) == null) {
+        Day day = dayRepository.findInCurrentEditionById(dayId);
+        if (day == null) {
             return ResponseEntity.notFound().build();
         }
         LocalTime start;
@@ -136,7 +137,7 @@ public class AgendaController {
         } catch (DateTimeParseException | NullPointerException e) {
             return ResponseEntity.badRequest().build();
         }
-        TimeSlot created = agendaService.createTimeSlot(dayId, start, end, request.forAllRooms().orElse(false));
+        TimeSlot created = agendaService.createTimeSlot(day, start, end, request.forAllRooms().orElse(false));
         return ResponseEntity.status(CREATED).body(InlineTimeSlot.from(created));
     }
 
@@ -145,10 +146,11 @@ public class AgendaController {
      */
     @DeleteMapping("/{dayId}/time-slots/{displayOrder}")
     public ResponseEntity<Void> deleteTimeSlot(@PathVariable String dayId, @PathVariable int displayOrder) {
-        if (timeSlotsRepository.findInCurrentEditionById(new TimeSlot.TimeSlotId(dayId, displayOrder)) == null) {
+        TimeSlot slot = timeSlotsRepository.findInCurrentEditionById(dayId, displayOrder);
+        if (slot == null) {
             return ResponseEntity.notFound().build();
         }
-        agendaService.deleteTimeSlot(dayId, displayOrder);
+        agendaService.deleteTimeSlot(slot.getId());
         return ResponseEntity.noContent().build();
     }
 
@@ -162,10 +164,11 @@ public class AgendaController {
 
     @PostMapping("/{dayId}/rooms")
     public ResponseEntity<InlineRoom> createRoom(@PathVariable String dayId, @RequestBody CreateRoomRequest request) {
-        if (dayRepository.findInCurrentEditionById(dayId) == null) {
+        Day day = dayRepository.findInCurrentEditionById(dayId);
+        if (day == null) {
             return ResponseEntity.notFound().build();
         }
-        Room created = agendaService.createRoom(dayId, request.label(), request.displayOrder().orElse(null));
+        Room created = agendaService.createRoom(day, request.label(), request.displayOrder().orElse(null));
         return ResponseEntity.status(CREATED).body(InlineRoom.from(created));
     }
 
@@ -203,8 +206,7 @@ public class AgendaController {
     public ResponseEntity<InlineTimeSlot> updateTimeSlot(@PathVariable String dayId,
                                                          @PathVariable int displayOrder,
                                                          @RequestBody UpdateTimeSlotRequest request) {
-        TimeSlot.TimeSlotId timeSlotId = new TimeSlot.TimeSlotId(dayId, displayOrder);
-        TimeSlot slot = timeSlotsRepository.findInCurrentEditionById(timeSlotId);
+        TimeSlot slot = timeSlotsRepository.findInCurrentEditionById(dayId, displayOrder);
         if (slot == null) {
             return ResponseEntity.notFound().build();
         }

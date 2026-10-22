@@ -55,8 +55,9 @@ class PresentationRatingControllerTest extends BaseIntegrationTest {
     @AfterEach
     void cleanUpDay() {
         SecurityHelper.asAdmin();
-        if (dayRepository.findById("rate-test-day") != null) {
-            dayRepository.deleteById("rate-test-day");
+        Day day = dayRepository.findInCurrentEditionById("rate-test-day");
+        if (day != null) {
+            dayRepository.delete(day);
         }
         SecurityHelper.cleanSecurity();
     }

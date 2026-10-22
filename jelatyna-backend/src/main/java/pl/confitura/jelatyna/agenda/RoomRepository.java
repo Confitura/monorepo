@@ -16,7 +16,7 @@ public interface RoomRepository extends Repository<Room, String> {
     @Query("select room from Room room order by displayOrder")
     List<Room> findAll();
 
-    List<Room> findByDayId(String dayId);
+    List<Room> findByDay(Day day);
 
     // A room follows its Day's Edition: the admin agenda edits only the Current Edition's (ADR-0004).
     @Query("select room from Room room where room.day.edition.current = true order by room.displayOrder")

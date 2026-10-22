@@ -54,23 +54,25 @@ public class TimeSlot extends AuditedEntity {
         return id.displayOrder;
     }
 
-    public TimeSlot setId(String dayId, int displayOrder) {
-        this.id = new TimeSlotId(dayId, displayOrder);
+    public TimeSlot setId(Day day, int displayOrder) {
+        this.id = new TimeSlotId(day.getEdition().getId(), day.getId(), displayOrder);
         return this;
     }
 
     public TimeSlot mergeWith(TimeSlot that) {
 
         return new TimeSlot()
-                .setId(new TimeSlot.TimeSlotId(this.getId().dayId(), this.getDisplayOrder()))
+                .setId(this.getId())
                 .setStart(this.getStart())
                 .setEnd(that.getEnd())
                 .setTimeSlotSpan(this.getTimeSlotSpan() + that.getTimeSlotSpan());
     }
 
+    // A slot of the Day with this id in that Edition: a Day id is unique only within its Edition.
     @Embeddable
     public record TimeSlotId(
-            @NotNull String dayId,
-            @NotNull int displayOrder) {
+            @NotNull @Column(name = "edition_id") String editionId,
+            @NotNull @Column(name = "day_id") String dayId,
+            @NotNull @Column(name = "display_order") int displayOrder) {
     }
 }

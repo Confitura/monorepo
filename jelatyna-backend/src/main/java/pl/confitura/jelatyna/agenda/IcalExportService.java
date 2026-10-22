@@ -78,8 +78,8 @@ public class IcalExportService {
             if (entry.getTimeSlot() == null || entry.getTimeSlot().getStart() == null || entry.getTimeSlot().getEnd() == null) {
                 continue;
             }
-            String dayId = entry.getTimeSlot().getId().dayId();
-            Day day = dayRepository.findById(dayId);
+            TimeSlot.TimeSlotId slotId = entry.getTimeSlot().getId();
+            Day day = dayRepository.findById(new Day.DayId(slotId.dayId(), slotId.editionId()));
             if (day == null || day.getDate() == null) {
                 continue;
             }

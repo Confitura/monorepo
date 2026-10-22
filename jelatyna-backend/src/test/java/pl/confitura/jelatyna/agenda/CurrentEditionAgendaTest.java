@@ -87,13 +87,8 @@ class CurrentEditionAgendaTest extends BaseIntegrationTest {
                                 {"label":"Friday","date":"2026-09-18","displayOrder":7}"""))
                 .andExpect(status().isNotFound());
         mockMvc.perform(delete("/days/past-day").with(admin())).andExpect(status().isNotFound());
-        // Day ids are global, so creating a Day with a past Edition's Day id would take that Day over.
-        mockMvc.perform(post("/days").with(admin()).contentType(APPLICATION_JSON)
-                        .content("""
-                                {"id":"past-day","label":"Friday","date":"2026-09-18","displayOrder":7}"""))
-                .andExpect(status().isConflict());
 
-        Day pastDay = dayRepository.findById("past-day");
+        Day pastDay = pastEntry.getRoom().getDay();
         assertThat(pastDay.getLabel()).isEqualTo("past-day");
         assertThat(pastDay.getEdition().isCurrent()).isFalse();
     }
@@ -115,8 +110,8 @@ class CurrentEditionAgendaTest extends BaseIntegrationTest {
                 .andExpect(status().isNotFound());
         mockMvc.perform(delete("/agenda/past-day/time-slots/0").with(admin())).andExpect(status().isNotFound());
 
-        assertThat(roomRepository.findByDayId("past-day")).extracting(Room::getLabel).containsExactly("Main Hall");
-        assertThat(timeSlotsRepository.findByIdDayId("past-day")).extracting(TimeSlot::getLabel).containsExactly("09:00 - 10:00");
+        assertThat(roomRepository.findByDay(pastEntry.getRoom().getDay())).extracting(Room::getLabel).containsExactly("Main Hall");
+        assertThat(timeSlotsRepository.findByDay(pastEntry.getRoom().getDay())).extracting(TimeSlot::getLabel).containsExactly("09:00 - 10:00");
     }
 
     @Test
@@ -133,7 +128,7 @@ class CurrentEditionAgendaTest extends BaseIntegrationTest {
                 .andExpect(status().isNotFound());
         mockMvc.perform(delete("/agenda/entries/" + pastEntry.getId()).with(admin())).andExpect(status().isNotFound());
 
-        assertThat(agendaRepository.findByTimeSlotIdDayId("past-day"))
+        assertThat(agendaRepository.findByDay(pastEntry.getRoom().getDay()))
                 .extracting(AgendaEntry::getId, AgendaEntry::getLabel)
                 .containsExactly(tuple(pastEntry.getId(), "Keynote"));
     }
@@ -168,14 +163,14 @@ class CurrentEditionAgendaTest extends BaseIntegrationTest {
                         .content("""
                                 {"id":"new-room","label":"Side Room","displayOrder":2,"day":{"id":"past-day"}}"""))
                 .andExpect(status().isNotFound());
-        // Room ids are global too, so saving a past Edition's room id would take that room over.
+        // Room ids are global, so saving a past Edition's room id would take that room over.
         mockMvc.perform(post("/rooms").with(admin()).contentType(APPLICATION_JSON)
                         .content("""
                                 {"id":"past-day-room","label":"Side Room","displayOrder":2,"day":{"id":"current-day"}}"""))
                 .andExpect(status().isConflict());
         mockMvc.perform(delete("/rooms/past-day-room").with(admin())).andExpect(status().isNotFound());
 
-        assertThat(roomRepository.findByDayId("past-day"))
+        assertThat(roomRepository.findByDay(pastEntry.getRoom().getDay()))
                 .extracting(Room::getId, Room::getLabel)
                 .containsExactly(tuple("past-day-room", "Main Hall"));
     }
@@ -186,7 +181,7 @@ class CurrentEditionAgendaTest extends BaseIntegrationTest {
                 .setDate(LocalDate.parse("2025-07-05")).setDisplayOrder(1).setEdition(edition));
         Room room = roomRepository.save(new Room().setId(dayId + "-room").setLabel("Main Hall")
                 .setDisplayOrder(1).setDay(day));
-        TimeSlot slot = timeSlotsRepository.save(new TimeSlot().setId(dayId, 0)
+        TimeSlot slot = timeSlotsRepository.save(new TimeSlot().setId(day, 0)
                 .setStart(LocalTime.of(9, 0)).setEnd(LocalTime.of(10, 0)));
         return agendaRepository.save(new AgendaEntry().setTimeSlot(slot).setRoom(room).setLabel("Keynote"));
     }

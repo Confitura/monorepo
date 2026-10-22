@@ -59,7 +59,7 @@ class DayControllerTest extends BaseIntegrationTest {
             roomRepository.findAll().forEach(room -> roomRepository.deleteById(room.getId()));
         });
         txTemplate.executeWithoutResult(status -> {
-            dayRepository.findAll().forEach(day -> dayRepository.deleteById(day.getId()));
+            dayRepository.findAll().forEach(dayRepository::delete);
         });
 
         day1 = new Day()
@@ -133,7 +133,7 @@ class DayControllerTest extends BaseIntegrationTest {
                                 {"id":"day-3","label":"Day 3","date":"2025-09-03","displayOrder":3}"""))
                 .andExpect(status().isCreated());
 
-        assertThat(dayRepository.findById("day-3").getEdition().getId()).isEqualTo(editionRepository.findCurrent().getId());
+        assertThat(dayRepository.findInCurrentEditionById("day-3")).isNotNull();
     }
 
     @Test
@@ -177,7 +177,7 @@ class DayControllerTest extends BaseIntegrationTest {
                     .setDisplayOrder(1)
                     .setDay(day1));
             TimeSlot slot = timeSlotsRepository.save(new TimeSlot()
-                    .setId(new TimeSlot.TimeSlotId(day1.getId(), 1))
+                    .setId(day1, 1)
                     .setStart(LocalTime.of(9, 0))
                     .setEnd(LocalTime.of(10, 0)));
             agendaRepository.save(new AgendaEntry()

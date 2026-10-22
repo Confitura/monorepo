@@ -171,15 +171,15 @@ public class WebpageDataDumper {
         }
         for (var day : days) {
             String dayId = day.getId();
-            var timeSlots = timeSlotsRepository.findByIdDayId(dayId).stream()
+            var timeSlots = timeSlotsRepository.findByDay(day).stream()
                     .sorted(Comparator.comparing(pl.confitura.jelatyna.agenda.TimeSlot::getDisplayOrder))
                     .map(InlineTimeSlot::from)
                     .toList();
-            var rooms = roomRepository.findByDayId(dayId).stream()
+            var rooms = roomRepository.findByDay(day).stream()
                     .sorted(Comparator.comparing(pl.confitura.jelatyna.agenda.Room::getDisplayOrder))
                     .map(InlineRoom::from)
                     .toList();
-            var entries = agendaService.findByTimeSlotIdDayIdAndMerge(dayId).stream()
+            var entries = agendaService.findByDayAndMerge(day).stream()
                     .map(InlineAgendaEntry::from)
                     .toList();
 

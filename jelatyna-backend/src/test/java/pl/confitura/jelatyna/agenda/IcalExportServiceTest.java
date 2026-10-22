@@ -33,7 +33,7 @@ class IcalExportServiceTest {
         Day day = new Day().setId("day-1").setDate(LocalDate.of(2025, 9, 19)).setLabel("Day 1").setDisplayOrder(1);
 
         TimeSlot slotTalk = new TimeSlot()
-                .setId("day-1", 1)
+                .setId(new TimeSlot.TimeSlotId("edition", "day-1", 1))
                 .setStart(LocalTime.of(9, 10))
                 .setEnd(LocalTime.of(10, 0));
         Room room = new Room().setId("ab-1").setLabel("AB").setDisplayOrder(1).setDay(day);
@@ -41,13 +41,13 @@ class IcalExportServiceTest {
         AgendaEntry talk = new AgendaEntry().setId("1").setTimeSlot(slotTalk).setRoom(room).setPresentation(pres);
 
         TimeSlot slotGeneral = new TimeSlot()
-                .setId("day-1", 0)
+                .setId(new TimeSlot.TimeSlotId("edition", "day-1", 0))
                 .setStart(LocalTime.of(8, 0))
                 .setEnd(LocalTime.of(9, 0));
         AgendaEntry general = new AgendaEntry().setId("2").setTimeSlot(slotGeneral).setLabel("Registration");
 
         when(agendaService.findAllAndMerge()).thenReturn(List.of(talk, general));
-        when(dayRepository.findById("day-1")).thenReturn(day);
+        when(dayRepository.findById(new Day.DayId("day-1", "edition"))).thenReturn(day);
 
         byte[] ics = service.generateIcs();
         String txt = new String(ics, StandardCharsets.UTF_8);
@@ -64,7 +64,7 @@ class IcalExportServiceTest {
         Day day = new Day().setId("day-1").setDate(LocalDate.of(2025, 9, 19)).setLabel("Day 1").setDisplayOrder(1);
 
         TimeSlot slot = new TimeSlot()
-                .setId("day-1", 0)
+                .setId(new TimeSlot.TimeSlotId("edition", "day-1", 0))
                 .setStart(LocalTime.of(10, 0))
                 .setEnd(LocalTime.of(10, 30));
 
@@ -74,7 +74,7 @@ class IcalExportServiceTest {
         AgendaEntry breakB = new AgendaEntry().setId("2").setTimeSlot(slot).setRoom(roomB).setLabel("Coffee Break");
 
         when(agendaService.findAllAndMerge()).thenReturn(List.of(breakA, breakB));
-        when(dayRepository.findById("day-1")).thenReturn(day);
+        when(dayRepository.findById(new Day.DayId("day-1", "edition"))).thenReturn(day);
 
         byte[] ics = service.generateIcs();
         String txt = new String(ics, StandardCharsets.UTF_8);
@@ -88,7 +88,7 @@ class IcalExportServiceTest {
     void generatesIcsForSinglePresentation() {
         Day day = new Day().setId("day-1").setDate(LocalDate.of(2025, 9, 19)).setLabel("Day 1").setDisplayOrder(1);
         TimeSlot slot = new TimeSlot()
-                .setId("day-1", 1)
+                .setId(new TimeSlot.TimeSlotId("edition", "day-1", 1))
                 .setStart(LocalTime.of(9, 10))
                 .setEnd(LocalTime.of(10, 0));
         Room room = new Room().setId("ab-1").setLabel("AB").setDisplayOrder(1).setDay(day);
@@ -96,7 +96,7 @@ class IcalExportServiceTest {
         AgendaEntry talk = new AgendaEntry().setId("1").setTimeSlot(slot).setRoom(room).setPresentation(pres);
 
         when(agendaRepository.findByPresentationId("pres-1")).thenReturn(List.of(talk));
-        when(dayRepository.findById("day-1")).thenReturn(day);
+        when(dayRepository.findById(new Day.DayId("day-1", "edition"))).thenReturn(day);
 
         byte[] ics = service.generateIcsForPresentation("pres-1");
         String txt = new String(ics, StandardCharsets.UTF_8);
