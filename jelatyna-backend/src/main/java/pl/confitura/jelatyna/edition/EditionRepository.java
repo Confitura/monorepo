@@ -20,6 +20,12 @@ public interface EditionRepository extends Repository<Edition, String> {
 
     List<Edition> findAllByOrderByYearDesc();
 
+    // The speaker homepage's Editions: the Current one and every one the user has a talk or workshop in.
+    @Query("SELECT e FROM Edition e WHERE e.current = true OR EXISTS"
+            + " (SELECT p FROM Presentation p JOIN p.speakers s WHERE p.edition = e AND s.id = :userId)"
+            + " ORDER BY e.year DESC")
+    List<Edition> findCurrentAndSpokenInBy(String userId);
+
     @PreAuthorize("@security.isAdmin()")
     void deleteById(String id);
 }

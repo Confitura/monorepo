@@ -3029,6 +3029,24 @@ export type GetByIdResponses = {
 
 export type GetByIdResponse = GetByIdResponses[keyof GetByIdResponses];
 
+export type GetUserEditionsData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/users/{id}/editions';
+};
+
+export type GetUserEditionsResponses = {
+    /**
+     * OK
+     */
+    200: Array<EditionDto>;
+};
+
+export type GetUserEditionsResponse = GetUserEditionsResponses[keyof GetUserEditionsResponses];
+
 export type GetUserLoginsData = {
     body?: never;
     path: {
@@ -3069,7 +3087,9 @@ export type GetUserPresentationsData = {
     path: {
         id: string;
     };
-    query?: never;
+    query?: {
+        editionId?: string;
+    };
     url: '/users/{id}/presentations';
 };
 
@@ -3126,7 +3146,9 @@ export type GetUserWorkshopsData = {
     path: {
         id: string;
     };
-    query?: never;
+    query?: {
+        editionId?: string;
+    };
     url: '/users/{id}/workshops';
 };
 
