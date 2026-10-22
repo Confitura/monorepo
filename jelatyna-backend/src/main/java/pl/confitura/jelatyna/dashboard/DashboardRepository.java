@@ -16,11 +16,12 @@ public interface DashboardRepository extends Repository<User, String> {
            "FROM User u")
     UsersStats getUserStats();
 
+    // Admin pages show only the Current Edition (ADR-0004); Users are not per Edition.
     @Query("SELECT new pl.confitura.jelatyna.dashboard.model.SubmittedStats(" +
            "COUNT(p), " +
            "SUM(CASE WHEN p.workshop = false THEN 1 ELSE 0 END), " +
            "SUM(CASE WHEN p.workshop = true THEN 1 ELSE 0 END) )" +
-           "FROM Presentation p")
+           "FROM Presentation p WHERE p.edition.current = true")
     SubmittedStats getSubmittedStats();
 
 
