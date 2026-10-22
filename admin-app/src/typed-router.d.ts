@@ -44,6 +44,7 @@ declare module 'vue-router/auto-routes' {
       Record<never, never>,
       | '/admin/agenda'
       | '/admin/faq'
+      | '/admin/news'
       | '/admin/pages'
       | '/admin/partners'
       | '/admin/presentation-preview.[[id]]'
@@ -62,6 +63,13 @@ declare module 'vue-router/auto-routes' {
     '/admin/faq': RouteRecordInfo<
       '/admin/faq',
       '/admin/faq',
+      Record<never, never>,
+      Record<never, never>,
+      | never
+    >,
+    '/admin/news': RouteRecordInfo<
+      '/admin/news',
+      '/admin/news',
       Record<never, never>,
       Record<never, never>,
       | never
@@ -237,6 +245,7 @@ declare module 'vue-router/auto-routes' {
         | '/admin'
         | '/admin/agenda'
         | '/admin/faq'
+        | '/admin/news'
         | '/admin/pages'
         | '/admin/partners'
         | '/admin/presentation-preview.[[id]]'
@@ -256,6 +265,12 @@ declare module 'vue-router/auto-routes' {
     'src/pages/admin/faq.vue': {
       routes:
         | '/admin/faq'
+      views:
+        | never
+    }
+    'src/pages/admin/news.vue': {
+      routes:
+        | '/admin/news'
       views:
         | never
     }
