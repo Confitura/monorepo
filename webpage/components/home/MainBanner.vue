@@ -17,7 +17,7 @@
         </div>
         <div class="info__long">
           <!--                  <TheTimer/>-->
-          <p> Warsaw | September 25–26, 2026 </p>
+          <p v-if="edition"> Warsaw | {{ formatConferenceDates(edition.conferenceStart, edition.lastDay) }} </p>
           <p>ADN Conference Center, Grzybowska 56</p>
           <!--                  <p><NuxtLink to="/calendar" class="banner__calendar-link"><i class="fas fa-calendar-plus"></i> Add to your calendar</NuxtLink></p>-->
         </div>
@@ -47,6 +47,7 @@ import dayjs from 'dayjs'
 
 //TODO let date: string = dayjs(this.$store.state.date).format('DD.MM.YYYY')
 
+const edition = useEdition()
 let section = ref(null)
 let date: string = dayjs('2025-06-24T09:00').format('DD.MM.YYYY')
 let threshold: number[] = []
