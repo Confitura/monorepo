@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import pl.confitura.jelatyna.news.NewsEntry;
 import pl.confitura.jelatyna.news.NewsEntryRepository;
@@ -22,6 +23,7 @@ import pl.confitura.jelatyna.user.User;
 import pl.confitura.jelatyna.user.UserRepository;
 
 import static com.google.common.io.Files.*;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
@@ -56,6 +58,10 @@ public class ResourceStorage {
     @PreAuthorize("@security.isAdmin()")
     void storeNewsEntryCover(MultipartFile file, String id) throws IOException {
         NewsEntry entry = newsEntryRepository.findById(id);
+        // Refused before storing: the folder also holds speaker photos and partner logos named by id.
+        if (entry == null) {
+            throw new ResponseStatusException(NOT_FOUND);
+        }
         entry.setCover(doStore(id, file, "photos"));
         newsEntryRepository.save(entry);
     }

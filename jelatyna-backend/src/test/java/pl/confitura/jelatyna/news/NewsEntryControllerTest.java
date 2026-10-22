@@ -19,6 +19,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Instant;
 import java.util.List;
+import java.util.UUID;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.endsWith;
@@ -189,8 +192,18 @@ class NewsEntryControllerTest extends BaseIntegrationTest {
     }
 
     @Test
+    void refusesACoverForNoEntryWithoutStoringIt() throws Exception {
+        // Speaker photos and partner logos share the folder, so a stray file could replace one of them.
+        String unknown = UUID.randomUUID().toString();
+        mockMvc.perform(multipart("/resources/news-entries/" + unknown).file(cover("cover.png")).with(admin()))
+                .andExpect(status().isNotFound());
+
+        assertThat(Path.of(resources.folder(), "photos", unknown + ".png")).doesNotExist();
+    }
+
+    @Test
     void anUpdateKeepsTheCoverUnlessItRemovesIt() throws Exception {
-        uploadCover(draft, "cover.png");
+        uploadCover(draft, "cover.png").andExpect(status().isOk());
         update(draft, new NewsEntryRequest("Draft again", null, null, null, null, null))
                 .andExpect(jsonPath("$.cover", endsWith("/photos/" + draft.getId() + ".png")));
 
