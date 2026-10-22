@@ -27,6 +27,8 @@ const form = ref<NewsEntryDto>({ title: '', slug: '', body: '', published: false
 // The date as typed in the datetime-local field: Warsaw wall-clock time, 'YYYY-MM-DDTHH:mm'.
 const dateInput = ref('')
 const savedSlug = ref('')
+// A save in flight: blocks a second Save and closing or switching the editor until it completes.
+const saving = ref(false)
 const requiredRule = (value: string) => !!value?.trim() || 'This field is required'
 const valid = computed(() => !!form.value.title?.trim() && !!dateInput.value)
 // Changing the slug of an existing entry breaks the links already shared.
@@ -83,7 +85,7 @@ function openEdit(item: NewsEntryDto) {
 }
 
 function save() {
-  if (!valid.value) return
+  if (!valid.value || saving.value) return
   const body = {
     title: form.value.title,
     // Left empty, the server generates the slug on create and keeps the current one on update.
@@ -92,9 +94,11 @@ function save() {
     date: fromWarsawInput(dateInput.value),
     published: form.value.published,
   }
+  saving.value = true
+  // throwOnError: the generated client otherwise resolves with the error, which would look like a success.
   const request = editing.value
-    ? updateNewsEntry({ path: { id: form.value.id! }, body })
-    : createNewsEntry({ body })
+    ? updateNewsEntry({ path: { id: form.value.id! }, body, throwOnError: true })
+    : createNewsEntry({ body, throwOnError: true })
   request
     .then(() => {
       Notify.success(editing.value ? 'News entry updated' : 'News entry created')
@@ -104,6 +108,9 @@ function save() {
     .catch((e) => {
       console.error(e)
       Notify.error('Failed to save news entry (is the slug already in use?)')
+    })
+    .finally(() => {
+      saving.value = false
     })
 }
 
@@ -153,7 +160,7 @@ defineExpose({ confirmDelete, reload, entries, openCreate, openEdit, save, form,
       <DialogConfirm ref="confirmDialog" />
     </v-card>
 
-    <v-dialog v-model="dialog" max-width="1000px">
+    <v-dialog v-model="dialog" max-width="1000px" :persistent="saving">
       <v-card>
         <v-card-title>{{ editing ? 'Edit news entry' : 'Add news entry' }}</v-card-title>
         <v-card-text>
@@ -180,8 +187,8 @@ defineExpose({ confirmDelete, reload, entries, openCreate, openEdit, save, form,
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn color="blue-darken-1" variant="text" @click="dialog = false">Cancel</v-btn>
-          <v-btn color="blue-darken-1" variant="text" :disabled="!valid" @click="save">Save</v-btn>
+          <v-btn color="blue-darken-1" variant="text" :disabled="saving" @click="dialog = false">Cancel</v-btn>
+          <v-btn color="blue-darken-1" variant="text" :disabled="!valid" :loading="saving" @click="save">Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

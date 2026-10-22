@@ -3,6 +3,7 @@ import { mount, flushPromises } from '@vue/test-utils'
 import { createVuetify } from 'vuetify'
 import { createTestingPinia } from '@pinia/testing'
 import NewsPage from '@/pages/admin/news.vue'
+import { useNotificationStore } from '@/stores/notification'
 
 global.ResizeObserver = class ResizeObserver {
   observe() {}
@@ -121,6 +122,7 @@ describe('admin news page', () => {
     // 08:15 in Warsaw on 2 November is CET (UTC+1)
     expect(api.createNewsEntry).toHaveBeenCalledWith({
       body: { title: 'Big news', slug: undefined, body: '**Hello**', date: '2026-11-02T07:15:00.000Z', published: true },
+      throwOnError: true,
     })
   })
 
@@ -158,6 +160,7 @@ describe('admin news page', () => {
     expect(api.updateNewsEntry).toHaveBeenCalledWith({
       path: { id: 'n2' },
       body: { title: 'Hello again', slug: 'hello-world', body: 'Text', date: '2026-06-15T10:30:00.000Z', published: true },
+      throwOnError: true,
     })
   })
 
@@ -184,5 +187,60 @@ describe('admin news page', () => {
     vm.form.slug = 'fresh'
     await flushPromises()
     expect(document.body.textContent).not.toContain('shared links will stop working')
+  })
+
+  it('keeps the dialog open with the edits and reports an error when saving fails', async () => {
+    vi.spyOn(console, 'error').mockImplementation(() => {})
+    api.updateNewsEntry.mockRejectedValue(new Error('409'))
+    const wrapper = mountPage()
+    await flushPromises()
+    const vm = wrapper.vm as any
+    vm.openEdit(entries[1])
+    vm.form.title = 'Edited title'
+    vm.save()
+    await flushPromises()
+    const notifications = useNotificationStore().addNotification as ReturnType<typeof vi.fn>
+    expect(notifications).toHaveBeenCalledTimes(1)
+    expect(notifications.mock.calls[0][1]).toBe('error')
+    expect(document.body.textContent).toContain('Edit news entry')
+    expect(vm.form.title).toBe('Edited title')
+    // the failed save is over, so the admin can try again
+    vm.save()
+    await flushPromises()
+    expect(api.updateNewsEntry).toHaveBeenCalledTimes(2)
+  })
+
+  it('sends only one request when Save is triggered again while a save is pending', async () => {
+    let finish: (value: unknown) => void = () => {}
+    api.createNewsEntry.mockReturnValue(new Promise((resolve) => (finish = resolve)))
+    const wrapper = mountPage()
+    await flushPromises()
+    const vm = wrapper.vm as any
+    vm.openCreate()
+    vm.form.title = 'Big news'
+    vm.save()
+    vm.save()
+    await flushPromises()
+    expect(api.createNewsEntry).toHaveBeenCalledTimes(1)
+    finish({ data: {}, status: 200 })
+    await flushPromises()
+  })
+
+  it('cannot be cancelled while a save is pending, so a slow save cannot close another editor', async () => {
+    let finish: (value: unknown) => void = () => {}
+    api.createNewsEntry.mockReturnValue(new Promise((resolve) => (finish = resolve)))
+    const wrapper = mountPage()
+    await flushPromises()
+    const vm = wrapper.vm as any
+    vm.openCreate()
+    vm.form.title = 'Big news'
+    vm.save()
+    await flushPromises()
+    const cancel = () =>
+      [...document.body.querySelectorAll('button')].find((b) => b.textContent?.trim() === 'Cancel')!
+    expect(cancel().disabled).toBe(true)
+    finish({ data: {}, status: 200 })
+    await flushPromises()
+    expect(cancel().disabled).toBe(false)
   })
 })
