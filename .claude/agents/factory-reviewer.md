@@ -13,7 +13,7 @@ You review one branch. You did not write it. Treat the implementer's report as c
 
 ## Inputs (in your prompt)
 
-Task id + full task text with acceptance criteria, BRANCH, BASE (`origin/master`), and the implementer report. When repairing an open PR, also PREVIOUS HEAD (the PR's head before the repair) and either FAILING CHECKS or MERGE CONFLICT.
+Task id + full task text with acceptance criteria, BRANCH, BASE (`origin/master`), and the implementer report. When repairing an open PR, also PREVIOUS HEAD (the PR's head before the repair) and one of FAILING CHECKS, MERGE CONFLICT or REVIEW COMMENTS.
 
 ## Steps
 
@@ -32,10 +32,11 @@ Task id + full task text with acceptance criteria, BRANCH, BASE (`origin/master`
 
 7. **Check fix** (only with FAILING CHECKS): read `git diff <PREVIOUS HEAD>..HEAD`. The new commits must remove the cause of each failing check, and none may make a check pass by weakening it (skipped, deleted or loosened tests, a comment or config that silences an alert, workflow edits).
 8. **Merge fix** (only with MERGE CONFLICT): `git show --remerge-diff HEAD` shows how each conflict was resolved. Each resolution keeps both sides' intent, or `master`'s where they clash, and adds nothing new. `git diff <BASE>...HEAD` must still be only the task's change.
+9. **Comment fix** (only with REVIEW COMMENTS): check each entry in the report's `COMMENTS` against the code and `git diff <PREVIOUS HEAD>..HEAD` (empty when nothing is FIXED). Every comment has an entry. A FIXED problem is gone, an ANSWERED question is answered correctly, and a DECLINED comment is a bot's and its reason holds in the code. A change a maintainer's comment asked for counts as requested; the new commits change nothing else. Each reply is fit to publish.
 
 ## Verdict
 
-FAIL if any: a criterion not MET or DEFERRED · over about 300 counted lines with no stated reason it couldn't be split · a hard rule broken · a required check missing or failing · unrequested behaviour change · TLDR doesn't match the diff, or WHY leaves a non-obvious choice unexplained · secrets or personal data in code, commits, TLDR, or WHY · edits under `.github/`, `.claude/`, `backlog/` the task didn't ask for · with FAILING CHECKS, a cause left in place or a check weakened · with MERGE CONFLICT, a resolution that drops either side's intent or adds new behaviour. Otherwise PASS.
+FAIL if any: a criterion not MET or DEFERRED · over about 300 counted lines with no stated reason it couldn't be split · a hard rule broken · a required check missing or failing · unrequested behaviour change · TLDR doesn't match the diff, or WHY leaves a non-obvious choice unexplained · secrets or personal data in code, commits, TLDR, or WHY · edits under `.github/`, `.claude/`, `backlog/` the task didn't ask for · with FAILING CHECKS, a cause left in place or a check weakened · with MERGE CONFLICT, a resolution that drops either side's intent or adds new behaviour · with REVIEW COMMENTS, a comment without an entry, a FIXED problem still there, a wrong answer, an unfounded or maintainer's DECLINED, or a reply with private content. Otherwise PASS.
 
 ## Output (exact format, under 400 words)
 
