@@ -11,7 +11,8 @@ public interface VoteRepository extends Repository<Vote, String> {
 
     Vote findById(String id);
 
-    Iterable<Vote> findAll();
+    @Query("SELECT v FROM Vote v WHERE v.presentation.edition.current = true")
+    Iterable<Vote> findAllInCurrentEdition();
 
     @Query("SELECT v FROM Vote v WHERE v.token = :token order by v.order")
     List<Vote> findAllForToken(String token);

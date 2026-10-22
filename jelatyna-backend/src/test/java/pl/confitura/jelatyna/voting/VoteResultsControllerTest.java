@@ -6,18 +6,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
 import pl.confitura.jelatyna.BaseIntegrationTest;
+import pl.confitura.jelatyna.edition.Edition;
 import pl.confitura.jelatyna.edition.EditionRepository;
+import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
 import pl.confitura.jelatyna.presentation.PreSelectionStatus;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
 import pl.confitura.jelatyna.user.User;
 import pl.confitura.jelatyna.user.UserRepository;
 
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.not;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -107,6 +113,51 @@ class VoteResultsControllerTest extends BaseIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[?(@.presentationId=='" + other.getId() + "')].speakerHasPreSelectedPresentation",
                         contains(true)));
+    }
+
+    @Test
+    void resultsCoverOnlyTheCurrentEditionsTalks() throws Exception {
+        //given a talk of a past Edition was voted on too
+        Presentation pastTalk = createPresentation("Last Year's Talk", "John Doe").setEdition(pastEdition());
+        voteRepository.saveAll(List.of(vote("A", 1), new Vote().setToken("A").setRate(1).setPresentation(pastTalk)));
+
+        mockMvc.perform(get("/votes/results").with(admin()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[*].presentationId", hasItem(presentation.getId())))
+                .andExpect(jsonPath("$[*].presentationId", not(hasItem(pastTalk.getId()))));
+    }
+
+    @Test
+    void resultShouldNotFlagASpeakerWhosePreApprovedTalkIsInAPastEdition() throws Exception {
+        User speaker = userRepository.save(new User().setName("Returning Speaker"));
+        createPresentation("Last Year's Talk", speaker).setEdition(pastEdition())
+                .setPreSelectionStatus(PreSelectionStatus.PRE_APPROVED);
+        Presentation thisYears = createPresentation("This Year's Talk", speaker);
+        voteRepository.saveAll(List.of(new Vote().setToken("Z").setRate(1).setPresentation(thisYears)));
+
+        mockMvc.perform(get("/votes/results").with(admin()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[?(@.presentationId=='" + thisYears.getId() + "')].speakerHasPreSelectedPresentation",
+                        contains(false)));
+    }
+
+    @Test
+    void statisticsCoverOnlyTheCurrentEditionsTalks() throws Exception {
+        Presentation pastTalk = createPresentation("Last Year's Talk", "John Doe").setEdition(pastEdition());
+        voteRepository.saveAll(List.of(vote("A", 1), new Vote().setToken("A").setRate(1).setPresentation(pastTalk)));
+
+        mockMvc.perform(get("/votes/statistics").with(admin()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[*].presentationId", hasItem(presentation.getId())))
+                .andExpect(jsonPath("$[*].presentationId", not(hasItem(pastTalk.getId()))));
+    }
+
+    private Edition pastEdition() {
+        SecurityHelper.asAdmin();
+        Edition past = editionRepository.save(new Edition().setYear(2025).setName("Confitura 2025")
+                .setConferenceStart(Instant.parse("2025-07-05T07:00:00Z")).setLastDay(LocalDate.parse("2025-07-05")));
+        SecurityHelper.cleanSecurity();
+        return past;
     }
 
     private Vote vote(String token, int rate) {

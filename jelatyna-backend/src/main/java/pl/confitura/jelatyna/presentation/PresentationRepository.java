@@ -19,6 +19,11 @@ public interface PresentationRepository extends Repository<Presentation, String>
 
     Presentation findById(String id);
 
+    // Admin pages show only the Current Edition (ADR-0004).
+    @PreAuthorize("@security.isAdmin()")
+    @Query("SELECT p FROM Presentation p WHERE p.edition.current = true")
+    List<Presentation> findAllInCurrentEdition();
+
     @PreAuthorize("@security.isAdmin()")
     List<Presentation> findAll();
 
