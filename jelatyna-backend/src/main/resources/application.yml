@@ -34,5 +34,15 @@ management:
   endpoint:
     health:
       show-details: when-authorized
+  # Trace every request; whether a trace leaves the process is up to the OTLP export settings.
+  tracing:
+    sampling:
+      probability: 1.0
+  # Metrics are scraped from /actuator/prometheus. Micrometer's OTLP registry would push them
+  # over HTTP every minute to a receiver that doesn't exist, and IDEA's plugin accepts only gRPC.
+  otlp:
+    metrics:
+      export:
+        enabled: false
 
 ui.origin: "https://2025.confitura.pl/"

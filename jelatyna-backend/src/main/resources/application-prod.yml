@@ -50,18 +50,12 @@ logging:
 management:
   server:
     port: 9090
+  # Off until a collector runs. Coolify's MANAGEMENT_OPENTELEMETRY_TRACING_EXPORT_OTLP_ENDPOINT
+  # (Alloy, OTLP over HTTP) takes effect only once MANAGEMENT_TRACING_EXPORT_OTLP_ENABLED=true is set.
   tracing:
-    sampling:
-      probability: 1.0
-  otlp:
-    metrics:
-      export:
+    export:
+      otlp:
         enabled: false
-#  opentelemetry:
-#    tracing:
-#      export:
-#        otlp:
-#          endpoint: ${OTLP_TRACES_ENDPOINT:http://alloy:4318/v1/traces}
 
 allegro:
   client-id: ${ALLEGRO_CLIENT_ID}
