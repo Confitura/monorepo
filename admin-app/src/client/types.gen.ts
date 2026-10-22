@@ -1547,6 +1547,24 @@ export type GetEditionResponses = {
 
 export type GetEditionResponse = GetEditionResponses[keyof GetEditionResponses];
 
+export type UpdateEditionData = {
+    body: EditionRequest;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/editions/{id}';
+};
+
+export type UpdateEditionResponses = {
+    /**
+     * OK
+     */
+    200: EditionDto;
+};
+
+export type UpdateEditionResponse = UpdateEditionResponses[keyof UpdateEditionResponses];
+
 export type GetFaqCategoriesData = {
     body?: never;
     path?: never;

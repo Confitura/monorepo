@@ -3,7 +3,7 @@ package pl.confitura.jelatyna.edition;
 import java.time.Instant;
 import java.time.LocalDate;
 
-/** Payload for a new Edition; the C4P period is optional. */
+/** Payload for a new or updated Edition; the C4P period is optional, and an update must repeat the year. */
 public record EditionRequest(
         Integer year,
         String name,
