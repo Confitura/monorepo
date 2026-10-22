@@ -34,9 +34,6 @@ public class User extends AuditedEntity {
     @Column(columnDefinition = "varchar(255)")
     @ToString.Include
     private String id = UUID.randomUUID().toString();
-    @ToString.Include
-    @Column(columnDefinition = "text")
-    private String origin;
     @Column(columnDefinition = "text")
     private String name;
     @Column(columnDefinition = "text")
@@ -57,8 +54,6 @@ public class User extends AuditedEntity {
     private boolean isAdmin;
     @ToString.Include
     private boolean isVolunteer;
-    @Column(columnDefinition = "text", name = "social_id")
-    private String socialId;
 
     @ToString.Include
     private Boolean privacyPolicyAccepted = false;
@@ -168,8 +163,6 @@ public class User extends AuditedEntity {
 
     interface WithPresentations {
         String getId();
-
-        String getOrigin();
 
         String getName();
 

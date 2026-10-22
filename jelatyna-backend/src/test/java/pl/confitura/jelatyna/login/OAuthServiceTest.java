@@ -58,8 +58,7 @@ class OAuthServiceTest extends BaseIntegrationTest {
         var user = googleUser.toUser();
         assertThat(user.getEmail()).isEqualTo("example@confitura.pl");
         assertThat(user.getPhoto()).isEqualTo("https://2025.confitura.pl/_nuxt/logo_white.CozqRHby.svg");
-        assertThat(user.getOrigin()).isEqualTo("google");
-        assertThat(user.getSocialId()).isEqualTo("Z29vZ2xlLzEyMzQ1Njc4OTA=");
+        assertThat(googleUser.getExternalId()).isEqualTo("1234567890");
     }
 
     @Test
@@ -110,7 +109,6 @@ class OAuthServiceTest extends BaseIntegrationTest {
         var user = githubUser.toUser();
         assertThat(user.getEmail()).isEqualTo(null);
         assertThat(user.getPhoto()).isEqualTo("https://avatars.githubusercontent.com/u/@#$%^%$#@?v=4");
-        assertThat(user.getOrigin()).isEqualTo("github");
-        assertThat(user.getSocialId()).isEqualTo("Z2l0aHViLzEyMTk2NTc=");
+        assertThat(githubUser.getExternalId()).isEqualTo("1219657");
     }
 }

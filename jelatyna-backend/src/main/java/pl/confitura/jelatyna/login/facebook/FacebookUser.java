@@ -21,8 +21,6 @@ public class FacebookUser extends OAuthUserBase {
     @Override
     protected User toUser() {
         return new User()
-                .setSocialId(encodeId())
-                .setOrigin(getSystem())
                 .setName(name);
     }
 }

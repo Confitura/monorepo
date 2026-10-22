@@ -26,10 +26,10 @@ class UserAdminControllerTest extends BaseIntegrationTest {
 
     @Test
     void listsEachUsersLoginsAndNoneForAManualUser() throws Exception {
-        User twoLogins = userRepository.save(new User().setName("Signed in twice").setOrigin("google"));
+        User twoLogins = userRepository.save(new User().setName("Signed in twice"));
         Login google = loginRepository.save(new Login(twoLogins, "google", UUID.randomUUID().toString()));
         Login github = loginRepository.save(new Login(twoLogins, "github", UUID.randomUUID().toString()));
-        User manual = userRepository.save(new User().setName("Added by an admin").setOrigin("manual"));
+        User manual = userRepository.save(new User().setName("Added by an admin"));
 
         SecurityHelper.asAdmin();
         String body = mockMvc.perform(get("/users"))

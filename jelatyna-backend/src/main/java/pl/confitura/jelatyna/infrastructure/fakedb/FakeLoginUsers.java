@@ -18,7 +18,6 @@ import pl.confitura.jelatyna.presentation.PresentationRepository;
 import pl.confitura.jelatyna.user.User;
 import pl.confitura.jelatyna.user.UserRepository;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -34,23 +33,16 @@ public class FakeLoginUsers {
     private static final User FAKE_VOLUNTEER = createFakeVolunteer();
     private static final User FAKE_SPEAKER = createFakeSpeaker();
 
-    private static final Map<String, User> bySystem = mapBySystem(FAKE_ADMIN,
-            FAKE_VOLUNTEER,
-            FAKE_SPEAKER);
+    // The fake users have no Logins, so fake sign-in picks one by provider.
+    private static final Map<String, User> bySystem = Map.of(
+            GoogleService.SYSTEM, FAKE_ADMIN,
+            FacebookService.SYSTEM, FAKE_VOLUNTEER,
+            GithubService.SYSTEM, FAKE_SPEAKER);
 
     private final UserRepository userRepository;
     private final PresentationRepository presentationRepository;
     private final EditionRepository editionRepository;
     private final TokenService tokenService;
-
-    private static Map<String, User> mapBySystem(User... users) {
-        Map<String, User> map = new HashMap<>();
-        for (User user : users) {
-            map.put(user.getOrigin(), user);
-        }
-        log.info("fake users: {}", map);
-        return map;
-    }
 
     public User getBySystem(String provider) {
         User user = bySystem.get(provider);
@@ -88,7 +80,6 @@ public class FakeLoginUsers {
 
         return new User()
                 .setId("00000000-0000-0000-0000-000000000001")
-                .setOrigin(GoogleService.SYSTEM)
                 .setName("Admin")
                 .setEmail("Admin@example.com")
                 .setBio("admin bio")
@@ -100,7 +91,6 @@ public class FakeLoginUsers {
     private static User createFakeVolunteer() {
         return new User()
                 .setId("00000000-0000-0000-0000-000000000002")
-                .setOrigin(FacebookService.SYSTEM)
                 .setName("volunteer")
                 .setEmail("volunteer@example.com")
                 .setBio("volunteer bio")
@@ -112,7 +102,6 @@ public class FakeLoginUsers {
     private static User createFakeSpeaker() {
         return new User()
                 .setId("00000000-0000-0000-0000-000000000003")
-                .setOrigin(GithubService.SYSTEM)
                 .setName("Speaker")
                 .setEmail("Speaker@example.com")
                 .setBio("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Adipisici praesent autem tincidunt, velit iure nisl soluta sea nonumy nisi dolor adipisici placerat culpa iure, assum erat delenit gubergren mazim fugiat quis nihil diam aliqua lorem elitr. Mollit iriure eros facilisi dignissim aliquyam nibh autem est clita eleifend velit proident et zzril commodo qui non rebum nobis eos dolor. Zzril consequat liber. Veniam eum eirmod molestie feugiat. Liber possim minim.\n" +

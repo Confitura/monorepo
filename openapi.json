@@ -1483,9 +1483,6 @@
           "name" : {
             "type" : "string"
           },
-          "origin" : {
-            "type" : "string"
-          },
           "participant" : {
             "type" : "boolean"
           },
@@ -1497,9 +1494,6 @@
           },
           "privacyPolicyAccepted" : {
             "type" : "boolean"
-          },
-          "socialId" : {
-            "type" : "string"
           },
           "speaker" : {
             "type" : "boolean"

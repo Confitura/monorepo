@@ -422,7 +422,7 @@ class UserLoginsControllerTest extends BaseIntegrationTest {
     @ValueSource(booleans = {true, false})
     void anAdminMergesAManualUserWithAUserThatHasALoginEitherWayRound(boolean manualSurvives) throws Exception {
         User admin = userRepository.save(new User().setName("Admin").setAdmin(true));
-        User manual = userRepository.save(new User().setName("Added by an admin").setOrigin("manual"));
+        User manual = userRepository.save(new User().setName("Added by an admin"));
         talk("Manual's talk", manual);
         String githubId = uniqueId();
         User signedIn = oauthUserService.mapToUser(gitHubUser(githubId));

@@ -10,7 +10,6 @@ import pl.confitura.jelatyna.user.LoginRepository;
 import pl.confitura.jelatyna.user.User;
 import pl.confitura.jelatyna.user.UserRepository;
 
-import java.util.Base64;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,7 +28,7 @@ class OAuthUserServiceTest extends BaseIntegrationTest {
     @Test
     void signInReturnsTheUserThatOwnsTheLogin() {
         String githubId = uniqueId();
-        User owner = userRepository.save(new User().setName("Manual speaker").setOrigin("manual"));
+        User owner = userRepository.save(new User().setName("Manual speaker"));
         loginRepository.save(new Login(owner, "github", githubId));
 
         User signedIn = oauthUserService.mapToUser(gitHubUser(githubId, "Someone"));
@@ -52,17 +51,6 @@ class OAuthUserServiceTest extends BaseIntegrationTest {
     }
 
     @Test
-    void aNewSignInStillFillsSocialIdAndOrigin() {
-        String githubId = uniqueId();
-
-        User created = oauthUserService.mapToUser(gitHubUser(githubId, "Octo Cat"));
-
-        User stored = userRepository.findById(created.getId());
-        assertThat(stored.getOrigin()).isEqualTo("github");
-        assertThat(new String(Base64.getDecoder().decode(stored.getSocialId()))).isEqualTo("github/" + githubId);
-    }
-
-    @Test
     void twitterLoginsAreKeyedByUsername() {
         String username = "confitura_" + uniqueId();
         TwitterUser twitterUser = new TwitterUser();
@@ -73,8 +61,6 @@ class OAuthUserServiceTest extends BaseIntegrationTest {
 
         assertThat(loginRepository.findByProviderAndExternalId("twitter", username))
                 .hasValueSatisfying(login -> assertThat(login.getUser().getId()).isEqualTo(created.getId()));
-        assertThat(new String(Base64.getDecoder().decode(userRepository.findById(created.getId()).getSocialId())))
-                .isEqualTo("twitter/" + username);
     }
 
     private static GitHubUser gitHubUser(String id, String name) {

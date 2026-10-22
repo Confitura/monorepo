@@ -34,8 +34,6 @@ public class GoogleUser extends OAuthUserBase {
                 .orElse(null);
 
         return new User()
-                .setSocialId(encodeId())
-                .setOrigin(getSystem())
                 .setPhoto(image.map(Image::url).orElse(null))
                 .setEmail(email)
                 .setName(displayName);

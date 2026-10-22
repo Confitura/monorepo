@@ -93,6 +93,14 @@ class KeepDataStartupTest {
                 .containsExactlyInAnyOrder(false, true);
     }
 
+    // The fake users have no Logins: fake sign-in picks one by the provider in /login/{provider}.
+    @Test
+    void fakeSignInSignsInAsTheFakeUserOfEachProvider() {
+        assertThat(fakeLoginUsers.getBySystem("google").getName()).isEqualTo("Admin");
+        assertThat(fakeLoginUsers.getBySystem("facebook").getName()).isEqualTo("volunteer");
+        assertThat(fakeLoginUsers.getBySystem("github").getName()).isEqualTo("Speaker");
+    }
+
     @Test
     void theFakeSpeakersTalkAndWorkshopAreInTheCurrentEdition() {
         User speaker = fakeLoginUsers.getBySystem(GithubService.SYSTEM);
