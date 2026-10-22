@@ -1,6 +1,7 @@
 package pl.confitura.jelatyna.edition;
 
 import jakarta.persistence.EntityManager;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,15 +43,21 @@ class EditionControllerTest extends BaseIntegrationTest {
     // The migration's Edition 2026 stays the Current Edition; every other one is the test's.
     @BeforeEach
     void editions() {
+        removeEveryEditionButTheCurrentOne();
+        past = persist(edition(2025));
+        next = persist(edition(2027).setC4pStart(Instant.parse("2027-02-01T00:00:00Z"))
+                .setC4pEnd(Instant.parse("2027-05-01T00:00:00Z")));
+    }
+
+    // This test commits its Editions, and other tests create a past Edition 2025 of their own.
+    @AfterEach
+    void removeEveryEditionButTheCurrentOne() {
         txTemplate.executeWithoutResult(status -> {
             String notCurrent = "(select e from Edition e where e.current = false)";
             entityManager.createQuery("delete from Presentation p where p.edition in " + notCurrent).executeUpdate();
             entityManager.createQuery("delete from Day d where d.edition in " + notCurrent).executeUpdate();
             entityManager.createQuery("delete from Edition e where e.current = false").executeUpdate();
         });
-        past = persist(edition(2025));
-        next = persist(edition(2027).setC4pStart(Instant.parse("2027-02-01T00:00:00Z"))
-                .setC4pEnd(Instant.parse("2027-05-01T00:00:00Z")));
     }
 
     @Test
