@@ -9,9 +9,10 @@ public record NewsEntryDto(
         String slug,
         String body,
         Instant date,
-        boolean published) {
+        boolean published,
+        String cover) {
 
     public static NewsEntryDto from(NewsEntry e) {
-        return new NewsEntryDto(e.getId(), e.getTitle(), e.getSlug(), e.getBody(), e.getDate(), e.isPublished());
+        return new NewsEntryDto(e.getId(), e.getTitle(), e.getSlug(), e.getBody(), e.getDate(), e.isPublished(), e.getCover());
     }
 }

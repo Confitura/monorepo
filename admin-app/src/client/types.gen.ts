@@ -318,6 +318,7 @@ export type MessageInfo = {
 
 export type NewsEntryDto = {
     body?: string;
+    cover?: string;
     date?: string;
     id?: string;
     published?: boolean;
@@ -329,6 +330,7 @@ export type NewsEntryRequest = {
     body?: string;
     date?: string;
     published?: boolean;
+    removeCover?: boolean;
     slug?: string;
     title?: string;
 };
@@ -2710,6 +2712,30 @@ export type RatesResponses = {
 };
 
 export type RatesResponse = RatesResponses[keyof RatesResponses];
+
+export type StoreNewsEntryCoverData = {
+    /**
+     * File to upload
+     */
+    body?: {
+        file?: Blob | File;
+    };
+    path: {
+        /**
+         * ID of the news entry
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/resources/news-entries/{id}';
+};
+
+export type StoreNewsEntryCoverResponses = {
+    /**
+     * OK
+     */
+    200: unknown;
+};
 
 export type StorePartnerLogoData = {
     /**

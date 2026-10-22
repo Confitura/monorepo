@@ -25,9 +25,11 @@ public record DumpedNews(
             String title,
             String slug,
             String body,
-            Instant publishedAt) {
+            Instant publishedAt,
+            String cover) {
         public static News from(NewsEntry newsEntry) {
-            return new News(newsEntry.getTitle(), newsEntry.getSlug(), newsEntry.getBody(), newsEntry.getDate());
+            return new News(newsEntry.getTitle(), newsEntry.getSlug(), newsEntry.getBody(), newsEntry.getDate(),
+                    newsEntry.getCover());
         }
     }
 }

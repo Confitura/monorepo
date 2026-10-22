@@ -14,6 +14,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import pl.confitura.jelatyna.news.NewsEntry;
+import pl.confitura.jelatyna.news.NewsEntryRepository;
 import pl.confitura.jelatyna.partner.Partner;
 import pl.confitura.jelatyna.partner.PartnerRepository;
 import pl.confitura.jelatyna.user.User;
@@ -30,6 +32,7 @@ public class ResourceStorage {
     private final ResourceConfigurationProperties properties;
     private final UserRepository repository;
     private final PartnerRepository partnerRepository;
+    private final NewsEntryRepository newsEntryRepository;
 
     @Transactional
     @PreAuthorize("@security.isOwner(#userId)")
@@ -47,6 +50,14 @@ public class ResourceStorage {
         Partner partner = partnerRepository.findById(id);
         partner.setLogo(doStore(id, file, "photos"));
         partnerRepository.save(partner);
+    }
+
+    @Transactional
+    @PreAuthorize("@security.isAdmin()")
+    void storeNewsEntryCover(MultipartFile file, String id) throws IOException {
+        NewsEntry entry = newsEntryRepository.findById(id);
+        entry.setCover(doStore(id, file, "photos"));
+        newsEntryRepository.save(entry);
     }
 
     private String doStore(String fileName, MultipartFile file, String... paths) throws IOException {

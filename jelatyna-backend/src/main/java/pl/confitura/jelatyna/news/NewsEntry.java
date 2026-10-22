@@ -34,4 +34,8 @@ public class NewsEntry {
     private Instant date;
 
     private boolean published;
+
+    // Where the resources upload stored the cover image; null when the entry has none.
+    @Column(columnDefinition = "text")
+    private String cover;
 }

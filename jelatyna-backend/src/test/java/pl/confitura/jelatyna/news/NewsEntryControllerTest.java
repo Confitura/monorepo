@@ -1,21 +1,29 @@
 package pl.confitura.jelatyna.news;
 
 import jakarta.persistence.EntityManager;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
 import org.springframework.transaction.support.TransactionTemplate;
 import pl.confitura.jelatyna.BaseIntegrationTest;
+import pl.confitura.jelatyna.resource.ResourceConfigurationProperties;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.Instant;
 import java.util.List;
 
 import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -31,6 +39,9 @@ class NewsEntryControllerTest extends BaseIntegrationTest {
     @Autowired
     private TransactionTemplate txTemplate;
 
+    @Autowired
+    private ResourceConfigurationProperties resources;
+
     private NewsEntry tickets;
     private NewsEntry draft;
 
@@ -41,6 +52,13 @@ class NewsEntryControllerTest extends BaseIntegrationTest {
         tickets = persist("Tickets", "tickets", "2025-09-12T08:11:12Z", true);
         draft = persist("Draft", "draft", "2026-10-01T10:00:00Z", false);
         persist("Scheduled", "scheduled", "2099-01-01T00:00:00Z", true);
+    }
+
+    @AfterEach
+    void removeUploadedCovers() throws IOException {
+        for (String extension : List.of("png", "jpg")) {
+            Files.deleteIfExists(Path.of(resources.folder(), "photos", draft.getId() + "." + extension));
+        }
     }
 
     @Test
@@ -68,7 +86,7 @@ class NewsEntryControllerTest extends BaseIntegrationTest {
     @Test
     void createsAnEntrySluggedFromItsTitle() throws Exception {
         Instant date = Instant.parse("2026-10-21T10:15:30Z");
-        create(new NewsEntryRequest("Agenda is out", null, "**Read** it", date, true))
+        create(new NewsEntryRequest("Agenda is out", null, "**Read** it", date, true, null))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").exists())
                 .andExpect(jsonPath("$.title", is("Agenda is out")))
@@ -112,15 +130,15 @@ class NewsEntryControllerTest extends BaseIntegrationTest {
     @Test
     void refusesAnEntryWithoutTitleBodyOrDate() throws Exception {
         Instant date = Instant.parse("2026-10-21T10:00:00Z");
-        create(new NewsEntryRequest(null, "no-title", "Body", date, true)).andExpect(status().isBadRequest());
-        create(new NewsEntryRequest("No body", null, null, date, true)).andExpect(status().isBadRequest());
-        create(new NewsEntryRequest("No date", null, "Body", null, true)).andExpect(status().isBadRequest());
+        create(new NewsEntryRequest(null, "no-title", "Body", date, true, null)).andExpect(status().isBadRequest());
+        create(new NewsEntryRequest("No body", null, null, date, true, null)).andExpect(status().isBadRequest());
+        create(new NewsEntryRequest("No date", null, "Body", null, true, null)).andExpect(status().isBadRequest());
     }
 
     @Test
     void updatesAnEntry() throws Exception {
         Instant date = Instant.parse("2026-11-02T09:30:00Z");
-        update(draft, new NewsEntryRequest("Agenda", "agenda-2026", "**New** body", date, true))
+        update(draft, new NewsEntryRequest("Agenda", "agenda-2026", "**New** body", date, true, null))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(draft.getId())))
                 .andExpect(jsonPath("$.title", is("Agenda")))
@@ -140,7 +158,7 @@ class NewsEntryControllerTest extends BaseIntegrationTest {
 
     @Test
     void aNewTitleKeepsTheSlugAndNullFieldsStayUnchanged() throws Exception {
-        update(tickets, new NewsEntryRequest("Tickets are sold out", null, null, null, null))
+        update(tickets, new NewsEntryRequest("Tickets are sold out", null, null, null, null, null))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.title", is("Tickets are sold out")))
                 .andExpect(jsonPath("$.slug", is("tickets")))
@@ -157,6 +175,29 @@ class NewsEntryControllerTest extends BaseIntegrationTest {
 
         mockMvc.perform(get("/news-entries/" + tickets.getId()).with(admin()))
                 .andExpect(jsonPath("$.slug", is("tickets")));
+    }
+
+    @Test
+    void anUploadedCoverReplacesTheOneBefore() throws Exception {
+        uploadCover(draft, "cover.png").andExpect(status().isOk());
+        mockMvc.perform(get("/news-entries/" + draft.getId()).with(admin()))
+                .andExpect(jsonPath("$.cover", endsWith("/photos/" + draft.getId() + ".png")));
+
+        uploadCover(draft, "cover.JPG").andExpect(status().isOk());
+        mockMvc.perform(get("/news-entries/" + draft.getId()).with(admin()))
+                .andExpect(jsonPath("$.cover", endsWith("/photos/" + draft.getId() + ".jpg")));
+    }
+
+    @Test
+    void anUpdateKeepsTheCoverUnlessItRemovesIt() throws Exception {
+        uploadCover(draft, "cover.png");
+        update(draft, new NewsEntryRequest("Draft again", null, null, null, null, null))
+                .andExpect(jsonPath("$.cover", endsWith("/photos/" + draft.getId() + ".png")));
+
+        update(draft, new NewsEntryRequest(null, null, null, null, null, true))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.title", is("Draft again")))
+                .andExpect(jsonPath("$.cover").value(nullValue()));
     }
 
     @Test
@@ -181,19 +222,30 @@ class NewsEntryControllerTest extends BaseIntegrationTest {
             mockMvc.perform(put(draftUrl).with(nonAdmin).contentType(APPLICATION_JSON).content(body))
                     .andExpect(status().isForbidden());
             mockMvc.perform(delete(draftUrl).with(nonAdmin)).andExpect(status().isForbidden());
+            mockMvc.perform(multipart("/resources" + draftUrl).file(cover("defaced.png")).with(nonAdmin))
+                    .andExpect(status().isForbidden());
         }
 
         mockMvc.perform(get("/news-entries").with(admin()))
-                .andExpect(jsonPath("$[*].title", contains("Scheduled", "Draft", "Tickets")));
+                .andExpect(jsonPath("$[*].title", contains("Scheduled", "Draft", "Tickets")))
+                .andExpect(jsonPath("$[1].cover").value(nullValue()));
     }
 
     private static NewsEntryRequest titled(String title, String slug) {
-        return new NewsEntryRequest(title, slug, "Body", Instant.parse("2026-10-21T10:00:00Z"), true);
+        return new NewsEntryRequest(title, slug, "Body", Instant.parse("2026-10-21T10:00:00Z"), true, null);
     }
 
     private ResultActions create(NewsEntryRequest request) throws Exception {
         return mockMvc.perform(post("/news-entries").with(admin())
                 .contentType(APPLICATION_JSON).content(json(request)));
+    }
+
+    private ResultActions uploadCover(NewsEntry entry, String fileName) throws Exception {
+        return mockMvc.perform(multipart("/resources/news-entries/" + entry.getId()).file(cover(fileName)).with(admin()));
+    }
+
+    private static MockMultipartFile cover(String fileName) {
+        return new MockMultipartFile("file", fileName, "image/png", new byte[]{1, 2, 3});
     }
 
     private ResultActions update(NewsEntry entry, NewsEntryRequest request) throws Exception {

@@ -63,4 +63,24 @@ public class ResourceController {
         storage.storePartnerLogo(file, id);
     }
 
+    @PostMapping("/news-entries/{id}")
+    @Operation(
+            summary = "Store news entry cover",
+            description = "Upload a Multipart file for the news entry's cover image, replacing any it had",
+            requestBody = @RequestBody(
+                    description = "File to upload",
+                    content = @Content(
+                            mediaType = "multipart/form-data",
+                            schemaProperties = @SchemaProperty(
+                                    name = "file",
+                                    schema = @Schema(type = "string", format = "binary")
+                            )
+                    )
+            ),
+            parameters = @Parameter(name = "id", description = "ID of the news entry", required = true)
+    )
+    public void storeNewsEntryCover(@RequestParam("file") MultipartFile file, @PathVariable String id) throws IOException {
+        storage.storeNewsEntryCover(file, id);
+    }
+
 }
