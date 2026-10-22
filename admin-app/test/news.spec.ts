@@ -19,6 +19,8 @@ const entries = [
 
 const api = vi.hoisted(() => ({
   getAllNewsEntries: vi.fn(),
+  createNewsEntry: vi.fn(),
+  updateNewsEntry: vi.fn(),
   deleteNewsEntry: vi.fn(),
 }))
 
@@ -46,12 +48,15 @@ describe('admin news page', () => {
     vi.useFakeTimers({ toFake: ['Date'] })
     vi.setSystemTime(new Date('2026-10-22T12:00:00Z'))
     api.getAllNewsEntries.mockResolvedValue({ data: entries, status: 200 })
+    api.createNewsEntry.mockResolvedValue({ data: {}, status: 200 })
+    api.updateNewsEntry.mockResolvedValue({ data: {}, status: 200 })
     api.deleteNewsEntry.mockResolvedValue({ status: 204 })
   })
 
   afterEach(() => {
     vi.useRealTimers()
     vi.clearAllMocks()
+    document.body.innerHTML = ''
   })
 
   it('lists entries in the order the API returns them, newest first', async () => {
@@ -89,5 +94,95 @@ describe('admin news page', () => {
     ;(wrapper.vm as any).confirmDelete({ id: 'n3', title: 'Unfinished' })
     await flushPromises()
     expect(api.deleteNewsEntry).toHaveBeenCalledWith({ path: { id: 'n3' } })
+  })
+
+  it('opens the create dialog with the date defaulting to now in Warsaw time and no slug', async () => {
+    const wrapper = mountPage()
+    await flushPromises()
+    const vm = wrapper.vm as any
+    vm.openCreate()
+    // 12:00 UTC on 22 October is 14:00 in Warsaw (CEST)
+    expect(vm.dateInput).toBe('2026-10-22T14:00')
+    expect(vm.form.slug).toBe('')
+    expect(vm.form.published).toBe(false)
+  })
+
+  it('creates an entry, leaving the slug out so the server generates it', async () => {
+    const wrapper = mountPage()
+    await flushPromises()
+    const vm = wrapper.vm as any
+    vm.openCreate()
+    vm.form.title = 'Big news'
+    vm.form.body = '**Hello**'
+    vm.form.published = true
+    vm.dateInput = '2026-11-02T08:15'
+    vm.save()
+    await flushPromises()
+    // 08:15 in Warsaw on 2 November is CET (UTC+1)
+    expect(api.createNewsEntry).toHaveBeenCalledWith({
+      body: { title: 'Big news', slug: undefined, body: '**Hello**', date: '2026-11-02T07:15:00.000Z', published: true },
+    })
+  })
+
+  it('sends a chosen slug when creating', async () => {
+    const wrapper = mountPage()
+    await flushPromises()
+    const vm = wrapper.vm as any
+    vm.openCreate()
+    vm.form.title = 'Big news'
+    vm.form.slug = 'my-slug'
+    vm.save()
+    await flushPromises()
+    expect(api.createNewsEntry.mock.calls[0][0].body.slug).toBe('my-slug')
+  })
+
+  it('does not save without a title', async () => {
+    const wrapper = mountPage()
+    await flushPromises()
+    const vm = wrapper.vm as any
+    vm.openCreate()
+    vm.save()
+    await flushPromises()
+    expect(api.createNewsEntry).not.toHaveBeenCalled()
+  })
+
+  it('edits an entry, showing its date in Warsaw time and sending it back as an instant', async () => {
+    const wrapper = mountPage()
+    await flushPromises()
+    const vm = wrapper.vm as any
+    vm.openEdit({ ...entries[1], body: 'Text' })
+    expect(vm.dateInput).toBe('2026-06-15T12:30')
+    vm.form.title = 'Hello again'
+    vm.save()
+    await flushPromises()
+    expect(api.updateNewsEntry).toHaveBeenCalledWith({
+      path: { id: 'n2' },
+      body: { title: 'Hello again', slug: 'hello-world', body: 'Text', date: '2026-06-15T10:30:00.000Z', published: true },
+    })
+  })
+
+  it('warns that shared links will break when an existing entry slug is changed', async () => {
+    const wrapper = mountPage()
+    await flushPromises()
+    const vm = wrapper.vm as any
+    vm.openEdit(entries[1])
+    await flushPromises()
+    expect(document.body.textContent).not.toContain('shared links will stop working')
+    vm.form.slug = 'new-slug'
+    await flushPromises()
+    expect(document.body.textContent).toContain('shared links will stop working')
+    vm.form.slug = 'hello-world'
+    await flushPromises()
+    expect(document.body.textContent).not.toContain('shared links will stop working')
+  })
+
+  it('does not warn about the slug when creating', async () => {
+    const wrapper = mountPage()
+    await flushPromises()
+    const vm = wrapper.vm as any
+    vm.openCreate()
+    vm.form.slug = 'fresh'
+    await flushPromises()
+    expect(document.body.textContent).not.toContain('shared links will stop working')
   })
 })
