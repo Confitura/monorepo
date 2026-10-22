@@ -13,10 +13,16 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.tuple;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.not;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static pl.confitura.jelatyna.infrastructure.security.SecurityHelper.admin;
@@ -75,18 +81,103 @@ class CurrentEditionAgendaTest extends BaseIntegrationTest {
     }
 
     @Test
-    void theCurrentEditionsDayAndItsAgendaAreShown() throws Exception {
-        mockMvc.perform(get("/days/current-day").with(admin())).andExpect(status().isOk());
-        mockMvc.perform(get("/agenda/current-day/entries").with(admin()))
+    void aPastEditionsDayCannotBeChanged() throws Exception {
+        mockMvc.perform(put("/days/past-day").with(admin()).contentType(APPLICATION_JSON)
+                        .content("""
+                                {"label":"Friday","date":"2026-09-18","displayOrder":7}"""))
+                .andExpect(status().isNotFound());
+        mockMvc.perform(delete("/days/past-day").with(admin())).andExpect(status().isNotFound());
+        // Day ids are global, so creating a Day with a past Edition's Day id would take that Day over.
+        mockMvc.perform(post("/days").with(admin()).contentType(APPLICATION_JSON)
+                        .content("""
+                                {"id":"past-day","label":"Friday","date":"2026-09-18","displayOrder":7}"""))
+                .andExpect(status().isConflict());
+
+        Day pastDay = dayRepository.findById("past-day");
+        assertThat(pastDay.getLabel()).isEqualTo("past-day");
+        assertThat(pastDay.getEdition().isCurrent()).isFalse();
+    }
+
+    @Test
+    void aPastEditionsRoomsAndTimeSlotsCannotBeChanged() throws Exception {
+        mockMvc.perform(post("/agenda/past-day/rooms").with(admin()).contentType(APPLICATION_JSON)
+                        .content("{\"label\":\"Side Room\"}"))
+                .andExpect(status().isNotFound());
+        mockMvc.perform(put("/agenda/rooms/past-day-room").with(admin()).contentType(APPLICATION_JSON)
+                        .content("{\"label\":\"Big Hall\"}"))
+                .andExpect(status().isNotFound());
+        mockMvc.perform(delete("/agenda/rooms/past-day-room").with(admin())).andExpect(status().isNotFound());
+        mockMvc.perform(post("/agenda/past-day/time-slots").with(admin()).contentType(APPLICATION_JSON)
+                        .content("{\"start\":\"11:30\",\"end\":\"12:30\"}"))
+                .andExpect(status().isNotFound());
+        mockMvc.perform(put("/agenda/past-day/time-slots/0").with(admin()).contentType(APPLICATION_JSON)
+                        .content("{\"start\":\"09:15\"}"))
+                .andExpect(status().isNotFound());
+        mockMvc.perform(delete("/agenda/past-day/time-slots/0").with(admin())).andExpect(status().isNotFound());
+
+        assertThat(roomRepository.findByDayId("past-day")).extracting(Room::getLabel).containsExactly("Main Hall");
+        assertThat(timeSlotsRepository.findByIdDayId("past-day")).extracting(TimeSlot::getLabel).containsExactly("09:00 - 10:00");
+    }
+
+    @Test
+    void aPastEditionsEntriesCannotBeChanged() throws Exception {
+        mockMvc.perform(post("/agenda/entries").with(admin()).contentType(APPLICATION_JSON)
+                        .content("""
+                                {"dayId":"past-day","timeSlotIndex":0,"roomId":"past-day-room","label":"Lunch"}"""))
+                .andExpect(status().isNotFound());
+        mockMvc.perform(put("/agenda/entries/" + pastEntry.getId()).with(admin()).contentType(APPLICATION_JSON)
+                        .content("{\"label\":\"Lunch\"}"))
+                .andExpect(status().isNotFound());
+        mockMvc.perform(put("/agenda/entries/" + pastEntry.getId() + "/slot").with(admin()).contentType(APPLICATION_JSON)
+                        .content("{\"dayId\":\"current-day\",\"timeSlotIndex\":0}"))
+                .andExpect(status().isNotFound());
+        mockMvc.perform(delete("/agenda/entries/" + pastEntry.getId()).with(admin())).andExpect(status().isNotFound());
+
+        assertThat(agendaRepository.findByTimeSlotIdDayId("past-day"))
+                .extracting(AgendaEntry::getId, AgendaEntry::getLabel)
+                .containsExactly(tuple(pastEntry.getId(), "Keynote"));
+    }
+
+    @Test
+    void theCurrentEditionsEntriesCannotReachAPastEditionsDay() throws Exception {
+        mockMvc.perform(put("/agenda/entries/" + currentEntry.getId() + "/slot").with(admin()).contentType(APPLICATION_JSON)
+                        .content("{\"dayId\":\"past-day\",\"timeSlotIndex\":0}"))
+                .andExpect(status().isNotFound());
+        // A past Edition's room is unknown, and an unknown room leaves the entry without one.
+        mockMvc.perform(put("/agenda/entries/" + currentEntry.getId()).with(admin()).contentType(APPLICATION_JSON)
+                        .content("{\"label\":\"Keynote\",\"roomId\":\"past-day-room\"}"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(1)));
-        mockMvc.perform(get("/agenda/entries/" + currentEntry.getId()).with(admin())).andExpect(status().isOk());
-        mockMvc.perform(get("/agenda/current-day/rooms").with(admin()))
+                .andExpect(jsonPath("$.roomId").doesNotExist());
+        mockMvc.perform(post("/agenda/entries").with(admin()).contentType(APPLICATION_JSON)
+                        .content("""
+                                {"dayId":"current-day","timeSlotIndex":0,"roomId":"past-day-room","label":"Lunch"}"""))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.roomId").doesNotExist());
+
+        assertThat(agendaRepository.findByRoomId("past-day-room")).extracting(AgendaEntry::getId).containsExactly(pastEntry.getId());
+    }
+
+    @Test
+    void theRoomsEndpointsShowAndChangeOnlyTheCurrentEditionsRooms() throws Exception {
+        mockMvc.perform(get("/rooms").with(admin()))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(1)));
-        mockMvc.perform(get("/agenda/current-day/time-slots").with(admin()))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(1)));
+                .andExpect(jsonPath("$[*].id", hasItem("current-day-room")))
+                .andExpect(jsonPath("$[*].id", not(hasItem("past-day-room"))));
+        mockMvc.perform(get("/rooms/past-day-room").with(admin())).andExpect(status().isNotFound());
+        mockMvc.perform(post("/rooms").with(admin()).contentType(APPLICATION_JSON)
+                        .content("""
+                                {"id":"new-room","label":"Side Room","displayOrder":2,"day":{"id":"past-day"}}"""))
+                .andExpect(status().isNotFound());
+        // Room ids are global too, so saving a past Edition's room id would take that room over.
+        mockMvc.perform(post("/rooms").with(admin()).contentType(APPLICATION_JSON)
+                        .content("""
+                                {"id":"past-day-room","label":"Side Room","displayOrder":2,"day":{"id":"current-day"}}"""))
+                .andExpect(status().isConflict());
+        mockMvc.perform(delete("/rooms/past-day-room").with(admin())).andExpect(status().isNotFound());
+
+        assertThat(roomRepository.findByDayId("past-day"))
+                .extracting(Room::getId, Room::getLabel)
+                .containsExactly(tuple("past-day-room", "Main Hall"));
     }
 
     // A Day with one room and one time slot, and an entry scheduled in them.
