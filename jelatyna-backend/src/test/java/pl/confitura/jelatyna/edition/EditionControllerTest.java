@@ -37,6 +37,7 @@ class EditionControllerTest extends BaseIntegrationTest {
     @Autowired
     private EditionRepository editionRepository;
 
+    private Edition current;
     private Edition past;
     private Edition next;
 
@@ -44,6 +45,7 @@ class EditionControllerTest extends BaseIntegrationTest {
     @BeforeEach
     void editions() {
         removeEveryEditionButTheCurrentOne();
+        current = editionRepository.findCurrent();
         past = persist(edition(2025));
         next = persist(edition(2027).setC4pStart(Instant.parse("2027-02-01T00:00:00Z"))
                 .setC4pEnd(Instant.parse("2027-05-01T00:00:00Z")));
@@ -58,6 +60,12 @@ class EditionControllerTest extends BaseIntegrationTest {
             entityManager.createQuery("delete from Day d where d.edition in " + notCurrent).executeUpdate();
             entityManager.createQuery("delete from Edition e where e.current = false").executeUpdate();
         });
+    }
+
+    // Other tests rely on the Current Edition's C4P period, which an update here changes.
+    @AfterEach
+    void restoreTheCurrentEdition() {
+        txTemplate.executeWithoutResult(status -> entityManager.merge(current));
     }
 
     @Test
@@ -137,6 +145,75 @@ class EditionControllerTest extends BaseIntegrationTest {
     }
 
     @Test
+    void updatesAnEditionsNameDatesAndC4pPeriod() throws Exception {
+        update(past, new EditionRequest(2025, "Confitura XV", Instant.parse("2025-06-27T07:00:00Z"),
+                LocalDate.parse("2025-06-28"), Instant.parse("2025-01-10T00:00:00Z"), Instant.parse("2025-03-10T00:00:00Z")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", is(past.getId())))
+                .andExpect(jsonPath("$.year", is(2025)))
+                .andExpect(jsonPath("$.current", is(false)));
+
+        mockMvc.perform(get("/editions/" + past.getId()).with(admin()))
+                .andExpect(jsonPath("$.name", is("Confitura XV")))
+                .andExpect(jsonPath("$.conferenceStart", is("2025-06-27T07:00:00Z")))
+                .andExpect(jsonPath("$.lastDay", is("2025-06-28")))
+                .andExpect(jsonPath("$.c4pStart", is("2025-01-10T00:00:00Z")))
+                .andExpect(jsonPath("$.c4pEnd", is("2025-03-10T00:00:00Z")))
+                .andExpect(jsonPath("$.current", is(false)));
+    }
+
+    @Test
+    void anUpdateWithoutAC4pPeriodClosesIt() throws Exception {
+        update(next, inYear(2027)).andExpect(status().isOk());
+
+        mockMvc.perform(get("/editions/" + next.getId()).with(admin()))
+                .andExpect(jsonPath("$.c4pStart", nullValue()))
+                .andExpect(jsonPath("$.c4pEnd", nullValue()));
+    }
+
+    @Test
+    void updatingTheCurrentEditionsDatesKeepsItCurrent() throws Exception {
+        update(current, new EditionRequest(2026, current.getName(), Instant.parse("2026-06-25T07:00:00Z"),
+                LocalDate.parse("2026-06-26"), Instant.parse("2026-01-01T00:00:00Z"), Instant.parse("2026-03-01T00:00:00Z")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.current", is(true)));
+
+        mockMvc.perform(get("/editions").with(admin()))
+                .andExpect(jsonPath("$[*].current", contains(false, true, false)))
+                .andExpect(jsonPath("$[1].conferenceStart", is("2026-06-25T07:00:00Z")))
+                .andExpect(jsonPath("$[1].c4pEnd", is("2026-03-01T00:00:00Z")));
+    }
+
+    @Test
+    void refusesAnUpdateChangingTheYearOrOfAnUnknownEdition() throws Exception {
+        update(past, inYear(2024)).andExpect(status().isBadRequest());
+        update(past, new EditionRequest(null, "Confitura 2025", Instant.parse("2025-09-22T07:00:00Z"),
+                LocalDate.parse("2025-09-23"), null, null)).andExpect(status().isBadRequest());
+        mockMvc.perform(put("/editions/does-not-exist").with(admin()).contentType(APPLICATION_JSON).content(json(inYear(2025))))
+                .andExpect(status().isNotFound());
+
+        mockMvc.perform(get("/editions").with(admin()))
+                .andExpect(jsonPath("$[*].year", contains(2027, 2026, 2025)));
+    }
+
+    @Test
+    void refusesAnUpdateWithInvalidDatesOrWithoutAName() throws Exception {
+        Instant start = Instant.parse("2025-09-22T07:00:00Z");
+        LocalDate lastDay = LocalDate.parse("2025-09-23");
+        Instant c4p = Instant.parse("2025-02-01T00:00:00Z");
+        update(past, new EditionRequest(2025, "Renamed", start, lastDay, c4p, c4p)).andExpect(status().isBadRequest());
+        update(past, new EditionRequest(2025, "Renamed", start, lastDay, c4p, c4p.minusSeconds(1)))
+                .andExpect(status().isBadRequest());
+        // The conference is in Warsaw, where 23:30 UTC on the 21st is already the 22nd.
+        update(past, new EditionRequest(2025, "Renamed", Instant.parse("2025-09-21T23:30:00Z"), LocalDate.parse("2025-09-21"),
+                null, null)).andExpect(status().isBadRequest());
+        update(past, new EditionRequest(2025, null, start, lastDay, null, null)).andExpect(status().isBadRequest());
+
+        mockMvc.perform(get("/editions/" + past.getId()).with(admin()))
+                .andExpect(jsonPath("$.name", is("Confitura 2025")));
+    }
+
+    @Test
     void deletesAnEdition() throws Exception {
         mockMvc.perform(delete("/editions/" + past.getId()).with(admin()))
                 .andExpect(status().isNoContent());
@@ -173,6 +250,8 @@ class EditionControllerTest extends BaseIntegrationTest {
             mockMvc.perform(get(pastUrl).with(nonAdmin)).andExpect(status().isForbidden());
             mockMvc.perform(post("/editions").with(nonAdmin).contentType(APPLICATION_JSON).content(json(inYear(2028))))
                     .andExpect(status().isForbidden());
+            mockMvc.perform(put(pastUrl).with(nonAdmin).contentType(APPLICATION_JSON).content(json(inYear(2025))))
+                    .andExpect(status().isForbidden());
             mockMvc.perform(delete(pastUrl).with(nonAdmin)).andExpect(status().isForbidden());
         }
 
@@ -197,6 +276,11 @@ class EditionControllerTest extends BaseIntegrationTest {
 
     private ResultActions create(EditionRequest request) throws Exception {
         return mockMvc.perform(post("/editions").with(admin()).contentType(APPLICATION_JSON).content(json(request)));
+    }
+
+    private ResultActions update(Edition edition, EditionRequest request) throws Exception {
+        return mockMvc.perform(put("/editions/" + edition.getId()).with(admin()).contentType(APPLICATION_JSON)
+                .content(json(request)));
     }
 
     private <T> T persist(T entity) {

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,10 +18,12 @@ import pl.confitura.jelatyna.presentation.PresentationRepository;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Lets admins manage Editions; every endpoint is admin-only. None makes an Edition current: the backend
- * needs exactly one Current Edition, so a new Edition is never current and the current one is never deleted.
+ * needs exactly one Current Edition, so a new Edition is never current, an update keeps whether it is, and the
+ * current one is never deleted.
  */
 @RestController
 @RequestMapping("/editions")
@@ -63,6 +66,27 @@ public class EditionController {
                 .setC4pStart(request.c4pStart())
                 .setC4pEnd(request.c4pEnd());
         return ResponseEntity.status(HttpStatus.CREATED).body(EditionDto.from(repository.save(edition)));
+    }
+
+    /**
+     * Replaces the name, conference dates and C4P period, so a null C4P date closes it. The year can't change,
+     * and neither does whether the Edition is current.
+     */
+    @PutMapping("/{id}")
+    public ResponseEntity<EditionDto> updateEdition(@PathVariable String id, @RequestBody EditionRequest request) {
+        Edition edition = repository.findById(id);
+        if (edition == null) {
+            return ResponseEntity.notFound().build();
+        }
+        if (!Objects.equals(request.year(), edition.getYear()) || !isValid(request)) {
+            return ResponseEntity.badRequest().build();
+        }
+        edition.setName(request.name())
+                .setConferenceStart(request.conferenceStart())
+                .setLastDay(request.lastDay())
+                .setC4pStart(request.c4pStart())
+                .setC4pEnd(request.c4pEnd());
+        return ResponseEntity.ok(EditionDto.from(repository.save(edition)));
     }
 
     /** Refused while the Edition is current or owns a talk, workshop or agenda Day. */
