@@ -1,5 +1,5 @@
 // @vitest-environment nuxt
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
 
 // Mock the archive/api fetch composable used by pages and PageFragment
@@ -40,11 +40,17 @@ const VOLUNTEERS = [
   { id: 'v2', name: 'Vol Two', photo: undefined },
 ]
 
+// edition.json as the backend dumps it; a test sets `edition` to null to simulate the file being missing
+const EDITION = { year: 2026, name: 'Confitura 2026', conferenceStart: '2026-09-25T09:00:00+02:00', lastDay: '2026-09-26' }
+const dumped = vi.hoisted(() => ({ edition: null as Record<string, unknown> | null }))
+dumped.edition = EDITION
+
 vi.mock('~/composables/useAPIFetch', async () => {
   const { ref } = await import('vue')
   const createFetch = (path?: string) => {
     const data = ref(
       path === '/faq/entries.json' ? FAQ_ENTRIES
+      : path === '/edition.json' ? dumped.edition
       : path === '/news.json' ? NEWS
       : path === '/partners/list.json' ? PARTNERS
       : path === '/users/123/public.json' ? SPEAKER
@@ -90,6 +96,7 @@ import SpeakersDetailPage from '~/pages/speakers/[id].vue'
 import SchedulePage from '~/pages/schedule/[[dayId]].vue'
 import ScheduleWorkshopsPage from '~/pages/schedule/workshops/[[dayId]].vue'
 import AgendaFlowPreviewPage from '~/pages/preview/agenda-flow.vue'
+import TheTimer from '~/components/TheTimer.vue'
 
 describe('pages render without errors', () => {
   it('renders the home page', async () => {
@@ -302,5 +309,52 @@ describe('pages render without errors', () => {
     const labelId = wrapper.find('.agenda-flow__phase-label').attributes('id')
     expect(lists[0].attributes('aria-labelledby')).toBe(labelId)
     expect(wrapper.find('abbr[title="Call for Papers"]').text()).toBe('C4P')
+  })
+
+  describe('with the Edition published as edition.json', () => {
+    afterEach(() => { dumped.edition = EDITION })
+
+    it('words the conference dates in the banner and the partners invitation', async () => {
+      const wrapper = await mountSuspended(IndexPage)
+      expect(wrapper.find('.banner .info__long p').text()).toBe('Warsaw | September 25–26, 2026')
+      expect(wrapper.find('.partners .body').text()).toContain('Confitura 2026 is coming on September 25–26, and')
+    })
+
+    it('shows one date for a one-day conference', async () => {
+      dumped.edition = { ...EDITION, lastDay: '2026-09-25' }
+      const wrapper = await mountSuspended(IndexPage)
+      expect(wrapper.find('.banner .info__long p').text()).toBe('Warsaw | September 25, 2026')
+      expect(wrapper.find('.partners .body').text()).toContain('Confitura 2026 is coming on September 25, and')
+    })
+
+    it('counts down to the conference start', async () => {
+      vi.useFakeTimers({ toFake: ['Date'] })
+      vi.setSystemTime(new Date('2026-09-23T06:58:57Z')) // 2 days 1 minute 3 seconds before 09:00 in Warsaw (07:00Z)
+      const wrapper = await mountSuspended(TheTimer)
+      vi.useRealTimers()
+      expect(wrapper.findAll('.timer-value').map((v) => v.text())).toEqual(['02', '00', '01', '03'])
+    })
+  })
+
+  describe('without edition.json', () => {
+    beforeEach(() => { dumped.edition = null })
+    afterEach(() => { dumped.edition = EDITION })
+
+    it('hides the banner date line but keeps the venue', async () => {
+      const wrapper = await mountSuspended(IndexPage)
+      expect(wrapper.findAll('.banner .info__long p').map((p) => p.text())).toEqual(['ADN Conference Center, Grzybowska 56'])
+    })
+
+    it('leaves the dates out of the partners invitation', async () => {
+      const wrapper = await mountSuspended(IndexPage)
+      const text = wrapper.find('.partners .body').text()
+      expect(text).not.toContain('is coming on')
+      expect(text).toContain('currently working on delivering')
+    })
+
+    it('hides the countdown', async () => {
+      const wrapper = await mountSuspended(TheTimer)
+      expect(wrapper.find('.timer').exists()).toBe(false)
+    })
   })
 })

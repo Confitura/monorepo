@@ -1,4 +1,8 @@
 <script setup lang="ts">
+const edition = useEdition()
+const dates = computed(() =>
+  edition.value ? formatConferenceDates(edition.value.conferenceStart, edition.value.lastDay, { withYear: false }) : null
+)
 </script>
 <template>
   <Box color="white" class="partners">
@@ -6,7 +10,9 @@
       <h2 class="header">Partner with us</h2>
       <div class="main-info">
         <div class="body">
-          Confitura 2026 is coming on <b>September 25–26</b>, and we’re currently working on delivering another
+          <template v-if="edition">{{ edition.name }} is coming on <b>{{ dates }}</b>, and we’re</template>
+          <template v-else>We’re</template>
+          currently working on delivering another
           outstanding event for our growing community. Now is the perfect moment to join us as a partner and become part
           of something truly special.
           <br/>

@@ -1,5 +1,5 @@
 <template>
-  <div class="timer" :key="seconds">
+  <div v-if="edition" class="timer" :key="seconds">
     <div class="timer-part">
       <span class="timer-value">{{ padValue(days) }}</span>
       <span class="timer-unit">days</span>
@@ -23,11 +23,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import dayjs from 'dayjs'
 
-// Target date for the countdown
-const start = ref(dayjs('2026-09-25T09:00:00')) // Using the date from MainBanner.vue (June 24, 2025)
+// The countdown targets the Current Edition's conference start; without edition.json it is hidden.
+const edition = useEdition()
+const start = computed(() => dayjs(edition.value?.conferenceStart))
 const now = ref(dayjs())
 const days = ref(0)
 const hours = ref(0)
