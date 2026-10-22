@@ -18,24 +18,24 @@
   "dependencies": {
     "@nuxtjs/plausible": "^4.0.0",
     "@nuxtjs/sitemap": "^8.6.2",
-    "@pinia/nuxt": "^1.0.2",
+    "@pinia/nuxt": "^1.0.3",
     "@plausible-analytics/tracker": "^0.4.6",
     "dayjs": "^1.11.23",
     "marked": "^18.1.1",
     "modern-normalize": "^3.0.1",
-    "nuxt": "^4.6.1",
-    "pinia": "^4.0.3",
-    "vue": "^3.5.43",
+    "nuxt": "^4.6.2",
+    "pinia": "^4.1.0",
+    "vue": "^3.5.44",
     "vue-router": "^5.4.0",
     "vue3-google-map": "^0.27.2"
   },
   "devDependencies": {
-    "@nuxt/test-utils": "4.3.3",
+    "@nuxt/test-utils": "4.3.4",
     "@vue/test-utils": "^2.5.1",
-    "happy-dom": "^21.0.1",
-    "playwright-core": "^1.64.0",
-    "sass-embedded": "^1.105.1",
-    "vitest": "^5.0.4"
+    "happy-dom": "^21.0.3",
+    "playwright-core": "^1.64.1",
+    "sass-embedded": "^1.105.2",
+    "vitest": "^5.0.5"
   },
   "pnpm": {
     "overrides": {
