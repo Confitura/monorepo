@@ -27,6 +27,12 @@ public class Security {
         return isAdmin() || userId.equals(getUserId());
     }
 
+    // Lets the talk and workshop endpoints each refuse the other kind, admins included: their
+    // updates write different fields. Says nothing about ownership: combine it with an owner check.
+    public boolean isWorkshop(String presentationId) {
+        return presentationRepository.findById(presentationId).isWorkshop();
+    }
+
     public boolean presentationOwnedByUser(String presentationId) {
         if (isAdmin()) {
             return true;
