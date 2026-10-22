@@ -14,6 +14,7 @@ public interface VoteRepository extends Repository<Vote, String> {
     @Query("SELECT v FROM Vote v WHERE v.presentation.edition.current = true")
     Iterable<Vote> findAllInCurrentEdition();
 
-    @Query("SELECT v FROM Vote v WHERE v.token = :token order by v.order")
-    List<Vote> findAllForToken(String token);
+    // A voter keeps their browser's token across years, so a past Edition's votes must not count.
+    @Query("SELECT v FROM Vote v WHERE v.token = :token and v.presentation.edition.current = true order by v.order")
+    List<Vote> findAllForTokenInCurrentEdition(String token);
 }

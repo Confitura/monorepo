@@ -27,7 +27,8 @@ public interface PresentationRepository extends Repository<Presentation, String>
     @PreAuthorize("@security.isAdmin()")
     List<Presentation> findAll();
 
-    @Query("SELECT p FROM Presentation p")
+    // Vote-for-papers covers only the Current Edition's talks (ADR-0004).
+    @Query("SELECT p FROM Presentation p WHERE p.edition.current = true")
     Iterable<Presentation> findAllForV4p();
 
     @Query("SELECT p FROM Presentation p " +

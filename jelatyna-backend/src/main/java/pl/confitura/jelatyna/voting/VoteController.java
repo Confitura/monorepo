@@ -11,6 +11,7 @@ import jakarta.validation.Valid;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,7 +47,7 @@ public class VoteController {
     @RequestMapping(value = "/votes/start/{token}", method = RequestMethod.POST)
     @Transactional
     public ResponseEntity<List<InlineVote>> start(@PathVariable String token) {
-        List<Vote> votes = voteRepository.findAllForToken(token);
+        List<Vote> votes = voteRepository.findAllForTokenInCurrentEdition(token);
         if (votes.isEmpty()) {
             votes = generateVotes(token);
         }
@@ -64,13 +65,16 @@ public class VoteController {
                         .setOrder(idx))
                 .collect(toList());
         voteRepository.saveAll(votes);
-        return voteRepository.findAllForToken(token);
+        return voteRepository.findAllForTokenInCurrentEdition(token);
     }
 
     @PostMapping("/votes")
     @Transactional
     public ResponseEntity<InlineVote> save(@RequestBody @Valid VoteController.VoteRequest vote) {
         Vote loaded = voteRepository.findById(vote.id());
+        if (!loaded.getPresentation().getEdition().isCurrent()) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
         loaded.setRate(vote.rate);
         loaded.setVoteDate(LocalDateTime.now());
         return ResponseEntity.ok(InlineVote.from(loaded));

@@ -99,6 +99,9 @@ public class PresentationController {
         if (presentation == null) {
             return ResponseEntity.notFound().build();
         }
+        if (!presentation.getEdition().isCurrent()) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Only the current edition's presentations can be rated");
+        }
         if (!presentation.isRatingEnabled()) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Rating is disabled for this presentation");
         }
