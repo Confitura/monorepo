@@ -18,6 +18,16 @@ public interface RoomRepository extends Repository<Room, String> {
 
     List<Room> findByDayId(String dayId);
 
+    // A room follows its Day's Edition: the admin agenda edits only the Current Edition's (ADR-0004).
+    @Query("select room from Room room where room.day.edition.current = true order by room.displayOrder")
+    List<Room> findAllInCurrentEdition();
+
+    @Query("select room from Room room where room.id = :id and room.day.edition.current = true")
+    Room findInCurrentEditionById(String id);
+
+    @Query("select room from Room room where room.day.id = :dayId and room.day.edition.current = true")
+    List<Room> findInCurrentEditionByDayId(String dayId);
+
     @PreAuthorize("@security.isAdmin()")
     void deleteById(String id);
 
