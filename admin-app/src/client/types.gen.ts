@@ -1920,6 +1920,24 @@ export type GetNewsEntryResponses = {
 
 export type GetNewsEntryResponse = GetNewsEntryResponses[keyof GetNewsEntryResponses];
 
+export type UpdateNewsEntryData = {
+    body: NewsEntryRequest;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/news-entries/{id}';
+};
+
+export type UpdateNewsEntryResponses = {
+    /**
+     * OK
+     */
+    200: NewsEntryDto;
+};
+
+export type UpdateNewsEntryResponse = UpdateNewsEntryResponses[keyof UpdateNewsEntryResponses];
+
 export type GetPagesData = {
     body?: never;
     path?: never;
