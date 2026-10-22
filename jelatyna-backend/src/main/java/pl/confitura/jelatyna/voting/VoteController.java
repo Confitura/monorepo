@@ -86,7 +86,7 @@ public class VoteController {
     @ResponseBody
     @Transactional
     public List<PresentationStats> statistics() {
-        Iterable<Vote> allVotes = voteRepository.findAll();
+        Iterable<Vote> allVotes = voteRepository.findAllInCurrentEdition();
         Stream<Vote> votesStream = StreamSupport.stream(allVotes.spliterator(), true);
 
         Map<String, Optional<PresentationStats>> statsByPresentation = votesStream
@@ -109,14 +109,14 @@ public class VoteController {
     public List<VoteResult> results(@RequestParam(required = false) List<String> tokens) {
         Set<String> selectedTokens = tokens == null ? Set.of() : new HashSet<>(tokens);
 
-        Set<String> preSelectedSpeakerIds = presentationRepository.findAll().stream()
+        Set<String> preSelectedSpeakerIds = presentationRepository.findAllInCurrentEdition().stream()
                 .filter(presentation -> presentation.getPreSelectionStatus() == PreSelectionStatus.PRE_APPROVED)
                 .flatMap(presentation -> presentation.getSpeakers().stream())
                 .map(User::getId)
                 .collect(Collectors.toSet());
 
         Map<String, List<Vote>> votesByPresentation = StreamSupport
-                .stream(voteRepository.findAll().spliterator(), false)
+                .stream(voteRepository.findAllInCurrentEdition().spliterator(), false)
                 .filter(vote -> vote.getRate() != null)
                 .collect(Collectors.groupingBy(vote -> vote.getPresentation().getId()));
 

@@ -162,7 +162,7 @@ public class PresentationController {
     @GetMapping("/presentations")
     public ResponseEntity<List<FullPresentation>> getAllPresentations() {
         List<Presentation> presentations = security.isAdmin()
-                ? repository.findAll()
+                ? repository.findAllInCurrentEdition()
                 : repository.findAccepted();
         return ResponseEntity.ok(presentations.stream().map(FullPresentation::new).collect(toList()));
     }
