@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.security.core.parameters.P;
 import org.springframework.security.access.prepost.PreAuthorize;
+import pl.confitura.jelatyna.edition.Edition;
 import pl.confitura.jelatyna.user.User;
 
 import java.util.List;
@@ -41,4 +42,6 @@ public interface PresentationRepository extends Repository<Presentation, String>
 
 
     List<Presentation> findBySpeakersContains(User speakers);
+
+    boolean existsByEdition(Edition edition);
 }
