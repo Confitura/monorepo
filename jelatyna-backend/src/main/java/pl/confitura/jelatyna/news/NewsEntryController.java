@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -65,6 +66,30 @@ public class NewsEntryController {
         entry.setDate(request.date());
         entry.setPublished(Boolean.TRUE.equals(request.published()));
         return ResponseEntity.status(HttpStatus.CREATED).body(NewsEntryDto.from(repository.save(entry)));
+    }
+
+    /**
+     * Changes only the fields given. A new title keeps the slug, so shared links keep working; a new
+     * slug is refused like a given one on create, but the entry's own current slug never clashes.
+     */
+    @PutMapping("/{id}")
+    public ResponseEntity<NewsEntryDto> updateNewsEntry(@PathVariable String id, @RequestBody NewsEntryRequest request) {
+        NewsEntry entry = repository.findById(id);
+        if (entry == null) {
+            return ResponseEntity.notFound().build();
+        }
+        if (request.slug() != null && !request.slug().equals(entry.getSlug())) {
+            HttpStatus refusal = refusalOf(request.slug());
+            if (refusal != null) {
+                return ResponseEntity.status(refusal).build();
+            }
+            entry.setSlug(request.slug());
+        }
+        if (request.title() != null) entry.setTitle(request.title());
+        if (request.body() != null) entry.setBody(request.body());
+        if (request.date() != null) entry.setDate(request.date());
+        if (request.published() != null) entry.setPublished(request.published());
+        return ResponseEntity.ok(NewsEntryDto.from(repository.save(entry)));
     }
 
     @DeleteMapping("/{id}")

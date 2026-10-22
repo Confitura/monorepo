@@ -2,7 +2,10 @@ package pl.confitura.jelatyna.news;
 
 import java.time.Instant;
 
-/** Payload for a new News Entry; without a slug, it takes one from the title. */
+/**
+ * Payload for a new News Entry, or an update of one; without a slug, a new entry takes one from the
+ * title. On update, null fields stay unchanged, and a new title leaves the slug as it is.
+ */
 public record NewsEntryRequest(
         String title,
         String slug,

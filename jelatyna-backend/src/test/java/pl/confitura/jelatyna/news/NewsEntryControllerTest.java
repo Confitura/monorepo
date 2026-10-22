@@ -118,6 +118,48 @@ class NewsEntryControllerTest extends BaseIntegrationTest {
     }
 
     @Test
+    void updatesAnEntry() throws Exception {
+        Instant date = Instant.parse("2026-11-02T09:30:00Z");
+        update(draft, new NewsEntryRequest("Agenda", "agenda-2026", "**New** body", date, true))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", is(draft.getId())))
+                .andExpect(jsonPath("$.title", is("Agenda")))
+                .andExpect(jsonPath("$.slug", is("agenda-2026")))
+                .andExpect(jsonPath("$.body", is("**New** body")))
+                .andExpect(jsonPath("$.date", is("2026-11-02T09:30:00Z")))
+                .andExpect(jsonPath("$.published", is(true)));
+
+        mockMvc.perform(get("/news-entries/" + draft.getId()).with(admin()))
+                .andExpect(jsonPath("$.title", is("Agenda")))
+                .andExpect(jsonPath("$.slug", is("agenda-2026")));
+
+        mockMvc.perform(put("/news-entries/does-not-exist").with(admin())
+                        .contentType(APPLICATION_JSON).content(json(titled("Missing", "missing"))))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void aNewTitleKeepsTheSlugAndNullFieldsStayUnchanged() throws Exception {
+        update(tickets, new NewsEntryRequest("Tickets are sold out", null, null, null, null))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.title", is("Tickets are sold out")))
+                .andExpect(jsonPath("$.slug", is("tickets")))
+                .andExpect(jsonPath("$.body", is("<p>Tickets</p>")))
+                .andExpect(jsonPath("$.date", is("2025-09-12T08:11:12Z")))
+                .andExpect(jsonPath("$.published", is(true)));
+    }
+
+    @Test
+    void refusesAChangedSlugAnotherEntryHasOrThatIsNoSlug() throws Exception {
+        update(tickets, titled("Tickets", "draft")).andExpect(status().isConflict());
+        update(tickets, titled("Tickets", "Not a slug")).andExpect(status().isBadRequest());
+        update(tickets, titled("Tickets", "tickets")).andExpect(status().isOk());
+
+        mockMvc.perform(get("/news-entries/" + tickets.getId()).with(admin()))
+                .andExpect(jsonPath("$.slug", is("tickets")));
+    }
+
+    @Test
     void deletesAnEntry() throws Exception {
         mockMvc.perform(delete("/news-entries/" + draft.getId()).with(admin()))
                 .andExpect(status().isNoContent());
@@ -136,6 +178,8 @@ class NewsEntryControllerTest extends BaseIntegrationTest {
             mockMvc.perform(get(draftUrl).with(nonAdmin)).andExpect(status().isForbidden());
             mockMvc.perform(post("/news-entries").with(nonAdmin).contentType(APPLICATION_JSON).content(body))
                     .andExpect(status().isForbidden());
+            mockMvc.perform(put(draftUrl).with(nonAdmin).contentType(APPLICATION_JSON).content(body))
+                    .andExpect(status().isForbidden());
             mockMvc.perform(delete(draftUrl).with(nonAdmin)).andExpect(status().isForbidden());
         }
 
@@ -149,6 +193,11 @@ class NewsEntryControllerTest extends BaseIntegrationTest {
 
     private ResultActions create(NewsEntryRequest request) throws Exception {
         return mockMvc.perform(post("/news-entries").with(admin())
+                .contentType(APPLICATION_JSON).content(json(request)));
+    }
+
+    private ResultActions update(NewsEntry entry, NewsEntryRequest request) throws Exception {
+        return mockMvc.perform(put("/news-entries/" + entry.getId()).with(admin())
                 .contentType(APPLICATION_JSON).content(json(request)));
     }
 
