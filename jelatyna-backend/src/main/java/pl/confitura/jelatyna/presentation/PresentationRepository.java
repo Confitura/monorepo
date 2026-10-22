@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.security.core.parameters.P;
 import org.springframework.security.access.prepost.PreAuthorize;
+import pl.confitura.jelatyna.edition.Edition;
 import pl.confitura.jelatyna.user.User;
 
 import java.util.List;
@@ -31,6 +32,12 @@ public interface PresentationRepository extends Repository<Presentation, String>
            " left join fetch p.speakers " +
            " WHERE p.status ='accepted' ")
     List<Presentation> findAccepted();
+
+    @Query("SELECT p FROM Presentation p " +
+           " left join fetch p.tags " +
+           " left join fetch p.speakers " +
+           " WHERE p.status ='accepted' AND p.edition = :edition")
+    List<Presentation> findAcceptedIn(Edition edition);
 
     Long count();
 

@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.access.prepost.PreAuthorize;
+import pl.confitura.jelatyna.edition.Edition;
 
 public interface UserRepository extends Repository<User, String> {
 
@@ -42,6 +43,12 @@ public interface UserRepository extends Repository<User, String> {
            "JOIN FETCH s.presentations p " +
            "WHERE p.status ='accepted'")
     List<User> findAllAccepted();
+
+    // Fetches each speaker's talks filtered too, so their public profile lists only these.
+    @Query("select distinct s FROM User s " +
+           "JOIN FETCH s.presentations p " +
+           "WHERE p.status ='accepted' AND p.edition = :edition")
+    List<User> findAllAcceptedIn(Edition edition);
 
     User findByEmail(String email);
 

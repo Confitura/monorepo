@@ -136,6 +136,26 @@
         },
         "type" : "object"
       },
+      "DumpedEdition" : {
+        "properties" : {
+          "conferenceStart" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "lastDay" : {
+            "format" : "date",
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "year" : {
+            "format" : "int32",
+            "type" : "integer"
+          }
+        },
+        "type" : "object"
+      },
       "FaqCategoryDto" : {
         "properties" : {
           "displayOrder" : {
@@ -4233,6 +4253,24 @@
               "*/*" : {
                 "schema" : {
                   "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "published-controller" ]
+      }
+    },
+    "/published/edition" : {
+      "get" : {
+        "operationId" : "getPublishedEdition",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/DumpedEdition"
                 }
               }
             },
