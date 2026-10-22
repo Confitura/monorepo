@@ -11,6 +11,7 @@ import jakarta.validation.Valid;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,7 +47,7 @@ public class VoteController {
     @RequestMapping(value = "/votes/start/{token}", method = RequestMethod.POST)
     @Transactional
     public ResponseEntity<List<InlineVote>> start(@PathVariable String token) {
-        List<Vote> votes = voteRepository.findAllForToken(token);
+        List<Vote> votes = voteRepository.findAllForTokenInCurrentEdition(token);
         if (votes.isEmpty()) {
             votes = generateVotes(token);
         }
@@ -64,13 +65,16 @@ public class VoteController {
                         .setOrder(idx))
                 .collect(toList());
         voteRepository.saveAll(votes);
-        return voteRepository.findAllForToken(token);
+        return voteRepository.findAllForTokenInCurrentEdition(token);
     }
 
     @PostMapping("/votes")
     @Transactional
     public ResponseEntity<InlineVote> save(@RequestBody @Valid VoteController.VoteRequest vote) {
         Vote loaded = voteRepository.findById(vote.id());
+        if (!loaded.getPresentation().getEdition().isCurrent()) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
         loaded.setRate(vote.rate);
         loaded.setVoteDate(LocalDateTime.now());
         return ResponseEntity.ok(InlineVote.from(loaded));
@@ -82,7 +86,7 @@ public class VoteController {
     @ResponseBody
     @Transactional
     public List<PresentationStats> statistics() {
-        Iterable<Vote> allVotes = voteRepository.findAll();
+        Iterable<Vote> allVotes = voteRepository.findAllInCurrentEdition();
         Stream<Vote> votesStream = StreamSupport.stream(allVotes.spliterator(), true);
 
         Map<String, Optional<PresentationStats>> statsByPresentation = votesStream
@@ -105,14 +109,14 @@ public class VoteController {
     public List<VoteResult> results(@RequestParam(required = false) List<String> tokens) {
         Set<String> selectedTokens = tokens == null ? Set.of() : new HashSet<>(tokens);
 
-        Set<String> preSelectedSpeakerIds = presentationRepository.findAll().stream()
+        Set<String> preSelectedSpeakerIds = presentationRepository.findAllInCurrentEdition().stream()
                 .filter(presentation -> presentation.getPreSelectionStatus() == PreSelectionStatus.PRE_APPROVED)
                 .flatMap(presentation -> presentation.getSpeakers().stream())
                 .map(User::getId)
                 .collect(Collectors.toSet());
 
         Map<String, List<Vote>> votesByPresentation = StreamSupport
-                .stream(voteRepository.findAll().spliterator(), false)
+                .stream(voteRepository.findAllInCurrentEdition().spliterator(), false)
                 .filter(vote -> vote.getRate() != null)
                 .collect(Collectors.groupingBy(vote -> vote.getPresentation().getId()));
 

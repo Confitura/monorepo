@@ -11,7 +11,7 @@ You implement **one** task in this repo. The task text in your prompt (descripti
 
 ## Hard rules
 
-- Work on the branch that is already checked out. Never switch, rebase, merge, or reset branches; never amend commits you already reported.
+- Work on the branch that is already checked out. Never switch, rebase, merge, or reset branches (finishing a merge the lead started is the one exception, see below); never amend commits you already reported.
 - Never run `backlog`, `git push`, or `gh`. The lead handles the board and the PR.
 - Never start dev servers or long-running processes: no `pnpm dev`/`preview`, `spring-boot:run`, `pnpm test:e2e`/Playwright, or docker. The one exception: containers that Testcontainers starts inside `./mvnw test` (the backend tests need PostgreSQL). Compose, `docker run`, and image builds stay forbidden.
 - No new dependencies or lockfile changes, and no edits under `.github/`, `.claude/`, `.mvn/`, `infra/` — unless the task asks for them.
@@ -32,7 +32,7 @@ You implement **one** task in this repo. The task text in your prompt (descripti
 
 | You touched | Run |
 |---|---|
-| `jelatyna-backend/**` | `java -version` must be 21 (else BLOCKED). `cd jelatyna-backend && ./mvnw test`. Backend tests rewrite `openapi.json`: commit it if the API changed on purpose; investigate if it changed unexpectedly. |
+| `jelatyna-backend/**` | `java -version` must be 25 (else BLOCKED). `cd jelatyna-backend && ./mvnw test`. Backend tests rewrite `openapi.json`: commit it if the API changed on purpose; investigate if it changed unexpectedly. |
 | `openapi.json` or `admin-app/**` | `cd admin-app && pnpm install --frozen-lockfile && pnpm codegen` — commit `admin-app/src/client/` with the spec in the same commit set. Then `pnpm typecheck` and `pnpm test:unit --run`. |
 | `webpage/**` | `cd webpage && pnpm install --frozen-lockfile && pnpm build && pnpm test --run` |
 | nothing above (docs, config) | no checks; report `MODULES: none` |
@@ -75,3 +75,12 @@ If your prompt has `FAILING CHECKS`, the branch is an open PR that already does 
 - Never make a check pass by weakening it: no skipped, deleted or loosened tests, no comment or config that silences an alert, no workflow edits.
 - If the failure isn't caused by this branch (a flaky test, an outage, `master` failing the same way), or it's a false positive with no sensible code fix, report `STATUS: BLOCKED` and say which.
 - Commit and check as in the procedure, then send the full report. TLDR names the failing check, its cause and what you changed; the lead adds it to the PR's Verification.
+
+## Resolving a merge conflict
+
+If your prompt has `MERGE CONFLICT`, the lead started merging `origin/master` into the PR branch and it stopped on conflicts. Finish that merge.
+
+- For each conflicting hunk, find out why each side changed it: `git log --merge -p -- <file>` and the commit messages. Keep both intents. Where they can't both hold, keep `master`'s behaviour and adapt the PR's change to it. Add nothing neither side had.
+- Run the checks for every module with a conflicting file, then `git add` the files and `git commit --no-edit`.
+- If you can't tell what a side meant, report `STATUS: BLOCKED` and leave the merge in progress; the lead aborts it.
+- TLDR lists each conflict and how you resolved it; the lead adds it to the PR's Verification.

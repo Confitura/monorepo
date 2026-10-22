@@ -101,6 +101,9 @@ public class PresentationController {
         if (presentation == null) {
             return ResponseEntity.notFound().build();
         }
+        if (!presentation.getEdition().isCurrent()) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Only the current edition's presentations can be rated");
+        }
         if (!presentation.isRatingEnabled()) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Rating is disabled for this presentation");
         }
@@ -161,7 +164,7 @@ public class PresentationController {
     @GetMapping("/presentations")
     public ResponseEntity<List<FullPresentation>> getAllPresentations() {
         List<Presentation> presentations = security.isAdmin()
-                ? repository.findAll()
+                ? repository.findAllInCurrentEdition()
                 : repository.findAccepted();
         return ResponseEntity.ok(presentations.stream().map(FullPresentation::new).collect(toList()));
     }

@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.security.core.parameters.P;
 import org.springframework.security.access.prepost.PreAuthorize;
+import pl.confitura.jelatyna.edition.Edition;
 import pl.confitura.jelatyna.user.User;
 
 import java.util.List;
@@ -19,10 +20,16 @@ public interface PresentationRepository extends Repository<Presentation, String>
 
     Presentation findById(String id);
 
+    // Admin pages show only the Current Edition (ADR-0004).
+    @PreAuthorize("@security.isAdmin()")
+    @Query("SELECT p FROM Presentation p WHERE p.edition.current = true")
+    List<Presentation> findAllInCurrentEdition();
+
     @PreAuthorize("@security.isAdmin()")
     List<Presentation> findAll();
 
-    @Query("SELECT p FROM Presentation p")
+    // Vote-for-papers covers only the Current Edition's talks (ADR-0004).
+    @Query("SELECT p FROM Presentation p WHERE p.edition.current = true")
     Iterable<Presentation> findAllForV4p();
 
     @Query("SELECT p FROM Presentation p " +
@@ -30,6 +37,12 @@ public interface PresentationRepository extends Repository<Presentation, String>
            " left join fetch p.speakers " +
            " WHERE p.status ='accepted' ")
     List<Presentation> findAccepted();
+
+    @Query("SELECT p FROM Presentation p " +
+           " left join fetch p.tags " +
+           " left join fetch p.speakers " +
+           " WHERE p.status ='accepted' AND p.edition = :edition")
+    List<Presentation> findAcceptedIn(Edition edition);
 
     Long count();
 

@@ -13,8 +13,8 @@ import java.util.Optional;
 
 /**
  * The global rating window derives from the agenda: rating opens at the start of
- * the conference's first day (the earliest agenda {@link Day} date), Europe/Warsaw,
- * and stays open afterwards. There is no separate flag — admins control it by
+ * the conference's first day (the Current Edition's earliest agenda {@link Day} date),
+ * Europe/Warsaw, and stays open afterwards. There is no separate flag — admins control it by
  * setting the agenda dates.
  */
 @Service
@@ -27,6 +27,7 @@ public class RatingWindowService {
 
     public Optional<LocalDate> opensAt() {
         return dayRepository.findAll().stream()
+                .filter(day -> day.getEdition().isCurrent())
                 .map(Day::getDate)
                 .filter(Objects::nonNull)
                 .min(Comparator.naturalOrder());

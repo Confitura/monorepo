@@ -97,7 +97,8 @@ public class UserController {
     }
 
     @GetMapping("/users/{id}/presentations/{presentationId}")
-    @PreAuthorize("@security.isOwner(#id)")
+    @PreAuthorize("@security.isOwner(#id) && @security.presentationOwnedByUser(#presentationId)"
+            + " && !@security.isWorkshop(#presentationId)")
     public ResponseEntity<InlinePresentation> getPresentation(@PathVariable String id, @PathVariable String presentationId) {
         var presentation = presentationRepository.findById(presentationId);
         return ResponseEntity.ok(new InlinePresentation(presentation));
@@ -137,7 +138,9 @@ public class UserController {
 
 
     @PostMapping("/users/{userId}/presentations/{presentationId}")
-    @PreAuthorize("@security.isOwner(#userId) && @security.canChangePresentation(#presentationId)")
+    @PreAuthorize("@security.isOwner(#userId) && @security.presentationOwnedByUser(#presentationId)"
+            + " && !@security.isWorkshop(#presentationId)"
+            + " && @security.canChangePresentation(#presentationId)")
     public ResponseEntity<InlinePresentation> updatePresentation(@Valid @RequestBody PresentationRequest presentationRequest,
                                                                  @PathVariable String userId,
                                                                  @PathVariable String presentationId) {
@@ -150,7 +153,9 @@ public class UserController {
     }
 
     @DeleteMapping("/users/{userId}/presentations/{presentationId}")
-    @PreAuthorize("@security.isOwner(#userId) && @security.canChangePresentation(#presentationId)")
+    @PreAuthorize("@security.isOwner(#userId) && @security.presentationOwnedByUser(#presentationId)"
+            + " && !@security.isWorkshop(#presentationId)"
+            + " && @security.canChangePresentation(#presentationId)")
     public void deletePresentation(@PathVariable String userId, @PathVariable String presentationId) {
         presentationRepository.deleteById(presentationId);
     }
@@ -177,7 +182,9 @@ public class UserController {
 
 
     @PostMapping("/users/{userId}/workshops/{workshopId}")
-    @PreAuthorize("@security.isOwner(#userId) && @security.canChangePresentation(#workshopId)")
+    @PreAuthorize("@security.isOwner(#userId) && @security.presentationOwnedByUser(#workshopId)"
+            + " && @security.isWorkshop(#workshopId)"
+            + " && @security.canChangePresentation(#workshopId)")
     public ResponseEntity<InlineWorkshop> updateWorkshop(@Valid @RequestBody WorkshopRequest workshopRequest,
                                                          @PathVariable String userId,
                                                          @PathVariable String workshopId) {
@@ -190,7 +197,9 @@ public class UserController {
     }
 
     @DeleteMapping("/users/{userId}/workshops/{workshopId}")
-    @PreAuthorize("@security.isOwner(#userId) && @security.canChangePresentation(#workshopId)")
+    @PreAuthorize("@security.isOwner(#userId) && @security.presentationOwnedByUser(#workshopId)"
+            + " && @security.isWorkshop(#workshopId)"
+            + " && @security.canChangePresentation(#workshopId)")
     public void deleteWorkshop(@PathVariable String userId, @PathVariable String workshopId) {
         presentationRepository.deleteById(workshopId);
     }
@@ -208,7 +217,8 @@ public class UserController {
     }
 
     @GetMapping("/users/{id}/workshops/{workshopId}")
-    @PreAuthorize("@security.isOwner(#id)")
+    @PreAuthorize("@security.isOwner(#id) && @security.presentationOwnedByUser(#workshopId)"
+            + " && @security.isWorkshop(#workshopId)")
     public ResponseEntity<InlineWorkshop> getWorkshop(@PathVariable String id, @PathVariable String workshopId) {
         var workshop = presentationRepository.findById(workshopId);
         return ResponseEntity.ok(new InlineWorkshop(workshop));

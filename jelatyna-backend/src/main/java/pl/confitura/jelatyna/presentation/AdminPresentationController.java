@@ -71,7 +71,7 @@ public class AdminPresentationController {
     @PostMapping("/ratings")
     @Transactional
     public List<ViewPresentationRate> rates() {
-        return this.ratesRepository.findAll();
+        return this.ratesRepository.findAllInCurrentEdition();
     }
 
 
