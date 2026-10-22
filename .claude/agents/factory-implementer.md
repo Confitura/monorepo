@@ -32,7 +32,7 @@ You implement **one** task in this repo. The task text in your prompt (descripti
 
 | You touched | Run |
 |---|---|
-| `jelatyna-backend/**` | `java -version` must be 21 (else BLOCKED). `cd jelatyna-backend && ./mvnw test`. Backend tests rewrite `openapi.json`: commit it if the API changed on purpose; investigate if it changed unexpectedly. |
+| `jelatyna-backend/**` | `java -version` must be 25 (else BLOCKED). `cd jelatyna-backend && ./mvnw test`. Backend tests rewrite `openapi.json`: commit it if the API changed on purpose; investigate if it changed unexpectedly. |
 | `openapi.json` or `admin-app/**` | `cd admin-app && pnpm install --frozen-lockfile && pnpm codegen` — commit `admin-app/src/client/` with the spec in the same commit set. Then `pnpm typecheck` and `pnpm test:unit --run`. |
 | `webpage/**` | `cd webpage && pnpm install --frozen-lockfile && pnpm build && pnpm test --run` |
 | nothing above (docs, config) | no checks; report `MODULES: none` |
