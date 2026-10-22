@@ -70,6 +70,26 @@ export type DumpedEdition = {
     year?: number;
 };
 
+export type EditionDto = {
+    c4pEnd?: string;
+    c4pStart?: string;
+    conferenceStart?: string;
+    current?: boolean;
+    id?: string;
+    lastDay?: string;
+    name?: string;
+    year?: number;
+};
+
+export type EditionRequest = {
+    c4pEnd?: string;
+    c4pStart?: string;
+    conferenceStart?: string;
+    lastDay?: string;
+    name?: string;
+    year?: number;
+};
+
 export type FaqCategoryDto = {
     displayOrder?: number;
     id?: string;
@@ -1460,6 +1480,72 @@ export type UpdateDayResponses = {
 };
 
 export type UpdateDayResponse = UpdateDayResponses[keyof UpdateDayResponses];
+
+export type GetAllEditionsData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/editions';
+};
+
+export type GetAllEditionsResponses = {
+    /**
+     * OK
+     */
+    200: Array<EditionDto>;
+};
+
+export type GetAllEditionsResponse = GetAllEditionsResponses[keyof GetAllEditionsResponses];
+
+export type CreateEditionData = {
+    body: EditionRequest;
+    path?: never;
+    query?: never;
+    url: '/editions';
+};
+
+export type CreateEditionResponses = {
+    /**
+     * OK
+     */
+    200: EditionDto;
+};
+
+export type CreateEditionResponse = CreateEditionResponses[keyof CreateEditionResponses];
+
+export type DeleteEditionData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/editions/{id}';
+};
+
+export type DeleteEditionResponses = {
+    /**
+     * OK
+     */
+    200: unknown;
+};
+
+export type GetEditionData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/editions/{id}';
+};
+
+export type GetEditionResponses = {
+    /**
+     * OK
+     */
+    200: EditionDto;
+};
+
+export type GetEditionResponse = GetEditionResponses[keyof GetEditionResponses];
 
 export type GetFaqCategoriesData = {
     body?: never;

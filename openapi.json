@@ -156,6 +156,68 @@
         },
         "type" : "object"
       },
+      "EditionDto" : {
+        "properties" : {
+          "c4pEnd" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "c4pStart" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "conferenceStart" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "current" : {
+            "type" : "boolean"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "lastDay" : {
+            "format" : "date",
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "year" : {
+            "format" : "int32",
+            "type" : "integer"
+          }
+        },
+        "type" : "object"
+      },
+      "EditionRequest" : {
+        "properties" : {
+          "c4pEnd" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "c4pStart" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "conferenceStart" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "lastDay" : {
+            "format" : "date",
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "year" : {
+            "format" : "int32",
+            "type" : "integer"
+          }
+        },
+        "type" : "object"
+      },
       "FaqCategoryDto" : {
         "properties" : {
           "displayOrder" : {
@@ -2818,6 +2880,96 @@
           }
         },
         "tags" : [ "day-controller" ]
+      }
+    },
+    "/editions" : {
+      "get" : {
+        "operationId" : "getAllEditions",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/EditionDto"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "edition-controller" ]
+      },
+      "post" : {
+        "operationId" : "createEdition",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/EditionRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/EditionDto"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "edition-controller" ]
+      }
+    },
+    "/editions/{id}" : {
+      "delete" : {
+        "operationId" : "deleteEdition",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "edition-controller" ]
+      },
+      "get" : {
+        "operationId" : "getEdition",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/EditionDto"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "edition-controller" ]
       }
     },
     "/faq-categories" : {

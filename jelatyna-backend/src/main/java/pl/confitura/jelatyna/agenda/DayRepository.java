@@ -20,6 +20,8 @@ public interface DayRepository extends Repository<Day, String> {
     @Query("select day from Day day where day.edition = :edition order by day.displayOrder")
     List<Day> findAllIn(Edition edition);
 
+    boolean existsByEdition(Edition edition);
+
     // The admin agenda shows and edits only the Current Edition's Days (ADR-0004).
     @Query("select day from Day day where day.edition.current = true order by day.displayOrder")
     List<Day> findAllInCurrentEdition();
