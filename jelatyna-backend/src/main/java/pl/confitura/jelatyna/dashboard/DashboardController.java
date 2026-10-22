@@ -192,7 +192,7 @@ class DashboardController {
 
         List<LocalDateTime> fetch = query.select(vote.voteDate)
                 .from(vote)
-                .where(vote.voteDate.isNotNull())
+                .where(vote.voteDate.isNotNull(), vote.presentation.edition.current.isTrue())
                 .orderBy(vote.voteDate.asc())
                 .fetch();
 
