@@ -5,13 +5,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.transaction.annotation.Transactional;
 import pl.confitura.jelatyna.BaseIntegrationTest;
 import pl.confitura.jelatyna.agenda.Day;
 import pl.confitura.jelatyna.agenda.DayRepository;
+import pl.confitura.jelatyna.edition.Edition;
 import pl.confitura.jelatyna.edition.EditionRepository;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
 import pl.confitura.jelatyna.presentation.rating.RateValue;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -93,6 +96,39 @@ class PresentationRatingControllerTest extends BaseIntegrationTest {
         SecurityHelper.cleanSecurity();
 
         mockMvc.perform(post("/presentations/" + presentation.getId() + "/ratings")
+                        .content(json(rateRequest()))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @Transactional
+    void ratingACurrentEditionTalkIsAccepted() throws Exception {
+        mockMvc.perform(post("/presentations/" + presentation.getId() + "/ratings")
+                        .content(json(rateRequest()))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated());
+    }
+
+    @Test
+    @Transactional
+    void ratingATalkOutsideTheCurrentEditionIsRefused() throws Exception {
+        SecurityHelper.asAdmin();
+        Edition pastEdition = editionRepository.save(new Edition()
+                .setYear(2025)
+                .setName("Confitura 2025")
+                .setConferenceStart(Instant.parse("2025-06-28T07:00:00Z"))
+                .setLastDay(LocalDate.of(2025, 6, 28)));
+        Presentation pastTalk = presentationRepository.save(new Presentation()
+                .setTitle("Last year's talk")
+                .setShortDescription("short")
+                .setDescription("description")
+                .setLevel("easy")
+                .setLanguage("pl")
+                .setEdition(pastEdition));
+        SecurityHelper.cleanSecurity();
+
+        mockMvc.perform(post("/presentations/" + pastTalk.getId() + "/ratings")
                         .content(json(rateRequest()))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isForbidden());

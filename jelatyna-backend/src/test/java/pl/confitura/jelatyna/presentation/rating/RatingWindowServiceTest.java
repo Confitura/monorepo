@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import pl.confitura.jelatyna.agenda.Day;
 import pl.confitura.jelatyna.agenda.DayRepository;
+import pl.confitura.jelatyna.edition.Edition;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -23,8 +24,15 @@ class RatingWindowServiceTest {
     @InjectMocks
     RatingWindowService service;
 
+    private static final Edition CURRENT_EDITION = new Edition().setYear(2027).setCurrent(true);
+    private static final Edition PAST_EDITION = new Edition().setYear(2026);
+
     private Day day(String id, LocalDate date) {
-        return new Day().setId(id).setDate(date).setLabel(id).setDisplayOrder(1);
+        return day(id, date, CURRENT_EDITION);
+    }
+
+    private Day day(String id, LocalDate date, Edition edition) {
+        return new Day().setId(id).setDate(date).setLabel(id).setDisplayOrder(1).setEdition(edition);
     }
 
     @Test
@@ -64,5 +72,17 @@ class RatingWindowServiceTest {
         ));
 
         assertThat(service.opensAt()).contains(earliest);
+    }
+
+    @Test
+    void opensOnTheCurrentEditionsFirstDayIgnoringOtherEditions() {
+        LocalDate firstDay = LocalDate.now().plusDays(2);
+        when(dayRepository.findAll()).thenReturn(List.of(
+                day("past-edition-day", LocalDate.now().minusYears(1), PAST_EDITION),
+                day("day-1", firstDay)
+        ));
+
+        assertThat(service.opensAt()).contains(firstDay);
+        assertThat(service.isOpen()).isFalse();
     }
 }
