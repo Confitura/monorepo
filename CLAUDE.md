@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a monorepo for the **Confitura** conference management system, consisting of three modules:
 
-- **jelatyna-backend** — Spring Boot 3 REST API (Java 21, Maven)
+- **jelatyna-backend** — Spring Boot 3 REST API (Java 25, Maven)
 - **admin-app** — Vue 3 + Vuetify admin dashboard (TypeScript, pnpm)
 - **webpage** — Nuxt 3 public conference website (TypeScript, pnpm)
 
@@ -87,7 +87,7 @@ Docker Compose (`docker-compose.yml`) provides PostgreSQL (5432, `postgres:16.10
 
 GitHub Actions (`.github/workflows/run-tests.yml`) runs on pushes to `master` and on PRs. A `changes` job (`dorny/paths-filter`) gates each test job, so a job runs only when its paths change (backend: `jelatyna-backend/**` or `openapi.json`; webpage: `webpage/**`; admin-app: `admin-app/**` or `openapi.json`):
 
-- **test-backend**: JDK 21, `mvn -B package`, then `git diff --exit-code openapi.json` (fails if the regenerated spec drifts from the committed one)
+- **test-backend**: JDK 25, `mvn -B package`, then `git diff --exit-code openapi.json` (fails if the regenerated spec drifts from the committed one)
 - **test-frontend** (webpage): Node 24, pnpm 10.5.2, `pnpm install --frozen-lockfile → build → test`
 - **test-admin-app**: Node 24, pnpm 10.5.2, `pnpm install --frozen-lockfile → codegen + git diff --exit-code src/client (drift check) → typecheck → test:unit`
 
@@ -118,7 +118,7 @@ The backend logs structured ECS in prod, serves Prometheus metrics on a separate
 - **See traces in IntelliJ IDEA:** enable the OpenTelemetry plugin for the backend's run configuration and run it. The plugin sets `OTEL_EXPORTER_OTLP_*` variables pointing at its own receiver, which accepts **gRPC only**; Boot turns them into a gRPC span exporter, and each request appears in the plugin's tool window. Only traces go there: metrics stay on Prometheus, and logs are not forwarded.
 - **Prod opt-in:** prod exports nothing until `MANAGEMENT_TRACING_EXPORT_OTLP_ENABLED=true` is set. Coolify's `MANAGEMENT_OPENTELEMETRY_TRACING_EXPORT_OTLP_ENDPOINT` (`http://alloy:4318/v1/traces`, OTLP over HTTP) alone does nothing. Set the opt-in once a collector runs; no Grafana Cloud stack or Alloy container exists yet.
 
-gRPC goes through `opentelemetry-exporter-sender-grpc-managed-channel` on `grpc-netty-shaded`, HTTP through `opentelemetry-exporter-sender-jdk`. OTel's okhttp sender stays excluded in `pom.xml`: it needs okhttp 5, and scribejava pins okhttp 4. Boot 4.1 gotchas: tracing needs `spring-boot-starter-opentelemetry`; the OTLP endpoint property is `management.opentelemetry.tracing.export.otlp.endpoint`. Build the backend with **JDK 21** — JDK 23+ silently disables Lombok/QueryDSL annotation processing.
+gRPC goes through `opentelemetry-exporter-sender-grpc-managed-channel` on `grpc-netty-shaded`, HTTP through `opentelemetry-exporter-sender-jdk`. OTel's okhttp sender stays excluded in `pom.xml`: it needs okhttp 5, and scribejava pins okhttp 4. Boot 4.1 gotchas: tracing needs `spring-boot-starter-opentelemetry`; the OTLP endpoint property is `management.opentelemetry.tracing.export.otlp.endpoint`. Build the backend with **JDK 25**. Since JDK 23, javac runs no annotation processor it merely finds on the classpath, so `maven-compiler-plugin` lists every processor in `annotationProcessorPaths`: Lombok; querydsl-apt (jakarta) plus the Jakarta Persistence API it loads; and `spring-boot-configuration-processor`. The Q-classes come from querydsl-apt there, not from `apt-maven-plugin`, whose includes match no package. Add any new processor to that list, or it silently generates nothing.
 
 `docs/pii-in-logs.md` documents which log statements leaked personal data, the S1–S7 fixes applied, and the conventions to follow when adding logging: log entity ids rather than emails, mask an address when no id exists (`MessageInfo.maskedEmail()`), use allowlist `@ToString(onlyExplicitlyIncluded = true)` on anything holding PII, log third-party error envelopes rather than response bodies, and never put credentials in a query string.
 
