@@ -1,5 +1,7 @@
 [phases.setup]
-nixPkgs = ["jdk21", "bash", "coreutils"]
+nixPkgs = ["jdk25", "bash", "coreutils"]
+# nixpacks 1.41.0 pins a Dec 2023 nixpkgs without jdk25; this nixos-25.11 revision has it.
+nixpkgsArchive = "b6018f87da91d19d0ab4cf979885689b469cdd41"
 
 [phases.install]
 cmds = ["./mvnw dependency:go-offline -q"]

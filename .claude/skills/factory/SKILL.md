@@ -1,6 +1,6 @@
 ---
 name: factory
-description: Local code factory over the private Backlog.md board. `setup` initializes the board; `run [task-id]` implements one ready task on a fresh branch, has it reviewed, and on a PASS opens a PR ready for review; `fix [pr]` makes an open factory PR's failing checks pass with a reviewed commit on its branch; `sync` closes out merged PRs; `auto` runs one unattended iteration. Run only when  the user types /factory, or from a /loop the user started with /factory auto.
+description: Local code factory over the private Backlog.md board. `setup` initializes the board; `run [task-id]` implements one ready task on a fresh branch, has it reviewed, and on a PASS opens a PR ready for review; `fix [pr]` resolves an open factory PR's merge conflict or failing checks with a reviewed commit on its branch; `sync` closes out merged PRs; `auto` runs one unattended iteration. Run only when  the user types /factory, or from a /loop the user started with /factory auto.
 argument-hint: "setup | run [task-id] | fix [pr] | sync | auto"
 ---
 
@@ -16,7 +16,7 @@ Board: `backlog browser` → http://localhost:6420. Tracker conventions: `docs/a
 
 1. **One task at a time.** Never start a task while another is `In Progress`.
 2. Only you (the lead) run `backlog`. Subagents get the task text in their prompt.
-3. Never merge, push to `master`, or force-push. Open a PR, or push to an open PR's branch, only after a reviewer PASS, and open it ready for review, never as a draft. Never mark an existing PR ready or push to a draft: a draft means a human put it there. A human still reviews and merges every PR.
+3. Never merge a PR, push to `master`, or force-push. Open a PR, or push to an open PR's branch, only after a reviewer PASS (a merge of `master` that needed no conflict resolution excepted), and open it ready for review, never as a draft. Never mark an existing PR ready or push to a draft: a draft means a human put it there. Bring `master` into a PR branch with a merge, never a rebase: a rebase needs a force push. A human still reviews and merges every PR.
 4. The repo is **public**: PR titles, bodies, and commits contain only the task title, acceptance criteria, the implementer's TLDR and WHY, the review outcome, and the checks. Never paste backlog notes, spec text, or anything private.
 5. Every PR follows `## Pull requests` in `CLAUDE.md`: TL;DR first, then `## Why`, so the PR still explains itself after the task is archived.
 6. No `Co-Authored-By` trailers.
@@ -158,7 +158,7 @@ Don't push. `backlog task edit <id> -s "To Do" --remove-label ready-for-agent --
 
 ## fix
 
-Makes the failing checks (CI jobs, CodeQL alerts) of one open factory PR pass, with a reviewed commit on the PR's own branch, so the maintainer reviews PRs that pass. `auto` runs it; `/factory fix [pr]` runs it by hand. The task stays `In Review` throughout.
+Repairs one open factory PR on its own branch: merges `master` in and resolves the conflicts, or makes its failing checks (CI jobs, CodeQL alerts) pass, so the maintainer reviews PRs that pass and merge cleanly. `auto` runs it; `/factory fix [pr]` runs it by hand. The task stays `In Review` throughout.
 
 ### Preflight
 
@@ -166,15 +166,15 @@ As in `run`: a clean tree, no task `In Progress`, `gh auth status`, `git fetch o
 
 ### 1. Pick the PR
 
-Candidates are the PRs of `In Review` tasks (`References:` in `backlog task view <id> --plain`) that are open and not drafts (a draft means a human turned it back), whose checks have all finished with at least one failure, and that have attempts left.
+Candidates are the PRs of `In Review` tasks (`References:` in `backlog task view <id> --plain`) that are open and not drafts (a draft means a human turned it back), that either conflict with `master` (`gh pr view <url> --json mergeable` says `CONFLICTING`) or have all their checks finished with at least one failure, and that have attempts left. A PR with both is repaired for the conflict first; its checks run again after the push.
 
-Attempts: at most one per head commit and two per PR, recorded in `backlog/.factory-auto.json` as `fix:<pr>:<head sha>`. A PR whose current head already has a key, or that has two `fix:` keys, has none left. It isn't a candidate: report it, and in `auto` mode notify `pr-checks-failed:<pr>:<head sha>`.
+Attempts: at most one per head commit and two per PR, recorded in `backlog/.factory-auto.json` as `fix:<pr>:<head sha>`. A PR whose current head already has a key, or that has two `fix:` keys, has none left. It isn't a candidate: report it, and in `auto` mode notify `pr-conflict:<pr>:<head sha>` or `pr-checks-failed:<pr>:<head sha>`.
 
 With a PR number it must be a candidate; without, take the first. Record its `fix:` key before going on.
 
 ### 2. Collect the failures
 
-Subagents can't run `gh`, so gather the evidence yourself:
+A conflict needs nothing collected; step 3 starts the merge. For failing checks, subagents can't run `gh`, so gather the evidence yourself:
 - `gh pr checks <url>` lists the failing checks and their links.
 - A GitHub Actions job (link `…/actions/runs/<run id>/job/<job id>`): the last ~150 lines of `gh run view <run id> --job <job id> --log-failed`.
 - CodeQL: `gh api "repos/{owner}/{repo}/code-scanning/alerts?pr=<n>&state=open" --jq '.[] | {rule: .rule.id, message: .most_recent_instance.message.text, path: .most_recent_instance.location.path, line: .most_recent_instance.location.start_line}'`.
@@ -183,7 +183,8 @@ Subagents can't run `gh`, so gather the evidence yourself:
 ### 3. Fix and review
 
 1. `git switch --no-track -C <headRefName> origin/<headRefName>` (`-C` resets a stale local copy to what the PR has). Note `git rev-parse --short HEAD` as the PR's previous head.
-2. Spawn **one** `factory-implementer` with the task's `model:` / `effort:` labels and this prompt:
+2. For a conflict, `git merge --no-edit origin/master`. If it completes on its own, there's nothing hand-written to review: push it (step 4) and let CI check it. A check that then fails comes back through `fix`. If it stops on conflicts, leave the merge in progress for the implementer.
+3. Spawn **one** `factory-implementer` with the task's `model:` / `effort:` labels and this prompt:
    ```
    TASK: <id> — <title>
    BRANCH: <headRefName> (already checked out; it is PR <url>)
@@ -191,22 +192,23 @@ Subagents can't run `gh`, so gather the evidence yourself:
    FAILING CHECKS:
    <per check: its name, then the log tail or the alert>
    ```
-3. `STATUS: BLOCKED` → **Hand back**. `STATUS: DONE` → confirm `git log --oneline origin/<headRefName>..HEAD` is non-empty and `git status --porcelain` is clean, then spawn a `factory-reviewer` with the task text, `BRANCH: <headRefName>`, `BASE: origin/master`, `PREVIOUS HEAD: <sha>`, the FAILING CHECKS, and the implementer's report.
-4. A first `VERDICT: FAIL` gets one fix round, as in `run` step 5. A second FAIL → **Hand back**.
+   For a conflict, replace the `FAILING CHECKS` block with `MERGE CONFLICT: a merge of origin/master is in progress; conflicting files: <git diff --name-only --diff-filter=U>`.
+4. `STATUS: BLOCKED` → **Hand back** (if a merge is still in progress, `git merge --abort` first). `STATUS: DONE` → confirm `git log --oneline origin/<headRefName>..HEAD` is non-empty and `git status --porcelain` is clean, then spawn a `factory-reviewer` with the task text, `BRANCH: <headRefName>`, `BASE: origin/master`, `PREVIOUS HEAD: <sha>`, the FAILING CHECKS or MERGE CONFLICT block, and the implementer's report.
+5. A first `VERDICT: FAIL` gets one fix round, as in `run` step 5. A second FAIL → **Hand back**.
 
 ### 4. Push (on PASS)
 
 1. `git push origin <headRefName>`. It's a plain push: if it's rejected because the branch moved, go to **Hand back**. Never force.
-2. Add one line at the end of the PR's `## Verification` list: read the body (`gh pr view <url> --json body`), add the line, then `gh pr edit <url> --body-file <tmp file>`. The line: `- Check fix (<short sha>): <the implementer's TLDR>`. Like the rest of the PR, it's public.
-3. `backlog task edit <id> --append-notes "factory: fixed failing <checks> on <PR url> in <short sha>, reviewer PASS"`.
+2. Add one line at the end of the PR's `## Verification` list: read the body (`gh pr view <url> --json body`), add the line, then `gh pr edit <url> --body-file <tmp file>`. The line: `- Check fix (<short sha>): <the implementer's TLDR>`, or for a conflict `- Merged master (<short sha>): <the implementer's TLDR, or "no conflicts">`. Like the rest of the PR, it's public.
+3. `backlog task edit <id> --append-notes "factory: fixed <the conflict | failing checks> on <PR url> in <short sha>, reviewer PASS"`.
 
 ### Hand back
 
-Don't push. `backlog task edit <id> --append-notes "factory: couldn't fix <checks> on <PR url> — <one line>"`. The task stays `In Review` for the human. In `auto` mode, notify `pr-checks-failed:<pr>:<head sha>` with that line.
+Don't push. `backlog task edit <id> --append-notes "factory: couldn't fix <the conflict | failing checks> on <PR url> — <one line>"`. The task stays `In Review` for the human. In `auto` mode, notify `pr-conflict:<pr>:<head sha>` or `pr-checks-failed:<pr>:<head sha>` with that line.
 
 ### Finish
 
-`git switch <remembered branch>`. Report: the PR, its failing checks, the verdict, and the pushed commit or why it was handed back.
+`git switch <remembered branch>`. Report: the PR, the conflict or its failing checks, the verdict, and the pushed commit or why it was handed back.
 
 ## auto
 
@@ -217,11 +219,10 @@ One unattended iteration, meant for `/loop /factory auto` in a dedicated clone o
 1. **Clone check.** The tree must be clean and on `master`. If not, notify `clone-dirty` and stop. Then `git fetch origin --prune` and fast-forward `master` (`git merge --ff-only origin/master`); if that fails, notify `clone-dirty` and stop.
 2. **`sync`** as above.
 3. **Interrupted work.** If a task is `In Progress`, an earlier iteration didn't finish. Notify `stuck:<task>` and stop; never reset it alone.
-4. **Conflicts.** For each task still `In Review`, if `gh pr view <url> --json mergeable` says `CONFLICTING`, notify `pr-conflict`. Don't resolve it yourself.
-5. **Failing checks.** If `fix` has a candidate PR (its step 1, which also notifies the PRs out of attempts), run `fix` on it exactly as in `fix` (the remembered branch is `master`), then stop: that fix is this iteration's one piece of work.
-6. **Human tasks.** For each `To Do` task labelled `ready-for-human` whose dependencies are all `Done`, notify `human-ready:<task>`.
-7. **Pick.** Take the first task from the ready frontier. If there is none, notify `idle:<open PRs>` ("nothing ready; waiting on your merges of #…") and stop.
-8. **`run`** that task exactly as in `run` (preflight through Finish; the remembered branch is `master`). After Publish, notify `pr-opened:<pr>`. After Hand to human, notify `handed:<task>` with the blocker in one line. If the size check split the task, notify `split:<task>` with the new task ids in one line.
-9. Stop after that one task or fix. In `/loop` dynamic mode, schedule the next iteration soon (about a minute) if the frontier still has a ready task or `fix` still has a candidate, otherwise 20–30 minutes.
+4. **Conflicts and failing checks.** If `fix` has a candidate PR (its step 1, which also notifies the PRs out of attempts), run `fix` on it exactly as in `fix` (the remembered branch is `master`), then stop: that fix is this iteration's one piece of work.
+5. **Human tasks.** For each `To Do` task labelled `ready-for-human` whose dependencies are all `Done`, notify `human-ready:<task>`.
+6. **Pick.** Take the first task from the ready frontier. If there is none, notify `idle:<open PRs>` ("nothing ready; waiting on your merges of #…") and stop.
+7. **`run`** that task exactly as in `run` (preflight through Finish; the remembered branch is `master`). After Publish, notify `pr-opened:<pr>`. After Hand to human, notify `handed:<task>` with the blocker in one line. If the size check split the task, notify `split:<task>` with the new task ids in one line.
+8. Stop after that one task or fix. In `/loop` dynamic mode, schedule the next iteration soon (about a minute) if the frontier still has a ready task or `fix` still has a candidate, otherwise 20–30 minutes.
 
-All invariants apply unchanged: one task at a time, never merge, never push to `master`, and open PRs or push to their branches only after a PASS.
+All invariants apply unchanged: one task at a time, never merge a PR, never push to `master`, and open PRs or push to their branches only after a PASS.

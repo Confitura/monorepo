@@ -23,6 +23,8 @@
       "Bash(gh auth status*)",
       "Bash(git fetch origin --prune*)",
       "Bash(git merge --ff-only origin/master*)",
+      "Bash(git merge --no-edit origin/master*)",
+      "Bash(git merge --abort*)",
       "Bash(git status*)",
       "Bash(git log *)",
       "Bash(git diff *)",

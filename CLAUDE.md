@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a monorepo for the **Confitura** conference management system, consisting of three modules:
 
-- **jelatyna-backend** — Spring Boot 3 REST API (Java 21, Maven)
+- **jelatyna-backend** — Spring Boot 3 REST API (Java 25, Maven)
 - **admin-app** — Vue 3 + Vuetify admin dashboard (TypeScript, pnpm)
 - **webpage** — Nuxt 3 public conference website (TypeScript, pnpm)
 
@@ -87,7 +87,7 @@ Docker Compose (`docker-compose.yml`) provides PostgreSQL (5432, `postgres:16.10
 
 GitHub Actions (`.github/workflows/run-tests.yml`) runs on pushes to `master` and on PRs. A `changes` job (`dorny/paths-filter`) gates each test job, so a job runs only when its paths change (backend: `jelatyna-backend/**` or `openapi.json`; webpage: `webpage/**`; admin-app: `admin-app/**` or `openapi.json`):
 
-- **test-backend**: JDK 21, `mvn -B package`, then `git diff --exit-code openapi.json` (fails if the regenerated spec drifts from the committed one)
+- **test-backend**: JDK 25, `mvn -B package`, then `git diff --exit-code openapi.json` (fails if the regenerated spec drifts from the committed one)
 - **test-frontend** (webpage): Node 24, pnpm 10.5.2, `pnpm install --frozen-lockfile → build → test`
 - **test-admin-app**: Node 24, pnpm 10.5.2, `pnpm install --frozen-lockfile → codegen + git diff --exit-code src/client (drift check) → typecheck → test:unit`
 
@@ -118,7 +118,7 @@ The backend logs structured ECS in prod, serves Prometheus metrics on a separate
 - **See traces in IntelliJ IDEA:** enable the OpenTelemetry plugin for the backend's run configuration and run it. The plugin sets `OTEL_EXPORTER_OTLP_*` variables pointing at its own receiver, which accepts **gRPC only**; Boot turns them into a gRPC span exporter, and each request appears in the plugin's tool window. Only traces go there: metrics stay on Prometheus, and logs are not forwarded.
 - **Prod opt-in:** prod exports nothing until `MANAGEMENT_TRACING_EXPORT_OTLP_ENABLED=true` is set. Coolify's `MANAGEMENT_OPENTELEMETRY_TRACING_EXPORT_OTLP_ENDPOINT` (`http://alloy:4318/v1/traces`, OTLP over HTTP) alone does nothing. Set the opt-in once a collector runs; no Grafana Cloud stack or Alloy container exists yet.
 
-gRPC goes through `opentelemetry-exporter-sender-grpc-managed-channel` on `grpc-netty-shaded`, HTTP through `opentelemetry-exporter-sender-jdk`. OTel's okhttp sender stays excluded in `pom.xml`: it needs okhttp 5, and scribejava pins okhttp 4. Boot 4.1 gotchas: tracing needs `spring-boot-starter-opentelemetry`; the OTLP endpoint property is `management.opentelemetry.tracing.export.otlp.endpoint`. Build the backend with **JDK 21** — JDK 23+ silently disables Lombok/QueryDSL annotation processing.
+gRPC goes through `opentelemetry-exporter-sender-grpc-managed-channel` on `grpc-netty-shaded`, HTTP through `opentelemetry-exporter-sender-jdk`. OTel's okhttp sender stays excluded in `pom.xml`: it needs okhttp 5, and scribejava pins okhttp 4. Boot 4.1 gotchas: tracing needs `spring-boot-starter-opentelemetry`; the OTLP endpoint property is `management.opentelemetry.tracing.export.otlp.endpoint`. Build the backend with **JDK 25**. Since JDK 23, javac runs no annotation processor it merely finds on the classpath, so `maven-compiler-plugin` lists every processor in `annotationProcessorPaths`: Lombok; querydsl-apt (jakarta) plus the Jakarta Persistence API it loads; and `spring-boot-configuration-processor`. The Q-classes come from querydsl-apt there, not from `apt-maven-plugin`, whose includes match no package. Add any new processor to that list, or it silently generates nothing.
 
 `docs/pii-in-logs.md` documents which log statements leaked personal data, the S1–S7 fixes applied, and the conventions to follow when adding logging: log entity ids rather than emails, mask an address when no id exists (`MessageInfo.maskedEmail()`), use allowlist `@ToString(onlyExplicitlyIncluded = true)` on anything holding PII, log third-party error envelopes rather than response bodies, and never put credentials in a query string.
 
@@ -140,12 +140,12 @@ The FAQ CMS (#563) and Sponsors CMS (#564) established the pattern for content t
 
 1. **Entity** (uuid2 id; add `published`, and `displayOrder` only if manual ordering is wanted) + **repository** with `@PreAuthorize("@security.isAdmin()")` on `save`/`deleteById`, a public `findPublished…`, and an admin `findAll…`.
 2. **Controller** `@RequestMapping("/things")`: `GET` (public, published only), `GET /all` (admin), `GET /{id}`, `POST`, `PUT /{id}`, `DELETE /{id}`; DTO (no audit fields) + nullable request record.
-3. **Publish**: add `dumpThings()` to `WebpageDataDumper` (writes `/things/….json`) and wire the repository into the `ArchiveConfiguration` dumper-bean constructor. Keep any legacy dump alive during a transition so consumers don't break.
+3. **Publish**: add `dumpThings(folder)` to `WebpageDataDumper` (writes `/things/….json`) and wire the repository into the `ArchiveConfiguration` dumper-bean constructor. Keep any legacy dump alive during a transition so consumers don't break.
 4. **Admin**: a `src/pages/admin/things.vue` (auto-routed via `definePage`) mirroring `admin/faq.vue`/`partners.vue` — list, create/edit dialog, `DialogConfirm` delete; `md-editor-v3` for markdown, `v-file-input` + the existing `POST /resources/…` for image upload. Regenerate the client (see above).
 5. **Webpage**: fetch `/things/….json` via `useArchiveFetch`, render with `marked`; fall back to any prior hardcoded data while the dump is empty.
 6. **Tests**: a `*ControllerTest` mirroring `FaqEntryControllerTest`/`PartnerControllerTest`; admin render + interaction spec mirroring `faq.spec.ts`/`partners.spec.ts`; a webpage assertion in `pages.nuxt.test.ts`.
 
-Data lands via the scheduled `WebpageDataDumper.dumpAll()` (~10 min) into the resource feed the webpage reads (`api.confitura.pl/api/resources/edition-2026/…`). Every schema change (new table, column, index, constraint) needs a new Flyway migration in `jelatyna-backend/src/main/resources/db/migration` **in the same PR**, named with the next zero-padded sequential version: `V00N__add_things.sql` (N = the next free number). Never edit a migration that is already on master. Hibernate only validates (`ddl-auto: validate`), so the Testcontainers suite fails if the migration is missing.
+Data lands via the scheduled `WebpageDataDumper.dumpAll()` (~10 min) into the Current Edition's folder of the resource feed (`api.confitura.pl/api/resources/edition-<year>/…`, ADR-0004); the webpage reads the folder named in its own config. Every schema change (new table, column, index, constraint) needs a new Flyway migration in `jelatyna-backend/src/main/resources/db/migration` **in the same PR**, named with the next zero-padded sequential version: `V00N__add_things.sql` (N = the next free number). Never edit a migration that is already on master. Hibernate only validates (`ddl-auto: validate`), so the Testcontainers suite fails if the migration is missing.
 
 ## Agent skills
 
@@ -163,9 +163,9 @@ Single-context: root `CONTEXT.md` + `docs/adr/`. See `docs/agents/domain.md`.
 
 ## Code factory
 
-`/factory` (`.claude/skills/factory/SKILL.md`) works the Backlog.md board **one task at a time**: `run [task-id]` takes the next `ready-for-agent` task whose dependencies are `Done`, branches `factory/<id>-<slug>` off `origin/master`, has the `factory-implementer` subagent build it, the separate `factory-reviewer` subagent check it, and only on a reviewer PASS opens a PR **ready for review** (task → `In Review`). A human still reviews and merges; `fix [pr]` makes a factory PR's failing checks (CI jobs, CodeQL alerts) pass with a reviewed commit on its branch, handing it back if the failure isn't the branch's fault. `sync` marks merged tasks `Done`. `setup` creates the board once. Watch it with `backlog browser` (http://localhost:6420).
+`/factory` (`.claude/skills/factory/SKILL.md`) works the Backlog.md board **one task at a time**: `run [task-id]` takes the next `ready-for-agent` task whose dependencies are `Done`, branches `factory/<id>-<slug>` off `origin/master`, has the `factory-implementer` subagent build it, the separate `factory-reviewer` subagent check it, and only on a reviewer PASS opens a PR **ready for review** (task → `In Review`). A human still reviews and merges; `fix [pr]` repairs a factory PR with a reviewed commit on its branch: it merges `master` in and resolves conflicts (never a rebase, which would need a force push), or makes failing checks (CI jobs, CodeQL alerts) pass, handing it back if the failure isn't the branch's fault. `sync` marks merged tasks `Done`. `setup` creates the board once. Watch it with `backlog browser` (http://localhost:6420).
 
-To run it unattended, start a Claude Code session in a **separate clone** of the repo (its `backlog/` symlinked to the main checkout's board and listed in that clone's `.git/info/exclude`) and run `/loop /factory auto`. Each iteration syncs, then fixes one PR's failing checks or runs one ready task, and sends a push notification only when a human is needed: a PR to review, a task handed over, a task split, failing checks it couldn't fix, a conflict, an interrupted task, an unblocked human task, or nothing left until PRs are merged.
+To run it unattended, start a Claude Code session in a **separate clone** of the repo (its `backlog/` symlinked to the main checkout's board and listed in that clone's `.git/info/exclude`) and run `/loop /factory auto`. Each iteration syncs, then repairs one PR (a conflict or failing checks) or runs one ready task, and sends a push notification only when a human is needed: a PR to review, a task handed over, a task split, a conflict or failing checks it couldn't fix, an interrupted task, an unblocked human task, or nothing left until PRs are merged.
 
 Factory PRs stay around **300 changed lines** (added plus deleted), hand-written only: `openapi.json`, `admin-app/src/client/**`, lockfiles, and verbatim schema dumps such as the Flyway baseline don't count. The maintainer prefers several small PRs over one big one, so cut tickets (`/to-tickets`) into slices that each fit and leave `master` green and wired. The lead splits a task that clearly won't fit into sequential, dependent tasks before branching; the implementer stops at a green checkpoint if it runs over and the remainder becomes a follow-up task; the reviewer fails an over-budget PR that gives no reason it couldn't be split (one migration plus its entity change is such a reason). The count goes in the report and the PR's Verification section.
 

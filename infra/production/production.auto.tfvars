@@ -165,7 +165,6 @@ applications = {
       "LISTMONK_BASE_URL"                                     = { value = "https://newsletter.confitura.pl/" }
       "LISTMONK_USERNAME"                                     = { value = "jelatyna" }
       "MANAGEMENT_OPENTELEMETRY_TRACING_EXPORT_OTLP_ENDPOINT" = { value = "http://alloy:4318/v1/traces" }
-      "NIXPACKS_JDK_VERSION"                                  = { value = "21" }
       "RESOURCES_FOLDER"                                      = { value = "/home/jelatyna/2017/files/new-photos" }
       "RESOURCES_RESOURCES_BASE_URL"                          = { value = "https://api.confitura.pl/api" }
       "SPRING_DATASOURCE_URL"                                 = { value = "jdbc:postgresql://pgw008ck8cg0kwgk88sswoo4:5432/confitura" }

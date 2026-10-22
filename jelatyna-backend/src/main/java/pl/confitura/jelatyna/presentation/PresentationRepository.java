@@ -20,6 +20,11 @@ public interface PresentationRepository extends Repository<Presentation, String>
 
     Presentation findById(String id);
 
+    // Admin pages show only the Current Edition (ADR-0004).
+    @PreAuthorize("@security.isAdmin()")
+    @Query("SELECT p FROM Presentation p WHERE p.edition.current = true")
+    List<Presentation> findAllInCurrentEdition();
+
     @PreAuthorize("@security.isAdmin()")
     List<Presentation> findAll();
 
@@ -32,6 +37,12 @@ public interface PresentationRepository extends Repository<Presentation, String>
            " left join fetch p.speakers " +
            " WHERE p.status ='accepted' ")
     List<Presentation> findAccepted();
+
+    @Query("SELECT p FROM Presentation p " +
+           " left join fetch p.tags " +
+           " left join fetch p.speakers " +
+           " WHERE p.status ='accepted' AND p.edition = :edition")
+    List<Presentation> findAcceptedIn(Edition edition);
 
     Long count();
 

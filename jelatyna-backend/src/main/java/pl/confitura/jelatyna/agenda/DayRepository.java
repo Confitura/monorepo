@@ -17,6 +17,9 @@ public interface DayRepository extends Repository<Day, String> {
     @Query("select day from Day day order by day.displayOrder")
     List<Day> findAll();
 
+    @Query("select day from Day day where day.edition = :edition order by day.displayOrder")
+    List<Day> findAllIn(Edition edition);
+
     boolean existsByEdition(Edition edition);
 
     @PreAuthorize("@security.isAdmin()")

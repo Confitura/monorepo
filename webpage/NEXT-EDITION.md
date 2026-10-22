@@ -7,14 +7,14 @@ Quick audit any time: `grep -rn "2026\|September 2\|Grzybowska\|edition-2026\|pa
 
 ## 1. Core event data — date, time & venue
 
-These drive the countdown, the banner, and the "add to calendar" feature. Get them right first.
+The conference dates and start time are **not hardcoded**: the countdown, the home banner's date line and
+the partners invitation read them from `edition.json`, which the backend publishes from the Current Edition
+(set them in the admin app). Without `edition.json` those elements are hidden. The calendar page and `.ics`
+(section 2) do **not** follow the Edition and still need updating by hand.
 
 - **`components/home/MainBanner.vue`**
-  - line ~16: banner date — `Warsaw | September 25–26, 2026`
   - line ~17: venue — `ADN Conference Center, Grzybowska 56`
   - line ~47: `let date = dayjs('2025-06-24T09:00')` — stale/legacy date constant; update or remove.
-- **`components/TheTimer.vue`** line ~30: countdown target — `dayjs('2026-09-25T09:00:00')`.
-- **`components/home/InvitePartners.vue`** line ~9: `Confitura 2026 is coming on September 25–26`.
 - **`pages/venue.vue`** line ~32: map center `{lat, lng}` — only if the venue moves.
 
 ## 2. Add-to-calendar feature (added for 2026)
