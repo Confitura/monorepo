@@ -5,6 +5,7 @@
       <article>
         <h2>{{ entry.title }}</h2>
         <small class="news-entry__date">{{ formatNewsDate(entry.publishedAt) }}</small>
+        <img v-if="entry.cover" class="news-cover" :src="photoUrl(entry.cover, 1200)" :alt="entry.title"/>
         <div class="news-entry__body" v-html="renderMarkdown(entry.body)"></div>
       </article>
     </Box>
@@ -27,6 +28,13 @@ if (!entry) {
 const title = `${entry.title} — Confitura`
 const description = plainText(entry.body)
 const url = `https://confitura.pl/news/${entry.slug}`
+// Without a cover the site-wide share image (and its 1200x630 size tags) stays; a cover's size is unknown.
+const coverMeta = entry.cover ? [
+  {property: 'og:image', content: entry.cover},
+  {property: 'og:image:width', content: undefined},
+  {property: 'og:image:height', content: undefined},
+  {name: 'twitter:image', content: entry.cover}
+] : []
 useHead({
   title,
   meta: [
@@ -37,7 +45,8 @@ useHead({
     {property: 'og:url', content: url},
     {name: 'twitter:card', content: 'summary_large_image'},
     {name: 'twitter:title', content: entry.title},
-    {name: 'twitter:description', content: description}
+    {name: 'twitter:description', content: description},
+    ...coverMeta
   ]
 })
 </script>
@@ -57,6 +66,12 @@ useHead({
 
   &__date {
     font-size: 1.5rem;
+  }
+
+  .news-cover {
+    display: block;
+    max-width: 100%;
+    margin: 2rem 0;
   }
 
   &__body {

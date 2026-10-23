@@ -10,6 +10,7 @@
           <small>{{ formatNewsDate(content.publishedAt) }}</small>
         </div>
         <div class="main-info">
+          <img v-if="content.cover" class="news-cover" :src="photoUrl(content.cover, 1200)" :alt="content.title"/>
           <div class="body" v-html="renderMarkdown(content.body)"></div>
         </div>
       </div>
@@ -110,6 +111,12 @@ useHead({
 .main-info {
   grid-area: mi;
   font-size: 1.75rem;
+
+  .news-cover {
+    display: block;
+    max-width: 100%;
+    margin-bottom: 2rem;
+  }
 }
 
 .additional-info {

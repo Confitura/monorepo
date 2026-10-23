@@ -15,8 +15,8 @@ const PARTNERS = [
 
 // newest first, as the backend dumps it
 const NEWS_ENTRIES = [
-  { title: 'Agenda is live', slug: 'agenda-is-live', body: 'See the **agenda** & plan your day.\n\nMore soon.', publishedAt: '2026-09-01T10:00:00Z' },
-  { title: 'Tickets', slug: 'tickets', body: '<p>Old <a href="https://x.pl">HTML</a> body</p>', publishedAt: '2026-08-20T19:12:42Z' },
+  { title: 'Agenda is live', slug: 'agenda-is-live', body: 'See the **agenda** & plan your day.\n\nMore soon.', publishedAt: '2026-09-01T10:00:00Z', cover: null },
+  { title: 'Tickets', slug: 'tickets', body: '<p>Old <a href="https://x.pl">HTML</a> body</p>', publishedAt: '2026-08-20T19:12:42Z', cover: 'https://api.confitura.pl/api/resources/photos/n2.png' },
 ]
 const NEWS = { latest: NEWS_ENTRIES[0], all: NEWS_ENTRIES }
 
@@ -154,6 +154,16 @@ describe('pages render without errors', () => {
     expect(wrapper.html()).toContain('<a href="https://x.pl">HTML</a>')
   })
 
+  it('shows a news entry cover above its body in the list, only for entries that have one', async () => {
+    const wrapper = await mountSuspended(NewsPage)
+    const entries = wrapper.findAll('.latest-news')
+    expect(entries[0].find('.news-cover').exists()).toBe(false)
+    const cover = entries[1].find('.news-cover')
+    expect(cover.attributes('src')).toBe('https://resources.confitura.pl/photos/n2.png?size=1200')
+    expect(cover.attributes('alt')).toBe('Tickets')
+    expect(entries[1].html().indexOf('news-cover')).toBeLessThan(entries[1].html().indexOf('class="body"'))
+  })
+
   it('links the home page banner to the newest news entry', async () => {
     const wrapper = await mountSuspended(IndexPage)
     const link = wrapper.find('.latest-news h2 a')
@@ -176,6 +186,28 @@ describe('pages render without errors', () => {
     expect(meta('og:description')).toBe('See the agenda & plan your day. More soon.')
     expect(meta('og:type')).toBe('article')
     expect(meta('og:url')).toBe('https://confitura.pl/news/agenda-is-live')
+    // No cover: the site-wide default share image from nuxt.config stays.
+    expect(meta('og:image')).toBe('https://confitura.pl/og-image.png')
+  })
+
+  it('shows the cover above the body on the news entry page, and nothing for an entry without one', async () => {
+    const without = await mountSuspended(NewsEntryPage, { route: '/news/agenda-is-live' })
+    expect(without.find('.news-cover').exists()).toBe(false)
+    const withCover = await mountSuspended(NewsEntryPage, { route: '/news/tickets' })
+    const cover = withCover.find('.news-entry .news-cover')
+    expect(cover.attributes('src')).toBe('https://resources.confitura.pl/photos/n2.png?size=1200')
+    expect(cover.attributes('alt')).toBe('Tickets')
+    expect(withCover.find('article').html().indexOf('news-cover'))
+      .toBeLessThan(withCover.find('article').html().indexOf('news-entry__body'))
+  })
+
+  it('shares the cover as the news entry image', async () => {
+    await mountSuspended(NewsEntryPage, { route: '/news/tickets' })
+    const content = (selector: string) => document.head.querySelector(selector)?.getAttribute('content')
+    await vi.waitFor(() => expect(content('meta[property="og:image"]')).toBe('https://api.confitura.pl/api/resources/photos/n2.png'))
+    expect(content('meta[name="twitter:image"]')).toBe('https://api.confitura.pl/api/resources/photos/n2.png')
+    // the site-wide 1200x630 size tags don't describe the cover
+    expect(document.head.querySelector('meta[property="og:image:width"]')).toBeNull()
   })
 
   it('answers 404 for an unknown news slug', async () => {
