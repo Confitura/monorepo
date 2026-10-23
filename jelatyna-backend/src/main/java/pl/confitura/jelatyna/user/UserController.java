@@ -4,6 +4,7 @@ import static com.timgroup.jgravatar.GravatarDefaultImage.BLANK;
 import static com.timgroup.jgravatar.GravatarRating.GENERAL_AUDIENCES;
 import static java.util.function.Predicate.not;
 import static java.util.stream.Collectors.toSet;
+import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static org.springframework.util.StringUtils.hasText;
@@ -22,6 +23,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.timgroup.jgravatar.Gravatar;
 import lombok.RequiredArgsConstructor;
@@ -170,6 +172,14 @@ public class UserController {
         presentationRepository.deleteById(presentationId);
     }
 
+    @PostMapping("/users/{userId}/presentations/{presentationId}/resubmit")
+    @PreAuthorize("@security.isOwner(#userId) && @security.presentationOwnedByUser(#presentationId)"
+            + " && !@security.isWorkshop(#presentationId)")
+    public ResponseEntity<InlinePresentation> resubmitPresentation(@PathVariable String userId,
+                                                                   @PathVariable String presentationId) {
+        return ResponseEntity.ok(new InlinePresentation(resubmit(userId, presentationId)));
+    }
+
     @PostMapping("/users/{userId}/workshops")
     @PreAuthorize("@security.isOwner(#userId)")
     public ResponseEntity<InlineWorkshop> addWorkshopToUser(@Valid @RequestBody WorkshopRequest workshopRequest,
@@ -212,6 +222,13 @@ public class UserController {
             + " && @security.canChangePresentation(#workshopId)")
     public void deleteWorkshop(@PathVariable String userId, @PathVariable String workshopId) {
         presentationRepository.deleteById(workshopId);
+    }
+
+    @PostMapping("/users/{userId}/workshops/{workshopId}/resubmit")
+    @PreAuthorize("@security.isOwner(#userId) && @security.presentationOwnedByUser(#workshopId)"
+            + " && @security.isWorkshop(#workshopId)")
+    public ResponseEntity<InlineWorkshop> resubmitWorkshop(@PathVariable String userId, @PathVariable String workshopId) {
+        return ResponseEntity.ok(new InlineWorkshop(resubmit(userId, workshopId)));
     }
 
     @GetMapping("/users/{id}/workshops")
@@ -281,6 +298,22 @@ public class UserController {
 
     private boolean canCreatePresentation() {
         return editionRepository.findCurrent().isC4pOpen() || security.isAdmin();
+    }
+
+    // Submit again (ADR-0004): copies a past Edition's talk or workshop into the Current Edition,
+    // with the user as its only speaker. A Current Edition's talk can still be edited, so it is refused.
+    private Presentation resubmit(String userId, String presentationId) {
+        if (!canCreatePresentation()) {
+            log.info("User {} tried to resubmit presentation after v4p is closed", userId);
+            throw new ResponseStatusException(FORBIDDEN);
+        }
+        Presentation original = presentationRepository.findById(presentationId);
+        if (original.getEdition().isCurrent()) {
+            throw new ResponseStatusException(CONFLICT, "Only a past Edition's talk can be submitted again");
+        }
+        Presentation copy = original.resubmittedBy(repository.findById(userId));
+        copy.setEdition(editionRepository.findCurrent());
+        return presentationRepository.save(copy);
     }
 
     private User updateUser(User user) {

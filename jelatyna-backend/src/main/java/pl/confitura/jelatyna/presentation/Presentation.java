@@ -121,6 +121,25 @@ public class Presentation {
                 .setStatus(STATUS_REPORTED);
     }
 
+    // Submit again (ADR-0004): the same talk as a fresh submission by one speaker, without the
+    // co-speakers, review or edition it had. The caller sets the edition.
+    public Presentation resubmittedBy(User speaker) {
+        return new Presentation()
+                .setSpeaker(speaker)
+                .setTitle(title)
+                .setShortDescription(shortDescription)
+                .setDescription(description)
+                .setLevel(level)
+                .setLanguage(language)
+                .setTags(new HashSet<>(tags))
+                .setWorkshop(workshop)
+                .setIsFree(isFree)
+                .setExpectedPrice(expectedPrice)
+                .setDurationInMinutes(durationInMinutes)
+                .setMaxGroupSize(maxGroupSize)
+                .setStatus(STATUS_REPORTED);
+    }
+
     boolean isOwnedBy(String email) {
         return speakers.stream().anyMatch(it -> it.getEmail().equalsIgnoreCase(email));
     }
