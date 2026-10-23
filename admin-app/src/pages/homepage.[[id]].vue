@@ -10,6 +10,8 @@ import {
   removeCospeaker as apiRemoveCospeaker,
   deleteWorkshop,
   deletePresentation,
+  resubmitPresentation,
+  resubmitWorkshop,
 } from '@/utils/api.ts'
 import type {
   EditionDto,
@@ -155,6 +157,23 @@ function deleteItem(
   }
 }
 
+// Copies a past Edition's talk into the Current Edition (ADR-0004), then shows the Current Edition.
+async function submitAgain(item: InlinePresentation | InlineWorkshop, workshop: boolean = false) {
+  try {
+    if (workshop) {
+      await resubmitWorkshop({ path: { userId, workshopId: item.id! }, throwOnError: true })
+    } else {
+      await resubmitPresentation({ path: { userId, presentationId: item.id! }, throwOnError: true })
+    }
+  } catch (error) {
+    Notify.error(`Failed to submit "${item.title}" again`)
+    return
+  }
+  Notify.success(`"${item.title}" submitted again`)
+  editionId.value = editions.value.find((e) => e.current)?.id
+  loadPresentations()
+}
+
 onMounted(() => {
   if (user) {
     loadPresentations()
@@ -266,6 +285,7 @@ function getColor(item: InlinePresentation | InlineWorkshop) {
                   <v-chip> {{ workshop.level }}</v-chip>
                   <v-chip v-for="tag in workshop.tags"> {{ tag }}</v-chip>
                   <v-spacer />
+                  <v-btn v-if="pastEdition" @click="submitAgain(workshop, true)">submit again</v-btn>
                   <v-btn v-if="!pastEdition" color="medium-emphasis" icon="mdi-delete" size="small">
                     <v-icon icon="mdi-delete" />
 
@@ -321,6 +341,7 @@ function getColor(item: InlinePresentation | InlineWorkshop) {
                   <v-chip> {{ presentation.level }}</v-chip>
                   <v-chip v-for="tag in presentation.tags"> {{ tag }}</v-chip>
                   <v-spacer />
+                  <v-btn v-if="pastEdition" @click="submitAgain(presentation)">submit again</v-btn>
                   <v-btn v-if="!pastEdition" color="medium-emphasis" icon="mdi-delete" size="small">
                     <v-icon icon="mdi-delete" />
 
