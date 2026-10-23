@@ -17,7 +17,7 @@ public interface AgendaRepository extends Repository<AgendaEntry, String> {
 
     // An entry follows its time slot's Day's Edition: the admin agenda edits only the Current Edition's (ADR-0004).
     @Query("from AgendaEntry entry where entry.id = :id " +
-           "and entry.timeSlot.id.dayId in (select day.id from Day day where day.edition.current = true)")
+           "and entry.timeSlot.id.editionId in (select edition.id from Edition edition where edition.current = true)")
     AgendaEntry findInCurrentEditionById(String id);
 
     @PreAuthorize("@security.isAdmin()")
@@ -26,7 +26,8 @@ public interface AgendaRepository extends Repository<AgendaEntry, String> {
     @Query("from AgendaEntry where timeSlot.forAllRooms = true")
     List<AgendaEntry> findEntriesForAllRooms();
 
-    List<AgendaEntry> findByTimeSlotIdDayId(String dayId);
+    @Query("from AgendaEntry entry where entry.timeSlot.id.editionId = :#{#day.edition.id} and entry.timeSlot.id.dayId = :#{#day.id}")
+    List<AgendaEntry> findByDay(Day day);
 
     List<AgendaEntry> findByTimeSlotId(TimeSlot.TimeSlotId timeSlotId);
 

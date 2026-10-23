@@ -147,7 +147,7 @@ public class AgendaInitializer {
 
     @NotNull
     private static TimeSlotId getTimeSlotId(Day day, int displayOrder) {
-        return new TimeSlotId(day.getId(), displayOrder);
+        return new TimeSlotId(day.getEdition().getId(), day.getId(), displayOrder);
     }
 
     private void createRoom(String id, String label, int displayOrder, Day day) {

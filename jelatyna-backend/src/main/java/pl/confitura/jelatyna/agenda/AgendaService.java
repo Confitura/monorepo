@@ -21,7 +21,7 @@ public class AgendaService {
     private final DayRepository dayRepository;
 
     public AgendaEntry createAgendaEntry(String dayId, int timeSlotPosition, String roomId, String label, String presentationId) {
-        TimeSlot timeSlot = timeSlotsRepository.findInCurrentEditionById(new TimeSlot.TimeSlotId(dayId, timeSlotPosition));
+        TimeSlot timeSlot = timeSlotsRepository.findInCurrentEditionById(dayId, timeSlotPosition);
         Room room = roomId != null ? roomRepository.findInCurrentEditionById(roomId) : null;
         Presentation presentation = presentationId != null ? presentationRepository.findById(presentationId) : null;
 
@@ -37,13 +37,13 @@ public class AgendaService {
      * in chronological order, so a slot may be added at any point of the day.
      */
     @Transactional
-    public TimeSlot createTimeSlot(String dayId, LocalTime start, LocalTime end, boolean forAllRooms) {
-        int displayOrder = timeSlotsRepository.findByIdDayId(dayId).stream()
+    public TimeSlot createTimeSlot(Day day, LocalTime start, LocalTime end, boolean forAllRooms) {
+        int displayOrder = timeSlotsRepository.findByDay(day).stream()
                 .mapToInt(TimeSlot::getDisplayOrder)
                 .max()
                 .orElse(-1) + 1;
         return timeSlotsRepository.save(new TimeSlot()
-                .setId(new TimeSlot.TimeSlotId(dayId, displayOrder))
+                .setId(day, displayOrder)
                 .setStart(start)
                 .setEnd(end)
                 .setForAllRooms(forAllRooms));
@@ -53,20 +53,19 @@ public class AgendaService {
      * Removes a time slot together with all agenda entries scheduled in it.
      */
     @Transactional
-    public void deleteTimeSlot(String dayId, int displayOrder) {
-        TimeSlot.TimeSlotId id = new TimeSlot.TimeSlotId(dayId, displayOrder);
+    public void deleteTimeSlot(TimeSlot.TimeSlotId id) {
         agendaRepository.findByTimeSlotId(id).forEach(entry -> agendaRepository.deleteById(entry.getId()));
         timeSlotsRepository.deleteById(id);
     }
 
     @Transactional
-    public Room createRoom(String dayId, String label, Integer displayOrder) {
-        int order = displayOrder != null ? displayOrder : nextRoomOrder(dayId);
+    public Room createRoom(Day day, String label, Integer displayOrder) {
+        int order = displayOrder != null ? displayOrder : nextRoomOrder(day);
         return roomRepository.save(new Room()
                 .setId(UUID.randomUUID().toString())
                 .setLabel(label)
                 .setDisplayOrder(order)
-                .setDay(dayRepository.findById(dayId)));
+                .setDay(day));
     }
 
     /**
@@ -82,15 +81,14 @@ public class AgendaService {
      * Removes a day together with its rooms, time slots and agenda entries.
      */
     @Transactional
-    public void deleteDay(String dayId) {
-        roomRepository.findByDayId(dayId).forEach(room -> deleteRoom(room.getId()));
-        timeSlotsRepository.findByIdDayId(dayId)
-                .forEach(slot -> deleteTimeSlot(dayId, slot.getDisplayOrder()));
-        dayRepository.deleteById(dayId);
+    public void deleteDay(Day day) {
+        roomRepository.findByDay(day).forEach(room -> deleteRoom(room.getId()));
+        timeSlotsRepository.findByDay(day).forEach(slot -> deleteTimeSlot(slot.getId()));
+        dayRepository.delete(day);
     }
 
-    private int nextRoomOrder(String dayId) {
-        return roomRepository.findByDayId(dayId).stream()
+    private int nextRoomOrder(Day day) {
+        return roomRepository.findByDay(day).stream()
                 .mapToInt(Room::getDisplayOrder)
                 .max()
                 .orElse(0) + 1;
@@ -101,8 +99,8 @@ public class AgendaService {
         return mergeTimeSlots(entries);
     }
 
-    public List<AgendaEntry> findByTimeSlotIdDayIdAndMerge(String dayId) {
-        List<AgendaEntry> entries = agendaRepository.findByTimeSlotIdDayId(dayId);
+    public List<AgendaEntry> findByDayAndMerge(Day day) {
+        List<AgendaEntry> entries = agendaRepository.findByDay(day);
         return mergeTimeSlots(entries);
     }
 
@@ -164,7 +162,8 @@ public class AgendaService {
         }
 
         private static boolean areInSequence(TimeSlot ts1, TimeSlot ts2, boolean allowBreak) {
-            boolean sameDay = ts1.getId().dayId().equals(ts2.getId().dayId());
+            boolean sameDay = ts1.getId().editionId().equals(ts2.getId().editionId())
+                    && ts1.getId().dayId().equals(ts2.getId().dayId());
             // Workshops may continue after a break, so their slots are merged even when a gap
             // (the break) separates them. Other presentations only merge when strictly adjacent.
             boolean inSequence = allowBreak

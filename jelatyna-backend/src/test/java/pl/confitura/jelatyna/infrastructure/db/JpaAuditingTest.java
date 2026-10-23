@@ -8,6 +8,7 @@ import pl.confitura.jelatyna.agenda.Day;
 import pl.confitura.jelatyna.agenda.DayRepository;
 import pl.confitura.jelatyna.agenda.Room;
 import pl.confitura.jelatyna.agenda.RoomRepository;
+import pl.confitura.jelatyna.edition.EditionRepository;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,13 +17,15 @@ class JpaAuditingTest extends BaseIntegrationTest {
 
     @Autowired
     DayRepository repository;
+    @Autowired
+    EditionRepository editionRepository;
 
     @Test
     @Transactional
     void shouldSaveAuditInfo() {
         SecurityHelper.asAdmin();
 
-        AuditedEntity saved = repository.save(new Day().setId("audited-day"));
+        AuditedEntity saved = repository.save(new Day().setId("audited-day").setEdition(editionRepository.findCurrent()));
 
         assertThat(saved).isNotNull();
         assertThat(saved.getCreatedDate()).isNotNull();
