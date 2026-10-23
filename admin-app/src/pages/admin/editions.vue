@@ -30,6 +30,10 @@ const emptyForm = () => ({
 const dialog = ref(false)
 const editing = ref(false)
 const form = ref(emptyForm())
+// The form shows minutes only. On edit, the stored instants are kept with their form text, so a date the
+// admin did not touch is sent back exactly as stored instead of rounded down to the minute.
+let stored: Record<string, { instant: string; text: string }> = {}
+const dateTimeFields = ['conferenceStart', 'c4pStart', 'c4pEnd'] as const
 // A save in flight: blocks a second Save and closing the dialog until it completes.
 const saving = ref(false)
 const requiredRule = (value: unknown) => !!String(value ?? '').trim() || 'This field is required'
@@ -83,6 +87,7 @@ function reload() {
 
 function openCreate() {
   editing.value = false
+  stored = {}
   form.value = emptyForm()
   dialog.value = true
 }
@@ -98,6 +103,10 @@ function openEdit(item: EditionDto) {
     c4pStart: item.c4pStart ? toWarsawInput(item.c4pStart) : '',
     c4pEnd: item.c4pEnd ? toWarsawInput(item.c4pEnd) : '',
   }
+  stored = {}
+  for (const field of dateTimeFields) {
+    if (item[field]) stored[field] = { instant: item[field], text: form.value[field] }
+  }
   dialog.value = true
 }
 
@@ -112,6 +121,14 @@ function saveRefusal(e: any) {
   }
 }
 
+// The stored instant while the field still shows its loaded text, otherwise the edited text read as Warsaw time.
+const instantOf = (field: (typeof dateTimeFields)[number]) => {
+  const text = form.value[field]
+  if (!text) return undefined
+  const original = stored[field]
+  return original?.text === text ? original.instant : fromWarsawInput(text)
+}
+
 function save() {
   if (problem.value || saving.value) return
   const f = form.value
@@ -119,11 +136,11 @@ function save() {
     // An update must repeat the stored year.
     year: f.year,
     name: f.name.trim(),
-    conferenceStart: fromWarsawInput(f.conferenceStart),
+    conferenceStart: instantOf('conferenceStart'),
     lastDay: f.lastDay,
     // The update replaces the whole Edition: leaving both out closes the C4P.
-    c4pStart: f.c4pStart ? fromWarsawInput(f.c4pStart) : undefined,
-    c4pEnd: f.c4pEnd ? fromWarsawInput(f.c4pEnd) : undefined,
+    c4pStart: instantOf('c4pStart'),
+    c4pEnd: instantOf('c4pEnd'),
   }
   saving.value = true
   // throwOnError: the generated client otherwise resolves with the error, which would look like a success.

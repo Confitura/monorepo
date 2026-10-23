@@ -260,14 +260,48 @@ describe('admin editions page', () => {
       body: {
         year: 2026,
         name: 'Confitura 2026!',
-        conferenceStart: '2026-09-25T07:00:00.000Z',
+        conferenceStart: '2026-09-25T07:00:00Z',
         lastDay: '2026-09-26',
-        c4pStart: '2026-01-10T09:30:00.000Z',
-        c4pEnd: '2026-12-31T22:30:00.000Z',
+        c4pStart: '2026-01-10T09:30:00Z',
+        c4pEnd: '2026-12-31T22:30:00Z',
       },
       throwOnError: true,
     })
     expect(vm.dialog).toBe(false)
+  })
+
+  it('keeps the stored seconds of the dates the admin did not change', async () => {
+    const wrapper = mountPage()
+    await flushPromises()
+    const vm = wrapper.vm as any
+    // the form shows minutes only, so 23:59:59 reads as 01:59 and must not be rounded down on save
+    vm.openEdit({
+      ...editions[1],
+      conferenceStart: '2025-09-26T07:00:30Z',
+      c4pStart: '2025-03-01T09:00:15Z',
+      c4pEnd: '2025-06-01T21:59:59Z',
+    })
+    vm.form.name = 'Confitura 2025!'
+    vm.save()
+    await flushPromises()
+    const body = api.updateEdition.mock.calls[0][0].body
+    expect(body.conferenceStart).toBe('2025-09-26T07:00:30Z')
+    expect(body.c4pStart).toBe('2025-03-01T09:00:15Z')
+    expect(body.c4pEnd).toBe('2025-06-01T21:59:59Z')
+  })
+
+  it('converts a date the admin changed from Warsaw time, keeping the others as stored', async () => {
+    const wrapper = mountPage()
+    await flushPromises()
+    const vm = wrapper.vm as any
+    vm.openEdit({ ...editions[1], c4pEnd: '2025-06-01T21:59:59Z' })
+    vm.form.c4pStart = '2025-03-02T10:00'
+    vm.save()
+    await flushPromises()
+    const body = api.updateEdition.mock.calls[0][0].body
+    expect(body.c4pStart).toBe('2025-03-02T09:00:00.000Z')
+    expect(body.c4pEnd).toBe('2025-06-01T21:59:59Z')
+    expect(body.conferenceStart).toBe('2025-09-26T07:00:00Z')
   })
 
   it('asks for the year only when creating', async () => {
