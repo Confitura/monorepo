@@ -140,7 +140,7 @@ class ChatControllerTest extends BaseIntegrationTest {
                         .header("X-Forwarded-For", "10.0.0.4")
                         .contentType(APPLICATION_JSON)
                         .content("{\"question\":\"" + longQuestion + "\"}"))
-                .andExpect(status().isPayloadTooLarge());
+                .andExpect(status().isContentTooLarge());
     }
 
     @Test

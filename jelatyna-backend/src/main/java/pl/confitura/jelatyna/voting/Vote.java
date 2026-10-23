@@ -8,7 +8,6 @@ import jakarta.validation.constraints.*;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
-import org.hibernate.annotations.GenericGenerator;
 import pl.confitura.jelatyna.presentation.Presentation;
 
 @Entity
@@ -17,8 +16,7 @@ import pl.confitura.jelatyna.presentation.Presentation;
 public class Vote {
 
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(columnDefinition = "varchar(100)")
     private String id;
     private String token;

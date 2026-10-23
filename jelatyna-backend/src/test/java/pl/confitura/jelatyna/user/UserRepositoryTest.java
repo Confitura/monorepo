@@ -35,7 +35,9 @@ public class UserRepositoryTest extends BaseIntegrationTest {
         User saved = repository.save(user);
 
         assertThat(repository.findById(saved.getId()))
-                .isEqualToComparingOnlyGivenFields(user, "name", "twitter");
+                .usingRecursiveComparison()
+                .comparingOnlyFields("name", "twitter")
+                .isEqualTo(user);
     }
 
     @Autowired

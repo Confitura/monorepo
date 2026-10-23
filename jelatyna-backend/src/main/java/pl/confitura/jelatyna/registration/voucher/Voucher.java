@@ -6,7 +6,6 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.Accessors;
-import org.hibernate.annotations.GenericGenerator;
 import pl.confitura.jelatyna.infrastructure.db.AuditedEntity;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -20,8 +19,7 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 public class Voucher  extends AuditedEntity {
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @GeneratedValue(strategy = GenerationType.UUID)
     @ToString.Include
     private String id;
 

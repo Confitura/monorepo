@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import lombok.experimental.Accessors;
-import org.hibernate.annotations.GenericGenerator;
 
 import lombok.Data;
 import pl.confitura.jelatyna.presentation.Presentation;
@@ -24,8 +23,7 @@ public class AgendaEntry {
 
 
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(columnDefinition = "varchar(100)")
     private String id;
 
