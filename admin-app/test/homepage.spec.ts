@@ -16,6 +16,8 @@ const api = vi.hoisted(() => ({
   getUserPresentations: vi.fn(),
   getUserWorkshops: vi.fn(),
   getById: vi.fn(),
+  resubmitPresentation: vi.fn(),
+  resubmitWorkshop: vi.fn(),
 }))
 
 vi.mock('@/utils/api.ts', () => api)
@@ -91,6 +93,7 @@ describe('homepage Editions', () => {
     expect(wrapper.text()).toContain("This year's workshop")
     expect(wrapper.findComponent(VSelect).exists()).toBe(false)
     expect(controls(wrapper)).toEqual(expect.arrayContaining(['submit new presentation', 'mdi-delete', 'mdi-pencil-outline', 'mdi-account-multiple']))
+    expect(controls(wrapper)).not.toContain('submit again')
   })
 
   it("shows a picked past Edition's talks with their ratings but without changing controls", async () => {
@@ -106,7 +109,38 @@ describe('homepage Editions', () => {
     expect(wrapper.text()).toContain("ratings of Last year's talk")
     expect(wrapper.text()).toContain("Last year's workshop")
     expect(wrapper.text()).not.toContain("This year's")
-    expect(controls(wrapper)).toEqual(['edit']) // the profile's, which stays
+    expect(controls(wrapper)).toEqual(['edit', 'submit again', 'submit again']) // the profile's edit stays
+  })
+
+  async function submitAgain(button: number) {
+    const wrapper = await mountPage([current, past])
+    await wrapper.findComponent(VSelect).setValue('e2025')
+    await flushPromises()
+    await wrapper.findAllComponents(VBtn).filter((b) => b.text() === 'submit again')[button]!.trigger('click')
+    await flushPromises()
+    return wrapper
+  }
+
+  it.each([
+    ['talk', 1, api.resubmitPresentation, { userId: 'u1', presentationId: "Last year's talk" }],
+    ['workshop', 0, api.resubmitWorkshop, { userId: 'u1', workshopId: "Last year's workshop" }],
+  ])("submits a past Edition's %s again and then shows the Current Edition with the copy", async (_, button, resubmit, path) => {
+    resubmit.mockResolvedValue({ data: {} })
+    const wrapper = await submitAgain(button)
+
+    expect(resubmit).toHaveBeenCalledWith({ path, throwOnError: true })
+    expect(wrapper.findComponent(VSelect).props('modelValue')).toBe('e2026')
+    expect(api.getUserPresentations).toHaveBeenLastCalledWith({ path: { id: 'u1' }, query: { editionId: 'e2026' } })
+    expect(wrapper.text()).toContain("This year's talk")
+    expect(wrapper.text()).not.toContain("Last year's")
+  })
+
+  it("stays on the past Edition when submitting again is refused", async () => {
+    api.resubmitPresentation.mockRejectedValue(new Error('403'))
+    const wrapper = await submitAgain(1)
+
+    expect(wrapper.findComponent(VSelect).props('modelValue')).toBe('e2025')
+    expect(wrapper.text()).toContain("Last year's talk")
   })
 
   it("shows only the picked Edition's talks when the default load answers after the pick", async () => {
