@@ -3355,6 +3355,25 @@ export type UpdatePresentationResponses = {
 
 export type UpdatePresentationResponse = UpdatePresentationResponses[keyof UpdatePresentationResponses];
 
+export type ResubmitPresentationData = {
+    body?: never;
+    path: {
+        userId: string;
+        presentationId: string;
+    };
+    query?: never;
+    url: '/users/{userId}/presentations/{presentationId}/resubmit';
+};
+
+export type ResubmitPresentationResponses = {
+    /**
+     * OK
+     */
+    200: InlinePresentation;
+};
+
+export type ResubmitPresentationResponse = ResubmitPresentationResponses[keyof ResubmitPresentationResponses];
+
 export type MarkAsVolunteerData = {
     body?: never;
     path: {
@@ -3429,6 +3448,25 @@ export type UpdateWorkshopResponses = {
 };
 
 export type UpdateWorkshopResponse = UpdateWorkshopResponses[keyof UpdateWorkshopResponses];
+
+export type ResubmitWorkshopData = {
+    body?: never;
+    path: {
+        userId: string;
+        workshopId: string;
+    };
+    query?: never;
+    url: '/users/{userId}/workshops/{workshopId}/resubmit';
+};
+
+export type ResubmitWorkshopResponses = {
+    /**
+     * OK
+     */
+    200: InlineWorkshop;
+};
+
+export type ResubmitWorkshopResponse = ResubmitWorkshopResponses[keyof ResubmitWorkshopResponses];
 
 export type SaveData = {
     body: VoteRequest;
