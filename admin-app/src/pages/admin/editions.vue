@@ -40,11 +40,15 @@ function c4pOpen(item: EditionDto) {
 }
 
 function reload() {
-  getAllEditions()
+  // throwOnError: the generated client otherwise resolves with the error, which would blank the list.
+  getAllEditions({ throwOnError: true })
     .then((res) => {
       editions.value = res.data ?? []
     })
-    .catch((e) => console.error(e))
+    .catch((e) => {
+      console.error(e)
+      Notify.error('Failed to load Editions')
+    })
 }
 
 // The API gives no response body, so the reason comes from the status code.

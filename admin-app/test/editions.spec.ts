@@ -174,4 +174,18 @@ describe('admin editions page', () => {
     // the list is stale, so it is reloaded
     expect(api.getAllEditions).toHaveBeenCalledTimes(2)
   })
+
+  it('shows an error and keeps the list when a reload fails', async () => {
+    vi.spyOn(console, 'error').mockImplementation(() => {})
+    const wrapper = mountPage()
+    await flushPromises()
+    api.getAllEditions.mockRejectedValue({ response: { status: 500 } })
+    ;(wrapper.vm as any).reload()
+    await flushPromises()
+    expect(api.getAllEditions).toHaveBeenLastCalledWith({ throwOnError: true })
+    expect(rowsOf(wrapper)).toHaveLength(3)
+    const notifications = useNotificationStore().addNotification as ReturnType<typeof vi.fn>
+    expect(notifications.mock.calls[0][1]).toBe('error')
+    expect(notifications.mock.calls[0][0]).toContain('Failed to load')
+  })
 })
