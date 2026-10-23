@@ -3,7 +3,13 @@ import DialogConfirm from '@/components/DialogConfirm.vue'
 import type { DataTableHeaders } from '@/plugins/vuetify'
 import { MdEditor } from 'md-editor-v3'
 import 'md-editor-v3/lib/style.css'
-import { getAllNewsEntries, createNewsEntry, updateNewsEntry, deleteNewsEntry } from '@/utils/api.ts'
+import {
+  getAllNewsEntries,
+  createNewsEntry,
+  updateNewsEntry,
+  deleteNewsEntry,
+  storeNewsEntryCover,
+} from '@/utils/api.ts'
 import { fromWarsawInput, toWarsawInput } from '@/utils/warsaw-time'
 import type { NewsEntryDto } from '@/client'
 
@@ -27,6 +33,9 @@ const form = ref<NewsEntryDto>({ title: '', slug: '', body: '', published: false
 // The date as typed in the datetime-local field: Warsaw wall-clock time, 'YYYY-MM-DDTHH:mm'.
 const dateInput = ref('')
 const savedSlug = ref('')
+// A chosen file is uploaded after the save, replacing any cover; a removed one is cleared by the save.
+const coverFile = ref<File | null>(null)
+const coverRemoved = ref(false)
 // A save in flight: blocks a second Save and closing or switching the editor until it completes.
 const saving = ref(false)
 const requiredRule = (value: string) => !!value?.trim() || 'This field is required'
@@ -73,6 +82,8 @@ function openCreate() {
   form.value = { title: '', slug: '', body: '', published: false }
   dateInput.value = toWarsawInput(new Date().toISOString())
   savedSlug.value = ''
+  coverFile.value = null
+  coverRemoved.value = false
   dialog.value = true
 }
 
@@ -81,7 +92,14 @@ function openEdit(item: NewsEntryDto) {
   form.value = { ...item }
   dateInput.value = toWarsawInput(item.date!)
   savedSlug.value = item.slug ?? ''
+  coverFile.value = null
+  coverRemoved.value = false
   dialog.value = true
+}
+
+function removeCover() {
+  form.value.cover = undefined
+  coverRemoved.value = true
 }
 
 function save() {
@@ -93,21 +111,41 @@ function save() {
     body: form.value.body,
     date: fromWarsawInput(dateInput.value),
     published: form.value.published,
+    // Sent only to remove the cover: left out, the server keeps it.
+    removeCover: coverRemoved.value || undefined,
   }
+  const created = !editing.value
+  let uploading = false
   saving.value = true
   // throwOnError: the generated client otherwise resolves with the error, which would look like a success.
   const request = editing.value
     ? updateNewsEntry({ path: { id: form.value.id! }, body, throwOnError: true })
     : createNewsEntry({ body, throwOnError: true })
   request
+    .then(({ data }) => {
+      // Saved: should the upload fail, saving again updates this entry rather than creating another.
+      editing.value = true
+      form.value.id = data.id
+      savedSlug.value = data.slug ?? ''
+      if (!coverFile.value) return
+      uploading = true
+      return storeNewsEntryCover({ path: { id: data.id! }, body: { file: coverFile.value }, throwOnError: true })
+    })
     .then(() => {
-      Notify.success(editing.value ? 'News entry updated' : 'News entry created')
+      Notify.success(created ? 'News entry created' : 'News entry updated')
       dialog.value = false
       reload()
     })
     .catch((e) => {
       console.error(e)
-      Notify.error('Failed to save news entry (is the slug already in use?)')
+      if (!uploading) {
+        Notify.error('Failed to save news entry (is the slug already in use?)')
+        return
+      }
+      // The entry is saved, so it is listed; the dialog stays open to retry the upload.
+      reload()
+      const tooLarge = (e as { status?: number })?.status === 413
+      Notify.error(`News entry saved, but ${tooLarge ? 'the cover file is too large' : 'uploading the cover failed'}`)
     })
     .finally(() => {
       saving.value = false
@@ -130,7 +168,7 @@ function confirmDelete(item: NewsEntryDto) {
 }
 
 onMounted(reload)
-defineExpose({ confirmDelete, reload, entries, openCreate, openEdit, save, form, dateInput, editing })
+defineExpose({ confirmDelete, reload, entries, openCreate, openEdit, save, form, dateInput, editing, coverFile })
 </script>
 
 <template>
@@ -183,6 +221,16 @@ defineExpose({ confirmDelete, reload, entries, openCreate, openEdit, save, form,
             :rules="[requiredRule]"
           />
           <v-switch v-model="form.published" label="Published" color="primary" />
+          <v-file-input
+            v-model="coverFile"
+            label="Cover image"
+            accept="image/png,image/jpeg,image/gif,image/webp,image/svg+xml"
+            prepend-icon="mdi-image-outline"
+          />
+          <div v-if="form.cover && !coverFile" class="d-flex align-center ga-2 mb-4">
+            <img :src="form.cover" alt="Cover" height="80" />
+            <v-btn variant="text" prepend-icon="mdi-delete-outline" @click="removeCover">Remove cover</v-btn>
+          </div>
           <MdEditor v-model="form.body" :theme="mdTheme" language="en-US" style="height: 400px" />
         </v-card-text>
         <v-card-actions>

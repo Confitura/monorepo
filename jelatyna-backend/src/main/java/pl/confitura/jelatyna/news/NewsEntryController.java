@@ -70,7 +70,8 @@ public class NewsEntryController {
 
     /**
      * Changes only the fields given. A new title keeps the slug, so shared links keep working; a new
-     * slug is refused like a given one on create, but the entry's own current slug never clashes.
+     * slug is refused like a given one on create, but the entry's own current slug never clashes. The
+     * cover is set only by the upload, POST /resources/news-entries/{id}, and removed by removeCover.
      */
     @PutMapping("/{id}")
     public ResponseEntity<NewsEntryDto> updateNewsEntry(@PathVariable String id, @RequestBody NewsEntryRequest request) {
@@ -89,6 +90,7 @@ public class NewsEntryController {
         if (request.body() != null) entry.setBody(request.body());
         if (request.date() != null) entry.setDate(request.date());
         if (request.published() != null) entry.setPublished(request.published());
+        if (Boolean.TRUE.equals(request.removeCover())) entry.setCover(null);
         return ResponseEntity.ok(NewsEntryDto.from(repository.save(entry)));
     }
 

@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.springframework.web.multipart.MultipartFile;
 
+import pl.confitura.jelatyna.news.NewsEntryRepository;
 import pl.confitura.jelatyna.partner.Partner;
 import pl.confitura.jelatyna.partner.PartnerRepository;
 import pl.confitura.jelatyna.user.UserRepository;
@@ -28,7 +29,7 @@ class ResourceStorageTest {
     private ResourceStorage storage() {
         ResourceConfigurationProperties properties =
                 new ResourceConfigurationProperties("resources", folder.toString(), "https://res.example");
-        return new ResourceStorage(properties, userRepository, partnerRepository);
+        return new ResourceStorage(properties, userRepository, partnerRepository, mock(NewsEntryRepository.class));
     }
 
     private MultipartFile file(String originalFilename) throws IOException {

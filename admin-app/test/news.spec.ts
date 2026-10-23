@@ -23,6 +23,7 @@ const api = vi.hoisted(() => ({
   createNewsEntry: vi.fn(),
   updateNewsEntry: vi.fn(),
   deleteNewsEntry: vi.fn(),
+  storeNewsEntryCover: vi.fn(),
 }))
 
 vi.mock('@/utils/api.ts', () => api)
@@ -52,6 +53,7 @@ describe('admin news page', () => {
     api.createNewsEntry.mockResolvedValue({ data: {}, status: 200 })
     api.updateNewsEntry.mockResolvedValue({ data: {}, status: 200 })
     api.deleteNewsEntry.mockResolvedValue({ status: 204 })
+    api.storeNewsEntryCover.mockResolvedValue({ status: 200 })
   })
 
   afterEach(() => {
@@ -124,6 +126,77 @@ describe('admin news page', () => {
       body: { title: 'Big news', slug: undefined, body: '**Hello**', date: '2026-11-02T07:15:00.000Z', published: true },
       throwOnError: true,
     })
+    expect(api.storeNewsEntryCover).not.toHaveBeenCalled()
+  })
+
+  it('uploads a chosen cover to the entry the create returns', async () => {
+    api.createNewsEntry.mockResolvedValue({ data: { id: 'n-new', slug: 'big-news' }, status: 201 })
+    const wrapper = mountPage()
+    await flushPromises()
+    const vm = wrapper.vm as any
+    vm.openCreate()
+    vm.form.title = 'Big news'
+    const cover = new File(['x'], 'cover.png', { type: 'image/png' })
+    vm.coverFile = cover
+    vm.save()
+    await flushPromises()
+    expect(api.storeNewsEntryCover).toHaveBeenCalledWith({ path: { id: 'n-new' }, body: { file: cover }, throwOnError: true })
+    expect(document.body.textContent).not.toContain('Add news entry')
+  })
+
+  it('replaces the cover of an entry being edited, keeping it until the upload', async () => {
+    api.updateNewsEntry.mockResolvedValue({ data: { ...entries[1], cover: 'https://res/n2.png' }, status: 200 })
+    const wrapper = mountPage()
+    await flushPromises()
+    const vm = wrapper.vm as any
+    vm.openEdit({ ...entries[1], cover: 'https://res/n2.png' })
+    const cover = new File(['x'], 'new.jpg', { type: 'image/jpeg' })
+    vm.coverFile = cover
+    vm.save()
+    await flushPromises()
+    expect(api.updateNewsEntry.mock.calls[0][0].body.removeCover).toBeUndefined()
+    expect(api.storeNewsEntryCover).toHaveBeenCalledWith({ path: { id: 'n2' }, body: { file: cover }, throwOnError: true })
+  })
+
+  it('shows the cover of an entry being edited and removes it on save', async () => {
+    api.updateNewsEntry.mockResolvedValue({ data: entries[1], status: 200 })
+    const wrapper = mountPage()
+    await flushPromises()
+    const vm = wrapper.vm as any
+    vm.openEdit({ ...entries[1], cover: 'https://res/n2.png' })
+    await flushPromises()
+    expect(document.body.querySelector('img[src="https://res/n2.png"]')).not.toBeNull()
+    const remove = [...document.body.querySelectorAll('button')].find((b) => b.textContent?.trim() === 'Remove cover')!
+    remove.click()
+    await flushPromises()
+    expect(document.body.querySelector('img[src="https://res/n2.png"]')).toBeNull()
+    vm.save()
+    await flushPromises()
+    expect(api.updateNewsEntry.mock.calls[0][0].body.removeCover).toBe(true)
+    expect(api.storeNewsEntryCover).not.toHaveBeenCalled()
+  })
+
+  it('keeps an entry whose cover upload failed, so saving again updates it rather than creating another', async () => {
+    vi.spyOn(console, 'error').mockImplementation(() => {})
+    api.createNewsEntry.mockResolvedValue({ data: { id: 'n-new', slug: 'big-news' }, status: 201 })
+    api.updateNewsEntry.mockResolvedValue({ data: { id: 'n-new', slug: 'big-news' }, status: 200 })
+    api.storeNewsEntryCover.mockRejectedValueOnce({ status: 413 })
+    const wrapper = mountPage()
+    await flushPromises()
+    const vm = wrapper.vm as any
+    vm.openCreate()
+    vm.form.title = 'Big news'
+    vm.coverFile = new File(['x'], 'huge.png', { type: 'image/png' })
+    vm.save()
+    await flushPromises()
+    const notifications = useNotificationStore().addNotification as ReturnType<typeof vi.fn>
+    expect(notifications).toHaveBeenCalledWith('News entry saved, but the cover file is too large', 'error')
+    expect(document.body.textContent).toContain('Edit news entry')
+    vm.save()
+    await flushPromises()
+    expect(api.createNewsEntry).toHaveBeenCalledTimes(1)
+    expect(api.updateNewsEntry.mock.calls[0][0].path).toEqual({ id: 'n-new' })
+    expect(api.storeNewsEntryCover).toHaveBeenCalledTimes(2)
   })
 
   it('sends a chosen slug when creating', async () => {

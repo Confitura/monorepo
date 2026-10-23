@@ -864,6 +864,9 @@
           "body" : {
             "type" : "string"
           },
+          "cover" : {
+            "type" : "string"
+          },
           "date" : {
             "format" : "date-time",
             "type" : "string"
@@ -893,6 +896,9 @@
             "type" : "string"
           },
           "published" : {
+            "type" : "boolean"
+          },
+          "removeCover" : {
             "type" : "boolean"
           },
           "slug" : {
@@ -4682,6 +4688,44 @@
           "bearerAuth" : [ ]
         } ],
         "tags" : [ "admin-presentation-controller" ]
+      }
+    },
+    "/resources/news-entries/{id}" : {
+      "post" : {
+        "description" : "Upload a Multipart file for the news entry's cover image, replacing any it had",
+        "operationId" : "storeNewsEntryCover",
+        "parameters" : [ {
+          "description" : "ID of the news entry",
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "multipart/form-data" : {
+              "schema" : {
+                "properties" : {
+                  "file" : {
+                    "format" : "binary",
+                    "type" : "string"
+                  }
+                },
+                "type" : "object"
+              }
+            }
+          },
+          "description" : "File to upload"
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        },
+        "summary" : "Store news entry cover",
+        "tags" : [ "resource-controller" ]
       }
     },
     "/resources/partners/{id}" : {
