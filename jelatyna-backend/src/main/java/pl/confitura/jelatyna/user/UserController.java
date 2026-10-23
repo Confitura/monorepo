@@ -29,6 +29,8 @@ import pl.confitura.jelatyna.api.model.InlinePresentation;
 import pl.confitura.jelatyna.api.model.InlineWorkshop;
 import pl.confitura.jelatyna.api.model.PresentationRequest;
 import pl.confitura.jelatyna.api.model.WorkshopRequest;
+import pl.confitura.jelatyna.edition.Edition;
+import pl.confitura.jelatyna.edition.EditionDto;
 import pl.confitura.jelatyna.edition.EditionRepository;
 import pl.confitura.jelatyna.infrastructure.security.JelatynaPrincipal;
 import pl.confitura.jelatyna.infrastructure.security.Security;
@@ -86,14 +88,22 @@ public class UserController {
 
     @GetMapping("/users/{id}/presentations")
     @PreAuthorize("@security.isOwner(#id)")
-    public ResponseEntity<List<InlinePresentation>> getUserPresentations(@PathVariable String id) {
+    public ResponseEntity<List<InlinePresentation>> getUserPresentations(@PathVariable String id,
+                                                                         @RequestParam(required = false) String editionId) {
         User user = repository.findById(id);
-        List<InlinePresentation> presentations = presentationRepository.findBySpeakersContains(user)
+        List<InlinePresentation> presentations = presentationRepository.findBySpeakersContainsAndEdition(user, editionOrCurrent(editionId))
                 .stream()
                 .filter(not(Presentation::isWorkshop))
                 .map(InlinePresentation::new)
                 .toList();
         return ResponseEntity.ok(presentations);
+    }
+
+    /** The Current Edition and every Edition the user has a talk or workshop in, newest year first. */
+    @GetMapping("/users/{id}/editions")
+    @PreAuthorize("@security.isOwner(#id)")
+    public List<EditionDto> getUserEditions(@PathVariable String id) {
+        return editionRepository.findCurrentAndSpokenInBy(id).stream().map(EditionDto::from).toList();
     }
 
     @GetMapping("/users/{id}/presentations/{presentationId}")
@@ -206,9 +216,10 @@ public class UserController {
 
     @GetMapping("/users/{id}/workshops")
     @PreAuthorize("@security.isOwner(#id)")
-    public ResponseEntity<List<InlineWorkshop>> getUserWorkshops(@PathVariable String id) {
+    public ResponseEntity<List<InlineWorkshop>> getUserWorkshops(@PathVariable String id,
+                                                                 @RequestParam(required = false) String editionId) {
         var user = repository.getReferenceById(id);
-        var presentations = presentationRepository.findBySpeakersContains(user)
+        var presentations = presentationRepository.findBySpeakersContainsAndEdition(user, editionOrCurrent(editionId))
                 .stream()
                 .filter(Presentation::isWorkshop)
                 .map(InlineWorkshop::new)
@@ -261,6 +272,11 @@ public class UserController {
             String url = gravatar.getUrl(user.getEmail());
             user.setPhoto(url.replace("http:", "https:"));
         }
+    }
+
+    // The speaker homepage opens on the Current Edition (ADR-0004).
+    private Edition editionOrCurrent(String editionId) {
+        return editionId == null ? editionRepository.findCurrent() : editionRepository.findById(editionId);
     }
 
     private boolean canCreatePresentation() {

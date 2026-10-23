@@ -5217,6 +5217,35 @@
         "tags" : [ "user-controller" ]
       }
     },
+    "/users/{id}/editions" : {
+      "get" : {
+        "operationId" : "getUserEditions",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/EditionDto"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "user-controller" ]
+      }
+    },
     "/users/{id}/logins" : {
       "get" : {
         "operationId" : "getUserLogins",
@@ -5285,6 +5314,13 @@
           "in" : "path",
           "name" : "id",
           "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "query",
+          "name" : "editionId",
+          "required" : false,
           "schema" : {
             "type" : "string"
           }
@@ -5373,6 +5409,13 @@
           "in" : "path",
           "name" : "id",
           "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "query",
+          "name" : "editionId",
+          "required" : false,
           "schema" : {
             "type" : "string"
           }
