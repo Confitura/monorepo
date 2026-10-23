@@ -55,5 +55,7 @@ public interface PresentationRepository extends Repository<Presentation, String>
 
     List<Presentation> findBySpeakersContains(User speakers);
 
+    List<Presentation> findBySpeakersContainsAndEdition(User speaker, Edition edition);
+
     boolean existsByEdition(Edition edition);
 }

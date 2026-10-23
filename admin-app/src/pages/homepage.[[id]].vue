@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import {
+  getUserEditions,
   getUserPresentations,
   getUserWorkshops,
   getById,
@@ -11,6 +12,7 @@ import {
   deletePresentation,
 } from '@/utils/api.ts'
 import type {
+  EditionDto,
   InlinePresentation,
   InlineWorkshop,
   User,
@@ -38,18 +40,41 @@ const selectedPresentation = ref<InlinePresentation | null>(null)
 const selectedWorkshop = ref<InlineWorkshop | null>(null)
 const cospeakersDialogVisible = ref(false)
 const isWorkshop = ref(false)
+const editions = ref<EditionDto[]>([])
+// Unset until the Editions load; the API then lists the Current Edition's talks.
+const editionId = ref<string>()
+// A past Edition's talks are read-only for speakers (ADR-0004).
+const pastEdition = computed(() =>
+  editions.value.some((e) => e.id === editionId.value && !e.current),
+)
 
 const user = useAuthStore().user
 const userId = (route?.params as { id?: string })?.id || user?.jti || ''
 
-function loadPresentations() {
-  getUserPresentations({ path: { id: userId } })
-    .then((res) => res.data)
-    .then((data) => (presentations.value = data ?? []))
+// Only the latest load may fill the lists, so a slow answer for an earlier pick is dropped.
+// A counter, not the Edition id: the default load has none, yet the Current Edition gets preselected.
+let latestLoad = 0
 
-  getUserWorkshops({ path: { id: userId } })
+function loadPresentations() {
+  const load = ++latestLoad
+  const options = { path: { id: userId }, query: { editionId: editionId.value } }
+  getUserPresentations(options)
     .then((res) => res.data)
-    .then((data) => (workshops.value = data ?? []))
+    .then((data) => { if (load === latestLoad) presentations.value = data ?? [] })
+
+  getUserWorkshops(options)
+    .then((res) => res.data)
+    .then((data) => { if (load === latestLoad) workshops.value = data ?? [] })
+}
+
+// The Current Edition is always listed, so the picker shows only for talks outside it.
+function loadEditions() {
+  getUserEditions({ path: { id: userId } })
+    .then((res) => res.data)
+    .then((data) => {
+      editions.value = data ?? []
+      editionId.value = editions.value.find((e) => e.current)?.id
+    })
 }
 
 function loadUserProfile() {
@@ -133,6 +158,7 @@ function deleteItem(
 onMounted(() => {
   if (user) {
     loadPresentations()
+    loadEditions()
     loadUserProfile()
   }
 })
@@ -202,10 +228,21 @@ function getColor(item: InlinePresentation | InlineWorkshop) {
       </v-col>
       <v-col cols="12" md="8">
         <v-container>
+          <v-row v-if="editions.length > 1">
+            <v-select
+              v-model="editionId"
+              :items="editions"
+              item-title="name"
+              item-value="id"
+              label="Edition"
+              @update:model-value="loadPresentations"
+            />
+          </v-row>
           <v-row>
             <h2>Workshops</h2>
 
             <v-btn
+              v-if="!pastEdition"
               size="large"
               class="submit-new"
               :to="'/workshop-form/new/' + userId"
@@ -229,7 +266,7 @@ function getColor(item: InlinePresentation | InlineWorkshop) {
                   <v-chip> {{ workshop.level }}</v-chip>
                   <v-chip v-for="tag in workshop.tags"> {{ tag }}</v-chip>
                   <v-spacer />
-                  <v-btn color="medium-emphasis" icon="mdi-delete" size="small">
+                  <v-btn v-if="!pastEdition" color="medium-emphasis" icon="mdi-delete" size="small">
                     <v-icon icon="mdi-delete" />
 
                     <v-menu activator="parent">
@@ -240,6 +277,7 @@ function getColor(item: InlinePresentation | InlineWorkshop) {
                   </v-btn>
 
                   <v-btn
+                    v-if="!pastEdition"
                     color="medium-emphasis"
                     icon="mdi-pencil-outline"
                     size="small"
@@ -247,6 +285,7 @@ function getColor(item: InlinePresentation | InlineWorkshop) {
                   />
 
                   <v-btn
+                    v-if="!pastEdition"
                     color="medium-emphasis"
                     icon="mdi-account-multiple"
                     size="small"
@@ -262,6 +301,7 @@ function getColor(item: InlinePresentation | InlineWorkshop) {
             <h2>Presentations</h2>
 
             <v-btn
+              v-if="!pastEdition"
               size="large"
               class="submit-new"
               :to="'/presentation-form/new/' + userId"
@@ -281,7 +321,7 @@ function getColor(item: InlinePresentation | InlineWorkshop) {
                   <v-chip> {{ presentation.level }}</v-chip>
                   <v-chip v-for="tag in presentation.tags"> {{ tag }}</v-chip>
                   <v-spacer />
-                  <v-btn color="medium-emphasis" icon="mdi-delete" size="small">
+                  <v-btn v-if="!pastEdition" color="medium-emphasis" icon="mdi-delete" size="small">
                     <v-icon icon="mdi-delete" />
 
                     <v-menu activator="parent">
@@ -292,6 +332,7 @@ function getColor(item: InlinePresentation | InlineWorkshop) {
                   </v-btn>
 
                   <v-btn
+                    v-if="!pastEdition"
                     color="medium-emphasis"
                     icon="mdi-pencil-outline"
                     size="small"
@@ -299,6 +340,7 @@ function getColor(item: InlinePresentation | InlineWorkshop) {
                   />
 
                   <v-btn
+                    v-if="!pastEdition"
                     color="medium-emphasis"
                     icon="mdi-account-multiple"
                     size="small"

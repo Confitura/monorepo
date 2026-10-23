@@ -3,7 +3,7 @@ package pl.confitura.jelatyna.edition;
 import java.time.Instant;
 import java.time.LocalDate;
 
-/** Admin view of an Edition. */
+/** View of an Edition, for admins and for the speaker homepage's Edition picker. */
 public record EditionDto(
         String id,
         int year,
