@@ -9,7 +9,7 @@ public class ChatException extends RuntimeException {
         UNAUTHORIZED(HttpStatus.UNAUTHORIZED),
         DISABLED(HttpStatus.SERVICE_UNAVAILABLE),
         INVALID(HttpStatus.BAD_REQUEST),
-        TOO_LONG(HttpStatus.PAYLOAD_TOO_LARGE),
+        TOO_LONG(HttpStatus.CONTENT_TOO_LARGE),
         RATE_LIMITED(HttpStatus.TOO_MANY_REQUESTS),
         CAP_REACHED(HttpStatus.SERVICE_UNAVAILABLE);
 

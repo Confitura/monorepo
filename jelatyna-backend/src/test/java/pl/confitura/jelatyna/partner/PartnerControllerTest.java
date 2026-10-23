@@ -9,6 +9,9 @@ import org.springframework.transaction.support.TransactionTemplate;
 import pl.confitura.jelatyna.BaseIntegrationTest;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
 
+import java.util.UUID;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -48,6 +51,13 @@ class PartnerControllerTest extends BaseIntegrationTest {
             h.setPublished(false);
             hidden = repository.save(h);
         });
+    }
+
+    @Test
+    void newPartnerGetsARandomUuidString() {
+        assertThat(gold.getId()).hasSize(36);
+        assertThat(UUID.fromString(gold.getId())).hasToString(gold.getId());
+        assertThat(hidden.getId()).isNotEqualTo(gold.getId());
     }
 
     @Test
