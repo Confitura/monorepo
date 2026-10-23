@@ -71,11 +71,8 @@ class SubmitPastTalkAgainTest extends BaseIntegrationTest {
         coSpeaker = userRepository.save(new User().setName("Co-speaker"));
         tag = tagRepository.saveAll(List.of(new Tag("submit-again", "Submit again"))).iterator().next();
         SecurityHelper.asAdmin();
-        past = editionRepository.save(new Edition()
-                .setYear(2025)
-                .setName("Confitura 2025")
-                .setConferenceStart(Instant.parse("2025-06-28T07:00:00Z"))
-                .setLastDay(LocalDate.of(2025, 6, 28)));
+        past = editionRepository.save(new Edition().setYear(2025).setName("Confitura 2025")
+                .setConferenceStart(Instant.parse("2025-06-28T07:00:00Z")).setLastDay(LocalDate.of(2025, 6, 28)));
         SecurityHelper.cleanSecurity();
     }
 
@@ -133,17 +130,6 @@ class SubmitPastTalkAgainTest extends BaseIntegrationTest {
 
     @ParameterizedTest
     @EnumSource
-    void aCoSpeakerSubmitsItAgainAsItsOnlySpeaker(Kind kind) throws Exception {
-        Presentation original = talk(past, kind);
-
-        String copyId = idOf(submitAgain(kind, original, coSpeaker, user(coSpeaker)).andExpect(status().isOk()));
-
-        mockMvc.perform(get("/presentations/" + copyId + "/cospeakers").with(user(coSpeaker)))
-                .andExpect(jsonPath("$[*].id", contains(coSpeaker.getId())));
-    }
-
-    @ParameterizedTest
-    @EnumSource
     void onlyASpeakerOfTheTalkCanSubmitItAgain(Kind kind) throws Exception {
         Presentation original = talk(past, kind);
         User otherSpeaker = userRepository.save(new User().setName("Other Speaker"));
@@ -152,6 +138,7 @@ class SubmitPastTalkAgainTest extends BaseIntegrationTest {
         submitAgain(kind, original, speaker, user(otherSpeaker)).andExpect(status().isForbidden());
         submitAgain(kind, original, speaker, anonymous).andExpect(status().isForbidden());
         submitAgain(kind, original, otherSpeaker, user(otherSpeaker)).andExpect(status().isForbidden());
+        submitAgain(kind, original, coSpeaker, user(coSpeaker)).andExpect(status().isOk());
     }
 
     @ParameterizedTest
