@@ -108,19 +108,20 @@ public class PublishedController {
         if (dayRepository == null || timeSlotsRepository == null || roomRepository == null || agendaService == null) {
             return ResponseEntity.notFound().build();
         }
-        var dayOpt = dayRepository.findAll().stream().filter(d -> dayId.equals(d.getId())).findFirst();
-        if (dayOpt.isEmpty()) {
+        // The webpage shows the Current Edition's Day; other Editions' Days may share its id (ADR-0004).
+        Day day = dayRepository.findInCurrentEditionById(dayId);
+        if (day == null) {
             return ResponseEntity.notFound().build();
         }
-        var timeSlots = timeSlotsRepository.findByIdDayId(dayId).stream()
+        var timeSlots = timeSlotsRepository.findByDay(day).stream()
                 .sorted(pl.confitura.jelatyna.agenda.TimeSlot.CHRONOLOGICALLY)
                 .map(InlineTimeSlot::from)
                 .toList();
-        var rooms = roomRepository.findByDayId(dayId).stream()
+        var rooms = roomRepository.findByDay(day).stream()
                 .sorted(Comparator.comparing(pl.confitura.jelatyna.agenda.Room::getDisplayOrder))
                 .map(InlineRoom::from)
                 .toList();
-        var entries = agendaService.findByTimeSlotIdDayIdAndMerge(dayId).stream()
+        var entries = agendaService.findByDayAndMerge(day).stream()
                 .map(InlineAgendaEntry::from)
                 .toList();
         var presentations = presentationRepository.findAccepted()
@@ -128,7 +129,7 @@ public class PublishedController {
                 .map(InlinePresentationWithSpeakers::new)
                 .toList();
         Map<Integer, List<InlineAgendaEntry>> byTimeSlot = entries.stream().collect(groupingBy(InlineAgendaEntry::timeSlotIndex));
-        InlineAgenda agenda = new InlineAgenda(dayOpt.get().getDate(), timeSlots, rooms, presentations, entries, byTimeSlot);
+        InlineAgenda agenda = new InlineAgenda(day.getDate(), timeSlots, rooms, presentations, entries, byTimeSlot);
         return ResponseEntity.ok(agenda);
     }
 }

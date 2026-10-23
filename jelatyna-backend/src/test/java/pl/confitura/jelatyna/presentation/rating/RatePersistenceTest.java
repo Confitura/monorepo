@@ -52,7 +52,7 @@ class RatePersistenceTest extends BaseIntegrationTest {
     @AfterEach
     void cleanUpDay() {
         SecurityHelper.asAdmin();
-        dayRepository.deleteById("rate-test-day");
+        dayRepository.delete(dayRepository.findInCurrentEditionById("rate-test-day"));
         SecurityHelper.cleanSecurity();
     }
 

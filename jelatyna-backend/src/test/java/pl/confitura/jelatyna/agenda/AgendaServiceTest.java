@@ -62,7 +62,7 @@ class AgendaServiceTest {
         timeSlot = new TimeSlot()
                 .setStart(LocalTime.of(9, 0))
                 .setEnd(LocalTime.of(10, 0))
-                .setId(new TimeSlot.TimeSlotId("day-1", 1));
+                .setId(new TimeSlot.TimeSlotId("edition", "day-1", 1));
 
         room = new Room()
                 .setId("room1")
@@ -73,8 +73,7 @@ class AgendaServiceTest {
         presentation = new Presentation();
         presentation.setId("presentation1");
 
-        lenient().when(dayRepository.findById(dayId)).thenReturn(day);
-        lenient().when(timeSlotsRepository.findInCurrentEditionById(new TimeSlot.TimeSlotId(dayId, timeSlotIndex))).thenReturn(timeSlot);
+        lenient().when(timeSlotsRepository.findInCurrentEditionById(dayId, timeSlotIndex)).thenReturn(timeSlot);
         lenient().when(roomRepository.findInCurrentEditionById(roomId)).thenReturn(room);
         lenient().when(presentationRepository.findById(presentationId)).thenReturn(presentation);
     }
@@ -123,11 +122,11 @@ class AgendaServiceTest {
         var ts1 = new TimeSlot()
                 .setStart(LocalTime.of(9, 0))
                 .setEnd(LocalTime.of(10, 0))
-                .setId(new TimeSlot.TimeSlotId("day-1", 1));
+                .setId(new TimeSlot.TimeSlotId("edition", "day-1", 1));
         var ts2 = new TimeSlot()
                 .setStart(LocalTime.of(10, 0))
                 .setEnd(LocalTime.of(11, 0))
-                .setId(new TimeSlot.TimeSlotId("day-1", 2));
+                .setId(new TimeSlot.TimeSlotId("edition", "day-1", 2));
         AgendaEntry a1 = new AgendaEntry().setTimeSlot(ts1).setRoom(room).setPresentation(presentation);
         AgendaEntry a2 = new AgendaEntry().setTimeSlot(ts2).setRoom(room).setPresentation(presentation);
         when(agendaRepository.findAll()).thenReturn(List.of(a1, a2));
@@ -150,15 +149,15 @@ class AgendaServiceTest {
         var ts1 = new TimeSlot()
                 .setStart(LocalTime.of(10, 0))
                 .setEnd(LocalTime.of(11, 0))
-                .setId(new TimeSlot.TimeSlotId("day-1", 1));
+                .setId(new TimeSlot.TimeSlotId("edition", "day-1", 1));
         var breakSlot = new TimeSlot()
                 .setStart(LocalTime.of(11, 0))
                 .setEnd(LocalTime.of(11, 15))
-                .setId(new TimeSlot.TimeSlotId("day-1", 2));
+                .setId(new TimeSlot.TimeSlotId("edition", "day-1", 2));
         var ts2 = new TimeSlot()
                 .setStart(LocalTime.of(11, 15))
                 .setEnd(LocalTime.of(12, 0))
-                .setId(new TimeSlot.TimeSlotId("day-1", 3));
+                .setId(new TimeSlot.TimeSlotId("edition", "day-1", 3));
         AgendaEntry a1 = new AgendaEntry().setTimeSlot(ts1).setRoom(room).setPresentation(workshop);
         AgendaEntry breakEntry = new AgendaEntry().setTimeSlot(breakSlot).setRoom(room).setLabel("break");
         AgendaEntry a2 = new AgendaEntry().setTimeSlot(ts2).setRoom(room).setPresentation(workshop);
@@ -180,11 +179,11 @@ class AgendaServiceTest {
         var ts1 = new TimeSlot()
                 .setStart(LocalTime.of(10, 0))
                 .setEnd(LocalTime.of(11, 0))
-                .setId(new TimeSlot.TimeSlotId("day-1", 1));
+                .setId(new TimeSlot.TimeSlotId("edition", "day-1", 1));
         var ts2 = new TimeSlot()
                 .setStart(LocalTime.of(11, 15))
                 .setEnd(LocalTime.of(12, 0))
-                .setId(new TimeSlot.TimeSlotId("day-1", 3));
+                .setId(new TimeSlot.TimeSlotId("edition", "day-1", 3));
         AgendaEntry a1 = new AgendaEntry().setTimeSlot(ts1).setRoom(room).setPresentation(presentation);
         AgendaEntry a2 = new AgendaEntry().setTimeSlot(ts2).setRoom(room).setPresentation(presentation);
         when(agendaRepository.findAll()).thenReturn(List.of(a1, a2));
@@ -199,11 +198,11 @@ class AgendaServiceTest {
         var ts1 = new TimeSlot()
                 .setStart(LocalTime.of(9, 0))
                 .setEnd(LocalTime.of(10, 0))
-                .setId(new TimeSlot.TimeSlotId("day-1", 1));
+                .setId(new TimeSlot.TimeSlotId("edition", "day-1", 1));
         var ts2 = new TimeSlot()
                 .setStart(LocalTime.of(10, 0))
                 .setEnd(LocalTime.of(11, 0))
-                .setId(new TimeSlot.TimeSlotId("day-1", 2));
+                .setId(new TimeSlot.TimeSlotId("edition", "day-1", 2));
         AgendaEntry a1 = new AgendaEntry().setTimeSlot(ts1).setRoom(room).setLabel("break");
         AgendaEntry a2 = new AgendaEntry().setTimeSlot(ts2).setRoom(room).setLabel("break");
         when(agendaRepository.findAll()).thenReturn(List.of(a1, a2));
