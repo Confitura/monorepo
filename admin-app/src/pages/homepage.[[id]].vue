@@ -51,15 +51,20 @@ const pastEdition = computed(() =>
 const user = useAuthStore().user
 const userId = (route?.params as { id?: string })?.id || user?.jti || ''
 
+// Only the latest load may fill the lists, so a slow answer for an earlier pick is dropped.
+// A counter, not the Edition id: the default load has none, yet the Current Edition gets preselected.
+let latestLoad = 0
+
 function loadPresentations() {
+  const load = ++latestLoad
   const options = { path: { id: userId }, query: { editionId: editionId.value } }
   getUserPresentations(options)
     .then((res) => res.data)
-    .then((data) => (presentations.value = data ?? []))
+    .then((data) => { if (load === latestLoad) presentations.value = data ?? [] })
 
   getUserWorkshops(options)
     .then((res) => res.data)
-    .then((data) => (workshops.value = data ?? []))
+    .then((data) => { if (load === latestLoad) workshops.value = data ?? [] })
 }
 
 // The Current Edition is always listed, so the picker shows only for talks outside it.

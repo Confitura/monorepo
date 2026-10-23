@@ -71,6 +71,16 @@ describe('homepage Editions', () => {
     return wrapper
   }
 
+  // Keeps the default (Current Edition) load pending until the returned function answers it.
+  function holdDefaultLoad() {
+    const answers: (() => void)[] = []
+    const late = (title: string) => () =>
+      new Promise((resolve) => answers.push(() => resolve({ data: [talk(title)] })))
+    api.getUserPresentations.mockImplementationOnce(late("This year's talk"))
+    api.getUserWorkshops.mockImplementationOnce(late("This year's workshop"))
+    return () => answers.forEach((answer) => answer())
+  }
+
   const controls = (wrapper: Awaited<ReturnType<typeof mountPage>>) =>
     wrapper.findAllComponents(VBtn).map((button) => button.props('icon') || button.text())
 
@@ -97,6 +107,31 @@ describe('homepage Editions', () => {
     expect(wrapper.text()).toContain("Last year's workshop")
     expect(wrapper.text()).not.toContain("This year's")
     expect(controls(wrapper)).toEqual(['edit']) // the profile's, which stays
+  })
+
+  it("shows only the picked Edition's talks when the default load answers after the pick", async () => {
+    const answerDefaultLoad = holdDefaultLoad()
+    const wrapper = await mountPage([current, past])
+
+    await wrapper.findComponent(VSelect).setValue('e2025')
+    await flushPromises()
+    answerDefaultLoad()
+    await flushPromises()
+
+    expect(wrapper.text()).toContain("Last year's talk")
+    expect(wrapper.text()).toContain("Last year's workshop")
+    expect(wrapper.text()).not.toContain("This year's")
+  })
+
+  it("lists the Current Edition's talks when they answer after the Editions", async () => {
+    const answerDefaultLoad = holdDefaultLoad()
+    const wrapper = await mountPage([current, past])
+
+    answerDefaultLoad()
+    await flushPromises()
+
+    expect(wrapper.text()).toContain("This year's talk")
+    expect(wrapper.text()).toContain("This year's workshop")
   })
 
   it("gives an admin viewing a user's homepage the same picker", async () => {
