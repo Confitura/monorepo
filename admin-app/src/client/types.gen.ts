@@ -27,6 +27,12 @@ export type ChatStatus = {
     enabled?: boolean;
 };
 
+export type CospeakerDto = {
+    email?: string;
+    id?: string;
+    name?: string;
+};
+
 export type CreateRoomRequest = {
     displayOrder?: number;
     label: string;
@@ -2274,7 +2280,7 @@ export type GetCospeakersResponses = {
     /**
      * OK
      */
-    200: Array<User>;
+    200: Array<CospeakerDto>;
 };
 
 export type GetCospeakersResponse = GetCospeakersResponses[keyof GetCospeakersResponses];
