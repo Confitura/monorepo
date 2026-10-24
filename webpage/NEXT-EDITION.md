@@ -1,7 +1,16 @@
 # Preparing the next edition (webpage)
 
-Checklist of the edition-specific values hardcoded in the webpage. Update these when
-rolling over to a new Confitura year. Paths are relative to `webpage/`.
+Start in the admin app, then bump the webpage's folder:
+
+1. On the admin app's **Editions** page, create the new Edition and **Make current** it. The backend then
+   dumps into `edition-<year>`, the previous Edition's dumps freeze as its Archive, and its votes lose the
+   voters' IP addresses. Change admins and volunteers for the new year only after this, or they disappear
+   from the previous Archive.
+2. Bump `archiveServer` in `nuxt.config.ts` to `edition-<year>/` (section 3). Until then the webpage keeps
+   showing the previous Archive.
+
+Then work through this checklist of the edition-specific values hardcoded in the webpage. Paths are
+relative to `webpage/`.
 
 Quick audit any time: `grep -rn "2026\|September 2\|Grzybowska\|edition-2026\|partners/2026" components pages public stores nuxt.config.ts`
 

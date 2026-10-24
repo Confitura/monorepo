@@ -48,6 +48,7 @@ const api = vi.hoisted(() => ({
   createEdition: vi.fn(),
   updateEdition: vi.fn(),
   deleteEdition: vi.fn(),
+  makeEditionCurrent: vi.fn(),
 }))
 
 vi.mock('@/utils/api.ts', () => api)
@@ -79,6 +80,7 @@ describe('admin editions page', () => {
     api.createEdition.mockResolvedValue({ data: {}, status: 201 })
     api.updateEdition.mockResolvedValue({ data: {}, status: 200 })
     api.deleteEdition.mockResolvedValue({ status: 200 })
+    api.makeEditionCurrent.mockResolvedValue({ data: {}, status: 200 })
   })
 
   afterEach(() => {
@@ -412,5 +414,78 @@ describe('admin editions page', () => {
     finish({ data: {}, status: 201 })
     await flushPromises()
     expect(vm.dialog).toBe(false)
+  })
+
+  it('offers to make current only the editions that are not current', async () => {
+    const wrapper = mountPage()
+    await flushPromises()
+    const rows = rowsOf(wrapper)
+    expect(rows[0]).not.toContain('Make current')
+    expect(rows[1]).toContain('Make current')
+    expect(rows[2]).toContain('Make current')
+  })
+
+  it('lists the five effects of making an edition current before anything happens', async () => {
+    const wrapper = mountPage()
+    await flushPromises()
+    await wrapper.findAll('tbody tr')[1].findAll('button').find((b) => b.text() === 'Make current')!.trigger('click')
+    await flushPromises()
+    const effects = [...document.body.querySelectorAll('ol li')].map((li) => li.textContent)
+    expect(effects).toHaveLength(5)
+    expect(effects[0]).toContain('edition-2025')
+    expect(effects[1]).toContain('Confitura 2026')
+    expect(effects[1]).toContain('Archive')
+    expect(effects[2]).toContain('IP addresses')
+    expect(effects[2]).toContain('cannot be undone')
+    expect(effects[3]).toContain('admins and volunteers')
+    expect(effects[4]).toContain('NEXT-EDITION.md')
+    expect(api.makeEditionCurrent).not.toHaveBeenCalled()
+  })
+
+  it('makes an edition current on confirmation and reloads the list', async () => {
+    const wrapper = mountPage()
+    await flushPromises()
+    const vm = wrapper.vm as any
+    vm.openMakeCurrent(editions[1])
+    vm.makeCurrent()
+    await flushPromises()
+    expect(api.makeEditionCurrent).toHaveBeenCalledWith({ path: { id: 'e2025' }, throwOnError: true })
+    expect(notificationsOf().mock.calls[0][1]).toBe('success')
+    expect(vm.switchDialog).toBe(false)
+    expect(api.getAllEditions).toHaveBeenCalledTimes(2)
+  })
+
+  it('sends only one request when confirmed again while a switch is pending, and cannot be cancelled', async () => {
+    let finish: (value: unknown) => void = () => {}
+    api.makeEditionCurrent.mockReturnValue(new Promise((resolve) => (finish = resolve)))
+    const wrapper = mountPage()
+    await flushPromises()
+    const vm = wrapper.vm as any
+    vm.openMakeCurrent(editions[1])
+    vm.makeCurrent()
+    vm.makeCurrent()
+    await flushPromises()
+    expect(api.makeEditionCurrent).toHaveBeenCalledTimes(1)
+    const cancel = () => [...document.body.querySelectorAll('button')].find((b) => b.textContent?.trim() === 'Cancel')!
+    expect(cancel().disabled).toBe(true)
+    finish({ data: {}, status: 200 })
+    await flushPromises()
+    expect(vm.switchDialog).toBe(false)
+  })
+
+  it('reports a failed switch, keeps the dialog open and reloads the list', async () => {
+    vi.spyOn(console, 'error').mockImplementation(() => {})
+    api.makeEditionCurrent.mockRejectedValue({ response: { status: 500 } })
+    const wrapper = mountPage()
+    await flushPromises()
+    const vm = wrapper.vm as any
+    vm.openMakeCurrent(editions[1])
+    vm.makeCurrent()
+    await flushPromises()
+    expect(notificationsOf()).toHaveBeenCalledTimes(1)
+    expect(notificationsOf().mock.calls[0][1]).toBe('error')
+    expect(vm.switchDialog).toBe(true)
+    // whatever happened on the server, the list shows it
+    expect(api.getAllEditions).toHaveBeenCalledTimes(2)
   })
 })
