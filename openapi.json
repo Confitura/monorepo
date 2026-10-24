@@ -1250,17 +1250,7 @@
           "comment" : {
             "type" : "string"
           },
-          "id" : {
-            "type" : "string"
-          },
-          "presentation" : {
-            "$ref" : "#/components/schemas/Presentation"
-          },
-          "reviewerToken" : {
-            "type" : "string"
-          },
           "value" : {
-            "enum" : [ "AWESOME", "GREAT", "IT_WAS_FINE", "BAD", "TERRIBLE" ],
             "type" : "string"
           }
         },
@@ -4390,49 +4380,6 @@
             "application/json" : {
               "schema" : {
                 "$ref" : "#/components/schemas/RateRequest"
-              }
-            }
-          },
-          "required" : true
-        },
-        "responses" : {
-          "200" : {
-            "content" : {
-              "*/*" : {
-                "schema" : {
-                  "type" : "object"
-                }
-              }
-            },
-            "description" : "OK"
-          }
-        },
-        "tags" : [ "presentation-controller" ]
-      }
-    },
-    "/presentations/{presentationId}/ratings/{ratingId}" : {
-      "put" : {
-        "operationId" : "updateRating",
-        "parameters" : [ {
-          "in" : "path",
-          "name" : "presentationId",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
-          "in" : "path",
-          "name" : "ratingId",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        } ],
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/Rate"
               }
             }
           },

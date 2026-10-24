@@ -8,7 +8,5 @@ public interface RateRepository extends Repository<Rate, String> {
 
     Rate save(Rate rate);
 
-    boolean existsById(String id);
-
     Optional<Rate> findByReviewerTokenAndPresentationId(String reviewerToken, String id);
 }

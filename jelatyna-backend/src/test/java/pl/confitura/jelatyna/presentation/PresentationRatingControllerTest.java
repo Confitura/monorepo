@@ -12,6 +12,8 @@ import pl.confitura.jelatyna.agenda.DayRepository;
 import pl.confitura.jelatyna.edition.Edition;
 import pl.confitura.jelatyna.edition.EditionRepository;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
+import pl.confitura.jelatyna.presentation.rating.Rate;
+import pl.confitura.jelatyna.presentation.rating.RateRepository;
 import pl.confitura.jelatyna.presentation.rating.RateValue;
 
 import java.time.Instant;
@@ -21,6 +23,7 @@ import java.util.UUID;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -32,6 +35,8 @@ class PresentationRatingControllerTest extends BaseIntegrationTest {
     DayRepository dayRepository;
     @Autowired
     EditionRepository editionRepository;
+    @Autowired
+    RateRepository rateRepository;
 
     private Presentation presentation;
     private final String reviewerToken = UUID.randomUUID().toString();
@@ -145,6 +150,29 @@ class PresentationRatingControllerTest extends BaseIntegrationTest {
     // The window-closed path (rating rejected before the first agenda day) is covered
     // by RatingWindowServiceTest; forcing a closed window here is unreliable because
     // other test classes leave FK-referenced agenda days behind in the shared DB.
+
+    @Test
+    void aStoredRatingCannotBeChangedByPuttingToIt() throws Exception {
+        mockMvc.perform(post("/presentations/" + presentation.getId() + "/ratings")
+                        .content(json(rateRequest().setComment("Great talk")))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated());
+        // The POST body nests the talk and its ratings in each other, too deep to parse, so look the id up.
+        String ratingId = rateRepository.findByReviewerTokenAndPresentationId(reviewerToken, presentation.getId())
+                .orElseThrow().getId();
+
+        // No handler maps this path for any method any more, so it is 404 rather than 405.
+        mockMvc.perform(put("/presentations/" + presentation.getId() + "/ratings/" + ratingId)
+                        .content(json(new Rate().setValue(RateValue.TERRIBLE).setComment("Changed")))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+
+        mockMvc.perform(get("/presentations/" + presentation.getId() + "/ratings").with(SecurityHelper.admin()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.ratingCount").value(1))
+                .andExpect(jsonPath("$.ratings[0].value").value("AWESOME"))
+                .andExpect(jsonPath("$.ratings[0].comment").value("Great talk"));
+    }
 
     @Test
     void disablingRatingRequiresAdmin() throws Exception {

@@ -4,7 +4,6 @@ import org.junit.Ignore;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
 import pl.confitura.jelatyna.BaseIntegrationTest;
@@ -23,7 +22,6 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static pl.confitura.jelatyna.infrastructure.security.SecurityHelper.user;
 
 @Disabled
 class RatingApiTest extends BaseIntegrationTest {
@@ -103,30 +101,6 @@ class RatingApiTest extends BaseIntegrationTest {
         mockMvc.perform(get("/presentations/" + presentation.getId() + "/ratings"))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("$._embedded.rates").value(hasSize(1)));
-    }
-
-    @Test
-    @Transactional
-    public void userShouldBeAbleToUpdateRate() throws Exception {
-
-        Rate newRate = new Rate().setValue(RateValue.GREAT);
-        MvcResult mvcResult = rate(presentation, reviewerToken, rate).andReturn();
-        Rate createdRate = fromJson(mvcResult.getResponse().getContentAsString(), Rate.class);
-
-        // when user updates rate
-        mockMvc.perform(
-                        put("/presentations/" + presentation.getId() + "/ratings/" + createdRate.getId())
-                                .with(user(reviewerToken))
-                                .content(json(newRate))
-                                .contentType(MediaType.APPLICATION_JSON)
-                )
-                .andExpect(status().isOk());
-
-        //then vote is updated
-        mockMvc.perform(get("/presentations/" + presentation.getId() + "/ratings"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$._embedded.rates").value(hasSize(1)))
-                .andExpect(jsonPath("$._embedded.rates[0].value").value(newRate.getValue().name()));
     }
 
 
