@@ -56,6 +56,20 @@
         },
         "type" : "object"
       },
+      "CospeakerDto" : {
+        "properties" : {
+          "email" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
       "CreateRoomRequest" : {
         "properties" : {
           "displayOrder" : {
@@ -4077,7 +4091,7 @@
               "*/*" : {
                 "schema" : {
                   "items" : {
-                    "$ref" : "#/components/schemas/User"
+                    "$ref" : "#/components/schemas/CospeakerDto"
                   },
                   "type" : "array",
                   "uniqueItems" : true

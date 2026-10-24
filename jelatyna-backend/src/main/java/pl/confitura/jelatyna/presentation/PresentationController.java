@@ -43,8 +43,10 @@ public class PresentationController {
 
     @PreAuthorize("@security.presentationOwnedByUser(#presentationId) || @security.isAdmin()")
     @GetMapping("/presentations/{presentationId}/cospeakers")
-    public ResponseEntity<Set<User>> getCospeakers(@PathVariable String presentationId) {
-        Set<User> cospeakers = this.repository.findById(presentationId).getSpeakers();
+    public ResponseEntity<Set<CospeakerDto>> getCospeakers(@PathVariable String presentationId) {
+        Set<CospeakerDto> cospeakers = this.repository.findById(presentationId).getSpeakers().stream()
+                .map(CospeakerDto::from)
+                .collect(Collectors.toSet());
         return ResponseEntity.ok(cospeakers);
     }
 
@@ -79,7 +81,7 @@ public class PresentationController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("This speaker is already added to this presentation");
         }
         presentation.getSpeakers().add(user);
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(CospeakerDto.from(user));
     }
 
     private Set<User> removeCospeakerById(String id, Set<User> cospeakers) {

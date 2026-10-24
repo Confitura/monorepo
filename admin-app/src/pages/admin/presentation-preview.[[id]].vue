@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
-import { getAllPresentations, getCospeakers, accept, reject } from '@/utils/api.ts'
+import { getAllPresentations, getById, getCospeakers, accept, reject } from '@/utils/api.ts'
 import type { FullPresentation, User } from '@/utils/api'
 import { Notify } from '@/stores/notification'
 
@@ -23,9 +23,10 @@ async function loadData() {
     console.error('Failed to load presentation', e)
   }
   try {
-    // getCospeakers returns users with bio/photo etc.
+    // getCospeakers names the speakers; their bios and links come from each one's profile.
     const cos = await getCospeakers({ path: { presentationId } })
-    cospeakers.value = Array.from(cos.data || [])
+    const profiles = await Promise.all((cos.data || []).map((sp) => getById({ path: { id: sp.id! } })))
+    cospeakers.value = profiles.flatMap(({ data }) => (data ? [data] : []))
   } catch (e) {
     console.warn('Failed to load cospeakers', e)
   } finally {
