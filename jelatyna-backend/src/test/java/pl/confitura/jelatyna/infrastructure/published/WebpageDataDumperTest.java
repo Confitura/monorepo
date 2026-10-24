@@ -19,6 +19,9 @@ import pl.confitura.jelatyna.edition.EditionRepository;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
+import pl.confitura.jelatyna.presentation.rating.Rate;
+import pl.confitura.jelatyna.presentation.rating.RateRepository;
+import pl.confitura.jelatyna.presentation.rating.RateValue;
 import pl.confitura.jelatyna.resource.ResourceConfigurationProperties;
 import pl.confitura.jelatyna.user.User;
 import pl.confitura.jelatyna.user.UserRepository;
@@ -30,6 +33,7 @@ import java.time.LocalDate;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.List;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -49,6 +53,9 @@ class WebpageDataDumperTest extends BaseIntegrationTest {
 
     @Autowired
     private PresentationRepository presentationRepository;
+
+    @Autowired
+    private RateRepository rateRepository;
 
     @Autowired
     private DayRepository dayRepository;
@@ -172,13 +179,31 @@ class WebpageDataDumperTest extends BaseIntegrationTest {
         assertThat(read("agenda/day-2031.json", "$.presentations[*].title")).containsExactly("This Year's Talk");
     }
 
+    @Test
+    void noDumpCarriesAReviewerToken() throws Exception {
+        Presentation talk = talk("Rated Talk", false, edition2031, speaker("Rated Speaker"));
+        day("day-2031", edition2031);
+        String reviewerToken = UUID.randomUUID().toString();
+        created.push(rateRepository.save(new Rate().setValue(RateValue.AWESOME).setComment("Great talk")
+                .setReviewerToken(reviewerToken).setPresentation(talk)));
+
+        webpageDataDumper.dumpAll();
+
+        List<Path> dumps;
+        try (var files = Files.walk(folder)) {
+            dumps = files.filter(Files::isRegularFile).toList();
+        }
+        assertThat(dumps).isNotEmpty().allSatisfy(dump ->
+                assertThat(Files.readString(dump)).doesNotContain(reviewerToken, "reviewerToken"));
+    }
+
     private User speaker(String name) {
         User speaker = userRepository.save(new User().setName(name));
         created.push(speaker);
         return speaker;
     }
 
-    private void talk(String title, boolean workshop, Edition edition, User speaker) {
+    private Presentation talk(String title, boolean workshop, Edition edition, User speaker) {
         Presentation talk = new Presentation()
                 .setTitle(title)
                 .setShortDescription("short")
@@ -189,7 +214,9 @@ class WebpageDataDumperTest extends BaseIntegrationTest {
                 .setEdition(edition)
                 .setSpeaker(speaker);
         talk.setAccepted(true);
-        created.push(presentationRepository.save(talk));
+        Presentation saved = presentationRepository.save(talk);
+        created.push(saved);
+        return saved;
     }
 
     private void day(String id, Edition edition) {
