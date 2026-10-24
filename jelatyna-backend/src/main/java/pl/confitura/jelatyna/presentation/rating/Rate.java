@@ -1,5 +1,6 @@
 package pl.confitura.jelatyna.presentation.rating;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import pl.confitura.jelatyna.presentation.Presentation;
@@ -23,8 +24,12 @@ public class Rate {
 
     private String comment;
 
+    // A reviewer's own secret: kept out of every response and dump.
+    @JsonIgnore
     private String reviewerToken;
 
+    // Not serialized, so a Rate never carries its talk, nor through it the talk's other ratings.
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "presentation_id")
     private Presentation presentation;

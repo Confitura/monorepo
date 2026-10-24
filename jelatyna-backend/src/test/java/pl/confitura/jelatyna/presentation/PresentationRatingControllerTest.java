@@ -1,5 +1,6 @@
 package pl.confitura.jelatyna.presentation;
 
+import com.jayway.jsonpath.JsonPath;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,13 +14,13 @@ import pl.confitura.jelatyna.edition.Edition;
 import pl.confitura.jelatyna.edition.EditionRepository;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
 import pl.confitura.jelatyna.presentation.rating.Rate;
-import pl.confitura.jelatyna.presentation.rating.RateRepository;
 import pl.confitura.jelatyna.presentation.rating.RateValue;
 
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -35,8 +36,6 @@ class PresentationRatingControllerTest extends BaseIntegrationTest {
     DayRepository dayRepository;
     @Autowired
     EditionRepository editionRepository;
-    @Autowired
-    RateRepository rateRepository;
 
     private Presentation presentation;
     private final String reviewerToken = UUID.randomUUID().toString();
@@ -117,6 +116,24 @@ class PresentationRatingControllerTest extends BaseIntegrationTest {
     }
 
     @Test
+    void theRatingResponseHasNoReviewerTokenNorTheTalksOtherRatings() throws Exception {
+        String otherReviewerToken = UUID.randomUUID().toString();
+        rate(rateRequest().setReviewerToken(otherReviewerToken));
+
+        String body = mockMvc.perform(post("/presentations/" + presentation.getId() + "/ratings")
+                        .content(json(rateRequest().setComment("Great talk")))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").value(notNullValue()))
+                .andExpect(jsonPath("$.value").value("AWESOME"))
+                .andExpect(jsonPath("$.comment").value("Great talk"))
+                .andExpect(jsonPath("$.reviewerToken").doesNotExist())
+                .andExpect(jsonPath("$.presentation").doesNotExist())
+                .andReturn().getResponse().getContentAsString();
+        assertThat(body).doesNotContain(reviewerToken, otherReviewerToken);
+    }
+
+    @Test
     @Transactional
     void ratingATalkOutsideTheCurrentEditionIsRefused() throws Exception {
         SecurityHelper.asAdmin();
@@ -152,14 +169,21 @@ class PresentationRatingControllerTest extends BaseIntegrationTest {
     // other test classes leave FK-referenced agenda days behind in the shared DB.
 
     @Test
+    void ratingAgainReplacesTheReviewersEarlierRating() throws Exception {
+        String firstId = rate(rateRequest().setComment("Great talk"));
+        String secondId = rate(rateRequest().setValue(RateValue.TERRIBLE.getNumericValue()).setComment("Changed"));
+
+        assertThat(secondId).isEqualTo(firstId);
+        mockMvc.perform(get("/presentations/" + presentation.getId() + "/ratings").with(SecurityHelper.admin()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.ratingCount").value(1))
+                .andExpect(jsonPath("$.ratings[0].value").value("TERRIBLE"))
+                .andExpect(jsonPath("$.ratings[0].comment").value("Changed"));
+    }
+
+    @Test
     void aStoredRatingCannotBeChangedByPuttingToIt() throws Exception {
-        mockMvc.perform(post("/presentations/" + presentation.getId() + "/ratings")
-                        .content(json(rateRequest().setComment("Great talk")))
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated());
-        // The POST body nests the talk and its ratings in each other, too deep to parse, so look the id up.
-        String ratingId = rateRepository.findByReviewerTokenAndPresentationId(reviewerToken, presentation.getId())
-                .orElseThrow().getId();
+        String ratingId = rate(rateRequest().setComment("Great talk"));
 
         // No handler maps this path for any method any more, so it is 404 rather than 405.
         mockMvc.perform(put("/presentations/" + presentation.getId() + "/ratings/" + ratingId)
@@ -178,6 +202,15 @@ class PresentationRatingControllerTest extends BaseIntegrationTest {
     void disablingRatingRequiresAdmin() throws Exception {
         mockMvc.perform(post("/presentations/" + presentation.getId() + "/rating/disable"))
                 .andExpect(status().is4xxClientError());
+    }
+
+    private String rate(RateRequest request) throws Exception {
+        String body = mockMvc.perform(post("/presentations/" + presentation.getId() + "/ratings")
+                        .content(json(request))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andReturn().getResponse().getContentAsString();
+        return JsonPath.read(body, "$.id");
     }
 
     private RateRequest rateRequest() {
