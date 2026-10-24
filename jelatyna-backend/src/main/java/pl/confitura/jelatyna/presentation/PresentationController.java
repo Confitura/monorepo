@@ -113,18 +113,6 @@ public class PresentationController {
                 .body(createdRate);
     }
 
-    @PutMapping("/presentations/{presentationId}/ratings/{ratingId}")
-    @Transactional
-    public ResponseEntity<?> updateRating(
-            @PathVariable("presentationId") String presentationId,
-            @PathVariable("ratingId") String ratingId,
-            @RequestBody @Valid Rate rate) {
-        ratingService.updateRating(rate.setId(ratingId));
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .build();
-    }
-
     @PreAuthorize("@security.presentationOwnedByUser(#presentationId) || @security.isAdmin()")
     @GetMapping("/presentations/{presentationId}/ratings")
     public ResponseEntity<ViewPresentationRate> rates(@PathVariable String presentationId) {

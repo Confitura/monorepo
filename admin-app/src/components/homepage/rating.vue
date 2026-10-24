@@ -101,8 +101,8 @@ onMounted(() => {
 
       <v-list lines="two">
         <v-list-item
-          v-for="r in ratings.ratings"
-          :key="r.id"
+          v-for="(r, i) in ratings.ratings"
+          :key="i"
           :title="r.value"
           :subtitle="r.comment"
         />

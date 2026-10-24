@@ -447,10 +447,7 @@ export type PublicSpeaker = {
 
 export type Rate = {
     comment?: string;
-    id?: string;
-    presentation?: Presentation;
-    reviewerToken?: string;
-    value?: 'AWESOME' | 'GREAT' | 'IT_WAS_FINE' | 'BAD' | 'TERRIBLE';
+    value?: string;
 };
 
 export type RateRequest = {
@@ -688,7 +685,7 @@ export type PresentationWritable = {
     preSelectionComment?: string;
     preSelectionStatus?: 'NONE' | 'PRE_APPROVED' | 'PRE_REJECTED' | 'IN_RESERVE';
     ratingEnabled?: boolean;
-    ratings?: Array<RateWritable>;
+    ratings?: Array<Rate>;
     shortDescription: string;
     speaker?: PresentationWritable;
     speakers: Array<User>;
@@ -709,31 +706,9 @@ export type PublicSpeakerWritable = {
     www?: string;
 };
 
-export type RateWritable = {
-    comment?: string;
-    id?: string;
-    presentation?: PresentationWritable;
-    reviewerToken?: string;
-    value?: 'AWESOME' | 'GREAT' | 'IT_WAS_FINE' | 'BAD' | 'TERRIBLE';
-};
-
 export type SendMailsRequestWritable = {
     messageInfoList?: Array<MessageInfoWritable>;
     template?: string;
-};
-
-export type ViewPresentationRateWritable = {
-    avgRating?: number;
-    presentationId?: string;
-    ratingCount?: number;
-    ratingCountAwesome?: number;
-    ratingCountBad?: number;
-    ratingCountGreat?: number;
-    ratingCountItWasFine?: number;
-    ratingCountTerrible?: number;
-    ratings?: Array<RateWritable>;
-    speakers?: Array<Speaker>;
-    title?: string;
 };
 
 export type TriggerWebpageDumpData = {
@@ -2497,27 +2472,6 @@ export type AddRatingResponses = {
 };
 
 export type AddRatingResponse = AddRatingResponses[keyof AddRatingResponses];
-
-export type UpdateRatingData = {
-    body: RateWritable;
-    path: {
-        presentationId: string;
-        ratingId: string;
-    };
-    query?: never;
-    url: '/presentations/{presentationId}/ratings/{ratingId}';
-};
-
-export type UpdateRatingResponses = {
-    /**
-     * OK
-     */
-    200: {
-        [key: string]: unknown;
-    };
-};
-
-export type UpdateRatingResponse = UpdateRatingResponses[keyof UpdateRatingResponses];
 
 export type RejectData = {
     body?: never;

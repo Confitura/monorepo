@@ -1,7 +1,5 @@
 package pl.confitura.jelatyna.presentation.rating;
 
-import jakarta.persistence.EntityNotFoundException;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,12 +31,5 @@ public class RatingService {
         presentation.getRatings().add(rate);
         repository.save(presentation);
         return rate;
-    }
-
-    public void updateRating(Rate rate) {
-        if (rate.getId() == null || !rateRepository.existsById(rate.getId())) {
-            throw new EntityNotFoundException();
-        }
-        rateRepository.save(rate);
     }
 }
