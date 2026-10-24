@@ -3012,6 +3012,32 @@
         "tags" : [ "edition-controller" ]
       }
     },
+    "/editions/{id}/make-current" : {
+      "post" : {
+        "operationId" : "makeEditionCurrent",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/EditionDto"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "tags" : [ "edition-controller" ]
+      }
+    },
     "/faq-categories" : {
       "get" : {
         "operationId" : "getFaqCategories",

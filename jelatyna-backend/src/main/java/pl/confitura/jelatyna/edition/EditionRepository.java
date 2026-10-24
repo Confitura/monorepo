@@ -11,6 +11,9 @@ public interface EditionRepository extends Repository<Edition, String> {
     @PreAuthorize("@security.isAdmin()")
     Edition save(Edition edition);
 
+    @PreAuthorize("@security.isAdmin()")
+    Edition saveAndFlush(Edition edition);
+
     @Query("SELECT e FROM Edition e WHERE e.current = true")
     Edition findCurrent();
 
