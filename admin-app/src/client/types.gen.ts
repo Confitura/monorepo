@@ -1567,6 +1567,24 @@ export type UpdateEditionResponses = {
 
 export type UpdateEditionResponse = UpdateEditionResponses[keyof UpdateEditionResponses];
 
+export type MakeEditionCurrentData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/editions/{id}/make-current';
+};
+
+export type MakeEditionCurrentResponses = {
+    /**
+     * OK
+     */
+    200: EditionDto;
+};
+
+export type MakeEditionCurrentResponse = MakeEditionCurrentResponses[keyof MakeEditionCurrentResponses];
+
 export type GetFaqCategoriesData = {
     body?: never;
     path?: never;

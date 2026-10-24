@@ -1,9 +1,12 @@
 package pl.confitura.jelatyna.edition;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.confitura.jelatyna.agenda.DayRepository;
+import pl.confitura.jelatyna.infrastructure.published.WebpageDataDumper;
+import pl.confitura.jelatyna.infrastructure.security.JelatynaPrincipal;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
+import pl.confitura.jelatyna.voting.VoteRepository;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -21,14 +27,15 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Lets admins manage Editions; every endpoint is admin-only. None makes an Edition current: the backend
- * needs exactly one Current Edition, so a new Edition is never current, an update keeps whether it is, and the
- * current one is never deleted.
+ * Lets admins manage Editions; every endpoint is admin-only. The backend needs exactly one Current Edition, so
+ * only {@link #makeEditionCurrent} changes which one it is: a new Edition is never current, an update keeps
+ * whether it is, and the current one is never deleted.
  */
 @RestController
 @RequestMapping("/editions")
 @PreAuthorize("@security.isAdmin()")
 @RequiredArgsConstructor
+@Slf4j
 public class EditionController {
 
     private static final ZoneId WARSAW = ZoneId.of("Europe/Warsaw");
@@ -36,6 +43,9 @@ public class EditionController {
     private final EditionRepository repository;
     private final PresentationRepository presentationRepository;
     private final DayRepository dayRepository;
+    private final VoteRepository voteRepository;
+    private final TransactionTemplate transactionTemplate;
+    private final WebpageDataDumper webpageDataDumper;
 
     /** Every Edition, newest year first. */
     @GetMapping
@@ -101,6 +111,45 @@ public class EditionController {
         }
         repository.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    /**
+     * Makes the Edition current (ADR-0004). In one transaction the previous Current Edition's votes lose their
+     * voters' IP addresses and it stops being current; then the dumps are written into the new Edition's folder.
+     * Refused for the Edition that is already current, which would clear nothing and dump for no reason.
+     */
+    @PostMapping("/{id}/make-current")
+    public ResponseEntity<EditionDto> makeEditionCurrent(@AuthenticationPrincipal JelatynaPrincipal principal,
+                                                         @PathVariable String id) {
+        Edition edition = repository.findById(id);
+        if (edition == null) {
+            return ResponseEntity.notFound().build();
+        }
+        if (edition.isCurrent()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
+        Edition previous = repository.findCurrent();
+        int votesCleared = transactionTemplate.execute(status -> {
+            int cleared = voteRepository.clearVoterIpsIn(previous);
+            // At most one Edition can be current, so the previous one stops being current first.
+            repository.saveAndFlush(previous.setCurrent(false));
+            repository.save(edition.setCurrent(true));
+            return cleared;
+        });
+        // Ids only: no IP addresses or emails in the logs.
+        log.atInfo().setMessage("Made an Edition current")
+                .addKeyValue("actorUserId", principal.getId())
+                .addKeyValue("previousEditionId", previous.getId())
+                .addKeyValue("editionId", edition.getId())
+                .addKeyValue("votesCleared", votesCleared)
+                .log();
+        // The switch stands even if this dump fails: the scheduled dump retries within ten minutes.
+        try {
+            webpageDataDumper.dumpAll();
+        } catch (Exception e) {
+            log.error("Dumping Edition {} after it became current failed", edition.getId(), e);
+        }
+        return ResponseEntity.ok(EditionDto.from(edition));
     }
 
     /**

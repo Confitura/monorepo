@@ -1,21 +1,36 @@
 package pl.confitura.jelatyna.edition;
 
+import ch.qos.logback.classic.Logger;
+import ch.qos.logback.classic.spi.ILoggingEvent;
+import ch.qos.logback.core.read.ListAppender;
+import com.jayway.jsonpath.JsonPath;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
 import org.springframework.transaction.support.TransactionTemplate;
+import org.springframework.util.FileSystemUtils;
 import pl.confitura.jelatyna.BaseIntegrationTest;
 import pl.confitura.jelatyna.agenda.Day;
 import pl.confitura.jelatyna.presentation.Presentation;
+import pl.confitura.jelatyna.resource.ResourceConfigurationProperties;
+import pl.confitura.jelatyna.voting.Vote;
+import pl.confitura.jelatyna.voting.VoteRepository;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.tuple;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
@@ -37,22 +52,32 @@ class EditionControllerTest extends BaseIntegrationTest {
     @Autowired
     private EditionRepository editionRepository;
 
+    @Autowired
+    private ResourceConfigurationProperties resources;
+
+    @Autowired
+    private VoteRepository voteRepository;
+
     private Edition current;
     private Edition past;
     private Edition next;
+    private Path nextFolder;
+    // Newest first, so a vote goes before its talk.
+    private final Deque<Object> created = new ArrayDeque<>();
 
     // The migration's Edition 2026 stays the Current Edition; every other one is the test's.
     @BeforeEach
-    void editions() {
+    void editions() throws Exception {
         removeEveryEditionButTheCurrentOne();
         current = editionRepository.findCurrent();
         past = persist(edition(2025));
         next = persist(edition(2027).setC4pStart(Instant.parse("2027-02-01T00:00:00Z"))
                 .setC4pEnd(Instant.parse("2027-05-01T00:00:00Z")));
+        nextFolder = Path.of(resources.folder(), "edition-2027");
+        FileSystemUtils.deleteRecursively(nextFolder);
     }
 
     // This test commits its Editions, and other tests create a past Edition 2025 of their own.
-    @AfterEach
     void removeEveryEditionButTheCurrentOne() {
         txTemplate.executeWithoutResult(status -> {
             String notCurrent = "(select e from Edition e where e.current = false)";
@@ -62,10 +87,112 @@ class EditionControllerTest extends BaseIntegrationTest {
         });
     }
 
-    // Other tests rely on the Current Edition's C4P period, which an update here changes.
+    // Other tests rely on the Current Edition and its C4P period, which a test here changes. It is made current
+    // again before the other Editions go, as those are the non-current ones.
     @AfterEach
-    void restoreTheCurrentEdition() {
-        txTemplate.executeWithoutResult(status -> entityManager.merge(current));
+    void restoreTheCurrentEditionAndRemoveTheRest() throws Exception {
+        txTemplate.executeWithoutResult(status -> {
+            // At most one Edition can be current, so the one a test made current stops being it first. This
+            // goes before anything loads an Edition, which would hide the update from the merge.
+            entityManager.createQuery("update Edition e set e.current = false").executeUpdate();
+            entityManager.merge(current);
+            created.forEach(entity -> entityManager.remove(entityManager.merge(entity)));
+        });
+        removeEveryEditionButTheCurrentOne();
+        FileSystemUtils.deleteRecursively(nextFolder);
+    }
+
+    @Test
+    void makesAnEditionCurrent() throws Exception {
+        makeCurrent(next)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", is(next.getId())))
+                .andExpect(jsonPath("$.current", is(true)));
+
+        mockMvc.perform(get("/editions").with(admin()))
+                .andExpect(jsonPath("$[*].year", contains(2027, 2026, 2025)))
+                .andExpect(jsonPath("$[*].current", contains(true, false, false)));
+    }
+
+    @Test
+    void clearsTheVoterIpsOfThePreviousCurrentEditionOnlyAndKeepsItsVotes() throws Exception {
+        Vote thisYears = vote(current, "203.0.113.7");
+        Vote lastYears = vote(past, "198.51.100.1");
+
+        makeCurrent(next).andExpect(status().isOk());
+
+        assertThat(voteRepository.findById(thisYears.getId())).extracting(Vote::getClient).isNull();
+        assertThat(voteRepository.findById(lastYears.getId())).extracting(Vote::getClient).isEqualTo("198.51.100.1");
+    }
+
+    @Test
+    void switchesBackToAnEarlierEditionWithoutRestoringItsVoterIps() throws Exception {
+        Vote thisYears = vote(current, "203.0.113.7");
+        Vote nextYears = vote(next, "192.0.2.10");
+        makeCurrent(next).andExpect(status().isOk());
+
+        makeCurrent(current).andExpect(status().isOk());
+
+        mockMvc.perform(get("/editions").with(admin()))
+                .andExpect(jsonPath("$[*].current", contains(false, true, false)));
+        assertThat(voteRepository.findById(thisYears.getId())).extracting(Vote::getClient).isNull();
+        assertThat(voteRepository.findById(nextYears.getId())).extracting(Vote::getClient).isNull();
+    }
+
+    @Test
+    void eachSwitchLogsOneLineWithIdsAndHowManyVotesLostTheirIp() throws Exception {
+        vote(current, "203.0.113.7");
+        vote(current, "203.0.113.8");
+        Logger logger = (Logger) LoggerFactory.getLogger(EditionController.class);
+        ListAppender<ILoggingEvent> appender = new ListAppender<>();
+        appender.start();
+        logger.addAppender(appender);
+
+        try {
+            makeCurrent(next).andExpect(status().isOk());
+        } finally {
+            logger.detachAppender(appender);
+        }
+
+        assertThat(appender.list).singleElement().satisfies(event -> {
+            assertThat(event.getKeyValuePairs())
+                    .extracting(pair -> pair.key, pair -> pair.value)
+                    .containsExactlyInAnyOrder(
+                            tuple("actorUserId", "ADMIN"),
+                            tuple("previousEditionId", current.getId()),
+                            tuple("editionId", next.getId()),
+                            tuple("votesCleared", 2));
+            assertThat(event.getFormattedMessage()).doesNotContain("203.0.113");
+        });
+    }
+
+    @Test
+    void dumpsIntoTheNewEditionsFolderStraightAway() throws Exception {
+        makeCurrent(next).andExpect(status().isOk());
+
+        Integer dumpedYear = JsonPath.read(Files.readString(nextFolder.resolve("edition.json")), "$.year");
+        assertThat(dumpedYear).isEqualTo(2027);
+    }
+
+    @Test
+    void aFailedDumpKeepsTheSwitch() throws Exception {
+        // A file where the new Edition's folder belongs makes the dump fail.
+        Files.createFile(nextFolder);
+
+        makeCurrent(next).andExpect(status().isOk());
+
+        mockMvc.perform(get("/editions").with(admin()))
+                .andExpect(jsonPath("$[*].current", contains(true, false, false)));
+    }
+
+    @Test
+    void refusesToMakeTheCurrentEditionCurrentAgainOrAnUnknownOne() throws Exception {
+        makeCurrent(current).andExpect(status().isConflict());
+        mockMvc.perform(post("/editions/does-not-exist/make-current").with(admin()))
+                .andExpect(status().isNotFound());
+
+        mockMvc.perform(get("/editions").with(admin()))
+                .andExpect(jsonPath("$[*].current", contains(false, true, false)));
     }
 
     @Test
@@ -253,10 +380,12 @@ class EditionControllerTest extends BaseIntegrationTest {
             mockMvc.perform(put(pastUrl).with(nonAdmin).contentType(APPLICATION_JSON).content(json(inYear(2025))))
                     .andExpect(status().isForbidden());
             mockMvc.perform(delete(pastUrl).with(nonAdmin)).andExpect(status().isForbidden());
+            mockMvc.perform(post(pastUrl + "/make-current").with(nonAdmin)).andExpect(status().isForbidden());
         }
 
         mockMvc.perform(get("/editions").with(admin()))
-                .andExpect(jsonPath("$[*].year", contains(2027, 2026, 2025)));
+                .andExpect(jsonPath("$[*].year", contains(2027, 2026, 2025)))
+                .andExpect(jsonPath("$[*].current", contains(false, true, false)));
     }
 
     private static Edition edition(int year) {
@@ -267,6 +396,15 @@ class EditionControllerTest extends BaseIntegrationTest {
     private static Presentation presentation(Edition edition) {
         return new Presentation().setTitle("A talk").setShortDescription("Short").setDescription("Long")
                 .setLevel("easy").setLanguage("pl").setEdition(edition);
+    }
+
+    // A vote for a new talk in the Edition, cast from the IP address.
+    private Vote vote(Edition edition, String ip) {
+        Presentation talk = persist(presentation(edition));
+        created.push(talk);
+        Vote vote = persist(new Vote().setToken("voter").setOrder(0).setPresentation(talk).setClient(ip));
+        created.push(vote);
+        return vote;
     }
 
     private static EditionRequest inYear(int year) {
@@ -281,6 +419,10 @@ class EditionControllerTest extends BaseIntegrationTest {
     private ResultActions update(Edition edition, EditionRequest request) throws Exception {
         return mockMvc.perform(put("/editions/" + edition.getId()).with(admin()).contentType(APPLICATION_JSON)
                 .content(json(request)));
+    }
+
+    private ResultActions makeCurrent(Edition edition) throws Exception {
+        return mockMvc.perform(post("/editions/" + edition.getId() + "/make-current").with(admin()));
     }
 
     private <T> T persist(T entity) {
