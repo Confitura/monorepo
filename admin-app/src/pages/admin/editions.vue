@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import DialogConfirm from '@/components/DialogConfirm.vue'
 import type { DataTableHeaders } from '@/plugins/vuetify'
-import { getAllEditions, createEdition, updateEdition, deleteEdition } from '@/utils/api.ts'
+import { getAllEditions, createEdition, updateEdition, deleteEdition, makeEditionCurrent } from '@/utils/api.ts'
 import { fromWarsawInput, toWarsawInput } from '@/utils/warsaw-time'
 import type { EditionDto } from '@/client'
 
@@ -192,8 +192,41 @@ function confirmDelete(item: EditionDto) {
   })
 }
 
+// --- Make current ---
+const switchDialog = ref(false)
+const switchTo = ref<EditionDto>()
+const currentName = computed(() => editions.value.find((e) => e.current)?.name ?? 'the current Edition')
+// A switch in flight: blocks a second one and closing the dialog until it completes.
+const switching = ref(false)
+
+function openMakeCurrent(item: EditionDto) {
+  switchTo.value = item
+  switchDialog.value = true
+}
+
+function makeCurrent() {
+  if (switching.value || !switchTo.value) return
+  const edition = switchTo.value
+  switching.value = true
+  // throwOnError: the generated client otherwise resolves with the error, which would look like a success.
+  makeEditionCurrent({ path: { id: edition.id! }, throwOnError: true })
+    .then(() => {
+      Notify.success(`${edition.name} is now the current Edition`)
+      switchDialog.value = false
+    })
+    .catch((e) => {
+      console.error(e)
+      Notify.error('Failed to make the Edition current')
+    })
+    .finally(() => {
+      switching.value = false
+      // Even a failed switch may mean the list is stale, e.g. another admin switched first.
+      reload()
+    })
+}
+
 onMounted(reload)
-defineExpose({ confirmDelete, reload, editions, openCreate, openEdit, save, form, dialog })
+defineExpose({ confirmDelete, reload, editions, openCreate, openEdit, save, form, dialog, openMakeCurrent, makeCurrent, switchDialog })
 </script>
 
 <template>
@@ -224,6 +257,7 @@ defineExpose({ confirmDelete, reload, editions, openCreate, openEdit, save, form
         <template #item.actions="{ item }">
           <v-btn icon="mdi-pencil-outline" variant="text" size="small" @click.stop="openEdit(item)" />
           <v-btn icon="mdi-delete-outline" variant="text" size="small" @click.stop="confirmDelete(item)" />
+          <v-btn v-if="!item.current" variant="text" size="small" @click.stop="openMakeCurrent(item)">Make current</v-btn>
         </template>
       </v-data-table>
 
@@ -257,6 +291,32 @@ defineExpose({ confirmDelete, reload, editions, openCreate, openEdit, save, form
           <v-spacer />
           <v-btn color="blue-darken-1" variant="text" :disabled="saving" @click="dialog = false">Cancel</v-btn>
           <v-btn color="blue-darken-1" variant="text" :disabled="!!problem" :loading="saving" @click="save">Save</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    <v-dialog v-model="switchDialog" max-width="600px" :persistent="switching">
+      <v-card>
+        <v-card-title>Make {{ switchTo?.name }} current?</v-card-title>
+        <v-card-text>
+          <ol class="ml-4">
+            <li>The webpage dumps move to <code>edition-{{ switchTo?.year }}</code>.</li>
+            <li>The dumps of {{ currentName }} freeze as its Archive.</li>
+            <li>The votes of {{ currentName }} lose the voters' IP addresses. This cannot be undone.</li>
+            <li>
+              Change admins and volunteers for the new year only after switching, or they disappear from the
+              previous Archive.
+            </li>
+            <li>
+              The webpage keeps showing the previous Archive until its config is bumped (see
+              <code>webpage/NEXT-EDITION.md</code>).
+            </li>
+          </ol>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn color="blue-darken-1" variant="text" :disabled="switching" @click="switchDialog = false">Cancel</v-btn>
+          <v-btn color="error" variant="text" :loading="switching" @click="makeCurrent">Make current</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
