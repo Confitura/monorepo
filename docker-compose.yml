@@ -11,7 +11,7 @@ services:
     volumes:
       - ./jelatyna-backend/src:/opt/app/src
     environment:
-      SPRING_PROFILES_ACTIVE: local
+      SPRING_PROFILES_ACTIVE: local,fake-security
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/jelatyna
       SPRING_DATASOURCE_USERNAME: jelatyna
       SPRING_DATASOURCE_PASSWORD: password
