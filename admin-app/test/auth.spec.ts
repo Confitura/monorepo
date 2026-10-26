@@ -17,6 +17,10 @@ vi.mock('@/plugins/router.ts', async () => {
   return { default: router }
 })
 
+// Payload: {"jti":"user-1","sub":"Jane","isAdmin":false,"isVolunteer":false,"isSpeaker":false,"isNew":false}
+const TOKEN =
+  'eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJ1c2VyLTEiLCJzdWIiOiJKYW5lIiwiaXNBZG1pbiI6ZmFsc2UsImlzVm9sdW50ZWVyIjpmYWxzZSwiaXNTcGVha2VyIjpmYWxzZSwiaXNOZXciOmZhbHNlfQ.signature'
+
 describe('auth store', () => {
   beforeEach(() => setActivePinia(createPinia()))
   afterEach(() => localStorage.removeItem('token'))
@@ -30,6 +34,18 @@ describe('auth store', () => {
     expect(store.user).toBeNull()
     expect(store.token).toBeNull()
     expect(localStorage.getItem('token')).toBeNull()
+  })
+
+  it.each([undefined, ''])('refuses to sign in with the token %j, keeping the signed-in one', (token) => {
+    localStorage.setItem('token', TOKEN)
+    const store = useAuthStore()
+
+    expect(() => store.login(token as unknown as string)).toThrow()
+    expect(() => store.replaceToken(token as unknown as string)).toThrow()
+
+    expect(localStorage.getItem('token')).toBe(TOKEN)
+    expect(store.token).toBe(TOKEN)
+    expect(store.user?.jti).toBe('user-1')
   })
 
   it('still shows the login page, in its layout, when the stored token is undecodable', async () => {

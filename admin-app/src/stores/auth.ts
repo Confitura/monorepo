@@ -44,7 +44,11 @@ export const useAuthStore = defineStore('auth', {
       }
     },
     // Swaps in a newly issued token for the signed-in User (e.g. after a merge) without leaving the page.
+    // Throws on an empty or missing token (login goes through here too), so it never ends up stored.
     replaceToken(token: string) {
+      if (!token) {
+        throw new Error('Refusing to store an empty token')
+      }
       localStorage.setItem('token', token)
       this.token = token
       this.user = extractUser(token)
