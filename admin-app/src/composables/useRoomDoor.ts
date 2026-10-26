@@ -75,7 +75,7 @@ function speakersLabel(p: FullPresentation): string {
 
 // The room door screens' shared logic: loads today's agenda (or the next day that has one), ticks
 // every second, and works out what any room shows right now.
-export function useRoomDoor() {
+export function useRoomDoor(loadErrorMessage = 'Failed to load schedule') {
   const loading = ref(true)
   const error = ref<string | null>(null)
   const rooms = ref<InlineRoom[]>([])
@@ -222,7 +222,7 @@ export function useRoomDoor() {
       }
       presentationsMap.value = map
     } catch {
-      error.value = 'Failed to load schedule'
+      error.value = loadErrorMessage
     } finally {
       loading.value = false
       timer = setInterval(() => tickCount.value++, 1_000)
