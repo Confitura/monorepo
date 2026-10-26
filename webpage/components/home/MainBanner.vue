@@ -1,6 +1,5 @@
 <template>
-  <section class="banner" id="home" ref="section">
-    <!--    <HomeMainBannerStars />-->
+  <section class="banner" id="home">
     <div class="container">
       <div class="info">
         <!--        <div class="info__live">-->
@@ -43,45 +42,7 @@
 </template>
 
 <script setup lang="ts">
-import dayjs from 'dayjs'
-
-//TODO let date: string = dayjs(this.$store.state.date).format('DD.MM.YYYY')
-
 const edition = useEdition()
-let section = ref(null)
-let date: string = dayjs('2025-06-24T09:00').format('DD.MM.YYYY')
-let threshold: number[] = []
-let observer: IntersectionObserver | null = null
-
-
-for (let i = 0; i <= 1; i += 0.01) {
-  threshold.push(i)
-}
-
-
-onMounted(() => {
-  const options = {
-    threshold: threshold
-  }
-  const callback: IntersectionObserverCallback = entries => {
-    const [entry] = entries
-    if (entry.isIntersecting) {
-      if (entry.boundingClientRect.top < -100) {
-        //TODO this.$store.commit(CHANGE_HEADER_THEME, { color: "white" });
-      } else {
-        //TODO this.$store.commit(CHANGE_HEADER_THEME, { color: "default" });
-      }
-    }
-  }
-  observer = new IntersectionObserver(callback, options)
-  observer.observe(section.value)
-})
-
-onBeforeUnmount(() => {
-  if (observer !== null) {
-    observer.disconnect()
-  }
-})
 </script>
 
 <style scoped lang="scss">
