@@ -97,6 +97,7 @@ import SchedulePage from '~/pages/schedule/[[dayId]].vue'
 import ScheduleWorkshopsPage from '~/pages/schedule/workshops/[[dayId]].vue'
 import AgendaFlowPreviewPage from '~/pages/preview/agenda-flow.vue'
 import TheTimer from '~/components/TheTimer.vue'
+import HomePartners from '~/components/home/Partners.vue'
 
 describe('pages render without errors', () => {
   it('renders the home page', async () => {
@@ -278,6 +279,43 @@ describe('pages render without errors', () => {
       route: { params: { id: 'join-us' } },
     })
     expect(wrapper.find('.partners').exists()).toBe(true)
+  })
+
+  it('shows the partner type and name in the partner page header, without fetching a missing page', async () => {
+    vi.mocked(useArchiveFetch).mockClear()
+    const wrapper = await mountSuspended(PartnersDetailPage, {
+      route: { params: { id: 'xtb' } },
+    })
+    expect(wrapper.find('h1').text()).toContain('gold partner')
+    expect(wrapper.find('h1').text()).toContain('XTB')
+    const paths = vi.mocked(useArchiveFetch).mock.calls.map(call => call[0])
+    expect(paths).not.toContain('/pages/undefined.json')
+  })
+
+  describe('home partners carousel', () => {
+    beforeEach(() => { vi.useFakeTimers({ toFake: ['setInterval', 'clearInterval'] }) })
+    afterEach(() => { vi.useRealTimers() })
+
+    it('links each partner by slug, like the partners list', async () => {
+      const wrapper = await mountSuspended(HomePartners)
+      const hrefs = wrapper.findAll('a.link').map(a => a.attributes('href'))
+      expect(hrefs).toContain('/partners/xtb')
+      expect(hrefs).not.toContain('/partners/uuid-1')
+      wrapper.unmount()
+    })
+
+    it('leaves at most one timer after mounting and unmounting twice, and hover pauses it', async () => {
+      const first = await mountSuspended(HomePartners)
+      first.unmount()
+      const second = await mountSuspended(HomePartners)
+      expect(vi.getTimerCount()).toBe(1)
+      await second.find('.type--active').trigger('mouseenter')
+      expect(vi.getTimerCount()).toBe(0)
+      await second.find('.type--active').trigger('mouseleave')
+      expect(vi.getTimerCount()).toBe(1)
+      second.unmount()
+      expect(vi.getTimerCount()).toBe(0)
+    })
   })
 
   it('renders the speakers listing page', async () => {
