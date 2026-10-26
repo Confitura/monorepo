@@ -1382,27 +1382,6 @@
         },
         "type" : "object"
       },
-      "Tweet" : {
-        "properties" : {
-          "avatar" : {
-            "type" : "string"
-          },
-          "name" : {
-            "type" : "string"
-          },
-          "text" : {
-            "type" : "string"
-          },
-          "time" : {
-            "format" : "date-time",
-            "type" : "string"
-          },
-          "twitterHandle" : {
-            "type" : "string"
-          }
-        },
-        "type" : "object"
-      },
       "UpdateAgendaEntryRequest" : {
         "properties" : {
           "label" : {
@@ -2336,27 +2315,6 @@
           }
         },
         "tags" : [ "agenda-controller" ]
-      }
-    },
-    "/api/tweets" : {
-      "get" : {
-        "operationId" : "getTweets",
-        "responses" : {
-          "200" : {
-            "content" : {
-              "*/*" : {
-                "schema" : {
-                  "items" : {
-                    "$ref" : "#/components/schemas/Tweet"
-                  },
-                  "type" : "array"
-                }
-              }
-            },
-            "description" : "OK"
-          }
-        },
-        "tags" : [ "tweeter-controller" ]
       }
     },
     "/chat/ask" : {

@@ -9,7 +9,5 @@ public class TwitterConfigurationProperties {
     private String apiKey;
     private String apiSecret;
     private String callback;
-    private String accessToken;
-    private String accessTokenSecret;
 
 }

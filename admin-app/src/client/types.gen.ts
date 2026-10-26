@@ -503,14 +503,6 @@ export type Tag = {
     name?: string;
 };
 
-export type Tweet = {
-    avatar?: string;
-    name?: string;
-    text?: string;
-    time?: string;
-    twitterHandle?: string;
-};
-
 export type UpdateAgendaEntryRequest = {
     label?: string;
     presentationId?: string;
@@ -1031,22 +1023,6 @@ export type UpdateTimeSlotResponses = {
 };
 
 export type UpdateTimeSlotResponse = UpdateTimeSlotResponses[keyof UpdateTimeSlotResponses];
-
-export type GetTweetsData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/api/tweets';
-};
-
-export type GetTweetsResponses = {
-    /**
-     * OK
-     */
-    200: Array<Tweet>;
-};
-
-export type GetTweetsResponse = GetTweetsResponses[keyof GetTweetsResponses];
 
 export type AskData = {
     body: AskRequest;
