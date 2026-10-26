@@ -15,7 +15,6 @@ global.ResizeObserver = class ResizeObserver {
 
 const DAY_ID = 'day-1'
 
-const day = { id: DAY_ID, label: 'Day 1', date: '2026-09-19', displayOrder: 1 }
 const timeSlots = [
   { dayId: DAY_ID, displayOrder: 0, label: '09:00 - 10:00', start: '09:00', end: '10:00', forAllRooms: false },
   { dayId: DAY_ID, displayOrder: 1, label: '10:15 - 11:15', start: '10:15', end: '11:15', forAllRooms: true },
@@ -43,7 +42,6 @@ const presentations = [
 
 // The agenda store consumes the generated hey-api SDK's flat, per-operation functions.
 const api = vi.hoisted(() => ({
-  getDayById: vi.fn(),
   getAllPresentations: vi.fn(),
   getAllTimeSlots: vi.fn(),
   getAllRooms1: vi.fn(),
@@ -142,7 +140,6 @@ async function clickDialogButton(text: string) {
 describe('component agenda-editor.vue', () => {
   beforeEach(() => {
     vi.clearAllMocks()
-    api.getDayById.mockResolvedValue({ data: day })
     api.getAllTimeSlots.mockResolvedValue({ data: timeSlots })
     api.getAllRooms1.mockResolvedValue({ data: rooms })
     api.getAgendaEntriesByDay.mockResolvedValue({ data: entries })

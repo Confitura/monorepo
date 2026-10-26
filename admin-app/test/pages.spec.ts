@@ -122,7 +122,6 @@ vi.mock('@/utils/api.ts', () => {
     triggerWebpageDump: ok({}),
     // days & agenda
     getAllDays: ok([]),
-    getDayById: ok({}),
     saveDay: ok({}),
     updateDay: ok({}),
     deleteDay: ok({}),
@@ -195,8 +194,6 @@ async function mountPage(component: any, route = '/') {
         ChartSubmissionTypes: { template: '<div class="stub-chart" />' },
         AgendaEditor: { template: '<div class="stub-agenda-editor" />' },
         RouterWrapper: { template: '<div class="stub-router-wrapper" />' },
-        // Rating is auto-imported as HomepageRating by unplugin-vue-components
-        HomepageRating: { template: '<div class="stub-rating" />' },
         Rating: { template: '<div class="stub-rating" />' },
       },
     },

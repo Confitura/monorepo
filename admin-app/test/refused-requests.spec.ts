@@ -170,7 +170,7 @@ describe('a request the backend refuses', () => {
       'GET /presentations/p1/cospeakers': { status: 200, data: [{ id: 'u1' }, { id: 'u2' }] },
       'GET /users/u1': { status: 200, data: { id: 'u1', name: 'Ada', bio: 'Writes compilers' } },
     })
-    await mountPage(PresentationPreviewPage, '/admin/presentation-preview/p1', { Rating: true, HomepageRating: true })
+    await mountPage(PresentationPreviewPage, '/admin/presentation-preview/p1', { Rating: true })
 
     expect(wrapper!.text()).toContain('Writes compilers')
   })
