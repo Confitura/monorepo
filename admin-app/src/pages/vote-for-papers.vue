@@ -44,7 +44,15 @@ function getV4Ptoken(): string {
   return token;
 }
 
-async function startVoting() {
+// Enter on the focused Start button both clicks it and reaches doc_keyUp, so a start already in flight is reused.
+let startInFlight: Promise<void> | null = null
+
+function startVoting() {
+  startInFlight ??= loadVotes().finally(() => (startInFlight = null))
+  return startInFlight
+}
+
+async function loadVotes() {
   const token = getV4Ptoken();
   const result = await start({ path: { token } })
   votes.value = (result.data ?? []).map((it: InlineVote) => {
