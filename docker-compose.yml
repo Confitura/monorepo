@@ -11,13 +11,10 @@ services:
     volumes:
       - ./jelatyna-backend/src:/opt/app/src
     environment:
+      SPRING_PROFILES_ACTIVE: local
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/jelatyna
       SPRING_DATASOURCE_USERNAME: jelatyna
       SPRING_DATASOURCE_PASSWORD: password
-      JWT_KEY: /tmp
-      MAIL_API_KEY: 123
-      RESOURCES_PATH: /tmp
-      RESOURCES_FOLDER: /tmp
     links:
       - postgres
 
