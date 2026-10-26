@@ -11,10 +11,12 @@ import jakarta.validation.Valid;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -29,14 +31,17 @@ public class VoteController {
     private VoteRepository voteRepository;
     private WebUtils webUtils;
     private LocalValidatorFactoryBean beanValidator;
+    private TransactionTemplate transactionTemplate;
 
     @Autowired
     public VoteController(PresentationRepository presentationRepository, VoteRepository voteRepository,
-                          WebUtils webUtils, LocalValidatorFactoryBean beanValidator) {
+                          WebUtils webUtils, LocalValidatorFactoryBean beanValidator,
+                          TransactionTemplate transactionTemplate) {
         this.presentationRepository = presentationRepository;
         this.voteRepository = voteRepository;
         this.webUtils = webUtils;
         this.beanValidator = beanValidator;
+        this.transactionTemplate = transactionTemplate;
     }
 
     @InitBinder
@@ -45,13 +50,20 @@ public class VoteController {
     }
 
     @RequestMapping(value = "/votes/start/{token}", method = RequestMethod.POST)
-    @Transactional
     public ResponseEntity<List<InlineVote>> start(@PathVariable String token) {
-        List<Vote> votes = voteRepository.findAllForTokenInCurrentEdition(token);
-        if (votes.isEmpty()) {
-            votes = generateVotes(token);
+        try {
+            return ResponseEntity.ok(transactionTemplate.execute(status -> InlineVote.from(votesFor(token))));
+        } catch (DataIntegrityViolationException startedAtTheSameTime) {
+            // A concurrent start for the token saved its votes first, and the unique (token, talk) index refused
+            // these. That rolled this start's transaction back, so the other start's votes are read in a new one.
+            return ResponseEntity.ok(transactionTemplate.execute(status ->
+                    InlineVote.from(voteRepository.findAllForTokenInCurrentEdition(token))));
         }
-        return ResponseEntity.ok(InlineVote.from(votes));
+    }
+
+    private List<Vote> votesFor(String token) {
+        List<Vote> votes = voteRepository.findAllForTokenInCurrentEdition(token);
+        return votes.isEmpty() ? generateVotes(token) : votes;
     }
 
     private List<Vote> generateVotes(String token) {
@@ -63,6 +75,9 @@ public class VoteController {
                         .setToken(token)
                         .setPresentation(presentations.get(idx))
                         .setOrder(idx))
+                // Saved in talk order, so a concurrent start for the token waits on the same first vote and
+                // then hits the unique (token, talk) index, instead of the two deadlocking.
+                .sorted(Comparator.comparing((Vote vote) -> vote.getPresentation().getId()))
                 .collect(toList());
         voteRepository.saveAll(votes);
         return voteRepository.findAllForTokenInCurrentEdition(token);
