@@ -21,8 +21,10 @@ import org.springframework.stereotype.Component;
 
 import tools.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import lombok.extern.slf4j.Slf4j;
 import pl.confitura.jelatyna.infrastructure.JsonError;
+import pl.confitura.jelatyna.user.User;
 import pl.confitura.jelatyna.user.UserRepository;
 
 @Component
@@ -47,19 +49,26 @@ public class JwtAuthenticationFilter extends AuthenticationFilter {
         } catch (ExpiredJwtException ex) {
             log.error("Error on parsing token", ex);
             unauthorized((HttpServletResponse) servletResponse, "Token Expired!");
+        } catch (JwtException ex) {
+            // A wrong signature (e.g. a token issued before the secret key was rotated) or no JWT at all.
+            log.info("Rejected a token that does not verify ({})", ex.getClass().getSimpleName());
+            unauthorized((HttpServletResponse) servletResponse, "Invalid token!");
         }
     }
 
     // Tokens live for months, so the User they name may have been deleted (or merged into
-    // another) since; an existence check by primary key is the one lookup per request.
+    // another) since, and its roles changed; loading it by primary key is the one lookup per
+    // request, and its roles replace those the token carries.
     private boolean doAuthorize(HttpServletRequest request) {
         String authorization = request.getHeader("Authorization");
         if (authorization != null) {
             var principal = tokenService.toUser(authorization.replaceFirst("Bearer ", ""));
-            if (!userRepository.existsById(principal.getId())) {
+            User user = userRepository.findById(principal.getId());
+            if (user == null) {
                 log.info("Rejected token of user {} that no longer exists", principal.getId());
                 return false;
             }
+            principal.setAdmin(user.isAdmin()).setVolunteer(user.isVolunteer());
             var authenticationToken = new PreAuthenticatedAuthenticationToken(principal, "", getAuthorities(principal));
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         }
