@@ -44,7 +44,9 @@ class OneVotePerTalkMigrationTest {
                     ('rated-not', 'rated', 'talk', 0, NULL, NULL),
                     ('unrated-later', 'unrated', 'talk', 4, NULL, NULL),
                     ('unrated-first', 'unrated', 'talk', 2, NULL, NULL),
-                    ('single', 'single', 'talk', 1, NULL, NULL);
+                    ('single', 'single', 'talk', 1, NULL, NULL),
+                    ('no-token', NULL, 'talk', 0, NULL, NULL),
+                    ('no-token-either', NULL, 'talk', 1, NULL, NULL);
                     """);
         }
         flyway().load().migrate();
@@ -63,6 +65,12 @@ class OneVotePerTalkMigrationTest {
     @Test
     void aVoteWithoutDuplicatesStays() throws SQLException {
         assertThat(rows("SELECT id FROM vote WHERE token = 'single'")).containsExactly("single");
+    }
+
+    // The unique index never compares NULLs, so votes without a token are not duplicates of each other.
+    @Test
+    void votesWithoutATokenStay() throws SQLException {
+        assertThat(rows("SELECT id FROM vote WHERE token IS NULL")).containsExactlyInAnyOrder("no-token", "no-token-either");
     }
 
     @Test
