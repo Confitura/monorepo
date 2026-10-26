@@ -458,7 +458,6 @@ export type Rate = {
 
 export type RateRequest = {
     comment?: string;
-    id?: string;
     reviewerToken?: string;
     value?: number;
 };

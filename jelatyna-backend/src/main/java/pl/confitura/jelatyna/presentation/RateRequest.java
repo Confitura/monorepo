@@ -10,14 +10,12 @@ import pl.confitura.jelatyna.presentation.rating.RateValue;
 @Accessors(chain = true)
 @Validated
 public class RateRequest {
-    private String id;
     private String reviewerToken;
     private int value;
     private String comment;
 
     public Rate toRate(String reviewerToken) {
         return new Rate()
-                .setId(id)
                 .setValue(RateValue.from(value))
                 .setComment(comment)
                 .setReviewerToken(reviewerToken);

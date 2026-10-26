@@ -143,7 +143,6 @@ class RatingApiTest extends BaseIntegrationTest {
 
     private ResultActions rate(Presentation presentation, String token, Rate rate) throws Exception {
         RateRequest rateRequest = new RateRequest()
-                .setId(rate.getId())
                 .setReviewerToken(token)
                 .setValue(rate.getValue().getNumericValue())
                 .setComment(rate.getComment());
