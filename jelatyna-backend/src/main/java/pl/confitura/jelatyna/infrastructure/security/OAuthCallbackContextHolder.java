@@ -18,11 +18,11 @@ public class OAuthCallbackContextHolder {
         return tokenToContext.get(token);
     }
 
-    public void setContext(String token, String secret, String state, String callback) {
-        tokenToContext.put(token, new OAuth2Context(secret, state, callback));
+    public void setContext(String token, String secret, String state) {
+        tokenToContext.put(token, new OAuth2Context(secret, state));
     }
 
-    public record OAuth2Context(String secret, String state, String callback) {
+    public record OAuth2Context(String secret, String state) {
     }
 
 }
