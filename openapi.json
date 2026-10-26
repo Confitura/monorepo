@@ -847,32 +847,6 @@
         },
         "type" : "object"
       },
-      "MessageInfo" : {
-        "properties" : {
-          "email" : {
-            "type" : "string"
-          },
-          "name" : {
-            "$ref" : "#/components/schemas/MessageInfo",
-            "writeOnly" : true
-          },
-          "ticket" : {
-            "format" : "byte",
-            "type" : "string"
-          },
-          "token" : {
-            "$ref" : "#/components/schemas/MessageInfo",
-            "writeOnly" : true
-          },
-          "variables" : {
-            "additionalProperties" : {
-              "type" : "string"
-            },
-            "type" : "object"
-          }
-        },
-        "type" : "object"
-      },
       "NewsEntryDto" : {
         "properties" : {
           "body" : {
@@ -1358,20 +1332,6 @@
           }
         },
         "required" : [ "day", "displayOrder" ],
-        "type" : "object"
-      },
-      "SendMailsRequest" : {
-        "properties" : {
-          "messageInfoList" : {
-            "items" : {
-              "$ref" : "#/components/schemas/MessageInfo"
-            },
-            "type" : "array"
-          },
-          "template" : {
-            "type" : "string"
-          }
-        },
         "type" : "object"
       },
       "Speaker" : {
@@ -3484,48 +3444,6 @@
           }
         },
         "tags" : [ "o-auth-2-login-controller" ]
-      }
-    },
-    "/mailing" : {
-      "post" : {
-        "operationId" : "sendMails",
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/SendMailsRequest"
-              }
-            }
-          },
-          "required" : true
-        },
-        "responses" : {
-          "200" : {
-            "description" : "OK"
-          }
-        },
-        "tags" : [ "mail-controller" ]
-      }
-    },
-    "/mailing/templates" : {
-      "get" : {
-        "operationId" : "getTemplates",
-        "responses" : {
-          "200" : {
-            "content" : {
-              "*/*" : {
-                "schema" : {
-                  "items" : {
-                    "type" : "string"
-                  },
-                  "type" : "array"
-                }
-              }
-            },
-            "description" : "OK"
-          }
-        },
-        "tags" : [ "mail-controller" ]
       }
     },
     "/news-entries" : {
@@ -5968,17 +5886,6 @@
         "tags" : [ "voucher-controller" ]
       }
     },
-    "/vouchers/send" : {
-      "post" : {
-        "operationId" : "sendVouchers",
-        "responses" : {
-          "200" : {
-            "description" : "OK"
-          }
-        },
-        "tags" : [ "voucher-controller" ]
-      }
-    },
     "/vouchers/{id}/check" : {
       "get" : {
         "operationId" : "canUseVoucher",
@@ -5999,25 +5906,6 @@
                 }
               }
             },
-            "description" : "OK"
-          }
-        },
-        "tags" : [ "voucher-controller" ]
-      }
-    },
-    "/vouchers/{id}/re-send" : {
-      "post" : {
-        "operationId" : "resendVoucher",
-        "parameters" : [ {
-          "in" : "path",
-          "name" : "id",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        } ],
-        "responses" : {
-          "200" : {
             "description" : "OK"
           }
         },

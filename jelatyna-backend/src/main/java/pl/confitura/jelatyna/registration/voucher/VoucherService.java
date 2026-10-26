@@ -83,10 +83,6 @@ public class VoucherService {
         return voucherRepository.findAll();
     }
 
-    public void sendVouchers() {
-        voucherRepository.findNotSent().forEach(this::sendVoucher);
-    }
-
     public void sendVoucher(Voucher voucher) {
         try {
             sender.send(VOUCHER, new MessageInfo().setEmail(voucher.getOriginalBuyer()).setToken(voucher.getId()));
@@ -95,10 +91,5 @@ public class VoucherService {
         } catch (Exception ex) {
             log.error("Error on sending email", ex);
         }
-    }
-
-    void resend(String voucherId) {
-        Voucher voucher = voucherRepository.findById(voucherId);
-        sendVoucher(voucher);
     }
 }

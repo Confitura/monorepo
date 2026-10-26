@@ -314,14 +314,6 @@ export type MergeUsersRequest = {
     token?: string;
 };
 
-export type MessageInfo = {
-    email?: string;
-    ticket?: string;
-    variables?: {
-        [key: string]: string;
-    };
-};
-
 export type NewsEntryDto = {
     body?: string;
     cover?: string;
@@ -489,11 +481,6 @@ export type Room = {
     label?: string;
     lastModifiedBy?: string;
     lastModifiedDate?: string;
-};
-
-export type SendMailsRequest = {
-    messageInfoList?: Array<MessageInfo>;
-    template?: string;
 };
 
 export type Speaker = {
@@ -666,16 +653,6 @@ export type LikeWritable = {
     token: string;
 };
 
-export type MessageInfoWritable = {
-    email?: string;
-    name?: MessageInfoWritable;
-    ticket?: string;
-    token?: MessageInfoWritable;
-    variables?: {
-        [key: string]: string;
-    };
-};
-
 export type PresentationWritable = {
     accepted?: boolean;
     description: string;
@@ -709,11 +686,6 @@ export type PublicSpeakerWritable = {
     presentations?: Array<PresentationWritable>;
     twitter?: string;
     www?: string;
-};
-
-export type SendMailsRequestWritable = {
-    messageInfoList?: Array<MessageInfoWritable>;
-    template?: string;
 };
 
 export type TriggerWebpageDumpData = {
@@ -1844,36 +1816,6 @@ export type CallbackResponses = {
 };
 
 export type CallbackResponse = CallbackResponses[keyof CallbackResponses];
-
-export type SendMailsData = {
-    body: SendMailsRequestWritable;
-    path?: never;
-    query?: never;
-    url: '/mailing';
-};
-
-export type SendMailsResponses = {
-    /**
-     * OK
-     */
-    200: unknown;
-};
-
-export type GetTemplatesData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/mailing/templates';
-};
-
-export type GetTemplatesResponses = {
-    /**
-     * OK
-     */
-    200: Array<string>;
-};
-
-export type GetTemplatesResponse = GetTemplatesResponses[keyof GetTemplatesResponses];
 
 export type GetAllNewsEntriesData = {
     body?: never;
@@ -3464,20 +3406,6 @@ export type CreateVoucherResponses = {
 
 export type CreateVoucherResponse = CreateVoucherResponses[keyof CreateVoucherResponses];
 
-export type SendVouchersData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/vouchers/send';
-};
-
-export type SendVouchersResponses = {
-    /**
-     * OK
-     */
-    200: unknown;
-};
-
 export type CanUseVoucherData = {
     body?: never;
     path: {
@@ -3495,19 +3423,3 @@ export type CanUseVoucherResponses = {
 };
 
 export type CanUseVoucherResponse = CanUseVoucherResponses[keyof CanUseVoucherResponses];
-
-export type ResendVoucherData = {
-    body?: never;
-    path: {
-        id: string;
-    };
-    query?: never;
-    url: '/vouchers/{id}/re-send';
-};
-
-export type ResendVoucherResponses = {
-    /**
-     * OK
-     */
-    200: unknown;
-};
