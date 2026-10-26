@@ -34,9 +34,6 @@ function loadRates(presentation: InlinePresentation | InlineWorkshop) {
     })
 }
 
-class Example {
-}
-
 onMounted(() => {
   loadRates(presentation);
 })
