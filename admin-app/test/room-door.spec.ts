@@ -3,11 +3,19 @@ import { defineComponent } from 'vue'
 import { mount, flushPromises } from '@vue/test-utils'
 import { useRoomDoor } from '@/composables/useRoomDoor.ts'
 
+// Whatever zone the tablet is in, the screen follows Warsaw time.
+process.env.TZ = 'America/New_York'
+
+const days = vi.hoisted(() => ({ fail: false, calls: 0 }))
+
 vi.mock('@/utils/api.ts', () => {
   const ok = (data: unknown) => Promise.resolve({ data })
   const slot = (displayOrder: number, start: string, end: string) => ({ displayOrder, start, end })
   return {
-    getAllDays: () => ok([{ id: 'd1', date: '2026-06-01' }, { id: 'd2', date: '2026-06-02' }]),
+    getAllDays: () => {
+      days.calls++
+      return days.fail ? Promise.reject(new Error('offline')) : ok([{ id: 'd1', date: '2026-06-01' }, { id: 'd2', date: '2026-06-02' }])
+    },
     getAllRooms1: () => ok([{ id: 'r2', label: 'B', displayOrder: 2 }, { id: 'r1', label: 'A', displayOrder: 1 }]),
     getAllTimeSlots: () => ok([slot(1, '10:00:00', '11:00:00'), slot(2, '11:00:00', '11:30:00'), slot(3, '11:30:00', '12:30:00')]),
     getAgendaEntriesByDay: ({ path }: { path: { dayId: string } }) =>
@@ -100,6 +108,39 @@ describe('useRoomDoor room state', () => {
 
     await vi.advanceTimersByTimeAsync(20_000)
     await flushPromises()
+    expect(door().roomStateFor('r1')).toEqual({
+      type: 'upcoming',
+      next: { title: 'Second', speakers: 'Bob, Cy', startsAt: '10:00:00' },
+    })
+    wrapper.unmount()
+  })
+})
+
+describe('useRoomDoor failed reload', () => {
+  afterEach(() => {
+    vi.useRealTimers()
+    days.fail = false
+  })
+
+  it('retries about once a minute until the schedule loads again', async () => {
+    vi.useFakeTimers({ toFake: ['Date', 'setInterval', 'clearInterval'] })
+    vi.setSystemTime(new Date('2026-06-01T23:59:50+02:00'))
+    const { wrapper, door } = mountDoor()
+    await flushPromises()
+
+    days.fail = true
+    await vi.advanceTimersByTimeAsync(20_000) // past midnight: the reload fails
+    await flushPromises()
+    expect(door().error.value).toBe('Failed to load schedule')
+
+    const callsAfterFailure = days.calls
+    await vi.advanceTimersByTimeAsync(30_000)
+    expect(days.calls).toBe(callsAfterFailure) // not retried on every tick
+
+    days.fail = false
+    await vi.advanceTimersByTimeAsync(40_000)
+    await flushPromises()
+    expect(door().error.value).toBeNull()
     expect(door().roomStateFor('r1')).toEqual({
       type: 'upcoming',
       next: { title: 'Second', speakers: 'Bob, Cy', startsAt: '10:00:00' },

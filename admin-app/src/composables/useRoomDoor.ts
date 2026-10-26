@@ -54,7 +54,7 @@ function speakersLabel(p: FullPresentation): string {
 }
 
 // The room door screens' shared logic: loads today's agenda (or the next day that has one), ticks
-// every second, reloads when the Warsaw date changes, and works out what any room shows right now.
+// every second, reloads when the Warsaw date changes (and a minute after a failed load), and works out what any room shows right now.
 export function useRoomDoor(loadErrorMessage = 'Failed to load schedule') {
   const loading = ref(true)
   const error = ref<string | null>(null)
@@ -65,6 +65,8 @@ export function useRoomDoor(loadErrorMessage = 'Failed to load schedule') {
   const tickCount = ref(0)
   const day = ref('')
   let loadedOn = ''
+  // When to retry a failed load (about once a minute); Infinity while nothing is to be retried
+  let retryAt = Infinity
 
   // Time left until `targetTimeStr` on the day being shown, in Warsaw time.
   function formatCountdown(targetTimeStr: string): string {
@@ -187,6 +189,7 @@ export function useRoomDoor(loadErrorMessage = 'Failed to load schedule') {
   async function load() {
     const today = warsawNow().date
     loadedOn = today
+    retryAt = Infinity
     try {
       const daysResponse = await getAllDays()
       const days = daysResponse.data
@@ -225,6 +228,7 @@ export function useRoomDoor(loadErrorMessage = 'Failed to load schedule') {
       error.value = null
     } catch {
       error.value = loadErrorMessage
+      retryAt = Date.now() + 60_000
     } finally {
       loading.value = false
     }
@@ -234,7 +238,7 @@ export function useRoomDoor(loadErrorMessage = 'Failed to load schedule') {
     await load()
     timer = setInterval(() => {
       tickCount.value++
-      if (warsawNow().date !== loadedOn) void load()
+      if (warsawNow().date !== loadedOn || Date.now() >= retryAt) void load()
     }, 1_000)
   })
 
