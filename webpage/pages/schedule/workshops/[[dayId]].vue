@@ -206,7 +206,6 @@ function hasSingleEntryFor(slot: TimeSlot): boolean {
 }
 
 function selectPresentation(presentation: Presentation) {
-  console.log('selected presentation', presentation.id)
   if (presentation && presentation.id) {
     selectedPresentationId.value = presentation.id
   }
