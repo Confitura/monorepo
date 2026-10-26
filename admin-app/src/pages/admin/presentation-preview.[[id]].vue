@@ -25,8 +25,9 @@ async function loadData() {
   try {
     // getCospeakers names the speakers; their bios and links come from each one's profile.
     const cos = await getCospeakers({ path: { presentationId } })
-    const profiles = await Promise.all((cos.data || []).map((sp) => getById({ path: { id: sp.id! } })))
-    cospeakers.value = profiles.flatMap(({ data }) => (data ? [data] : []))
+    // A profile that fails to load leaves out that speaker, not all of them.
+    const profiles = await Promise.allSettled((cos.data || []).map((sp) => getById({ path: { id: sp.id! } })))
+    cospeakers.value = profiles.flatMap((profile) => (profile.status === 'fulfilled' ? [profile.value.data] : []))
   } catch (e) {
     console.warn('Failed to load cospeakers', e)
   } finally {

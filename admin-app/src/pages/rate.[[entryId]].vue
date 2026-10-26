@@ -78,12 +78,11 @@ function submit() {
       comment: comment.value
     }
   })
-    .then((res) => {
-      if ((res.status ?? 0) >= 200 && (res.status ?? 0) < 300) {
-        submitted.value = true
-      } else {
-        presError.value = 'Failed to submit rating. Please try again later.'
-      }
+    .then(() => {
+      submitted.value = true
+    })
+    .catch(() => {
+      presError.value = 'Failed to submit rating. Please try again later.'
     })
     .finally(() => {
       loading.value = false

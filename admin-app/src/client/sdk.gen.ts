@@ -18,13 +18,13 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
     meta?: keyof ClientMeta extends never ? Record<string, unknown> : ClientMeta;
 };
 
-export const triggerWebpageDump = <ThrowOnError extends boolean = false>(options?: Options<TriggerWebpageDumpData, ThrowOnError>): RequestResult<TriggerWebpageDumpResponses, unknown, ThrowOnError> => (options?.client ?? client).post<TriggerWebpageDumpResponses, unknown, ThrowOnError>({ url: '/admin-tasks/webpage/dump', ...options });
+export const triggerWebpageDump = <ThrowOnError extends boolean = true>(options?: Options<TriggerWebpageDumpData, ThrowOnError>): RequestResult<TriggerWebpageDumpResponses, unknown, ThrowOnError> => (options?.client ?? client).post<TriggerWebpageDumpResponses, unknown, ThrowOnError>({ url: '/admin-tasks/webpage/dump', ...options });
 
-export const getLastWebpageDump = <ThrowOnError extends boolean = false>(options?: Options<GetLastWebpageDumpData, ThrowOnError>): RequestResult<GetLastWebpageDumpResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetLastWebpageDumpResponses, unknown, ThrowOnError>({ url: '/admin-tasks/webpage/last-dump', ...options });
+export const getLastWebpageDump = <ThrowOnError extends boolean = true>(options?: Options<GetLastWebpageDumpData, ThrowOnError>): RequestResult<GetLastWebpageDumpResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetLastWebpageDumpResponses, unknown, ThrowOnError>({ url: '/admin-tasks/webpage/last-dump', ...options });
 
-export const getAllDays1 = <ThrowOnError extends boolean = false>(options?: Options<GetAllDays1Data, ThrowOnError>): RequestResult<GetAllDays1Responses, unknown, ThrowOnError> => (options?.client ?? client).get<GetAllDays1Responses, unknown, ThrowOnError>({ url: '/agenda/days', ...options });
+export const getAllDays1 = <ThrowOnError extends boolean = true>(options?: Options<GetAllDays1Data, ThrowOnError>): RequestResult<GetAllDays1Responses, unknown, ThrowOnError> => (options?.client ?? client).get<GetAllDays1Responses, unknown, ThrowOnError>({ url: '/agenda/days', ...options });
 
-export const saveAgendaEntry = <ThrowOnError extends boolean = false>(options: Options<SaveAgendaEntryData, ThrowOnError>): RequestResult<SaveAgendaEntryResponses, unknown, ThrowOnError> => (options.client ?? client).post<SaveAgendaEntryResponses, unknown, ThrowOnError>({
+export const saveAgendaEntry = <ThrowOnError extends boolean = true>(options: Options<SaveAgendaEntryData, ThrowOnError>): RequestResult<SaveAgendaEntryResponses, unknown, ThrowOnError> => (options.client ?? client).post<SaveAgendaEntryResponses, unknown, ThrowOnError>({
     url: '/agenda/entries',
     ...options,
     headers: {
@@ -33,11 +33,11 @@ export const saveAgendaEntry = <ThrowOnError extends boolean = false>(options: O
     }
 });
 
-export const deleteAgendaEntry = <ThrowOnError extends boolean = false>(options: Options<DeleteAgendaEntryData, ThrowOnError>): RequestResult<DeleteAgendaEntryResponses, unknown, ThrowOnError> => (options.client ?? client).delete<DeleteAgendaEntryResponses, unknown, ThrowOnError>({ url: '/agenda/entries/{id}', ...options });
+export const deleteAgendaEntry = <ThrowOnError extends boolean = true>(options: Options<DeleteAgendaEntryData, ThrowOnError>): RequestResult<DeleteAgendaEntryResponses, unknown, ThrowOnError> => (options.client ?? client).delete<DeleteAgendaEntryResponses, unknown, ThrowOnError>({ url: '/agenda/entries/{id}', ...options });
 
-export const getAgendaEntryById = <ThrowOnError extends boolean = false>(options: Options<GetAgendaEntryByIdData, ThrowOnError>): RequestResult<GetAgendaEntryByIdResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetAgendaEntryByIdResponses, unknown, ThrowOnError>({ url: '/agenda/entries/{id}', ...options });
+export const getAgendaEntryById = <ThrowOnError extends boolean = true>(options: Options<GetAgendaEntryByIdData, ThrowOnError>): RequestResult<GetAgendaEntryByIdResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetAgendaEntryByIdResponses, unknown, ThrowOnError>({ url: '/agenda/entries/{id}', ...options });
 
-export const updateAgendaEntry = <ThrowOnError extends boolean = false>(options: Options<UpdateAgendaEntryData, ThrowOnError>): RequestResult<UpdateAgendaEntryResponses, unknown, ThrowOnError> => (options.client ?? client).put<UpdateAgendaEntryResponses, unknown, ThrowOnError>({
+export const updateAgendaEntry = <ThrowOnError extends boolean = true>(options: Options<UpdateAgendaEntryData, ThrowOnError>): RequestResult<UpdateAgendaEntryResponses, unknown, ThrowOnError> => (options.client ?? client).put<UpdateAgendaEntryResponses, unknown, ThrowOnError>({
     url: '/agenda/entries/{id}',
     ...options,
     headers: {
@@ -46,7 +46,7 @@ export const updateAgendaEntry = <ThrowOnError extends boolean = false>(options:
     }
 });
 
-export const moveAgendaEntry = <ThrowOnError extends boolean = false>(options: Options<MoveAgendaEntryData, ThrowOnError>): RequestResult<MoveAgendaEntryResponses, unknown, ThrowOnError> => (options.client ?? client).put<MoveAgendaEntryResponses, unknown, ThrowOnError>({
+export const moveAgendaEntry = <ThrowOnError extends boolean = true>(options: Options<MoveAgendaEntryData, ThrowOnError>): RequestResult<MoveAgendaEntryResponses, unknown, ThrowOnError> => (options.client ?? client).put<MoveAgendaEntryResponses, unknown, ThrowOnError>({
     url: '/agenda/entries/{id}/slot',
     ...options,
     headers: {
@@ -55,27 +55,27 @@ export const moveAgendaEntry = <ThrowOnError extends boolean = false>(options: O
     }
 });
 
-export const exportIcal = <ThrowOnError extends boolean = false>(options?: Options<ExportIcalData, ThrowOnError>): RequestResult<ExportIcalResponses, unknown, ThrowOnError> => (options?.client ?? client).get<ExportIcalResponses, unknown, ThrowOnError>({
+export const exportIcal = <ThrowOnError extends boolean = true>(options?: Options<ExportIcalData, ThrowOnError>): RequestResult<ExportIcalResponses, unknown, ThrowOnError> => (options?.client ?? client).get<ExportIcalResponses, unknown, ThrowOnError>({
     responseType: 'text',
     url: '/agenda/ical',
     ...options
 });
 
-export const getPresentationIcal = <ThrowOnError extends boolean = false>(options: Options<GetPresentationIcalData, ThrowOnError>): RequestResult<GetPresentationIcalResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetPresentationIcalResponses, unknown, ThrowOnError>({
+export const getPresentationIcal = <ThrowOnError extends boolean = true>(options: Options<GetPresentationIcalData, ThrowOnError>): RequestResult<GetPresentationIcalResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetPresentationIcalResponses, unknown, ThrowOnError>({
     responseType: 'text',
     url: '/agenda/ical/presentation/{presentationId}',
     ...options
 });
 
-export const subscribeIcal = <ThrowOnError extends boolean = false>(options?: Options<SubscribeIcalData, ThrowOnError>): RequestResult<SubscribeIcalResponses, unknown, ThrowOnError> => (options?.client ?? client).get<SubscribeIcalResponses, unknown, ThrowOnError>({
+export const subscribeIcal = <ThrowOnError extends boolean = true>(options?: Options<SubscribeIcalData, ThrowOnError>): RequestResult<SubscribeIcalResponses, unknown, ThrowOnError> => (options?.client ?? client).get<SubscribeIcalResponses, unknown, ThrowOnError>({
     responseType: 'text',
     url: '/agenda/ical/subscribe',
     ...options
 });
 
-export const removeRoom = <ThrowOnError extends boolean = false>(options: Options<RemoveRoomData, ThrowOnError>): RequestResult<RemoveRoomResponses, unknown, ThrowOnError> => (options.client ?? client).delete<RemoveRoomResponses, unknown, ThrowOnError>({ url: '/agenda/rooms/{id}', ...options });
+export const removeRoom = <ThrowOnError extends boolean = true>(options: Options<RemoveRoomData, ThrowOnError>): RequestResult<RemoveRoomResponses, unknown, ThrowOnError> => (options.client ?? client).delete<RemoveRoomResponses, unknown, ThrowOnError>({ url: '/agenda/rooms/{id}', ...options });
 
-export const updateRoom = <ThrowOnError extends boolean = false>(options: Options<UpdateRoomData, ThrowOnError>): RequestResult<UpdateRoomResponses, unknown, ThrowOnError> => (options.client ?? client).put<UpdateRoomResponses, unknown, ThrowOnError>({
+export const updateRoom = <ThrowOnError extends boolean = true>(options: Options<UpdateRoomData, ThrowOnError>): RequestResult<UpdateRoomResponses, unknown, ThrowOnError> => (options.client ?? client).put<UpdateRoomResponses, unknown, ThrowOnError>({
     url: '/agenda/rooms/{id}',
     ...options,
     headers: {
@@ -84,11 +84,11 @@ export const updateRoom = <ThrowOnError extends boolean = false>(options: Option
     }
 });
 
-export const getAgendaEntriesByDay = <ThrowOnError extends boolean = false>(options: Options<GetAgendaEntriesByDayData, ThrowOnError>): RequestResult<GetAgendaEntriesByDayResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetAgendaEntriesByDayResponses, unknown, ThrowOnError>({ url: '/agenda/{dayId}/entries', ...options });
+export const getAgendaEntriesByDay = <ThrowOnError extends boolean = true>(options: Options<GetAgendaEntriesByDayData, ThrowOnError>): RequestResult<GetAgendaEntriesByDayResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetAgendaEntriesByDayResponses, unknown, ThrowOnError>({ url: '/agenda/{dayId}/entries', ...options });
 
-export const getAllRooms1 = <ThrowOnError extends boolean = false>(options: Options<GetAllRooms1Data, ThrowOnError>): RequestResult<GetAllRooms1Responses, unknown, ThrowOnError> => (options.client ?? client).get<GetAllRooms1Responses, unknown, ThrowOnError>({ url: '/agenda/{dayId}/rooms', ...options });
+export const getAllRooms1 = <ThrowOnError extends boolean = true>(options: Options<GetAllRooms1Data, ThrowOnError>): RequestResult<GetAllRooms1Responses, unknown, ThrowOnError> => (options.client ?? client).get<GetAllRooms1Responses, unknown, ThrowOnError>({ url: '/agenda/{dayId}/rooms', ...options });
 
-export const createRoom = <ThrowOnError extends boolean = false>(options: Options<CreateRoomData, ThrowOnError>): RequestResult<CreateRoomResponses, unknown, ThrowOnError> => (options.client ?? client).post<CreateRoomResponses, unknown, ThrowOnError>({
+export const createRoom = <ThrowOnError extends boolean = true>(options: Options<CreateRoomData, ThrowOnError>): RequestResult<CreateRoomResponses, unknown, ThrowOnError> => (options.client ?? client).post<CreateRoomResponses, unknown, ThrowOnError>({
     url: '/agenda/{dayId}/rooms',
     ...options,
     headers: {
@@ -97,9 +97,9 @@ export const createRoom = <ThrowOnError extends boolean = false>(options: Option
     }
 });
 
-export const getAllTimeSlots = <ThrowOnError extends boolean = false>(options: Options<GetAllTimeSlotsData, ThrowOnError>): RequestResult<GetAllTimeSlotsResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetAllTimeSlotsResponses, unknown, ThrowOnError>({ url: '/agenda/{dayId}/time-slots', ...options });
+export const getAllTimeSlots = <ThrowOnError extends boolean = true>(options: Options<GetAllTimeSlotsData, ThrowOnError>): RequestResult<GetAllTimeSlotsResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetAllTimeSlotsResponses, unknown, ThrowOnError>({ url: '/agenda/{dayId}/time-slots', ...options });
 
-export const createTimeSlot = <ThrowOnError extends boolean = false>(options: Options<CreateTimeSlotData, ThrowOnError>): RequestResult<CreateTimeSlotResponses, unknown, ThrowOnError> => (options.client ?? client).post<CreateTimeSlotResponses, unknown, ThrowOnError>({
+export const createTimeSlot = <ThrowOnError extends boolean = true>(options: Options<CreateTimeSlotData, ThrowOnError>): RequestResult<CreateTimeSlotResponses, unknown, ThrowOnError> => (options.client ?? client).post<CreateTimeSlotResponses, unknown, ThrowOnError>({
     url: '/agenda/{dayId}/time-slots',
     ...options,
     headers: {
@@ -108,9 +108,9 @@ export const createTimeSlot = <ThrowOnError extends boolean = false>(options: Op
     }
 });
 
-export const deleteTimeSlot = <ThrowOnError extends boolean = false>(options: Options<DeleteTimeSlotData, ThrowOnError>): RequestResult<DeleteTimeSlotResponses, unknown, ThrowOnError> => (options.client ?? client).delete<DeleteTimeSlotResponses, unknown, ThrowOnError>({ url: '/agenda/{dayId}/time-slots/{displayOrder}', ...options });
+export const deleteTimeSlot = <ThrowOnError extends boolean = true>(options: Options<DeleteTimeSlotData, ThrowOnError>): RequestResult<DeleteTimeSlotResponses, unknown, ThrowOnError> => (options.client ?? client).delete<DeleteTimeSlotResponses, unknown, ThrowOnError>({ url: '/agenda/{dayId}/time-slots/{displayOrder}', ...options });
 
-export const updateTimeSlot = <ThrowOnError extends boolean = false>(options: Options<UpdateTimeSlotData, ThrowOnError>): RequestResult<UpdateTimeSlotResponses, unknown, ThrowOnError> => (options.client ?? client).put<UpdateTimeSlotResponses, unknown, ThrowOnError>({
+export const updateTimeSlot = <ThrowOnError extends boolean = true>(options: Options<UpdateTimeSlotData, ThrowOnError>): RequestResult<UpdateTimeSlotResponses, unknown, ThrowOnError> => (options.client ?? client).put<UpdateTimeSlotResponses, unknown, ThrowOnError>({
     url: '/agenda/{dayId}/time-slots/{displayOrder}',
     ...options,
     headers: {
@@ -119,9 +119,9 @@ export const updateTimeSlot = <ThrowOnError extends boolean = false>(options: Op
     }
 });
 
-export const getTweets = <ThrowOnError extends boolean = false>(options?: Options<GetTweetsData, ThrowOnError>): RequestResult<GetTweetsResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetTweetsResponses, unknown, ThrowOnError>({ url: '/api/tweets', ...options });
+export const getTweets = <ThrowOnError extends boolean = true>(options?: Options<GetTweetsData, ThrowOnError>): RequestResult<GetTweetsResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetTweetsResponses, unknown, ThrowOnError>({ url: '/api/tweets', ...options });
 
-export const ask = <ThrowOnError extends boolean = false>(options: Options<AskData, ThrowOnError, AskResponse>): Promise<ServerSentEventsResult<AskResponses>> => (options.client ?? client).sse.post<AskResponses, unknown, ThrowOnError>({
+export const ask = <ThrowOnError extends boolean = true>(options: Options<AskData, ThrowOnError, AskResponse>): Promise<ServerSentEventsResult<AskResponses>> => (options.client ?? client).sse.post<AskResponses, unknown, ThrowOnError>({
     responseType: 'text',
     url: '/chat/ask',
     ...options,
@@ -131,73 +131,73 @@ export const ask = <ThrowOnError extends boolean = false>(options: Options<AskDa
     }
 });
 
-export const getChatStatus = <ThrowOnError extends boolean = false>(options?: Options<GetChatStatusData, ThrowOnError>): RequestResult<GetChatStatusResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetChatStatusResponses, unknown, ThrowOnError>({ url: '/chat/status', ...options });
+export const getChatStatus = <ThrowOnError extends boolean = true>(options?: Options<GetChatStatusData, ThrowOnError>): RequestResult<GetChatStatusResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetChatStatusResponses, unknown, ThrowOnError>({ url: '/chat/status', ...options });
 
-export const getCurrentUser = <ThrowOnError extends boolean = false>(options?: Options<GetCurrentUserData, ThrowOnError>): RequestResult<GetCurrentUserResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetCurrentUserResponses, unknown, ThrowOnError>({ url: '/current-user', ...options });
+export const getCurrentUser = <ThrowOnError extends boolean = true>(options?: Options<GetCurrentUserData, ThrowOnError>): RequestResult<GetCurrentUserResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetCurrentUserResponses, unknown, ThrowOnError>({ url: '/current-user', ...options });
 
-export const arrivals = <ThrowOnError extends boolean = false>(options?: Options<ArrivalsData, ThrowOnError>): RequestResult<ArrivalsResponses, unknown, ThrowOnError> => (options?.client ?? client).get<ArrivalsResponses, unknown, ThrowOnError>({
+export const arrivals = <ThrowOnError extends boolean = true>(options?: Options<ArrivalsData, ThrowOnError>): RequestResult<ArrivalsResponses, unknown, ThrowOnError> => (options?.client ?? client).get<ArrivalsResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],
     url: '/dashboard/arrivals',
     ...options
 });
 
-export const getMealStats = <ThrowOnError extends boolean = false>(options?: Options<GetMealStatsData, ThrowOnError>): RequestResult<GetMealStatsResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetMealStatsResponses, unknown, ThrowOnError>({
+export const getMealStats = <ThrowOnError extends boolean = true>(options?: Options<GetMealStatsData, ThrowOnError>): RequestResult<GetMealStatsResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetMealStatsResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],
     url: '/dashboard/meal',
     ...options
 });
 
-export const newsletterStat = <ThrowOnError extends boolean = false>(options?: Options<NewsletterStatData, ThrowOnError>): RequestResult<NewsletterStatResponses, unknown, ThrowOnError> => (options?.client ?? client).get<NewsletterStatResponses, unknown, ThrowOnError>({
+export const newsletterStat = <ThrowOnError extends boolean = true>(options?: Options<NewsletterStatData, ThrowOnError>): RequestResult<NewsletterStatResponses, unknown, ThrowOnError> => (options?.client ?? client).get<NewsletterStatResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],
     url: '/dashboard/newsletter',
     ...options
 });
 
-export const getRegistrationStats = <ThrowOnError extends boolean = false>(options?: Options<GetRegistrationStatsData, ThrowOnError>): RequestResult<GetRegistrationStatsResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetRegistrationStatsResponses, unknown, ThrowOnError>({
+export const getRegistrationStats = <ThrowOnError extends boolean = true>(options?: Options<GetRegistrationStatsData, ThrowOnError>): RequestResult<GetRegistrationStatsResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetRegistrationStatsResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],
     url: '/dashboard/registration',
     ...options
 });
 
-export const registrations = <ThrowOnError extends boolean = false>(options?: Options<RegistrationsData, ThrowOnError>): RequestResult<RegistrationsResponses, unknown, ThrowOnError> => (options?.client ?? client).get<RegistrationsResponses, unknown, ThrowOnError>({
+export const registrations = <ThrowOnError extends boolean = true>(options?: Options<RegistrationsData, ThrowOnError>): RequestResult<RegistrationsResponses, unknown, ThrowOnError> => (options?.client ?? client).get<RegistrationsResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],
     url: '/dashboard/registrations',
     ...options
 });
 
-export const submissionStats = <ThrowOnError extends boolean = false>(options?: Options<SubmissionStatsData, ThrowOnError>): RequestResult<SubmissionStatsResponses, unknown, ThrowOnError> => (options?.client ?? client).get<SubmissionStatsResponses, unknown, ThrowOnError>({
+export const submissionStats = <ThrowOnError extends boolean = true>(options?: Options<SubmissionStatsData, ThrowOnError>): RequestResult<SubmissionStatsResponses, unknown, ThrowOnError> => (options?.client ?? client).get<SubmissionStatsResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],
     url: '/dashboard/submissions',
     ...options
 });
 
-export const getTShirtSizes = <ThrowOnError extends boolean = false>(options?: Options<GetTShirtSizesData, ThrowOnError>): RequestResult<GetTShirtSizesResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetTShirtSizesResponses, unknown, ThrowOnError>({
+export const getTShirtSizes = <ThrowOnError extends boolean = true>(options?: Options<GetTShirtSizesData, ThrowOnError>): RequestResult<GetTShirtSizesResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetTShirtSizesResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],
     url: '/dashboard/tshirts',
     ...options
 });
 
-export const usersStats = <ThrowOnError extends boolean = false>(options?: Options<UsersStatsData, ThrowOnError>): RequestResult<UsersStatsResponses, unknown, ThrowOnError> => (options?.client ?? client).get<UsersStatsResponses, unknown, ThrowOnError>({
+export const usersStats = <ThrowOnError extends boolean = true>(options?: Options<UsersStatsData, ThrowOnError>): RequestResult<UsersStatsResponses, unknown, ThrowOnError> => (options?.client ?? client).get<UsersStatsResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],
     url: '/dashboard/users',
     ...options
 });
 
-export const votes = <ThrowOnError extends boolean = false>(options?: Options<VotesData, ThrowOnError>): RequestResult<VotesResponses, unknown, ThrowOnError> => (options?.client ?? client).get<VotesResponses, unknown, ThrowOnError>({
+export const votes = <ThrowOnError extends boolean = true>(options?: Options<VotesData, ThrowOnError>): RequestResult<VotesResponses, unknown, ThrowOnError> => (options?.client ?? client).get<VotesResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],
     url: '/dashboard/votes',
     ...options
 });
 
-export const getVoucherStats = <ThrowOnError extends boolean = false>(options?: Options<GetVoucherStatsData, ThrowOnError>): RequestResult<GetVoucherStatsResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetVoucherStatsResponses, unknown, ThrowOnError>({
+export const getVoucherStats = <ThrowOnError extends boolean = true>(options?: Options<GetVoucherStatsData, ThrowOnError>): RequestResult<GetVoucherStatsResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetVoucherStatsResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],
     url: '/dashboard/vouchers',
     ...options
 });
 
-export const getAllDays = <ThrowOnError extends boolean = false>(options?: Options<GetAllDaysData, ThrowOnError>): RequestResult<GetAllDaysResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetAllDaysResponses, unknown, ThrowOnError>({ url: '/days', ...options });
+export const getAllDays = <ThrowOnError extends boolean = true>(options?: Options<GetAllDaysData, ThrowOnError>): RequestResult<GetAllDaysResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetAllDaysResponses, unknown, ThrowOnError>({ url: '/days', ...options });
 
-export const saveDay = <ThrowOnError extends boolean = false>(options: Options<SaveDayData, ThrowOnError>): RequestResult<SaveDayResponses, unknown, ThrowOnError> => (options.client ?? client).post<SaveDayResponses, unknown, ThrowOnError>({
+export const saveDay = <ThrowOnError extends boolean = true>(options: Options<SaveDayData, ThrowOnError>): RequestResult<SaveDayResponses, unknown, ThrowOnError> => (options.client ?? client).post<SaveDayResponses, unknown, ThrowOnError>({
     url: '/days',
     ...options,
     headers: {
@@ -206,11 +206,11 @@ export const saveDay = <ThrowOnError extends boolean = false>(options: Options<S
     }
 });
 
-export const deleteDay = <ThrowOnError extends boolean = false>(options: Options<DeleteDayData, ThrowOnError>): RequestResult<DeleteDayResponses, unknown, ThrowOnError> => (options.client ?? client).delete<DeleteDayResponses, unknown, ThrowOnError>({ url: '/days/{id}', ...options });
+export const deleteDay = <ThrowOnError extends boolean = true>(options: Options<DeleteDayData, ThrowOnError>): RequestResult<DeleteDayResponses, unknown, ThrowOnError> => (options.client ?? client).delete<DeleteDayResponses, unknown, ThrowOnError>({ url: '/days/{id}', ...options });
 
-export const getDayById = <ThrowOnError extends boolean = false>(options: Options<GetDayByIdData, ThrowOnError>): RequestResult<GetDayByIdResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetDayByIdResponses, unknown, ThrowOnError>({ url: '/days/{id}', ...options });
+export const getDayById = <ThrowOnError extends boolean = true>(options: Options<GetDayByIdData, ThrowOnError>): RequestResult<GetDayByIdResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetDayByIdResponses, unknown, ThrowOnError>({ url: '/days/{id}', ...options });
 
-export const updateDay = <ThrowOnError extends boolean = false>(options: Options<UpdateDayData, ThrowOnError>): RequestResult<UpdateDayResponses, unknown, ThrowOnError> => (options.client ?? client).put<UpdateDayResponses, unknown, ThrowOnError>({
+export const updateDay = <ThrowOnError extends boolean = true>(options: Options<UpdateDayData, ThrowOnError>): RequestResult<UpdateDayResponses, unknown, ThrowOnError> => (options.client ?? client).put<UpdateDayResponses, unknown, ThrowOnError>({
     url: '/days/{id}',
     ...options,
     headers: {
@@ -219,9 +219,9 @@ export const updateDay = <ThrowOnError extends boolean = false>(options: Options
     }
 });
 
-export const getAllEditions = <ThrowOnError extends boolean = false>(options?: Options<GetAllEditionsData, ThrowOnError>): RequestResult<GetAllEditionsResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetAllEditionsResponses, unknown, ThrowOnError>({ url: '/editions', ...options });
+export const getAllEditions = <ThrowOnError extends boolean = true>(options?: Options<GetAllEditionsData, ThrowOnError>): RequestResult<GetAllEditionsResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetAllEditionsResponses, unknown, ThrowOnError>({ url: '/editions', ...options });
 
-export const createEdition = <ThrowOnError extends boolean = false>(options: Options<CreateEditionData, ThrowOnError>): RequestResult<CreateEditionResponses, unknown, ThrowOnError> => (options.client ?? client).post<CreateEditionResponses, unknown, ThrowOnError>({
+export const createEdition = <ThrowOnError extends boolean = true>(options: Options<CreateEditionData, ThrowOnError>): RequestResult<CreateEditionResponses, unknown, ThrowOnError> => (options.client ?? client).post<CreateEditionResponses, unknown, ThrowOnError>({
     url: '/editions',
     ...options,
     headers: {
@@ -230,11 +230,11 @@ export const createEdition = <ThrowOnError extends boolean = false>(options: Opt
     }
 });
 
-export const deleteEdition = <ThrowOnError extends boolean = false>(options: Options<DeleteEditionData, ThrowOnError>): RequestResult<DeleteEditionResponses, unknown, ThrowOnError> => (options.client ?? client).delete<DeleteEditionResponses, unknown, ThrowOnError>({ url: '/editions/{id}', ...options });
+export const deleteEdition = <ThrowOnError extends boolean = true>(options: Options<DeleteEditionData, ThrowOnError>): RequestResult<DeleteEditionResponses, unknown, ThrowOnError> => (options.client ?? client).delete<DeleteEditionResponses, unknown, ThrowOnError>({ url: '/editions/{id}', ...options });
 
-export const getEdition = <ThrowOnError extends boolean = false>(options: Options<GetEditionData, ThrowOnError>): RequestResult<GetEditionResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetEditionResponses, unknown, ThrowOnError>({ url: '/editions/{id}', ...options });
+export const getEdition = <ThrowOnError extends boolean = true>(options: Options<GetEditionData, ThrowOnError>): RequestResult<GetEditionResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetEditionResponses, unknown, ThrowOnError>({ url: '/editions/{id}', ...options });
 
-export const updateEdition = <ThrowOnError extends boolean = false>(options: Options<UpdateEditionData, ThrowOnError>): RequestResult<UpdateEditionResponses, unknown, ThrowOnError> => (options.client ?? client).put<UpdateEditionResponses, unknown, ThrowOnError>({
+export const updateEdition = <ThrowOnError extends boolean = true>(options: Options<UpdateEditionData, ThrowOnError>): RequestResult<UpdateEditionResponses, unknown, ThrowOnError> => (options.client ?? client).put<UpdateEditionResponses, unknown, ThrowOnError>({
     url: '/editions/{id}',
     ...options,
     headers: {
@@ -243,11 +243,11 @@ export const updateEdition = <ThrowOnError extends boolean = false>(options: Opt
     }
 });
 
-export const makeEditionCurrent = <ThrowOnError extends boolean = false>(options: Options<MakeEditionCurrentData, ThrowOnError>): RequestResult<MakeEditionCurrentResponses, unknown, ThrowOnError> => (options.client ?? client).post<MakeEditionCurrentResponses, unknown, ThrowOnError>({ url: '/editions/{id}/make-current', ...options });
+export const makeEditionCurrent = <ThrowOnError extends boolean = true>(options: Options<MakeEditionCurrentData, ThrowOnError>): RequestResult<MakeEditionCurrentResponses, unknown, ThrowOnError> => (options.client ?? client).post<MakeEditionCurrentResponses, unknown, ThrowOnError>({ url: '/editions/{id}/make-current', ...options });
 
-export const getFaqCategories = <ThrowOnError extends boolean = false>(options?: Options<GetFaqCategoriesData, ThrowOnError>): RequestResult<GetFaqCategoriesResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetFaqCategoriesResponses, unknown, ThrowOnError>({ url: '/faq-categories', ...options });
+export const getFaqCategories = <ThrowOnError extends boolean = true>(options?: Options<GetFaqCategoriesData, ThrowOnError>): RequestResult<GetFaqCategoriesResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetFaqCategoriesResponses, unknown, ThrowOnError>({ url: '/faq-categories', ...options });
 
-export const createFaqCategory = <ThrowOnError extends boolean = false>(options: Options<CreateFaqCategoryData, ThrowOnError>): RequestResult<CreateFaqCategoryResponses, unknown, ThrowOnError> => (options.client ?? client).post<CreateFaqCategoryResponses, unknown, ThrowOnError>({
+export const createFaqCategory = <ThrowOnError extends boolean = true>(options: Options<CreateFaqCategoryData, ThrowOnError>): RequestResult<CreateFaqCategoryResponses, unknown, ThrowOnError> => (options.client ?? client).post<CreateFaqCategoryResponses, unknown, ThrowOnError>({
     url: '/faq-categories',
     ...options,
     headers: {
@@ -256,7 +256,7 @@ export const createFaqCategory = <ThrowOnError extends boolean = false>(options:
     }
 });
 
-export const mergeFaqCategories = <ThrowOnError extends boolean = false>(options: Options<MergeFaqCategoriesData, ThrowOnError>): RequestResult<MergeFaqCategoriesResponses, unknown, ThrowOnError> => (options.client ?? client).post<MergeFaqCategoriesResponses, unknown, ThrowOnError>({
+export const mergeFaqCategories = <ThrowOnError extends boolean = true>(options: Options<MergeFaqCategoriesData, ThrowOnError>): RequestResult<MergeFaqCategoriesResponses, unknown, ThrowOnError> => (options.client ?? client).post<MergeFaqCategoriesResponses, unknown, ThrowOnError>({
     url: '/faq-categories/merge',
     ...options,
     headers: {
@@ -265,7 +265,7 @@ export const mergeFaqCategories = <ThrowOnError extends boolean = false>(options
     }
 });
 
-export const reorderFaqCategories = <ThrowOnError extends boolean = false>(options: Options<ReorderFaqCategoriesData, ThrowOnError>): RequestResult<ReorderFaqCategoriesResponses, unknown, ThrowOnError> => (options.client ?? client).put<ReorderFaqCategoriesResponses, unknown, ThrowOnError>({
+export const reorderFaqCategories = <ThrowOnError extends boolean = true>(options: Options<ReorderFaqCategoriesData, ThrowOnError>): RequestResult<ReorderFaqCategoriesResponses, unknown, ThrowOnError> => (options.client ?? client).put<ReorderFaqCategoriesResponses, unknown, ThrowOnError>({
     url: '/faq-categories/order',
     ...options,
     headers: {
@@ -274,9 +274,9 @@ export const reorderFaqCategories = <ThrowOnError extends boolean = false>(optio
     }
 });
 
-export const deleteFaqCategory = <ThrowOnError extends boolean = false>(options: Options<DeleteFaqCategoryData, ThrowOnError>): RequestResult<DeleteFaqCategoryResponses, unknown, ThrowOnError> => (options.client ?? client).delete<DeleteFaqCategoryResponses, unknown, ThrowOnError>({ url: '/faq-categories/{id}', ...options });
+export const deleteFaqCategory = <ThrowOnError extends boolean = true>(options: Options<DeleteFaqCategoryData, ThrowOnError>): RequestResult<DeleteFaqCategoryResponses, unknown, ThrowOnError> => (options.client ?? client).delete<DeleteFaqCategoryResponses, unknown, ThrowOnError>({ url: '/faq-categories/{id}', ...options });
 
-export const updateFaqCategory = <ThrowOnError extends boolean = false>(options: Options<UpdateFaqCategoryData, ThrowOnError>): RequestResult<UpdateFaqCategoryResponses, unknown, ThrowOnError> => (options.client ?? client).put<UpdateFaqCategoryResponses, unknown, ThrowOnError>({
+export const updateFaqCategory = <ThrowOnError extends boolean = true>(options: Options<UpdateFaqCategoryData, ThrowOnError>): RequestResult<UpdateFaqCategoryResponses, unknown, ThrowOnError> => (options.client ?? client).put<UpdateFaqCategoryResponses, unknown, ThrowOnError>({
     url: '/faq-categories/{id}',
     ...options,
     headers: {
@@ -285,9 +285,9 @@ export const updateFaqCategory = <ThrowOnError extends boolean = false>(options:
     }
 });
 
-export const getPublishedFaqEntries = <ThrowOnError extends boolean = false>(options?: Options<GetPublishedFaqEntriesData, ThrowOnError>): RequestResult<GetPublishedFaqEntriesResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetPublishedFaqEntriesResponses, unknown, ThrowOnError>({ url: '/faq-entries', ...options });
+export const getPublishedFaqEntries = <ThrowOnError extends boolean = true>(options?: Options<GetPublishedFaqEntriesData, ThrowOnError>): RequestResult<GetPublishedFaqEntriesResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetPublishedFaqEntriesResponses, unknown, ThrowOnError>({ url: '/faq-entries', ...options });
 
-export const createFaqEntry = <ThrowOnError extends boolean = false>(options: Options<CreateFaqEntryData, ThrowOnError>): RequestResult<CreateFaqEntryResponses, unknown, ThrowOnError> => (options.client ?? client).post<CreateFaqEntryResponses, unknown, ThrowOnError>({
+export const createFaqEntry = <ThrowOnError extends boolean = true>(options: Options<CreateFaqEntryData, ThrowOnError>): RequestResult<CreateFaqEntryResponses, unknown, ThrowOnError> => (options.client ?? client).post<CreateFaqEntryResponses, unknown, ThrowOnError>({
     url: '/faq-entries',
     ...options,
     headers: {
@@ -296,11 +296,11 @@ export const createFaqEntry = <ThrowOnError extends boolean = false>(options: Op
     }
 });
 
-export const getAllFaqEntries = <ThrowOnError extends boolean = false>(options?: Options<GetAllFaqEntriesData, ThrowOnError>): RequestResult<GetAllFaqEntriesResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetAllFaqEntriesResponses, unknown, ThrowOnError>({ url: '/faq-entries/all', ...options });
+export const getAllFaqEntries = <ThrowOnError extends boolean = true>(options?: Options<GetAllFaqEntriesData, ThrowOnError>): RequestResult<GetAllFaqEntriesResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetAllFaqEntriesResponses, unknown, ThrowOnError>({ url: '/faq-entries/all', ...options });
 
-export const importFromFaqPage = <ThrowOnError extends boolean = false>(options?: Options<ImportFromFaqPageData, ThrowOnError>): RequestResult<ImportFromFaqPageResponses, unknown, ThrowOnError> => (options?.client ?? client).post<ImportFromFaqPageResponses, unknown, ThrowOnError>({ url: '/faq-entries/import', ...options });
+export const importFromFaqPage = <ThrowOnError extends boolean = true>(options?: Options<ImportFromFaqPageData, ThrowOnError>): RequestResult<ImportFromFaqPageResponses, unknown, ThrowOnError> => (options?.client ?? client).post<ImportFromFaqPageResponses, unknown, ThrowOnError>({ url: '/faq-entries/import', ...options });
 
-export const reorderFaqEntries = <ThrowOnError extends boolean = false>(options: Options<ReorderFaqEntriesData, ThrowOnError>): RequestResult<ReorderFaqEntriesResponses, unknown, ThrowOnError> => (options.client ?? client).put<ReorderFaqEntriesResponses, unknown, ThrowOnError>({
+export const reorderFaqEntries = <ThrowOnError extends boolean = true>(options: Options<ReorderFaqEntriesData, ThrowOnError>): RequestResult<ReorderFaqEntriesResponses, unknown, ThrowOnError> => (options.client ?? client).put<ReorderFaqEntriesResponses, unknown, ThrowOnError>({
     url: '/faq-entries/order',
     ...options,
     headers: {
@@ -309,11 +309,11 @@ export const reorderFaqEntries = <ThrowOnError extends boolean = false>(options:
     }
 });
 
-export const deleteFaqEntry = <ThrowOnError extends boolean = false>(options: Options<DeleteFaqEntryData, ThrowOnError>): RequestResult<DeleteFaqEntryResponses, unknown, ThrowOnError> => (options.client ?? client).delete<DeleteFaqEntryResponses, unknown, ThrowOnError>({ url: '/faq-entries/{id}', ...options });
+export const deleteFaqEntry = <ThrowOnError extends boolean = true>(options: Options<DeleteFaqEntryData, ThrowOnError>): RequestResult<DeleteFaqEntryResponses, unknown, ThrowOnError> => (options.client ?? client).delete<DeleteFaqEntryResponses, unknown, ThrowOnError>({ url: '/faq-entries/{id}', ...options });
 
-export const getFaqEntry = <ThrowOnError extends boolean = false>(options: Options<GetFaqEntryData, ThrowOnError>): RequestResult<GetFaqEntryResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetFaqEntryResponses, unknown, ThrowOnError>({ url: '/faq-entries/{id}', ...options });
+export const getFaqEntry = <ThrowOnError extends boolean = true>(options: Options<GetFaqEntryData, ThrowOnError>): RequestResult<GetFaqEntryResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetFaqEntryResponses, unknown, ThrowOnError>({ url: '/faq-entries/{id}', ...options });
 
-export const updateFaqEntry = <ThrowOnError extends boolean = false>(options: Options<UpdateFaqEntryData, ThrowOnError>): RequestResult<UpdateFaqEntryResponses, unknown, ThrowOnError> => (options.client ?? client).put<UpdateFaqEntryResponses, unknown, ThrowOnError>({
+export const updateFaqEntry = <ThrowOnError extends boolean = true>(options: Options<UpdateFaqEntryData, ThrowOnError>): RequestResult<UpdateFaqEntryResponses, unknown, ThrowOnError> => (options.client ?? client).put<UpdateFaqEntryResponses, unknown, ThrowOnError>({
     url: '/faq-entries/{id}',
     ...options,
     headers: {
@@ -322,21 +322,21 @@ export const updateFaqEntry = <ThrowOnError extends boolean = false>(options: Op
     }
 });
 
-export const getLikes = <ThrowOnError extends boolean = false>(options: Options<GetLikesData, ThrowOnError>): RequestResult<GetLikesResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetLikesResponses, unknown, ThrowOnError>({ url: '/likes', ...options });
+export const getLikes = <ThrowOnError extends boolean = true>(options: Options<GetLikesData, ThrowOnError>): RequestResult<GetLikesResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetLikesResponses, unknown, ThrowOnError>({ url: '/likes', ...options });
 
-export const getLikesSummary = <ThrowOnError extends boolean = false>(options?: Options<GetLikesSummaryData, ThrowOnError>): RequestResult<GetLikesSummaryResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetLikesSummaryResponses, unknown, ThrowOnError>({ url: '/likes/summary', ...options });
+export const getLikesSummary = <ThrowOnError extends boolean = true>(options?: Options<GetLikesSummaryData, ThrowOnError>): RequestResult<GetLikesSummaryResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetLikesSummaryResponses, unknown, ThrowOnError>({ url: '/likes/summary', ...options });
 
-export const delete_ = <ThrowOnError extends boolean = false>(options: Options<DeleteData, ThrowOnError>): RequestResult<DeleteResponses, unknown, ThrowOnError> => (options.client ?? client).delete<DeleteResponses, unknown, ThrowOnError>({ url: '/likes/{id}', ...options });
+export const delete_ = <ThrowOnError extends boolean = true>(options: Options<DeleteData, ThrowOnError>): RequestResult<DeleteResponses, unknown, ThrowOnError> => (options.client ?? client).delete<DeleteResponses, unknown, ThrowOnError>({ url: '/likes/{id}', ...options });
 
-export const redirectToTwitterLogin = <ThrowOnError extends boolean = false>(options: Options<RedirectToTwitterLoginData, ThrowOnError>): RequestResult<RedirectToTwitterLoginResponses, unknown, ThrowOnError> => (options.client ?? client).get<RedirectToTwitterLoginResponses, unknown, ThrowOnError>({ url: '/login/twitter', ...options });
+export const redirectToTwitterLogin = <ThrowOnError extends boolean = true>(options: Options<RedirectToTwitterLoginData, ThrowOnError>): RequestResult<RedirectToTwitterLoginResponses, unknown, ThrowOnError> => (options.client ?? client).get<RedirectToTwitterLoginResponses, unknown, ThrowOnError>({ url: '/login/twitter', ...options });
 
-export const doLoginWithTwitter = <ThrowOnError extends boolean = false>(options: Options<DoLoginWithTwitterData, ThrowOnError>): RequestResult<DoLoginWithTwitterResponses, unknown, ThrowOnError> => (options.client ?? client).get<DoLoginWithTwitterResponses, unknown, ThrowOnError>({ url: '/login/twitter/callback', ...options });
+export const doLoginWithTwitter = <ThrowOnError extends boolean = true>(options: Options<DoLoginWithTwitterData, ThrowOnError>): RequestResult<DoLoginWithTwitterResponses, unknown, ThrowOnError> => (options.client ?? client).get<DoLoginWithTwitterResponses, unknown, ThrowOnError>({ url: '/login/twitter/callback', ...options });
 
-export const loginInProvider = <ThrowOnError extends boolean = false>(options: Options<LoginInProviderData, ThrowOnError>): RequestResult<LoginInProviderResponses, unknown, ThrowOnError> => (options.client ?? client).get<LoginInProviderResponses, unknown, ThrowOnError>({ url: '/login/{provider}', ...options });
+export const loginInProvider = <ThrowOnError extends boolean = true>(options: Options<LoginInProviderData, ThrowOnError>): RequestResult<LoginInProviderResponses, unknown, ThrowOnError> => (options.client ?? client).get<LoginInProviderResponses, unknown, ThrowOnError>({ url: '/login/{provider}', ...options });
 
-export const callback = <ThrowOnError extends boolean = false>(options: Options<CallbackData, ThrowOnError>): RequestResult<CallbackResponses, unknown, ThrowOnError> => (options.client ?? client).get<CallbackResponses, unknown, ThrowOnError>({ url: '/login/{provider}/callback', ...options });
+export const callback = <ThrowOnError extends boolean = true>(options: Options<CallbackData, ThrowOnError>): RequestResult<CallbackResponses, unknown, ThrowOnError> => (options.client ?? client).get<CallbackResponses, unknown, ThrowOnError>({ url: '/login/{provider}/callback', ...options });
 
-export const sendMails = <ThrowOnError extends boolean = false>(options: Options<SendMailsData, ThrowOnError>): RequestResult<SendMailsResponses, unknown, ThrowOnError> => (options.client ?? client).post<SendMailsResponses, unknown, ThrowOnError>({
+export const sendMails = <ThrowOnError extends boolean = true>(options: Options<SendMailsData, ThrowOnError>): RequestResult<SendMailsResponses, unknown, ThrowOnError> => (options.client ?? client).post<SendMailsResponses, unknown, ThrowOnError>({
     url: '/mailing',
     ...options,
     headers: {
@@ -345,11 +345,11 @@ export const sendMails = <ThrowOnError extends boolean = false>(options: Options
     }
 });
 
-export const getTemplates = <ThrowOnError extends boolean = false>(options?: Options<GetTemplatesData, ThrowOnError>): RequestResult<GetTemplatesResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetTemplatesResponses, unknown, ThrowOnError>({ url: '/mailing/templates', ...options });
+export const getTemplates = <ThrowOnError extends boolean = true>(options?: Options<GetTemplatesData, ThrowOnError>): RequestResult<GetTemplatesResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetTemplatesResponses, unknown, ThrowOnError>({ url: '/mailing/templates', ...options });
 
-export const getAllNewsEntries = <ThrowOnError extends boolean = false>(options?: Options<GetAllNewsEntriesData, ThrowOnError>): RequestResult<GetAllNewsEntriesResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetAllNewsEntriesResponses, unknown, ThrowOnError>({ url: '/news-entries', ...options });
+export const getAllNewsEntries = <ThrowOnError extends boolean = true>(options?: Options<GetAllNewsEntriesData, ThrowOnError>): RequestResult<GetAllNewsEntriesResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetAllNewsEntriesResponses, unknown, ThrowOnError>({ url: '/news-entries', ...options });
 
-export const createNewsEntry = <ThrowOnError extends boolean = false>(options: Options<CreateNewsEntryData, ThrowOnError>): RequestResult<CreateNewsEntryResponses, unknown, ThrowOnError> => (options.client ?? client).post<CreateNewsEntryResponses, unknown, ThrowOnError>({
+export const createNewsEntry = <ThrowOnError extends boolean = true>(options: Options<CreateNewsEntryData, ThrowOnError>): RequestResult<CreateNewsEntryResponses, unknown, ThrowOnError> => (options.client ?? client).post<CreateNewsEntryResponses, unknown, ThrowOnError>({
     url: '/news-entries',
     ...options,
     headers: {
@@ -358,11 +358,11 @@ export const createNewsEntry = <ThrowOnError extends boolean = false>(options: O
     }
 });
 
-export const deleteNewsEntry = <ThrowOnError extends boolean = false>(options: Options<DeleteNewsEntryData, ThrowOnError>): RequestResult<DeleteNewsEntryResponses, unknown, ThrowOnError> => (options.client ?? client).delete<DeleteNewsEntryResponses, unknown, ThrowOnError>({ url: '/news-entries/{id}', ...options });
+export const deleteNewsEntry = <ThrowOnError extends boolean = true>(options: Options<DeleteNewsEntryData, ThrowOnError>): RequestResult<DeleteNewsEntryResponses, unknown, ThrowOnError> => (options.client ?? client).delete<DeleteNewsEntryResponses, unknown, ThrowOnError>({ url: '/news-entries/{id}', ...options });
 
-export const getNewsEntry = <ThrowOnError extends boolean = false>(options: Options<GetNewsEntryData, ThrowOnError>): RequestResult<GetNewsEntryResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetNewsEntryResponses, unknown, ThrowOnError>({ url: '/news-entries/{id}', ...options });
+export const getNewsEntry = <ThrowOnError extends boolean = true>(options: Options<GetNewsEntryData, ThrowOnError>): RequestResult<GetNewsEntryResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetNewsEntryResponses, unknown, ThrowOnError>({ url: '/news-entries/{id}', ...options });
 
-export const updateNewsEntry = <ThrowOnError extends boolean = false>(options: Options<UpdateNewsEntryData, ThrowOnError>): RequestResult<UpdateNewsEntryResponses, unknown, ThrowOnError> => (options.client ?? client).put<UpdateNewsEntryResponses, unknown, ThrowOnError>({
+export const updateNewsEntry = <ThrowOnError extends boolean = true>(options: Options<UpdateNewsEntryData, ThrowOnError>): RequestResult<UpdateNewsEntryResponses, unknown, ThrowOnError> => (options.client ?? client).put<UpdateNewsEntryResponses, unknown, ThrowOnError>({
     url: '/news-entries/{id}',
     ...options,
     headers: {
@@ -371,13 +371,13 @@ export const updateNewsEntry = <ThrowOnError extends boolean = false>(options: O
     }
 });
 
-export const getPages = <ThrowOnError extends boolean = false>(options?: Options<GetPagesData, ThrowOnError>): RequestResult<GetPagesResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetPagesResponses, unknown, ThrowOnError>({ url: '/pages', ...options });
+export const getPages = <ThrowOnError extends boolean = true>(options?: Options<GetPagesData, ThrowOnError>): RequestResult<GetPagesResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetPagesResponses, unknown, ThrowOnError>({ url: '/pages', ...options });
 
-export const deletePage = <ThrowOnError extends boolean = false>(options: Options<DeletePageData, ThrowOnError>): RequestResult<DeletePageResponses, unknown, ThrowOnError> => (options.client ?? client).delete<DeletePageResponses, unknown, ThrowOnError>({ url: '/pages/{id}', ...options });
+export const deletePage = <ThrowOnError extends boolean = true>(options: Options<DeletePageData, ThrowOnError>): RequestResult<DeletePageResponses, unknown, ThrowOnError> => (options.client ?? client).delete<DeletePageResponses, unknown, ThrowOnError>({ url: '/pages/{id}', ...options });
 
-export const getPage = <ThrowOnError extends boolean = false>(options: Options<GetPageData, ThrowOnError>): RequestResult<GetPageResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetPageResponses, unknown, ThrowOnError>({ url: '/pages/{id}', ...options });
+export const getPage = <ThrowOnError extends boolean = true>(options: Options<GetPageData, ThrowOnError>): RequestResult<GetPageResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetPageResponses, unknown, ThrowOnError>({ url: '/pages/{id}', ...options });
 
-export const createPage = <ThrowOnError extends boolean = false>(options: Options<CreatePageData, ThrowOnError>): RequestResult<CreatePageResponses, unknown, ThrowOnError> => (options.client ?? client).post<CreatePageResponses, unknown, ThrowOnError>({
+export const createPage = <ThrowOnError extends boolean = true>(options: Options<CreatePageData, ThrowOnError>): RequestResult<CreatePageResponses, unknown, ThrowOnError> => (options.client ?? client).post<CreatePageResponses, unknown, ThrowOnError>({
     url: '/pages/{id}',
     ...options,
     headers: {
@@ -386,7 +386,7 @@ export const createPage = <ThrowOnError extends boolean = false>(options: Option
     }
 });
 
-export const updatePage = <ThrowOnError extends boolean = false>(options: Options<UpdatePageData, ThrowOnError>): RequestResult<UpdatePageResponses, unknown, ThrowOnError> => (options.client ?? client).put<UpdatePageResponses, unknown, ThrowOnError>({
+export const updatePage = <ThrowOnError extends boolean = true>(options: Options<UpdatePageData, ThrowOnError>): RequestResult<UpdatePageResponses, unknown, ThrowOnError> => (options.client ?? client).put<UpdatePageResponses, unknown, ThrowOnError>({
     url: '/pages/{id}',
     ...options,
     headers: {
@@ -395,9 +395,9 @@ export const updatePage = <ThrowOnError extends boolean = false>(options: Option
     }
 });
 
-export const getPublishedPartners = <ThrowOnError extends boolean = false>(options?: Options<GetPublishedPartnersData, ThrowOnError>): RequestResult<GetPublishedPartnersResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetPublishedPartnersResponses, unknown, ThrowOnError>({ url: '/partners', ...options });
+export const getPublishedPartners = <ThrowOnError extends boolean = true>(options?: Options<GetPublishedPartnersData, ThrowOnError>): RequestResult<GetPublishedPartnersResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetPublishedPartnersResponses, unknown, ThrowOnError>({ url: '/partners', ...options });
 
-export const createPartner = <ThrowOnError extends boolean = false>(options: Options<CreatePartnerData, ThrowOnError>): RequestResult<CreatePartnerResponses, unknown, ThrowOnError> => (options.client ?? client).post<CreatePartnerResponses, unknown, ThrowOnError>({
+export const createPartner = <ThrowOnError extends boolean = true>(options: Options<CreatePartnerData, ThrowOnError>): RequestResult<CreatePartnerResponses, unknown, ThrowOnError> => (options.client ?? client).post<CreatePartnerResponses, unknown, ThrowOnError>({
     url: '/partners',
     ...options,
     headers: {
@@ -406,13 +406,13 @@ export const createPartner = <ThrowOnError extends boolean = false>(options: Opt
     }
 });
 
-export const getAllPartners = <ThrowOnError extends boolean = false>(options?: Options<GetAllPartnersData, ThrowOnError>): RequestResult<GetAllPartnersResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetAllPartnersResponses, unknown, ThrowOnError>({ url: '/partners/all', ...options });
+export const getAllPartners = <ThrowOnError extends boolean = true>(options?: Options<GetAllPartnersData, ThrowOnError>): RequestResult<GetAllPartnersResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetAllPartnersResponses, unknown, ThrowOnError>({ url: '/partners/all', ...options });
 
-export const deletePartner = <ThrowOnError extends boolean = false>(options: Options<DeletePartnerData, ThrowOnError>): RequestResult<DeletePartnerResponses, unknown, ThrowOnError> => (options.client ?? client).delete<DeletePartnerResponses, unknown, ThrowOnError>({ url: '/partners/{id}', ...options });
+export const deletePartner = <ThrowOnError extends boolean = true>(options: Options<DeletePartnerData, ThrowOnError>): RequestResult<DeletePartnerResponses, unknown, ThrowOnError> => (options.client ?? client).delete<DeletePartnerResponses, unknown, ThrowOnError>({ url: '/partners/{id}', ...options });
 
-export const getPartner = <ThrowOnError extends boolean = false>(options: Options<GetPartnerData, ThrowOnError>): RequestResult<GetPartnerResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetPartnerResponses, unknown, ThrowOnError>({ url: '/partners/{id}', ...options });
+export const getPartner = <ThrowOnError extends boolean = true>(options: Options<GetPartnerData, ThrowOnError>): RequestResult<GetPartnerResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetPartnerResponses, unknown, ThrowOnError>({ url: '/partners/{id}', ...options });
 
-export const updatePartner = <ThrowOnError extends boolean = false>(options: Options<UpdatePartnerData, ThrowOnError>): RequestResult<UpdatePartnerResponses, unknown, ThrowOnError> => (options.client ?? client).put<UpdatePartnerResponses, unknown, ThrowOnError>({
+export const updatePartner = <ThrowOnError extends boolean = true>(options: Options<UpdatePartnerData, ThrowOnError>): RequestResult<UpdatePartnerResponses, unknown, ThrowOnError> => (options.client ?? client).put<UpdatePartnerResponses, unknown, ThrowOnError>({
     url: '/partners/{id}',
     ...options,
     headers: {
@@ -421,23 +421,23 @@ export const updatePartner = <ThrowOnError extends boolean = false>(options: Opt
     }
 });
 
-export const getAllPresentations = <ThrowOnError extends boolean = false>(options?: Options<GetAllPresentationsData, ThrowOnError>): RequestResult<GetAllPresentationsResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetAllPresentationsResponses, unknown, ThrowOnError>({ url: '/presentations', ...options });
+export const getAllPresentations = <ThrowOnError extends boolean = true>(options?: Options<GetAllPresentationsData, ThrowOnError>): RequestResult<GetAllPresentationsResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetAllPresentationsResponses, unknown, ThrowOnError>({ url: '/presentations', ...options });
 
-export const accept = <ThrowOnError extends boolean = false>(options: Options<AcceptData, ThrowOnError>): RequestResult<AcceptResponses, unknown, ThrowOnError> => (options.client ?? client).post<AcceptResponses, unknown, ThrowOnError>({
+export const accept = <ThrowOnError extends boolean = true>(options: Options<AcceptData, ThrowOnError>): RequestResult<AcceptResponses, unknown, ThrowOnError> => (options.client ?? client).post<AcceptResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],
     url: '/presentations/{presentationId}/accept',
     ...options
 });
 
-export const getCospeakers = <ThrowOnError extends boolean = false>(options: Options<GetCospeakersData, ThrowOnError>): RequestResult<GetCospeakersResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetCospeakersResponses, unknown, ThrowOnError>({ url: '/presentations/{presentationId}/cospeakers', ...options });
+export const getCospeakers = <ThrowOnError extends boolean = true>(options: Options<GetCospeakersData, ThrowOnError>): RequestResult<GetCospeakersResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetCospeakersResponses, unknown, ThrowOnError>({ url: '/presentations/{presentationId}/cospeakers', ...options });
 
-export const addCospeaker = <ThrowOnError extends boolean = false>(options: Options<AddCospeakerData, ThrowOnError>): RequestResult<AddCospeakerResponses, unknown, ThrowOnError> => (options.client ?? client).post<AddCospeakerResponses, unknown, ThrowOnError>({ url: '/presentations/{presentationId}/cospeakers/{email}', ...options });
+export const addCospeaker = <ThrowOnError extends boolean = true>(options: Options<AddCospeakerData, ThrowOnError>): RequestResult<AddCospeakerResponses, unknown, ThrowOnError> => (options.client ?? client).post<AddCospeakerResponses, unknown, ThrowOnError>({ url: '/presentations/{presentationId}/cospeakers/{email}', ...options });
 
-export const removeCospeaker = <ThrowOnError extends boolean = false>(options: Options<RemoveCospeakerData, ThrowOnError>): RequestResult<RemoveCospeakerResponses, unknown, ThrowOnError> => (options.client ?? client).delete<RemoveCospeakerResponses, unknown, ThrowOnError>({ url: '/presentations/{presentationId}/cospeakers/{id}', ...options });
+export const removeCospeaker = <ThrowOnError extends boolean = true>(options: Options<RemoveCospeakerData, ThrowOnError>): RequestResult<RemoveCospeakerResponses, unknown, ThrowOnError> => (options.client ?? client).delete<RemoveCospeakerResponses, unknown, ThrowOnError>({ url: '/presentations/{presentationId}/cospeakers/{id}', ...options });
 
-export const countByPresentation = <ThrowOnError extends boolean = false>(options: Options<CountByPresentationData, ThrowOnError>): RequestResult<CountByPresentationResponses, unknown, ThrowOnError> => (options.client ?? client).get<CountByPresentationResponses, unknown, ThrowOnError>({ url: '/presentations/{presentationId}/likes', ...options });
+export const countByPresentation = <ThrowOnError extends boolean = true>(options: Options<CountByPresentationData, ThrowOnError>): RequestResult<CountByPresentationResponses, unknown, ThrowOnError> => (options.client ?? client).get<CountByPresentationResponses, unknown, ThrowOnError>({ url: '/presentations/{presentationId}/likes', ...options });
 
-export const createVote = <ThrowOnError extends boolean = false>(options: Options<CreateVoteData, ThrowOnError>): RequestResult<CreateVoteResponses, unknown, ThrowOnError> => (options.client ?? client).post<CreateVoteResponses, unknown, ThrowOnError>({
+export const createVote = <ThrowOnError extends boolean = true>(options: Options<CreateVoteData, ThrowOnError>): RequestResult<CreateVoteResponses, unknown, ThrowOnError> => (options.client ?? client).post<CreateVoteResponses, unknown, ThrowOnError>({
     url: '/presentations/{presentationId}/likes',
     ...options,
     headers: {
@@ -446,7 +446,7 @@ export const createVote = <ThrowOnError extends boolean = false>(options: Option
     }
 });
 
-export const setPreSelection = <ThrowOnError extends boolean = false>(options: Options<SetPreSelectionData, ThrowOnError>): RequestResult<SetPreSelectionResponses, unknown, ThrowOnError> => (options.client ?? client).post<SetPreSelectionResponses, unknown, ThrowOnError>({
+export const setPreSelection = <ThrowOnError extends boolean = true>(options: Options<SetPreSelectionData, ThrowOnError>): RequestResult<SetPreSelectionResponses, unknown, ThrowOnError> => (options.client ?? client).post<SetPreSelectionResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],
     url: '/presentations/{presentationId}/pre-selection',
     ...options,
@@ -456,23 +456,23 @@ export const setPreSelection = <ThrowOnError extends boolean = false>(options: O
     }
 });
 
-export const getRatingEnabled = <ThrowOnError extends boolean = false>(options: Options<GetRatingEnabledData, ThrowOnError>): RequestResult<GetRatingEnabledResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetRatingEnabledResponses, unknown, ThrowOnError>({ url: '/presentations/{presentationId}/rating-enabled', ...options });
+export const getRatingEnabled = <ThrowOnError extends boolean = true>(options: Options<GetRatingEnabledData, ThrowOnError>): RequestResult<GetRatingEnabledResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetRatingEnabledResponses, unknown, ThrowOnError>({ url: '/presentations/{presentationId}/rating-enabled', ...options });
 
-export const disableRating = <ThrowOnError extends boolean = false>(options: Options<DisableRatingData, ThrowOnError>): RequestResult<DisableRatingResponses, unknown, ThrowOnError> => (options.client ?? client).post<DisableRatingResponses, unknown, ThrowOnError>({
+export const disableRating = <ThrowOnError extends boolean = true>(options: Options<DisableRatingData, ThrowOnError>): RequestResult<DisableRatingResponses, unknown, ThrowOnError> => (options.client ?? client).post<DisableRatingResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],
     url: '/presentations/{presentationId}/rating/disable',
     ...options
 });
 
-export const enableRating = <ThrowOnError extends boolean = false>(options: Options<EnableRatingData, ThrowOnError>): RequestResult<EnableRatingResponses, unknown, ThrowOnError> => (options.client ?? client).post<EnableRatingResponses, unknown, ThrowOnError>({
+export const enableRating = <ThrowOnError extends boolean = true>(options: Options<EnableRatingData, ThrowOnError>): RequestResult<EnableRatingResponses, unknown, ThrowOnError> => (options.client ?? client).post<EnableRatingResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],
     url: '/presentations/{presentationId}/rating/enable',
     ...options
 });
 
-export const rates1 = <ThrowOnError extends boolean = false>(options: Options<Rates1Data, ThrowOnError>): RequestResult<Rates1Responses, unknown, ThrowOnError> => (options.client ?? client).get<Rates1Responses, unknown, ThrowOnError>({ url: '/presentations/{presentationId}/ratings', ...options });
+export const rates1 = <ThrowOnError extends boolean = true>(options: Options<Rates1Data, ThrowOnError>): RequestResult<Rates1Responses, unknown, ThrowOnError> => (options.client ?? client).get<Rates1Responses, unknown, ThrowOnError>({ url: '/presentations/{presentationId}/ratings', ...options });
 
-export const addRating = <ThrowOnError extends boolean = false>(options: Options<AddRatingData, ThrowOnError>): RequestResult<AddRatingResponses, unknown, ThrowOnError> => (options.client ?? client).post<AddRatingResponses, unknown, ThrowOnError>({
+export const addRating = <ThrowOnError extends boolean = true>(options: Options<AddRatingData, ThrowOnError>): RequestResult<AddRatingResponses, unknown, ThrowOnError> => (options.client ?? client).post<AddRatingResponses, unknown, ThrowOnError>({
     url: '/presentations/{presentationId}/ratings',
     ...options,
     headers: {
@@ -481,33 +481,33 @@ export const addRating = <ThrowOnError extends boolean = false>(options: Options
     }
 });
 
-export const reject = <ThrowOnError extends boolean = false>(options: Options<RejectData, ThrowOnError>): RequestResult<RejectResponses, unknown, ThrowOnError> => (options.client ?? client).post<RejectResponses, unknown, ThrowOnError>({
+export const reject = <ThrowOnError extends boolean = true>(options: Options<RejectData, ThrowOnError>): RequestResult<RejectResponses, unknown, ThrowOnError> => (options.client ?? client).post<RejectResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],
     url: '/presentations/{presentationId}/reject',
     ...options
 });
 
-export const agenda = <ThrowOnError extends boolean = false>(options: Options<AgendaData, ThrowOnError>): RequestResult<AgendaResponses, unknown, ThrowOnError> => (options.client ?? client).get<AgendaResponses, unknown, ThrowOnError>({ url: '/published/agenda/{dayId}', ...options });
+export const agenda = <ThrowOnError extends boolean = true>(options: Options<AgendaData, ThrowOnError>): RequestResult<AgendaResponses, unknown, ThrowOnError> => (options.client ?? client).get<AgendaResponses, unknown, ThrowOnError>({ url: '/published/agenda/{dayId}', ...options });
 
-export const getPublishedEdition = <ThrowOnError extends boolean = false>(options?: Options<GetPublishedEditionData, ThrowOnError>): RequestResult<GetPublishedEditionResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetPublishedEditionResponses, unknown, ThrowOnError>({ url: '/published/edition', ...options });
+export const getPublishedEdition = <ThrowOnError extends boolean = true>(options?: Options<GetPublishedEditionData, ThrowOnError>): RequestResult<GetPublishedEditionResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetPublishedEditionResponses, unknown, ThrowOnError>({ url: '/published/edition', ...options });
 
-export const news = <ThrowOnError extends boolean = false>(options?: Options<NewsData, ThrowOnError>): RequestResult<NewsResponses, unknown, ThrowOnError> => (options?.client ?? client).get<NewsResponses, unknown, ThrowOnError>({ url: '/published/news', ...options });
+export const news = <ThrowOnError extends boolean = true>(options?: Options<NewsData, ThrowOnError>): RequestResult<NewsResponses, unknown, ThrowOnError> => (options?.client ?? client).get<NewsResponses, unknown, ThrowOnError>({ url: '/published/news', ...options });
 
-export const page = <ThrowOnError extends boolean = false>(options: Options<PageData, ThrowOnError>): RequestResult<PageResponses, unknown, ThrowOnError> => (options.client ?? client).get<PageResponses, unknown, ThrowOnError>({ url: '/published/pages/{page}', ...options });
+export const page = <ThrowOnError extends boolean = true>(options: Options<PageData, ThrowOnError>): RequestResult<PageResponses, unknown, ThrowOnError> => (options.client ?? client).get<PageResponses, unknown, ThrowOnError>({ url: '/published/pages/{page}', ...options });
 
-export const acceptedPresentations = <ThrowOnError extends boolean = false>(options?: Options<AcceptedPresentationsData, ThrowOnError>): RequestResult<AcceptedPresentationsResponses, unknown, ThrowOnError> => (options?.client ?? client).get<AcceptedPresentationsResponses, unknown, ThrowOnError>({ url: '/published/presentations/accepted', ...options });
+export const acceptedPresentations = <ThrowOnError extends boolean = true>(options?: Options<AcceptedPresentationsData, ThrowOnError>): RequestResult<AcceptedPresentationsResponses, unknown, ThrowOnError> => (options?.client ?? client).get<AcceptedPresentationsResponses, unknown, ThrowOnError>({ url: '/published/presentations/accepted', ...options });
 
-export const admins = <ThrowOnError extends boolean = false>(options?: Options<AdminsData, ThrowOnError>): RequestResult<AdminsResponses, unknown, ThrowOnError> => (options?.client ?? client).get<AdminsResponses, unknown, ThrowOnError>({ url: '/published/users/search/admins', ...options });
+export const admins = <ThrowOnError extends boolean = true>(options?: Options<AdminsData, ThrowOnError>): RequestResult<AdminsResponses, unknown, ThrowOnError> => (options?.client ?? client).get<AdminsResponses, unknown, ThrowOnError>({ url: '/published/users/search/admins', ...options });
 
-export const speakers = <ThrowOnError extends boolean = false>(options?: Options<SpeakersData, ThrowOnError>): RequestResult<SpeakersResponses, unknown, ThrowOnError> => (options?.client ?? client).get<SpeakersResponses, unknown, ThrowOnError>({ url: '/published/users/search/speakers', ...options });
+export const speakers = <ThrowOnError extends boolean = true>(options?: Options<SpeakersData, ThrowOnError>): RequestResult<SpeakersResponses, unknown, ThrowOnError> => (options?.client ?? client).get<SpeakersResponses, unknown, ThrowOnError>({ url: '/published/users/search/speakers', ...options });
 
-export const speaker = <ThrowOnError extends boolean = false>(options: Options<SpeakerData, ThrowOnError>): RequestResult<SpeakerResponses, unknown, ThrowOnError> => (options.client ?? client).get<SpeakerResponses, unknown, ThrowOnError>({ url: '/published/users/{id}/public', ...options });
+export const speaker = <ThrowOnError extends boolean = true>(options: Options<SpeakerData, ThrowOnError>): RequestResult<SpeakerResponses, unknown, ThrowOnError> => (options.client ?? client).get<SpeakerResponses, unknown, ThrowOnError>({ url: '/published/users/{id}/public', ...options });
 
-export const acceptedWorkshops = <ThrowOnError extends boolean = false>(options?: Options<AcceptedWorkshopsData, ThrowOnError>): RequestResult<AcceptedWorkshopsResponses, unknown, ThrowOnError> => (options?.client ?? client).get<AcceptedWorkshopsResponses, unknown, ThrowOnError>({ url: '/published/workshops/accepted', ...options });
+export const acceptedWorkshops = <ThrowOnError extends boolean = true>(options?: Options<AcceptedWorkshopsData, ThrowOnError>): RequestResult<AcceptedWorkshopsResponses, unknown, ThrowOnError> => (options?.client ?? client).get<AcceptedWorkshopsResponses, unknown, ThrowOnError>({ url: '/published/workshops/accepted', ...options });
 
-export const getRatingStatus = <ThrowOnError extends boolean = false>(options?: Options<GetRatingStatusData, ThrowOnError>): RequestResult<GetRatingStatusResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetRatingStatusResponses, unknown, ThrowOnError>({ url: '/rating/status', ...options });
+export const getRatingStatus = <ThrowOnError extends boolean = true>(options?: Options<GetRatingStatusData, ThrowOnError>): RequestResult<GetRatingStatusResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetRatingStatusResponses, unknown, ThrowOnError>({ url: '/rating/status', ...options });
 
-export const rates = <ThrowOnError extends boolean = false>(options?: Options<RatesData, ThrowOnError>): RequestResult<RatesResponses, unknown, ThrowOnError> => (options?.client ?? client).post<RatesResponses, unknown, ThrowOnError>({
+export const rates = <ThrowOnError extends boolean = true>(options?: Options<RatesData, ThrowOnError>): RequestResult<RatesResponses, unknown, ThrowOnError> => (options?.client ?? client).post<RatesResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],
     url: '/ratings',
     ...options
@@ -518,7 +518,7 @@ export const rates = <ThrowOnError extends boolean = false>(options?: Options<Ra
  *
  * Upload a Multipart file for the news entry's cover image, replacing any it had
  */
-export const storeNewsEntryCover = <ThrowOnError extends boolean = false>(options: Options<StoreNewsEntryCoverData, ThrowOnError>): RequestResult<StoreNewsEntryCoverResponses, unknown, ThrowOnError> => (options.client ?? client).post<StoreNewsEntryCoverResponses, unknown, ThrowOnError>({
+export const storeNewsEntryCover = <ThrowOnError extends boolean = true>(options: Options<StoreNewsEntryCoverData, ThrowOnError>): RequestResult<StoreNewsEntryCoverResponses, unknown, ThrowOnError> => (options.client ?? client).post<StoreNewsEntryCoverResponses, unknown, ThrowOnError>({
     ...formDataBodySerializer,
     url: '/resources/news-entries/{id}',
     ...options,
@@ -533,7 +533,7 @@ export const storeNewsEntryCover = <ThrowOnError extends boolean = false>(option
  *
  * Upload a Multipart file for the partner's logo
  */
-export const storePartnerLogo = <ThrowOnError extends boolean = false>(options: Options<StorePartnerLogoData, ThrowOnError>): RequestResult<StorePartnerLogoResponses, unknown, ThrowOnError> => (options.client ?? client).post<StorePartnerLogoResponses, unknown, ThrowOnError>({
+export const storePartnerLogo = <ThrowOnError extends boolean = true>(options: Options<StorePartnerLogoData, ThrowOnError>): RequestResult<StorePartnerLogoResponses, unknown, ThrowOnError> => (options.client ?? client).post<StorePartnerLogoResponses, unknown, ThrowOnError>({
     ...formDataBodySerializer,
     url: '/resources/partners/{id}',
     ...options,
@@ -548,7 +548,7 @@ export const storePartnerLogo = <ThrowOnError extends boolean = false>(options: 
  *
  * Upload a Multipart file for the speaker's photo
  */
-export const storeUserProfilePicture = <ThrowOnError extends boolean = false>(options: Options<StoreUserProfilePictureData, ThrowOnError>): RequestResult<StoreUserProfilePictureResponses, unknown, ThrowOnError> => (options.client ?? client).post<StoreUserProfilePictureResponses, unknown, ThrowOnError>({
+export const storeUserProfilePicture = <ThrowOnError extends boolean = true>(options: Options<StoreUserProfilePictureData, ThrowOnError>): RequestResult<StoreUserProfilePictureResponses, unknown, ThrowOnError> => (options.client ?? client).post<StoreUserProfilePictureResponses, unknown, ThrowOnError>({
     ...formDataBodySerializer,
     url: '/resources/{userId}',
     ...options,
@@ -558,9 +558,9 @@ export const storeUserProfilePicture = <ThrowOnError extends boolean = false>(op
     }
 });
 
-export const getAllRooms = <ThrowOnError extends boolean = false>(options?: Options<GetAllRoomsData, ThrowOnError>): RequestResult<GetAllRoomsResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetAllRoomsResponses, unknown, ThrowOnError>({ url: '/rooms', ...options });
+export const getAllRooms = <ThrowOnError extends boolean = true>(options?: Options<GetAllRoomsData, ThrowOnError>): RequestResult<GetAllRoomsResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetAllRoomsResponses, unknown, ThrowOnError>({ url: '/rooms', ...options });
 
-export const saveRoom = <ThrowOnError extends boolean = false>(options: Options<SaveRoomData, ThrowOnError>): RequestResult<SaveRoomResponses, unknown, ThrowOnError> => (options.client ?? client).post<SaveRoomResponses, unknown, ThrowOnError>({
+export const saveRoom = <ThrowOnError extends boolean = true>(options: Options<SaveRoomData, ThrowOnError>): RequestResult<SaveRoomResponses, unknown, ThrowOnError> => (options.client ?? client).post<SaveRoomResponses, unknown, ThrowOnError>({
     url: '/rooms',
     ...options,
     headers: {
@@ -569,13 +569,13 @@ export const saveRoom = <ThrowOnError extends boolean = false>(options: Options<
     }
 });
 
-export const deleteRoom = <ThrowOnError extends boolean = false>(options: Options<DeleteRoomData, ThrowOnError>): RequestResult<DeleteRoomResponses, unknown, ThrowOnError> => (options.client ?? client).delete<DeleteRoomResponses, unknown, ThrowOnError>({ url: '/rooms/{id}', ...options });
+export const deleteRoom = <ThrowOnError extends boolean = true>(options: Options<DeleteRoomData, ThrowOnError>): RequestResult<DeleteRoomResponses, unknown, ThrowOnError> => (options.client ?? client).delete<DeleteRoomResponses, unknown, ThrowOnError>({ url: '/rooms/{id}', ...options });
 
-export const getRoomById = <ThrowOnError extends boolean = false>(options: Options<GetRoomByIdData, ThrowOnError>): RequestResult<GetRoomByIdResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetRoomByIdResponses, unknown, ThrowOnError>({ url: '/rooms/{id}', ...options });
+export const getRoomById = <ThrowOnError extends boolean = true>(options: Options<GetRoomByIdData, ThrowOnError>): RequestResult<GetRoomByIdResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetRoomByIdResponses, unknown, ThrowOnError>({ url: '/rooms/{id}', ...options });
 
-export const getAllTags = <ThrowOnError extends boolean = false>(options?: Options<GetAllTagsData, ThrowOnError>): RequestResult<GetAllTagsResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetAllTagsResponses, unknown, ThrowOnError>({ url: '/tags', ...options });
+export const getAllTags = <ThrowOnError extends boolean = true>(options?: Options<GetAllTagsData, ThrowOnError>): RequestResult<GetAllTagsResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetAllTagsResponses, unknown, ThrowOnError>({ url: '/tags', ...options });
 
-export const saveTags = <ThrowOnError extends boolean = false>(options: Options<SaveTagsData, ThrowOnError>): RequestResult<SaveTagsResponses, unknown, ThrowOnError> => (options.client ?? client).post<SaveTagsResponses, unknown, ThrowOnError>({
+export const saveTags = <ThrowOnError extends boolean = true>(options: Options<SaveTagsData, ThrowOnError>): RequestResult<SaveTagsResponses, unknown, ThrowOnError> => (options.client ?? client).post<SaveTagsResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],
     url: '/tags',
     ...options,
@@ -585,15 +585,15 @@ export const saveTags = <ThrowOnError extends boolean = false>(options: Options<
     }
 });
 
-export const refreshToken = <ThrowOnError extends boolean = false>(options?: Options<RefreshTokenData, ThrowOnError>): RequestResult<RefreshTokenResponses, unknown, ThrowOnError> => (options?.client ?? client).post<RefreshTokenResponses, unknown, ThrowOnError>({ url: '/tokens/refresh-token', ...options });
+export const refreshToken = <ThrowOnError extends boolean = true>(options?: Options<RefreshTokenData, ThrowOnError>): RequestResult<RefreshTokenResponses, unknown, ThrowOnError> => (options?.client ?? client).post<RefreshTokenResponses, unknown, ThrowOnError>({ url: '/tokens/refresh-token', ...options });
 
-export const getAllUsers = <ThrowOnError extends boolean = false>(options?: Options<GetAllUsersData, ThrowOnError>): RequestResult<GetAllUsersResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetAllUsersResponses, unknown, ThrowOnError>({
+export const getAllUsers = <ThrowOnError extends boolean = true>(options?: Options<GetAllUsersData, ThrowOnError>): RequestResult<GetAllUsersResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetAllUsersResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],
     url: '/users',
     ...options
 });
 
-export const save1 = <ThrowOnError extends boolean = false>(options: Options<Save1Data, ThrowOnError>): RequestResult<Save1Responses, unknown, ThrowOnError> => (options.client ?? client).post<Save1Responses, unknown, ThrowOnError>({
+export const save1 = <ThrowOnError extends boolean = true>(options: Options<Save1Data, ThrowOnError>): RequestResult<Save1Responses, unknown, ThrowOnError> => (options.client ?? client).post<Save1Responses, unknown, ThrowOnError>({
     url: '/users',
     ...options,
     headers: {
@@ -602,7 +602,7 @@ export const save1 = <ThrowOnError extends boolean = false>(options: Options<Sav
     }
 });
 
-export const createManual = <ThrowOnError extends boolean = false>(options: Options<CreateManualData, ThrowOnError>): RequestResult<CreateManualResponses, unknown, ThrowOnError> => (options.client ?? client).post<CreateManualResponses, unknown, ThrowOnError>({
+export const createManual = <ThrowOnError extends boolean = true>(options: Options<CreateManualData, ThrowOnError>): RequestResult<CreateManualResponses, unknown, ThrowOnError> => (options.client ?? client).post<CreateManualResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],
     url: '/users/manual',
     ...options,
@@ -612,7 +612,7 @@ export const createManual = <ThrowOnError extends boolean = false>(options: Opti
     }
 });
 
-export const mergeUsers = <ThrowOnError extends boolean = false>(options: Options<MergeUsersData, ThrowOnError>): RequestResult<MergeUsersResponses, unknown, ThrowOnError> => (options.client ?? client).post<MergeUsersResponses, unknown, ThrowOnError>({
+export const mergeUsers = <ThrowOnError extends boolean = true>(options: Options<MergeUsersData, ThrowOnError>): RequestResult<MergeUsersResponses, unknown, ThrowOnError> => (options.client ?? client).post<MergeUsersResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],
     url: '/users/merge',
     ...options,
@@ -622,7 +622,7 @@ export const mergeUsers = <ThrowOnError extends boolean = false>(options: Option
     }
 });
 
-export const cancelMerge = <ThrowOnError extends boolean = false>(options: Options<CancelMergeData, ThrowOnError>): RequestResult<CancelMergeResponses, unknown, ThrowOnError> => (options.client ?? client).post<CancelMergeResponses, unknown, ThrowOnError>({
+export const cancelMerge = <ThrowOnError extends boolean = true>(options: Options<CancelMergeData, ThrowOnError>): RequestResult<CancelMergeResponses, unknown, ThrowOnError> => (options.client ?? client).post<CancelMergeResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],
     url: '/users/merge/cancel',
     ...options,
@@ -632,7 +632,7 @@ export const cancelMerge = <ThrowOnError extends boolean = false>(options: Optio
     }
 });
 
-export const previewMerge = <ThrowOnError extends boolean = false>(options: Options<PreviewMergeData, ThrowOnError>): RequestResult<PreviewMergeResponses, unknown, ThrowOnError> => (options.client ?? client).post<PreviewMergeResponses, unknown, ThrowOnError>({
+export const previewMerge = <ThrowOnError extends boolean = true>(options: Options<PreviewMergeData, ThrowOnError>): RequestResult<PreviewMergeResponses, unknown, ThrowOnError> => (options.client ?? client).post<PreviewMergeResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],
     url: '/users/merge/preview',
     ...options,
@@ -642,57 +642,57 @@ export const previewMerge = <ThrowOnError extends boolean = false>(options: Opti
     }
 });
 
-export const getAdmins = <ThrowOnError extends boolean = false>(options?: Options<GetAdminsData, ThrowOnError>): RequestResult<GetAdminsResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetAdminsResponses, unknown, ThrowOnError>({ url: '/users/search/admins', ...options });
+export const getAdmins = <ThrowOnError extends boolean = true>(options?: Options<GetAdminsData, ThrowOnError>): RequestResult<GetAdminsResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetAdminsResponses, unknown, ThrowOnError>({ url: '/users/search/admins', ...options });
 
-export const getSpeakers = <ThrowOnError extends boolean = false>(options?: Options<GetSpeakersData, ThrowOnError>): RequestResult<GetSpeakersResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetSpeakersResponses, unknown, ThrowOnError>({ url: '/users/search/speakers', ...options });
+export const getSpeakers = <ThrowOnError extends boolean = true>(options?: Options<GetSpeakersData, ThrowOnError>): RequestResult<GetSpeakersResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetSpeakersResponses, unknown, ThrowOnError>({ url: '/users/search/speakers', ...options });
 
-export const getVolunteers = <ThrowOnError extends boolean = false>(options?: Options<GetVolunteersData, ThrowOnError>): RequestResult<GetVolunteersResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetVolunteersResponses, unknown, ThrowOnError>({ url: '/users/search/volunteers', ...options });
+export const getVolunteers = <ThrowOnError extends boolean = true>(options?: Options<GetVolunteersData, ThrowOnError>): RequestResult<GetVolunteersResponses, unknown, ThrowOnError> => (options?.client ?? client).get<GetVolunteersResponses, unknown, ThrowOnError>({ url: '/users/search/volunteers', ...options });
 
-export const getById = <ThrowOnError extends boolean = false>(options: Options<GetByIdData, ThrowOnError>): RequestResult<GetByIdResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetByIdResponses, unknown, ThrowOnError>({ url: '/users/{id}', ...options });
+export const getById = <ThrowOnError extends boolean = true>(options: Options<GetByIdData, ThrowOnError>): RequestResult<GetByIdResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetByIdResponses, unknown, ThrowOnError>({ url: '/users/{id}', ...options });
 
-export const getUserEditions = <ThrowOnError extends boolean = false>(options: Options<GetUserEditionsData, ThrowOnError>): RequestResult<GetUserEditionsResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetUserEditionsResponses, unknown, ThrowOnError>({ url: '/users/{id}/editions', ...options });
+export const getUserEditions = <ThrowOnError extends boolean = true>(options: Options<GetUserEditionsData, ThrowOnError>): RequestResult<GetUserEditionsResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetUserEditionsResponses, unknown, ThrowOnError>({ url: '/users/{id}/editions', ...options });
 
-export const getUserLogins = <ThrowOnError extends boolean = false>(options: Options<GetUserLoginsData, ThrowOnError>): RequestResult<GetUserLoginsResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetUserLoginsResponses, unknown, ThrowOnError>({
+export const getUserLogins = <ThrowOnError extends boolean = true>(options: Options<GetUserLoginsData, ThrowOnError>): RequestResult<GetUserLoginsResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetUserLoginsResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],
     url: '/users/{id}/logins',
     ...options
 });
 
-export const unlinkLogin = <ThrowOnError extends boolean = false>(options: Options<UnlinkLoginData, ThrowOnError>): RequestResult<UnlinkLoginResponses, unknown, ThrowOnError> => (options.client ?? client).delete<UnlinkLoginResponses, unknown, ThrowOnError>({
+export const unlinkLogin = <ThrowOnError extends boolean = true>(options: Options<UnlinkLoginData, ThrowOnError>): RequestResult<UnlinkLoginResponses, unknown, ThrowOnError> => (options.client ?? client).delete<UnlinkLoginResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],
     url: '/users/{id}/logins/{loginId}',
     ...options
 });
 
-export const getUserPresentations = <ThrowOnError extends boolean = false>(options: Options<GetUserPresentationsData, ThrowOnError>): RequestResult<GetUserPresentationsResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetUserPresentationsResponses, unknown, ThrowOnError>({ url: '/users/{id}/presentations', ...options });
+export const getUserPresentations = <ThrowOnError extends boolean = true>(options: Options<GetUserPresentationsData, ThrowOnError>): RequestResult<GetUserPresentationsResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetUserPresentationsResponses, unknown, ThrowOnError>({ url: '/users/{id}/presentations', ...options });
 
-export const getPresentation = <ThrowOnError extends boolean = false>(options: Options<GetPresentationData, ThrowOnError>): RequestResult<GetPresentationResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetPresentationResponses, unknown, ThrowOnError>({ url: '/users/{id}/presentations/{presentationId}', ...options });
+export const getPresentation = <ThrowOnError extends boolean = true>(options: Options<GetPresentationData, ThrowOnError>): RequestResult<GetPresentationResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetPresentationResponses, unknown, ThrowOnError>({ url: '/users/{id}/presentations/{presentationId}', ...options });
 
-export const getPublicById = <ThrowOnError extends boolean = false>(options: Options<GetPublicByIdData, ThrowOnError>): RequestResult<GetPublicByIdResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetPublicByIdResponses, unknown, ThrowOnError>({ url: '/users/{id}/public', ...options });
+export const getPublicById = <ThrowOnError extends boolean = true>(options: Options<GetPublicByIdData, ThrowOnError>): RequestResult<GetPublicByIdResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetPublicByIdResponses, unknown, ThrowOnError>({ url: '/users/{id}/public', ...options });
 
-export const getUserWorkshops = <ThrowOnError extends boolean = false>(options: Options<GetUserWorkshopsData, ThrowOnError>): RequestResult<GetUserWorkshopsResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetUserWorkshopsResponses, unknown, ThrowOnError>({ url: '/users/{id}/workshops', ...options });
+export const getUserWorkshops = <ThrowOnError extends boolean = true>(options: Options<GetUserWorkshopsData, ThrowOnError>): RequestResult<GetUserWorkshopsResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetUserWorkshopsResponses, unknown, ThrowOnError>({ url: '/users/{id}/workshops', ...options });
 
-export const getWorkshop = <ThrowOnError extends boolean = false>(options: Options<GetWorkshopData, ThrowOnError>): RequestResult<GetWorkshopResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetWorkshopResponses, unknown, ThrowOnError>({ url: '/users/{id}/workshops/{workshopId}', ...options });
+export const getWorkshop = <ThrowOnError extends boolean = true>(options: Options<GetWorkshopData, ThrowOnError>): RequestResult<GetWorkshopResponses, unknown, ThrowOnError> => (options.client ?? client).get<GetWorkshopResponses, unknown, ThrowOnError>({ url: '/users/{id}/workshops/{workshopId}', ...options });
 
-export const adminMergeUsers = <ThrowOnError extends boolean = false>(options: Options<AdminMergeUsersData, ThrowOnError>): RequestResult<AdminMergeUsersResponses, unknown, ThrowOnError> => (options.client ?? client).post<AdminMergeUsersResponses, unknown, ThrowOnError>({
+export const adminMergeUsers = <ThrowOnError extends boolean = true>(options: Options<AdminMergeUsersData, ThrowOnError>): RequestResult<AdminMergeUsersResponses, unknown, ThrowOnError> => (options.client ?? client).post<AdminMergeUsersResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],
     url: '/users/{survivorId}/merge/{absorbedId}',
     ...options
 });
 
-export const previewAdminMerge = <ThrowOnError extends boolean = false>(options: Options<PreviewAdminMergeData, ThrowOnError>): RequestResult<PreviewAdminMergeResponses, unknown, ThrowOnError> => (options.client ?? client).get<PreviewAdminMergeResponses, unknown, ThrowOnError>({
+export const previewAdminMerge = <ThrowOnError extends boolean = true>(options: Options<PreviewAdminMergeData, ThrowOnError>): RequestResult<PreviewAdminMergeResponses, unknown, ThrowOnError> => (options.client ?? client).get<PreviewAdminMergeResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],
     url: '/users/{survivorId}/merge/{absorbedId}/preview',
     ...options
 });
 
-export const markAsAdmin = <ThrowOnError extends boolean = false>(options: Options<MarkAsAdminData, ThrowOnError>): RequestResult<MarkAsAdminResponses, unknown, ThrowOnError> => (options.client ?? client).post<MarkAsAdminResponses, unknown, ThrowOnError>({
+export const markAsAdmin = <ThrowOnError extends boolean = true>(options: Options<MarkAsAdminData, ThrowOnError>): RequestResult<MarkAsAdminResponses, unknown, ThrowOnError> => (options.client ?? client).post<MarkAsAdminResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],
     url: '/users/{userId}/admin/{isAdmin}',
     ...options
 });
 
-export const assignParticipationData = <ThrowOnError extends boolean = false>(options: Options<AssignParticipationDataData, ThrowOnError>): RequestResult<AssignParticipationDataResponses, unknown, ThrowOnError> => (options.client ?? client).post<AssignParticipationDataResponses, unknown, ThrowOnError>({
+export const assignParticipationData = <ThrowOnError extends boolean = true>(options: Options<AssignParticipationDataData, ThrowOnError>): RequestResult<AssignParticipationDataResponses, unknown, ThrowOnError> => (options.client ?? client).post<AssignParticipationDataResponses, unknown, ThrowOnError>({
     url: '/users/{userId}/participationData',
     ...options,
     headers: {
@@ -701,7 +701,7 @@ export const assignParticipationData = <ThrowOnError extends boolean = false>(op
     }
 });
 
-export const addPresentationToUser = <ThrowOnError extends boolean = false>(options: Options<AddPresentationToUserData, ThrowOnError>): RequestResult<AddPresentationToUserResponses, unknown, ThrowOnError> => (options.client ?? client).post<AddPresentationToUserResponses, unknown, ThrowOnError>({
+export const addPresentationToUser = <ThrowOnError extends boolean = true>(options: Options<AddPresentationToUserData, ThrowOnError>): RequestResult<AddPresentationToUserResponses, unknown, ThrowOnError> => (options.client ?? client).post<AddPresentationToUserResponses, unknown, ThrowOnError>({
     url: '/users/{userId}/presentations',
     ...options,
     headers: {
@@ -710,9 +710,9 @@ export const addPresentationToUser = <ThrowOnError extends boolean = false>(opti
     }
 });
 
-export const deletePresentation = <ThrowOnError extends boolean = false>(options: Options<DeletePresentationData, ThrowOnError>): RequestResult<DeletePresentationResponses, unknown, ThrowOnError> => (options.client ?? client).delete<DeletePresentationResponses, unknown, ThrowOnError>({ url: '/users/{userId}/presentations/{presentationId}', ...options });
+export const deletePresentation = <ThrowOnError extends boolean = true>(options: Options<DeletePresentationData, ThrowOnError>): RequestResult<DeletePresentationResponses, unknown, ThrowOnError> => (options.client ?? client).delete<DeletePresentationResponses, unknown, ThrowOnError>({ url: '/users/{userId}/presentations/{presentationId}', ...options });
 
-export const updatePresentation = <ThrowOnError extends boolean = false>(options: Options<UpdatePresentationData, ThrowOnError>): RequestResult<UpdatePresentationResponses, unknown, ThrowOnError> => (options.client ?? client).post<UpdatePresentationResponses, unknown, ThrowOnError>({
+export const updatePresentation = <ThrowOnError extends boolean = true>(options: Options<UpdatePresentationData, ThrowOnError>): RequestResult<UpdatePresentationResponses, unknown, ThrowOnError> => (options.client ?? client).post<UpdatePresentationResponses, unknown, ThrowOnError>({
     url: '/users/{userId}/presentations/{presentationId}',
     ...options,
     headers: {
@@ -721,15 +721,15 @@ export const updatePresentation = <ThrowOnError extends boolean = false>(options
     }
 });
 
-export const resubmitPresentation = <ThrowOnError extends boolean = false>(options: Options<ResubmitPresentationData, ThrowOnError>): RequestResult<ResubmitPresentationResponses, unknown, ThrowOnError> => (options.client ?? client).post<ResubmitPresentationResponses, unknown, ThrowOnError>({ url: '/users/{userId}/presentations/{presentationId}/resubmit', ...options });
+export const resubmitPresentation = <ThrowOnError extends boolean = true>(options: Options<ResubmitPresentationData, ThrowOnError>): RequestResult<ResubmitPresentationResponses, unknown, ThrowOnError> => (options.client ?? client).post<ResubmitPresentationResponses, unknown, ThrowOnError>({ url: '/users/{userId}/presentations/{presentationId}/resubmit', ...options });
 
-export const markAsVolunteer = <ThrowOnError extends boolean = false>(options: Options<MarkAsVolunteerData, ThrowOnError>): RequestResult<MarkAsVolunteerResponses, unknown, ThrowOnError> => (options.client ?? client).post<MarkAsVolunteerResponses, unknown, ThrowOnError>({
+export const markAsVolunteer = <ThrowOnError extends boolean = true>(options: Options<MarkAsVolunteerData, ThrowOnError>): RequestResult<MarkAsVolunteerResponses, unknown, ThrowOnError> => (options.client ?? client).post<MarkAsVolunteerResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],
     url: '/users/{userId}/volunteer/{isVolunteer}',
     ...options
 });
 
-export const addWorkshopToUser = <ThrowOnError extends boolean = false>(options: Options<AddWorkshopToUserData, ThrowOnError>): RequestResult<AddWorkshopToUserResponses, unknown, ThrowOnError> => (options.client ?? client).post<AddWorkshopToUserResponses, unknown, ThrowOnError>({
+export const addWorkshopToUser = <ThrowOnError extends boolean = true>(options: Options<AddWorkshopToUserData, ThrowOnError>): RequestResult<AddWorkshopToUserResponses, unknown, ThrowOnError> => (options.client ?? client).post<AddWorkshopToUserResponses, unknown, ThrowOnError>({
     url: '/users/{userId}/workshops',
     ...options,
     headers: {
@@ -738,9 +738,9 @@ export const addWorkshopToUser = <ThrowOnError extends boolean = false>(options:
     }
 });
 
-export const deleteWorkshop = <ThrowOnError extends boolean = false>(options: Options<DeleteWorkshopData, ThrowOnError>): RequestResult<DeleteWorkshopResponses, unknown, ThrowOnError> => (options.client ?? client).delete<DeleteWorkshopResponses, unknown, ThrowOnError>({ url: '/users/{userId}/workshops/{workshopId}', ...options });
+export const deleteWorkshop = <ThrowOnError extends boolean = true>(options: Options<DeleteWorkshopData, ThrowOnError>): RequestResult<DeleteWorkshopResponses, unknown, ThrowOnError> => (options.client ?? client).delete<DeleteWorkshopResponses, unknown, ThrowOnError>({ url: '/users/{userId}/workshops/{workshopId}', ...options });
 
-export const updateWorkshop = <ThrowOnError extends boolean = false>(options: Options<UpdateWorkshopData, ThrowOnError>): RequestResult<UpdateWorkshopResponses, unknown, ThrowOnError> => (options.client ?? client).post<UpdateWorkshopResponses, unknown, ThrowOnError>({
+export const updateWorkshop = <ThrowOnError extends boolean = true>(options: Options<UpdateWorkshopData, ThrowOnError>): RequestResult<UpdateWorkshopResponses, unknown, ThrowOnError> => (options.client ?? client).post<UpdateWorkshopResponses, unknown, ThrowOnError>({
     url: '/users/{userId}/workshops/{workshopId}',
     ...options,
     headers: {
@@ -749,9 +749,9 @@ export const updateWorkshop = <ThrowOnError extends boolean = false>(options: Op
     }
 });
 
-export const resubmitWorkshop = <ThrowOnError extends boolean = false>(options: Options<ResubmitWorkshopData, ThrowOnError>): RequestResult<ResubmitWorkshopResponses, unknown, ThrowOnError> => (options.client ?? client).post<ResubmitWorkshopResponses, unknown, ThrowOnError>({ url: '/users/{userId}/workshops/{workshopId}/resubmit', ...options });
+export const resubmitWorkshop = <ThrowOnError extends boolean = true>(options: Options<ResubmitWorkshopData, ThrowOnError>): RequestResult<ResubmitWorkshopResponses, unknown, ThrowOnError> => (options.client ?? client).post<ResubmitWorkshopResponses, unknown, ThrowOnError>({ url: '/users/{userId}/workshops/{workshopId}/resubmit', ...options });
 
-export const save = <ThrowOnError extends boolean = false>(options: Options<SaveData, ThrowOnError>): RequestResult<SaveResponses, unknown, ThrowOnError> => (options.client ?? client).post<SaveResponses, unknown, ThrowOnError>({
+export const save = <ThrowOnError extends boolean = true>(options: Options<SaveData, ThrowOnError>): RequestResult<SaveResponses, unknown, ThrowOnError> => (options.client ?? client).post<SaveResponses, unknown, ThrowOnError>({
     url: '/votes',
     ...options,
     headers: {
@@ -760,15 +760,15 @@ export const save = <ThrowOnError extends boolean = false>(options: Options<Save
     }
 });
 
-export const results = <ThrowOnError extends boolean = false>(options?: Options<ResultsData, ThrowOnError>): RequestResult<ResultsResponses, unknown, ThrowOnError> => (options?.client ?? client).get<ResultsResponses, unknown, ThrowOnError>({ url: '/votes/results', ...options });
+export const results = <ThrowOnError extends boolean = true>(options?: Options<ResultsData, ThrowOnError>): RequestResult<ResultsResponses, unknown, ThrowOnError> => (options?.client ?? client).get<ResultsResponses, unknown, ThrowOnError>({ url: '/votes/results', ...options });
 
-export const start = <ThrowOnError extends boolean = false>(options: Options<StartData, ThrowOnError>): RequestResult<StartResponses, unknown, ThrowOnError> => (options.client ?? client).post<StartResponses, unknown, ThrowOnError>({ url: '/votes/start/{token}', ...options });
+export const start = <ThrowOnError extends boolean = true>(options: Options<StartData, ThrowOnError>): RequestResult<StartResponses, unknown, ThrowOnError> => (options.client ?? client).post<StartResponses, unknown, ThrowOnError>({ url: '/votes/start/{token}', ...options });
 
-export const statistics = <ThrowOnError extends boolean = false>(options?: Options<StatisticsData, ThrowOnError>): RequestResult<StatisticsResponses, unknown, ThrowOnError> => (options?.client ?? client).get<StatisticsResponses, unknown, ThrowOnError>({ url: '/votes/statistics', ...options });
+export const statistics = <ThrowOnError extends boolean = true>(options?: Options<StatisticsData, ThrowOnError>): RequestResult<StatisticsResponses, unknown, ThrowOnError> => (options?.client ?? client).get<StatisticsResponses, unknown, ThrowOnError>({ url: '/votes/statistics', ...options });
 
-export const findAll = <ThrowOnError extends boolean = false>(options?: Options<FindAllData, ThrowOnError>): RequestResult<FindAllResponses, unknown, ThrowOnError> => (options?.client ?? client).get<FindAllResponses, unknown, ThrowOnError>({ url: '/vouchers', ...options });
+export const findAll = <ThrowOnError extends boolean = true>(options?: Options<FindAllData, ThrowOnError>): RequestResult<FindAllResponses, unknown, ThrowOnError> => (options?.client ?? client).get<FindAllResponses, unknown, ThrowOnError>({ url: '/vouchers', ...options });
 
-export const createVoucher = <ThrowOnError extends boolean = false>(options: Options<CreateVoucherData, ThrowOnError>): RequestResult<CreateVoucherResponses, unknown, ThrowOnError> => (options.client ?? client).post<CreateVoucherResponses, unknown, ThrowOnError>({
+export const createVoucher = <ThrowOnError extends boolean = true>(options: Options<CreateVoucherData, ThrowOnError>): RequestResult<CreateVoucherResponses, unknown, ThrowOnError> => (options.client ?? client).post<CreateVoucherResponses, unknown, ThrowOnError>({
     url: '/vouchers',
     ...options,
     headers: {
@@ -777,8 +777,8 @@ export const createVoucher = <ThrowOnError extends boolean = false>(options: Opt
     }
 });
 
-export const sendVouchers = <ThrowOnError extends boolean = false>(options?: Options<SendVouchersData, ThrowOnError>): RequestResult<SendVouchersResponses, unknown, ThrowOnError> => (options?.client ?? client).post<SendVouchersResponses, unknown, ThrowOnError>({ url: '/vouchers/send', ...options });
+export const sendVouchers = <ThrowOnError extends boolean = true>(options?: Options<SendVouchersData, ThrowOnError>): RequestResult<SendVouchersResponses, unknown, ThrowOnError> => (options?.client ?? client).post<SendVouchersResponses, unknown, ThrowOnError>({ url: '/vouchers/send', ...options });
 
-export const canUseVoucher = <ThrowOnError extends boolean = false>(options: Options<CanUseVoucherData, ThrowOnError>): RequestResult<CanUseVoucherResponses, unknown, ThrowOnError> => (options.client ?? client).get<CanUseVoucherResponses, unknown, ThrowOnError>({ url: '/vouchers/{id}/check', ...options });
+export const canUseVoucher = <ThrowOnError extends boolean = true>(options: Options<CanUseVoucherData, ThrowOnError>): RequestResult<CanUseVoucherResponses, unknown, ThrowOnError> => (options.client ?? client).get<CanUseVoucherResponses, unknown, ThrowOnError>({ url: '/vouchers/{id}/check', ...options });
 
-export const resendVoucher = <ThrowOnError extends boolean = false>(options: Options<ResendVoucherData, ThrowOnError>): RequestResult<ResendVoucherResponses, unknown, ThrowOnError> => (options.client ?? client).post<ResendVoucherResponses, unknown, ThrowOnError>({ url: '/vouchers/{id}/re-send', ...options });
+export const resendVoucher = <ThrowOnError extends boolean = true>(options: Options<ResendVoucherData, ThrowOnError>): RequestResult<ResendVoucherResponses, unknown, ThrowOnError> => (options.client ?? client).post<ResendVoucherResponses, unknown, ThrowOnError>({ url: '/vouchers/{id}/re-send', ...options });

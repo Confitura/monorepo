@@ -126,7 +126,12 @@ function toggleDescription() {
 
 async function vote(vote: InlineVote, value: number) {
   vote.rate = value;
-  await save({ body: { id: vote.id, rate: vote.rate } })
+  try {
+    await save({ body: { id: vote.id, rate: vote.rate } })
+  } catch {
+    Notify.error('Your vote was not saved, please try again')
+    return
+  }
   goToPosition(currentPosition.value + 1);
 }
 </script>

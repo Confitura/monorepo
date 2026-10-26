@@ -68,7 +68,10 @@ function handleSubmit() {
   doSubmit()
     .then(_ => Notify.success(`Presentation ${presentation.value.title} saved`))
     .then(_ => router.back())
-    .catch(error => console.error('Submission failed:', error))
+    .catch(error => {
+      console.error('Submission failed:', error)
+      Notify.error(`Failed to save presentation ${presentation.value.title}`)
+    })
 }
 
 

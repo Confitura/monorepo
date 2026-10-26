@@ -59,7 +59,7 @@ onMounted(() => {
 // The backend refuses the preview exactly when it would refuse the merge.
 async function loadPreview() {
   try {
-    const response = await previewMerge({ body: { token: addedLoginToken.value! }, throwOnError: true })
+    const response = await previewMerge({ body: { token: addedLoginToken.value! } })
     preview.value = response.data
   } catch (error) {
     refusal.value = refusalMessage(error)
@@ -79,7 +79,7 @@ function refusalMessage(error: unknown) {
 // fresh token for the signed-in User.
 async function confirmLink() {
   try {
-    const response = await mergeUsers({ body: { token: addedLoginToken.value! }, throwOnError: true })
+    const response = await mergeUsers({ body: { token: addedLoginToken.value! } })
     useAuthStore().replaceToken(response.data)
     Notify.success(`${provider} login added`)
     router.push('/profile-form')
@@ -91,7 +91,11 @@ async function confirmLink() {
 // Deletes the User the second sign-in created, so nothing is left behind. Whatever the backend answers,
 // the signed-in User is unchanged, so the page just goes back.
 async function cancelLink() {
-  await cancelMerge({ body: { token: addedLoginToken.value! } })
+  try {
+    await cancelMerge({ body: { token: addedLoginToken.value! } })
+  } catch (error) {
+    console.error('Failed to discard the User of the added login', error)
+  }
   router.push('/profile-form')
 }
 </script>

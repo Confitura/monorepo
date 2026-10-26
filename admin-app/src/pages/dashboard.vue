@@ -46,9 +46,10 @@ async function triggerWebpageUpdate() {
 }
 
 async function loadStats() {
-  const {data: users} = await usersStats();
-  const {data: submissions} = await submissionStats();
-  const {data: newsletter} = await newsletterStat();
+  // A stat that fails to load (the newsletter count comes from Listmonk) leaves the others showing.
+  const users = await usersStats().then(({data}) => data, () => undefined);
+  const submissions = await submissionStats().then(({data}) => data, () => undefined);
+  const newsletter = await newsletterStat().then(({data}) => data, () => undefined);
 
   stats.value = [
     {

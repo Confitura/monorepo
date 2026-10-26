@@ -93,7 +93,7 @@ function dialogUnlinkLogin(user: FullUser, login: LoginDto) {
       ?.open(message)
       .then(async (confirmed: boolean) => {
         if (confirmed) {
-          unlinkLogin({ path: { id: user.id!, loginId: login.id! }, throwOnError: true })
+          unlinkLogin({ path: { id: user.id!, loginId: login.id! } })
               .then(_ => reloadUsers())
               .catch(_ => Notify.error('Failed to remove the login'))
         }
@@ -144,7 +144,7 @@ watch(mergePair, async (pair, _, onCleanup) => {
   mergeRefusal.value = null
   if (!pair) return
   try {
-    const response = await previewAdminMerge({ path: pair, throwOnError: true })
+    const response = await previewAdminMerge({ path: pair })
     if (!stale) mergePreview.value = response.data
   } catch (error) {
     if (!stale) mergeRefusal.value = refusalMessage(error, 'Failed to preview the merge')
@@ -152,7 +152,7 @@ watch(mergePair, async (pair, _, onCleanup) => {
 })
 
 function confirmMerge() {
-  adminMergeUsers({ path: mergePair.value!, throwOnError: true })
+  adminMergeUsers({ path: mergePair.value! })
       .then(_ => {
         Notify.success('Users merged')
         mergeDialog.value = false

@@ -162,9 +162,9 @@ function deleteItem(
 async function submitAgain(item: InlinePresentation | InlineWorkshop, workshop: boolean = false) {
   try {
     if (workshop) {
-      await resubmitWorkshop({ path: { userId, workshopId: item.id! }, throwOnError: true })
+      await resubmitWorkshop({ path: { userId, workshopId: item.id! } })
     } else {
-      await resubmitPresentation({ path: { userId, presentationId: item.id! }, throwOnError: true })
+      await resubmitPresentation({ path: { userId, presentationId: item.id! } })
     }
   } catch (error) {
     Notify.error(`Failed to submit "${item.title}" again`)
