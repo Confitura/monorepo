@@ -1,18 +1,5 @@
 <script setup lang="ts">
-import router from "@/plugins/router.ts";
 import {goToSignIn} from "@/utils/sign-in-attempt.ts";
-
-const name = ref('')
-
-function sayHi() {
-  localStorage.setItem('token', name.value)
-  router.push('/')
-}
-
-function warning() {
-  Notify.warning(`How dare you refuse me, ${name.value}.`)
-  localStorage.removeItem('token')
-}
 
 definePage({
   meta: {

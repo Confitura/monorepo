@@ -28,7 +28,7 @@ describe('admin presentation preview', () => {
     const wrapper = mount(PresentationPreview, {
       global: {
         plugins: [createVuetify(), createTestingPinia(), router],
-        stubs: { Rating: true, HomepageRating: true },
+        stubs: { Rating: true },
       },
     })
     await flushPromises()
