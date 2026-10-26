@@ -21,6 +21,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -182,6 +183,22 @@ class PresentationRatingControllerTest extends BaseIntegrationTest {
     }
 
     @Test
+    void anIdInTheRatingRequestDoesNotChooseTheStoredRating() throws Exception {
+        String otherRatingId = rate(rateRequest().setReviewerToken(UUID.randomUUID().toString()).setComment("Other's view"));
+
+        String ownRatingId = rate("""
+                {"id": "%s", "reviewerToken": "%s", "value": %d, "comment": "Mine"}
+                """.formatted(otherRatingId, reviewerToken, RateValue.TERRIBLE.getNumericValue()));
+
+        assertThat(ownRatingId).isNotEqualTo(otherRatingId);
+        mockMvc.perform(get("/presentations/" + presentation.getId() + "/ratings").with(SecurityHelper.admin()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.ratingCount").value(2))
+                .andExpect(jsonPath("$.ratings[?(@.comment == \"Other's view\")].value").value(contains("AWESOME")))
+                .andExpect(jsonPath("$.ratings[?(@.comment == 'Mine')].value").value(contains("TERRIBLE")));
+    }
+
+    @Test
     void aStoredRatingCannotBeChangedByPuttingToIt() throws Exception {
         String ratingId = rate(rateRequest().setComment("Great talk"));
 
@@ -205,8 +222,12 @@ class PresentationRatingControllerTest extends BaseIntegrationTest {
     }
 
     private String rate(RateRequest request) throws Exception {
+        return rate(json(request));
+    }
+
+    private String rate(String requestJson) throws Exception {
         String body = mockMvc.perform(post("/presentations/" + presentation.getId() + "/ratings")
-                        .content(json(request))
+                        .content(requestJson)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andReturn().getResponse().getContentAsString();
