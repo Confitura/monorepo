@@ -33,19 +33,6 @@ public class VoucherService {
                 .setType(type));
     }
 
-    public Voucher generateVoucherFromAllegro(String originalBuyer,
-                                              String comment,
-                                              String buyerLogin,
-                                              String auctionId,
-                                              String auctionName) {
-        return voucherRepository.save(new Voucher()
-                .setOriginalBuyer(originalBuyer)
-                .setComment(comment)
-                .setType(Voucher.VoucherType.PARTICIPANT)
-                .setAllegro(new Voucher.AllegroContext(auctionId, auctionName, buyerLogin))
-        );
-    }
-
     public boolean isValid(Voucher voucher) {
         if (voucher == null || voucher.getId() == null) {
             return false;
