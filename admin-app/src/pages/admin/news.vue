@@ -117,10 +117,9 @@ function save() {
   const created = !editing.value
   let uploading = false
   saving.value = true
-  // throwOnError: the generated client otherwise resolves with the error, which would look like a success.
   const request = editing.value
-    ? updateNewsEntry({ path: { id: form.value.id! }, body, throwOnError: true })
-    : createNewsEntry({ body, throwOnError: true })
+    ? updateNewsEntry({ path: { id: form.value.id! }, body })
+    : createNewsEntry({ body })
   request
     .then(({ data }) => {
       // Saved: should the upload fail, saving again updates this entry rather than creating another.
@@ -129,7 +128,7 @@ function save() {
       savedSlug.value = data.slug ?? ''
       if (!coverFile.value) return
       uploading = true
-      return storeNewsEntryCover({ path: { id: data.id! }, body: { file: coverFile.value }, throwOnError: true })
+      return storeNewsEntryCover({ path: { id: data.id! }, body: { file: coverFile.value } })
     })
     .then(() => {
       Notify.success(created ? 'News entry created' : 'News entry updated')

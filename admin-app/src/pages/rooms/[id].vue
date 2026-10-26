@@ -211,7 +211,7 @@ function tick() {
 onMounted(async () => {
   try {
     const today = new Date().toISOString().split('T')[0]
-    const daysResponse = await getAllDays({ throwOnError: true })
+    const daysResponse = await getAllDays()
     const days = daysResponse.data
 
     const todayDay =
@@ -227,10 +227,10 @@ onMounted(async () => {
     }
 
     const [roomsRes, slotsRes, entriesRes, presRes] = await Promise.all([
-      getAllRooms1({ path: { dayId: todayDay.id }, throwOnError: true }),
-      getAllTimeSlots({ path: { dayId: todayDay.id }, throwOnError: true }),
-      getAgendaEntriesByDay({ path: { dayId: todayDay.id }, throwOnError: true }),
-      getAllPresentations({ throwOnError: true }),
+      getAllRooms1({ path: { dayId: todayDay.id } }),
+      getAllTimeSlots({ path: { dayId: todayDay.id } }),
+      getAgendaEntriesByDay({ path: { dayId: todayDay.id } }),
+      getAllPresentations(),
     ])
 
     const room = roomsRes.data.find((r) => r.id === roomId)

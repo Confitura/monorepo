@@ -147,7 +147,7 @@ describe('admin editions page', () => {
     await flushPromises()
     ;(wrapper.vm as any).confirmDelete({ id: 'e2024', name: 'Confitura 2024' })
     await flushPromises()
-    expect(api.deleteEdition).toHaveBeenCalledWith({ path: { id: 'e2024' }, throwOnError: true })
+    expect(api.deleteEdition).toHaveBeenCalledWith({ path: { id: 'e2024' } })
     expect(api.getAllEditions).toHaveBeenCalledTimes(2)
     const notifications = useNotificationStore().addNotification as ReturnType<typeof vi.fn>
     expect(notifications.mock.calls[0][1]).toBe('success')
@@ -188,7 +188,7 @@ describe('admin editions page', () => {
     api.getAllEditions.mockRejectedValue({ response: { status: 500 } })
     ;(wrapper.vm as any).reload()
     await flushPromises()
-    expect(api.getAllEditions).toHaveBeenLastCalledWith({ throwOnError: true })
+    expect(api.getAllEditions).toHaveBeenLastCalledWith()
     expect(rowsOf(wrapper)).toHaveLength(3)
     const notifications = useNotificationStore().addNotification as ReturnType<typeof vi.fn>
     expect(notifications.mock.calls[0][1]).toBe('error')
@@ -221,7 +221,6 @@ describe('admin editions page', () => {
         c4pStart: undefined,
         c4pEnd: undefined,
       },
-      throwOnError: true,
     })
     expect(notificationsOf().mock.calls[0][1]).toBe('success')
     expect(vm.dialog).toBe(false)
@@ -267,7 +266,6 @@ describe('admin editions page', () => {
         c4pStart: '2026-01-10T09:30:00Z',
         c4pEnd: '2026-12-31T22:30:00Z',
       },
-      throwOnError: true,
     })
     expect(vm.dialog).toBe(false)
   })
@@ -449,7 +447,7 @@ describe('admin editions page', () => {
     vm.openMakeCurrent(editions[1])
     vm.makeCurrent()
     await flushPromises()
-    expect(api.makeEditionCurrent).toHaveBeenCalledWith({ path: { id: 'e2025' }, throwOnError: true })
+    expect(api.makeEditionCurrent).toHaveBeenCalledWith({ path: { id: 'e2025' } })
     expect(notificationsOf().mock.calls[0][1]).toBe('success')
     expect(vm.switchDialog).toBe(false)
     expect(api.getAllEditions).toHaveBeenCalledTimes(2)

@@ -72,7 +72,10 @@ function handleSubmit() {
   doSubmit()
     .then(_ => Notify.success(`Workshop ${workshop.value.title} saved`))
     .then(_ => router.back())
-    .catch(error => console.error('Submission failed:', error))
+    .catch(error => {
+      console.error('Submission failed:', error)
+      Notify.error(`Failed to save workshop ${workshop.value.title}`)
+    })
 }
 
 

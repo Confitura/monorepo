@@ -31,7 +31,7 @@ function addedOn(login: LoginDto) {
 // The Login is deleted; adding it again later means signing in with it, as for any new Login.
 async function removeLogin(login: LoginDto) {
   try {
-    await unlinkLogin({ path: { id: effectiveUserId.value!, loginId: login.id! }, throwOnError: true })
+    await unlinkLogin({ path: { id: effectiveUserId.value!, loginId: login.id! } })
     logins.value = logins.value.filter((other) => other.id !== login.id)
   } catch (error) {
     Notify.error(`Failed to remove the ${providerLabel(login.provider)} login`)
@@ -93,7 +93,7 @@ const onSubmit = async () => {
     }
     save1({ body: form.value })
       .then(() => refreshToken())
-      .then((res) => store.login(res.data!))
+      .then((res) => store.login(res.data))
       .then(() => uploadProfilePhoto())
       .catch((error) => {
         if(error.status == 413){

@@ -44,7 +44,7 @@ describe('api client', () => {
   it('signs the user out and returns to the login page when the backend rejects their token', async () => {
     backendRespondsWith(401)
 
-    await refreshToken()
+    await expect(refreshToken()).rejects.toThrow()
 
     expect(localStorage.getItem('token')).toBeNull()
     expect(useAuthStore().user).toBeNull()
@@ -54,7 +54,7 @@ describe('api client', () => {
   it('keeps the user signed in when a request is only forbidden', async () => {
     backendRespondsWith(403)
 
-    await refreshToken()
+    await expect(refreshToken()).rejects.toThrow()
 
     expect(localStorage.getItem('token')).toBe(TOKEN)
     expect(useAuthStore().user?.jti).toBe('user-1')

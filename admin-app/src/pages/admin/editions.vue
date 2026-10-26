@@ -74,8 +74,7 @@ function c4pOpen(item: EditionDto) {
 }
 
 function reload() {
-  // throwOnError: the generated client otherwise resolves with the error, which would blank the list.
-  getAllEditions({ throwOnError: true })
+  getAllEditions()
     .then((res) => {
       editions.value = res.data ?? []
     })
@@ -143,10 +142,9 @@ function save() {
     c4pEnd: instantOf('c4pEnd'),
   }
   saving.value = true
-  // throwOnError: the generated client otherwise resolves with the error, which would look like a success.
   const request = editing.value
-    ? updateEdition({ path: { id: f.id }, body, throwOnError: true })
-    : createEdition({ body, throwOnError: true })
+    ? updateEdition({ path: { id: f.id }, body })
+    : createEdition({ body })
   request
     .then(() => {
       Notify.success(editing.value ? 'Edition updated' : 'Edition created')
@@ -177,8 +175,7 @@ function refusalReason(e: any) {
 function confirmDelete(item: EditionDto) {
   confirmDialog.value?.open(`Delete Edition "${item.name}"?`).then((confirmed: boolean) => {
     if (!confirmed) return
-    // throwOnError: the generated client otherwise resolves with the error, which would look like a success.
-    deleteEdition({ path: { id: item.id! }, throwOnError: true })
+    deleteEdition({ path: { id: item.id! } })
       .then(() => {
         Notify.success('Edition deleted')
         reload()
@@ -208,8 +205,7 @@ function makeCurrent() {
   if (switching.value || !switchTo.value) return
   const edition = switchTo.value
   switching.value = true
-  // throwOnError: the generated client otherwise resolves with the error, which would look like a success.
-  makeEditionCurrent({ path: { id: edition.id! }, throwOnError: true })
+  makeEditionCurrent({ path: { id: edition.id! } })
     .then(() => {
       Notify.success(`${edition.name} is now the current Edition`)
       switchDialog.value = false

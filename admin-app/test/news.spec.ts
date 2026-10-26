@@ -124,7 +124,6 @@ describe('admin news page', () => {
     // 08:15 in Warsaw on 2 November is CET (UTC+1)
     expect(api.createNewsEntry).toHaveBeenCalledWith({
       body: { title: 'Big news', slug: undefined, body: '**Hello**', date: '2026-11-02T07:15:00.000Z', published: true },
-      throwOnError: true,
     })
     expect(api.storeNewsEntryCover).not.toHaveBeenCalled()
   })
@@ -140,7 +139,7 @@ describe('admin news page', () => {
     vm.coverFile = cover
     vm.save()
     await flushPromises()
-    expect(api.storeNewsEntryCover).toHaveBeenCalledWith({ path: { id: 'n-new' }, body: { file: cover }, throwOnError: true })
+    expect(api.storeNewsEntryCover).toHaveBeenCalledWith({ path: { id: 'n-new' }, body: { file: cover } })
     expect(document.body.textContent).not.toContain('Add news entry')
   })
 
@@ -155,7 +154,7 @@ describe('admin news page', () => {
     vm.save()
     await flushPromises()
     expect(api.updateNewsEntry.mock.calls[0][0].body.removeCover).toBeUndefined()
-    expect(api.storeNewsEntryCover).toHaveBeenCalledWith({ path: { id: 'n2' }, body: { file: cover }, throwOnError: true })
+    expect(api.storeNewsEntryCover).toHaveBeenCalledWith({ path: { id: 'n2' }, body: { file: cover } })
   })
 
   it('shows the cover of an entry being edited and removes it on save', async () => {
@@ -233,7 +232,6 @@ describe('admin news page', () => {
     expect(api.updateNewsEntry).toHaveBeenCalledWith({
       path: { id: 'n2' },
       body: { title: 'Hello again', slug: 'hello-world', body: 'Text', date: '2026-06-15T10:30:00.000Z', published: true },
-      throwOnError: true,
     })
   })
 

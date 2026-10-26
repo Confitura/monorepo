@@ -128,7 +128,7 @@ describe('homepage Editions', () => {
     resubmit.mockResolvedValue({ data: {} })
     const wrapper = await submitAgain(button)
 
-    expect(resubmit).toHaveBeenCalledWith({ path, throwOnError: true })
+    expect(resubmit).toHaveBeenCalledWith({ path })
     expect(wrapper.findComponent(VSelect).props('modelValue')).toBe('e2026')
     expect(api.getUserPresentations).toHaveBeenLastCalledWith({ path: { id: 'u1' }, query: { editionId: 'e2026' } })
     expect(wrapper.text()).toContain("This year's talk")
