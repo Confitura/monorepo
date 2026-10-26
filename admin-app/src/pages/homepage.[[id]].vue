@@ -14,6 +14,7 @@ import {
   resubmitWorkshop,
 } from '@/utils/api.ts'
 import type {
+  CospeakerDto,
   EditionDto,
   InlinePresentation,
   InlineWorkshop,
@@ -36,7 +37,7 @@ const route = useRoute()
 const presentations = ref<InlinePresentation[]>([])
 const workshops = ref<InlineWorkshop[]>([])
 const profile = ref<User>()
-const cospeakers = ref<User[]>([])
+const cospeakers = ref<CospeakerDto[]>([])
 const newCospeakerEmail = ref('')
 const selectedPresentation = ref<InlinePresentation | null>(null)
 const selectedWorkshop = ref<InlineWorkshop | null>(null)
