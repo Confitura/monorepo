@@ -5,8 +5,6 @@ twitter:
   api-key: ${TWITTER_KEY}
   api-secret: ${TWITTER_SECRET}
   callback: ${TWITTER_CALLBACK}
-  access-token: ${TWITTER_ACCESS_TOKEN}
-  access-token-secret: ${TWITTER_ACCESS_TOKEN_SECRET}
 app.oauth.oauth2:
   facebook:
     api-key: ${FACEBOOK_KEY}
