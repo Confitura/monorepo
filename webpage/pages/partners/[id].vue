@@ -34,7 +34,6 @@ import Box from '@/components/Box.vue'
 import Contact from '@/components/Contact.vue'
 import { usePartnersStore, type Partner } from '@/stores/partnersStore'
 import { useRoute } from 'vue-router'
-import { marked } from 'marked'
 
 const route = useRoute()
 const partnersStore = usePartnersStore()
@@ -62,7 +61,7 @@ await callOnce('partner', () => {
 })
 
 const description = computed(() => {
-  return marked(partner.value.description)
+  return renderMarkdown(partner.value.description)
 })
 
 const imgUrls = import.meta.glob('~/assets/partners/2026/*', {

@@ -13,10 +13,8 @@
 </template>
 
 <script setup lang="ts">
-import {marked} from 'marked'
-
 const {presentation} = defineProps<{ presentation }>()
-let description = computed(() => marked(presentation.description))
+let description = computed(() => renderMarkdown(presentation.description))
 
 </script>
 

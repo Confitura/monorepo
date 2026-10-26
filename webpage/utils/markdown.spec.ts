@@ -10,6 +10,20 @@ describe('renderMarkdown', () => {
     const html = '<p>Open: <a href="https://x.pl/?a=1&amp;b=2">tickets</a></p>\n<ul>\n<li>one</li>\n</ul>'
     expect(renderMarkdown(html).trim()).toBe(html)
   })
+
+  it('keeps a seeded link opening in a new tab', () => {
+    const html = '<p><a href="https://x.pl" target="_blank" rel="noopener">tickets</a></p>'
+    expect(renderMarkdown(html).trim()).toBe(html)
+  })
+
+  it('drops event handlers and javascript: links', () => {
+    expect(renderMarkdown('<img src="x.png" onerror="alert(1)">').trim()).toBe('<img src="x.png">')
+    expect(renderMarkdown('[x](javascript:alert(1))').trim()).toBe('<p><a>x</a></p>')
+  })
+
+  it('renders a missing body as nothing', () => {
+    expect(renderMarkdown(null)).toBe('')
+  })
 })
 
 describe('plainText', () => {

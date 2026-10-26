@@ -1,8 +1,12 @@
+import DOMPurify from 'isomorphic-dompurify'
 import { marked } from 'marked'
 
-// News bodies and FAQ answers are Markdown; the seeded entries are HTML, which Markdown passes through.
-export function renderMarkdown(source: string): string {
-  return marked.parse(source ?? '', { async: false })
+// Talk descriptions, news bodies, FAQ answers and partner descriptions are Markdown; the seeded
+// entries are HTML, which Markdown passes through. Speakers write talk descriptions, so the result
+// is sanitised (here, so it holds during server-side rendering too) before it reaches v-html.
+// `target` is kept so the seeded links that open in a new tab still do.
+export function renderMarkdown(source: string | null): string {
+  return DOMPurify.sanitize(marked.parse(source ?? '', { async: false }), { ADD_ATTR: ['target'] })
 }
 
 // The start of a Markdown body as plain text, for share-card descriptions.
