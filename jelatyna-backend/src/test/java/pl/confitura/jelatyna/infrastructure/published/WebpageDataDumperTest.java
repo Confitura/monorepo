@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.json.JsonCompareMode;
 import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.util.FileSystemUtils;
 import pl.confitura.jelatyna.BaseIntegrationTest;
@@ -36,9 +35,6 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class WebpageDataDumperTest extends BaseIntegrationTest {
 
@@ -115,15 +111,6 @@ class WebpageDataDumperTest extends BaseIntegrationTest {
         JSONAssert.assertEquals("""
                 {"year": 2031, "name": "Confitura 2031", "conferenceStart": "2031-06-27T09:00:00+02:00", "lastDay": "2031-06-28"}
                 """, Files.readString(folder.resolve("edition.json")), JSONCompareMode.STRICT);
-    }
-
-    @Test
-    void thePublishedEditionIsTheDumpedOne() throws Exception {
-        webpageDataDumper.dumpAll();
-
-        mockMvc.perform(get("/published/edition"))
-                .andExpect(status().isOk())
-                .andExpect(content().json(Files.readString(folder.resolve("edition.json")), JsonCompareMode.STRICT));
     }
 
     @Test

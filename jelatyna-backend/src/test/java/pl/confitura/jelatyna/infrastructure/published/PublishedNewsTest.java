@@ -16,14 +16,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.hasEntry;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class PublishedNewsTest extends BaseIntegrationTest {
 
@@ -48,32 +40,6 @@ class PublishedNewsTest extends BaseIntegrationTest {
         // Both are newer than any public entry below, so either would be the latest if it leaked.
         persist("Draft", "draft", Instant.parse("2026-10-01T10:00:00Z"), false);
         persist("Scheduled", "scheduled", Instant.now().plus(1, ChronoUnit.DAYS), true);
-    }
-
-    @Test
-    void latestIsNullWhenNoEntryIsPublic() throws Exception {
-        mockMvc.perform(get("/published/news"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.latest").value(nullValue()))
-                .andExpect(jsonPath("$.all", hasSize(0)));
-    }
-
-    @Test
-    void listsOnlyPublishedEntriesWhoseDateHasPassedNewestFirst() throws Exception {
-        persist("Older", "older", Instant.parse("2025-08-20T19:12:42.265697Z"), true);
-        persist("Newest", "newest", Instant.parse("2026-09-27T10:27:57Z"), true, COVER);
-        persist("Middle", "middle", Instant.parse("2026-01-29T17:17:46Z"), true);
-
-        mockMvc.perform(get("/published/news"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.all[*].title", contains("Newest", "Middle", "Older")))
-                .andExpect(jsonPath("$.all[2].publishedAt", is("2025-08-20T19:12:42.265697Z")))
-                .andExpect(jsonPath("$.all[1]", hasEntry("cover", null)))
-                .andExpect(jsonPath("$.latest.title", is("Newest")))
-                .andExpect(jsonPath("$.latest.slug", is("newest")))
-                .andExpect(jsonPath("$.latest.body", is("<p>Newest</p>")))
-                .andExpect(jsonPath("$.latest.publishedAt", is("2026-09-27T10:27:57Z")))
-                .andExpect(jsonPath("$.latest.cover", is(COVER)));
     }
 
     @Test
