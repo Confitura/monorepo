@@ -81,7 +81,7 @@ Both frontends communicate with the backend REST API. They use file-based routin
 
 ### Local Infrastructure
 
-Docker Compose (`docker-compose.yml`) provides PostgreSQL (5432, `postgres:16.10`), the backend (built from `jelatyna-backend/Dockerfile`, run with the `local` profile against the compose `postgres`), and nginx (8080, proxying to the backend). For frontend-only work, running the backend locally with fake profiles is simpler.
+Docker Compose (`docker-compose.yml`) provides PostgreSQL (5432, `postgres:16.10`), the backend (built from `jelatyna-backend/Dockerfile`, run with the `local` profile against the compose `postgres`), and nginx (host port 8080). For frontend-only work, running the backend locally with fake profiles is simpler.
 
 ## CI/CD
 
