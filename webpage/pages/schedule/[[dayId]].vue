@@ -84,9 +84,8 @@ const presentations = ref<Presentation[]>([])
 
 // Single call to useArchiveFetch to populate all variables
 function loadDayAgenda() {
-  const {data} = useArchiveFetch(dayPath, {
-    key: `day-agenda-${dayId}`,
-    transform: (data: DayAgenda) => data
+  const {data} = useArchiveFetch<DayAgenda>(dayPath, {
+    key: `day-agenda-${dayId}`
   })
 
   watch(data, (value) => {

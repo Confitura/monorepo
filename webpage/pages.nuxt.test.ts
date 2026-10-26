@@ -47,8 +47,8 @@ dumped.edition = EDITION
 
 vi.mock('~/composables/useAPIFetch', async () => {
   const { ref } = await import('vue')
-  const createFetch = (path?: string) => {
-    const data = ref(
+  const createFetch = (path?: string, options?: { transform?: (d: unknown) => unknown }) => {
+    const raw = (
       path === '/faq/entries.json' ? FAQ_ENTRIES
       : path === '/edition.json' ? dumped.edition
       : path === '/news.json' ? NEWS
@@ -57,8 +57,10 @@ vi.mock('~/composables/useAPIFetch', async () => {
       : path === '/agenda/day-1.json' ? DAY1_AGENDA
       : path === '/users/search/admins.json' ? ADMINS
       : path === '/users/search/volunteers.json' ? VOLUNTEERS
-      : null,
+      : null
     )
+    // only the agenda feeds are transformed (to bare ids); the other mocked pages keep their raw fixtures
+    const data = ref(path?.startsWith('/agenda/') && options?.transform ? options.transform(raw) : raw)
     const result = { data, pending: ref(false), error: ref(null), refresh: vi.fn(), execute: vi.fn() }
     return Object.assign(Promise.resolve(result), result)
   }
