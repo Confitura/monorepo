@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
@@ -18,8 +19,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.Collections.emptyList;
+import static pl.confitura.jelatyna.infrastructure.Profiles.FAKE_DB;
 
 @Component
+@Profile(FAKE_DB)
 @Slf4j
 @RequiredArgsConstructor
 public class AgendaInitializer {
@@ -36,14 +39,17 @@ public class AgendaInitializer {
 
     private void init() {
         loginAsAdmin();
-        if (dayRepository.findAll().isEmpty()) {
-            log.info("Initializing agenda");
-            createDayOne();
-            createDayTwo();
-            createDayOneWorkshops();
-            createDayTwoWorkshops();
+        try {
+            if (dayRepository.findAll().isEmpty()) {
+                log.info("Initializing agenda");
+                createDayOne();
+                createDayTwo();
+                createDayOneWorkshops();
+                createDayTwoWorkshops();
+            }
+        } finally {
+            SecurityContextHolder.clearContext();
         }
-
     }
 
     private void createDayOneWorkshops() {
