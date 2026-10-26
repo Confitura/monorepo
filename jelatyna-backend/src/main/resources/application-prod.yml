@@ -57,13 +57,6 @@ management:
       otlp:
         enabled: false
 
-allegro:
-  client-id: ${ALLEGRO_CLIENT_ID}
-  client-secret: ${ALLEGRO_SECRET}
-  callback: https://2023.confitura.pl/admin/allegro
-  api: https://api.allegro.pl
-  uri: https://allegro.pl
-
 chat:
   # AI chat is disabled; hardcoded so a leftover CHAT_ENABLED env var cannot turn it back on.
   # To re-enable, restore `enabled: ${CHAT_ENABLED:false}` and the <ChatWidget> in webpage/app.vue.
