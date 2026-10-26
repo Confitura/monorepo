@@ -140,6 +140,11 @@
         </dependency>
 
         <dependency>
+            <groupId>com.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>5.12.0</version>
+        </dependency>
+        <dependency>
             <groupId>com.mandrillapp.wrapper.lutung</groupId>
             <artifactId>lutung</artifactId>
             <version>0.0.8</version>
