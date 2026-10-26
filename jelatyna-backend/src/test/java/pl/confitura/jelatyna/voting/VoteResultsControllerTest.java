@@ -141,17 +141,6 @@ class VoteResultsControllerTest extends BaseIntegrationTest {
                         contains(false)));
     }
 
-    @Test
-    void statisticsCoverOnlyTheCurrentEditionsTalks() throws Exception {
-        Presentation pastTalk = createPresentation("Last Year's Talk", "John Doe").setEdition(pastEdition());
-        voteRepository.saveAll(List.of(vote("A", 1), new Vote().setToken("A").setRate(1).setPresentation(pastTalk)));
-
-        mockMvc.perform(get("/votes/statistics").with(admin()))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[*].presentationId", hasItem(presentation.getId())))
-                .andExpect(jsonPath("$[*].presentationId", not(hasItem(pastTalk.getId()))));
-    }
-
     private Edition pastEdition() {
         SecurityHelper.asAdmin();
         Edition past = editionRepository.save(new Edition().setYear(2025).setName("Confitura 2025")
