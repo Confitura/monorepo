@@ -745,33 +745,6 @@
         "required" : [ "description", "durationInMinutes", "expectedPrice", "id", "isFree", "language", "level", "maxGroupSize", "shortDescription", "status", "tags", "title" ],
         "type" : "object"
       },
-      "Like" : {
-        "properties" : {
-          "id" : {
-            "type" : "string"
-          },
-          "presentation" : {
-            "$ref" : "#/components/schemas/Presentation"
-          },
-          "token" : {
-            "minLength" : 1,
-            "type" : "string"
-          }
-        },
-        "required" : [ "token" ],
-        "type" : "object"
-      },
-      "LikeResponse" : {
-        "properties" : {
-          "id" : {
-            "type" : "string"
-          },
-          "presentationId" : {
-            "type" : "string"
-          }
-        },
-        "type" : "object"
-      },
       "LoginDto" : {
         "properties" : {
           "createdDate" : {
@@ -1055,93 +1028,16 @@
       },
       "Presentation" : {
         "properties" : {
-          "accepted" : {
-            "type" : "boolean"
-          },
-          "description" : {
-            "minLength" : 1,
-            "type" : "string"
-          },
-          "durationInMinutes" : {
-            "format" : "int32",
-            "type" : "integer"
-          },
-          "expectedPrice" : {
-            "format" : "double",
-            "type" : "number"
-          },
           "id" : {
             "type" : "string"
           },
-          "isFree" : {
+          "isWorkshop" : {
             "type" : "boolean"
           },
-          "language" : {
-            "minLength" : 1,
+          "name" : {
             "type" : "string"
-          },
-          "level" : {
-            "minLength" : 1,
-            "type" : "string"
-          },
-          "maxGroupSize" : {
-            "format" : "int32",
-            "type" : "integer"
-          },
-          "new" : {
-            "type" : "boolean"
-          },
-          "preSelectionComment" : {
-            "type" : "string"
-          },
-          "preSelectionStatus" : {
-            "enum" : [ "NONE", "PRE_APPROVED", "PRE_REJECTED", "IN_RESERVE" ],
-            "type" : "string"
-          },
-          "ratingEnabled" : {
-            "type" : "boolean"
-          },
-          "ratings" : {
-            "items" : {
-              "$ref" : "#/components/schemas/Rate"
-            },
-            "type" : "array",
-            "uniqueItems" : true
-          },
-          "shortDescription" : {
-            "minLength" : 1,
-            "type" : "string"
-          },
-          "speaker" : {
-            "$ref" : "#/components/schemas/Presentation",
-            "writeOnly" : true
-          },
-          "speakers" : {
-            "items" : {
-              "$ref" : "#/components/schemas/User"
-            },
-            "type" : "array",
-            "uniqueItems" : true
-          },
-          "status" : {
-            "type" : "string"
-          },
-          "tags" : {
-            "items" : {
-              "$ref" : "#/components/schemas/Tag"
-            },
-            "type" : "array",
-            "uniqueItems" : true
-          },
-          "title" : {
-            "minLength" : 1,
-            "type" : "string"
-          },
-          "workshop" : {
-            "type" : "boolean"
           }
         },
-        "required" : [ "description", "language", "level", "shortDescription", "speakers", "title" ],
         "type" : "object"
       },
       "PresentationRequest" : {
@@ -1166,37 +1062,6 @@
           },
           "title" : {
             "type" : "string"
-          }
-        },
-        "type" : "object"
-      },
-      "PresentationStats" : {
-        "properties" : {
-          "negativeVotes" : {
-            "format" : "int64",
-            "type" : "integer"
-          },
-          "positiveVotes" : {
-            "format" : "int64",
-            "type" : "integer"
-          },
-          "presentationId" : {
-            "type" : "string"
-          },
-          "rateOfNegative" : {
-            "format" : "int32",
-            "type" : "integer"
-          },
-          "rateOfPositive" : {
-            "format" : "int32",
-            "type" : "integer"
-          },
-          "title" : {
-            "type" : "string"
-          },
-          "totalVotes" : {
-            "format" : "int64",
-            "type" : "integer"
           }
         },
         "type" : "object"
@@ -3237,76 +3102,6 @@
         "tags" : [ "faq-entry-controller" ]
       }
     },
-    "/likes" : {
-      "get" : {
-        "operationId" : "getLikes",
-        "parameters" : [ {
-          "in" : "query",
-          "name" : "token",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "content" : {
-              "*/*" : {
-                "schema" : {
-                  "items" : {
-                    "$ref" : "#/components/schemas/LikeResponse"
-                  },
-                  "type" : "array"
-                }
-              }
-            },
-            "description" : "OK"
-          }
-        },
-        "tags" : [ "like-controller" ]
-      }
-    },
-    "/likes/summary" : {
-      "get" : {
-        "operationId" : "getLikesSummary",
-        "responses" : {
-          "200" : {
-            "content" : {
-              "*/*" : {
-                "schema" : {
-                  "additionalProperties" : {
-                    "format" : "int64",
-                    "type" : "integer"
-                  },
-                  "type" : "object"
-                }
-              }
-            },
-            "description" : "OK"
-          }
-        },
-        "tags" : [ "like-controller" ]
-      }
-    },
-    "/likes/{id}" : {
-      "delete" : {
-        "operationId" : "delete",
-        "parameters" : [ {
-          "in" : "path",
-          "name" : "id",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK"
-          }
-        },
-        "tags" : [ "like-controller" ]
-      }
-    },
     "/login/twitter" : {
       "get" : {
         "operationId" : "redirectToTwitterLogin",
@@ -3991,67 +3786,6 @@
           }
         },
         "tags" : [ "presentation-controller" ]
-      }
-    },
-    "/presentations/{presentationId}/likes" : {
-      "get" : {
-        "operationId" : "countByPresentation",
-        "parameters" : [ {
-          "in" : "path",
-          "name" : "presentationId",
-          "required" : true,
-          "schema" : {
-            "$ref" : "#/components/schemas/Presentation"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "content" : {
-              "*/*" : {
-                "schema" : {
-                  "format" : "int64",
-                  "type" : "integer"
-                }
-              }
-            },
-            "description" : "OK"
-          }
-        },
-        "tags" : [ "like-controller" ]
-      },
-      "post" : {
-        "operationId" : "createVote",
-        "parameters" : [ {
-          "in" : "path",
-          "name" : "presentationId",
-          "required" : true,
-          "schema" : {
-            "$ref" : "#/components/schemas/Presentation"
-          }
-        } ],
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/Like"
-              }
-            }
-          },
-          "required" : true
-        },
-        "responses" : {
-          "200" : {
-            "content" : {
-              "*/*" : {
-                "schema" : {
-                  "type" : "string"
-                }
-              }
-            },
-            "description" : "OK"
-          }
-        },
-        "tags" : [ "like-controller" ]
       }
     },
     "/presentations/{presentationId}/pre-selection" : {
@@ -5804,27 +5538,6 @@
                 "schema" : {
                   "items" : {
                     "$ref" : "#/components/schemas/InlineVote"
-                  },
-                  "type" : "array"
-                }
-              }
-            },
-            "description" : "OK"
-          }
-        },
-        "tags" : [ "vote-controller" ]
-      }
-    },
-    "/votes/statistics" : {
-      "get" : {
-        "operationId" : "statistics",
-        "responses" : {
-          "200" : {
-            "content" : {
-              "*/*" : {
-                "schema" : {
-                  "items" : {
-                    "$ref" : "#/components/schemas/PresentationStats"
                   },
                   "type" : "array"
                 }

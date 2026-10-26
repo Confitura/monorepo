@@ -29,7 +29,6 @@ public class SecurityConfiguration {
                 )
                 .authorizeHttpRequests(it -> it
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers(HttpMethod.DELETE, "/likes/*").permitAll()
                         .requestMatchers(HttpMethod.DELETE, "/**").authenticated()
                         .requestMatchers("/actuator/info").permitAll()
                         .requestMatchers("/actuator/health").permitAll()

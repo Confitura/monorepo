@@ -97,27 +97,6 @@ public class VoteController {
 
 
     @PreAuthorize("@security.isAdmin()")
-    @GetMapping("/votes/statistics")
-    @ResponseBody
-    @Transactional
-    public List<PresentationStats> statistics() {
-        Iterable<Vote> allVotes = voteRepository.findAllInCurrentEdition();
-        Stream<Vote> votesStream = StreamSupport.stream(allVotes.spliterator(), true);
-
-        Map<String, Optional<PresentationStats>> statsByPresentation = votesStream
-                .map(PresentationStats::new)
-                .collect(Collectors.groupingBy(PresentationStats::getPresentationId,
-                        Collectors.reducing(PresentationStats::add)));
-
-        return statsByPresentation.values().stream()
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .sorted(Comparator.comparing(PresentationStats::getPositiveVotes))
-                .collect(toList());
-
-    }
-
-    @PreAuthorize("@security.isAdmin()")
     @GetMapping("/votes/results")
     @ResponseBody
     @Transactional
