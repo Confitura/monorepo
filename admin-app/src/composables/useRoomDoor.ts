@@ -65,6 +65,9 @@ export function useRoomDoor(loadErrorMessage = 'Failed to load schedule') {
   const tickCount = ref(0)
   const day = ref('')
   let loadedOn = ''
+  // Room ids seen so far -> their labels. Every day has its own room records (ids), so a single-room
+  // screen finds its room on a later day by label, the only thing a room keeps across days.
+  const seenLabels = new Map<string, string>()
   // When to retry a failed load (about once a minute); Infinity while nothing is to be retried
   let retryAt = Infinity
 
@@ -184,6 +187,17 @@ export function useRoomDoor(loadErrorMessage = 'Failed to load schedule') {
     return { type: 'ended' }
   }
 
+  const normalize = (label?: string) => label?.trim().toLowerCase()
+
+  // The room with this id, else the room of the picked day that has the label this id had earlier
+  function findRoom(roomId: string): InlineRoom | undefined {
+    const label = normalize(seenLabels.get(roomId))
+    return (
+      rooms.value.find((r) => r.id === roomId) ??
+      (label ? rooms.value.find((r) => normalize(r.label) === label) : undefined)
+    )
+  }
+
   let timer: ReturnType<typeof setInterval> | null = null
 
   async function load() {
@@ -213,6 +227,7 @@ export function useRoomDoor(loadErrorMessage = 'Failed to load schedule') {
         getAllPresentations(),
       ])
 
+      for (const r of roomsRes.data) seenLabels.set(r.id, r.label)
       rooms.value = roomsRes.data.sort(
         (a, b) => a.displayOrder - b.displayOrder,
       )
@@ -246,5 +261,5 @@ export function useRoomDoor(loadErrorMessage = 'Failed to load schedule') {
     if (timer) clearInterval(timer)
   })
 
-  return { loading, error, rooms, roomStateFor, formatCountdown }
+  return { loading, error, rooms, findRoom, roomStateFor, formatCountdown }
 }

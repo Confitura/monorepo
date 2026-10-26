@@ -6,7 +6,7 @@ import { useRoomDoor } from '@/composables/useRoomDoor.ts'
 // Whatever zone the tablet is in, the screen follows Warsaw time.
 process.env.TZ = 'America/New_York'
 
-const days = vi.hoisted(() => ({ fail: false, calls: 0 }))
+const days = vi.hoisted(() => ({ fail: false, calls: 0, renumbered: false }))
 
 vi.mock('@/utils/api.ts', () => {
   const ok = (data: unknown) => Promise.resolve({ data })
@@ -16,12 +16,18 @@ vi.mock('@/utils/api.ts', () => {
       days.calls++
       return days.fail ? Promise.reject(new Error('offline')) : ok([{ id: 'd1', date: '2026-06-01' }, { id: 'd2', date: '2026-06-02' }])
     },
-    getAllRooms1: () => ok([{ id: 'r2', label: 'B', displayOrder: 2 }, { id: 'r1', label: 'A', displayOrder: 1 }]),
+    // Each day has its own room records: when `renumbered`, day 2 has new ids for the same rooms
+    getAllRooms1: ({ path }: { path: { dayId: string } }) =>
+      ok(
+        days.renumbered && path.dayId === 'd2'
+          ? [{ id: 'r1x', label: ' a ', displayOrder: 1 }]
+          : [{ id: 'r2', label: 'B', displayOrder: 2 }, { id: 'r1', label: 'A', displayOrder: 1 }],
+      ),
     getAllTimeSlots: () => ok([slot(1, '10:00:00', '11:00:00'), slot(2, '11:00:00', '11:30:00'), slot(3, '11:30:00', '12:30:00')]),
     getAgendaEntriesByDay: ({ path }: { path: { dayId: string } }) =>
       ok(
         path.dayId === 'd2'
-          ? [{ timeSlotIndex: 1, roomId: 'r1', presentationId: 'p2' }]
+          ? [{ timeSlotIndex: 1, roomId: days.renumbered ? 'r1x' : 'r1', presentationId: 'p2' }]
           : [
               { timeSlotIndex: 1, roomId: 'r1', presentationId: 'p1' },
               { timeSlotIndex: 2, label: 'Coffee' },
@@ -112,6 +118,33 @@ describe('useRoomDoor room state', () => {
       type: 'upcoming',
       next: { title: 'Second', speakers: 'Bob, Cy', startsAt: '10:00:00' },
     })
+    wrapper.unmount()
+  })
+})
+
+describe('useRoomDoor single room across days', () => {
+  afterEach(() => {
+    vi.useRealTimers()
+    days.renumbered = false
+  })
+
+  it('follows the same room by its label to the next day after midnight', async () => {
+    days.renumbered = true
+    vi.useFakeTimers({ toFake: ['Date', 'setInterval', 'clearInterval'] })
+    vi.setSystemTime(new Date('2026-06-01T23:59:50+02:00'))
+    const { wrapper, door } = mountDoor()
+    await flushPromises()
+    expect(door().findRoom('r1')?.id).toBe('r1')
+
+    await vi.advanceTimersByTimeAsync(20_000)
+    await flushPromises()
+    const room = door().findRoom('r1')
+    expect(room?.id).toBe('r1x')
+    expect(door().roomStateFor(room!.id)).toEqual({
+      type: 'upcoming',
+      next: { title: 'Second', speakers: 'Bob, Cy', startsAt: '10:00:00' },
+    })
+    expect(door().findRoom('r2')).toBeUndefined() // room B has nothing on day 2
     wrapper.unmount()
   })
 })
