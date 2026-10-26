@@ -10,6 +10,7 @@ import {
   type InlineRoom,
   type InlineTimeSlot,
 } from '@/utils/api.ts'
+import { fromWarsawInput, toWarsawInput } from '@/utils/warsaw-time.ts'
 
 interface NextPresentation {
   title: string
@@ -35,32 +36,11 @@ function timeToMinutes(timeStr: string): number {
   return h * 60 + m
 }
 
-function nowMinutes(): number {
-  const now = new Date()
-  return now.getHours() * 60 + now.getMinutes() + now.getSeconds() / 60
-}
-
-function timeStrToDate(timeStr: string): Date {
-  const [h, m, s = 0] = timeStr.split(':').map(Number)
-  const d = new Date()
-  d.setHours(h, m, s, 0)
-  return d
-}
-
-function remainingMs(targetTimeStr: string): number {
-  return timeStrToDate(targetTimeStr).getTime() - Date.now()
-}
-
-export function formatCountdown(targetTimeStr: string): string {
-  const ms = remainingMs(targetTimeStr)
-  if (ms <= 0) return '00:00'
-  const totalSeconds = Math.floor(ms / 1000)
-  if (totalSeconds > 60) {
-    const mins = Math.floor(totalSeconds / 60)
-    return `${mins} minute${mins !== 1 ? 's' : ''}`
-  }
-  const secs = totalSeconds % 60
-  return `00:${String(secs).padStart(2, '0')}`
+// The Warsaw date and minute of the day (with seconds as a fraction). Warsaw's UTC offset is a whole
+// number of minutes, so the seconds are the same as UTC's.
+function warsawNow() {
+  const [date, time] = toWarsawInput(new Date().toISOString()).split('T')
+  return { date, minutes: timeToMinutes(time) + (Date.now() % 60_000) / 60_000 }
 }
 
 function speakersLabel(p: FullPresentation): string {
@@ -74,7 +54,7 @@ function speakersLabel(p: FullPresentation): string {
 }
 
 // The room door screens' shared logic: loads today's agenda (or the next day that has one), ticks
-// every second, and works out what any room shows right now.
+// every second, reloads when the Warsaw date changes, and works out what any room shows right now.
 export function useRoomDoor(loadErrorMessage = 'Failed to load schedule') {
   const loading = ref(true)
   const error = ref<string | null>(null)
@@ -83,6 +63,23 @@ export function useRoomDoor(loadErrorMessage = 'Failed to load schedule') {
   const agendaEntries = ref<InlineAgendaEntry[]>([])
   const presentationsMap = ref(new Map<string, FullPresentation>())
   const tickCount = ref(0)
+  const day = ref('')
+  let loadedOn = ''
+
+  // Time left until `targetTimeStr` on the day being shown, in Warsaw time.
+  function formatCountdown(targetTimeStr: string): string {
+    const sec = Number(targetTimeStr.split(':')[2] ?? 0)
+    const target =
+      new Date(fromWarsawInput(`${day.value}T${targetTimeStr.slice(0, 5)}`)).getTime() + sec * 1000
+    const ms = target - Date.now()
+    if (ms <= 0) return '00:00'
+    const totalSeconds = Math.floor(ms / 1000)
+    if (totalSeconds >= 60) {
+      const mins = Math.floor(totalSeconds / 60)
+      return `${mins} minute${mins !== 1 ? 's' : ''}`
+    }
+    return `00:${String(totalSeconds).padStart(2, '0')}`
+  }
 
   function findNextPresentation(
     roomId: string,
@@ -125,7 +122,9 @@ export function useRoomDoor(loadErrorMessage = 'Failed to load schedule') {
     // tickCount dependency ensures the timer triggers recomputation
     void tickCount.value
 
-    const now = nowMinutes()
+    const warsaw = warsawNow()
+    // A day still ahead has not started: nothing on it is current, whatever the time of day
+    const now = day.value > warsaw.date ? -1 : warsaw.minutes
     const sortedSlots = [...timeSlots.value].sort(
       (a, b) => a.displayOrder - b.displayOrder,
     )
@@ -185,9 +184,10 @@ export function useRoomDoor(loadErrorMessage = 'Failed to load schedule') {
 
   let timer: ReturnType<typeof setInterval> | null = null
 
-  onMounted(async () => {
+  async function load() {
+    const today = warsawNow().date
+    loadedOn = today
     try {
-      const today = new Date().toISOString().split('T')[0]
       const daysResponse = await getAllDays()
       const days = daysResponse.data
 
@@ -215,18 +215,27 @@ export function useRoomDoor(loadErrorMessage = 'Failed to load schedule') {
       )
       timeSlots.value = slotsRes.data
       agendaEntries.value = entriesRes.data
+      day.value = todayDay.date
 
       const map = new Map<string, FullPresentation>()
       for (const p of presRes.data) {
         map.set(p.id, p)
       }
       presentationsMap.value = map
+      error.value = null
     } catch {
       error.value = loadErrorMessage
     } finally {
       loading.value = false
-      timer = setInterval(() => tickCount.value++, 1_000)
     }
+  }
+
+  onMounted(async () => {
+    await load()
+    timer = setInterval(() => {
+      tickCount.value++
+      if (warsawNow().date !== loadedOn) void load()
+    }, 1_000)
   })
 
   onUnmounted(() => {
