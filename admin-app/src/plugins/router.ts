@@ -11,7 +11,8 @@ let router = createRouter({
 router.beforeEach((to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
 
   let pathMeta: RouteMeta = to.meta
-  if (!pathMeta.requiresAuth) {
+  // Requiring an admin implies being signed in; child pages inherit both flags through the merged meta.
+  if (!pathMeta.requiresAuth && !pathMeta.requiresAdmin) {
     return next();
   }
 
