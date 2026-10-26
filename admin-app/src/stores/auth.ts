@@ -15,14 +15,23 @@ function extractUser(token: string | null): User | null {
   if (token == null) {
     return null
   }
-  const body = jwtDecode(token)
-  return body as User
+  try {
+    return jwtDecode(token) as User
+  } catch {
+    return null
+  }
 }
 
 export const useAuthStore = defineStore('auth', {
   state: () => {
-    const token = localStorage.getItem('token')
+    let token = localStorage.getItem('token')
     const user: User | null = extractUser(token)
+    // A stored token that can't be decoded (e.g. the string "undefined") signs no one in, so drop it
+    // rather than let it break every page until the person clears their site data.
+    if (user == null && token != null) {
+      localStorage.removeItem('token')
+      token = null
+    }
     return { user, token }
   },
   actions: {
@@ -35,7 +44,11 @@ export const useAuthStore = defineStore('auth', {
       }
     },
     // Swaps in a newly issued token for the signed-in User (e.g. after a merge) without leaving the page.
+    // Throws on an empty or missing token (login goes through here too), so it never ends up stored.
     replaceToken(token: string) {
+      if (!token) {
+        throw new Error('Refusing to store an empty token')
+      }
       localStorage.setItem('token', token)
       this.token = token
       this.user = extractUser(token)
