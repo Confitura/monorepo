@@ -1,12 +1,11 @@
 <template>
   <div class="partners">
-    <PageHeader :title="partner.name" type="peace"></PageHeader>
-    <PageFragment class="header" type="peace">
+    <PageHeader class="header" type="peace">
       <template #title>
         <span class="header__partner-type">{{ partner.type }} partner</span>
         {{ partner.name }}
       </template>
-    </PageFragment>
+    </PageHeader>
     <Box class="content" color="white" :full="false">
       <article class="partner">
         <div class="partner__logo-container">

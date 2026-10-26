@@ -8,7 +8,7 @@
             <a
                 v-for="item in partners.platinum"
                 :key="item.id"
-                :href="'/partners/' + item.id "
+                :href="'/partners/' + (item.slug || item.id)"
                 class="link"
                 rel="noopener"
                 target="_blank"
@@ -55,7 +55,7 @@
                   [`logo--${active}`]: active
                 }"
             >
-              <a :href="'/partners/' + item.id " class="link" rel="noopener" target="_blank">
+              <a :href="'/partners/' + (item.slug || item.id)" class="link" rel="noopener" target="_blank">
                 <img
                     :src="resolveImage(item.logo)"
                     :alt="item.name"
@@ -129,7 +129,7 @@ onMounted(() => {
   startCarousel()
 })
 
-onDeactivated(() => {
+onBeforeUnmount(() => {
   stopCarousel()
 })
 
