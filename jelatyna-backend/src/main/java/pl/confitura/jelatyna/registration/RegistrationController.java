@@ -6,7 +6,6 @@ import static pl.confitura.jelatyna.mail.MailSender.MailType.*;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.StreamSupport;
 
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -14,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -54,40 +52,6 @@ public class RegistrationController {
                 .map(it -> new Participant(it, (JelatynaPrincipal) authentication.getPrincipal()))
                 .collect(toList());
         return ResponseEntity.ok(list);
-    }
-
-    @PostMapping("/participants/reminder")
-    @PreAuthorize("@security.isAdmin()")
-    @Transactional
-    public ResponseEntity<Object> reminder() {
-        doSendRemindTo(voucherService.findUnusedVouchers());
-        return ResponseEntity.accepted().build();
-    }
-
-    @PostMapping("/participants/ticket")
-    @PreAuthorize("@security.isAdmin()")
-    @Transactional
-    public ResponseEntity<Object> sendTickets() {
-        doSendTicketTo(repository.findUsersToSendTickets());
-        return ResponseEntity.accepted().build();
-    }
-
-    @PostMapping("/participants/{id}/resend-ticket")
-    @PreAuthorize("@security.isAdmin()")
-    @Transactional
-    public ResponseEntity<Object> resendTicket(@PathVariable("id") String id) {
-        log.info("re-sending ticket to {}", id);
-        ParticipationData user = repository.findById(id);
-        sendTicketTo(user);
-        return ResponseEntity.accepted().build();
-    }
-
-    @PostMapping("/participants/survey")
-    @PreAuthorize("@security.isAdmin()")
-    @Transactional
-    public ResponseEntity<Object> sendSurveys() {
-        doSendSurveyTo(repository.findAllPresentOnConference());
-        return ResponseEntity.accepted().build();
     }
 
     @PostMapping("/participants")
@@ -181,26 +145,6 @@ public class RegistrationController {
         return ResponseEntity.status(status).body(participant);
     }
 
-    @Async
-    void doSendRemindTo(Iterable<Voucher> vouchers) {
-        vouchers
-                .forEach(voucher -> {
-                    try {
-                        MessageInfo info = new MessageInfo()
-                                .setEmail(voucher.getOriginalBuyer())
-                                .setToken(voucher.getId());
-                        sender.send(REGISTRATION_REMINDER, info);
-                    } catch (Exception e) {
-                        log.error("Error on sending reminder for voucher {}", voucher.getId(), e);
-                    }
-                });
-    }
-
-    @Async
-    void doSendTicketTo(Iterable<ParticipationData> users) {
-        users.forEach(this::sendTicketTo);
-    }
-
     private void sendTicketTo(ParticipationData user) {
         try {
             doSendTicketTo(user);
@@ -219,31 +163,5 @@ public class RegistrationController {
                 .setTicket(generator.generateFor(user.getId()));
         sender.send(TICKET, info);
         repository.save(user.setTicketSendDate(LocalDateTime.now()));
-    }
-
-    @Async
-    void doSendSurveyTo(Iterable<ParticipationData> users) {
-        StreamSupport.stream(users.spliterator(), false)
-                .filter(ParticipationData::alreadyArrived)
-                .filter(ParticipationData::surveyNotSentYet)
-                .forEach(this::sendSurveyTo);
-    }
-
-    private void sendSurveyTo(ParticipationData user) {
-        try {
-            doSendSurvey(user);
-        } catch (Exception e) {
-            log.error("Error on sending survey to participant {}", user.getId());
-            log.error("Exception from sender:", e);
-        }
-    }
-
-    @Transactional
-    void doSendSurvey(ParticipationData user) throws IOException, MandrillApiError {
-        MessageInfo info = new MessageInfo()
-                .setEmail(user.getEmail())
-                .setName(user.getFullName());
-        sender.send(SURVEY, info);
-        repository.save(user.setSurveySendDate(LocalDateTime.now()));
     }
 }
