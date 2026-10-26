@@ -21,9 +21,6 @@ app.oauth.oauth2:
     api-secret: ${GOOGLE_SECRET}
     callback: ${GOOGLE_CALLBACK}
 
-jwt:
-  key: ${JWT_KEY}
-
 mail:
   api-key: ${MAIL_KEY}
   from-email: confitura@confitura.pl
