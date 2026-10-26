@@ -69,13 +69,6 @@ export type DumpStatus = {
     lastDumpAt?: string;
 };
 
-export type DumpedEdition = {
-    conferenceStart?: string;
-    lastDay?: string;
-    name?: string;
-    year?: number;
-};
-
 export type EditionDto = {
     c4pEnd?: string;
     c4pStart?: string;
@@ -199,23 +192,6 @@ export type InlinePresentation = {
     status: string;
     tags: Array<string>;
     title: string;
-};
-
-export type InlinePresentationWithSpeakers = {
-    description?: string;
-    durationInMinutes?: number;
-    expectedPrice?: number;
-    id?: string;
-    isFree?: boolean;
-    language?: string;
-    level?: string;
-    maxGroupSize?: number;
-    shortDescription?: string;
-    sortableTitle?: string;
-    speakers?: Array<Speaker>;
-    tags?: Array<Tag>;
-    title?: string;
-    workshop?: boolean;
 };
 
 export type InlineRoom = {
@@ -2334,166 +2310,6 @@ export type RejectResponses = {
 };
 
 export type RejectResponse = RejectResponses[keyof RejectResponses];
-
-export type AgendaData = {
-    body?: never;
-    path: {
-        dayId: string;
-    };
-    query?: never;
-    url: '/published/agenda/{dayId}';
-};
-
-export type AgendaResponses = {
-    /**
-     * OK
-     */
-    200: {
-        [key: string]: unknown;
-    };
-};
-
-export type AgendaResponse = AgendaResponses[keyof AgendaResponses];
-
-export type GetPublishedEditionData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/published/edition';
-};
-
-export type GetPublishedEditionResponses = {
-    /**
-     * OK
-     */
-    200: DumpedEdition;
-};
-
-export type GetPublishedEditionResponse = GetPublishedEditionResponses[keyof GetPublishedEditionResponses];
-
-export type NewsData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/published/news';
-};
-
-export type NewsResponses = {
-    /**
-     * OK
-     */
-    200: {
-        [key: string]: unknown;
-    };
-};
-
-export type NewsResponse = NewsResponses[keyof NewsResponses];
-
-export type PageData = {
-    body?: never;
-    path: {
-        page: string;
-    };
-    query?: never;
-    url: '/published/pages/{page}';
-};
-
-export type PageResponses = {
-    /**
-     * OK
-     */
-    200: {
-        [key: string]: unknown;
-    };
-};
-
-export type PageResponse = PageResponses[keyof PageResponses];
-
-export type AcceptedPresentationsData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/published/presentations/accepted';
-};
-
-export type AcceptedPresentationsResponses = {
-    /**
-     * OK
-     */
-    200: Array<InlinePresentationWithSpeakers>;
-};
-
-export type AcceptedPresentationsResponse = AcceptedPresentationsResponses[keyof AcceptedPresentationsResponses];
-
-export type AdminsData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/published/users/search/admins';
-};
-
-export type AdminsResponses = {
-    /**
-     * OK
-     */
-    200: {
-        [key: string]: unknown;
-    };
-};
-
-export type AdminsResponse = AdminsResponses[keyof AdminsResponses];
-
-export type SpeakersData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/published/users/search/speakers';
-};
-
-export type SpeakersResponses = {
-    /**
-     * OK
-     */
-    200: {
-        [key: string]: unknown;
-    };
-};
-
-export type SpeakersResponse = SpeakersResponses[keyof SpeakersResponses];
-
-export type SpeakerData = {
-    body?: never;
-    path: {
-        id: string;
-    };
-    query?: never;
-    url: '/published/users/{id}/public';
-};
-
-export type SpeakerResponses = {
-    /**
-     * OK
-     */
-    200: PublicSpeaker;
-};
-
-export type SpeakerResponse = SpeakerResponses[keyof SpeakerResponses];
-
-export type AcceptedWorkshopsData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/published/workshops/accepted';
-};
-
-export type AcceptedWorkshopsResponses = {
-    /**
-     * OK
-     */
-    200: Array<InlinePresentationWithSpeakers>;
-};
-
-export type AcceptedWorkshopsResponse = AcceptedWorkshopsResponses[keyof AcceptedWorkshopsResponses];
 
 export type GetRatingStatusData = {
     body?: never;

@@ -115,16 +115,6 @@ class DayIdsPerEditionTest extends BaseIntegrationTest {
     }
 
     @Test
-    void thePublishedAgendaIsTheCurrentEditionsDay() throws Exception {
-        mockMvc.perform(get("/published/agenda/" + DAY_ID))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.date", is("2026-09-25")))
-                .andExpect(jsonPath("$.rooms[*].label", contains("This Year's Room")))
-                .andExpect(jsonPath("$.timeSlots", hasSize(1)))
-                .andExpect(jsonPath("$.agendaEntries[*].label", contains("This Year's Keynote")));
-    }
-
-    @Test
     void theDumpedDayIsTheCurrentEditionsDay(@TempDir Path folder) throws Exception {
         webpageDataDumper.dumpAgendaByDay(editionRepository.findCurrent(), folder.toString());
 
