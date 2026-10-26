@@ -8,7 +8,7 @@ definePage({
   },
 })
 
-const { loading, error, rooms, roomStateFor, formatCountdown } = useRoomDoor()
+const { loading, error, rooms, roomStateFor, formatCountdown } = useRoomDoor('Failed to load rooms')
 
 function cardColor(_state: RoomState): string {
   return '#000000'
