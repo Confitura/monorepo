@@ -6,6 +6,11 @@ export default defineNuxtConfig({
         dirs: ['~/components']
     },
     devtools: {enabled: true},
+    // Serve rendered pages from a cache and refresh it in the background, matching the ~10 minute archive dump.
+    // The pages render only from the archive JSON (nothing from cookies, headers or the query string), so one cached copy fits every visitor.
+    routeRules: {
+        '/**': {swr: 600}
+    },
     runtimeConfig: {
         public: {
             apiServer: "https://api.confitura.pl/api/resources/archive/2026/",

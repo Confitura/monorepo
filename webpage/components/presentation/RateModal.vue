@@ -27,13 +27,17 @@ function onMessage(event: MessageEvent) {
 onMounted(() => window.addEventListener('message', onMessage))
 onBeforeUnmount(() => window.removeEventListener('message', onMessage))
 
-// Load all accepted presentations and workshops
-const { data: presentations } = await useArchiveFetch('/presentations/accepted.json', {
-  transform: (data) => data
-})
-const { data: workshops } = await useArchiveFetch('/workshops/accepted.json', {
-  transform: (data) => data
-})
+// The accepted presentations and workshops are large, so they load on the client only when the popup opens.
+const lists = { immediate: false, server: false }
+const { data: presentations, execute: loadPresentations } = useArchiveFetch('/presentations/accepted.json', lists)
+const { data: workshops, execute: loadWorkshops } = useArchiveFetch('/workshops/accepted.json', lists)
+let loaded = false
+watch(() => presentationId, (id) => {
+  if (!id || loaded || !import.meta.client) return
+  loaded = true
+  loadPresentations()
+  loadWorkshops()
+}, { immediate: true })
 
 const findById = (id?: string | null) => {
   if (!id) return null
