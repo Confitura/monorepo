@@ -4,6 +4,8 @@ updates:
     directory: /jelatyna-backend
     schedule:
       interval: weekly
+    cooldown:
+      default-days: 7
     groups:
       maven-minor-patch:
         update-types:
@@ -14,6 +16,8 @@ updates:
     directory: /webpage
     schedule:
       interval: weekly
+    cooldown:
+      default-days: 7
     groups:
       npm-minor-patch:
         update-types:
@@ -24,6 +28,8 @@ updates:
     directory: /admin-app
     schedule:
       interval: weekly
+    cooldown:
+      default-days: 7
     groups:
       npm-minor-patch:
         update-types:
@@ -34,6 +40,8 @@ updates:
     directory: /
     schedule:
       interval: weekly
+    cooldown:
+      default-days: 7
     groups:
       github-actions:
         update-types:
