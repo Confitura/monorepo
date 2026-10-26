@@ -3,7 +3,8 @@ export function formatNewsDate(date: string): string {
   const options: Intl.DateTimeFormatOptions = {
     year: 'numeric',
     month: 'long',
-    day: 'numeric'
+    day: 'numeric',
+    timeZone: 'Europe/Warsaw'
   };
   return new Date(date).toLocaleDateString('en-US', options);
 }

@@ -56,10 +56,11 @@ async function loadRatingStatus() {
 
 const opensAtLabel = computed(() => {
   if (!ratingOpensAt.value) return 'Rating is disabled on this presentation'
+  // A calendar date with no zone parses as UTC midnight: format it in UTC so no zone shifts the day.
   const date = new Date(ratingOpensAt.value)
   const formatted = Number.isNaN(date.getTime())
     ? ratingOpensAt.value
-    : date.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })
+    : date.toLocaleDateString(undefined, { timeZone: 'UTC', year: 'numeric', month: 'long', day: 'numeric' })
   return `Rating will be enabled on ${formatted}`
 })
 
