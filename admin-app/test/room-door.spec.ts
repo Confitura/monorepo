@@ -6,7 +6,7 @@ import { useRoomDoor } from '@/composables/useRoomDoor.ts'
 // Whatever zone the tablet is in, the screen follows Warsaw time.
 process.env.TZ = 'America/New_York'
 
-const days = vi.hoisted(() => ({ fail: false, calls: 0, renumbered: false }))
+const days = vi.hoisted(() => ({ fail: false, calls: 0, agendaCalls: 0, renumbered: false }))
 
 vi.mock('@/utils/api.ts', () => {
   const ok = (data: unknown) => Promise.resolve({ data })
@@ -24,8 +24,9 @@ vi.mock('@/utils/api.ts', () => {
           : [{ id: 'r2', label: 'B', displayOrder: 2 }, { id: 'r1', label: 'A', displayOrder: 1 }],
       ),
     getAllTimeSlots: () => ok([slot(1, '10:00:00', '11:00:00'), slot(2, '11:00:00', '11:30:00'), slot(3, '11:30:00', '12:30:00')]),
-    getAgendaEntriesByDay: ({ path }: { path: { dayId: string } }) =>
-      ok(
+    getAgendaEntriesByDay: ({ path }: { path: { dayId: string } }) => {
+      days.agendaCalls++
+      return ok(
         path.dayId === 'd2'
           ? [{ timeSlotIndex: 1, roomId: days.renumbered ? 'r1x' : 'r1', presentationId: 'p2' }]
           : [
@@ -33,7 +34,8 @@ vi.mock('@/utils/api.ts', () => {
               { timeSlotIndex: 2, label: 'Coffee' },
               { timeSlotIndex: 3, roomId: 'r1', presentationId: 'p2' },
             ],
-      ),
+      )
+    },
     getAllPresentations: () =>
       ok([
         { id: 'p1', title: 'First', flatSpeakers: 'Ann', speakers: [] },
@@ -179,6 +181,23 @@ describe('useRoomDoor failed reload', () => {
       next: { title: 'Second', speakers: 'Bob, Cy', startsAt: '10:00:00' },
     })
     wrapper.unmount()
+  })
+})
+
+describe('useRoomDoor unmounted while loading', () => {
+  afterEach(() => vi.useRealTimers())
+
+  it('starts no timer and calls no agenda API after the unmount', async () => {
+    vi.useFakeTimers({ toFake: ['Date', 'setInterval', 'clearInterval'] })
+    vi.setSystemTime(new Date('2026-06-01T23:59:50+02:00'))
+    const agendaCalls = days.agendaCalls
+    const { wrapper } = mountDoor()
+    wrapper.unmount() // before the first load resolves
+    await flushPromises()
+    expect(vi.getTimerCount()).toBe(0)
+
+    await vi.advanceTimersByTimeAsync(120_000) // past midnight
+    expect(days.agendaCalls).toBe(agendaCalls)
   })
 })
 
