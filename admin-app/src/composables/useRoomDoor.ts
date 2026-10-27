@@ -199,6 +199,8 @@ export function useRoomDoor(loadErrorMessage = 'Failed to load schedule') {
   }
 
   let timer: ReturnType<typeof setInterval> | null = null
+  // Set when the screen is left: a load still in flight must not start a timer or call the API further
+  let unmounted = false
 
   async function load() {
     const today = warsawNow().date
@@ -206,6 +208,7 @@ export function useRoomDoor(loadErrorMessage = 'Failed to load schedule') {
     retryAt = Infinity
     try {
       const daysResponse = await getAllDays()
+      if (unmounted) return
       const days = daysResponse.data
 
       const todayDay =
@@ -251,6 +254,7 @@ export function useRoomDoor(loadErrorMessage = 'Failed to load schedule') {
 
   onMounted(async () => {
     await load()
+    if (unmounted) return
     timer = setInterval(() => {
       tickCount.value++
       if (warsawNow().date !== loadedOn || Date.now() >= retryAt) void load()
@@ -258,6 +262,7 @@ export function useRoomDoor(loadErrorMessage = 'Failed to load schedule') {
   })
 
   onUnmounted(() => {
+    unmounted = true
     if (timer) clearInterval(timer)
   })
 
