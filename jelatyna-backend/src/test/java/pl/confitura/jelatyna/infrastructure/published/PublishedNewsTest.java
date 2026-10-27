@@ -53,6 +53,31 @@ class PublishedNewsTest extends BaseIntegrationTest {
         assertThat(fromJson(dumped, DumpedNews.class)).isEqualTo(new DumpedNews(newest, List.of(newest)));
     }
 
+    @Test
+    void newsJsonHasNoLatestAndNoEntriesWhenNothingIsPublic() throws Exception {
+        webpageDataDumper.dumpAll();
+
+        assertThat(dumpedNews()).isEqualTo(new DumpedNews(null, List.of()));
+    }
+
+    @Test
+    void newsJsonListsPublicEntriesNewestFirstKeepingPublishedAtPrecisionAndMissingCover() throws Exception {
+        persist("Older", "older", Instant.parse("2025-08-20T19:12:42.265697Z"), true);
+        persist("Newest", "newest", Instant.parse("2026-09-27T10:27:57Z"), true, COVER);
+        persist("Middle", "middle", Instant.parse("2026-01-29T17:17:46Z"), true);
+
+        webpageDataDumper.dumpAll();
+
+        var newest = new DumpedNews.News("Newest", "newest", "<p>Newest</p>", Instant.parse("2026-09-27T10:27:57Z"), COVER);
+        var middle = new DumpedNews.News("Middle", "middle", "<p>Middle</p>", Instant.parse("2026-01-29T17:17:46Z"), null);
+        var older = new DumpedNews.News("Older", "older", "<p>Older</p>", Instant.parse("2025-08-20T19:12:42.265697Z"), null);
+        assertThat(dumpedNews()).isEqualTo(new DumpedNews(newest, List.of(newest, middle, older)));
+    }
+
+    private DumpedNews dumpedNews() throws Exception {
+        return fromJson(Files.readString(Path.of(resources.folder(), "edition-2026", "news.json")), DumpedNews.class);
+    }
+
     private void persist(String title, String slug, Instant date, boolean published) {
         persist(title, slug, date, published, null);
     }
