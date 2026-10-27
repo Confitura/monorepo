@@ -71,7 +71,6 @@ public class UserController {
             @RequestBody ParticipationData participationData) {
         User current = repository.findById(userId);
         current.setParticipationData(participationRepository.findById(participationData.getId()));
-        current.setParticipationData(participationRepository.findById(participationData.getId()));
         return ResponseEntity.ok(repository.save(current));
     }
 

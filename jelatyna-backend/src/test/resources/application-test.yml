@@ -1,6 +1,5 @@
 resources.path: /tmp
 resources.folder: /tmp
-jwt.key: abc
 
 app.oauth.oauth2:
   github:

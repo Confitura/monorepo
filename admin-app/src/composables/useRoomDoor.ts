@@ -10,6 +10,7 @@ import {
   type InlineRoom,
   type InlineTimeSlot,
 } from '@/utils/api.ts'
+import { fromWarsawInput, toWarsawInput } from '@/utils/warsaw-time.ts'
 
 interface NextPresentation {
   title: string
@@ -35,32 +36,11 @@ function timeToMinutes(timeStr: string): number {
   return h * 60 + m
 }
 
-function nowMinutes(): number {
-  const now = new Date()
-  return now.getHours() * 60 + now.getMinutes() + now.getSeconds() / 60
-}
-
-function timeStrToDate(timeStr: string): Date {
-  const [h, m, s = 0] = timeStr.split(':').map(Number)
-  const d = new Date()
-  d.setHours(h, m, s, 0)
-  return d
-}
-
-function remainingMs(targetTimeStr: string): number {
-  return timeStrToDate(targetTimeStr).getTime() - Date.now()
-}
-
-export function formatCountdown(targetTimeStr: string): string {
-  const ms = remainingMs(targetTimeStr)
-  if (ms <= 0) return '00:00'
-  const totalSeconds = Math.floor(ms / 1000)
-  if (totalSeconds > 60) {
-    const mins = Math.floor(totalSeconds / 60)
-    return `${mins} minute${mins !== 1 ? 's' : ''}`
-  }
-  const secs = totalSeconds % 60
-  return `00:${String(secs).padStart(2, '0')}`
+// The Warsaw date and minute of the day (with seconds as a fraction). Warsaw's UTC offset is a whole
+// number of minutes, so the seconds are the same as UTC's.
+function warsawNow() {
+  const [date, time] = toWarsawInput(new Date().toISOString()).split('T')
+  return { date, minutes: timeToMinutes(time) + (Date.now() % 60_000) / 60_000 }
 }
 
 function speakersLabel(p: FullPresentation): string {
@@ -74,8 +54,8 @@ function speakersLabel(p: FullPresentation): string {
 }
 
 // The room door screens' shared logic: loads today's agenda (or the next day that has one), ticks
-// every second, and works out what any room shows right now.
-export function useRoomDoor() {
+// every second, reloads when the Warsaw date changes (and a minute after a failed load), and works out what any room shows right now.
+export function useRoomDoor(loadErrorMessage = 'Failed to load schedule') {
   const loading = ref(true)
   const error = ref<string | null>(null)
   const rooms = ref<InlineRoom[]>([])
@@ -83,6 +63,28 @@ export function useRoomDoor() {
   const agendaEntries = ref<InlineAgendaEntry[]>([])
   const presentationsMap = ref(new Map<string, FullPresentation>())
   const tickCount = ref(0)
+  const day = ref('')
+  let loadedOn = ''
+  // Room ids seen so far -> their labels. Every day has its own room records (ids), so a single-room
+  // screen finds its room on a later day by label, the only thing a room keeps across days.
+  const seenLabels = new Map<string, string>()
+  // When to retry a failed load (about once a minute); Infinity while nothing is to be retried
+  let retryAt = Infinity
+
+  // Time left until `targetTimeStr` on the day being shown, in Warsaw time.
+  function formatCountdown(targetTimeStr: string): string {
+    const sec = Number(targetTimeStr.split(':')[2] ?? 0)
+    const target =
+      new Date(fromWarsawInput(`${day.value}T${targetTimeStr.slice(0, 5)}`)).getTime() + sec * 1000
+    const ms = target - Date.now()
+    if (ms <= 0) return '00:00'
+    const totalSeconds = Math.floor(ms / 1000)
+    if (totalSeconds >= 60) {
+      const mins = Math.floor(totalSeconds / 60)
+      return `${mins} minute${mins !== 1 ? 's' : ''}`
+    }
+    return `00:${String(totalSeconds).padStart(2, '0')}`
+  }
 
   function findNextPresentation(
     roomId: string,
@@ -125,7 +127,9 @@ export function useRoomDoor() {
     // tickCount dependency ensures the timer triggers recomputation
     void tickCount.value
 
-    const now = nowMinutes()
+    const warsaw = warsawNow()
+    // A day still ahead has not started: nothing on it is current, whatever the time of day
+    const now = day.value > warsaw.date ? -1 : warsaw.minutes
     const sortedSlots = [...timeSlots.value].sort(
       (a, b) => a.displayOrder - b.displayOrder,
     )
@@ -183,12 +187,28 @@ export function useRoomDoor() {
     return { type: 'ended' }
   }
 
-  let timer: ReturnType<typeof setInterval> | null = null
+  const normalize = (label?: string) => label?.trim().toLowerCase()
 
-  onMounted(async () => {
+  // The room with this id, else the room of the picked day that has the label this id had earlier
+  function findRoom(roomId: string): InlineRoom | undefined {
+    const label = normalize(seenLabels.get(roomId))
+    return (
+      rooms.value.find((r) => r.id === roomId) ??
+      (label ? rooms.value.find((r) => normalize(r.label) === label) : undefined)
+    )
+  }
+
+  let timer: ReturnType<typeof setInterval> | null = null
+  // Set when the screen is left: a load still in flight must not start a timer or call the API further
+  let unmounted = false
+
+  async function load() {
+    const today = warsawNow().date
+    loadedOn = today
+    retryAt = Infinity
     try {
-      const today = new Date().toISOString().split('T')[0]
       const daysResponse = await getAllDays()
+      if (unmounted) return
       const days = daysResponse.data
 
       const todayDay =
@@ -210,28 +230,41 @@ export function useRoomDoor() {
         getAllPresentations(),
       ])
 
+      for (const r of roomsRes.data) seenLabels.set(r.id, r.label)
       rooms.value = roomsRes.data.sort(
         (a, b) => a.displayOrder - b.displayOrder,
       )
       timeSlots.value = slotsRes.data
       agendaEntries.value = entriesRes.data
+      day.value = todayDay.date
 
       const map = new Map<string, FullPresentation>()
       for (const p of presRes.data) {
         map.set(p.id, p)
       }
       presentationsMap.value = map
+      error.value = null
     } catch {
-      error.value = 'Failed to load schedule'
+      error.value = loadErrorMessage
+      retryAt = Date.now() + 60_000
     } finally {
       loading.value = false
-      timer = setInterval(() => tickCount.value++, 1_000)
     }
+  }
+
+  onMounted(async () => {
+    await load()
+    if (unmounted) return
+    timer = setInterval(() => {
+      tickCount.value++
+      if (warsawNow().date !== loadedOn || Date.now() >= retryAt) void load()
+    }, 1_000)
   })
 
   onUnmounted(() => {
+    unmounted = true
     if (timer) clearInterval(timer)
   })
 
-  return { loading, error, rooms, roomStateFor, formatCountdown }
+  return { loading, error, rooms, findRoom, roomStateFor, formatCountdown }
 }

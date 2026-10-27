@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
 
 /**
  * Lets admins manage News Entries. Every endpoint is admin-only, as unpublished and scheduled
- * entries must not leak; the public reads its entries from /published/news and the webpage dump.
+ * entries must not leak; the public reads its entries from the webpage dump.
  */
 @RestController
 @RequestMapping("/news-entries")

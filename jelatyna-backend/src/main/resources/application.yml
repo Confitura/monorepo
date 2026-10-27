@@ -7,8 +7,6 @@ twitter:
   api-key: KEY
   api-secret: SECRET
   callback: http://localhost:8080/login
-  access-token: TOKEN
-  access-token-secret: TOKEN_SECRET
 spring:
   application:
     name: jelatyna-backend

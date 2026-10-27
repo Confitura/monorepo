@@ -11,14 +11,15 @@ definePage({
 const route = useRoute('/rooms/[id]')
 const roomId = route.params.id as string
 
-const { loading, error: loadError, rooms, roomStateFor, formatCountdown } =
+const { loading, error: loadError, findRoom, roomStateFor, formatCountdown } =
   useRoomDoor()
 
-const room = computed(() => rooms.value.find((r) => r.id === roomId))
+// The room's record changes with the day, so it is found again by its label
+const room = computed(() => findRoom(roomId))
 const error = computed(
-  () => loadError.value ?? (room.value ? null : 'Room not found'),
+  () => loadError.value ?? (room.value ? null : 'This room has nothing scheduled today'),
 )
-const roomState = computed(() => roomStateFor(roomId))
+const roomState = computed(() => roomStateFor(room.value?.id ?? roomId))
 </script>
 
 <template>

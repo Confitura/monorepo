@@ -65,10 +65,6 @@ public class ParticipationData extends AuditedEntity {
         return this.arrivalDate != null;
     }
 
-    boolean surveyNotSentYet() {
-        return surveySendDate == null;
-    }
-
     public String getFullName() {
         return firstName + " " + lastName;
     }

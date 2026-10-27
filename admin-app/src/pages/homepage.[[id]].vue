@@ -313,7 +313,6 @@ function getColor(item: InlinePresentation | InlineWorkshop) {
                     @click="loadCospeakers(workshop.id!, true)"
                   />
                 </v-card-actions>
-                <HomepageRating />
                 <Rating :presentation="workshop" />
               </v-card>
             </v-col>

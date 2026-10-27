@@ -16,18 +16,19 @@ interface DayAgenda {
 const DAY_FEEDS = ['day-1', 'day-2', 'day-1-workshops', 'day-2-workshops']
 
 export function useScheduledPresentationIds() {
+  // Each feed lists every accepted talk in full; keep only the ids so the page payload stays small.
   const feeds = DAY_FEEDS.map(dayId =>
-      useArchiveFetch(`/agenda/${dayId}.json`, { key: `scheduled-agenda-${dayId}` }).data
+      useArchiveFetch(`/agenda/${dayId}.json`, {
+        key: `scheduled-agenda-${dayId}`,
+        transform: (feed: DayAgenda | null) => (feed?.agendaEntries || []).flatMap(entry => entry.presentationId ? [entry.presentationId] : []),
+      }).data
   )
 
   return computed(() => {
     const ids = new Set<string>()
     for (const feed of feeds) {
-      const entries = (feed.value as DayAgenda | null)?.agendaEntries || []
-      for (const entry of entries) {
-        if (entry.presentationId) {
-          ids.add(entry.presentationId)
-        }
+      for (const id of feed.value || []) {
+        ids.add(id)
       }
     }
     return ids

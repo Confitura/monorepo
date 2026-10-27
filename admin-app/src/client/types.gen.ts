@@ -69,13 +69,6 @@ export type DumpStatus = {
     lastDumpAt?: string;
 };
 
-export type DumpedEdition = {
-    conferenceStart?: string;
-    lastDay?: string;
-    name?: string;
-    year?: number;
-};
-
 export type EditionDto = {
     c4pEnd?: string;
     c4pStart?: string;
@@ -201,23 +194,6 @@ export type InlinePresentation = {
     title: string;
 };
 
-export type InlinePresentationWithSpeakers = {
-    description?: string;
-    durationInMinutes?: number;
-    expectedPrice?: number;
-    id?: string;
-    isFree?: boolean;
-    language?: string;
-    level?: string;
-    maxGroupSize?: number;
-    shortDescription?: string;
-    sortableTitle?: string;
-    speakers?: Array<Speaker>;
-    tags?: Array<Tag>;
-    title?: string;
-    workshop?: boolean;
-};
-
 export type InlineRoom = {
     displayOrder: number;
     id: string;
@@ -274,17 +250,6 @@ export type InlineWorkshop = {
     title: string;
 };
 
-export type Like = {
-    id?: string;
-    presentation?: Presentation;
-    token: string;
-};
-
-export type LikeResponse = {
-    id?: string;
-    presentationId?: string;
-};
-
 export type LoginDto = {
     createdDate?: string;
     id?: string;
@@ -312,14 +277,6 @@ export type MergeRequest = {
 
 export type MergeUsersRequest = {
     token?: string;
-};
-
-export type MessageInfo = {
-    email?: string;
-    ticket?: string;
-    variables?: {
-        [key: string]: string;
-    };
 };
 
 export type NewsEntryDto = {
@@ -399,26 +356,9 @@ export type PreSelectionRequest = {
 };
 
 export type Presentation = {
-    accepted?: boolean;
-    description: string;
-    durationInMinutes?: number;
-    expectedPrice?: number;
     id?: string;
-    isFree?: boolean;
-    language: string;
-    level: string;
-    maxGroupSize?: number;
-    new?: boolean;
-    preSelectionComment?: string;
-    preSelectionStatus?: 'NONE' | 'PRE_APPROVED' | 'PRE_REJECTED' | 'IN_RESERVE';
-    ratingEnabled?: boolean;
-    ratings?: Array<Rate>;
-    shortDescription: string;
-    speakers: Array<User>;
-    status?: string;
-    tags?: Array<Tag>;
-    title: string;
-    workshop?: boolean;
+    isWorkshop?: boolean;
+    name?: string;
 };
 
 export type PresentationRequest = {
@@ -428,16 +368,6 @@ export type PresentationRequest = {
     shortDescription?: string;
     tags?: Array<string>;
     title?: string;
-};
-
-export type PresentationStats = {
-    negativeVotes?: number;
-    positiveVotes?: number;
-    presentationId?: string;
-    rateOfNegative?: number;
-    rateOfPositive?: number;
-    title?: string;
-    totalVotes?: number;
 };
 
 export type PublicSpeaker = {
@@ -491,11 +421,6 @@ export type Room = {
     lastModifiedDate?: string;
 };
 
-export type SendMailsRequest = {
-    messageInfoList?: Array<MessageInfo>;
-    template?: string;
-};
-
 export type Speaker = {
     id?: string;
     name?: string;
@@ -514,14 +439,6 @@ export type SubmittedStats = {
 export type Tag = {
     id?: string;
     name?: string;
-};
-
-export type Tweet = {
-    avatar?: string;
-    name?: string;
-    text?: string;
-    time?: string;
-    twitterHandle?: string;
 };
 
 export type UpdateAgendaEntryRequest = {
@@ -658,62 +575,6 @@ export type WorkshopRequest = {
     shortDescription?: string;
     tags?: Array<string>;
     title?: string;
-};
-
-export type LikeWritable = {
-    id?: string;
-    presentation?: PresentationWritable;
-    token: string;
-};
-
-export type MessageInfoWritable = {
-    email?: string;
-    name?: MessageInfoWritable;
-    ticket?: string;
-    token?: MessageInfoWritable;
-    variables?: {
-        [key: string]: string;
-    };
-};
-
-export type PresentationWritable = {
-    accepted?: boolean;
-    description: string;
-    durationInMinutes?: number;
-    expectedPrice?: number;
-    id?: string;
-    isFree?: boolean;
-    language: string;
-    level: string;
-    maxGroupSize?: number;
-    new?: boolean;
-    preSelectionComment?: string;
-    preSelectionStatus?: 'NONE' | 'PRE_APPROVED' | 'PRE_REJECTED' | 'IN_RESERVE';
-    ratingEnabled?: boolean;
-    ratings?: Array<Rate>;
-    shortDescription: string;
-    speaker?: PresentationWritable;
-    speakers: Array<User>;
-    status?: string;
-    tags?: Array<Tag>;
-    title: string;
-    workshop?: boolean;
-};
-
-export type PublicSpeakerWritable = {
-    bio?: string;
-    github?: string;
-    id?: string;
-    name?: string;
-    photo?: string;
-    presentations?: Array<PresentationWritable>;
-    twitter?: string;
-    www?: string;
-};
-
-export type SendMailsRequestWritable = {
-    messageInfoList?: Array<MessageInfoWritable>;
-    template?: string;
 };
 
 export type TriggerWebpageDumpData = {
@@ -1059,22 +920,6 @@ export type UpdateTimeSlotResponses = {
 };
 
 export type UpdateTimeSlotResponse = UpdateTimeSlotResponses[keyof UpdateTimeSlotResponses];
-
-export type GetTweetsData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/api/tweets';
-};
-
-export type GetTweetsResponses = {
-    /**
-     * OK
-     */
-    200: Array<Tweet>;
-};
-
-export type GetTweetsResponse = GetTweetsResponses[keyof GetTweetsResponses];
 
 export type AskData = {
     body: AskRequest;
@@ -1710,58 +1555,6 @@ export type UpdateFaqEntryResponses = {
 
 export type UpdateFaqEntryResponse = UpdateFaqEntryResponses[keyof UpdateFaqEntryResponses];
 
-export type GetLikesData = {
-    body?: never;
-    path?: never;
-    query: {
-        token: string;
-    };
-    url: '/likes';
-};
-
-export type GetLikesResponses = {
-    /**
-     * OK
-     */
-    200: Array<LikeResponse>;
-};
-
-export type GetLikesResponse = GetLikesResponses[keyof GetLikesResponses];
-
-export type GetLikesSummaryData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/likes/summary';
-};
-
-export type GetLikesSummaryResponses = {
-    /**
-     * OK
-     */
-    200: {
-        [key: string]: number;
-    };
-};
-
-export type GetLikesSummaryResponse = GetLikesSummaryResponses[keyof GetLikesSummaryResponses];
-
-export type DeleteData = {
-    body?: never;
-    path: {
-        id: string;
-    };
-    query?: never;
-    url: '/likes/{id}';
-};
-
-export type DeleteResponses = {
-    /**
-     * OK
-     */
-    200: unknown;
-};
-
 export type RedirectToTwitterLoginData = {
     body?: never;
     path?: never;
@@ -1844,36 +1637,6 @@ export type CallbackResponses = {
 };
 
 export type CallbackResponse = CallbackResponses[keyof CallbackResponses];
-
-export type SendMailsData = {
-    body: SendMailsRequestWritable;
-    path?: never;
-    query?: never;
-    url: '/mailing';
-};
-
-export type SendMailsResponses = {
-    /**
-     * OK
-     */
-    200: unknown;
-};
-
-export type GetTemplatesData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/mailing/templates';
-};
-
-export type GetTemplatesResponses = {
-    /**
-     * OK
-     */
-    200: Array<string>;
-};
-
-export type GetTemplatesResponse = GetTemplatesResponses[keyof GetTemplatesResponses];
 
 export type GetAllNewsEntriesData = {
     body?: never;
@@ -2245,42 +2008,6 @@ export type RemoveCospeakerResponses = {
 
 export type RemoveCospeakerResponse = RemoveCospeakerResponses[keyof RemoveCospeakerResponses];
 
-export type CountByPresentationData = {
-    body?: never;
-    path: {
-        presentationId: PresentationWritable;
-    };
-    query?: never;
-    url: '/presentations/{presentationId}/likes';
-};
-
-export type CountByPresentationResponses = {
-    /**
-     * OK
-     */
-    200: number;
-};
-
-export type CountByPresentationResponse = CountByPresentationResponses[keyof CountByPresentationResponses];
-
-export type CreateVoteData = {
-    body: LikeWritable;
-    path: {
-        presentationId: PresentationWritable;
-    };
-    query?: never;
-    url: '/presentations/{presentationId}/likes';
-};
-
-export type CreateVoteResponses = {
-    /**
-     * OK
-     */
-    200: string;
-};
-
-export type CreateVoteResponse = CreateVoteResponses[keyof CreateVoteResponses];
-
 export type SetPreSelectionData = {
     body: PreSelectionRequest;
     path: {
@@ -2416,166 +2143,6 @@ export type RejectResponses = {
 };
 
 export type RejectResponse = RejectResponses[keyof RejectResponses];
-
-export type AgendaData = {
-    body?: never;
-    path: {
-        dayId: string;
-    };
-    query?: never;
-    url: '/published/agenda/{dayId}';
-};
-
-export type AgendaResponses = {
-    /**
-     * OK
-     */
-    200: {
-        [key: string]: unknown;
-    };
-};
-
-export type AgendaResponse = AgendaResponses[keyof AgendaResponses];
-
-export type GetPublishedEditionData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/published/edition';
-};
-
-export type GetPublishedEditionResponses = {
-    /**
-     * OK
-     */
-    200: DumpedEdition;
-};
-
-export type GetPublishedEditionResponse = GetPublishedEditionResponses[keyof GetPublishedEditionResponses];
-
-export type NewsData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/published/news';
-};
-
-export type NewsResponses = {
-    /**
-     * OK
-     */
-    200: {
-        [key: string]: unknown;
-    };
-};
-
-export type NewsResponse = NewsResponses[keyof NewsResponses];
-
-export type PageData = {
-    body?: never;
-    path: {
-        page: string;
-    };
-    query?: never;
-    url: '/published/pages/{page}';
-};
-
-export type PageResponses = {
-    /**
-     * OK
-     */
-    200: {
-        [key: string]: unknown;
-    };
-};
-
-export type PageResponse = PageResponses[keyof PageResponses];
-
-export type AcceptedPresentationsData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/published/presentations/accepted';
-};
-
-export type AcceptedPresentationsResponses = {
-    /**
-     * OK
-     */
-    200: Array<InlinePresentationWithSpeakers>;
-};
-
-export type AcceptedPresentationsResponse = AcceptedPresentationsResponses[keyof AcceptedPresentationsResponses];
-
-export type AdminsData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/published/users/search/admins';
-};
-
-export type AdminsResponses = {
-    /**
-     * OK
-     */
-    200: {
-        [key: string]: unknown;
-    };
-};
-
-export type AdminsResponse = AdminsResponses[keyof AdminsResponses];
-
-export type SpeakersData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/published/users/search/speakers';
-};
-
-export type SpeakersResponses = {
-    /**
-     * OK
-     */
-    200: {
-        [key: string]: unknown;
-    };
-};
-
-export type SpeakersResponse = SpeakersResponses[keyof SpeakersResponses];
-
-export type SpeakerData = {
-    body?: never;
-    path: {
-        id: string;
-    };
-    query?: never;
-    url: '/published/users/{id}/public';
-};
-
-export type SpeakerResponses = {
-    /**
-     * OK
-     */
-    200: PublicSpeaker;
-};
-
-export type SpeakerResponse = SpeakerResponses[keyof SpeakerResponses];
-
-export type AcceptedWorkshopsData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/published/workshops/accepted';
-};
-
-export type AcceptedWorkshopsResponses = {
-    /**
-     * OK
-     */
-    200: Array<InlinePresentationWithSpeakers>;
-};
-
-export type AcceptedWorkshopsResponse = AcceptedWorkshopsResponses[keyof AcceptedWorkshopsResponses];
 
 export type GetRatingStatusData = {
     body?: never;
@@ -3416,22 +2983,6 @@ export type StartResponses = {
 
 export type StartResponse = StartResponses[keyof StartResponses];
 
-export type StatisticsData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/votes/statistics';
-};
-
-export type StatisticsResponses = {
-    /**
-     * OK
-     */
-    200: Array<PresentationStats>;
-};
-
-export type StatisticsResponse = StatisticsResponses[keyof StatisticsResponses];
-
 export type FindAllData = {
     body?: never;
     path?: never;
@@ -3464,20 +3015,6 @@ export type CreateVoucherResponses = {
 
 export type CreateVoucherResponse = CreateVoucherResponses[keyof CreateVoucherResponses];
 
-export type SendVouchersData = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/vouchers/send';
-};
-
-export type SendVouchersResponses = {
-    /**
-     * OK
-     */
-    200: unknown;
-};
-
 export type CanUseVoucherData = {
     body?: never;
     path: {
@@ -3495,19 +3032,3 @@ export type CanUseVoucherResponses = {
 };
 
 export type CanUseVoucherResponse = CanUseVoucherResponses[keyof CanUseVoucherResponses];
-
-export type ResendVoucherData = {
-    body?: never;
-    path: {
-        id: string;
-    };
-    query?: never;
-    url: '/vouchers/{id}/re-send';
-};
-
-export type ResendVoucherResponses = {
-    /**
-     * OK
-     */
-    200: unknown;
-};

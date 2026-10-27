@@ -150,26 +150,6 @@
         },
         "type" : "object"
       },
-      "DumpedEdition" : {
-        "properties" : {
-          "conferenceStart" : {
-            "format" : "date-time",
-            "type" : "string"
-          },
-          "lastDay" : {
-            "format" : "date",
-            "type" : "string"
-          },
-          "name" : {
-            "type" : "string"
-          },
-          "year" : {
-            "format" : "int32",
-            "type" : "integer"
-          }
-        },
-        "type" : "object"
-      },
       "EditionDto" : {
         "properties" : {
           "c4pEnd" : {
@@ -534,62 +514,6 @@
         "required" : [ "description", "id", "language", "level", "shortDescription", "status", "tags", "title" ],
         "type" : "object"
       },
-      "InlinePresentationWithSpeakers" : {
-        "properties" : {
-          "description" : {
-            "type" : "string"
-          },
-          "durationInMinutes" : {
-            "format" : "int32",
-            "type" : "integer"
-          },
-          "expectedPrice" : {
-            "format" : "double",
-            "type" : "number"
-          },
-          "id" : {
-            "type" : "string"
-          },
-          "isFree" : {
-            "type" : "boolean"
-          },
-          "language" : {
-            "type" : "string"
-          },
-          "level" : {
-            "type" : "string"
-          },
-          "maxGroupSize" : {
-            "format" : "int32",
-            "type" : "integer"
-          },
-          "shortDescription" : {
-            "type" : "string"
-          },
-          "sortableTitle" : {
-            "type" : "string"
-          },
-          "speakers" : {
-            "items" : {
-              "$ref" : "#/components/schemas/Speaker"
-            },
-            "type" : "array"
-          },
-          "tags" : {
-            "items" : {
-              "$ref" : "#/components/schemas/Tag"
-            },
-            "type" : "array"
-          },
-          "title" : {
-            "type" : "string"
-          },
-          "workshop" : {
-            "type" : "boolean"
-          }
-        },
-        "type" : "object"
-      },
       "InlineRoom" : {
         "properties" : {
           "displayOrder" : {
@@ -745,33 +669,6 @@
         "required" : [ "description", "durationInMinutes", "expectedPrice", "id", "isFree", "language", "level", "maxGroupSize", "shortDescription", "status", "tags", "title" ],
         "type" : "object"
       },
-      "Like" : {
-        "properties" : {
-          "id" : {
-            "type" : "string"
-          },
-          "presentation" : {
-            "$ref" : "#/components/schemas/Presentation"
-          },
-          "token" : {
-            "minLength" : 1,
-            "type" : "string"
-          }
-        },
-        "required" : [ "token" ],
-        "type" : "object"
-      },
-      "LikeResponse" : {
-        "properties" : {
-          "id" : {
-            "type" : "string"
-          },
-          "presentationId" : {
-            "type" : "string"
-          }
-        },
-        "type" : "object"
-      },
       "LoginDto" : {
         "properties" : {
           "createdDate" : {
@@ -843,32 +740,6 @@
         "properties" : {
           "token" : {
             "type" : "string"
-          }
-        },
-        "type" : "object"
-      },
-      "MessageInfo" : {
-        "properties" : {
-          "email" : {
-            "type" : "string"
-          },
-          "name" : {
-            "$ref" : "#/components/schemas/MessageInfo",
-            "writeOnly" : true
-          },
-          "ticket" : {
-            "format" : "byte",
-            "type" : "string"
-          },
-          "token" : {
-            "$ref" : "#/components/schemas/MessageInfo",
-            "writeOnly" : true
-          },
-          "variables" : {
-            "additionalProperties" : {
-              "type" : "string"
-            },
-            "type" : "object"
           }
         },
         "type" : "object"
@@ -1081,93 +952,16 @@
       },
       "Presentation" : {
         "properties" : {
-          "accepted" : {
-            "type" : "boolean"
-          },
-          "description" : {
-            "minLength" : 1,
-            "type" : "string"
-          },
-          "durationInMinutes" : {
-            "format" : "int32",
-            "type" : "integer"
-          },
-          "expectedPrice" : {
-            "format" : "double",
-            "type" : "number"
-          },
           "id" : {
             "type" : "string"
           },
-          "isFree" : {
+          "isWorkshop" : {
             "type" : "boolean"
           },
-          "language" : {
-            "minLength" : 1,
+          "name" : {
             "type" : "string"
-          },
-          "level" : {
-            "minLength" : 1,
-            "type" : "string"
-          },
-          "maxGroupSize" : {
-            "format" : "int32",
-            "type" : "integer"
-          },
-          "new" : {
-            "type" : "boolean"
-          },
-          "preSelectionComment" : {
-            "type" : "string"
-          },
-          "preSelectionStatus" : {
-            "enum" : [ "NONE", "PRE_APPROVED", "PRE_REJECTED", "IN_RESERVE" ],
-            "type" : "string"
-          },
-          "ratingEnabled" : {
-            "type" : "boolean"
-          },
-          "ratings" : {
-            "items" : {
-              "$ref" : "#/components/schemas/Rate"
-            },
-            "type" : "array",
-            "uniqueItems" : true
-          },
-          "shortDescription" : {
-            "minLength" : 1,
-            "type" : "string"
-          },
-          "speaker" : {
-            "$ref" : "#/components/schemas/Presentation",
-            "writeOnly" : true
-          },
-          "speakers" : {
-            "items" : {
-              "$ref" : "#/components/schemas/User"
-            },
-            "type" : "array",
-            "uniqueItems" : true
-          },
-          "status" : {
-            "type" : "string"
-          },
-          "tags" : {
-            "items" : {
-              "$ref" : "#/components/schemas/Tag"
-            },
-            "type" : "array",
-            "uniqueItems" : true
-          },
-          "title" : {
-            "minLength" : 1,
-            "type" : "string"
-          },
-          "workshop" : {
-            "type" : "boolean"
           }
         },
-        "required" : [ "description", "language", "level", "shortDescription", "speakers", "title" ],
         "type" : "object"
       },
       "PresentationRequest" : {
@@ -1192,37 +986,6 @@
           },
           "title" : {
             "type" : "string"
-          }
-        },
-        "type" : "object"
-      },
-      "PresentationStats" : {
-        "properties" : {
-          "negativeVotes" : {
-            "format" : "int64",
-            "type" : "integer"
-          },
-          "positiveVotes" : {
-            "format" : "int64",
-            "type" : "integer"
-          },
-          "presentationId" : {
-            "type" : "string"
-          },
-          "rateOfNegative" : {
-            "format" : "int32",
-            "type" : "integer"
-          },
-          "rateOfPositive" : {
-            "format" : "int32",
-            "type" : "integer"
-          },
-          "title" : {
-            "type" : "string"
-          },
-          "totalVotes" : {
-            "format" : "int64",
-            "type" : "integer"
           }
         },
         "type" : "object"
@@ -1360,20 +1123,6 @@
         "required" : [ "day", "displayOrder" ],
         "type" : "object"
       },
-      "SendMailsRequest" : {
-        "properties" : {
-          "messageInfoList" : {
-            "items" : {
-              "$ref" : "#/components/schemas/MessageInfo"
-            },
-            "type" : "array"
-          },
-          "template" : {
-            "type" : "string"
-          }
-        },
-        "type" : "object"
-      },
       "Speaker" : {
         "properties" : {
           "id" : {
@@ -1417,27 +1166,6 @@
             "type" : "string"
           },
           "name" : {
-            "type" : "string"
-          }
-        },
-        "type" : "object"
-      },
-      "Tweet" : {
-        "properties" : {
-          "avatar" : {
-            "type" : "string"
-          },
-          "name" : {
-            "type" : "string"
-          },
-          "text" : {
-            "type" : "string"
-          },
-          "time" : {
-            "format" : "date-time",
-            "type" : "string"
-          },
-          "twitterHandle" : {
             "type" : "string"
           }
         },
@@ -2378,27 +2106,6 @@
         "tags" : [ "agenda-controller" ]
       }
     },
-    "/api/tweets" : {
-      "get" : {
-        "operationId" : "getTweets",
-        "responses" : {
-          "200" : {
-            "content" : {
-              "*/*" : {
-                "schema" : {
-                  "items" : {
-                    "$ref" : "#/components/schemas/Tweet"
-                  },
-                  "type" : "array"
-                }
-              }
-            },
-            "description" : "OK"
-          }
-        },
-        "tags" : [ "tweeter-controller" ]
-      }
-    },
     "/chat/ask" : {
       "post" : {
         "operationId" : "ask",
@@ -3277,76 +2984,6 @@
         "tags" : [ "faq-entry-controller" ]
       }
     },
-    "/likes" : {
-      "get" : {
-        "operationId" : "getLikes",
-        "parameters" : [ {
-          "in" : "query",
-          "name" : "token",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "content" : {
-              "*/*" : {
-                "schema" : {
-                  "items" : {
-                    "$ref" : "#/components/schemas/LikeResponse"
-                  },
-                  "type" : "array"
-                }
-              }
-            },
-            "description" : "OK"
-          }
-        },
-        "tags" : [ "like-controller" ]
-      }
-    },
-    "/likes/summary" : {
-      "get" : {
-        "operationId" : "getLikesSummary",
-        "responses" : {
-          "200" : {
-            "content" : {
-              "*/*" : {
-                "schema" : {
-                  "additionalProperties" : {
-                    "format" : "int64",
-                    "type" : "integer"
-                  },
-                  "type" : "object"
-                }
-              }
-            },
-            "description" : "OK"
-          }
-        },
-        "tags" : [ "like-controller" ]
-      }
-    },
-    "/likes/{id}" : {
-      "delete" : {
-        "operationId" : "delete",
-        "parameters" : [ {
-          "in" : "path",
-          "name" : "id",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK"
-          }
-        },
-        "tags" : [ "like-controller" ]
-      }
-    },
     "/login/twitter" : {
       "get" : {
         "operationId" : "redirectToTwitterLogin",
@@ -3484,48 +3121,6 @@
           }
         },
         "tags" : [ "o-auth-2-login-controller" ]
-      }
-    },
-    "/mailing" : {
-      "post" : {
-        "operationId" : "sendMails",
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/SendMailsRequest"
-              }
-            }
-          },
-          "required" : true
-        },
-        "responses" : {
-          "200" : {
-            "description" : "OK"
-          }
-        },
-        "tags" : [ "mail-controller" ]
-      }
-    },
-    "/mailing/templates" : {
-      "get" : {
-        "operationId" : "getTemplates",
-        "responses" : {
-          "200" : {
-            "content" : {
-              "*/*" : {
-                "schema" : {
-                  "items" : {
-                    "type" : "string"
-                  },
-                  "type" : "array"
-                }
-              }
-            },
-            "description" : "OK"
-          }
-        },
-        "tags" : [ "mail-controller" ]
       }
     },
     "/news-entries" : {
@@ -4075,67 +3670,6 @@
         "tags" : [ "presentation-controller" ]
       }
     },
-    "/presentations/{presentationId}/likes" : {
-      "get" : {
-        "operationId" : "countByPresentation",
-        "parameters" : [ {
-          "in" : "path",
-          "name" : "presentationId",
-          "required" : true,
-          "schema" : {
-            "$ref" : "#/components/schemas/Presentation"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "content" : {
-              "*/*" : {
-                "schema" : {
-                  "format" : "int64",
-                  "type" : "integer"
-                }
-              }
-            },
-            "description" : "OK"
-          }
-        },
-        "tags" : [ "like-controller" ]
-      },
-      "post" : {
-        "operationId" : "createVote",
-        "parameters" : [ {
-          "in" : "path",
-          "name" : "presentationId",
-          "required" : true,
-          "schema" : {
-            "$ref" : "#/components/schemas/Presentation"
-          }
-        } ],
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/Like"
-              }
-            }
-          },
-          "required" : true
-        },
-        "responses" : {
-          "200" : {
-            "content" : {
-              "*/*" : {
-                "schema" : {
-                  "type" : "string"
-                }
-              }
-            },
-            "description" : "OK"
-          }
-        },
-        "tags" : [ "like-controller" ]
-      }
-    },
     "/presentations/{presentationId}/pre-selection" : {
       "post" : {
         "operationId" : "setPreSelection",
@@ -4346,198 +3880,6 @@
           "bearerAuth" : [ ]
         } ],
         "tags" : [ "admin-presentation-controller" ]
-      }
-    },
-    "/published/agenda/{dayId}" : {
-      "get" : {
-        "operationId" : "agenda",
-        "parameters" : [ {
-          "in" : "path",
-          "name" : "dayId",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "content" : {
-              "*/*" : {
-                "schema" : {
-                  "type" : "object"
-                }
-              }
-            },
-            "description" : "OK"
-          }
-        },
-        "tags" : [ "published-controller" ]
-      }
-    },
-    "/published/edition" : {
-      "get" : {
-        "operationId" : "getPublishedEdition",
-        "responses" : {
-          "200" : {
-            "content" : {
-              "*/*" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/DumpedEdition"
-                }
-              }
-            },
-            "description" : "OK"
-          }
-        },
-        "tags" : [ "published-controller" ]
-      }
-    },
-    "/published/news" : {
-      "get" : {
-        "operationId" : "news",
-        "responses" : {
-          "200" : {
-            "content" : {
-              "*/*" : {
-                "schema" : {
-                  "type" : "object"
-                }
-              }
-            },
-            "description" : "OK"
-          }
-        },
-        "tags" : [ "published-controller" ]
-      }
-    },
-    "/published/pages/{page}" : {
-      "get" : {
-        "operationId" : "page",
-        "parameters" : [ {
-          "in" : "path",
-          "name" : "page",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "content" : {
-              "*/*" : {
-                "schema" : {
-                  "type" : "object"
-                }
-              }
-            },
-            "description" : "OK"
-          }
-        },
-        "tags" : [ "published-controller" ]
-      }
-    },
-    "/published/presentations/accepted" : {
-      "get" : {
-        "operationId" : "acceptedPresentations",
-        "responses" : {
-          "200" : {
-            "content" : {
-              "*/*" : {
-                "schema" : {
-                  "items" : {
-                    "$ref" : "#/components/schemas/InlinePresentationWithSpeakers"
-                  },
-                  "type" : "array"
-                }
-              }
-            },
-            "description" : "OK"
-          }
-        },
-        "tags" : [ "published-controller" ]
-      }
-    },
-    "/published/users/search/admins" : {
-      "get" : {
-        "operationId" : "admins",
-        "responses" : {
-          "200" : {
-            "content" : {
-              "*/*" : {
-                "schema" : {
-                  "type" : "object"
-                }
-              }
-            },
-            "description" : "OK"
-          }
-        },
-        "tags" : [ "published-controller" ]
-      }
-    },
-    "/published/users/search/speakers" : {
-      "get" : {
-        "operationId" : "speakers",
-        "responses" : {
-          "200" : {
-            "content" : {
-              "*/*" : {
-                "schema" : {
-                  "type" : "object"
-                }
-              }
-            },
-            "description" : "OK"
-          }
-        },
-        "tags" : [ "published-controller" ]
-      }
-    },
-    "/published/users/{id}/public" : {
-      "get" : {
-        "operationId" : "speaker",
-        "parameters" : [ {
-          "in" : "path",
-          "name" : "id",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "content" : {
-              "*/*" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/PublicSpeaker"
-                }
-              }
-            },
-            "description" : "OK"
-          }
-        },
-        "tags" : [ "published-controller" ]
-      }
-    },
-    "/published/workshops/accepted" : {
-      "get" : {
-        "operationId" : "acceptedWorkshops",
-        "responses" : {
-          "200" : {
-            "content" : {
-              "*/*" : {
-                "schema" : {
-                  "items" : {
-                    "$ref" : "#/components/schemas/InlinePresentationWithSpeakers"
-                  },
-                  "type" : "array"
-                }
-              }
-            },
-            "description" : "OK"
-          }
-        },
-        "tags" : [ "published-controller" ]
       }
     },
     "/rating/status" : {
@@ -5897,27 +5239,6 @@
         "tags" : [ "vote-controller" ]
       }
     },
-    "/votes/statistics" : {
-      "get" : {
-        "operationId" : "statistics",
-        "responses" : {
-          "200" : {
-            "content" : {
-              "*/*" : {
-                "schema" : {
-                  "items" : {
-                    "$ref" : "#/components/schemas/PresentationStats"
-                  },
-                  "type" : "array"
-                }
-              }
-            },
-            "description" : "OK"
-          }
-        },
-        "tags" : [ "vote-controller" ]
-      }
-    },
     "/vouchers" : {
       "get" : {
         "operationId" : "findAll",
@@ -5968,17 +5289,6 @@
         "tags" : [ "voucher-controller" ]
       }
     },
-    "/vouchers/send" : {
-      "post" : {
-        "operationId" : "sendVouchers",
-        "responses" : {
-          "200" : {
-            "description" : "OK"
-          }
-        },
-        "tags" : [ "voucher-controller" ]
-      }
-    },
     "/vouchers/{id}/check" : {
       "get" : {
         "operationId" : "canUseVoucher",
@@ -5999,25 +5309,6 @@
                 }
               }
             },
-            "description" : "OK"
-          }
-        },
-        "tags" : [ "voucher-controller" ]
-      }
-    },
-    "/vouchers/{id}/re-send" : {
-      "post" : {
-        "operationId" : "resendVoucher",
-        "parameters" : [ {
-          "in" : "path",
-          "name" : "id",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        } ],
-        "responses" : {
-          "200" : {
             "description" : "OK"
           }
         },

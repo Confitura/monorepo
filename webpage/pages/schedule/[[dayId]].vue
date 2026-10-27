@@ -84,9 +84,8 @@ const presentations = ref<Presentation[]>([])
 
 // Single call to useArchiveFetch to populate all variables
 function loadDayAgenda() {
-  const {data} = useArchiveFetch(dayPath, {
-    key: `day-agenda-${dayId}`,
-    transform: (data: DayAgenda) => data
+  const {data} = useArchiveFetch<DayAgenda>(dayPath, {
+    key: `day-agenda-${dayId}`
   })
 
   watch(data, (value) => {
@@ -186,14 +185,10 @@ function getEntryFor(room: Room | null, slot: TimeSlot): AgendaEntry {
 function isForAllRooms(slot: TimeSlot): boolean {
   const entry = agenda.value.find(it => it.timeSlotId === slot.id)
   let forAllRooms = entry !== undefined && entry.roomId === null;
-  if (forAllRooms) {
-    console.log('slot', slot.label, 'isForAllRooms', forAllRooms)
-  }
   return forAllRooms
 }
 
 function selectPresentation(presentation: Presentation) {
-  console.log('selected presentation', presentation.id)
   if (presentation && presentation.id) {
     selectedPresentationId.value = presentation.id
   }

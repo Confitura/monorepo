@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
 import {
-  getDayById,
   getAllTimeSlots,
   getAllRooms1,
   getAgendaEntriesByDay,
@@ -22,7 +21,6 @@ import type {
   CreateTimeSlotRequest,
   FullPresentation,
   InlineAgendaEntry,
-  InlineDay,
   InlineRoom,
   InlineTimeSlot,
   UpdateAgendaEntrySlotRequest,
@@ -35,7 +33,6 @@ export const useAgendaStore = defineStore('agenda', {
     presentations: [] as FullPresentation[],
 
     // New multi-day support
-    days: [] as InlineDay[],
     timeSlotsByDay: {} as Record<string, InlineTimeSlot[]>,
     roomsByDay: {} as Record<string, InlineRoom[]>,
     agendaEntriesByDay: {} as Record<string, InlineAgendaEntry[]>,
@@ -61,15 +58,13 @@ export const useAgendaStore = defineStore('agenda', {
         // Fetch all requested days in parallel
         const results = await Promise.all(
           ids.map(async (dayId) => {
-            const [dayResponse, timeSlotsResponse, roomsResponse, agendaEntriesResponse] = await Promise.all([
-              getDayById({ path: { id: dayId } }),
+            const [timeSlotsResponse, roomsResponse, agendaEntriesResponse] = await Promise.all([
               getAllTimeSlots({ path: { dayId } }),
               getAllRooms1({ path: { dayId } }),
               getAgendaEntriesByDay({ path: { dayId } }),
             ])
 
             return {
-              day: dayResponse.data as InlineDay,
               timeSlots: timeSlotsResponse.data as InlineTimeSlot[],
               rooms: roomsResponse.data as InlineRoom[],
               agendaEntries: agendaEntriesResponse.data as InlineAgendaEntry[],
@@ -78,16 +73,12 @@ export const useAgendaStore = defineStore('agenda', {
         )
 
         // Update maps and arrays
-        const fetchedDays: InlineDay[] = []
-        for (const r of results) {
-          const dayId = (r.day as any).id as string
-          fetchedDays.push(r.day)
+        for (const [i, r] of results.entries()) {
+          const dayId = ids[i]
           this.timeSlotsByDay[dayId] = r.timeSlots
           this.roomsByDay[dayId] = r.rooms
           this.agendaEntriesByDay[dayId] = r.agendaEntries
         }
-        this.days = fetchedDays
-
       } catch (e) {
         console.error('AgendaStore.refreshData error', e)
         throw e

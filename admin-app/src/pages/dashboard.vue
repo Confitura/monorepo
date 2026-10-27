@@ -203,16 +203,6 @@ async function copyV4PToken() {
       </v-col>
     </v-row>
     <v-row>
-      <!--      <v-col cols="12" md="6" lg="12">-->
-      <!--        <v-card class="pa-2">-->
-      <!--          <ChartLine />-->
-      <!--        </v-card>-->
-      <!--      </v-col>-->
-      <!--      <v-col cols="12" md="6" lg="4">-->
-      <!--        <v-card class="pa-2">-->
-      <!--          <ChartRadar />-->
-      <!--        </v-card>-->
-      <!--      </v-col>-->
       <v-col v-if="hasVotes" cols="12" lg="8">
         <v-card class="pa-2">
           <ChartVotesOverTime :source="votesData"/>
@@ -260,11 +250,6 @@ async function copyV4PToken() {
           </div>
         </v-card>
       </v-col>
-      <!--      <v-col cols="12" md="6" lg="4">-->
-      <!--        <v-card class="pa-2">-->
-      <!--          <ChartBar />-->
-      <!--        </v-card>-->
-      <!--      </v-col>-->
     </v-row>
   </v-container>
 </template>
