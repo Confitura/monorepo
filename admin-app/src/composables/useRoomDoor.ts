@@ -1,4 +1,4 @@
-import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 import {
   getAgendaEntriesByDay,
   getAllDays,
@@ -261,7 +261,7 @@ export function useRoomDoor(loadErrorMessage = 'Failed to load schedule') {
     }, 1_000)
   })
 
-  onBeforeUnmount(() => {
+  onUnmounted(() => {
     unmounted = true
     if (timer) clearInterval(timer)
   })
