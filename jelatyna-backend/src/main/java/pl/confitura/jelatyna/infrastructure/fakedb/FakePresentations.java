@@ -15,7 +15,7 @@ import pl.confitura.jelatyna.agenda.TimeSlot.TimeSlotId;
 import pl.confitura.jelatyna.api.model.PresentationRequest;
 import pl.confitura.jelatyna.edition.Edition;
 import pl.confitura.jelatyna.edition.EditionRepository;
-import pl.confitura.jelatyna.infrastructure.security.JelatynaPrincipal;
+import pl.confitura.jelatyna.platform.security.JelatynaPrincipal;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
 import pl.confitura.jelatyna.user.User;
@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Set;
 
 import static java.time.temporal.ChronoUnit.DAYS;
-import static pl.confitura.jelatyna.infrastructure.Profiles.FAKE_DB;
+import static pl.confitura.jelatyna.platform.Profiles.FAKE_DB;
 
 @Slf4j
 @Configuration()

@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.infrastructure.tracing;
+package pl.confitura.jelatyna.platform.tracing;
 
 import com.sun.net.httpserver.HttpServer;
 import io.opentelemetry.exporter.otlp.http.trace.OtlpHttpSpanExporter;

@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.infrastructure.db;
+package pl.confitura.jelatyna.platform.persistence;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

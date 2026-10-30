@@ -21,6 +21,7 @@ import io.jsonwebtoken.JwtHandlerAdapter;
 import io.jsonwebtoken.Jwts;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
+import pl.confitura.jelatyna.platform.security.JelatynaPrincipal;
 import pl.confitura.jelatyna.user.User;
 
 import javax.crypto.SecretKey;

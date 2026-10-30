@@ -1,11 +1,12 @@
 package pl.confitura.jelatyna.infrastructure.security;
 
-import static pl.confitura.jelatyna.infrastructure.security.SecurityContextUtil.getPrincipal;
+import static pl.confitura.jelatyna.platform.security.SecurityContextUtil.getPrincipal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import lombok.extern.slf4j.Slf4j;
+import pl.confitura.jelatyna.platform.security.JelatynaPrincipal;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
 import pl.confitura.jelatyna.user.UserRepository;

@@ -20,7 +20,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import pl.confitura.jelatyna.infrastructure.WebUtils;
+import pl.confitura.jelatyna.platform.web.WebUtils;
 import pl.confitura.jelatyna.presentation.*;
 import pl.confitura.jelatyna.user.User;
 

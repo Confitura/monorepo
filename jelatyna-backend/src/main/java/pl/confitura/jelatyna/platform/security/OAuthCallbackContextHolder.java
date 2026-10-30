@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.infrastructure.security;
+package pl.confitura.jelatyna.platform.security;
 
 import static java.util.concurrent.TimeUnit.MINUTES;
 

@@ -6,7 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.Accessors;
-import pl.confitura.jelatyna.infrastructure.db.AuditedEntity;
+import pl.confitura.jelatyna.platform.persistence.AuditedEntity;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import jakarta.persistence.*;

@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.infrastructure;
+package pl.confitura.jelatyna.platform.web;
 
 import static java.util.Optional.ofNullable;
 

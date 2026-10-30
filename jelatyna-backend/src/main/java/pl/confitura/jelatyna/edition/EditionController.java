@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.confitura.jelatyna.agenda.DayRepository;
 import pl.confitura.jelatyna.infrastructure.published.WebpageDataDumper;
-import pl.confitura.jelatyna.infrastructure.security.JelatynaPrincipal;
+import pl.confitura.jelatyna.platform.security.JelatynaPrincipal;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
 import pl.confitura.jelatyna.voting.VoteRepository;
 

@@ -34,7 +34,7 @@ import pl.confitura.jelatyna.api.model.WorkshopRequest;
 import pl.confitura.jelatyna.edition.Edition;
 import pl.confitura.jelatyna.edition.EditionDto;
 import pl.confitura.jelatyna.edition.EditionRepository;
-import pl.confitura.jelatyna.infrastructure.security.JelatynaPrincipal;
+import pl.confitura.jelatyna.platform.security.JelatynaPrincipal;
 import pl.confitura.jelatyna.infrastructure.security.Security;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;

@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.docs;
+package pl.confitura.jelatyna.platform.web;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;

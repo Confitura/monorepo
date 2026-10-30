@@ -1,7 +1,7 @@
-package pl.confitura.jelatyna.infrastructure.db;
+package pl.confitura.jelatyna.platform.persistence;
 
 import org.springframework.data.domain.AuditorAware;
-import pl.confitura.jelatyna.infrastructure.security.SecurityContextUtil;
+import pl.confitura.jelatyna.platform.security.SecurityContextUtil;
 
 import java.util.Optional;
 

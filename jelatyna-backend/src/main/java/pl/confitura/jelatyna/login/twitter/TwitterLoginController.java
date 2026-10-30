@@ -2,7 +2,7 @@ package pl.confitura.jelatyna.login.twitter;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.PERMANENT_REDIRECT;
-import static pl.confitura.jelatyna.infrastructure.Profiles.FAKE_SECURITY;
+import static pl.confitura.jelatyna.platform.Profiles.FAKE_SECURITY;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
@@ -15,7 +15,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.github.scribejava.core.model.OAuth1AccessToken;
 import com.github.scribejava.core.model.OAuth1RequestToken;
-import pl.confitura.jelatyna.infrastructure.security.OAuthCallbackContextHolder;
+import pl.confitura.jelatyna.platform.security.OAuthCallbackContextHolder;
 import pl.confitura.jelatyna.infrastructure.security.TokenService;
 
 import java.net.URLEncoder;

@@ -24,7 +24,7 @@ import org.springframework.web.server.ResponseStatusException;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import pl.confitura.jelatyna.infrastructure.security.JelatynaPrincipal;
+import pl.confitura.jelatyna.platform.security.JelatynaPrincipal;
 import pl.confitura.jelatyna.infrastructure.security.TokenService;
 import pl.confitura.jelatyna.presentation.Presentation;
 

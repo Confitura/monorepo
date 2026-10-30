@@ -11,7 +11,7 @@ import org.springframework.security.web.authentication.preauth.PreAuthenticatedA
 import org.springframework.stereotype.Component;
 import pl.confitura.jelatyna.agenda.TimeSlot.TimeSlotId;
 import pl.confitura.jelatyna.edition.EditionRepository;
-import pl.confitura.jelatyna.infrastructure.security.JelatynaPrincipal;
+import pl.confitura.jelatyna.platform.security.JelatynaPrincipal;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.Collections.emptyList;
-import static pl.confitura.jelatyna.infrastructure.Profiles.FAKE_DB;
+import static pl.confitura.jelatyna.platform.Profiles.FAKE_DB;
 
 @Component
 @Profile(FAKE_DB)

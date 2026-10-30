@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.infrastructure.security;
+package pl.confitura.jelatyna.platform.security;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

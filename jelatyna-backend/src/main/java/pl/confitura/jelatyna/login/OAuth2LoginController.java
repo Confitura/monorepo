@@ -1,7 +1,7 @@
 package pl.confitura.jelatyna.login;
 
 import static org.springframework.http.HttpStatus.PERMANENT_REDIRECT;
-import static pl.confitura.jelatyna.infrastructure.Profiles.FAKE_SECURITY;
+import static pl.confitura.jelatyna.platform.Profiles.FAKE_SECURITY;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;

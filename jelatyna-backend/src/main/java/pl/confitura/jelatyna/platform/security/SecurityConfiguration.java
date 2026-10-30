@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.infrastructure.security;
+package pl.confitura.jelatyna.platform.security;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
@@ -17,7 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfiguration {
-    static final String ADMIN = "ROLE_ADMIN";
+    public static final String ADMIN = "ROLE_ADMIN";
 
     private final AuthenticationFilter authenticationFilter;
 
@@ -48,8 +48,8 @@ public class SecurityConfiguration {
     // Boot also registers every Filter bean with the servlet container, which would run the token
     // check (and its User lookup) a second time after the security chain.
     @Bean
-    public FilterRegistrationBean<JwtAuthenticationFilter> jwtAuthenticationFilterRegistration(JwtAuthenticationFilter filter) {
-        FilterRegistrationBean<JwtAuthenticationFilter> registration = new FilterRegistrationBean<>(filter);
+    public FilterRegistrationBean<AuthenticationFilter> jwtAuthenticationFilterRegistration(AuthenticationFilter filter) {
+        FilterRegistrationBean<AuthenticationFilter> registration = new FilterRegistrationBean<>(filter);
         registration.setEnabled(false);
         return registration;
     }
