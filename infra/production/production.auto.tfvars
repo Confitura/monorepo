@@ -143,7 +143,6 @@ applications = {
     }
 
     env_vars = {
-      "ALLEGRO_CLIENT_ID"                                     = { value = "63fd714f2f4440e381db69ee7b5b7d8f" }
       "APP_CORS_ORIGINS_0_"                                   = { value = "https://app.confitura.pl" }
       "APP_CORS_ORIGINS_1_"                                   = { value = "https://2025.confitura.pl" }
       "APP_CORS_ORIGINS_2_"                                   = { value = "http://localhost:3000" }

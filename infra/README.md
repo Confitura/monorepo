@@ -33,9 +33,8 @@ Still to do:
   in `production/imports.tf`, not by hand-run `tofu import`; the CI apply
   imports them. `SPRING_PROFILES_ACTIVE` was created by OpenTofu. The 11
   non-secret ones are declared in `production.auto.tfvars`. The two secrets
-  (`LISTMONK_PASSWORD`, `APP_JWT_SECRETKEY`) already exist in Coolify but still
-  need adding to `secrets.enc.yaml`, and their import blocks go into
-  `imports.tf` in the same PR.
+  (`LISTMONK_PASSWORD`, `APP_JWT_SECRETKEY`) are in `secrets.enc.yaml` and
+  adopted by import blocks in `imports.tf` too.
 - **Preview copies** of every variable, and admin_app's `VITE_API_URL` /
   `VITE_SELF_URL` (which exist in Coolify but do nothing, see below), are
   deliberately unmanaged.
