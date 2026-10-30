@@ -39,7 +39,12 @@
       "Bash(cd jelatyna-backend && ./mvnw *)",
       "Bash(cd admin-app && pnpm *)",
       "Bash(cd webpage && pnpm *)",
-      "Bash(java -version*)"
+      "Bash(java -version*)",
+      "Bash(gh pr create --base factory/* --head factory/*)",
+      "Bash(gh pr edit * --base master)",
+      "Bash(gh stack link *)",
+      "Bash(git merge --no-edit origin/factory/*)",
+      "Bash(git merge-base --is-ancestor *)"
     ],
     "deny": [
       "Bash(gh pr merge *)",
@@ -49,7 +54,13 @@
       "Bash(git push * -f*)",
       "Bash(git push *+*)",
       "Bash(git push *master*)",
-      "Bash(gh api *code-scanning/alerts/*)"
+      "Bash(gh api *code-scanning/alerts/*)",
+      "Bash(gh stack rebase*)",
+      "Bash(gh stack sync*)",
+      "Bash(gh stack push*)",
+      "Bash(gh stack submit*)",
+      "Bash(gh stack modify*)",
+      "Bash(gh stack merge*)"
     ]
   }
 }

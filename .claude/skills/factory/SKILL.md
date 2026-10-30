@@ -8,7 +8,7 @@ argument-hint: "setup | run [task-id] | fix [pr] | sync | auto"
 
 Subcommand: `$0` (default `run`). Arguments: `$ARGUMENTS`.
 
-Pipeline: Backlog.md task (`ready-for-agent`) → branch `factory/<id>-<slug>` from `origin/master` → `factory-implementer` subagent → independent `factory-reviewer` subagent → PR ready for review → human reviews and merges → `/factory sync` marks it Done.
+Pipeline: Backlog.md task (`ready-for-agent`) → branch `factory/<id>-<slug>` from `origin/master` (or stacked on a dependency's open PR, see **Stacks**) → `factory-implementer` subagent → independent `factory-reviewer` subagent → PR ready for review → human reviews and merges → `/factory sync` marks it Done.
 
 Board: `backlog browser` → http://localhost:6420. Tracker conventions: `docs/agents/issue-tracker.md`.
 
@@ -16,10 +16,20 @@ Board: `backlog browser` → http://localhost:6420. Tracker conventions: `docs/a
 
 1. **One task at a time.** Never start a task while another is `In Progress`.
 2. Only you (the lead) run `backlog`. Subagents get the task text in their prompt.
-3. Never merge a PR, push to `master`, or force-push. Open a PR, push to an open PR's branch, or reply to its comments, only after a reviewer PASS (a merge of `master` that needed no conflict resolution excepted), and open it ready for review, never as a draft. Never mark an existing PR ready or push to a draft: a draft means a human put it there. Bring `master` into a PR branch with a merge, never a rebase: a rebase needs a force push. A human still reviews and merges every PR.
+3. Never merge a PR, push to `master`, or force-push. Open a PR, push to an open PR's branch, or reply to its comments, only after a reviewer PASS (a merge of the PR's base that needed no conflict resolution excepted), and open it ready for review, never as a draft. Never mark an existing PR ready or push to a draft: a draft means a human put it there. Bring `master`, or in a stack the branch below, into a PR branch with a merge, never a rebase: a rebase needs a force push. Of the gh-stack commands, use only `gh stack link`: `rebase`, `sync`, `push`, `submit`, `modify` and `merge` rewrite, push or merge branches. A human still reviews and merges every PR.
 4. The repo is **public**: PR titles, bodies, commits, and replies to comments contain only the task title, acceptance criteria, the implementer's TLDR, WHY and comment replies, the review outcome, and the checks. Never paste backlog notes, spec text, or anything private.
 5. Every PR follows `## Pull requests` in `CLAUDE.md`: TL;DR first, then `## Why`, so the PR still explains itself after the task is archived.
 6. No `Co-Authored-By` trailers.
+
+## Stacks
+
+A task whose dependencies are all `Done` except one, its **parent**, which is `In Review` with an open, non-draft factory PR, is **stackable**: it builds on the parent's unmerged branch. The maintainer then reviews a series of PRs and merges it in one go, instead of the factory waiting for each merge.
+
+- **Depth:** the parent's stack is its PR plus every open PR below it (follow `baseRefName` while it is a `factory/` branch with an open PR). A task is stackable only while that stack has fewer than 4 PRs.
+- **Base:** the bottom PR targets `master`; every other PR targets its parent's branch, so its diff shows only its own layer. CI runs on PRs whatever their base.
+- **Link:** after opening a stacked PR, link the stack bottom to top, `gh stack link <bottom PR> … <parent PR> <new PR>`, with PR numbers only and never `--open` (needs `gh extension install github/gh-stack`). Merging a PR in a linked stack merges every PR below it, so the maintainer merges a batch at once.
+- **Changes travel up by merging:** when a PR in a stack gets a new commit, the PR above it needs a **restack**, which `fix` does by merging the base in, one level per run.
+- **Merged below:** when a parent PR merges, GitHub moves the PR above it onto `master`; if it doesn't, `sync` retargets it. A squash merge leaves the parent's commits in the branch, so the PR then needs a restack from `master` too.
 
 ## setup
 
@@ -48,19 +58,19 @@ Board: `backlog browser` → http://localhost:6420. Tracker conventions: `docs/a
 
 ### 1. Pick the task
 
-- With an id: `backlog task view <id> --plain`; it must be `To Do`, labelled `ready-for-agent`, and appear in the ready list below. Otherwise explain why and stop.
-- Without: the first task from `backlog task list -s "To Do" -l ready-for-agent --ready --plain`. Empty → say the frontier is empty and stop.
+- With an id: `backlog task view <id> --plain`; it must be `To Do`, labelled `ready-for-agent`, and appear in the ready list below or be stackable (**Stacks**). Otherwise explain why and stop.
+- Without: the first task from `backlog task list -s "To Do" -l ready-for-agent --ready --plain`. If that's empty, the first stackable task in `backlog task list -s "To Do" -l ready-for-agent --plain` (check each one's dependencies with `backlog task view`). Neither → say the frontier is empty and stop.
 
-`--ready` treats a dependency as satisfied only when it is `Done` (merged), so tasks never build on unmerged work.
+`--ready` treats a dependency as satisfied only when it is `Done` (merged). A stackable task builds on exactly one unmerged PR, its parent's.
 
 ### 2. Assign model and effort
 
 `backlog task view <id> --plain` → keep the full text (title, description, acceptance criteria, labels).
 
-**Size budget.** A PR stays around **300 changed lines** (added plus deleted), hand-written only. Generated or vendored files don't count: `openapi.json`, `admin-app/src/client/**`, lockfiles (`pnpm-lock.yaml`, `.terraform.lock.hcl`), and verbatim schema dumps such as the Flyway baseline (`V001__baseline.sql`). The measure, run from the branch against `origin/master`:
+**Size budget.** A PR stays around **300 changed lines** (added plus deleted), hand-written only. Generated or vendored files don't count: `openapi.json`, `admin-app/src/client/**`, lockfiles (`pnpm-lock.yaml`, `.terraform.lock.hcl`), and verbatim schema dumps such as the Flyway baseline (`V001__baseline.sql`). The measure, run from the branch against its base `<S>` (see **Start**):
 
 ```
-git diff --shortstat origin/master...HEAD -- . ':(exclude)openapi.json' ':(exclude)admin-app/src/client' ':(exclude)*pnpm-lock.yaml' ':(exclude)*.terraform.lock.hcl' ':(exclude)jelatyna-backend/src/main/resources/db/migration/V001__baseline.sql'
+git diff --shortstat <S>...HEAD -- . ':(exclude)openapi.json' ':(exclude)admin-app/src/client' ':(exclude)*pnpm-lock.yaml' ':(exclude)*.terraform.lock.hcl' ':(exclude)jelatyna-backend/src/main/resources/db/migration/V001__baseline.sql'
 ```
 
 If the task clearly won't fit in about 300 counted lines, split it **before branching**; the maintainer prefers several small PRs over one big one. Only split where each slice is a complete, green, reviewable change that leaves `master` working and wired (a migration and the entity change that uses it stay together, and may exceed the budget if the PR says why):
@@ -91,9 +101,9 @@ The reviewer ignores these labels — it is pinned to `opus` / `xhigh` in its ow
 
 ### 3. Start
 
-1. Branch `B = factory/<id lowercase>-<slug>` where slug is the title in `[a-z0-9-]`, ≤40 chars. If `B` already exists (`git rev-parse --verify --quiet <B>` or `origin/<B>` succeeds — an earlier attempt), append `-2`, `-3`, … until it's free. A retry always starts fresh from `origin/master`; the earlier branch stays for reference and `sync` deletes it once the task is merged.
-2. `git switch --no-track -c <B> origin/master` (`--no-track` so the branch never tracks `master`)
-3. `backlog task edit <id> -s "In Progress" --append-notes "factory: started <YYYY-MM-DD> on <B>"`
+1. Branch `B = factory/<id lowercase>-<slug>` where slug is the title in `[a-z0-9-]`, ≤40 chars. If `B` already exists (`git rev-parse --verify --quiet <B>` or `origin/<B>` succeeds — an earlier attempt), append `-2`, `-3`, … until it's free. A retry always starts fresh from its base; the earlier branch stays for reference and `sync` deletes it once the task is merged.
+2. The base `S` is `origin/master`, or for a stackable task `origin/<the parent PR's headRefName>`. `git switch --no-track -c <B> <S>` (`--no-track` so the branch never tracks its base)
+3. `backlog task edit <id> -s "In Progress" --append-notes "factory: started <YYYY-MM-DD> on <B>"`, ending the note with `, stacked on <parent PR url>` for a stacked task (`fix` reads it)
 
 ### 4. Implement
 
@@ -102,13 +112,14 @@ Spawn **one** `factory-implementer` subagent (foreground) with `model: <m>` and 
 ```
 TASK: <id> — <title>
 BRANCH: <B> (already checked out)
+BASE: <S>
 <full task text: description + acceptance criteria>
 ```
 
 ### 5. Review
 
 - `STATUS: BLOCKED` → go to **Hand to human**.
-- `STATUS: DONE` → confirm `git log --oneline origin/master..HEAD` is non-empty and `git status --porcelain` is clean, then spawn a `factory-reviewer` subagent with: the task text, `BRANCH: <B>`, `BASE: origin/master`, and the implementer's report.
+- `STATUS: DONE` → confirm `git log --oneline <S>..HEAD` is non-empty and `git status --porcelain` is clean, then spawn a `factory-reviewer` subagent with: the task text, `BRANCH: <B>`, `BASE: <S>`, and the implementer's report.
 - `REMAINING WORK` in the report that isn't `none` means the implementer stopped at a green checkpoint to stay near the size budget. The reviewer marks the criteria listed there `DEFERRED`, which is not a FAIL. Publish what's done as usual, then in **Publish** create the follow-up task for the remainder.
 - `VERDICT: FAIL` (first time) → resume the same implementer with `SendMessage` (agent id from its result) carrying the REQUIRED FIXES — it keeps its model and effort. If resuming isn't possible, spawn a fresh `factory-implementer` with the same `model` / `effort`, the task text, the findings, and "remediation mode: the branch already has your earlier commits". Then run a **new** reviewer.
 - Second FAIL → **Hand to human**.
@@ -116,7 +127,7 @@ BRANCH: <B> (already checked out)
 ### 6. Publish (on PASS)
 
 1. `git push -u origin <B>`
-2. `gh pr create --base master --head <B> --title "<task title>" --body-file <tmp file>` with:
+2. `gh pr create --base <master, or for a stacked task the parent PR's headRefName> --head <B> --title "<task title>" --body-file <tmp file>` with:
    ```
    <implementer TLDR>
 
@@ -136,6 +147,8 @@ BRANCH: <B> (already checked out)
    Opened by the local code factory after an automated review PASS. Needs human review and merge.
    ```
    If the WHY doesn't answer an obvious "why this way?" about the diff, ask the implementer to complete it before publishing — never fill it in from backlog notes.
+
+   For a stacked task, end the body with `Stacked on #<parent PR>: review that one first. Merging this PR also merges the PRs below it.`, then link the stack (**Stacks**). If linking fails, keep the PR (its base already chains it) and say so in the report.
 3. `backlog task edit <id> -s "In Review" --ref <PR url> --append-notes "factory: PR <url> (ready for review), reviewer PASS"` plus `--check-ac <n>` for each criterion the reviewer marked MET (not the DEFERRED ones).
 4. If the report's `REMAINING WORK` isn't `none`, create the follow-up: `backlog task create "<title>" -d "<what's left>" --ac "<criterion>" … -l ready-for-agent --dep <id>` with the deferred criteria as its `--ac`s. Carry over a `model:` / `effort:` label only if the human set it (the ones the factory added are recorded in a `factory: tier` note; leave those off so the follow-up is tiered on its own). Append `factory: remaining work split off as <new id>` to the task's notes. It depends on this task, so it stays off the frontier until the PR merges. As in a split, add the new task to the dependencies of any task that depended on this one (`--dep` replaces the list, so repeat the existing ones).
 
@@ -149,16 +162,16 @@ Don't push. `backlog task edit <id> -s "To Do" --remove-label ready-for-agent --
 
 ## sync
 
-1. `backlog task list -s "In Review" --plain`. For each task, read its PR url from `References:` in `backlog task view <id> --plain`, then `gh pr view <url> --json state,headRefName,isDraft`.
+1. `backlog task list -s "In Review" --plain`. For each task, read its PR url from `References:` in `backlog task view <id> --plain`, then `gh pr view <url> --json state,headRefName,baseRefName,isDraft`.
    - `MERGED` → `backlog task edit <id> -s "Done" --append-notes "factory: merged <YYYY-MM-DD>"`; delete the task's local branches — `<headRefName>` plus any earlier attempts from `git branch --list 'factory/<id lowercase>-*'` — with `git branch -D`, skipping one that is checked out (squash merges aren't ancestors, so `-d` fails).
    - `CLOSED` → `backlog task edit <id> -s "To Do" --remove-label ready-for-agent --add-label ready-for-human --append-notes "factory: PR closed unmerged"`.
-   - `OPEN` → report whether it's ready or a draft (a draft means a human turned it back), a one-line `gh pr checks <url>` summary, and how many review comments are pending (see **Review comments** in `fix`).
+   - `OPEN` → report whether it's ready or a draft (a draft means a human turned it back), a one-line `gh pr checks <url>` summary, and how many review comments are pending (see **Review comments** in `fix`). If its base branch belongs to a merged PR or no longer exists, GitHub didn't move it down its stack: `gh pr edit <url> --base master`.
 2. `git fetch origin --prune`.
 3. Print a table of what changed and the new frontier (`backlog task list -s "To Do" -l ready-for-agent --ready --plain`).
 
 ## fix
 
-Repairs one open factory PR on its own branch: merges `master` in and resolves the conflicts, makes its failing checks (CI jobs, CodeQL alerts) pass, or addresses its review comments, so the maintainer reviews PRs that pass, merge cleanly, and have every comment answered. `auto` runs it; `/factory fix [pr]` runs it by hand. The task stays `In Review` throughout.
+Repairs one open factory PR on its own branch: merges its base (`master`, or in a stack the branch below) in and resolves the conflicts, makes its failing checks (CI jobs, CodeQL alerts) pass, or addresses its review comments, so the maintainer reviews PRs that pass, merge cleanly, and have every comment answered. `auto` runs it; `/factory fix [pr]` runs it by hand. The task stays `In Review` throughout.
 
 ### Preflight
 
@@ -166,9 +179,11 @@ As in `run`: a clean tree, no task `In Progress`, `gh auth status`, `git fetch o
 
 ### 1. Pick the PR
 
-Candidates are the PRs of `In Review` tasks (`References:` in `backlog task view <id> --plain`) that are open and not drafts (a draft means a human turned it back), need a repair, and have attempts left. A PR needs a repair when it conflicts with `master` (`gh pr view <url> --json mergeable` says `CONFLICTING`), when all its checks have finished with at least one failure, or when all its checks have finished and it has pending review comments (below). A PR needing several is repaired in that order, one per run: the push brings fresh checks and a fresh review, and the rest come back through `fix`. Waiting for every check also waits for Macroscope's review of the head: its check stays pending while it reviews.
+Candidates are the PRs of `In Review` tasks (`References:` in `backlog task view <id> --plain`) that are open and not drafts (a draft means a human turned it back), need a repair, and have attempts left. A PR needs a repair when it conflicts with its base (`gh pr view <url> --json mergeable` says `CONFLICTING`) or needs a restack, when all its checks have finished with at least one failure, or when all its checks have finished and it has pending review comments (below). A PR needing several is repaired in that order, one per run: the push brings fresh checks and a fresh review, and the rest come back through `fix`. Waiting for every check also waits for Macroscope's review of the head: its check stays pending while it reviews.
 
-Attempts: for a conflict or failing checks, at most one per head commit and two per PR, recorded in `backlog/.factory-auto.json` as `fix:<pr>:<head sha>`. A PR whose current head already has a key, or that has two `fix:` keys, has none left. Review comments count separately, one attempt per batch, keyed `comments:<pr>:<newest pending comment id>` (so a handed-back batch waits for a new comment). Macroscope reviews every push, so batches of bot comments only get two attempts per PR (their keys end in `:bot`); a batch with a maintainer's comment always gets its attempt. A PR out of attempts isn't a candidate: report it, and in `auto` mode notify `pr-conflict:<pr>:<head sha>`, `pr-checks-failed:<pr>:<head sha>` or `pr-comments:<pr>:<newest pending comment id>`.
+A stacked PR (its task's notes say `stacked on <parent PR url>`) needs a **restack** when its base is a `factory/` branch whose tip it lacks (`git merge-base --is-ancestor origin/<baseRefName> origin/<headRefName>` fails), or when its parent PR is merged and its head commit is older than that merge (`gh pr view <parent> --json mergedAt` against `git log -1 --format=%cI origin/<headRefName>`). A restack is repaired like a conflict.
+
+Attempts: for a conflict, a restack or failing checks, at most one per head commit and two per PR, recorded in `backlog/.factory-auto.json` as `fix:<pr>:<head sha>`. A PR whose current head already has a key, or that has two `fix:` keys, has none left. Review comments count separately, one attempt per batch, keyed `comments:<pr>:<newest pending comment id>` (so a handed-back batch waits for a new comment). Macroscope reviews every push, so batches of bot comments only get two attempts per PR (their keys end in `:bot`); a batch with a maintainer's comment always gets its attempt. A PR out of attempts isn't a candidate: report it, and in `auto` mode notify `pr-conflict:<pr>:<head sha>`, `pr-checks-failed:<pr>:<head sha>` or `pr-comments:<pr>:<newest pending comment id>`.
 
 With a PR number it must be a candidate; without, take the first. Record its attempt key before going on.
 
@@ -184,7 +199,7 @@ Read them with two calls:
 
 ### 2. Collect the failures
 
-A conflict needs nothing collected; step 3 starts the merge. For failing checks, subagents can't run `gh`, so gather the evidence yourself:
+A conflict or restack needs nothing collected; step 3 starts the merge. For failing checks, subagents can't run `gh`, so gather the evidence yourself:
 - `gh pr checks <url>` lists the failing checks and their links.
 - A GitHub Actions job (link `…/actions/runs/<run id>/job/<job id>`): the last ~150 lines of `gh run view <run id> --job <job id> --log-failed`.
 - CodeQL: `gh api "repos/{owner}/{repo}/code-scanning/alerts?pr=<n>&state=open" --jq '.[] | {rule: .rule.id, message: .most_recent_instance.message.text, path: .most_recent_instance.location.path, line: .most_recent_instance.location.start_line}'`.
@@ -195,23 +210,24 @@ For review comments, take the pending ones from step 1: per comment its id, its 
 ### 3. Fix and review
 
 1. `git switch --no-track -C <headRefName> origin/<headRefName>` (`-C` resets a stale local copy to what the PR has). Note `git rev-parse --short HEAD` as the PR's previous head.
-2. For a conflict, `git merge --no-edit origin/master`. If it completes on its own, there's nothing hand-written to review: push it (step 4) and let CI check it. A check that then fails comes back through `fix`. If it stops on conflicts, leave the merge in progress for the implementer.
+2. For a conflict or restack, `git merge --no-edit origin/<baseRefName>` (after a parent merged, that is `origin/master`). If it completes on its own, there's nothing hand-written to review: push it (step 4) and let CI check it. A check that then fails comes back through `fix`. If it stops on conflicts, leave the merge in progress for the implementer.
 3. Spawn **one** `factory-implementer` with the task's `model:` / `effort:` labels and this prompt:
    ```
    TASK: <id> — <title>
    BRANCH: <headRefName> (already checked out; it is PR <url>)
+   BASE: origin/<baseRefName>
    <full task text: description + acceptance criteria>
    FAILING CHECKS:
    <per check: its name, then the log tail or the alert>
    ```
-   For a conflict, replace the `FAILING CHECKS` block with `MERGE CONFLICT: a merge of origin/master is in progress; conflicting files: <git diff --name-only --diff-filter=U>`. For review comments, replace it with `REVIEW COMMENTS:` and, per comment, `<id> — <author> — <path:line, or conversation>`, then its body (and a thread's earlier comments).
-4. `STATUS: BLOCKED` → **Hand back** (if a merge is still in progress, `git merge --abort` first). `STATUS: DONE` → confirm `git log --oneline origin/<headRefName>..HEAD` is non-empty (for review comments it is empty when none was FIXED) and `git status --porcelain` is clean, then spawn a `factory-reviewer` with the task text, `BRANCH: <headRefName>`, `BASE: origin/master`, `PREVIOUS HEAD: <sha>`, the FAILING CHECKS, MERGE CONFLICT or REVIEW COMMENTS block, and the implementer's report.
+   For a conflict, replace the `FAILING CHECKS` block with `MERGE CONFLICT: a merge of origin/<baseRefName> is in progress; conflicting files: <git diff --name-only --diff-filter=U>`. For review comments, replace it with `REVIEW COMMENTS:` and, per comment, `<id> — <author> — <path:line, or conversation>`, then its body (and a thread's earlier comments).
+4. `STATUS: BLOCKED` → **Hand back** (if a merge is still in progress, `git merge --abort` first). `STATUS: DONE` → confirm `git log --oneline origin/<headRefName>..HEAD` is non-empty (for review comments it is empty when none was FIXED) and `git status --porcelain` is clean, then spawn a `factory-reviewer` with the task text, `BRANCH: <headRefName>`, `BASE: origin/<baseRefName>`, `PREVIOUS HEAD: <sha>`, the FAILING CHECKS, MERGE CONFLICT or REVIEW COMMENTS block, and the implementer's report.
 5. A first `VERDICT: FAIL` gets one fix round, as in `run` step 5. A second FAIL → **Hand back**.
 
 ### 4. Push (on PASS)
 
 1. `git push origin <headRefName>`. It's a plain push: if it's rejected because the branch moved, go to **Hand back**. Never force. Review comments with nothing FIXED have no commit to push: skip to step 3.
-2. Add one line at the end of the PR's `## Verification` list: read the body (`gh pr view <url> --json body`), add the line, then `gh pr edit <url> --body-file <tmp file>`. The line: `- Check fix (<short sha>): <the implementer's TLDR>`, for a conflict `- Merged master (<short sha>): <the implementer's TLDR, or "no conflicts">`, or for review comments `- Review comments (<short sha>): <the implementer's TLDR>`. Like the rest of the PR, it's public.
+2. Add one line at the end of the PR's `## Verification` list: read the body (`gh pr view <url> --json body`), add the line, then `gh pr edit <url> --body-file <tmp file>`. The line: `- Check fix (<short sha>): <the implementer's TLDR>`, for a conflict or restack `- Merged <baseRefName> (<short sha>): <the implementer's TLDR, or "no conflicts">`, or for review comments `- Review comments (<short sha>): <the implementer's TLDR>`. Like the rest of the PR, it's public.
 3. For review comments, post each reply from the `COMMENTS` section of the implementer's report as written, ending with `<!-- factory -->`. A thread comment gets its reply in the thread: `gh api -X POST "repos/{owner}/{repo}/pulls/<n>/comments/<comment id>/replies" -F body=@<tmp file>`. Conversation comments and review bodies get one `gh pr comment <url> --body-file <tmp file>` that quotes each and answers it. Don't resolve threads: that's the commenter's call, and Macroscope resolves its own once the code is fixed.
 4. `backlog task edit <id> --append-notes "factory: fixed <the conflict | failing checks | review comments> on <PR url> in <short sha, or "replies only">, reviewer PASS"`.
 
@@ -234,8 +250,8 @@ One unattended iteration, meant for `/loop /factory auto` in a dedicated clone o
 3. **Interrupted work.** If a task is `In Progress`, an earlier iteration didn't finish. Notify `stuck:<task>` and stop; never reset it alone.
 4. **Conflicts, failing checks and review comments.** If `fix` has a candidate PR (its step 1, which also notifies the PRs out of attempts), run `fix` on it exactly as in `fix` (the remembered branch is `master`), then stop: that fix is this iteration's one piece of work.
 5. **Human tasks.** For each `To Do` task labelled `ready-for-human` whose dependencies are all `Done`, notify `human-ready:<task>`.
-6. **Pick.** Take the first task from the ready frontier. If there is none, notify `idle:<open PRs>` ("nothing ready; waiting on your merges of #…") and stop.
+6. **Pick.** Take the task `run` would pick (its step 1), stackable tasks included. If there is none, notify `idle:<open PRs>` ("nothing ready; waiting on your merges of #…") and stop.
 7. **`run`** that task exactly as in `run` (preflight through Finish; the remembered branch is `master`). After Publish, notify `pr-opened:<pr>`. After Hand to human, notify `handed:<task>` with the blocker in one line. If the size check split the task, notify `split:<task>` with the new task ids in one line.
-8. Stop after that one task or fix. In `/loop` dynamic mode, schedule the next iteration soon (about a minute) if the frontier still has a ready task or `fix` still has a candidate, otherwise 20–30 minutes.
+8. Stop after that one task or fix. In `/loop` dynamic mode, schedule the next iteration soon (about a minute) if a task is still ready or stackable or `fix` still has a candidate, otherwise 20–30 minutes.
 
 All invariants apply unchanged: one task at a time, never merge a PR, never push to `master`, and open PRs, push to their branches, or reply to their comments only after a PASS.
