@@ -57,10 +57,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - name: Install nixpacks
-        run: curl -sSL https://nixpacks.com/install.sh | bash
+      - uses: actions/setup-java@v6
+        with:
+          java-version: '25'
+          distribution: temurin
+          cache: maven
+      # Restore only: deploy-images.yml's push-backend owns this cache and saves it.
+      - name: Restore Paketo builder
+        id: paketo-cache
+        uses: actions/cache/restore@v6
+        with:
+          path: /tmp/paketo-builder.tar
+          key: paketo-builder-${{ hashFiles('jelatyna-backend/pom.xml') }}
+          restore-keys: paketo-builder-
+      - name: Load Paketo builder
+        if: steps.paketo-cache.outputs.cache-matched-key != ''
+        run: docker load -i /tmp/paketo-builder.tar
       - name: Build backend
-        run: nixpacks build jelatyna-backend --name confitura-backend
+        run: cd jelatyna-backend && ./mvnw spring-boot:build-image -DskipTests
 
   all-builds-passed:
     runs-on: ubuntu-latest
