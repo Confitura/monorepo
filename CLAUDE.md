@@ -32,7 +32,7 @@ Run locally in one of two modes (note `-P` selects Maven profiles, not Spring on
 - **Fresh demo data** — a plain `./mvnw spring-boot:run` activates `local`, `fake-db` and `fake-security` (the spring-boot-maven-plugin `<profiles>` in `pom.xml`). **It wipes and re-seeds the local database on every start.**
 - **Keep data** — `./mvnw spring-boot:run -Dspring-boot.run.profiles=local,fake-security`. `-Dspring-boot.run.profiles=…` replaces the pom's list, so always include `local`.
 
-Both need a Postgres running, e.g. `docker run -d --name pg -e POSTGRES_DB=jelatyna -e POSTGRES_USER=jelatyna -e POSTGRES_PASSWORD=password -p 5432:5432 postgres:16`.
+Both need a Postgres running: from the repo root, `docker compose -f docker/postgres/docker-compose.yml up -d` (see Local Infrastructure).
 
 ### admin-app
 
@@ -81,7 +81,7 @@ Both frontends communicate with the backend REST API. They use file-based routin
 
 ### Local Infrastructure
 
-Docker Compose (`docker-compose.yml`) provides PostgreSQL (5432, `postgres:16.10`), the backend (built from `jelatyna-backend/Dockerfile`, run with the `local,fake-security` profiles against the compose `postgres`), and nginx (host port 8080). For frontend-only work, running the backend locally with fake profiles is simpler.
+`docker/postgres/docker-compose.yml` provides the local database: PostgreSQL on 5432 (`postgres:16.10`, prod's major version) with the `local` profile's credentials, on the `postgres16_data` volume. Start it from the repo root with `docker compose -f docker/postgres/docker-compose.yml up -d`. Nothing else runs in Docker locally: start the backend with `./mvnw spring-boot:run` and the frontends with `pnpm dev`.
 
 ## CI/CD
 
@@ -91,7 +91,7 @@ GitHub Actions (`.github/workflows/run-tests.yml`) runs on pushes to `master` an
 - **test-frontend** (webpage): Node 24, pnpm 10.5.2, `pnpm install --frozen-lockfile → build → test`
 - **test-admin-app**: Node 24, pnpm 10.5.2, `pnpm install --frozen-lockfile → codegen + git diff --exit-code src/client (drift check) → typecheck → test:unit`
 
-`.github/workflows/check-builds.yml` runs on the same triggers with its own paths filter (module directories only, not `openapi.json`) and builds the deployable images: Docker builds of webpage and admin-app, a nixpacks build of the backend.
+`.github/workflows/check-builds.yml` runs on the same triggers with its own paths filter (module directories only, not `openapi.json`) and builds the deployable images: Docker builds of webpage and admin-app, and the backend's Paketo image with `./mvnw spring-boot:build-image -DskipTests`, the same build `deploy-images.yml`'s `push-backend` deploys, without the GHCR login or push. It restores (never saves) `push-backend`'s Paketo builder cache. `spring-boot:build-image` is the only way to build a backend image.
 
 Each workflow ends in an aggregator job — `all-tests-passed` and `all-builds-passed` — that fails if any job failed and passes if they passed or were skipped. These two are the required checks on `master`.
 

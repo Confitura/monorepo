@@ -9,9 +9,11 @@ In order to use this project you will also need an UI - for this there is separa
 ## how to start backend
 
 The backend needs a local PostgreSQL on `localhost:5432` (database and user `jelatyna`, password `password`).
-The root `docker-compose.yml` provides one, pinned to prod's version (`postgres:16.10`). From the repo root:
+`docker/postgres/docker-compose.yml` provides one, pinned to prod's version (`postgres:16.10`). From the repo root:
 
-`docker compose up -d postgres`
+`docker compose -f docker/postgres/docker-compose.yml up -d`
+
+It keeps its data in the `postgres16_data` volume. It used to run `postgres:14` on a `postgres_data` volume, which Postgres 16 can't open, so it starts empty; the old volume is left untouched (find it with `docker volume ls`).
 
 Then start the backend in one of two modes.
 
@@ -30,6 +32,13 @@ Leave out `fake-db`:
 Windows: `mvnw.cmd spring-boot:run "-Dspring-boot.run.profiles=local,fake-security"`
 
 `-Dspring-boot.run.profiles` replaces the default list, so always include `local`: it holds the local settings (database, dummy JWT secret, mail and listmonk keys, CORS origin). Those secrets are dummies, so never activate `local` in prod.
+
+## building the image
+The backend image is built one way only, with Paketo buildpacks:
+
+`./mvnw spring-boot:build-image -DskipTests`
+
+`deploy-images.yml` builds and pushes it to GHCR for prod; `check-builds.yml` runs the same build, without pushing, on every PR and master push that touches the backend.
 
 ## users
 When starting app in development mode application will not use real oAuth providers. 
