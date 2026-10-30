@@ -1,7 +1,7 @@
 # Adopt the backend environment variables that already exist in Coolify.
 #
-# The 10 variables below were renamed by hand in Coolify (dotted Spring names to
-# relaxed-binding names) before they were declared in production.auto.tfvars.
+# The plain variables below were renamed by hand in Coolify (dotted Spring names
+# to relaxed-binding names) before they were declared in production.auto.tfvars.
 # Without these blocks OpenTofu plans to create them, and Coolify rejects each
 # one because the key already exists. An import block makes the plan read
 # "to import" instead, and the apply adopts them into state.
@@ -14,11 +14,20 @@
 # Once the variables are in state these blocks are no-ops. They may be removed
 # in a later change.
 #
-# Deliberately absent: the secrets APP_JWT_SECRETKEY (dh3evqv0icsy97n5n3ylj8xh)
-# and LISTMONK_PASSWORD (rmvu1gfbvh80ubi4161lgzmz). An import block whose target
-# has no configuration fails the plan, and these keys only get configuration
-# (under coolify_environment_variable.secret) once they are added to
-# secrets.enc.yaml. Add their import blocks in the same PR as that sops change.
+# The two secrets right below (APP_JWT_SECRETKEY, LISTMONK_PASSWORD) also already
+# exist in Coolify. Their configuration comes from secrets.enc.yaml, so their
+# blocks were added in the same change as those sops entries: an import block
+# whose target has no configuration fails the plan.
+
+import {
+  to = module.app["backend"].coolify_environment_variable.secret["APP_JWT_SECRETKEY"]
+  id = "application:wqwwmtfjn4xuhsgj4uzwfd4x:dh3evqv0icsy97n5n3ylj8xh"
+}
+
+import {
+  to = module.app["backend"].coolify_environment_variable.secret["LISTMONK_PASSWORD"]
+  id = "application:wqwwmtfjn4xuhsgj4uzwfd4x:rmvu1gfbvh80ubi4161lgzmz"
+}
 
 import {
   to = module.app["backend"].coolify_environment_variable.plain["APP_CORS_ORIGINS_0_"]
