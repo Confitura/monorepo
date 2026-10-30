@@ -18,7 +18,7 @@ The `ponytail` skill sets how you change code: the smallest complete change, not
 - Never start dev servers or long-running processes: no `pnpm dev`/`preview`, `spring-boot:run`, `pnpm test:e2e`/Playwright, or docker. The one exception: containers that Testcontainers starts inside `./mvnw test` (the backend tests need PostgreSQL). Compose, `docker run`, and image builds stay forbidden.
 - No new dependencies or lockfile changes, and no edits under `.github/`, `.claude/`, `.mvn/`, `infra/` — unless the task asks for them.
 - Surgical changes in the surrounding style. Every changed line traces to the task.
-- **Size budget: about 300 changed lines** (added plus deleted), hand-written only. `openapi.json`, `admin-app/src/client/**`, lockfiles (`pnpm-lock.yaml`, `.terraform.lock.hcl`), and verbatim schema dumps such as the Flyway baseline don't count. Measure with `git diff --shortstat origin/master...HEAD -- . ':(exclude)openapi.json' ':(exclude)admin-app/src/client' ':(exclude)*pnpm-lock.yaml' ':(exclude)*.terraform.lock.hcl' ':(exclude)jelatyna-backend/src/main/resources/db/migration/V001__baseline.sql'`. If the diff would clearly go over, stop at a coherent, green checkpoint (checks pass, nothing half-wired), commit that, and list what's left under `REMAINING WORK`; the lead publishes what's done and files the rest as a follow-up task. A change that can't be split without leaving `master` broken or half-wired (one migration plus its entity change) may exceed the budget; say why in WHY.
+- **Size budget: about 300 changed lines** (added plus deleted), hand-written only. `openapi.json`, `admin-app/src/client/**`, lockfiles (`pnpm-lock.yaml`, `.terraform.lock.hcl`), and verbatim schema dumps such as the Flyway baseline don't count. `BASE` is in your prompt (`origin/master` if it's missing). Measure with `git diff --shortstat <BASE>...HEAD -- . ':(exclude)openapi.json' ':(exclude)admin-app/src/client' ':(exclude)*pnpm-lock.yaml' ':(exclude)*.terraform.lock.hcl' ':(exclude)jelatyna-backend/src/main/resources/db/migration/V001__baseline.sql'`. If the diff would clearly go over, stop at a coherent, green checkpoint (checks pass, nothing half-wired), commit that, and list what's left under `REMAINING WORK`; the lead publishes what's done and files the rest as a follow-up task. A change that can't be split without leaving `master` broken or half-wired (one migration plus its entity change) may exceed the budget; say why in WHY.
 - Run commands from the repo root as one call: `cd <app> && <cmd>`.
 
 ## Procedure
@@ -80,9 +80,9 @@ If your prompt has `FAILING CHECKS`, the branch is an open PR that already does 
 
 ## Resolving a merge conflict
 
-If your prompt has `MERGE CONFLICT`, the lead started merging `origin/master` into the PR branch and it stopped on conflicts. Finish that merge.
+If your prompt has `MERGE CONFLICT`, the lead started merging the PR's base (the `BASE` in your prompt: `origin/master`, or in a stack the branch below) into the PR branch and it stopped on conflicts. Finish that merge.
 
-- For each conflicting hunk, find out why each side changed it: `git log --merge -p -- <file>` and the commit messages. Keep both intents. Where they can't both hold, keep `master`'s behaviour and adapt the PR's change to it. Add nothing neither side had.
+- For each conflicting hunk, find out why each side changed it: `git log --merge -p -- <file>` and the commit messages. Keep both intents. Where they can't both hold, keep the base's behaviour and adapt the PR's change to it. Add nothing neither side had.
 - Run the checks for every module with a conflicting file, then `git add` the files and `git commit --no-edit`.
 - If you can't tell what a side meant, report `STATUS: BLOCKED` and leave the merge in progress; the lead aborts it.
 - TLDR lists each conflict and how you resolved it; the lead adds it to the PR's Verification.
