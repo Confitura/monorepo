@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.infrastructure.db;
+package pl.confitura.jelatyna.platform.persistence;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -15,7 +15,7 @@ import pl.confitura.jelatyna.login.google.GoogleService;
 import java.util.HashMap;
 import java.util.Map;
 
-import static pl.confitura.jelatyna.infrastructure.Profiles.FAKE_SECURITY;
+import static pl.confitura.jelatyna.platform.Profiles.FAKE_SECURITY;
 
 @EnableConfigurationProperties(OAuthConfiguration.OAuthConfigurationProperties.class)
 @Configuration

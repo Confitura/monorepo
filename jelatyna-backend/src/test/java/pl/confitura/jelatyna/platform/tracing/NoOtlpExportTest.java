@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.infrastructure.tracing;
+package pl.confitura.jelatyna.platform.tracing;
 
 import io.micrometer.registry.otlp.OtlpMeterRegistry;
 import io.opentelemetry.sdk.logs.export.LogRecordExporter;

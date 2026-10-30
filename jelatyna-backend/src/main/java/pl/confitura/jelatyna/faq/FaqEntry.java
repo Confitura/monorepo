@@ -10,7 +10,7 @@ import jakarta.persistence.ManyToOne;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import pl.confitura.jelatyna.infrastructure.db.AuditedEntity;
+import pl.confitura.jelatyna.platform.persistence.AuditedEntity;
 
 /** A single FAQ question managed independently and grouped by its {@link FaqCategory}. */
 @Data

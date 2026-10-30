@@ -19,7 +19,7 @@ import lombok.ToString;
 import lombok.experimental.Accessors;
 import pl.confitura.jelatyna.agenda.AgendaEntry;
 import pl.confitura.jelatyna.agenda.TimeSlot;
-import pl.confitura.jelatyna.infrastructure.db.AuditedEntity;
+import pl.confitura.jelatyna.platform.persistence.AuditedEntity;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.registration.ParticipationData;
 

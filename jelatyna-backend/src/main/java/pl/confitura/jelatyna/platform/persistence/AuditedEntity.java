@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.infrastructure.db;
+package pl.confitura.jelatyna.platform.persistence;
 
 import lombok.Data;
 import org.springframework.data.annotation.*;

@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.docs;
+package pl.confitura.jelatyna.platform.web;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;

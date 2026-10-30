@@ -8,7 +8,7 @@ import jakarta.persistence.Id;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import pl.confitura.jelatyna.infrastructure.db.AuditedEntity;
+import pl.confitura.jelatyna.platform.persistence.AuditedEntity;
 
 /**
  * A dictionary entry that groups {@link FaqEntry} questions. Owns its own visibility

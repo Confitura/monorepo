@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.infrastructure;
+package pl.confitura.jelatyna.platform.web;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;

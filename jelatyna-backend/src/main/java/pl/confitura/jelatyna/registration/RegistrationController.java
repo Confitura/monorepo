@@ -26,8 +26,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.microtripit.mandrillapp.lutung.model.MandrillApiError;
 import lombok.extern.slf4j.Slf4j;
-import pl.confitura.jelatyna.infrastructure.security.JelatynaPrincipal;
-import pl.confitura.jelatyna.infrastructure.security.SecurityContextUtil;
+import pl.confitura.jelatyna.platform.security.JelatynaPrincipal;
+import pl.confitura.jelatyna.platform.security.SecurityContextUtil;
 import pl.confitura.jelatyna.mail.MailSender;
 import pl.confitura.jelatyna.mail.MessageInfo;
 import pl.confitura.jelatyna.registration.demographic.DemographicDataRepository;

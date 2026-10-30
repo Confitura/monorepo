@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.infrastructure.tracing;
+package pl.confitura.jelatyna.platform.tracing;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.MessageLite;

@@ -21,7 +21,7 @@ import pl.confitura.jelatyna.user.UserRepository;
 import java.util.Map;
 import java.util.Set;
 
-import static pl.confitura.jelatyna.infrastructure.Profiles.FAKE_SECURITY;
+import static pl.confitura.jelatyna.platform.Profiles.FAKE_SECURITY;
 
 @Slf4j
 @Configuration

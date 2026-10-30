@@ -3,7 +3,7 @@ package pl.confitura.jelatyna.agenda;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import pl.confitura.jelatyna.infrastructure.db.AuditedEntity;
+import pl.confitura.jelatyna.platform.persistence.AuditedEntity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;

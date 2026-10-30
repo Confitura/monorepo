@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.infrastructure.security;
+package pl.confitura.jelatyna.platform.security;
 
 import org.springframework.web.filter.GenericFilterBean;
 

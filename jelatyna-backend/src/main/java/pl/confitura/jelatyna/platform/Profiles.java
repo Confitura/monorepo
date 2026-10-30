@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.infrastructure;
+package pl.confitura.jelatyna.platform;
 
 public class Profiles {
     public static final String PRODUCTION = "default";
