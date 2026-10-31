@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import pl.confitura.jelatyna.platform.storage.ResourceStorage;
 import pl.confitura.jelatyna.webpage.partner.domain.Partner;
+import pl.confitura.jelatyna.webpage.partner.domain.PartnerDto;
 import pl.confitura.jelatyna.webpage.partner.domain.PartnerRepository;
 
 import java.io.IOException;
