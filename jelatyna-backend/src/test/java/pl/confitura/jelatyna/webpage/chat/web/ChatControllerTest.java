@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.chat;
+package pl.confitura.jelatyna.webpage.chat.web;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.Bean;
@@ -8,7 +8,9 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Import;
 import pl.confitura.jelatyna.BaseIntegrationTest;
-import pl.confitura.jelatyna.chat.ChatTypes.SseEvent;
+import pl.confitura.jelatyna.webpage.chat.domain.ChatTypes.SseEvent;
+import pl.confitura.jelatyna.webpage.chat.domain.DatalinksClient;
+import pl.confitura.jelatyna.webpage.chat.domain.SpeakerDirectory;
 
 import java.util.List;
 import java.util.Map;

@@ -1,8 +1,9 @@
-package pl.confitura.jelatyna.chat;
+package pl.confitura.jelatyna.webpage.chat.web;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import pl.confitura.jelatyna.BaseIntegrationTest;
+import pl.confitura.jelatyna.webpage.chat.domain.DatalinksClient;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;

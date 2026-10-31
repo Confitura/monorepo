@@ -1,6 +1,6 @@
-package pl.confitura.jelatyna.chat;
+package pl.confitura.jelatyna.webpage.chat.datalinks;
 
-import pl.confitura.jelatyna.chat.ChatTypes.SseEvent;
+import pl.confitura.jelatyna.webpage.chat.domain.ChatTypes.SseEvent;
 
 import java.io.BufferedReader;
 import java.io.IOException;

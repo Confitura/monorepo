@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.chat;
+package pl.confitura.jelatyna.webpage.chat.domain;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;

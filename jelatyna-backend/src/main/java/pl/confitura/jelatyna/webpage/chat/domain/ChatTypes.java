@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.chat;
+package pl.confitura.jelatyna.webpage.chat.domain;
 
 /** Small shared types for the chat feature. */
 public final class ChatTypes {

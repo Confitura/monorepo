@@ -1,9 +1,9 @@
-package pl.confitura.jelatyna.chat;
+package pl.confitura.jelatyna.webpage.chat.domain;
 
 import org.springframework.stereotype.Service;
-import pl.confitura.jelatyna.chat.ChatTypes.AskRequest;
-import pl.confitura.jelatyna.chat.ChatTypes.EventSink;
-import pl.confitura.jelatyna.chat.ChatTypes.SseEvent;
+import pl.confitura.jelatyna.webpage.chat.domain.ChatTypes.AskRequest;
+import pl.confitura.jelatyna.webpage.chat.domain.ChatTypes.EventSink;
+import pl.confitura.jelatyna.webpage.chat.domain.ChatTypes.SseEvent;
 
 import tools.jackson.databind.ObjectMapper;
 import tools.jackson.databind.node.ObjectNode;

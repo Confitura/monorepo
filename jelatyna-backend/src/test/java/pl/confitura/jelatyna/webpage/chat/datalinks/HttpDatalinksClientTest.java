@@ -1,10 +1,11 @@
-package pl.confitura.jelatyna.chat;
+package pl.confitura.jelatyna.webpage.chat.datalinks;
 
 import com.sun.net.httpserver.HttpServer;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import pl.confitura.jelatyna.chat.ChatTypes.SseEvent;
+import pl.confitura.jelatyna.webpage.chat.domain.ChatConfigurationProperties;
+import pl.confitura.jelatyna.webpage.chat.domain.ChatTypes.SseEvent;
 
 import tools.jackson.databind.json.JsonMapper;
 
