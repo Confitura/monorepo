@@ -3,11 +3,12 @@ package pl.confitura.jelatyna.agenda;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.security.access.prepost.PreAuthorize;
+import pl.confitura.jelatyna.conference.edition.domain.EditionContent;
 import pl.confitura.jelatyna.edition.Edition;
 
 import java.util.List;
 
-public interface DayRepository extends Repository<Day, Day.DayId> {
+public interface DayRepository extends Repository<Day, Day.DayId>, EditionContent {
 
     @PreAuthorize("@security.isAdmin()")
     Day save(Day day);
@@ -19,8 +20,6 @@ public interface DayRepository extends Repository<Day, Day.DayId> {
 
     @Query("select day from Day day where day.edition = :edition order by day.displayOrder")
     List<Day> findAllIn(Edition edition);
-
-    boolean existsByEdition(Edition edition);
 
     // The admin agenda shows and edits only the Current Edition's Days (ADR-0004).
     @Query("select day from Day day where day.edition.current = true order by day.displayOrder")

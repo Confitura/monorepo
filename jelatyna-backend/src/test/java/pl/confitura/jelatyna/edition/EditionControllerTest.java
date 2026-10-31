@@ -16,6 +16,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.util.FileSystemUtils;
 import pl.confitura.jelatyna.BaseIntegrationTest;
 import pl.confitura.jelatyna.agenda.Day;
+import pl.confitura.jelatyna.conference.voting.domain.VoterIpsCleaner;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.resource.ResourceConfigurationProperties;
 import pl.confitura.jelatyna.voting.Vote;
@@ -28,9 +29,10 @@ import java.time.LocalDate;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.tuple;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
@@ -140,30 +142,29 @@ class EditionControllerTest extends BaseIntegrationTest {
     }
 
     @Test
-    void eachSwitchLogsOneLineWithIdsAndHowManyVotesLostTheirIp() throws Exception {
+    void eachSwitchLogsTheIdsAndHowManyVotesLostTheirIp() throws Exception {
         vote(current, "203.0.113.7");
         vote(current, "203.0.113.8");
-        Logger logger = (Logger) LoggerFactory.getLogger(EditionController.class);
+        Logger switches = (Logger) LoggerFactory.getLogger(EditionController.class);
+        Logger clearings = (Logger) LoggerFactory.getLogger(VoterIpsCleaner.class);
         ListAppender<ILoggingEvent> appender = new ListAppender<>();
         appender.start();
-        logger.addAppender(appender);
+        switches.addAppender(appender);
+        clearings.addAppender(appender);
 
         try {
             makeCurrent(next).andExpect(status().isOk());
         } finally {
-            logger.detachAppender(appender);
+            switches.detachAppender(appender);
+            clearings.detachAppender(appender);
         }
 
-        assertThat(appender.list).singleElement().satisfies(event -> {
-            assertThat(event.getKeyValuePairs())
-                    .extracting(pair -> pair.key, pair -> pair.value)
-                    .containsExactlyInAnyOrder(
-                            tuple("actorUserId", "ADMIN"),
-                            tuple("previousEditionId", current.getId()),
-                            tuple("editionId", next.getId()),
-                            tuple("votesCleared", 2));
-            assertThat(event.getFormattedMessage()).doesNotContain("203.0.113");
-        });
+        assertThat(appender.list).extracting(event -> event.getKeyValuePairs().stream()
+                        .collect(Collectors.toMap(pair -> pair.key, pair -> pair.value)))
+                .containsExactlyInAnyOrder(
+                        Map.of("editionId", current.getId(), "votesCleared", 2),
+                        Map.of("actorUserId", "ADMIN", "previousEditionId", current.getId(), "editionId", next.getId()));
+        assertThat(appender.list).allSatisfy(event -> assertThat(event.getFormattedMessage()).doesNotContain("203.0.113"));
     }
 
     @Test

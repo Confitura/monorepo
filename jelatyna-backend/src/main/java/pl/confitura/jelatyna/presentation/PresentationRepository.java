@@ -5,13 +5,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.security.core.parameters.P;
 import org.springframework.security.access.prepost.PreAuthorize;
+import pl.confitura.jelatyna.conference.edition.domain.EditionContent;
 import pl.confitura.jelatyna.edition.Edition;
 import pl.confitura.jelatyna.user.User;
 
 import java.util.List;
 import java.util.Set;
 
-public interface PresentationRepository extends Repository<Presentation, String> {
+public interface PresentationRepository extends Repository<Presentation, String>, EditionContent {
 
     Presentation save(Presentation presentation);
 
@@ -56,6 +57,4 @@ public interface PresentationRepository extends Repository<Presentation, String>
     List<Presentation> findBySpeakersContains(User speakers);
 
     List<Presentation> findBySpeakersContainsAndEdition(User speaker, Edition edition);
-
-    boolean existsByEdition(Edition edition);
 }

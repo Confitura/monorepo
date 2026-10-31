@@ -2,6 +2,7 @@ package pl.confitura.jelatyna.edition;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,11 +16,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.confitura.jelatyna.agenda.DayRepository;
-import pl.confitura.jelatyna.infrastructure.published.WebpageDataDumper;
+import pl.confitura.jelatyna.conference.edition.domain.EditionContent;
+import pl.confitura.jelatyna.conference.edition.domain.EditionMadeCurrent;
 import pl.confitura.jelatyna.platform.security.JelatynaPrincipal;
-import pl.confitura.jelatyna.presentation.PresentationRepository;
-import pl.confitura.jelatyna.voting.VoteRepository;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -41,11 +40,9 @@ public class EditionController {
     private static final ZoneId WARSAW = ZoneId.of("Europe/Warsaw");
 
     private final EditionRepository repository;
-    private final PresentationRepository presentationRepository;
-    private final DayRepository dayRepository;
-    private final VoteRepository voteRepository;
+    private final List<EditionContent> contents;
     private final TransactionTemplate transactionTemplate;
-    private final WebpageDataDumper webpageDataDumper;
+    private final ApplicationEventPublisher events;
 
     /** Every Edition, newest year first. */
     @GetMapping
@@ -106,7 +103,7 @@ public class EditionController {
         if (edition == null) {
             return ResponseEntity.notFound().build();
         }
-        if (edition.isCurrent() || presentationRepository.existsByEdition(edition) || dayRepository.existsByEdition(edition)) {
+        if (edition.isCurrent() || contents.stream().anyMatch(content -> content.existsByEdition(edition))) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
         repository.deleteById(id);
@@ -114,9 +111,10 @@ public class EditionController {
     }
 
     /**
-     * Makes the Edition current (ADR-0004). In one transaction the previous Current Edition's votes lose their
-     * voters' IP addresses and it stops being current; then the dumps are written into the new Edition's folder.
-     * Refused for the Edition that is already current, which would clear nothing and dump for no reason.
+     * Makes the Edition current (ADR-0004). In one transaction {@link EditionMadeCurrent} listeners run (voting
+     * clears the previous Current Edition's voter IP addresses) and the previous Edition stops being current; once
+     * it commits, a listener writes the dumps into the new Edition's folder. Refused for the Edition that is
+     * already current, which would clear nothing and dump for no reason.
      */
     @PostMapping("/{id}/make-current")
     public ResponseEntity<EditionDto> makeEditionCurrent(@AuthenticationPrincipal JelatynaPrincipal principal,
@@ -129,26 +127,18 @@ public class EditionController {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
         Edition previous = repository.findCurrent();
-        int votesCleared = transactionTemplate.execute(status -> {
-            int cleared = voteRepository.clearVoterIpsIn(previous);
+        transactionTemplate.executeWithoutResult(status -> {
+            events.publishEvent(new EditionMadeCurrent(previous, edition));
             // At most one Edition can be current, so the previous one stops being current first.
             repository.saveAndFlush(previous.setCurrent(false));
             repository.save(edition.setCurrent(true));
-            return cleared;
         });
         // Ids only: no IP addresses or emails in the logs.
         log.atInfo().setMessage("Made an Edition current")
                 .addKeyValue("actorUserId", principal.getId())
                 .addKeyValue("previousEditionId", previous.getId())
                 .addKeyValue("editionId", edition.getId())
-                .addKeyValue("votesCleared", votesCleared)
                 .log();
-        // The switch stands even if this dump fails: the scheduled dump retries within ten minutes.
-        try {
-            webpageDataDumper.dumpAll();
-        } catch (Exception e) {
-            log.error("Dumping Edition {} after it became current failed", edition.getId(), e);
-        }
         return ResponseEntity.ok(EditionDto.from(edition));
     }
 

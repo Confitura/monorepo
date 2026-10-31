@@ -3,13 +3,17 @@ package pl.confitura.jelatyna.infrastructure.published;
 import tools.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.event.TransactionalEventListener;
 import pl.confitura.jelatyna.agenda.*;
 import pl.confitura.jelatyna.agenda.api.InlineAgendaEntry;
 import pl.confitura.jelatyna.agenda.api.InlineRoom;
 import pl.confitura.jelatyna.agenda.api.InlineTimeSlot;
 import pl.confitura.jelatyna.api.model.InlinePresentationWithSpeakers;
+import pl.confitura.jelatyna.conference.edition.domain.EditionMadeCurrent;
 import pl.confitura.jelatyna.edition.Edition;
 import pl.confitura.jelatyna.edition.EditionRepository;
 import pl.confitura.jelatyna.faq.FaqEntryDto;
@@ -38,6 +42,7 @@ import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
 
 @RequiredArgsConstructor
+@Slf4j
 public class WebpageDataDumper {
 
     private final ObjectMapper objectMapper;
@@ -77,6 +82,18 @@ public class WebpageDataDumper {
         dumpFaqEntries(folder);
         dumpPartners(folder);
         lastDumpAt.set(Instant.now());
+    }
+
+    // Runs once the switch commits, so it dumps into the new Edition's folder, in a transaction of its own.
+    @TransactionalEventListener
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void dumpForTheNewCurrentEdition(EditionMadeCurrent event) {
+        // The switch stands even if this dump fails: the scheduled dump retries within ten minutes.
+        try {
+            dumpAll();
+        } catch (Exception e) {
+            log.error("Dumping Edition {} after it became current failed", event.current().getId(), e);
+        }
     }
 
     public Instant getLastDumpAt() {
