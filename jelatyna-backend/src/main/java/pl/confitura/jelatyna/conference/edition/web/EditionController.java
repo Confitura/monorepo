@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.edition;
+package pl.confitura.jelatyna.conference.edition.web;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pl.confitura.jelatyna.conference.edition.domain.Edition;
 import pl.confitura.jelatyna.conference.edition.domain.EditionContent;
 import pl.confitura.jelatyna.conference.edition.domain.EditionMadeCurrent;
+import pl.confitura.jelatyna.conference.edition.domain.EditionRepository;
 import pl.confitura.jelatyna.platform.security.JelatynaPrincipal;
 
 import java.time.LocalDate;

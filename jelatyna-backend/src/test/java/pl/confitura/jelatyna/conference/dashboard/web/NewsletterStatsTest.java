@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.dashboard;
+package pl.confitura.jelatyna.conference.dashboard.web;
 
 import org.junit.jupiter.api.Test;
 import pl.confitura.jelatyna.BaseIntegrationTest;

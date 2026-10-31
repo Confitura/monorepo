@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.edition;
+package pl.confitura.jelatyna.conference.edition.web;
 
 import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.spi.ILoggingEvent;
@@ -16,11 +16,13 @@ import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.util.FileSystemUtils;
 import pl.confitura.jelatyna.BaseIntegrationTest;
 import pl.confitura.jelatyna.agenda.Day;
+import pl.confitura.jelatyna.conference.edition.domain.Edition;
+import pl.confitura.jelatyna.conference.edition.domain.EditionRepository;
 import pl.confitura.jelatyna.conference.voting.domain.VoterIpsCleaner;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.platform.storage.ResourceConfigurationProperties;
-import pl.confitura.jelatyna.voting.Vote;
-import pl.confitura.jelatyna.voting.VoteRepository;
+import pl.confitura.jelatyna.conference.voting.domain.Vote;
+import pl.confitura.jelatyna.conference.voting.domain.VoteRepository;
 
 import java.nio.file.Files;
 import java.nio.file.Path;

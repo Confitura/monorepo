@@ -1,18 +1,18 @@
-package pl.confitura.jelatyna.dashboard;
+package pl.confitura.jelatyna.conference.dashboard.web;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import pl.confitura.jelatyna.BaseIntegrationTest;
-import pl.confitura.jelatyna.dashboard.model.SubmittedStats;
-import pl.confitura.jelatyna.edition.Edition;
-import pl.confitura.jelatyna.edition.EditionRepository;
+import pl.confitura.jelatyna.conference.dashboard.domain.SubmittedStats;
+import pl.confitura.jelatyna.conference.edition.domain.Edition;
+import pl.confitura.jelatyna.conference.edition.domain.EditionRepository;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
-import pl.confitura.jelatyna.voting.Vote;
-import pl.confitura.jelatyna.voting.VoteRepository;
+import pl.confitura.jelatyna.conference.voting.domain.Vote;
+import pl.confitura.jelatyna.conference.voting.domain.VoteRepository;
 
 import java.time.Instant;
 import java.time.LocalDate;

@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.edition;
+package pl.confitura.jelatyna.conference.edition.domain;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;

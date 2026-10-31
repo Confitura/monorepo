@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.voting;
+package pl.confitura.jelatyna.conference.voting.web;
 
 import static java.util.stream.Collectors.toList;
 
@@ -20,6 +20,8 @@ import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import pl.confitura.jelatyna.conference.voting.domain.Vote;
+import pl.confitura.jelatyna.conference.voting.domain.VoteRepository;
 import pl.confitura.jelatyna.platform.web.WebUtils;
 import pl.confitura.jelatyna.presentation.*;
 import pl.confitura.jelatyna.user.User;

@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.dashboard;
+package pl.confitura.jelatyna.conference.dashboard.web;
 
 import com.querydsl.core.Tuple;
 import lombok.Data;

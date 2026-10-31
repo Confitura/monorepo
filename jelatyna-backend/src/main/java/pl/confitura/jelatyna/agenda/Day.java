@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-import pl.confitura.jelatyna.edition.Edition;
+import pl.confitura.jelatyna.conference.edition.domain.Edition;
 import pl.confitura.jelatyna.platform.persistence.AuditedEntity;
 
 import jakarta.persistence.*;

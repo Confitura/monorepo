@@ -7,8 +7,8 @@ import org.junit.jupiter.api.io.TempDir;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import pl.confitura.jelatyna.BaseIntegrationTest;
-import pl.confitura.jelatyna.edition.Edition;
-import pl.confitura.jelatyna.edition.EditionRepository;
+import pl.confitura.jelatyna.conference.edition.domain.Edition;
+import pl.confitura.jelatyna.conference.edition.domain.EditionRepository;
 import pl.confitura.jelatyna.webpage.archive.domain.WebpageDataDumper;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
 

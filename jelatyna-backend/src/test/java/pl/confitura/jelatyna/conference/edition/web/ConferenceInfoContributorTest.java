@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.infrastructure.actuator;
+package pl.confitura.jelatyna.conference.edition.web;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -6,8 +6,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.confitura.jelatyna.BaseIntegrationTest;
-import pl.confitura.jelatyna.edition.Edition;
-import pl.confitura.jelatyna.edition.EditionRepository;
+import pl.confitura.jelatyna.conference.edition.domain.Edition;
+import pl.confitura.jelatyna.conference.edition.domain.EditionRepository;
 
 class ConferenceInfoContributorTest extends BaseIntegrationTest {
 

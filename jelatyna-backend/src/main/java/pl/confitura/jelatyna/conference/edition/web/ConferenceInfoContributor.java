@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.infrastructure.actuator;
+package pl.confitura.jelatyna.conference.edition.web;
 
 import java.time.Instant;
 
@@ -6,8 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.actuate.info.Info;
 import org.springframework.boot.actuate.info.InfoContributor;
 import org.springframework.stereotype.Component;
-import pl.confitura.jelatyna.edition.Edition;
-import pl.confitura.jelatyna.edition.EditionRepository;
+import pl.confitura.jelatyna.conference.edition.domain.Edition;
+import pl.confitura.jelatyna.conference.edition.domain.EditionRepository;
 
 @Component
 @RequiredArgsConstructor
