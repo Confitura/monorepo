@@ -27,5 +27,5 @@ app:
 
 listmonk:
   base-url: http://localhost:8000/api/v1/
-  api-key: 123
-  list-id: 123
+  username: listmonk
+  password: listmonk
