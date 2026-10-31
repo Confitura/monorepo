@@ -7,7 +7,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -15,7 +14,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -28,14 +26,13 @@ import lombok.ToString;
 import lombok.experimental.Accessors;
 import pl.confitura.jelatyna.api.model.WorkshopRequest;
 import pl.confitura.jelatyna.conference.edition.domain.Edition;
-import pl.confitura.jelatyna.presentation.rating.Rate;
 import pl.confitura.jelatyna.api.model.PresentationRequest;
 import pl.confitura.jelatyna.user.User;
 
 @Entity
 @Data
-@ToString(exclude = {"speakers", "ratings"})
-@EqualsAndHashCode(exclude = {"speakers", "ratings"})
+@ToString(exclude = "speakers")
+@EqualsAndHashCode(exclude = "speakers")
 @Accessors(chain = true)
 public class Presentation {
 
@@ -72,9 +69,6 @@ public class Presentation {
     @NotNull
     @JsonIgnore
     private Edition edition;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "presentation")
-    private Set<Rate> ratings = new HashSet<>();
 
     private String status;
 

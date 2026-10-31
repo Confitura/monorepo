@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.presentation.rating;
+package pl.confitura.jelatyna.conference.rating.domain;
 
 import org.springframework.data.repository.Repository;
 

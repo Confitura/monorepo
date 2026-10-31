@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.presentation.rating;
+package pl.confitura.jelatyna.conference.rating.domain;
 
 import org.junit.Ignore;
 import org.junit.jupiter.api.*;
@@ -13,7 +13,7 @@ import pl.confitura.jelatyna.agenda.PresentationUtils;
 import pl.confitura.jelatyna.agenda.UserUtils;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
 import pl.confitura.jelatyna.presentation.Presentation;
-import pl.confitura.jelatyna.presentation.RateRequest;
+import pl.confitura.jelatyna.conference.rating.web.RateRequest;
 
 import java.util.List;
 import java.util.UUID;

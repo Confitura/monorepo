@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.presentation;
+package pl.confitura.jelatyna.conference.rating.web;
 
 import com.jayway.jsonpath.JsonPath;
 import org.junit.jupiter.api.AfterEach;
@@ -13,8 +13,10 @@ import pl.confitura.jelatyna.agenda.DayRepository;
 import pl.confitura.jelatyna.conference.edition.domain.Edition;
 import pl.confitura.jelatyna.conference.edition.domain.EditionRepository;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
-import pl.confitura.jelatyna.presentation.rating.Rate;
-import pl.confitura.jelatyna.presentation.rating.RateValue;
+import pl.confitura.jelatyna.conference.rating.domain.Rate;
+import pl.confitura.jelatyna.conference.rating.domain.RateValue;
+import pl.confitura.jelatyna.presentation.Presentation;
+import pl.confitura.jelatyna.presentation.PresentationRepository;
 
 import java.time.Instant;
 import java.time.LocalDate;

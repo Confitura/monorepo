@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.presentation.rating;
+package pl.confitura.jelatyna.conference.rating.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.presentation.rating;
+package pl.confitura.jelatyna.conference.rating.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.presentation.rating;
+package pl.confitura.jelatyna.conference.rating.domain;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,9 +27,6 @@ public class RatingService {
                 .map(it -> it.update(newRate))
                 .orElse(newRate);
 
-        var rate = rateRepository.save(r);
-        presentation.getRatings().add(rate);
-        repository.save(presentation);
-        return rate;
+        return rateRepository.save(r);
     }
 }

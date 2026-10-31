@@ -1,10 +1,10 @@
-package pl.confitura.jelatyna.presentation;
+package pl.confitura.jelatyna.conference.rating.web;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.springframework.validation.annotation.Validated;
-import pl.confitura.jelatyna.presentation.rating.Rate;
-import pl.confitura.jelatyna.presentation.rating.RateValue;
+import pl.confitura.jelatyna.conference.rating.domain.Rate;
+import pl.confitura.jelatyna.conference.rating.domain.RateValue;
 
 @Data
 @Accessors(chain = true)
