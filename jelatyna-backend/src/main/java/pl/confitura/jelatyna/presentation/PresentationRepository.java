@@ -7,12 +7,13 @@ import org.springframework.security.core.parameters.P;
 import org.springframework.security.access.prepost.PreAuthorize;
 import pl.confitura.jelatyna.conference.edition.domain.EditionContent;
 import pl.confitura.jelatyna.edition.Edition;
+import pl.confitura.jelatyna.identity.user.domain.Speakers;
 import pl.confitura.jelatyna.user.User;
 
 import java.util.List;
 import java.util.Set;
 
-public interface PresentationRepository extends Repository<Presentation, String>, EditionContent {
+public interface PresentationRepository extends Repository<Presentation, String>, EditionContent, Speakers {
 
     Presentation save(Presentation presentation);
 
@@ -57,4 +58,16 @@ public interface PresentationRepository extends Repository<Presentation, String>
     List<Presentation> findBySpeakersContains(User speakers);
 
     List<Presentation> findBySpeakersContainsAndEdition(User speaker, Edition edition);
+
+    @Override
+    @Query("SELECT CASE WHEN COUNT(p) > 0 THEN true ELSE false END FROM Presentation p JOIN p.speakers s WHERE s.id = :userId")
+    boolean isSpeaker(String userId);
+
+    @Override
+    @Query("SELECT DISTINCT s.id FROM Presentation p JOIN p.speakers s")
+    Set<String> speakerIds();
+
+    @Override
+    @Query("SELECT DISTINCT s.id FROM Presentation p JOIN p.speakers s WHERE p.status ='accepted'")
+    Set<String> acceptedSpeakerIds();
 }

@@ -6,9 +6,9 @@ import pl.confitura.jelatyna.registration.ParticipationData;
 import pl.confitura.jelatyna.user.User;
 
 /**
- * A User as the API shows it: the profile with its ticket. User keeps only the ticket's id, so the web layer adds
- * the ticket here, under the schema name and shape the API has always had.
+ * A User as the API shows it: the profile with its ticket and whether it speaks. User keeps only the ticket's id and
+ * doesn't know its talks, so the web layer adds both here, under the schema name and shape the API has always had.
  */
 @Schema(name = "User")
-public record UserWithTicket(@JsonUnwrapped User user, ParticipationData participationData) {
+public record UserWithTicket(@JsonUnwrapped User user, ParticipationData participationData, boolean speaker) {
 }

@@ -293,6 +293,24 @@ class UserLoginsControllerTest extends BaseIntegrationTest {
     }
 
     @Test
+    void aSurvivorThatGainsItsFirstTalkIsASpeakerInItsFreshToken() throws Exception {
+        User signedIn = userRepository.save(new User().setName("Signed in"));
+        User other = oauthUserService.mapToUser(gitHubUser(uniqueId()));
+        talk("Other's talk", other);
+        assertThat(isSpeaker(tokenService.asToken(signedIn))).isFalse();
+
+        String survivorToken = merge(signedIn, tokenService.asToken(other))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+
+        assertThat(isSpeaker(survivorToken)).isTrue();
+    }
+
+    private Boolean isSpeaker(String token) {
+        return Jwts.parser().verifyWith(serverKey()).build().parseSignedClaims(token).getPayload().get("isSpeaker", Boolean.class);
+    }
+
+    @Test
     void thePreviewListsTheTalksThatWillMoveWithoutMovingThem() throws Exception {
         User signedIn = userRepository.save(new User().setName("Signed in"));
         User other = oauthUserService.mapToUser(gitHubUser(uniqueId()));

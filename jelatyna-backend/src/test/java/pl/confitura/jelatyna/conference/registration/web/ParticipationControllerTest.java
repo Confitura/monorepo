@@ -38,6 +38,7 @@ class ParticipationControllerTest extends BaseIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(owner.getId()))
                 .andExpect(jsonPath("$.participant").value(true))
+                .andExpect(jsonPath("$.speaker").value(false))
                 .andExpect(jsonPath("$.participationData.id").value(ticket.getId()));
         mockMvc.perform(get("/current-user").with(user(owner)))
                 .andExpect(jsonPath("$.participationData.id").value(ticket.getId()));
