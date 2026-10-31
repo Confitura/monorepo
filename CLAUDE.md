@@ -90,8 +90,8 @@ Both frontends communicate with the backend REST API. They use file-based routin
 GitHub Actions (`.github/workflows/run-tests.yml`) runs on pushes to `master` and on PRs, whatever their base branch (so stacked PRs are checked too). A `changes` job (`dorny/paths-filter`) gates each test job, so a job runs only when its paths change (backend: `jelatyna-backend/**` or `openapi.json`; webpage: `webpage/**`; admin-app: `admin-app/**` or `openapi.json`):
 
 - **test-backend**: JDK 25, `mvn -B package`, then `git diff --exit-code openapi.json` (fails if the regenerated spec drifts from the committed one)
-- **test-frontend** (webpage): Node 24, pnpm 10.5.2, `pnpm install --frozen-lockfile → build → test`
-- **test-admin-app**: Node 24, pnpm 10.5.2, `pnpm install --frozen-lockfile → codegen + git diff --exit-code src/client (drift check) → typecheck → test:unit`
+- **test-frontend** (webpage): Node 24, pnpm 10.34.9, `pnpm install --frozen-lockfile → build → test`
+- **test-admin-app**: Node 24, pnpm 10.34.9, `pnpm install --frozen-lockfile → codegen + git diff --exit-code src/client (drift check) → typecheck → test:unit`
 
 `.github/workflows/check-builds.yml` runs on the same triggers with its own paths filter (module directories only, not `openapi.json`) and builds the deployable images: Docker builds of webpage and admin-app, and the backend's Paketo image with `./mvnw spring-boot:build-image -DskipTests`, the same build `deploy-images.yml`'s `push-backend` deploys, without the GHCR login or push. It restores (never saves) `push-backend`'s Paketo builder cache. `spring-boot:build-image` is the only way to build a backend image.
 
