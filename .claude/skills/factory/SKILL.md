@@ -8,7 +8,7 @@ argument-hint: "setup | run [task-id] | fix [pr] | sync | auto"
 
 Subcommand: `$0` (default `run`). Arguments: `$ARGUMENTS`.
 
-Pipeline: Backlog.md task (`ready-for-agent`) → branch `factory/<id>-<slug>` from `origin/master` (or stacked on a dependency's open PR, see **Stacks**) → `factory-implementer` subagent → independent `factory-reviewer` subagent → PR ready for review → human reviews and merges → `/factory sync` marks it Done.
+Pipeline: Backlog.md task (`ready-for-agent`) → branch `factory/<id>-<slug>` from `origin/master` (or stacked on a dependency's open PR, see **Stacks**) → `factory-implementer` subagent → independent `factory-reviewer` subagent → PR ready for review → merged (a PR targeting `master` auto-merges once Macroscope approves its head and the required checks pass; the maintainer merges stacked PRs) → `/factory sync` marks it Done.
 
 Board: `backlog browser` → http://localhost:6420. Tracker conventions: `docs/agents/issue-tracker.md`.
 
@@ -16,20 +16,20 @@ Board: `backlog browser` → http://localhost:6420. Tracker conventions: `docs/a
 
 1. **One task at a time.** Never start a task while another is `In Progress`.
 2. Only you (the lead) run `backlog`. Subagents get the task text in their prompt.
-3. Never merge a PR, push to `master`, or force-push. Open a PR, push to an open PR's branch, or reply to its comments, only after a reviewer PASS (a merge of the PR's base that needed no conflict resolution excepted), and open it ready for review, never as a draft. Never mark an existing PR ready or push to a draft: a draft means a human put it there. Bring `master`, or in a stack the branch below, into a PR branch with a merge, never a rebase: a rebase needs a force push. Of the gh-stack commands, use only `gh stack link`: `rebase`, `sync`, `push`, `submit`, `modify` and `merge` rewrite, push or merge branches. A human still reviews and merges every PR.
+3. Never merge a PR, push to `master`, or force-push. Open a PR, push to an open PR's branch, or reply to its comments, only after a reviewer PASS (a merge of the PR's base that needed no conflict resolution excepted), and open it ready for review, never as a draft. Never mark an existing PR ready or push to a draft: a draft means a human put it there. Bring `master`, or in a stack the branch below, into a PR branch with a merge, never a rebase: a rebase needs a force push. Of the gh-stack commands, use only `gh stack link`: `rebase`, `sync`, `push`, `submit`, `modify` and `merge` rewrite, push or merge branches. The factory never merges, but a factory PR targeting `master` merges itself: `.github/workflows/factory-auto-merge.yml` enables squash auto-merge when Macroscope approves its head, GitHub merges once the required checks pass, and a push after the approval turns it off until Macroscope approves the new head. Stacked PRs (while they target another branch) and every non-factory PR still need the maintainer to merge.
 4. The repo is **public**: PR titles, bodies, commits, and replies to comments contain only the task title, acceptance criteria, the implementer's TLDR, WHY and comment replies, the review outcome, and the checks. Never paste backlog notes, spec text, or anything private.
 5. Every PR follows `## Pull requests` in `CLAUDE.md`: TL;DR first, then `## Why`, so the PR still explains itself after the task is archived.
 6. No `Co-Authored-By` trailers.
 
 ## Stacks
 
-A task whose dependencies are all `Done` except one, its **parent**, which is `In Review` with an open, non-draft factory PR, is **stackable**: it builds on the parent's unmerged branch. The maintainer then reviews a series of PRs and merges it in one go, instead of the factory waiting for each merge.
+A task whose dependencies are all `Done` except one, its **parent**, which is `In Review` with an open, non-draft factory PR, is **stackable**: it builds on the parent's unmerged branch. The maintainer then reviews a series of PRs and merges it in one go, instead of the factory waiting for each merge. A stacked PR never auto-merges while it targets its parent's branch; only the bottom PR, which targets `master`, auto-merges on its own Macroscope approval.
 
 - **Depth:** the parent's stack is its PR plus every open PR below it (follow `baseRefName` while it is a `factory/` branch with an open PR). A task is stackable only while that stack has fewer than 4 PRs.
 - **Base:** the bottom PR targets `master`; every other PR targets its parent's branch, so its diff shows only its own layer. CI runs on PRs whatever their base.
 - **Link:** after opening a stacked PR, link the stack bottom to top, `gh stack link <bottom PR> … <parent PR> <new PR>`, with PR numbers only and never `--open` (needs `gh extension install github/gh-stack`). Merging a PR in a linked stack merges every PR below it, so the maintainer merges a batch at once.
 - **Changes travel up by merging:** when a PR in a stack gets a new commit, the PR above it needs a **restack**, which `fix` does by merging the base in, one level per run.
-- **Merged below:** when a parent PR merges, GitHub moves the PR above it onto `master`; if it doesn't, `sync` retargets it. A squash merge leaves the parent's commits in the branch, so the PR then needs a restack from `master` too.
+- **Merged below:** when a parent PR merges, GitHub moves the PR above it onto `master`; if it doesn't, `sync` retargets it. A squash merge leaves the parent's commits in the branch, so the PR then needs a restack from `master` too. Moving onto `master` brings no approval event, so the PR auto-merges only once Macroscope approves a later head (such as its restack); until then the maintainer merges it.
 
 ## setup
 
@@ -144,7 +144,7 @@ BASE: <S>
    - Automated review: PASS on first round | PASS after one fix round (<what the first review caught and how it was fixed>)
    - Implementer: <m> / <e> (tier <X>) · Reviewer: opus / xhigh
 
-   Opened by the local code factory after an automated review PASS. Needs human review and merge.
+   Opened by the local code factory after an automated review PASS. Auto-merges once Macroscope approves it and the required checks pass if it targets `master`; a stacked PR needs a human merge.
    ```
    If the WHY doesn't answer an obvious "why this way?" about the diff, ask the implementer to complete it before publishing — never fill it in from backlog notes.
 
