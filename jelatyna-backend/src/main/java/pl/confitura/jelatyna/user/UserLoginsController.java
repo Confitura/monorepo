@@ -24,9 +24,9 @@ import org.springframework.web.server.ResponseStatusException;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import pl.confitura.jelatyna.identity.user.domain.AbsorbedUserTalks;
 import pl.confitura.jelatyna.platform.security.JelatynaPrincipal;
 import pl.confitura.jelatyna.infrastructure.security.TokenService;
-import pl.confitura.jelatyna.presentation.Presentation;
 
 /**
  * A User's Logins, and linking another one (ADR-0003): the person completes that provider's sign-in
@@ -45,6 +45,7 @@ public class UserLoginsController {
     private final UserRepository userRepository;
     private final LoginRepository loginRepository;
     private final TokenService tokenService;
+    private final AbsorbedUserTalks absorbedUserTalks;
 
     @GetMapping("/users/{id}/logins")
     @PreAuthorize("@security.isOwner(#id)")
@@ -125,7 +126,7 @@ public class UserLoginsController {
                                      @RequestBody MergeUsersRequest request) {
         User absorbed = userToAbsorb(principal, request);
         User survivor = userRepository.findById(principal.getId());
-        return MergePreview.of(survivor, absorbed);
+        return MergePreview.of(survivor, absorbed, absorbedUserTalks.talksToTake(survivor, absorbed));
     }
 
     /** What {@link #adminMergeUsers} would make of the survivor, shown before the admin confirms; changes nothing. */
@@ -134,7 +135,8 @@ public class UserLoginsController {
     @Transactional(readOnly = true)
     public MergePreview previewAdminMerge(@PathVariable String survivorId, @PathVariable String absorbedId) {
         User survivor = survivorForAdmin(survivorId, absorbedId);
-        return MergePreview.of(survivor, userToAbsorb(survivor, absorbedId));
+        User absorbed = userToAbsorb(survivor, absorbedId);
+        return MergePreview.of(survivor, absorbed, absorbedUserTalks.talksToTake(survivor, absorbed));
     }
 
     /**
@@ -196,7 +198,7 @@ public class UserLoginsController {
     // User is deleted. Answers what moved, for the log.
     private Moved merge(User survivor, User absorbed) {
         survivor.absorb(absorbed);
-        int talksMoved = survivor.takeTalks(absorbed);
+        int talksMoved = absorbedUserTalks.takeTalks(survivor, absorbed);
         survivor.takeTicket(absorbed);
         List<Login> logins = loginRepository.findByUserId(absorbed.getId());
         logins.forEach(login -> login.moveTo(survivor));
@@ -221,12 +223,12 @@ public class UserLoginsController {
                                String www, String photo, boolean becomesAdmin, boolean becomesVolunteer,
                                List<String> talksToMove) {
 
-        static MergePreview of(User survivor, User absorbed) {
+        static MergePreview of(User survivor, User absorbed, List<String> talksToMove) {
             User merged = survivor.mergedWith(absorbed);
             return new MergePreview(merged.getName(), merged.getEmail(), merged.getBio(), merged.getUsername(),
                     merged.getTwitter(), merged.getGithub(), merged.getWww(), merged.getPhoto(),
                     merged.isAdmin() && !survivor.isAdmin(), merged.isVolunteer() && !survivor.isVolunteer(),
-                    survivor.talksToTake(absorbed).stream().map(Presentation::getTitle).toList());
+                    talksToMove);
         }
     }
 }
