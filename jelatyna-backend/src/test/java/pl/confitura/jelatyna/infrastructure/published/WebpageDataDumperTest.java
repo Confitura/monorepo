@@ -30,6 +30,7 @@ import java.nio.file.Path;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayDeque;
+import java.util.Arrays;
 import java.util.Deque;
 import java.util.List;
 import java.util.UUID;
@@ -139,15 +140,19 @@ class WebpageDataDumperTest extends BaseIntegrationTest {
     @Test
     void speakersShowOnlyTheirTalksInTheCurrentEdition() throws Exception {
         User returning = speaker("Returning Speaker");
+        User coSpeaker = speaker("Co-speaker");
         User pastOnly = speaker("Past Speaker");
-        talk("This Year's Talk", false, edition2031, returning);
+        talk("This Year's Talk", false, edition2031, returning, coSpeaker);
+        talk("This Year's Workshop", true, edition2031, returning);
         talk("Last Year's Talk", false, edition2026, returning);
         talk("Last Year's Other Talk", false, edition2026, pastOnly);
 
         webpageDataDumper.dumpAll();
 
-        assertThat(read("users/search/speakers.json", "$[*].name")).containsExactly("Returning Speaker");
+        assertThat(read("users/search/speakers.json", "$[*].name")).containsExactlyInAnyOrder("Returning Speaker", "Co-speaker");
         assertThat(read("users/" + returning.getId() + "/public.json", "$.presentations[*].name"))
+                .containsExactlyInAnyOrder("This Year's Talk", "This Year's Workshop");
+        assertThat(read("users/" + coSpeaker.getId() + "/public.json", "$.presentations[*].name"))
                 .containsExactly("This Year's Talk");
         assertThat(folder.resolve("users/" + pastOnly.getId() + "/public.json")).doesNotExist();
     }
@@ -190,7 +195,7 @@ class WebpageDataDumperTest extends BaseIntegrationTest {
         return speaker;
     }
 
-    private Presentation talk(String title, boolean workshop, Edition edition, User speaker) {
+    private Presentation talk(String title, boolean workshop, Edition edition, User... speakers) {
         Presentation talk = new Presentation()
                 .setTitle(title)
                 .setShortDescription("short")
@@ -198,8 +203,8 @@ class WebpageDataDumperTest extends BaseIntegrationTest {
                 .setLevel("beginner")
                 .setLanguage("Polish")
                 .setWorkshop(workshop)
-                .setEdition(edition)
-                .setSpeaker(speaker);
+                .setEdition(edition);
+        Arrays.stream(speakers).forEach(talk::setSpeaker);
         talk.setAccepted(true);
         Presentation saved = presentationRepository.save(talk);
         created.push(saved);

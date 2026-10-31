@@ -4404,7 +4404,7 @@
             "description" : "OK"
           }
         },
-        "tags" : [ "user-controller" ]
+        "tags" : [ "public-speaker-controller" ]
       }
     },
     "/users/search/volunteers" : {
@@ -4633,7 +4633,7 @@
             "description" : "OK"
           }
         },
-        "tags" : [ "user-controller" ]
+        "tags" : [ "public-speaker-controller" ]
       }
     },
     "/users/{id}/workshops" : {

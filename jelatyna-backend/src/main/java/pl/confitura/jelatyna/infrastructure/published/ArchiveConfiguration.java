@@ -14,7 +14,6 @@ import pl.confitura.jelatyna.page.PageController;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
 import pl.confitura.jelatyna.platform.storage.ResourceConfigurationProperties;
 import pl.confitura.jelatyna.user.UserController;
-import pl.confitura.jelatyna.user.UserRepository;
 
 @Configuration
 @RequiredArgsConstructor
@@ -23,7 +22,6 @@ public class ArchiveConfiguration {
 
     private final ObjectMapper objectMapper;
     private final UserController userController;
-    private final UserRepository userRepository;
     private final PageController pageController;
     private final ResourceConfigurationProperties resourceConfigurationProperties;
     private final EditionRepository editionRepository;
@@ -43,7 +41,6 @@ public class ArchiveConfiguration {
                 resourceConfigurationProperties.folder(),
                 editionRepository,
                 userController,
-                userRepository,
                 pageController,
                 newsEntryRepository,
                 presentationRepository,
