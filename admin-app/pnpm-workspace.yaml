@@ -1,0 +1,2 @@
+# Skip versions younger than 3 days (in minutes), transitive ones included
+minimumReleaseAge: 4320
