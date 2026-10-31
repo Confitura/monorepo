@@ -3959,7 +3959,7 @@
           }
         },
         "summary" : "Store news entry cover",
-        "tags" : [ "resource-controller" ]
+        "tags" : [ "news-entry-controller" ]
       }
     },
     "/resources/partners/{id}" : {
@@ -3997,7 +3997,7 @@
           }
         },
         "summary" : "Store partner logo",
-        "tags" : [ "resource-controller" ]
+        "tags" : [ "partner-controller" ]
       }
     },
     "/resources/{userId}" : {
@@ -4042,7 +4042,7 @@
           }
         },
         "summary" : "Store speaker photo",
-        "tags" : [ "resource-controller" ]
+        "tags" : [ "user-controller" ]
       }
     },
     "/rooms" : {
