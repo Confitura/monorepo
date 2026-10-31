@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.registration;
+package pl.confitura.jelatyna.conference.registration.web;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import pl.confitura.jelatyna.BaseIntegrationTest;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
-import pl.confitura.jelatyna.registration.voucher.Voucher;
-import pl.confitura.jelatyna.registration.voucher.VoucherService;
+import pl.confitura.jelatyna.conference.registration.domain.ParticipationData;
+import pl.confitura.jelatyna.conference.registration.domain.ParticipationRepository;
+import pl.confitura.jelatyna.conference.registration.domain.Voucher;
+import pl.confitura.jelatyna.conference.registration.domain.VoucherService;
 import pl.confitura.jelatyna.user.User;
 import pl.confitura.jelatyna.user.UserRepository;
 

@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.mail;
+package pl.confitura.jelatyna.conference.registration.mandrill;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

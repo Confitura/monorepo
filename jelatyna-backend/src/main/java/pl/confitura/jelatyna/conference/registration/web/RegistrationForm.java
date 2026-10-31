@@ -1,8 +1,9 @@
-package pl.confitura.jelatyna.registration;
+package pl.confitura.jelatyna.conference.registration.web;
 
 import lombok.Data;
-import pl.confitura.jelatyna.registration.demographic.DemographicData;
-import pl.confitura.jelatyna.registration.voucher.Voucher;
+import pl.confitura.jelatyna.conference.registration.domain.DemographicData;
+import pl.confitura.jelatyna.conference.registration.domain.ParticipationData;
+import pl.confitura.jelatyna.conference.registration.domain.Voucher;
 
 import java.util.Set;
 

@@ -1,7 +1,8 @@
-package pl.confitura.jelatyna.registration;
+package pl.confitura.jelatyna.conference.registration.web;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pl.confitura.jelatyna.conference.registration.domain.ParticipationData;
 
 @Data
 @NoArgsConstructor

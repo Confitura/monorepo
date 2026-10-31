@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.mail;
+package pl.confitura.jelatyna.conference.registration.mandrill;
 
 import java.io.IOException;
 import java.util.Base64;
@@ -15,21 +15,29 @@ import com.microtripit.mandrillapp.lutung.model.MandrillApiError;
 import com.microtripit.mandrillapp.lutung.view.MandrillMessage;
 import com.microtripit.mandrillapp.lutung.view.MandrillTemplate;
 import lombok.extern.slf4j.Slf4j;
+import pl.confitura.jelatyna.conference.registration.domain.MailSender;
+import pl.confitura.jelatyna.conference.registration.domain.MessageInfo;
 
 @Service
 @Slf4j
-public class MailSender {
+public class MandrillMailSender implements MailSender {
     private final MandrillApi api;
     private final MailConfigurationProperties properties;
 
-    public MailSender(MailConfigurationProperties properties) {
+    public MandrillMailSender(MailConfigurationProperties properties) {
         this.api = new MandrillApi(properties.getApiKey());
         this.properties = properties;
     }
 
-    public void send(MailType mailType, MessageInfo messageInfo) throws IOException, MandrillApiError {
-        String template = mailType.templateName;
-        send(template, messageInfo);
+    @Override
+    public void send(MailType mailType, MessageInfo messageInfo) throws IOException {
+        String template = mailType.templateName();
+        try {
+            send(template, messageInfo);
+        } catch (MandrillApiError e) {
+            // The error envelope (status, name, message, code), never the rendered mail.
+            throw new IOException("Mandrill rejected template " + template + ": " + e.getMandrillErrorAsJson(), e);
+        }
     }
 
     public void send(String template, MessageInfo messageInfo) throws MandrillApiError, IOException {
@@ -64,19 +72,5 @@ public class MailSender {
         MandrillMessage.Recipient recipient = new MandrillMessage.Recipient();
         recipient.setEmail(emailAddress);
         return Lists.newArrayList(recipient);
-    }
-
-    public enum MailType {
-        REGISTRATION_REMINDER("registration-reminder"), //TODO No template yet
-        TICKET("registration-ticket"),
-        SURVEY("survey"), // TODO add link to survey in template
-        VOUCHER("pre-registration");
-
-        private final String templateName;
-
-        MailType(String templateName) {
-            this.templateName = templateName;
-        }
-
     }
 }

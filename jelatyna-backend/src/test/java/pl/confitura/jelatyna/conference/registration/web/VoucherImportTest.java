@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.registration.voucher;
+package pl.confitura.jelatyna.conference.registration.web;
 
 import org.junit.jupiter.api.Test;
 import pl.confitura.jelatyna.BaseIntegrationTest;

@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.registration;
+package pl.confitura.jelatyna.conference.registration.domain;
 
 import java.util.Collection;
 import java.util.List;
@@ -6,8 +6,6 @@ import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.security.access.prepost.PreAuthorize;
-
-import pl.confitura.jelatyna.registration.voucher.Voucher;
 
 public interface ParticipationRepository extends Repository<ParticipationData, String> {
     ParticipationData save(ParticipationData participationData);

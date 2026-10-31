@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.mail;
+package pl.confitura.jelatyna.conference.registration.domain;
 
 import org.junit.jupiter.api.Test;
 

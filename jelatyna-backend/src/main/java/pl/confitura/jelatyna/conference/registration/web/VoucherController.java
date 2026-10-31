@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.registration.voucher;
+package pl.confitura.jelatyna.conference.registration.web;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,7 +18,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
-import pl.confitura.jelatyna.registration.ParticipationData;
+import pl.confitura.jelatyna.conference.registration.domain.ParticipationData;
+import pl.confitura.jelatyna.conference.registration.domain.Voucher;
+import pl.confitura.jelatyna.conference.registration.domain.VoucherService;
 
 @RequiredArgsConstructor
 @RestController

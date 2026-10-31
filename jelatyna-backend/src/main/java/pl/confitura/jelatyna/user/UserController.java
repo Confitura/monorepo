@@ -28,7 +28,7 @@ import pl.confitura.jelatyna.conference.registration.web.UserWithTicket;
 import pl.confitura.jelatyna.identity.user.domain.Speakers;
 import pl.confitura.jelatyna.platform.security.JelatynaPrincipal;
 import pl.confitura.jelatyna.platform.storage.ResourceStorage;
-import pl.confitura.jelatyna.registration.ParticipationRepository;
+import pl.confitura.jelatyna.conference.registration.domain.ParticipationRepository;
 
 @RestController
 @RequiredArgsConstructor

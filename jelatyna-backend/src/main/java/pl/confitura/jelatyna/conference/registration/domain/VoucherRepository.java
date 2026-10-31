@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.registration.voucher;
+package pl.confitura.jelatyna.conference.registration.domain;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ interface VoucherRepository extends Repository<Voucher, String> {
     @Query("SELECT v" +
            " FROM Voucher v" +
            " WHERE " +
-           " v NOT IN (SELECT p.voucher FROM pl.confitura.jelatyna.registration.ParticipationData p)")
+           " v NOT IN (SELECT p.voucher FROM pl.confitura.jelatyna.conference.registration.domain.ParticipationData p)")
     List<Voucher> findUnusedVouchers();
 
     Voucher findById(String id);

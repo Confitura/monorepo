@@ -1,7 +1,7 @@
-package pl.confitura.jelatyna.registration;
+package pl.confitura.jelatyna.conference.registration.web;
 
 import static java.util.stream.Collectors.toList;
-import static pl.confitura.jelatyna.mail.MailSender.MailType.*;
+import static pl.confitura.jelatyna.conference.registration.domain.MailSender.MailType.*;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -24,15 +24,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.microtripit.mandrillapp.lutung.model.MandrillApiError;
 import lombok.extern.slf4j.Slf4j;
 import pl.confitura.jelatyna.platform.security.JelatynaPrincipal;
 import pl.confitura.jelatyna.platform.security.SecurityContextUtil;
-import pl.confitura.jelatyna.mail.MailSender;
-import pl.confitura.jelatyna.mail.MessageInfo;
-import pl.confitura.jelatyna.registration.demographic.DemographicDataRepository;
-import pl.confitura.jelatyna.registration.voucher.Voucher;
-import pl.confitura.jelatyna.registration.voucher.VoucherService;
+import pl.confitura.jelatyna.conference.registration.domain.MailSender;
+import pl.confitura.jelatyna.conference.registration.domain.MessageInfo;
+import pl.confitura.jelatyna.conference.registration.domain.ParticipationData;
+import pl.confitura.jelatyna.conference.registration.domain.ParticipationRepository;
+import pl.confitura.jelatyna.conference.registration.domain.TicketGenerator;
+import pl.confitura.jelatyna.conference.registration.domain.DemographicDataRepository;
+import pl.confitura.jelatyna.conference.registration.domain.Voucher;
+import pl.confitura.jelatyna.conference.registration.domain.VoucherService;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -155,7 +157,7 @@ public class RegistrationController {
     }
 
     @Transactional
-    void doSendTicketTo(ParticipationData user) throws IOException, MandrillApiError {
+    void doSendTicketTo(ParticipationData user) throws IOException {
         MessageInfo info = new MessageInfo()
                 .setToken(user.getId())
                 .setEmail(user.getEmail())
