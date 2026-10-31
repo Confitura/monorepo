@@ -5,10 +5,10 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import pl.confitura.jelatyna.BaseIntegrationTest;
-import pl.confitura.jelatyna.agenda.AgendaEntry;
-import pl.confitura.jelatyna.agenda.AgendaUtils;
-import pl.confitura.jelatyna.agenda.PresentationUtils;
-import pl.confitura.jelatyna.agenda.UserUtils;
+import pl.confitura.jelatyna.conference.agenda.domain.AgendaEntry;
+import pl.confitura.jelatyna.conference.agenda.domain.AgendaUtils;
+import pl.confitura.jelatyna.conference.agenda.domain.PresentationUtils;
+import pl.confitura.jelatyna.conference.agenda.domain.UserUtils;
 import pl.confitura.jelatyna.user.User;
 
 import java.util.List;

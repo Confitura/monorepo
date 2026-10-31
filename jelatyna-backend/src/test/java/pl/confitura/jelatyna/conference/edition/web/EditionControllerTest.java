@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.request.RequestPostProcessor;
 import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.util.FileSystemUtils;
 import pl.confitura.jelatyna.BaseIntegrationTest;
-import pl.confitura.jelatyna.agenda.Day;
+import pl.confitura.jelatyna.conference.agenda.domain.Day;
 import pl.confitura.jelatyna.conference.edition.domain.Edition;
 import pl.confitura.jelatyna.conference.edition.domain.EditionRepository;
 import pl.confitura.jelatyna.conference.voting.domain.VoterIpsCleaner;

@@ -5,8 +5,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import pl.confitura.jelatyna.agenda.Day;
-import pl.confitura.jelatyna.agenda.DayRepository;
+import pl.confitura.jelatyna.conference.agenda.domain.Day;
+import pl.confitura.jelatyna.conference.agenda.domain.DayRepository;
 import pl.confitura.jelatyna.conference.edition.domain.Edition;
 
 import java.time.LocalDate;

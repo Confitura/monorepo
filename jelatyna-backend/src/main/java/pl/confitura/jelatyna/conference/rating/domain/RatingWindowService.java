@@ -2,8 +2,8 @@ package pl.confitura.jelatyna.conference.rating.domain;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.confitura.jelatyna.agenda.Day;
-import pl.confitura.jelatyna.agenda.DayRepository;
+import pl.confitura.jelatyna.conference.agenda.domain.Day;
+import pl.confitura.jelatyna.conference.agenda.domain.DayRepository;
 
 import java.time.LocalDate;
 import java.time.ZoneId;

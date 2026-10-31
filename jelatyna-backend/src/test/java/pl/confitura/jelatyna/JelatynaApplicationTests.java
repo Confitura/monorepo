@@ -2,7 +2,7 @@ package pl.confitura.jelatyna;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
-import pl.confitura.jelatyna.agenda.Day;
+import pl.confitura.jelatyna.conference.agenda.domain.Day;
 
 import java.time.LocalDate;
 
