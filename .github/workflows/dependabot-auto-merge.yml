@@ -3,9 +3,12 @@ name: dependabot auto-merge
 on:
   pull_request:
 
+# Auto-merge is enabled with the AUTO_MERGE_TOKEN PAT (described in factory-auto-merge.yml) so the
+# merge triggers master's workflows; GITHUB_TOKEN only reads. Dependabot runs read secrets from the
+# Dependabot store, so the PAT is added under Settings → Secrets and variables → Dependabot too.
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
+  pull-requests: read
 
 jobs:
   auto-merge:
@@ -21,7 +24,12 @@ jobs:
         if: >-
           steps.metadata.outputs.update-type == 'version-update:semver-minor' ||
           steps.metadata.outputs.update-type == 'version-update:semver-patch'
-        run: gh pr merge --auto --squash "$PR_URL"
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "::error::The AUTO_MERGE_TOKEN secret is missing from the Dependabot store: add the PAT described in .github/workflows/factory-auto-merge.yml under Settings → Secrets and variables → Dependabot"
+            exit 1
+          fi
+          gh pr merge --auto --squash "$PR_URL"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.AUTO_MERGE_TOKEN }}

@@ -1,0 +1,69 @@
+name: factory auto-merge
+
+# A factory/* PR into master merges itself once Macroscope approves its head and the
+# required checks pass; a push after the approval turns auto-merge off until Macroscope
+# approves the new head. Stacked PRs (base is another branch), fork PRs and every other
+# branch are left to the maintainer.
+#
+# The gh calls use AUTO_MERGE_TOKEN, not GITHUB_TOKEN: a merge enabled with GITHUB_TOKEN
+# triggers no workflows, so master would get no deploy-images, run-tests or check-builds.
+# Create a fine-grained PAT for this repository only with Contents, Pull requests and
+# Workflows (GitHub refuses to merge a PR changing .github/workflows without it) set to
+# read and write, and add it as AUTO_MERGE_TOKEN under Settings → Secrets and variables → Actions.
+# No job checks out or runs PR code: they only call the API with the PR's URL.
+on:
+  pull_request_review:
+    types: [ submitted ]
+  pull_request:
+    types: [ synchronize ]
+
+permissions: {}
+
+jobs:
+  enable:
+    # review.commit_id == head.sha skips an approval of a commit that is no longer the head.
+    if: >-
+      github.event_name == 'pull_request_review' &&
+      github.event.review.state == 'approved' &&
+      github.event.review.user.login == 'macroscopeapp[bot]' &&
+      github.event.review.user.type == 'Bot' &&
+      github.event.review.commit_id == github.event.pull_request.head.sha &&
+      github.event.pull_request.base.ref == 'master' &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      startsWith(github.event.pull_request.head.ref, 'factory/') &&
+      !github.event.pull_request.draft
+    runs-on: ubuntu-latest
+    steps:
+      # --match-head-commit: GitHub refuses if a push landed between the review and this call.
+      - name: Enable auto-merge
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "::error::The AUTO_MERGE_TOKEN Actions secret is missing; see the header of .github/workflows/factory-auto-merge.yml"
+            exit 1
+          fi
+          gh pr merge --auto --squash --match-head-commit "$APPROVED_SHA" "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          APPROVED_SHA: ${{ github.event.review.commit_id }}
+          GH_TOKEN: ${{ secrets.AUTO_MERGE_TOKEN }}
+
+  disable:
+    # auto_merge is the state when the push happened, so a later approval of the new head stands.
+    if: >-
+      github.event_name == 'pull_request' &&
+      github.event.pull_request.auto_merge != null &&
+      github.event.pull_request.base.ref == 'master' &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      startsWith(github.event.pull_request.head.ref, 'factory/')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Disable auto-merge
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "::error::The AUTO_MERGE_TOKEN Actions secret is missing; see the header of .github/workflows/factory-auto-merge.yml"
+            exit 1
+          fi
+          gh pr merge --disable-auto "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.AUTO_MERGE_TOKEN }}
