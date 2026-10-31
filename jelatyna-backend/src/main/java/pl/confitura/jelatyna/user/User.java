@@ -21,7 +21,6 @@ import pl.confitura.jelatyna.agenda.AgendaEntry;
 import pl.confitura.jelatyna.agenda.TimeSlot;
 import pl.confitura.jelatyna.platform.persistence.AuditedEntity;
 import pl.confitura.jelatyna.presentation.Presentation;
-import pl.confitura.jelatyna.registration.ParticipationData;
 
 @Entity
 @Data
@@ -62,8 +61,9 @@ public class User extends AuditedEntity {
     @JsonIgnore
     private Set<Presentation> presentations;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private ParticipationData participationData = null;
+    // The ticket (registration's ParticipationData) by id; responses show the ticket itself.
+    @JsonIgnore
+    private String participationDataId;
 
     public boolean isSpeaker() {
         return presentations != null
@@ -71,7 +71,7 @@ public class User extends AuditedEntity {
     }
 
     public boolean isParticipant() {
-        return participationData != null;
+        return participationDataId != null;
     }
 
 
@@ -89,10 +89,6 @@ public class User extends AuditedEntity {
 
     public boolean hasAcceptedPresentation() {
         return presentations != null && presentations.stream().anyMatch(Presentation::isAccepted);
-    }
-
-    public boolean hasArrived() {
-        return isParticipant() && getParticipationData().getArrivalDate() != null;
     }
 
     // Whether the User holds anything worth keeping, so a cancelled merge must not delete it. Sign-in fills in the
@@ -137,7 +133,7 @@ public class User extends AuditedEntity {
     // Moves the absorbed User's ticket to this one, which keeps its own if it has one; the merge refuses two tickets.
     void takeTicket(User absorbed) {
         if (!isParticipant()) {
-            participationData = absorbed.participationData;
+            participationDataId = absorbed.participationDataId;
         }
     }
 

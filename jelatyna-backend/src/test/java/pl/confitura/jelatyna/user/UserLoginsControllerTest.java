@@ -318,7 +318,7 @@ class UserLoginsControllerTest extends BaseIntegrationTest {
                 .andReturn().getResponse().getContentAsString();
 
         mockMvc.perform(get("/users/" + signedIn.getId()).header(AUTHORIZATION, "Bearer " + survivorToken))
-                .andExpect(jsonPath("$.participationData.id").value(other.getParticipationData().getId()));
+                .andExpect(jsonPath("$.participationData.id").value(other.getParticipationDataId()));
     }
 
     @Test
@@ -331,7 +331,7 @@ class UserLoginsControllerTest extends BaseIntegrationTest {
                 .andReturn().getResponse().getContentAsString();
 
         mockMvc.perform(get("/users/" + signedIn.getId()).header(AUTHORIZATION, "Bearer " + survivorToken))
-                .andExpect(jsonPath("$.participationData.id").value(signedIn.getParticipationData().getId()));
+                .andExpect(jsonPath("$.participationData.id").value(signedIn.getParticipationDataId()));
     }
 
     // The merge, and so its preview, refuses two tickets.
@@ -362,7 +362,7 @@ class UserLoginsControllerTest extends BaseIntegrationTest {
                 SecurityHelper.asAdmin();
                 ParticipationData ticket = participationRepository.save(new ParticipationData().setVoucher(voucherService.generateVoucher("")));
                 SecurityHelper.cleanSecurity();
-                userRepository.save(user.setParticipationData(ticket));
+                userRepository.save(user.setParticipationDataId(ticket.getId()));
             }
         }
         return user;
@@ -453,7 +453,7 @@ class UserLoginsControllerTest extends BaseIntegrationTest {
                 .andExpect(jsonPath("$.admin").value(true))
                 .andExpect(jsonPath("$.volunteer").value(true))
                 .andExpect(jsonPath("$.privacyPolicyAccepted").value(true))
-                .andExpect(jsonPath("$.participationData.id").value(absorbed.getParticipationData().getId()));
+                .andExpect(jsonPath("$.participationData.id").value(absorbed.getParticipationDataId()));
     }
 
     @Test

@@ -24,9 +24,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.timgroup.jgravatar.Gravatar;
 import lombok.RequiredArgsConstructor;
+import pl.confitura.jelatyna.conference.registration.web.UserWithTicket;
 import pl.confitura.jelatyna.platform.security.JelatynaPrincipal;
 import pl.confitura.jelatyna.platform.storage.ResourceStorage;
-import pl.confitura.jelatyna.registration.ParticipationData;
 import pl.confitura.jelatyna.registration.ParticipationRepository;
 
 @RestController
@@ -39,21 +39,12 @@ public class UserController {
 
     @PostMapping("/users")
     @PreAuthorize("@security.isOwner(#user.id)")
-    public ResponseEntity<?> save(@RequestBody User user) {
+    // Documented as the API's User, which shows the ticket: the entity alone would replace that schema.
+    public ResponseEntity<?> save(@RequestBody @Schema(implementation = UserWithTicket.class) User user) {
         User current = updateUser(user);
         setDefaultPhotoFor(current);
         setIdIfManuallyCreated(current);
-        return ResponseEntity.ok(repository.save(current));
-    }
-
-    @PostMapping("/users/{userId}/participationData")
-    @PreAuthorize("@security.isOwner(#userId)")
-    public ResponseEntity<?> assignParticipationData(
-            @PathVariable String userId,
-            @RequestBody ParticipationData participationData) {
-        User current = repository.findById(userId);
-        current.setParticipationData(participationRepository.findById(participationData.getId()));
-        return ResponseEntity.ok(repository.save(current));
+        return ResponseEntity.ok(withTicket(repository.save(current)));
     }
 
     @PostMapping("/resources/{userId}")
@@ -84,9 +75,9 @@ public class UserController {
 
     @GetMapping("/users/{id}")
     @PreAuthorize("@security.isOwner(#id) || @security.isAdmin()")
-    public ResponseEntity<User> getById(@PathVariable String id) {
+    public ResponseEntity<UserWithTicket> getById(@PathVariable String id) {
         User user = repository.findById(id);
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(user == null ? null : withTicket(user));
     }
 
     @GetMapping("/users/{id}/public")
@@ -116,11 +107,17 @@ public class UserController {
     }
 
     @GetMapping("/current-user")
-    public ResponseEntity<User> getCurrentUser(@AuthenticationPrincipal JelatynaPrincipal user) {
+    public ResponseEntity<UserWithTicket> getCurrentUser(@AuthenticationPrincipal JelatynaPrincipal user) {
         if (user == null) {
             return ResponseEntity.status(UNAUTHORIZED).build();
         }
-        return ResponseEntity.ok(repository.findById(user.getId()));
+        return ResponseEntity.ok(withTicket(repository.findById(user.getId())));
+    }
+
+    // User holds only its ticket's id; registration has the ticket.
+    private UserWithTicket withTicket(User user) {
+        String ticketId = user.getParticipationDataId();
+        return new UserWithTicket(user, ticketId == null ? null : participationRepository.findById(ticketId));
     }
 
     private void setDefaultPhotoFor(User user) {
