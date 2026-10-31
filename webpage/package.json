@@ -24,7 +24,7 @@
     "isomorphic-dompurify": "^4.6.0",
     "marked": "^18.1.1",
     "modern-normalize": "^3.0.1",
-    "nuxt": "^4.6.2",
+    "nuxt": "^4.6.3",
     "pinia": "^4.1.0",
     "vue": "^3.5.44",
     "vue-router": "^5.4.0",
