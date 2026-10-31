@@ -4574,7 +4574,7 @@
             "description" : "OK"
           }
         },
-        "tags" : [ "user-controller" ]
+        "tags" : [ "speaker-presentation-controller" ]
       }
     },
     "/users/{id}/presentations/{presentationId}" : {
@@ -4607,7 +4607,7 @@
             "description" : "OK"
           }
         },
-        "tags" : [ "user-controller" ]
+        "tags" : [ "speaker-presentation-controller" ]
       }
     },
     "/users/{id}/public" : {
@@ -4669,7 +4669,7 @@
             "description" : "OK"
           }
         },
-        "tags" : [ "user-controller" ]
+        "tags" : [ "speaker-presentation-controller" ]
       }
     },
     "/users/{id}/workshops/{workshopId}" : {
@@ -4702,7 +4702,7 @@
             "description" : "OK"
           }
         },
-        "tags" : [ "user-controller" ]
+        "tags" : [ "speaker-presentation-controller" ]
       }
     },
     "/users/{survivorId}/merge/{absorbedId}" : {
@@ -4875,7 +4875,7 @@
             "description" : "OK"
           }
         },
-        "tags" : [ "user-controller" ]
+        "tags" : [ "speaker-presentation-controller" ]
       }
     },
     "/users/{userId}/presentations/{presentationId}" : {
@@ -4901,7 +4901,7 @@
             "description" : "OK"
           }
         },
-        "tags" : [ "user-controller" ]
+        "tags" : [ "speaker-presentation-controller" ]
       },
       "post" : {
         "operationId" : "updatePresentation",
@@ -4942,7 +4942,7 @@
             "description" : "OK"
           }
         },
-        "tags" : [ "user-controller" ]
+        "tags" : [ "speaker-presentation-controller" ]
       }
     },
     "/users/{userId}/presentations/{presentationId}/resubmit" : {
@@ -4975,7 +4975,7 @@
             "description" : "OK"
           }
         },
-        "tags" : [ "user-controller" ]
+        "tags" : [ "speaker-presentation-controller" ]
       }
     },
     "/users/{userId}/volunteer/{isVolunteer}" : {
@@ -5047,7 +5047,7 @@
             "description" : "OK"
           }
         },
-        "tags" : [ "user-controller" ]
+        "tags" : [ "speaker-presentation-controller" ]
       }
     },
     "/users/{userId}/workshops/{workshopId}" : {
@@ -5073,7 +5073,7 @@
             "description" : "OK"
           }
         },
-        "tags" : [ "user-controller" ]
+        "tags" : [ "speaker-presentation-controller" ]
       },
       "post" : {
         "operationId" : "updateWorkshop",
@@ -5114,7 +5114,7 @@
             "description" : "OK"
           }
         },
-        "tags" : [ "user-controller" ]
+        "tags" : [ "speaker-presentation-controller" ]
       }
     },
     "/users/{userId}/workshops/{workshopId}/resubmit" : {
@@ -5147,7 +5147,7 @@
             "description" : "OK"
           }
         },
-        "tags" : [ "user-controller" ]
+        "tags" : [ "speaker-presentation-controller" ]
       }
     },
     "/votes" : {
