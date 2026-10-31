@@ -1,7 +1,8 @@
-package pl.confitura.jelatyna.news;
+package pl.confitura.jelatyna.conference.dashboard.listmonk;
 
 import com.eventuallycoding.listmonk.ListmonkClient;
 import lombok.RequiredArgsConstructor;
+import pl.confitura.jelatyna.conference.dashboard.domain.NewsletterApi;
 
 import java.io.IOException;
 

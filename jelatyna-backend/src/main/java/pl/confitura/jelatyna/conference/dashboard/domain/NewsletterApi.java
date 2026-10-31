@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.news;
+package pl.confitura.jelatyna.conference.dashboard.domain;
 
 import java.io.IOException;
 
