@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.infrastructure.published;
+package pl.confitura.jelatyna.webpage.archive.domain;
 
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;

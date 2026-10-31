@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.infrastructure.published;
+package pl.confitura.jelatyna.webpage.archive.domain;
 
 import tools.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +10,7 @@ import pl.confitura.jelatyna.edition.EditionRepository;
 import pl.confitura.jelatyna.webpage.faq.domain.FaqEntryRepository;
 import pl.confitura.jelatyna.webpage.news.domain.NewsEntryRepository;
 import pl.confitura.jelatyna.webpage.partner.domain.PartnerRepository;
-import pl.confitura.jelatyna.webpage.page.web.PageController;
+import pl.confitura.jelatyna.webpage.page.domain.PageRepository;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
 import pl.confitura.jelatyna.platform.storage.ResourceConfigurationProperties;
 import pl.confitura.jelatyna.user.UserController;
@@ -22,7 +22,7 @@ public class ArchiveConfiguration {
 
     private final ObjectMapper objectMapper;
     private final UserController userController;
-    private final PageController pageController;
+    private final PageRepository pageRepository;
     private final ResourceConfigurationProperties resourceConfigurationProperties;
     private final EditionRepository editionRepository;
     private final NewsEntryRepository newsEntryRepository;
@@ -41,7 +41,7 @@ public class ArchiveConfiguration {
                 resourceConfigurationProperties.folder(),
                 editionRepository,
                 userController,
-                pageController,
+                pageRepository,
                 newsEntryRepository,
                 presentationRepository,
                 agendaService,

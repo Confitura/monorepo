@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.confitura.jelatyna.webpage.faq.domain.FaqCategory;
 import pl.confitura.jelatyna.webpage.faq.domain.FaqCategoryRepository;
 import pl.confitura.jelatyna.webpage.faq.domain.FaqEntry;
+import pl.confitura.jelatyna.webpage.faq.domain.FaqEntryDto;
 import pl.confitura.jelatyna.webpage.faq.domain.FaqEntryRepository;
 import pl.confitura.jelatyna.webpage.faq.domain.FaqMarkdownParser;
 import pl.confitura.jelatyna.webpage.page.domain.Page;

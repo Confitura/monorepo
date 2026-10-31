@@ -1,6 +1,4 @@
-package pl.confitura.jelatyna.webpage.faq.web;
-
-import pl.confitura.jelatyna.webpage.faq.domain.FaqEntry;
+package pl.confitura.jelatyna.webpage.faq.domain;
 
 /** Public/admin view of a FAQ entry (without audit fields). */
 public record FaqEntryDto(

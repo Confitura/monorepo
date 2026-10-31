@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.infrastructure.published;
+package pl.confitura.jelatyna.webpage.archive.domain;
 
 import com.jayway.jsonpath.JsonPath;
 import jakarta.persistence.EntityManager;
@@ -24,6 +24,8 @@ import pl.confitura.jelatyna.presentation.rating.RateValue;
 import pl.confitura.jelatyna.platform.storage.ResourceConfigurationProperties;
 import pl.confitura.jelatyna.user.User;
 import pl.confitura.jelatyna.user.UserRepository;
+import pl.confitura.jelatyna.webpage.page.domain.Page;
+import pl.confitura.jelatyna.webpage.page.domain.PageRepository;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -56,6 +58,9 @@ class WebpageDataDumperTest extends BaseIntegrationTest {
 
     @Autowired
     private DayRepository dayRepository;
+
+    @Autowired
+    private PageRepository pageRepository;
 
     @Autowired
     private EntityManager entityManager;
@@ -121,6 +126,20 @@ class WebpageDataDumperTest extends BaseIntegrationTest {
         assertThat(List.of("users/search/admins.json", "users/search/volunteers.json", "faq/entries.json",
                 "partners/list.json", "news.json"))
                 .allSatisfy(file -> assertThat(folder.resolve(file)).exists());
+    }
+
+    @Test
+    void eachPageIsDumpedAsItsContent() {
+        Page page = new Page();
+        page.setId("dumped-page");
+        page.setContent("# About");
+        SecurityHelper.asAdmin();
+        created.push(pageRepository.save(page));
+        SecurityHelper.cleanSecurity();
+
+        webpageDataDumper.dumpAll();
+
+        assertThat(folder.resolve("pages/dumped-page.json")).hasContent("\"# About\"");
     }
 
     @Test

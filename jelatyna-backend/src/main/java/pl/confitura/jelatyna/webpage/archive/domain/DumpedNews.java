@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.infrastructure.published;
+package pl.confitura.jelatyna.webpage.archive.domain;
 
 import pl.confitura.jelatyna.webpage.news.domain.NewsEntry;
 

@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.confitura.jelatyna.BaseIntegrationTest;
 import pl.confitura.jelatyna.edition.Edition;
 import pl.confitura.jelatyna.edition.EditionRepository;
-import pl.confitura.jelatyna.infrastructure.published.WebpageDataDumper;
+import pl.confitura.jelatyna.webpage.archive.domain.WebpageDataDumper;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
 
 import java.nio.file.Files;

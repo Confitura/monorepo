@@ -1,6 +1,4 @@
-package pl.confitura.jelatyna.webpage.partner.web;
-
-import pl.confitura.jelatyna.webpage.partner.domain.Partner;
+package pl.confitura.jelatyna.webpage.partner.domain;
 
 public record PartnerDto(
         String id,

@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.conference.presentation.web;
+package pl.confitura.jelatyna.conference.presentation.domain;
 
 import static java.util.stream.Collectors.toSet;
 

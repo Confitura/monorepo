@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.infrastructure.admintasks;
+package pl.confitura.jelatyna.webpage.archive.web;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.confitura.jelatyna.infrastructure.published.WebpageDataDumper;
+import pl.confitura.jelatyna.webpage.archive.domain.WebpageDataDumper;
 
 import java.time.Instant;
 

@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.infrastructure.published;
+package pl.confitura.jelatyna.webpage.archive.domain;
 
 import tools.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -14,15 +14,16 @@ import pl.confitura.jelatyna.agenda.api.InlineRoom;
 import pl.confitura.jelatyna.agenda.api.InlineTimeSlot;
 import pl.confitura.jelatyna.api.model.InlinePresentationWithSpeakers;
 import pl.confitura.jelatyna.conference.edition.domain.EditionMadeCurrent;
-import pl.confitura.jelatyna.conference.presentation.web.PublicSpeaker;
+import pl.confitura.jelatyna.conference.presentation.domain.PublicSpeaker;
 import pl.confitura.jelatyna.edition.Edition;
 import pl.confitura.jelatyna.edition.EditionRepository;
-import pl.confitura.jelatyna.webpage.faq.web.FaqEntryDto;
+import pl.confitura.jelatyna.webpage.faq.domain.FaqEntryDto;
 import pl.confitura.jelatyna.webpage.faq.domain.FaqEntryRepository;
 import pl.confitura.jelatyna.webpage.news.domain.NewsEntryRepository;
-import pl.confitura.jelatyna.webpage.partner.web.PartnerDto;
+import pl.confitura.jelatyna.webpage.partner.domain.PartnerDto;
 import pl.confitura.jelatyna.webpage.partner.domain.PartnerRepository;
-import pl.confitura.jelatyna.webpage.page.web.PageController;
+import pl.confitura.jelatyna.webpage.page.domain.Page;
+import pl.confitura.jelatyna.webpage.page.domain.PageRepository;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
 import pl.confitura.jelatyna.user.UserController;
@@ -48,7 +49,7 @@ public class WebpageDataDumper {
     private final EditionRepository editionRepository;
 
     private final UserController userController;
-    private final PageController pageController;
+    private final PageRepository pageRepository;
     private final NewsEntryRepository newsEntryRepository;
     private final PresentationRepository presentationRepository;
 
@@ -116,9 +117,8 @@ public class WebpageDataDumper {
     }
 
     void dumpPages(String folder) {
-        for (String page : pageController.getPages()) {
-            var content = pageController.getPage(page);
-            dumbData(folder, content.getBody(), "/pages/" + page + ".json");
+        for (Page page : pageRepository.findAll()) {
+            dumbData(folder, page.getContent(), "/pages/" + page.getId() + ".json");
         }
     }
 

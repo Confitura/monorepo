@@ -2,7 +2,7 @@ package pl.confitura.jelatyna.chat;
 
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import pl.confitura.jelatyna.conference.presentation.web.PublicSpeaker;
+import pl.confitura.jelatyna.conference.presentation.domain.PublicSpeaker;
 import pl.confitura.jelatyna.conference.presentation.web.PublicSpeakerController;
 
 import java.util.HashMap;
