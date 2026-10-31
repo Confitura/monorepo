@@ -92,7 +92,7 @@ public class WebpageDataDumper {
         try {
             dumpAll();
         } catch (Exception e) {
-            log.error("Dumping Edition {} after it became current failed", event.edition().getId(), e);
+            log.error("Dumping Edition {} after it became current failed", event.current().getId(), e);
         }
     }
 
