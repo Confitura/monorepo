@@ -8,10 +8,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.event.TransactionalEventListener;
-import pl.confitura.jelatyna.agenda.*;
-import pl.confitura.jelatyna.agenda.api.InlineAgendaEntry;
-import pl.confitura.jelatyna.agenda.api.InlineRoom;
-import pl.confitura.jelatyna.agenda.api.InlineTimeSlot;
+import pl.confitura.jelatyna.conference.agenda.domain.*;
 import pl.confitura.jelatyna.conference.edition.domain.EditionMadeCurrent;
 import pl.confitura.jelatyna.conference.presentation.domain.PublicSpeaker;
 import pl.confitura.jelatyna.conference.edition.domain.Edition;
@@ -183,11 +180,11 @@ public class WebpageDataDumper {
         for (var day : days) {
             String dayId = day.getId();
             var timeSlots = timeSlotsRepository.findByDay(day).stream()
-                    .sorted(Comparator.comparing(pl.confitura.jelatyna.agenda.TimeSlot::getDisplayOrder))
+                    .sorted(Comparator.comparing(pl.confitura.jelatyna.conference.agenda.domain.TimeSlot::getDisplayOrder))
                     .map(InlineTimeSlot::from)
                     .toList();
             var rooms = roomRepository.findByDay(day).stream()
-                    .sorted(Comparator.comparing(pl.confitura.jelatyna.agenda.Room::getDisplayOrder))
+                    .sorted(Comparator.comparing(pl.confitura.jelatyna.conference.agenda.domain.Room::getDisplayOrder))
                     .map(InlineRoom::from)
                     .toList();
             var entries = agendaService.findByDayAndMerge(day).stream()

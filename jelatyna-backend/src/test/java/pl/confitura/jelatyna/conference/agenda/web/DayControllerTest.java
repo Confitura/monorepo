@@ -1,0 +1,202 @@
+package pl.confitura.jelatyna.conference.agenda.web;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.transaction.support.TransactionTemplate;
+import pl.confitura.jelatyna.BaseIntegrationTest;
+import pl.confitura.jelatyna.conference.agenda.domain.*;
+import pl.confitura.jelatyna.conference.edition.domain.EditionRepository;
+import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+class DayControllerTest extends BaseIntegrationTest {
+
+    @Autowired
+    private DayRepository dayRepository;
+
+    @Autowired
+    private AgendaRepository agendaRepository;
+
+    @Autowired
+    private TimeSlotsRepository timeSlotsRepository;
+
+    @Autowired
+    private RoomRepository roomRepository;
+
+    @Autowired
+    private TransactionTemplate txTemplate;
+
+    @Autowired
+    private EditionRepository editionRepository;
+
+    private Day day1;
+    private Day day2;
+
+    @BeforeEach
+    public void setUp() {
+        // Clear existing days by finding and deleting them
+        SecurityHelper.asAdmin();
+
+        txTemplate.executeWithoutResult(status -> {
+            agendaRepository.findAll().forEach(agenda -> agendaRepository.deleteById(agenda.getId()));
+        });
+        txTemplate.executeWithoutResult(status -> {
+            timeSlotsRepository.findAll().forEach(timeSlot -> timeSlotsRepository.deleteById(timeSlot.getId()));
+        });
+
+        txTemplate.executeWithoutResult(status -> {
+            roomRepository.findAll().forEach(room -> roomRepository.deleteById(room.getId()));
+        });
+        txTemplate.executeWithoutResult(status -> {
+            dayRepository.findAll().forEach(dayRepository::delete);
+        });
+
+        day1 = new Day()
+                .setId("day-1")
+                .setLabel("Day 1")
+                .setDate(LocalDate.of(2025, 9, 1))
+                .setDisplayOrder(1)
+                .setEdition(editionRepository.findCurrent());
+
+        day2 = new Day()
+                .setId("day-2")
+                .setLabel("Day 2")
+                .setDate(LocalDate.of(2025, 9, 2))
+                .setDisplayOrder(2)
+                .setEdition(editionRepository.findCurrent());
+
+        txTemplate.executeWithoutResult(status -> {
+            day1 = dayRepository.save(day1);
+            day2 = dayRepository.save(day2);
+        });
+    }
+
+    @Test
+    void shouldReturnAllDays() throws Exception {
+        mockMvc.perform(get("/days"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].label", is("Day 1")))
+                .andExpect(jsonPath("$[1].label", is("Day 2")));
+    }
+
+    @Test
+    void shouldReturnDayById() throws Exception {
+        mockMvc.perform(get("/days/" + day1.getId()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.label", is("Day 1")))
+                .andExpect(jsonPath("$.displayOrder", is(1)));
+    }
+
+    @Test
+    void shouldReturn404WhenDayNotFound() throws Exception {
+        mockMvc.perform(get("/days/non-existent-id"))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    void shouldCreateDay() throws Exception {
+        String dayJson = """
+                {
+                  "id":"day-3",
+                  "label":"Day 3",
+                  "date":"2025-09-03",
+                  "displayOrder":3
+                }""";
+
+        mockMvc.perform(post("/days")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(dayJson))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.label", is("Day 3")))
+                .andExpect(jsonPath("$.displayOrder", is(3)));
+    }
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    void aCreatedDayIsInTheCurrentEdition() throws Exception {
+        mockMvc.perform(post("/days")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"id":"day-3","label":"Day 3","date":"2025-09-03","displayOrder":3}"""))
+                .andExpect(status().isCreated());
+
+        assertThat(dayRepository.findInCurrentEditionById("day-3")).isNotNull();
+    }
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    void shouldUpdateDay() throws Exception {
+        String dayJson = """
+                {
+                  "label":"Friday",
+                  "date":"2026-09-18",
+                  "displayOrder":7
+                }""";
+
+        mockMvc.perform(put("/days/" + day1.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(dayJson))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.label", is("Friday")))
+                .andExpect(jsonPath("$.date", is("2026-09-18")))
+                .andExpect(jsonPath("$.displayOrder", is(7)));
+    }
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    void shouldDeleteDay() throws Exception {
+        mockMvc.perform(delete("/days/" + day1.getId()))
+                .andExpect(status().isNoContent());
+
+        mockMvc.perform(get("/days"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].label", is("Day 2")));
+    }
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    void shouldDeleteDayWithItsRoomsTimeSlotsAndEntries() throws Exception {
+        txTemplate.executeWithoutResult(status -> {
+            Room room = roomRepository.save(new Room()
+                    .setId("room-1")
+                    .setLabel("Main Hall")
+                    .setDisplayOrder(1)
+                    .setDay(day1));
+            TimeSlot slot = timeSlotsRepository.save(new TimeSlot()
+                    .setId(day1, 1)
+                    .setStart(LocalTime.of(9, 0))
+                    .setEnd(LocalTime.of(10, 0)));
+            agendaRepository.save(new AgendaEntry()
+                    .setTimeSlot(slot)
+                    .setRoom(room)
+                    .setLabel("Opening Keynote"));
+        });
+
+        mockMvc.perform(delete("/days/" + day1.getId()))
+                .andExpect(status().isNoContent());
+
+        mockMvc.perform(get("/agenda/" + day1.getId() + "/rooms"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(0)));
+        mockMvc.perform(get("/agenda/" + day1.getId() + "/time-slots"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(0)));
+        mockMvc.perform(get("/days/" + day1.getId()))
+                .andExpect(status().isNotFound());
+    }
+}

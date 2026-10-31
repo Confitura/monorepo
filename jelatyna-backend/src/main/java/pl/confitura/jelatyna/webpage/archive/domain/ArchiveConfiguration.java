@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import pl.confitura.jelatyna.agenda.*;
+import pl.confitura.jelatyna.conference.agenda.domain.*;
 import pl.confitura.jelatyna.conference.edition.domain.EditionRepository;
 import pl.confitura.jelatyna.webpage.faq.domain.FaqEntryRepository;
 import pl.confitura.jelatyna.webpage.news.domain.NewsEntryRepository;

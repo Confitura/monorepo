@@ -4,10 +4,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import pl.confitura.jelatyna.BaseIntegrationTest;
-import pl.confitura.jelatyna.agenda.Day;
-import pl.confitura.jelatyna.agenda.DayRepository;
-import pl.confitura.jelatyna.agenda.Room;
-import pl.confitura.jelatyna.agenda.RoomRepository;
+import pl.confitura.jelatyna.conference.agenda.domain.Day;
+import pl.confitura.jelatyna.conference.agenda.domain.DayRepository;
+import pl.confitura.jelatyna.conference.agenda.domain.Room;
+import pl.confitura.jelatyna.conference.agenda.domain.RoomRepository;
 import pl.confitura.jelatyna.conference.edition.domain.EditionRepository;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
 

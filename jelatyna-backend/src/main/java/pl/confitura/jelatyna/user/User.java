@@ -13,8 +13,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.experimental.Accessors;
-import pl.confitura.jelatyna.agenda.AgendaEntry;
-import pl.confitura.jelatyna.agenda.TimeSlot;
+import pl.confitura.jelatyna.conference.agenda.domain.AgendaEntry;
+import pl.confitura.jelatyna.conference.agenda.domain.TimeSlot;
 import pl.confitura.jelatyna.platform.persistence.AuditedEntity;
 
 @Entity

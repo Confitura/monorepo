@@ -1,8 +1,8 @@
 package pl.confitura.jelatyna.webpage.archive.domain;
 
-import pl.confitura.jelatyna.agenda.api.InlineAgendaEntry;
-import pl.confitura.jelatyna.agenda.api.InlineRoom;
-import pl.confitura.jelatyna.agenda.api.InlineTimeSlot;
+import pl.confitura.jelatyna.conference.agenda.domain.InlineAgendaEntry;
+import pl.confitura.jelatyna.conference.agenda.domain.InlineRoom;
+import pl.confitura.jelatyna.conference.agenda.domain.InlineTimeSlot;
 
 import java.time.LocalDate;
 import java.util.List;
