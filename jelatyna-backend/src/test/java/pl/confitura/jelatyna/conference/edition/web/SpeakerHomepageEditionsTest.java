@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.user;
+package pl.confitura.jelatyna.conference.edition.web;
 
 import static org.hamcrest.Matchers.contains;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -22,6 +22,8 @@ import pl.confitura.jelatyna.edition.EditionRepository;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
+import pl.confitura.jelatyna.user.User;
+import pl.confitura.jelatyna.user.UserRepository;
 
 // The speaker homepage shows one Edition's talks and workshops, the Current Edition's by default (ADR-0004).
 @Transactional
