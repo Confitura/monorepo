@@ -18,7 +18,7 @@ import pl.confitura.jelatyna.BaseIntegrationTest;
 import pl.confitura.jelatyna.agenda.Day;
 import pl.confitura.jelatyna.conference.voting.domain.VoterIpsCleaner;
 import pl.confitura.jelatyna.presentation.Presentation;
-import pl.confitura.jelatyna.resource.ResourceConfigurationProperties;
+import pl.confitura.jelatyna.platform.storage.ResourceConfigurationProperties;
 import pl.confitura.jelatyna.voting.Vote;
 import pl.confitura.jelatyna.voting.VoteRepository;
 
