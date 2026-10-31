@@ -14,6 +14,7 @@ import pl.confitura.jelatyna.agenda.api.InlineRoom;
 import pl.confitura.jelatyna.agenda.api.InlineTimeSlot;
 import pl.confitura.jelatyna.api.model.InlinePresentationWithSpeakers;
 import pl.confitura.jelatyna.conference.edition.domain.EditionMadeCurrent;
+import pl.confitura.jelatyna.conference.presentation.web.PublicSpeaker;
 import pl.confitura.jelatyna.edition.Edition;
 import pl.confitura.jelatyna.edition.EditionRepository;
 import pl.confitura.jelatyna.faq.FaqEntryDto;
@@ -24,9 +25,7 @@ import pl.confitura.jelatyna.partner.PartnerRepository;
 import pl.confitura.jelatyna.page.PageController;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
-import pl.confitura.jelatyna.user.PublicSpeaker;
 import pl.confitura.jelatyna.user.UserController;
-import pl.confitura.jelatyna.user.UserRepository;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -39,7 +38,6 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toSet;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -50,7 +48,6 @@ public class WebpageDataDumper {
     private final EditionRepository editionRepository;
 
     private final UserController userController;
-    private final UserRepository userRepository;
     private final PageController pageController;
     private final NewsEntryRepository newsEntryRepository;
     private final PresentationRepository presentationRepository;
@@ -137,9 +134,7 @@ public class WebpageDataDumper {
 
     @Transactional
     public void dumpSpeakers(Edition edition, String folder) {
-        var speakers = userRepository.findAllAcceptedIn(edition).stream()
-                .map(PublicSpeaker::from)
-                .collect(toSet());
+        var speakers = PublicSpeaker.of(presentationRepository.findAcceptedIn(edition));
         dumpEachSpeaker(speakers, folder);
         dumbData(folder, speakers, "/users/search/speakers.json");
     }

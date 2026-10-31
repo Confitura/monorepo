@@ -2,8 +2,8 @@ package pl.confitura.jelatyna.chat;
 
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import pl.confitura.jelatyna.user.PublicSpeaker;
-import pl.confitura.jelatyna.user.UserController;
+import pl.confitura.jelatyna.conference.presentation.web.PublicSpeaker;
+import pl.confitura.jelatyna.conference.presentation.web.PublicSpeakerController;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,16 +13,16 @@ import java.util.Set;
 @Component
 public class UserControllerSpeakerDirectory implements SpeakerDirectory {
 
-    private final UserController userController;
+    private final PublicSpeakerController publicSpeakerController;
 
-    public UserControllerSpeakerDirectory(UserController userController) {
-        this.userController = userController;
+    public UserControllerSpeakerDirectory(PublicSpeakerController publicSpeakerController) {
+        this.publicSpeakerController = publicSpeakerController;
     }
 
     @Override
     @Transactional(readOnly = true)
     public Map<String, String> idToName() {
-        Set<PublicSpeaker> speakers = userController.getSpeakers().getBody();
+        Set<PublicSpeaker> speakers = publicSpeakerController.getSpeakers().getBody();
         Map<String, String> map = new HashMap<>();
         if (speakers != null) {
             for (PublicSpeaker speaker : speakers) {

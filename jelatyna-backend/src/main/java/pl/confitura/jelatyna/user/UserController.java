@@ -80,12 +80,6 @@ public class UserController {
         return ResponseEntity.ok(user == null ? null : withTicket(user));
     }
 
-    @GetMapping("/users/{id}/public")
-    public ResponseEntity<?> getPublicById(@PathVariable String id) {
-        User user = repository.findById(id);
-        return ResponseEntity.ok(PublicSpeaker.from(user));
-    }
-
     @GetMapping("/users/search/admins")
     public ResponseEntity<?> getAdmins() {
         Set<PublicProfile> admins = repository.findAdmins().stream().map(PublicProfile::from).collect(toSet());
@@ -96,14 +90,6 @@ public class UserController {
     public ResponseEntity<?> getVolunteers() {
         Set<PublicProfile> volunteers = repository.findVolunteers().stream().map(PublicProfile::from).collect(toSet());
         return ResponseEntity.ok(volunteers);
-    }
-
-    @GetMapping("/users/search/speakers")
-    public ResponseEntity<Set<PublicSpeaker>> getSpeakers() {
-        var speakers = repository.findAllAccepted().stream()
-                .map(PublicSpeaker::from)
-                .collect(toSet());
-        return ResponseEntity.ok(speakers);
     }
 
     @GetMapping("/current-user")

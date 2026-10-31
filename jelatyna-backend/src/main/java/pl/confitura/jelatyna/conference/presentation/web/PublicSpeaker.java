@@ -1,6 +1,12 @@
-package pl.confitura.jelatyna.user;
+package pl.confitura.jelatyna.conference.presentation.web;
 
+import static java.util.stream.Collectors.toSet;
+
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
+
+import pl.confitura.jelatyna.user.User;
 
 public record PublicSpeaker(
         String id,
@@ -12,7 +18,14 @@ public record PublicSpeaker(
         String photo,
         List<Presentation> presentations) {
 
-    public static PublicSpeaker from(User user) {
+    // Each speaker of these talks, with those of the talks they give.
+    public static Set<PublicSpeaker> of(Collection<pl.confitura.jelatyna.presentation.Presentation> talks) {
+        return talks.stream().flatMap(talk -> talk.getSpeakers().stream()).distinct()
+                .map(speaker -> from(speaker, talks.stream().filter(talk -> talk.getSpeakers().contains(speaker)).toList()))
+                .collect(toSet());
+    }
+
+    public static PublicSpeaker from(User user, Collection<pl.confitura.jelatyna.presentation.Presentation> talks) {
         return new PublicSpeaker(
                 user.getId(),
                 user.getName(),
@@ -21,7 +34,7 @@ public record PublicSpeaker(
                 user.getGithub(),
                 user.getWww(),
                 user.getPhoto(),
-                user.getPresentations().stream().map(Presentation::from).toList()
+                talks.stream().map(Presentation::from).toList()
         );
     }
 
