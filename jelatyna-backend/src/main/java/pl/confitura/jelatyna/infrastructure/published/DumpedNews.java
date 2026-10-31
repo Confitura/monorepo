@@ -1,6 +1,6 @@
 package pl.confitura.jelatyna.infrastructure.published;
 
-import pl.confitura.jelatyna.news.NewsEntry;
+import pl.confitura.jelatyna.webpage.news.domain.NewsEntry;
 
 import java.time.Instant;
 import java.util.List;
