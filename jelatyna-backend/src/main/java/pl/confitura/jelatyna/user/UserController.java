@@ -9,6 +9,7 @@ import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static org.springframework.util.StringUtils.hasText;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -17,12 +18,19 @@ import java.util.stream.Stream;
 
 import jakarta.validation.Valid;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.SchemaProperty;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.timgroup.jgravatar.Gravatar;
@@ -35,6 +43,7 @@ import pl.confitura.jelatyna.edition.Edition;
 import pl.confitura.jelatyna.edition.EditionDto;
 import pl.confitura.jelatyna.edition.EditionRepository;
 import pl.confitura.jelatyna.platform.security.JelatynaPrincipal;
+import pl.confitura.jelatyna.platform.storage.ResourceStorage;
 import pl.confitura.jelatyna.infrastructure.security.Security;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
@@ -54,6 +63,7 @@ public class UserController {
     private final EditionRepository editionRepository;
     private final ParticipationRepository participationRepository;
     private final TagRepository tagRepository;
+    private final ResourceStorage storage;
 
     @PostMapping("/users")
     @PreAuthorize("@security.isOwner(#user.id)")
@@ -72,6 +82,32 @@ public class UserController {
         User current = repository.findById(userId);
         current.setParticipationData(participationRepository.findById(participationData.getId()));
         return ResponseEntity.ok(repository.save(current));
+    }
+
+    @PostMapping("/resources/{userId}")
+    @Operation(
+            summary = "Store speaker photo",
+            description = "Upload a Multipart file for the speaker's photo",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "File to upload",
+                    content = @Content(
+                            mediaType = "multipart/form-data",
+                            schemaProperties = @SchemaProperty(
+                                    name = "file",
+                                    schema = @Schema(type = "string", format = "binary")
+                            )
+                    )
+            ),
+            parameters = @Parameter(name = "userId", description = "ID of the user", required = true)
+    )
+    @Transactional
+    @PreAuthorize("@security.isOwner(#userId)")
+    public String storeUserProfilePicture(@RequestParam("file") MultipartFile file, @PathVariable String userId) throws IOException {
+        User user = repository.findById(userId);
+        String path = storage.store(user.getId(), file, "photos");
+        user.setPhoto(path);
+        repository.save(user);
+        return user.getPhoto();
     }
 
     @GetMapping("/users/{id}")
