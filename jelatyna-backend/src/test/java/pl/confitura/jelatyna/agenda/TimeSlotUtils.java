@@ -3,7 +3,7 @@ package pl.confitura.jelatyna.agenda;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
-import pl.confitura.jelatyna.edition.EditionRepository;
+import pl.confitura.jelatyna.conference.edition.domain.EditionRepository;
 
 import java.time.LocalTime;
 import java.util.ArrayList;

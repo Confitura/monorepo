@@ -27,7 +27,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 import pl.confitura.jelatyna.api.model.WorkshopRequest;
-import pl.confitura.jelatyna.edition.Edition;
+import pl.confitura.jelatyna.conference.edition.domain.Edition;
 import pl.confitura.jelatyna.presentation.rating.Rate;
 import pl.confitura.jelatyna.api.model.PresentationRequest;
 import pl.confitura.jelatyna.user.User;

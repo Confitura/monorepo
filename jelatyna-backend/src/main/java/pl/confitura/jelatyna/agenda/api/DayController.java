@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.confitura.jelatyna.agenda.AgendaService;
 import pl.confitura.jelatyna.agenda.Day;
 import pl.confitura.jelatyna.agenda.DayRepository;
-import pl.confitura.jelatyna.edition.EditionRepository;
+import pl.confitura.jelatyna.conference.edition.domain.EditionRepository;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;

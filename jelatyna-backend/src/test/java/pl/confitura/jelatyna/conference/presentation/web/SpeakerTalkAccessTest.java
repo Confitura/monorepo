@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.confitura.jelatyna.BaseIntegrationTest;
 import pl.confitura.jelatyna.api.model.PresentationRequest;
 import pl.confitura.jelatyna.api.model.WorkshopRequest;
-import pl.confitura.jelatyna.edition.EditionRepository;
+import pl.confitura.jelatyna.conference.edition.domain.EditionRepository;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
 import pl.confitura.jelatyna.user.User;

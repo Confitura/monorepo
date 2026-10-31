@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.dashboard;
+package pl.confitura.jelatyna.conference.dashboard.web;
 
 import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -8,13 +8,14 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.confitura.jelatyna.dashboard.model.SubmittedStats;
-import pl.confitura.jelatyna.dashboard.model.UsersStats;
+import pl.confitura.jelatyna.conference.dashboard.domain.DashboardRepository;
+import pl.confitura.jelatyna.conference.dashboard.domain.SubmittedStats;
+import pl.confitura.jelatyna.conference.dashboard.domain.UsersStats;
 import pl.confitura.jelatyna.conference.dashboard.domain.NewsletterApi;
 import pl.confitura.jelatyna.registration.QParticipationData;
 import pl.confitura.jelatyna.registration.demographic.QDemographicData;
 import pl.confitura.jelatyna.registration.voucher.QVoucher;
-import pl.confitura.jelatyna.voting.QVote;
+import pl.confitura.jelatyna.conference.voting.domain.QVote;
 
 import jakarta.persistence.EntityManager;
 

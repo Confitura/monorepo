@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.voting;
+package pl.confitura.jelatyna.conference.voting.web;
 
 import com.jayway.jsonpath.JsonPath;
 import jakarta.persistence.EntityManager;
@@ -10,8 +10,10 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionTemplate;
 import pl.confitura.jelatyna.BaseIntegrationTest;
-import pl.confitura.jelatyna.edition.Edition;
-import pl.confitura.jelatyna.edition.EditionRepository;
+import pl.confitura.jelatyna.conference.edition.domain.Edition;
+import pl.confitura.jelatyna.conference.edition.domain.EditionRepository;
+import pl.confitura.jelatyna.conference.voting.domain.Vote;
+import pl.confitura.jelatyna.conference.voting.domain.VoteRepository;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;

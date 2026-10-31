@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.security.access.prepost.PreAuthorize;
 import pl.confitura.jelatyna.conference.edition.domain.EditionContent;
-import pl.confitura.jelatyna.edition.Edition;
+import pl.confitura.jelatyna.conference.edition.domain.Edition;
 
 import java.util.List;
 

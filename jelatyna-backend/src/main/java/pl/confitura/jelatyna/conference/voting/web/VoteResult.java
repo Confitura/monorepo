@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.voting;
+package pl.confitura.jelatyna.conference.voting.web;
 
 import java.util.List;
 import java.util.Map;
@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import pl.confitura.jelatyna.conference.voting.domain.Vote;
 import pl.confitura.jelatyna.presentation.PreSelectionStatus;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.Tag;

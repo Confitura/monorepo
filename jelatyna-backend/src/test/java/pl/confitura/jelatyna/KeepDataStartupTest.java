@@ -10,7 +10,7 @@ import org.springframework.boot.testcontainers.service.connection.ServiceConnect
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.testcontainers.postgresql.PostgreSQLContainer;
-import pl.confitura.jelatyna.edition.EditionRepository;
+import pl.confitura.jelatyna.conference.edition.domain.EditionRepository;
 import pl.confitura.jelatyna.infrastructure.fakedb.FakeLoginUsers;
 import pl.confitura.jelatyna.login.github.GithubService;
 import pl.confitura.jelatyna.presentation.Presentation;

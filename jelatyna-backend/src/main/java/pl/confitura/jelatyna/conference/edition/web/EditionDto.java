@@ -1,7 +1,9 @@
-package pl.confitura.jelatyna.edition;
+package pl.confitura.jelatyna.conference.edition.web;
 
 import java.time.Instant;
 import java.time.LocalDate;
+
+import pl.confitura.jelatyna.conference.edition.domain.Edition;
 
 /** View of an Edition, for admins and for the speaker homepage's Edition picker. */
 public record EditionDto(

@@ -8,7 +8,7 @@ import pl.confitura.jelatyna.agenda.Day;
 import pl.confitura.jelatyna.agenda.DayRepository;
 import pl.confitura.jelatyna.agenda.Room;
 import pl.confitura.jelatyna.agenda.RoomRepository;
-import pl.confitura.jelatyna.edition.EditionRepository;
+import pl.confitura.jelatyna.conference.edition.domain.EditionRepository;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
 
 import static org.assertj.core.api.Assertions.assertThat;

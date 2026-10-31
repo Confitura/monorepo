@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.voting;
+package pl.confitura.jelatyna.conference.voting.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

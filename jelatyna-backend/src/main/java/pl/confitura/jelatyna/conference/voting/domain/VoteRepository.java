@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.voting;
+package pl.confitura.jelatyna.conference.voting.domain;
 
 import java.util.List;
 import java.util.Set;
@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
-import pl.confitura.jelatyna.edition.Edition;
+import pl.confitura.jelatyna.conference.edition.domain.Edition;
 
 public interface VoteRepository extends Repository<Vote, String> {
     Set<Vote> saveAll(Iterable<Vote> votes);

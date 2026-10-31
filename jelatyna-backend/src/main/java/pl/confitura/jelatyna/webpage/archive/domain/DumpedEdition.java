@@ -1,6 +1,6 @@
 package pl.confitura.jelatyna.webpage.archive.domain;
 
-import pl.confitura.jelatyna.edition.Edition;
+import pl.confitura.jelatyna.conference.edition.domain.Edition;
 
 import java.time.LocalDate;
 import java.time.OffsetDateTime;

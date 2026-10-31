@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.edition;
+package pl.confitura.jelatyna.conference.edition.web;
 
 import java.time.Instant;
 import java.time.LocalDate;
