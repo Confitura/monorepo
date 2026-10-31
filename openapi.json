@@ -4477,7 +4477,7 @@
             "description" : "OK"
           }
         },
-        "tags" : [ "user-controller" ]
+        "tags" : [ "speaker-edition-controller" ]
       }
     },
     "/users/{id}/logins" : {

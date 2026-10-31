@@ -7,7 +7,6 @@ import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static org.springframework.util.StringUtils.hasText;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -25,8 +24,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.timgroup.jgravatar.Gravatar;
 import lombok.RequiredArgsConstructor;
-import pl.confitura.jelatyna.edition.EditionDto;
-import pl.confitura.jelatyna.edition.EditionRepository;
 import pl.confitura.jelatyna.platform.security.JelatynaPrincipal;
 import pl.confitura.jelatyna.platform.storage.ResourceStorage;
 import pl.confitura.jelatyna.registration.ParticipationData;
@@ -37,7 +34,6 @@ import pl.confitura.jelatyna.registration.ParticipationRepository;
 public class UserController {
 
     private final UserRepository repository;
-    private final EditionRepository editionRepository;
     private final ParticipationRepository participationRepository;
     private final ResourceStorage storage;
 
@@ -97,13 +93,6 @@ public class UserController {
     public ResponseEntity<?> getPublicById(@PathVariable String id) {
         User user = repository.findById(id);
         return ResponseEntity.ok(PublicSpeaker.from(user));
-    }
-
-    /** The Current Edition and every Edition the user has a talk or workshop in, newest year first. */
-    @GetMapping("/users/{id}/editions")
-    @PreAuthorize("@security.isOwner(#id)")
-    public List<EditionDto> getUserEditions(@PathVariable String id) {
-        return editionRepository.findCurrentAndSpokenInBy(id).stream().map(EditionDto::from).toList();
     }
 
     @GetMapping("/users/search/admins")
