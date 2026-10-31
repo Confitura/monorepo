@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.user;
+package pl.confitura.jelatyna.conference.presentation.web;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.contains;
@@ -34,6 +34,8 @@ import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
 import pl.confitura.jelatyna.presentation.Tag;
 import pl.confitura.jelatyna.presentation.TagRepository;
+import pl.confitura.jelatyna.user.User;
+import pl.confitura.jelatyna.user.UserRepository;
 
 // "Submit again" copies a past Edition's talk or workshop into the Current Edition as a fresh
 // submission by the speaker who resubmits it; the original stays as it was (ADR-0004).

@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.user;
+package pl.confitura.jelatyna.conference.presentation.web;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -25,6 +25,8 @@ import pl.confitura.jelatyna.api.model.WorkshopRequest;
 import pl.confitura.jelatyna.edition.EditionRepository;
 import pl.confitura.jelatyna.presentation.Presentation;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
+import pl.confitura.jelatyna.user.User;
+import pl.confitura.jelatyna.user.UserRepository;
 
 // The /users/{userId}/presentations/{id} and /users/{userId}/workshops/{id} endpoints serve only
 // a talk or workshop that user speaks at (as speaker or co-speaker), and only through the
