@@ -12,7 +12,7 @@ import pl.confitura.jelatyna.agenda.AgendaUtils;
 import pl.confitura.jelatyna.agenda.PresentationUtils;
 import pl.confitura.jelatyna.agenda.UserUtils;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
-import pl.confitura.jelatyna.presentation.Presentation;
+import pl.confitura.jelatyna.conference.presentation.domain.Presentation;
 import pl.confitura.jelatyna.conference.rating.web.RateRequest;
 
 import java.util.List;

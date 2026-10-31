@@ -20,11 +20,11 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
 import org.springframework.transaction.annotation.Transactional;
 import pl.confitura.jelatyna.BaseIntegrationTest;
-import pl.confitura.jelatyna.api.model.PresentationRequest;
-import pl.confitura.jelatyna.api.model.WorkshopRequest;
+import pl.confitura.jelatyna.conference.presentation.domain.PresentationRequest;
+import pl.confitura.jelatyna.conference.presentation.domain.WorkshopRequest;
 import pl.confitura.jelatyna.conference.edition.domain.EditionRepository;
-import pl.confitura.jelatyna.presentation.Presentation;
-import pl.confitura.jelatyna.presentation.PresentationRepository;
+import pl.confitura.jelatyna.conference.presentation.domain.Presentation;
+import pl.confitura.jelatyna.conference.presentation.domain.PresentationRepository;
 import pl.confitura.jelatyna.user.User;
 import pl.confitura.jelatyna.user.UserRepository;
 

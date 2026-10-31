@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.presentation;
+package pl.confitura.jelatyna.conference.presentation.domain;
 
 import org.springframework.data.repository.Repository;
 

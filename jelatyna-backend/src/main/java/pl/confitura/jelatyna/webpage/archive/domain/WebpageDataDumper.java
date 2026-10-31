@@ -12,7 +12,6 @@ import pl.confitura.jelatyna.agenda.*;
 import pl.confitura.jelatyna.agenda.api.InlineAgendaEntry;
 import pl.confitura.jelatyna.agenda.api.InlineRoom;
 import pl.confitura.jelatyna.agenda.api.InlineTimeSlot;
-import pl.confitura.jelatyna.api.model.InlinePresentationWithSpeakers;
 import pl.confitura.jelatyna.conference.edition.domain.EditionMadeCurrent;
 import pl.confitura.jelatyna.conference.presentation.domain.PublicSpeaker;
 import pl.confitura.jelatyna.conference.edition.domain.Edition;
@@ -24,8 +23,8 @@ import pl.confitura.jelatyna.webpage.partner.domain.PartnerDto;
 import pl.confitura.jelatyna.webpage.partner.domain.PartnerRepository;
 import pl.confitura.jelatyna.webpage.page.domain.Page;
 import pl.confitura.jelatyna.webpage.page.domain.PageRepository;
-import pl.confitura.jelatyna.presentation.Presentation;
-import pl.confitura.jelatyna.presentation.PresentationRepository;
+import pl.confitura.jelatyna.conference.presentation.domain.Presentation;
+import pl.confitura.jelatyna.conference.presentation.domain.PresentationRepository;
 import pl.confitura.jelatyna.user.UserController;
 
 import java.nio.file.Files;

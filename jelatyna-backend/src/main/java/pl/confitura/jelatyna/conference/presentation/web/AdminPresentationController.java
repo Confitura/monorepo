@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.presentation;
+package pl.confitura.jelatyna.conference.presentation.web;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
@@ -6,6 +6,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import pl.confitura.jelatyna.conference.presentation.domain.PreSelectionStatus;
+import pl.confitura.jelatyna.conference.presentation.domain.Presentation;
+import pl.confitura.jelatyna.conference.presentation.domain.PresentationRepository;
+import pl.confitura.jelatyna.conference.presentation.domain.Tag;
+import pl.confitura.jelatyna.conference.presentation.domain.TagRepository;
 
 @RequiredArgsConstructor
 @RestController

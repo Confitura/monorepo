@@ -13,8 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.support.TransactionTemplate;
 import pl.confitura.jelatyna.BaseIntegrationTest;
 import pl.confitura.jelatyna.conference.edition.domain.EditionRepository;
-import pl.confitura.jelatyna.presentation.Presentation;
-import pl.confitura.jelatyna.presentation.PresentationRepository;
+import pl.confitura.jelatyna.conference.presentation.domain.Presentation;
+import pl.confitura.jelatyna.conference.presentation.domain.PresentationRepository;
 import pl.confitura.jelatyna.user.User;
 import pl.confitura.jelatyna.user.UserRepository;
 

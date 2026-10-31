@@ -6,8 +6,6 @@ import org.springframework.stereotype.Component;
 
 import lombok.RequiredArgsConstructor;
 import pl.confitura.jelatyna.identity.user.domain.AbsorbedUserTalks;
-import pl.confitura.jelatyna.presentation.Presentation;
-import pl.confitura.jelatyna.presentation.PresentationRepository;
 import pl.confitura.jelatyna.user.User;
 
 @Component

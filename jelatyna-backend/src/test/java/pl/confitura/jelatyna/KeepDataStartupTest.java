@@ -13,8 +13,8 @@ import org.testcontainers.postgresql.PostgreSQLContainer;
 import pl.confitura.jelatyna.conference.edition.domain.EditionRepository;
 import pl.confitura.jelatyna.infrastructure.fakedb.FakeLoginUsers;
 import pl.confitura.jelatyna.login.github.GithubService;
-import pl.confitura.jelatyna.presentation.Presentation;
-import pl.confitura.jelatyna.presentation.PresentationRepository;
+import pl.confitura.jelatyna.conference.presentation.domain.Presentation;
+import pl.confitura.jelatyna.conference.presentation.domain.PresentationRepository;
 import pl.confitura.jelatyna.user.User;
 
 import javax.sql.DataSource;

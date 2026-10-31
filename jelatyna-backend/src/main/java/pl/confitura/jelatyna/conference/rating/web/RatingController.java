@@ -18,8 +18,8 @@ import pl.confitura.jelatyna.conference.rating.domain.RatingService;
 import pl.confitura.jelatyna.conference.rating.domain.RatingWindowService;
 import pl.confitura.jelatyna.conference.rating.domain.ViewPresentationRate;
 import pl.confitura.jelatyna.conference.rating.domain.ViewPresentationRateRepository;
-import pl.confitura.jelatyna.presentation.Presentation;
-import pl.confitura.jelatyna.presentation.PresentationRepository;
+import pl.confitura.jelatyna.conference.presentation.domain.Presentation;
+import pl.confitura.jelatyna.conference.presentation.domain.PresentationRepository;
 
 // The tag these endpoints had while PresentationController served them, so openapi.json stays the same.
 @Tag(name = "presentation-controller")

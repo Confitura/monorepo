@@ -2,8 +2,8 @@ package pl.confitura.jelatyna.agenda;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-import pl.confitura.jelatyna.presentation.Presentation;
-import pl.confitura.jelatyna.presentation.PresentationRepository;
+import pl.confitura.jelatyna.conference.presentation.domain.Presentation;
+import pl.confitura.jelatyna.conference.presentation.domain.PresentationRepository;
 import pl.confitura.jelatyna.user.User;
 
 import java.util.List;

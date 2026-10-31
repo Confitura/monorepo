@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.api.model;
+package pl.confitura.jelatyna.conference.presentation.domain;
 
 public record PresentationRequest(
         String title,

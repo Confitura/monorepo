@@ -3,7 +3,6 @@ package pl.confitura.jelatyna.webpage.archive.domain;
 import pl.confitura.jelatyna.agenda.api.InlineAgendaEntry;
 import pl.confitura.jelatyna.agenda.api.InlineRoom;
 import pl.confitura.jelatyna.agenda.api.InlineTimeSlot;
-import pl.confitura.jelatyna.api.model.InlinePresentationWithSpeakers;
 
 import java.time.LocalDate;
 import java.util.List;

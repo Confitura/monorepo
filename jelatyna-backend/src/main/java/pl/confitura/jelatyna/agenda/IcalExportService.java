@@ -14,7 +14,7 @@ import net.fortuna.ical4j.model.property.Summary;
 import net.fortuna.ical4j.model.property.Uid;
 import net.fortuna.ical4j.model.property.Url;
 import org.springframework.stereotype.Service;
-import pl.confitura.jelatyna.presentation.Presentation;
+import pl.confitura.jelatyna.conference.presentation.domain.Presentation;
 
 import java.io.ByteArrayOutputStream;
 import java.net.URI;

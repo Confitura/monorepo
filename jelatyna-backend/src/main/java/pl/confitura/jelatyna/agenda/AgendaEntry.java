@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.experimental.Accessors;
 
 import lombok.Data;
-import pl.confitura.jelatyna.presentation.Presentation;
+import pl.confitura.jelatyna.conference.presentation.domain.Presentation;
 import pl.confitura.jelatyna.user.PublicProfile;
 
 import java.util.Collections;
