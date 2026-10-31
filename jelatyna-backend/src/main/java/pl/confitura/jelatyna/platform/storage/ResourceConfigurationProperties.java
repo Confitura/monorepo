@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.resource;
+package pl.confitura.jelatyna.platform.storage;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;

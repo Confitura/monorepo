@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.transaction.support.TransactionTemplate;
 import pl.confitura.jelatyna.BaseIntegrationTest;
@@ -12,11 +13,14 @@ import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static pl.confitura.jelatyna.infrastructure.security.SecurityHelper.admin;
+import static pl.confitura.jelatyna.infrastructure.security.SecurityHelper.user;
 
 class PartnerControllerTest extends BaseIntegrationTest {
 
@@ -141,5 +145,24 @@ class PartnerControllerTest extends BaseIntegrationTest {
         mockMvc.perform(get("/partners/all"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)));
+    }
+
+    @Test
+    void anAdminUploadsALogo() throws Exception {
+        mockMvc.perform(multipart("/resources/partners/" + gold.getId()).file(logo()).with(admin()))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(get("/partners/" + gold.getId()))
+                .andExpect(jsonPath("$.logo", endsWith("/photos/" + gold.getId() + ".png")));
+    }
+
+    @Test
+    void refusesALogoFromNonAdmins() throws Exception {
+        mockMvc.perform(multipart("/resources/partners/" + gold.getId()).file(logo()).with(user("not-an-admin")))
+                .andExpect(status().isForbidden());
+    }
+
+    private static MockMultipartFile logo() {
+        return new MockMultipartFile("file", "logo.png", "image/png", new byte[]{1, 2, 3});
     }
 }

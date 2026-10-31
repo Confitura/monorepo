@@ -21,7 +21,7 @@ import pl.confitura.jelatyna.presentation.PresentationRepository;
 import pl.confitura.jelatyna.presentation.rating.Rate;
 import pl.confitura.jelatyna.presentation.rating.RateRepository;
 import pl.confitura.jelatyna.presentation.rating.RateValue;
-import pl.confitura.jelatyna.resource.ResourceConfigurationProperties;
+import pl.confitura.jelatyna.platform.storage.ResourceConfigurationProperties;
 import pl.confitura.jelatyna.user.User;
 import pl.confitura.jelatyna.user.UserRepository;
 

@@ -12,7 +12,7 @@ import pl.confitura.jelatyna.news.NewsEntryRepository;
 import pl.confitura.jelatyna.partner.PartnerRepository;
 import pl.confitura.jelatyna.page.PageController;
 import pl.confitura.jelatyna.presentation.PresentationRepository;
-import pl.confitura.jelatyna.resource.ResourceConfigurationProperties;
+import pl.confitura.jelatyna.platform.storage.ResourceConfigurationProperties;
 import pl.confitura.jelatyna.user.UserController;
 import pl.confitura.jelatyna.user.UserRepository;
 

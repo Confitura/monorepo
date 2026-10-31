@@ -2,8 +2,11 @@ package pl.confitura.jelatyna.user;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.endsWith;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static pl.confitura.jelatyna.infrastructure.security.SecurityHelper.admin;
 import static pl.confitura.jelatyna.infrastructure.security.SecurityHelper.user;
@@ -15,6 +18,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
 import pl.confitura.jelatyna.BaseIntegrationTest;
@@ -118,6 +122,27 @@ class UserControllerTest extends BaseIntegrationTest {
         addWorkshop(speaker).andExpect(status().isOk());
 
         assertThat(editionIdsOfTheTalksOf(speaker)).containsExactly(editionRepository.findCurrent().getId());
+    }
+
+    @Test
+    void aUserUploadsTheirProfilePicture() throws Exception {
+        User speaker = userRepository.save(new User().setName("Speaker"));
+
+        uploadProfilePicture(speaker, user(speaker))
+                .andExpect(status().isOk())
+                .andExpect(content().string(endsWith("/photos/" + speaker.getId() + ".png")));
+    }
+
+    @Test
+    void refusesAProfilePictureForSomeoneElse() throws Exception {
+        User speaker = userRepository.save(new User().setName("Speaker"));
+
+        uploadProfilePicture(speaker, user("someone-else")).andExpect(status().isForbidden());
+    }
+
+    private ResultActions uploadProfilePicture(User owner, RequestPostProcessor signedIn) throws Exception {
+        MockMultipartFile photo = new MockMultipartFile("file", "me.png", "image/png", new byte[]{1, 2, 3});
+        return mockMvc.perform(multipart("/resources/" + owner.getId()).file(photo).with(signedIn));
     }
 
     private ResultActions addTalk(User speaker, RequestPostProcessor signedIn) throws Exception {

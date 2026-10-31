@@ -12,7 +12,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
 import org.springframework.transaction.support.TransactionTemplate;
 import pl.confitura.jelatyna.BaseIntegrationTest;
-import pl.confitura.jelatyna.resource.ResourceConfigurationProperties;
+import pl.confitura.jelatyna.platform.storage.ResourceConfigurationProperties;
 
 import java.io.IOException;
 import java.nio.file.Files;

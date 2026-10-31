@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.resource;
+package pl.confitura.jelatyna.platform.storage;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -13,23 +13,15 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.springframework.web.multipart.MultipartFile;
 
-import pl.confitura.jelatyna.news.NewsEntryRepository;
-import pl.confitura.jelatyna.partner.Partner;
-import pl.confitura.jelatyna.partner.PartnerRepository;
-import pl.confitura.jelatyna.user.UserRepository;
-
 class ResourceStorageTest {
 
     @TempDir
     Path folder;
 
-    private final PartnerRepository partnerRepository = mock(PartnerRepository.class);
-    private final UserRepository userRepository = mock(UserRepository.class);
-
     private ResourceStorage storage() {
         ResourceConfigurationProperties properties =
                 new ResourceConfigurationProperties("resources", folder.toString(), "https://res.example");
-        return new ResourceStorage(properties, userRepository, partnerRepository, mock(NewsEntryRepository.class));
+        return new ResourceStorage(properties);
     }
 
     private MultipartFile file(String originalFilename) throws IOException {
@@ -41,18 +33,15 @@ class ResourceStorageTest {
 
     @Test
     void storesAllowedImageWithinStorageDirectory() throws IOException {
-        when(partnerRepository.findById("p1")).thenReturn(mock(Partner.class));
-
-        storage().storePartnerLogo(file("logo.PNG"), "p1");
+        String url = storage().store("p1", file("logo.PNG"), "photos");
 
         assertThat(Files.exists(folder.resolve("photos").resolve("p1.png"))).isTrue();
+        assertThat(url).isEqualTo("https://res.example/resources/photos/p1.png");
     }
 
     @Test
     void rejectsPathTraversalInFileName() throws IOException {
-        when(partnerRepository.findById("../../evil")).thenReturn(mock(Partner.class));
-
-        assertThatThrownBy(() -> storage().storePartnerLogo(file("logo.png"), "../../evil"))
+        assertThatThrownBy(() -> storage().store("../../evil", file("logo.png"), "photos"))
                 .isInstanceOf(IllegalArgumentException.class);
 
         assertThat(Files.exists(folder.getParent().getParent().resolve("evil.png"))).isFalse();
@@ -60,9 +49,7 @@ class ResourceStorageTest {
 
     @Test
     void rejectsDisallowedExtension() throws IOException {
-        when(partnerRepository.findById("p1")).thenReturn(mock(Partner.class));
-
-        assertThatThrownBy(() -> storage().storePartnerLogo(file("evil.php"), "p1"))
+        assertThatThrownBy(() -> storage().store("p1", file("evil.php"), "photos"))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }
