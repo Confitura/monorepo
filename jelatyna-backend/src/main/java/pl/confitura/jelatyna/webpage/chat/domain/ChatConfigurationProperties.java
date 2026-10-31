@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.chat;
+package pl.confitura.jelatyna.webpage.chat.domain;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

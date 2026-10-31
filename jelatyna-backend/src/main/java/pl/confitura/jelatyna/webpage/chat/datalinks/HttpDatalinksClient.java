@@ -1,8 +1,10 @@
-package pl.confitura.jelatyna.chat;
+package pl.confitura.jelatyna.webpage.chat.datalinks;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import pl.confitura.jelatyna.chat.ChatTypes.SseEvent;
+import pl.confitura.jelatyna.webpage.chat.domain.ChatConfigurationProperties;
+import pl.confitura.jelatyna.webpage.chat.domain.ChatTypes.SseEvent;
+import pl.confitura.jelatyna.webpage.chat.domain.DatalinksClient;
 
 import tools.jackson.databind.ObjectMapper;
 import tools.jackson.databind.node.ObjectNode;

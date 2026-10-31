@@ -1,7 +1,7 @@
-package pl.confitura.jelatyna.chat;
+package pl.confitura.jelatyna.webpage.chat.datalinks;
 
 import org.junit.jupiter.api.Test;
-import pl.confitura.jelatyna.chat.ChatTypes.SseEvent;
+import pl.confitura.jelatyna.webpage.chat.domain.ChatTypes.SseEvent;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

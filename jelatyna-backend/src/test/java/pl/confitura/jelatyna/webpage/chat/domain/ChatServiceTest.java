@@ -1,8 +1,8 @@
-package pl.confitura.jelatyna.chat;
+package pl.confitura.jelatyna.webpage.chat.domain;
 
 import org.junit.jupiter.api.Test;
-import pl.confitura.jelatyna.chat.ChatTypes.AskRequest;
-import pl.confitura.jelatyna.chat.ChatTypes.SseEvent;
+import pl.confitura.jelatyna.webpage.chat.domain.ChatTypes.AskRequest;
+import pl.confitura.jelatyna.webpage.chat.domain.ChatTypes.SseEvent;
 
 import tools.jackson.databind.json.JsonMapper;
 
