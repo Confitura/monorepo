@@ -4839,7 +4839,7 @@
             "description" : "OK"
           }
         },
-        "tags" : [ "user-controller" ]
+        "tags" : [ "participation-controller" ]
       }
     },
     "/users/{userId}/presentations" : {

@@ -28,7 +28,7 @@ public class UserUtils {
     public User markArrived(User user) {
         Voucher voucher = voucherService.generateVoucher("");
         ParticipationData data = participationRepository.save(new ParticipationData().setArrivalDate(now()).setVoucher(voucher));
-        return userRepository.save(user.setParticipationData(data));
+        return userRepository.save(user.setParticipationDataId(data.getId()));
     }
 
     public void createAdmin(String name) {

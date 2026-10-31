@@ -1,5 +1,6 @@
 package pl.confitura.jelatyna.user;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -7,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import pl.confitura.jelatyna.conference.registration.web.UserWithTicket;
 
 import java.util.List;
 import java.util.Map;
@@ -54,7 +56,8 @@ public class UserAdminController {
 
     @PostMapping("/users/manual")
     @Transactional
-    public ResponseEntity<FullUser> createManual(@RequestBody User user) {
+    // Documented as the API's User, which shows the ticket: the entity alone would replace that schema.
+    public ResponseEntity<FullUser> createManual(@RequestBody @Schema(implementation = UserWithTicket.class) User user) {
         if (user.getPhoto() == null || user.getPhoto().isBlank()) {
             var gravatar = new com.timgroup.jgravatar.Gravatar(300, com.timgroup.jgravatar.GravatarRating.GENERAL_AUDIENCES, com.timgroup.jgravatar.GravatarDefaultImage.BLANK);
             String url = gravatar.getUrl(user.getEmail());

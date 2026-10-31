@@ -52,7 +52,7 @@ class CospeakersTest extends BaseIntegrationTest {
         speaker = userRepository.save(new User().setName("Speaker").setEmail("speaker@cospeakers.test"));
         coSpeaker = userRepository.save(new User().setName("Co-speaker").setEmail("co-speaker@cospeakers.test")
                 .setBio("Bio").setTwitter("twitter").setGithub("github").setWww("https://co-speaker.test")
-                .setAdmin(true).setVolunteer(true).setPrivacyPolicyAccepted(true).setParticipationData(ticket()));
+                .setAdmin(true).setVolunteer(true).setPrivacyPolicyAccepted(true).setParticipationDataId(ticket().getId()));
     }
 
     @Test
