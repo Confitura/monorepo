@@ -1,7 +1,8 @@
-package pl.confitura.jelatyna.news;
+package pl.confitura.jelatyna.conference.dashboard.listmonk;
 
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
+import pl.confitura.jelatyna.conference.dashboard.domain.NewsletterApi;
 
 import java.io.IOException;
 

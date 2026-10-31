@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.confitura.jelatyna.dashboard.model.SubmittedStats;
 import pl.confitura.jelatyna.dashboard.model.UsersStats;
-import pl.confitura.jelatyna.news.NewsletterApi;
+import pl.confitura.jelatyna.conference.dashboard.domain.NewsletterApi;
 import pl.confitura.jelatyna.registration.QParticipationData;
 import pl.confitura.jelatyna.registration.demographic.QDemographicData;
 import pl.confitura.jelatyna.registration.voucher.QVoucher;
