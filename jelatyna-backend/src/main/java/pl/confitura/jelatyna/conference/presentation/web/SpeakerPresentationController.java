@@ -19,17 +19,15 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import pl.confitura.jelatyna.api.model.InlinePresentation;
-import pl.confitura.jelatyna.api.model.InlineWorkshop;
-import pl.confitura.jelatyna.api.model.PresentationRequest;
-import pl.confitura.jelatyna.api.model.WorkshopRequest;
+import pl.confitura.jelatyna.conference.presentation.domain.PresentationRequest;
+import pl.confitura.jelatyna.conference.presentation.domain.WorkshopRequest;
 import pl.confitura.jelatyna.conference.edition.domain.Edition;
 import pl.confitura.jelatyna.conference.edition.domain.EditionRepository;
 import pl.confitura.jelatyna.infrastructure.security.Security;
-import pl.confitura.jelatyna.presentation.Presentation;
-import pl.confitura.jelatyna.presentation.PresentationRepository;
-import pl.confitura.jelatyna.presentation.Tag;
-import pl.confitura.jelatyna.presentation.TagRepository;
+import pl.confitura.jelatyna.conference.presentation.domain.Presentation;
+import pl.confitura.jelatyna.conference.presentation.domain.PresentationRepository;
+import pl.confitura.jelatyna.conference.presentation.domain.Tag;
+import pl.confitura.jelatyna.conference.presentation.domain.TagRepository;
 import pl.confitura.jelatyna.user.User;
 import pl.confitura.jelatyna.user.UserRepository;
 

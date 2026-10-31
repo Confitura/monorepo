@@ -4,11 +4,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import pl.confitura.jelatyna.BaseIntegrationTest;
-import pl.confitura.jelatyna.api.model.PresentationRequest;
+import pl.confitura.jelatyna.conference.presentation.domain.PresentationRequest;
 import pl.confitura.jelatyna.conference.edition.domain.EditionRepository;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
-import pl.confitura.jelatyna.presentation.Presentation;
-import pl.confitura.jelatyna.presentation.PresentationRepository;
+import pl.confitura.jelatyna.conference.presentation.domain.Presentation;
+import pl.confitura.jelatyna.conference.presentation.domain.PresentationRepository;
 
 import java.util.Arrays;
 import java.util.Set;

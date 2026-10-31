@@ -3,7 +3,7 @@ package pl.confitura.jelatyna.conference.rating.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import pl.confitura.jelatyna.presentation.Presentation;
+import pl.confitura.jelatyna.conference.presentation.domain.Presentation;
 
 import jakarta.persistence.*;
 

@@ -7,7 +7,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import pl.confitura.jelatyna.agenda.DayRepository;
 import pl.confitura.jelatyna.conference.edition.domain.EditionRepository;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
-import pl.confitura.jelatyna.presentation.PresentationRepository;
+import pl.confitura.jelatyna.conference.presentation.domain.PresentationRepository;
 
 import javax.sql.DataSource;
 import java.sql.Connection;

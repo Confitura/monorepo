@@ -8,7 +8,7 @@ import jakarta.validation.constraints.*;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
-import pl.confitura.jelatyna.presentation.Presentation;
+import pl.confitura.jelatyna.conference.presentation.domain.Presentation;
 
 @Entity
 @Data

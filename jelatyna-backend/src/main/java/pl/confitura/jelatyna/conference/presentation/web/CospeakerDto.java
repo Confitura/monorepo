@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.presentation;
+package pl.confitura.jelatyna.conference.presentation.web;
 
 import pl.confitura.jelatyna.user.User;
 

@@ -3,7 +3,7 @@ package pl.confitura.jelatyna.webpage.chat.domain;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import pl.confitura.jelatyna.conference.presentation.domain.PublicSpeaker;
-import pl.confitura.jelatyna.presentation.PresentationRepository;
+import pl.confitura.jelatyna.conference.presentation.domain.PresentationRepository;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -11,8 +11,8 @@ import pl.confitura.jelatyna.agenda.Day;
 import pl.confitura.jelatyna.agenda.DayRepository;
 import pl.confitura.jelatyna.conference.edition.domain.EditionRepository;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
-import pl.confitura.jelatyna.presentation.Presentation;
-import pl.confitura.jelatyna.presentation.PresentationRepository;
+import pl.confitura.jelatyna.conference.presentation.domain.Presentation;
+import pl.confitura.jelatyna.conference.presentation.domain.PresentationRepository;
 import pl.confitura.jelatyna.conference.rating.web.RateRequest;
 
 import java.time.LocalDate;

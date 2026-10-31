@@ -1,6 +1,6 @@
-package pl.confitura.jelatyna.api.model;
+package pl.confitura.jelatyna.webpage.archive.domain;
 
-import pl.confitura.jelatyna.presentation.Presentation;
+import pl.confitura.jelatyna.conference.presentation.domain.Presentation;
 
 import java.util.List;
 
@@ -40,7 +40,7 @@ public record InlinePresentationWithSpeakers(
     }
 
     public record Tag(String id, String name) {
-        static Tag from(pl.confitura.jelatyna.presentation.Tag tag) {
+        static Tag from(pl.confitura.jelatyna.conference.presentation.domain.Tag tag) {
             return new Tag(tag.getId(), tag.getName());
         }
     }

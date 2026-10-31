@@ -18,12 +18,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
 import pl.confitura.jelatyna.BaseIntegrationTest;
-import pl.confitura.jelatyna.api.model.PresentationRequest;
-import pl.confitura.jelatyna.api.model.WorkshopRequest;
+import pl.confitura.jelatyna.conference.presentation.domain.PresentationRequest;
+import pl.confitura.jelatyna.conference.presentation.domain.WorkshopRequest;
 import pl.confitura.jelatyna.conference.edition.domain.Edition;
 import pl.confitura.jelatyna.conference.edition.domain.EditionRepository;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
-import pl.confitura.jelatyna.presentation.PresentationRepository;
+import pl.confitura.jelatyna.conference.presentation.domain.PresentationRepository;
 import pl.confitura.jelatyna.user.User;
 import pl.confitura.jelatyna.user.UserRepository;
 

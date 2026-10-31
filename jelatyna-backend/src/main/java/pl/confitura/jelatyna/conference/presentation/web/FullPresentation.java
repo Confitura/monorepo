@@ -1,8 +1,8 @@
-package pl.confitura.jelatyna.api.model;
+package pl.confitura.jelatyna.conference.presentation.web;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import pl.confitura.jelatyna.presentation.Presentation;
-import pl.confitura.jelatyna.presentation.Tag;
+import pl.confitura.jelatyna.conference.presentation.domain.Presentation;
+import pl.confitura.jelatyna.conference.presentation.domain.Tag;
 import pl.confitura.jelatyna.user.User;
 
 import java.util.List;

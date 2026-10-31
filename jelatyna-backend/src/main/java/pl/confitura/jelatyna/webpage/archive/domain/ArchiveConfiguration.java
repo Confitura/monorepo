@@ -11,7 +11,7 @@ import pl.confitura.jelatyna.webpage.faq.domain.FaqEntryRepository;
 import pl.confitura.jelatyna.webpage.news.domain.NewsEntryRepository;
 import pl.confitura.jelatyna.webpage.partner.domain.PartnerRepository;
 import pl.confitura.jelatyna.webpage.page.domain.PageRepository;
-import pl.confitura.jelatyna.presentation.PresentationRepository;
+import pl.confitura.jelatyna.conference.presentation.domain.PresentationRepository;
 import pl.confitura.jelatyna.platform.storage.ResourceConfigurationProperties;
 import pl.confitura.jelatyna.user.UserController;
 

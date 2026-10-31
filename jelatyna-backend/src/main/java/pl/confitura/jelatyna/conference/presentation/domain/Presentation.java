@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.presentation;
+package pl.confitura.jelatyna.conference.presentation.domain;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,9 +24,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.experimental.Accessors;
-import pl.confitura.jelatyna.api.model.WorkshopRequest;
 import pl.confitura.jelatyna.conference.edition.domain.Edition;
-import pl.confitura.jelatyna.api.model.PresentationRequest;
 import pl.confitura.jelatyna.user.User;
 
 @Entity
@@ -137,11 +135,11 @@ public class Presentation {
                 .setStatus(STATUS_REPORTED);
     }
 
-    boolean isOwnedBy(String email) {
+    public boolean isOwnedBy(String email) {
         return speakers.stream().anyMatch(it -> it.getEmail().equalsIgnoreCase(email));
     }
 
-    boolean hasCospeaker(String email) {
+    public boolean hasCospeaker(String email) {
         return speakers.stream().anyMatch(it -> it.getEmail().equalsIgnoreCase(email));
     }
 

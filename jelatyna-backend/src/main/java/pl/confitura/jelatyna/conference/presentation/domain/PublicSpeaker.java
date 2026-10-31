@@ -19,13 +19,13 @@ public record PublicSpeaker(
         List<Presentation> presentations) {
 
     // Each speaker of these talks, with those of the talks they give.
-    public static Set<PublicSpeaker> of(Collection<pl.confitura.jelatyna.presentation.Presentation> talks) {
+    public static Set<PublicSpeaker> of(Collection<pl.confitura.jelatyna.conference.presentation.domain.Presentation> talks) {
         return talks.stream().flatMap(talk -> talk.getSpeakers().stream()).distinct()
                 .map(speaker -> from(speaker, talks.stream().filter(talk -> talk.getSpeakers().contains(speaker)).toList()))
                 .collect(toSet());
     }
 
-    public static PublicSpeaker from(User user, Collection<pl.confitura.jelatyna.presentation.Presentation> talks) {
+    public static PublicSpeaker from(User user, Collection<pl.confitura.jelatyna.conference.presentation.domain.Presentation> talks) {
         return new PublicSpeaker(
                 user.getId(),
                 user.getName(),
@@ -39,7 +39,7 @@ public record PublicSpeaker(
     }
 
     record Presentation(String id, String name, Boolean isWorkshop) {
-        static Presentation from(pl.confitura.jelatyna.presentation.Presentation presentation) {
+        static Presentation from(pl.confitura.jelatyna.conference.presentation.domain.Presentation presentation) {
             return new Presentation(presentation.getId(), presentation.getTitle(), presentation.isWorkshop());
         }
     }

@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.presentation;
+package pl.confitura.jelatyna.conference.presentation.web;
 
 import java.util.List;
 import java.util.Set;
@@ -11,7 +11,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import pl.confitura.jelatyna.api.model.FullPresentation;
+import pl.confitura.jelatyna.conference.presentation.domain.Presentation;
+import pl.confitura.jelatyna.conference.presentation.domain.PresentationRepository;
+import pl.confitura.jelatyna.conference.presentation.domain.Tag;
+import pl.confitura.jelatyna.conference.presentation.domain.TagRepository;
 import pl.confitura.jelatyna.infrastructure.security.Security;
 import pl.confitura.jelatyna.user.User;
 import pl.confitura.jelatyna.user.UserRepository;

@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.confitura.jelatyna.conference.voting.domain.Vote;
 import pl.confitura.jelatyna.conference.voting.domain.VoteRepository;
 import pl.confitura.jelatyna.platform.web.WebUtils;
-import pl.confitura.jelatyna.presentation.*;
+import pl.confitura.jelatyna.conference.presentation.domain.*;
 import pl.confitura.jelatyna.user.User;
 
 @RestController

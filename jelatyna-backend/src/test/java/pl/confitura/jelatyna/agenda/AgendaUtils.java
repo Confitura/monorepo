@@ -3,7 +3,7 @@ package pl.confitura.jelatyna.agenda;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.confitura.jelatyna.presentation.Presentation;
+import pl.confitura.jelatyna.conference.presentation.domain.Presentation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
