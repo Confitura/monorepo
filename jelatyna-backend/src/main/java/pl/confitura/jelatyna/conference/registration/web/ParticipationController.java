@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import pl.confitura.jelatyna.identity.user.domain.Speakers;
 import pl.confitura.jelatyna.registration.ParticipationData;
 import pl.confitura.jelatyna.registration.ParticipationRepository;
 import pl.confitura.jelatyna.user.User;
@@ -20,6 +21,7 @@ public class ParticipationController {
 
     private final UserRepository userRepository;
     private final ParticipationRepository participationRepository;
+    private final Speakers speakers;
 
     @PostMapping("/users/{userId}/participationData")
     @PreAuthorize("@security.isOwner(#userId)")
@@ -30,6 +32,6 @@ public class ParticipationController {
         ParticipationData ticket = participationRepository.findById(participationData.getId());
         // An unknown ticket id clears the User's ticket, as it did when User mapped the ticket itself.
         current.setParticipationDataId(ticket == null ? null : ticket.getId());
-        return ResponseEntity.ok(new UserWithTicket(userRepository.save(current), ticket));
+        return ResponseEntity.ok(new UserWithTicket(userRepository.save(current), ticket, speakers.isSpeaker(userId)));
     }
 }

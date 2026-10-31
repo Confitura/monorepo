@@ -9,9 +9,11 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import pl.confitura.jelatyna.conference.registration.web.UserWithTicket;
+import pl.confitura.jelatyna.identity.user.domain.Speakers;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.mapping;
@@ -26,6 +28,7 @@ public class UserAdminController {
 
     private final UserRepository repository;
     private final LoginRepository loginRepository;
+    private final Speakers speakers;
 
     @PostMapping("/users/{userId}/volunteer/{isVolunteer}")
     @Transactional
@@ -49,8 +52,10 @@ public class UserAdminController {
     public List<FullUser> getAllUsers() {
         Map<String, List<LoginDto>> loginsByUserId = loginRepository.findAll().stream()
                 .collect(groupingBy(login -> login.getUser().getId(), mapping(LoginDto::from, toList())));
+        Set<String> speakerIds = speakers.speakerIds();
+        Set<String> acceptedSpeakerIds = speakers.acceptedSpeakerIds();
         return repository.findAll().stream()
-                .map(user -> new FullUser(user, loginsByUserId.getOrDefault(user.getId(), List.of())))
+                .map(user -> new FullUser(user, loginsByUserId.getOrDefault(user.getId(), List.of()), speakerIds, acceptedSpeakerIds))
                 .collect(toList());
     }
 
@@ -64,7 +69,7 @@ public class UserAdminController {
             user.setPhoto(url.replace("http:", "https:"));
         }
         var saved = repository.save(user);
-        return ResponseEntity.ok(new FullUser(saved, List.of()));
+        return ResponseEntity.ok(new FullUser(saved, List.of(), speakers.speakerIds(), speakers.acceptedSpeakerIds()));
     }
 
     public record FullUser(
@@ -85,7 +90,7 @@ public class UserAdminController {
             boolean isParticipant,
             boolean hasAcceptedPresentation) {
 
-        public FullUser(User user, List<LoginDto> logins) {
+        public FullUser(User user, List<LoginDto> logins, Set<String> speakerIds, Set<String> acceptedSpeakerIds) {
             this(
                     user.getId(),
                     logins,
@@ -99,10 +104,10 @@ public class UserAdminController {
                     user.getPhoto(),
                     user.isAdmin(),
                     user.isVolunteer(),
-                    user.isSpeaker(),
+                    speakerIds.contains(user.getId()),
                     user.getPrivacyPolicyAccepted(),
                     user.isParticipant(),
-                    user.hasAcceptedPresentation()
+                    acceptedSpeakerIds.contains(user.getId())
             );
         }
     }

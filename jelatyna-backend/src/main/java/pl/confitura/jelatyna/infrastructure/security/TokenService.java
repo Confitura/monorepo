@@ -21,6 +21,7 @@ import io.jsonwebtoken.JwtHandlerAdapter;
 import io.jsonwebtoken.Jwts;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
+import pl.confitura.jelatyna.identity.user.domain.Speakers;
 import pl.confitura.jelatyna.platform.security.JelatynaPrincipal;
 import pl.confitura.jelatyna.user.User;
 
@@ -37,6 +38,7 @@ public class TokenService {
     private static final String AUTH_TIME = "auth_time";
 
     private final JwtProperties properties;
+    private final Speakers speakers;
 
     /** A token for a person who has just signed in with a provider. */
     public String asToken(User user) {
@@ -49,7 +51,7 @@ public class TokenService {
         return Jwts.builder()
                 .claim("isAdmin", user.isAdmin())
                 .claim("isVolunteer", user.isVolunteer())
-                .claim("isSpeaker", user.isSpeaker())
+                .claim("isSpeaker", speakers.isSpeaker(user.getId()))
                 .claim("isNew", !user.getPrivacyPolicyAccepted())
                 .claim(AUTH_TIME, authTime == null ? null : authTime.getEpochSecond())
                 .id(user.getId())

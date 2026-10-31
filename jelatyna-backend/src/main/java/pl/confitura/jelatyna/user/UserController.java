@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.timgroup.jgravatar.Gravatar;
 import lombok.RequiredArgsConstructor;
 import pl.confitura.jelatyna.conference.registration.web.UserWithTicket;
+import pl.confitura.jelatyna.identity.user.domain.Speakers;
 import pl.confitura.jelatyna.platform.security.JelatynaPrincipal;
 import pl.confitura.jelatyna.platform.storage.ResourceStorage;
 import pl.confitura.jelatyna.registration.ParticipationRepository;
@@ -35,6 +36,7 @@ public class UserController {
 
     private final UserRepository repository;
     private final ParticipationRepository participationRepository;
+    private final Speakers speakers;
     private final ResourceStorage storage;
 
     @PostMapping("/users")
@@ -100,10 +102,11 @@ public class UserController {
         return ResponseEntity.ok(withTicket(repository.findById(user.getId())));
     }
 
-    // User holds only its ticket's id; registration has the ticket.
+    // User holds only its ticket's id; registration has the ticket, and presentation knows whether the User speaks.
     private UserWithTicket withTicket(User user) {
         String ticketId = user.getParticipationDataId();
-        return new UserWithTicket(user, ticketId == null ? null : participationRepository.findById(ticketId));
+        return new UserWithTicket(user, ticketId == null ? null : participationRepository.findById(ticketId),
+                speakers.isSpeaker(user.getId()));
     }
 
     private void setDefaultPhotoFor(User user) {

@@ -11,6 +11,8 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -59,7 +61,9 @@ public class Presentation {
     @ManyToMany
     private Set<Tag> tags = new HashSet<>();
 
+    // The column is named after User's old inverse side (presentations), which no longer exists.
     @ManyToMany
+    @JoinTable(name = "presentation_speakers", joinColumns = @JoinColumn(name = "presentations_id"))
     @NotNull
     private Set<User> speakers = new HashSet<>();
 

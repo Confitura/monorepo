@@ -4,9 +4,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import pl.confitura.jelatyna.BaseIntegrationTest;
+import pl.confitura.jelatyna.api.model.PresentationRequest;
+import pl.confitura.jelatyna.edition.EditionRepository;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
+import pl.confitura.jelatyna.presentation.Presentation;
+import pl.confitura.jelatyna.presentation.PresentationRepository;
 
 import java.util.Arrays;
+import java.util.Set;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -23,6 +28,12 @@ class UserAdminControllerTest extends BaseIntegrationTest {
 
     @Autowired
     private LoginRepository loginRepository;
+
+    @Autowired
+    private PresentationRepository presentationRepository;
+
+    @Autowired
+    private EditionRepository editionRepository;
 
     @Test
     void listsEachUsersLoginsAndNoneForAManualUser() throws Exception {
@@ -46,6 +57,35 @@ class UserAdminControllerTest extends BaseIntegrationTest {
         assertThat(Arrays.stream(users).filter(user -> user.id().equals(manual.getId())))
                 .singleElement()
                 .satisfies(user -> assertThat(user.logins()).isEmpty());
+    }
+
+    @Test
+    void flagsWhoSpeaksAndWhoHasAnAcceptedTalk() throws Exception {
+        User accepted = userRepository.save(new User().setName("Accepted speaker"));
+        User reported = userRepository.save(new User().setName("Reported speaker"));
+        User none = userRepository.save(new User().setName("Not a speaker"));
+        talk(true, accepted);
+        talk(false, reported);
+
+        SecurityHelper.asAdmin();
+        String body = mockMvc.perform(get("/users"))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        SecurityHelper.cleanSecurity();
+
+        assertThat(fromJson(body, UserAdminController.FullUser[].class))
+                .filteredOn(user -> Set.of(accepted.getId(), reported.getId(), none.getId()).contains(user.id()))
+                .extracting(UserAdminController.FullUser::name, UserAdminController.FullUser::isSpeaker,
+                        UserAdminController.FullUser::hasAcceptedPresentation)
+                .containsExactlyInAnyOrder(tuple("Accepted speaker", true, true), tuple("Reported speaker", true, false),
+                        tuple("Not a speaker", false, false));
+    }
+
+    private void talk(boolean accepted, User speaker) {
+        Presentation talk = Presentation.from(
+                new PresentationRequest("Talk", "short", "long", "beginner", "Polish", new String[]{}), speaker, Set.of());
+        talk.setAccepted(accepted);
+        presentationRepository.save(talk.setEdition(editionRepository.findCurrent()));
     }
 
     @Test

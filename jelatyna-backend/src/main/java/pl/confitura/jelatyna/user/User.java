@@ -4,12 +4,9 @@ import static org.springframework.util.StringUtils.hasText;
 
 import java.util.LinkedHashSet;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 
 import jakarta.persistence.*;
-
-import org.springframework.beans.factory.annotation.Value;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
@@ -19,12 +16,11 @@ import lombok.experimental.Accessors;
 import pl.confitura.jelatyna.agenda.AgendaEntry;
 import pl.confitura.jelatyna.agenda.TimeSlot;
 import pl.confitura.jelatyna.platform.persistence.AuditedEntity;
-import pl.confitura.jelatyna.presentation.Presentation;
 
 @Entity
 @Data
 @ToString(onlyExplicitlyIncluded = true)
-@EqualsAndHashCode(exclude = "presentations", callSuper = false)
+@EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @Table(name = "users")
 public class User extends AuditedEntity {
@@ -56,18 +52,9 @@ public class User extends AuditedEntity {
     @ToString.Include
     private Boolean privacyPolicyAccepted = false;
 
-    @ManyToMany(mappedBy = "speakers")
-    @JsonIgnore
-    private Set<Presentation> presentations;
-
     // The ticket (registration's ParticipationData) by id; responses show the ticket itself.
     @JsonIgnore
     private String participationDataId;
-
-    public boolean isSpeaker() {
-        return presentations != null
-               && !presentations.isEmpty();
-    }
 
     public boolean isParticipant() {
         return participationDataId != null;
@@ -86,15 +73,11 @@ public class User extends AuditedEntity {
         privacyPolicyAccepted = user.privacyPolicyAccepted;
     }
 
-    public boolean hasAcceptedPresentation() {
-        return presentations != null && presentations.stream().anyMatch(Presentation::isAccepted);
-    }
-
-    // Whether the User holds anything worth keeping, so a cancelled merge must not delete it. Sign-in fills in the
-    // provider's name and photo, but the privacy policy is accepted only by saving the profile, so it marks a
-    // profile the person made.
+    // Whether the User holds anything worth keeping, so a cancelled merge must not delete it; its talks are asked of
+    // Speakers. Sign-in fills in the provider's name and photo, but the privacy policy is accepted only by saving the
+    // profile, so it marks a profile the person made.
     boolean hasContent() {
-        return Boolean.TRUE.equals(privacyPolicyAccepted) || isAdmin || isVolunteer || isSpeaker() || isParticipant();
+        return Boolean.TRUE.equals(privacyPolicyAccepted) || isAdmin || isVolunteer || isParticipant();
     }
 
     // Merge (users): keeps this User's own profile values and takes the absorbed User's only where these are empty;
@@ -134,30 +117,5 @@ public class User extends AuditedEntity {
 
     interface Edit {
 
-    }
-
-    interface WithPresentations {
-        String getId();
-
-        String getName();
-
-        String getEmail();
-
-        String getBio();
-
-        String getTwitter();
-
-        String getGithub();
-
-        String getWww();
-
-        String getPhoto();
-
-        boolean isAdmin();
-
-        @Value("#{target.isSpeaker()}")
-        boolean isSpeaker();
-
-        Set<Presentation> getPresentations();
     }
 }

@@ -25,6 +25,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import pl.confitura.jelatyna.identity.user.domain.AbsorbedUserTalks;
+import pl.confitura.jelatyna.identity.user.domain.Speakers;
 import pl.confitura.jelatyna.platform.security.JelatynaPrincipal;
 import pl.confitura.jelatyna.infrastructure.security.TokenService;
 
@@ -46,6 +47,7 @@ public class UserLoginsController {
     private final LoginRepository loginRepository;
     private final TokenService tokenService;
     private final AbsorbedUserTalks absorbedUserTalks;
+    private final Speakers speakers;
 
     @GetMapping("/users/{id}/logins")
     @PreAuthorize("@security.isOwner(#id)")
@@ -148,7 +150,7 @@ public class UserLoginsController {
     public ResponseEntity<Void> cancelMerge(@AuthenticationPrincipal JelatynaPrincipal principal,
                                             @RequestBody MergeUsersRequest request) {
         User absorbed = userToAbsorb(principal, request);
-        if (absorbed.hasContent()) {
+        if (absorbed.hasContent() || speakers.isSpeaker(absorbed.getId())) {
             throw new ResponseStatusException(CONFLICT, "The other user has a profile or roles");
         }
         loginRepository.findByUserId(absorbed.getId()).forEach(loginRepository::delete);
