@@ -138,7 +138,7 @@ gRPC goes through `opentelemetry-exporter-sender-grpc-managed-channel` on `grpc-
 
 ## Adding a CMS-managed, published entity (playbook)
 
-The FAQ CMS (#563) and Sponsors CMS (#564) established the pattern for content that admins manage and the webpage renders. To add another (mirror `pl.confitura.jelatyna.faq` / `.partner`):
+The FAQ CMS (#563) and Sponsors CMS (#564) established the pattern for content that admins manage and the webpage renders. To add another (mirror `pl.confitura.jelatyna.webpage.faq` / `.partner`: entity and repository in `domain`, controller, DTO and request in `web`):
 
 1. **Entity** (uuid2 id; add `published`, and `displayOrder` only if manual ordering is wanted) + **repository** with `@PreAuthorize("@security.isAdmin()")` on `save`/`deleteById`, a public `findPublished…`, and an admin `findAll…`.
 2. **Controller** `@RequestMapping("/things")`: `GET` (public, published only), `GET /all` (admin), `GET /{id}`, `POST`, `PUT /{id}`, `DELETE /{id}`; DTO (no audit fields) + nullable request record.
