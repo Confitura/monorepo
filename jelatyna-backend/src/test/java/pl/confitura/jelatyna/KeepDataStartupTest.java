@@ -12,7 +12,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.testcontainers.postgresql.PostgreSQLContainer;
 import pl.confitura.jelatyna.conference.edition.domain.EditionRepository;
 import pl.confitura.jelatyna.demo.FakeLoginUsers;
-import pl.confitura.jelatyna.identity.login.github.GithubService;
+import pl.confitura.jelatyna.identity.login.providers.github.GithubService;
 import pl.confitura.jelatyna.conference.presentation.domain.Presentation;
 import pl.confitura.jelatyna.conference.presentation.domain.PresentationRepository;
 import pl.confitura.jelatyna.identity.user.domain.User;

@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.identity.login.google;
+package pl.confitura.jelatyna.identity.login.providers.google;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;

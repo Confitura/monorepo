@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.identity.login.twitter;
+package pl.confitura.jelatyna.identity.login.providers.twitter;
 
 import static com.github.scribejava.core.model.Verb.GET;
 
