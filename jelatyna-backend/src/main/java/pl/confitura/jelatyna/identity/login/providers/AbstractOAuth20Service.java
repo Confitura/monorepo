@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.identity.login.oauth2;
+package pl.confitura.jelatyna.identity.login.providers;
 
 import tools.jackson.databind.ObjectMapper;
 import com.github.scribejava.core.model.OAuth2AccessToken;

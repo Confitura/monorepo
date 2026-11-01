@@ -27,9 +27,9 @@ tell a reader what its classes may depend on, and the tangle grows with every fe
   and `platform` (cross-cutting: security, persistence, web, storage).
 - Inside a feature: `domain` (JPA entities, Spring Data repositories, domain services,
   port interfaces), `web` (controllers, DTOs, requests), and one package per external
-  system it talks to (`listmonk`, `mandrill`, `datalinks`, `google`, ...) implementing a
-  domain port. Every feature has `domain` and `web`, even a small one. An adapter that
-  two features use lives in `platform.<system>`.
+  system it talks to (`listmonk`, `mandrill`, `datalinks`, ...; the OAuth providers share
+  `identity.login.providers`) implementing a domain port. Every feature has `domain` and
+  `web`, even a small one. An adapter that two features use lives in `platform.<system>`.
 - The domain is pragmatic: it may use `jakarta.persistence` and `org.springframework.data`,
   but not `org.springframework.web`, HTTP clients, ScribeJava or the Mandrill client.
   `@PreAuthorize` stays on repositories.
