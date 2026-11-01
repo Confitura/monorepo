@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import pl.confitura.jelatyna.infrastructure.fakedb.FakeLoginUsers;
 import pl.confitura.jelatyna.identity.user.domain.TokenService;
 import pl.confitura.jelatyna.identity.user.domain.User;
 
