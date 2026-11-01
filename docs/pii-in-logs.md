@@ -11,12 +11,13 @@ today.
 ## Fixes
 
 **S1 - Twitter profile body.** `TwitterService.mapToUser` logged the whole
-`verify_credentials` response at info (name, handle, e-mail). The statement was deleted; it
-stays deleted.
+`verify_credentials` response at info: the Twitter profile (name, handle and other profile
+fields such as location and bio). No e-mail was in it, since the request never sent
+`include_email`. The statement was deleted; it stays deleted.
 
 **S2 - Allegro buyer login.** `AllegroVoucherSender` and `AllegroClient.sendMessage` logged the
 buyer's Allegro login. They logged the voucher message id instead (`sending voucher message {}
-failed`) or nothing. *Code removed:* the Allegro integration is gone (#738); only the
+failed`), or logged the send without the recipient (`sending Allegro message`). *Code removed:* the Allegro integration is gone (#738); only the
 `AllegroContext` embeddable on `Voucher` remains, and nothing logs it.
 
 **S3 - Allegro bodies and secrets.** `AllegroClient` logged every API response body (buyer data,
@@ -68,8 +69,8 @@ it.
    (`RegistrationController`); `log.info("Rejected token of user {} that no longer exists",
    principal.getId())` (`JwtAuthenticationFilter`).
 2. **No id yet? Mask the address.** `MessageInfo.maskedEmail()` keeps the first character and
-   the domain (`e***@example.com`), and returns `***` or `<no address>` for anything it cannot
-   parse. `MandrillMailSender` logs `template, messageInfo.maskedEmail()`; `MessageInfoTest`
+   the domain (`e***@example.com`), and returns `<no address>` for null and `***` for a value
+   without a usable `@`. `MandrillMailSender` logs `template, messageInfo.maskedEmail()`; `MessageInfoTest`
    pins the format.
 3. **Allowlist `toString` for anything holding PII.** Use `@ToString(onlyExplicitlyIncluded =
    true)` and `@ToString.Include` on the safe fields, never the default "everything but".
