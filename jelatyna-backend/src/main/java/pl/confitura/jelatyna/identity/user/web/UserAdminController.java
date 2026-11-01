@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.user;
+package pl.confitura.jelatyna.identity.user.web;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -8,7 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import pl.confitura.jelatyna.identity.user.domain.LoginRepository;
 import pl.confitura.jelatyna.identity.user.domain.Speakers;
+import pl.confitura.jelatyna.identity.user.domain.User;
+import pl.confitura.jelatyna.identity.user.domain.UserRepository;
 
 import java.util.List;
 import java.util.Map;

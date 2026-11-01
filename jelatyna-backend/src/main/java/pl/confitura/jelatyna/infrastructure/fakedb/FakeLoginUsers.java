@@ -15,8 +15,8 @@ import pl.confitura.jelatyna.login.github.GithubService;
 import pl.confitura.jelatyna.login.google.GoogleService;
 import pl.confitura.jelatyna.conference.presentation.domain.Presentation;
 import pl.confitura.jelatyna.conference.presentation.domain.PresentationRepository;
-import pl.confitura.jelatyna.user.User;
-import pl.confitura.jelatyna.user.UserRepository;
+import pl.confitura.jelatyna.identity.user.domain.User;
+import pl.confitura.jelatyna.identity.user.domain.UserRepository;
 
 import java.util.Map;
 import java.util.Set;

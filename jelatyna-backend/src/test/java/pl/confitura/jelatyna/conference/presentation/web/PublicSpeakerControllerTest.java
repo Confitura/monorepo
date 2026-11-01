@@ -25,8 +25,8 @@ import pl.confitura.jelatyna.conference.edition.domain.EditionRepository;
 import pl.confitura.jelatyna.identity.user.web.SecurityHelper;
 import pl.confitura.jelatyna.conference.presentation.domain.Presentation;
 import pl.confitura.jelatyna.conference.presentation.domain.PresentationRepository;
-import pl.confitura.jelatyna.user.User;
-import pl.confitura.jelatyna.user.UserRepository;
+import pl.confitura.jelatyna.identity.user.domain.User;
+import pl.confitura.jelatyna.identity.user.domain.UserRepository;
 
 // The speakers' public profiles: the list shows each speaker of an accepted talk with those talks, of any Edition;
 // a speaker's own profile lists every talk they give.

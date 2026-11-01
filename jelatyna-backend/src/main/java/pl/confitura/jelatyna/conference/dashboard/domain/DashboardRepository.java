@@ -2,7 +2,7 @@ package pl.confitura.jelatyna.conference.dashboard.domain;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
-import pl.confitura.jelatyna.user.User;
+import pl.confitura.jelatyna.identity.user.domain.User;
 
 public interface DashboardRepository extends Repository<User, String> {
 

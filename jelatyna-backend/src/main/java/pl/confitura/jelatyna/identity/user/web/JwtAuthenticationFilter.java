@@ -28,8 +28,8 @@ import pl.confitura.jelatyna.platform.security.AuthenticationFilter;
 import pl.confitura.jelatyna.platform.security.JelatynaPrincipal;
 import pl.confitura.jelatyna.platform.security.SecurityConfiguration;
 import pl.confitura.jelatyna.platform.web.JsonError;
-import pl.confitura.jelatyna.user.User;
-import pl.confitura.jelatyna.user.UserRepository;
+import pl.confitura.jelatyna.identity.user.domain.User;
+import pl.confitura.jelatyna.identity.user.domain.UserRepository;
 
 @Component
 @Slf4j

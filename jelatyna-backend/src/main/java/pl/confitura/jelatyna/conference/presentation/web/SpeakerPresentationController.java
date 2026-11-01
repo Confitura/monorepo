@@ -28,8 +28,8 @@ import pl.confitura.jelatyna.conference.presentation.domain.Presentation;
 import pl.confitura.jelatyna.conference.presentation.domain.PresentationRepository;
 import pl.confitura.jelatyna.conference.presentation.domain.Tag;
 import pl.confitura.jelatyna.conference.presentation.domain.TagRepository;
-import pl.confitura.jelatyna.user.User;
-import pl.confitura.jelatyna.user.UserRepository;
+import pl.confitura.jelatyna.identity.user.domain.User;
+import pl.confitura.jelatyna.identity.user.domain.UserRepository;
 
 /** A speaker's own talks and workshops, under their /users/{id} path. */
 @RestController

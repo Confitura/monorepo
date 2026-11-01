@@ -11,8 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import pl.confitura.jelatyna.BaseIntegrationTest;
 import pl.confitura.jelatyna.identity.user.domain.TokenService;
-import pl.confitura.jelatyna.user.User;
-import pl.confitura.jelatyna.user.UserRepository;
+import pl.confitura.jelatyna.identity.user.domain.User;
+import pl.confitura.jelatyna.identity.user.domain.UserRepository;
 
 class JwtAuthenticationFilterTest extends BaseIntegrationTest {
 

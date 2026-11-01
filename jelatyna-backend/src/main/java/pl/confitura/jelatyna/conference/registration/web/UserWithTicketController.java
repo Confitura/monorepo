@@ -19,8 +19,8 @@ import lombok.RequiredArgsConstructor;
 import pl.confitura.jelatyna.conference.registration.domain.ParticipationRepository;
 import pl.confitura.jelatyna.identity.user.domain.Speakers;
 import pl.confitura.jelatyna.platform.security.JelatynaPrincipal;
-import pl.confitura.jelatyna.user.User;
-import pl.confitura.jelatyna.user.UserRepository;
+import pl.confitura.jelatyna.identity.user.domain.User;
+import pl.confitura.jelatyna.identity.user.domain.UserRepository;
 
 /** Serves a User's profile with their ticket, so the user package needn't know registration. */
 // The tag these endpoints had while UserController served them, so openapi.json stays the same.

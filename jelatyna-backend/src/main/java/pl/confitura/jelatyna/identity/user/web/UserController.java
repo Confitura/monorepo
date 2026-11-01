@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.user;
+package pl.confitura.jelatyna.identity.user.web;
 
 import static java.util.stream.Collectors.toSet;
 
@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.RequiredArgsConstructor;
+import pl.confitura.jelatyna.identity.user.domain.PublicProfile;
+import pl.confitura.jelatyna.identity.user.domain.User;
+import pl.confitura.jelatyna.identity.user.domain.UserRepository;
 import pl.confitura.jelatyna.platform.storage.ResourceStorage;
 
 @RestController

@@ -4,7 +4,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
 import pl.confitura.jelatyna.platform.security.JelatynaPrincipal;
-import pl.confitura.jelatyna.user.User;
+import pl.confitura.jelatyna.identity.user.domain.User;
 
 import static java.util.Collections.emptyList;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;

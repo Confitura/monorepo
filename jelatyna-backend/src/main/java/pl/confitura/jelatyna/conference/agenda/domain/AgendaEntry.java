@@ -7,7 +7,7 @@ import lombok.experimental.Accessors;
 
 import lombok.Data;
 import pl.confitura.jelatyna.conference.presentation.domain.Presentation;
-import pl.confitura.jelatyna.user.PublicProfile;
+import pl.confitura.jelatyna.identity.user.domain.PublicProfile;
 
 import java.util.Collections;
 import java.util.Set;

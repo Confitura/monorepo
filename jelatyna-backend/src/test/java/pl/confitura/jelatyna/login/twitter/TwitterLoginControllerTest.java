@@ -15,7 +15,7 @@ import com.github.scribejava.core.model.OAuth1AccessToken;
 import com.github.scribejava.core.model.OAuth1RequestToken;
 import pl.confitura.jelatyna.platform.security.OAuthCallbackContextHolder;
 import pl.confitura.jelatyna.identity.user.domain.TokenService;
-import pl.confitura.jelatyna.user.User;
+import pl.confitura.jelatyna.identity.user.domain.User;
 
 class TwitterLoginControllerTest {
 

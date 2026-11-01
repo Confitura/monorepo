@@ -24,7 +24,7 @@ import pl.confitura.jelatyna.conference.voting.domain.Vote;
 import pl.confitura.jelatyna.conference.voting.domain.VoteRepository;
 import pl.confitura.jelatyna.platform.web.WebUtils;
 import pl.confitura.jelatyna.conference.presentation.domain.*;
-import pl.confitura.jelatyna.user.User;
+import pl.confitura.jelatyna.identity.user.domain.User;
 
 @RestController
 public class VoteController {

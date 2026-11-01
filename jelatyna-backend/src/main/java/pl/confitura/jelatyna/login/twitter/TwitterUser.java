@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import pl.confitura.jelatyna.login.OAuthUserBase;
-import pl.confitura.jelatyna.user.User;
+import pl.confitura.jelatyna.identity.user.domain.User;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data

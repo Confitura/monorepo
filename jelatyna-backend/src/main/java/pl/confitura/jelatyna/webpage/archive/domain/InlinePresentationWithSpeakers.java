@@ -49,7 +49,7 @@ public record InlinePresentationWithSpeakers(
             String id,
             String name,
             String photoUrl) {
-        static Speaker from(pl.confitura.jelatyna.user.User speaker) {
+        static Speaker from(pl.confitura.jelatyna.identity.user.domain.User speaker) {
             return new Speaker(
                     speaker.getId(),
                     speaker.getName(),

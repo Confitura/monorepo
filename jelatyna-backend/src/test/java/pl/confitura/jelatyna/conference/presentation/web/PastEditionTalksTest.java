@@ -28,8 +28,8 @@ import pl.confitura.jelatyna.conference.presentation.domain.WorkshopRequest;
 import pl.confitura.jelatyna.conference.edition.domain.Edition;
 import pl.confitura.jelatyna.conference.edition.domain.EditionRepository;
 import pl.confitura.jelatyna.identity.user.web.SecurityHelper;
-import pl.confitura.jelatyna.user.User;
-import pl.confitura.jelatyna.user.UserRepository;
+import pl.confitura.jelatyna.identity.user.domain.User;
+import pl.confitura.jelatyna.identity.user.domain.UserRepository;
 
 // A past Edition's talks and workshops are read-only for their speakers; admins can still change
 // them (ADR-0004). Every speaker endpoint that changes an existing talk is listed in Change.

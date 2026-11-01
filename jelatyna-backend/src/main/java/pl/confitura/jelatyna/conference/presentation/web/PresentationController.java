@@ -16,8 +16,8 @@ import pl.confitura.jelatyna.conference.presentation.domain.PresentationReposito
 import pl.confitura.jelatyna.conference.presentation.domain.Tag;
 import pl.confitura.jelatyna.conference.presentation.domain.TagRepository;
 import pl.confitura.jelatyna.identity.user.domain.Security;
-import pl.confitura.jelatyna.user.User;
-import pl.confitura.jelatyna.user.UserRepository;
+import pl.confitura.jelatyna.identity.user.domain.User;
+import pl.confitura.jelatyna.identity.user.domain.UserRepository;
 
 import static java.util.stream.Collectors.toList;
 

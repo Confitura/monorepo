@@ -24,8 +24,8 @@ import pl.confitura.jelatyna.conference.edition.domain.Edition;
 import pl.confitura.jelatyna.conference.edition.domain.EditionRepository;
 import pl.confitura.jelatyna.identity.user.web.SecurityHelper;
 import pl.confitura.jelatyna.conference.presentation.domain.PresentationRepository;
-import pl.confitura.jelatyna.user.User;
-import pl.confitura.jelatyna.user.UserRepository;
+import pl.confitura.jelatyna.identity.user.domain.User;
+import pl.confitura.jelatyna.identity.user.domain.UserRepository;
 
 // 403, not 401, once the call for papers closes: the admin app treats a 401 as a rejected token
 // and signs the user out.

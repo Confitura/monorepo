@@ -10,7 +10,7 @@ import pl.confitura.jelatyna.conference.voting.domain.Vote;
 import pl.confitura.jelatyna.conference.presentation.domain.PreSelectionStatus;
 import pl.confitura.jelatyna.conference.presentation.domain.Presentation;
 import pl.confitura.jelatyna.conference.presentation.domain.Tag;
-import pl.confitura.jelatyna.user.User;
+import pl.confitura.jelatyna.identity.user.domain.User;
 
 import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 

@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.user;
+package pl.confitura.jelatyna.identity.user.web;
 
 import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
@@ -25,7 +25,11 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import pl.confitura.jelatyna.identity.user.domain.AbsorbedUserTalks;
+import pl.confitura.jelatyna.identity.user.domain.Login;
+import pl.confitura.jelatyna.identity.user.domain.LoginRepository;
 import pl.confitura.jelatyna.identity.user.domain.Speakers;
+import pl.confitura.jelatyna.identity.user.domain.User;
+import pl.confitura.jelatyna.identity.user.domain.UserRepository;
 import pl.confitura.jelatyna.platform.security.JelatynaPrincipal;
 import pl.confitura.jelatyna.identity.user.domain.TokenService;
 
