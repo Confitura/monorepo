@@ -17,7 +17,7 @@ public interface PresentationRepository extends Repository<Presentation, String>
 
     Presentation save(Presentation presentation);
 
-    @PreAuthorize("@security.presentationOwnedByUser(#id)")
+    @PreAuthorize("@presentationSecurity.presentationOwnedByUser(#id)")
     void deleteById(@P("id") String id);
 
     Presentation findById(String id);

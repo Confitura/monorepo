@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 import pl.confitura.jelatyna.identity.user.domain.AbsorbedUserTalks;
 import pl.confitura.jelatyna.identity.user.domain.Speakers;
 import pl.confitura.jelatyna.platform.security.JelatynaPrincipal;
-import pl.confitura.jelatyna.infrastructure.security.TokenService;
+import pl.confitura.jelatyna.identity.user.domain.TokenService;
 
 /**
  * A User's Logins, and linking another one (ADR-0003): the person completes that provider's sign-in

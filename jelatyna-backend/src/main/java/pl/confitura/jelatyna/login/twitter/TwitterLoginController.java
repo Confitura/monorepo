@@ -16,7 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.github.scribejava.core.model.OAuth1AccessToken;
 import com.github.scribejava.core.model.OAuth1RequestToken;
 import pl.confitura.jelatyna.platform.security.OAuthCallbackContextHolder;
-import pl.confitura.jelatyna.infrastructure.security.TokenService;
+import pl.confitura.jelatyna.identity.user.domain.TokenService;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;

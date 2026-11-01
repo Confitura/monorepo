@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.infrastructure.security;
+package pl.confitura.jelatyna.identity.user.web;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
@@ -18,6 +18,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 import io.jsonwebtoken.Jwts;
 import pl.confitura.jelatyna.BaseIntegrationTest;
+import pl.confitura.jelatyna.identity.user.domain.TokenService;
 import pl.confitura.jelatyna.user.User;
 import pl.confitura.jelatyna.user.UserRepository;
 

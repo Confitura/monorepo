@@ -59,7 +59,7 @@ public class RatingController {
                 .body(createdRate);
     }
 
-    @PreAuthorize("@security.presentationOwnedByUser(#presentationId) || @security.isAdmin()")
+    @PreAuthorize("@presentationSecurity.presentationOwnedByUser(#presentationId) || @security.isAdmin()")
     @GetMapping("/presentations/{presentationId}/ratings")
     public ResponseEntity<ViewPresentationRate> rates(@PathVariable String presentationId) {
         return this.ratesRepository.findByPresentationId(presentationId)
