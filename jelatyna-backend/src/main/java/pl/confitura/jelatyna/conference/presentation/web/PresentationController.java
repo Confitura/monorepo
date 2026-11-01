@@ -64,11 +64,11 @@ public class PresentationController {
         }
 
         Presentation presentation = this.repository.findById(presentationId);
-        if (presentation.isOwnedBy(email)) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("You cannot add yourself as a speaker!");
-        }
         if (presentation.hasCospeaker(email)) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("This speaker is already added to this presentation");
+            String reason = user.getId().equals(security.getUserId())
+                    ? "You cannot add yourself as a speaker!"
+                    : "This speaker is already added to this presentation";
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(reason);
         }
         presentation.getSpeakers().add(user);
         return ResponseEntity.ok(CospeakerDto.from(user));
