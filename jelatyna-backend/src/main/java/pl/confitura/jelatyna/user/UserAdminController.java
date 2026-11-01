@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import pl.confitura.jelatyna.conference.registration.web.UserWithTicket;
 import pl.confitura.jelatyna.identity.user.domain.Speakers;
 
 import java.util.List;
@@ -61,8 +60,8 @@ public class UserAdminController {
 
     @PostMapping("/users/manual")
     @Transactional
-    // Documented as the API's User, which shows the ticket: the entity alone would replace that schema.
-    public ResponseEntity<FullUser> createManual(@RequestBody @Schema(implementation = UserWithTicket.class) User user) {
+    // Documented as the API's User (registration's UserWithTicket) by reference: the entity alone would replace that schema.
+    public ResponseEntity<FullUser> createManual(@RequestBody @Schema(ref = "#/components/schemas/User") User user) {
         if (user.getPhoto() == null || user.getPhoto().isBlank()) {
             var gravatar = new com.timgroup.jgravatar.Gravatar(300, com.timgroup.jgravatar.GravatarRating.GENERAL_AUDIENCES, com.timgroup.jgravatar.GravatarDefaultImage.BLANK);
             String url = gravatar.getUrl(user.getEmail());
