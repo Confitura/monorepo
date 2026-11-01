@@ -9,7 +9,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static pl.confitura.jelatyna.infrastructure.security.SecurityHelper.ADMIN_TOKEN;
+import static pl.confitura.jelatyna.identity.user.web.SecurityHelper.ADMIN_TOKEN;
 
 @Component
 @AllArgsConstructor

@@ -2,7 +2,7 @@ package pl.confitura.jelatyna.conference.agenda.domain;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
+import pl.confitura.jelatyna.identity.user.web.SecurityHelper;
 import pl.confitura.jelatyna.conference.registration.domain.ParticipationData;
 import pl.confitura.jelatyna.conference.registration.domain.ParticipationRepository;
 import pl.confitura.jelatyna.conference.registration.domain.Voucher;

@@ -6,7 +6,7 @@ import pl.confitura.jelatyna.BaseIntegrationTest;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static pl.confitura.jelatyna.infrastructure.security.SecurityHelper.admin;
+import static pl.confitura.jelatyna.identity.user.web.SecurityHelper.admin;
 
 class NewsletterStatsTest extends BaseIntegrationTest {
 

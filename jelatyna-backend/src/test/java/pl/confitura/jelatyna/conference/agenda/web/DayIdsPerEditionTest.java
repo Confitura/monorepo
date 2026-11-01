@@ -11,7 +11,7 @@ import pl.confitura.jelatyna.conference.agenda.domain.*;
 import pl.confitura.jelatyna.conference.edition.domain.Edition;
 import pl.confitura.jelatyna.conference.edition.domain.EditionRepository;
 import pl.confitura.jelatyna.webpage.archive.domain.WebpageDataDumper;
-import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
+import pl.confitura.jelatyna.identity.user.web.SecurityHelper;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static pl.confitura.jelatyna.infrastructure.security.SecurityHelper.admin;
+import static pl.confitura.jelatyna.identity.user.web.SecurityHelper.admin;
 
 // A Day id is unique within its Edition (ADR-0004): the webpage's schedule pages hardcode the Day
 // ids, so every Edition uses the same ones.

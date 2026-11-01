@@ -9,7 +9,7 @@ import pl.confitura.jelatyna.conference.agenda.domain.DayRepository;
 import pl.confitura.jelatyna.conference.agenda.domain.Room;
 import pl.confitura.jelatyna.conference.agenda.domain.RoomRepository;
 import pl.confitura.jelatyna.conference.edition.domain.EditionRepository;
-import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
+import pl.confitura.jelatyna.identity.user.web.SecurityHelper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
