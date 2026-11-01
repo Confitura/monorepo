@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.registration.demographic;
+package pl.confitura.jelatyna.conference.registration.domain;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

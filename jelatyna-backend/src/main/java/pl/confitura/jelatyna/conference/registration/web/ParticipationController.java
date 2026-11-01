@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import pl.confitura.jelatyna.identity.user.domain.Speakers;
-import pl.confitura.jelatyna.registration.ParticipationData;
-import pl.confitura.jelatyna.registration.ParticipationRepository;
+import pl.confitura.jelatyna.conference.registration.domain.ParticipationData;
+import pl.confitura.jelatyna.conference.registration.domain.ParticipationRepository;
 import pl.confitura.jelatyna.user.User;
 import pl.confitura.jelatyna.user.UserRepository;
 

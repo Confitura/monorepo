@@ -2,7 +2,7 @@ package pl.confitura.jelatyna.conference.registration.web;
 
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import io.swagger.v3.oas.annotations.media.Schema;
-import pl.confitura.jelatyna.registration.ParticipationData;
+import pl.confitura.jelatyna.conference.registration.domain.ParticipationData;
 import pl.confitura.jelatyna.user.User;
 
 /**

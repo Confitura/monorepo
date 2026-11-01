@@ -1,7 +1,6 @@
-package pl.confitura.jelatyna.registration;
+package pl.confitura.jelatyna.conference.registration.domain;
 
 import org.junit.jupiter.api.Test;
-import pl.confitura.jelatyna.registration.voucher.Voucher;
 
 import java.time.LocalDateTime;
 

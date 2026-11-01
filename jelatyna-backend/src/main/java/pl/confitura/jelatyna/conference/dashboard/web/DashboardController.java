@@ -12,9 +12,9 @@ import pl.confitura.jelatyna.conference.dashboard.domain.DashboardRepository;
 import pl.confitura.jelatyna.conference.dashboard.domain.SubmittedStats;
 import pl.confitura.jelatyna.conference.dashboard.domain.UsersStats;
 import pl.confitura.jelatyna.conference.dashboard.domain.NewsletterApi;
-import pl.confitura.jelatyna.registration.QParticipationData;
-import pl.confitura.jelatyna.registration.demographic.QDemographicData;
-import pl.confitura.jelatyna.registration.voucher.QVoucher;
+import pl.confitura.jelatyna.conference.registration.domain.QParticipationData;
+import pl.confitura.jelatyna.conference.registration.domain.QDemographicData;
+import pl.confitura.jelatyna.conference.registration.domain.QVoucher;
 import pl.confitura.jelatyna.conference.voting.domain.QVote;
 
 import jakarta.persistence.EntityManager;

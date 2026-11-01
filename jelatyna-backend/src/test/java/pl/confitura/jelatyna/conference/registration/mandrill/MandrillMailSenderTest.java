@@ -1,18 +1,18 @@
-package pl.confitura.jelatyna.mail;
+package pl.confitura.jelatyna.conference.registration.mandrill;
 
-import com.microtripit.mandrillapp.lutung.model.MandrillApiError;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
-import pl.confitura.jelatyna.registration.TicketGenerator;
+import pl.confitura.jelatyna.conference.registration.domain.MessageInfo;
+import pl.confitura.jelatyna.conference.registration.domain.TicketGenerator;
 
 import static org.junit.jupiter.api.Assertions.fail;
-import static pl.confitura.jelatyna.mail.MailSender.MailType.*;
+import static pl.confitura.jelatyna.conference.registration.domain.MailSender.MailType.*;
 
 @EnabledIfSystemProperty(named = "mandrillApiKey", matches = ".+")
-class MailSenderTest {
+class MandrillMailSenderTest {
 
-    MailSender mailSender;
+    MandrillMailSender mailSender;
     TicketGenerator generator = new TicketGenerator();
 
     @BeforeEach
@@ -25,7 +25,7 @@ class MailSenderTest {
         properties.setApiKey(System.getProperty("mandrillApiKey"));
         properties.setFromEmail(System.getProperty("destinationMail"));
         properties.setFromName("Integration Test");
-        mailSender = new MailSender(properties);
+        mailSender = new MandrillMailSender(properties);
 
     }
 
@@ -43,10 +43,6 @@ class MailSenderTest {
             //when TICKET is sent
             mailSender.send(TICKET, messageInfo);
 
-        } catch (MandrillApiError e) {
-            //then no Exception thrown
-
-            fail("should not cause an exception; " + e.getMandrillErrorAsJson(), e);
         } catch (Exception e) {
             fail("should not cause an exception", e);
         }
@@ -65,9 +61,6 @@ class MailSenderTest {
             //when VOUCHER is sent
             mailSender.send(VOUCHER, messageInfo);
 
-        } catch (MandrillApiError e) {
-            //then no Exception thrown
-            fail("should not cause an exception; " + e.getMandrillErrorAsJson(), e);
         } catch (Exception e) {
             fail("should not cause an exception", e);
         }
@@ -84,9 +77,6 @@ class MailSenderTest {
             //when SURVEY is sent
             mailSender.send(SURVEY, messageInfo);
 
-        } catch (MandrillApiError e) {
-            //then no Exception thrown
-            fail("should not cause an exception; " + e.getMandrillErrorAsJson(), e);
         } catch (Exception e) {
             fail("should not cause an exception", e);
         }

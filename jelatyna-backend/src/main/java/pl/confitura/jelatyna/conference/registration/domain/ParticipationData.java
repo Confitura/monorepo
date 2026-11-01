@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.registration;
+package pl.confitura.jelatyna.conference.registration.domain;
 
 import java.time.LocalDateTime;
 
@@ -18,7 +18,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import pl.confitura.jelatyna.platform.persistence.AuditedEntity;
-import pl.confitura.jelatyna.registration.voucher.Voucher;
 
 @Entity
 @Data
@@ -61,7 +60,7 @@ public class ParticipationData extends AuditedEntity {
     @ToString.Include
     private LocalDateTime surveySendDate;
 
-    boolean alreadyArrived() {
+    public boolean alreadyArrived() {
         return this.arrivalDate != null;
     }
 

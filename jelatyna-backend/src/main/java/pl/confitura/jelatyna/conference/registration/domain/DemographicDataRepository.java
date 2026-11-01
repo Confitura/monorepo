@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.registration.demographic;
+package pl.confitura.jelatyna.conference.registration.domain;
 
 import org.springframework.data.repository.Repository;
 import org.springframework.security.access.prepost.PreAuthorize;

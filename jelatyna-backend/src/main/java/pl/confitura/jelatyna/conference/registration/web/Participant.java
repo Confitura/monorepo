@@ -1,11 +1,12 @@
-package pl.confitura.jelatyna.registration;
+package pl.confitura.jelatyna.conference.registration.web;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import lombok.Data;
 import pl.confitura.jelatyna.platform.security.JelatynaPrincipal;
-import pl.confitura.jelatyna.registration.voucher.Voucher;
+import pl.confitura.jelatyna.conference.registration.domain.ParticipationData;
+import pl.confitura.jelatyna.conference.registration.domain.Voucher;
 import pl.confitura.jelatyna.user.User;
 
 @Data

@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.registration.voucher;
+package pl.confitura.jelatyna.conference.registration.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

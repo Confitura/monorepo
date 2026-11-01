@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.registration;
+package pl.confitura.jelatyna.conference.registration.domain;
 
 import org.springframework.stereotype.Service;
 

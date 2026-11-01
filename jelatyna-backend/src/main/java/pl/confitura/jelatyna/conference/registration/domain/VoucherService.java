@@ -1,9 +1,7 @@
-package pl.confitura.jelatyna.registration.voucher;
+package pl.confitura.jelatyna.conference.registration.domain;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.confitura.jelatyna.registration.ParticipationData;
-import pl.confitura.jelatyna.registration.ParticipationRepository;
 
 import java.util.List;
 
@@ -33,7 +31,7 @@ public class VoucherService {
         }
     }
 
-    boolean isValid(String voucherId) {
+    public boolean isValid(String voucherId) {
         Voucher voucher = voucherRepository.findById(voucherId);
         if (voucher == null || voucher.getId() == null) {
             return false;
@@ -62,11 +60,11 @@ public class VoucherService {
         return participationRepository.findByVoucher(voucher) != null;
     }
 
-    boolean canUseVoucher(String voucherId) {
+    public boolean canUseVoucher(String voucherId) {
         return getParticipationDataFor(voucherId) == null;
     }
 
-    ParticipationData getParticipationDataFor(String voucherId) {
+    public ParticipationData getParticipationDataFor(String voucherId) {
         Voucher voucher = voucherRepository.findById(voucherId);
         return participationRepository.findByVoucher(voucher);
     }

@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import pl.confitura.jelatyna.BaseIntegrationTest;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
-import pl.confitura.jelatyna.registration.ParticipationData;
-import pl.confitura.jelatyna.registration.ParticipationRepository;
-import pl.confitura.jelatyna.registration.voucher.Voucher;
-import pl.confitura.jelatyna.registration.voucher.VoucherService;
+import pl.confitura.jelatyna.conference.registration.domain.ParticipationData;
+import pl.confitura.jelatyna.conference.registration.domain.ParticipationRepository;
+import pl.confitura.jelatyna.conference.registration.domain.Voucher;
+import pl.confitura.jelatyna.conference.registration.domain.VoucherService;
 
 import jakarta.persistence.EntityManager;
 

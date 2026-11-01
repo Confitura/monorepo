@@ -3,10 +3,10 @@ package pl.confitura.jelatyna.conference.agenda.domain;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
-import pl.confitura.jelatyna.registration.ParticipationData;
-import pl.confitura.jelatyna.registration.ParticipationRepository;
-import pl.confitura.jelatyna.registration.voucher.Voucher;
-import pl.confitura.jelatyna.registration.voucher.VoucherService;
+import pl.confitura.jelatyna.conference.registration.domain.ParticipationData;
+import pl.confitura.jelatyna.conference.registration.domain.ParticipationRepository;
+import pl.confitura.jelatyna.conference.registration.domain.Voucher;
+import pl.confitura.jelatyna.conference.registration.domain.VoucherService;
 import pl.confitura.jelatyna.user.User;
 import pl.confitura.jelatyna.user.UserRepository;
 

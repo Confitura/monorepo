@@ -48,9 +48,9 @@ import pl.confitura.jelatyna.login.OAuthUserService;
 import pl.confitura.jelatyna.login.github.GitHubUser;
 import pl.confitura.jelatyna.conference.presentation.domain.Presentation;
 import pl.confitura.jelatyna.conference.presentation.domain.PresentationRepository;
-import pl.confitura.jelatyna.registration.ParticipationData;
-import pl.confitura.jelatyna.registration.ParticipationRepository;
-import pl.confitura.jelatyna.registration.voucher.VoucherService;
+import pl.confitura.jelatyna.conference.registration.domain.ParticipationData;
+import pl.confitura.jelatyna.conference.registration.domain.ParticipationRepository;
+import pl.confitura.jelatyna.conference.registration.domain.VoucherService;
 
 class UserLoginsControllerTest extends BaseIntegrationTest {
 
