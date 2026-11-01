@@ -86,7 +86,7 @@ class CospeakersTest extends BaseIntegrationTest {
 
     @Test
     void addingAnUnknownEmailOrAnAlreadyAddedSpeakerIsRefused() throws Exception {
-        Presentation talk = talk(speaker);
+        Presentation talk = talk(speaker, coSpeaker);
         String coSpeakers = "/presentations/" + talk.getId() + "/cospeakers/";
 
         mockMvc.perform(post(coSpeakers + "nobody@cospeakers.test").with(user(speaker)))
@@ -94,6 +94,9 @@ class CospeakersTest extends BaseIntegrationTest {
         mockMvc.perform(post(coSpeakers + "speaker@cospeakers.test").with(user(speaker)))
                 .andExpect(status().isConflict())
                 .andExpect(content().string("You cannot add yourself as a speaker!"));
+        mockMvc.perform(post(coSpeakers + "co-speaker@cospeakers.test").with(user(speaker)))
+                .andExpect(status().isConflict())
+                .andExpect(content().string("This speaker is already added to this presentation"));
     }
 
     private Presentation talk(User... speakers) {

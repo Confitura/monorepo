@@ -135,10 +135,6 @@ public class Presentation {
                 .setStatus(STATUS_REPORTED);
     }
 
-    public boolean isOwnedBy(String email) {
-        return speakers.stream().anyMatch(it -> it.getEmail().equalsIgnoreCase(email));
-    }
-
     public boolean hasCospeaker(String email) {
         return speakers.stream().anyMatch(it -> it.getEmail().equalsIgnoreCase(email));
     }
