@@ -23,7 +23,7 @@ tell a reader what its classes may depend on, and the tangle grows with every fe
   - `conference`: edition, presentation, rating, agenda, voting, registration, dashboard
   - `webpage`: faq, partner, page, news, archive, chat
   - `identity`: user, login
-- Two more top-level packages: `demo` (the demo data, today's `infrastructure.fakedb`)
+- Two more top-level packages: `demo` (the demo data, formerly `infrastructure.fakedb`)
   and `platform` (cross-cutting: security, persistence, web, storage).
 - Inside a feature: `domain` (JPA entities, Spring Data repositories, domain services,
   port interfaces), `web` (controllers, DTOs, requests), and one package per external
@@ -80,7 +80,7 @@ reviewable.
 
 ## Consequences
 
-- Until the last part merges, two layouts coexist; the old packages are held only by the
+- While the migration ran, two layouts coexisted; the old packages were held only by the
   "lives in an area" rule.
 - Since the migration is done there is no store to commit: a violation can't be frozen,
   only fixed.
