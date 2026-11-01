@@ -15,7 +15,7 @@ import pl.confitura.jelatyna.conference.presentation.domain.Presentation;
 import pl.confitura.jelatyna.conference.presentation.domain.PresentationRepository;
 import pl.confitura.jelatyna.conference.presentation.domain.Tag;
 import pl.confitura.jelatyna.conference.presentation.domain.TagRepository;
-import pl.confitura.jelatyna.infrastructure.security.Security;
+import pl.confitura.jelatyna.identity.user.domain.Security;
 import pl.confitura.jelatyna.user.User;
 import pl.confitura.jelatyna.user.UserRepository;
 
@@ -31,7 +31,7 @@ public class PresentationController {
     private final Security security;
 
 
-    @PreAuthorize("@security.presentationOwnedByUser(#presentationId) || @security.isAdmin()")
+    @PreAuthorize("@presentationSecurity.presentationOwnedByUser(#presentationId) || @security.isAdmin()")
     @GetMapping("/presentations/{presentationId}/cospeakers")
     public ResponseEntity<Set<CospeakerDto>> getCospeakers(@PathVariable String presentationId) {
         Set<CospeakerDto> cospeakers = this.repository.findById(presentationId).getSpeakers().stream()
@@ -40,8 +40,8 @@ public class PresentationController {
         return ResponseEntity.ok(cospeakers);
     }
 
-    @PreAuthorize("(@security.presentationOwnedByUser(#presentationId) || @security.isAdmin())"
-            + " && @security.canChangePresentation(#presentationId)")
+    @PreAuthorize("(@presentationSecurity.presentationOwnedByUser(#presentationId) || @security.isAdmin())"
+            + " && @presentationSecurity.canChangePresentation(#presentationId)")
     @DeleteMapping("/presentations/{presentationId}/cospeakers/{id:.+}")
     public ResponseEntity<?> removeCospeaker(@PathVariable String presentationId, @PathVariable String id) {
         Presentation presentation = this.repository.findById(presentationId);
@@ -53,8 +53,8 @@ public class PresentationController {
         return ResponseEntity.ok().build();
     }
 
-    @PreAuthorize("(@security.presentationOwnedByUser(#presentationId) || @security.isAdmin())"
-            + " && @security.canChangePresentation(#presentationId)")
+    @PreAuthorize("(@presentationSecurity.presentationOwnedByUser(#presentationId) || @security.isAdmin())"
+            + " && @presentationSecurity.canChangePresentation(#presentationId)")
     @PostMapping("/presentations/{presentationId}/cospeakers/{email:.+}")
     @Transactional
     public ResponseEntity<?> addCospeaker(@PathVariable String presentationId, @PathVariable String email) {

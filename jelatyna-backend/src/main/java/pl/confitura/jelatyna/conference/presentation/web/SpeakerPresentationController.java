@@ -23,7 +23,7 @@ import pl.confitura.jelatyna.conference.presentation.domain.PresentationRequest;
 import pl.confitura.jelatyna.conference.presentation.domain.WorkshopRequest;
 import pl.confitura.jelatyna.conference.edition.domain.Edition;
 import pl.confitura.jelatyna.conference.edition.domain.EditionRepository;
-import pl.confitura.jelatyna.infrastructure.security.Security;
+import pl.confitura.jelatyna.identity.user.domain.Security;
 import pl.confitura.jelatyna.conference.presentation.domain.Presentation;
 import pl.confitura.jelatyna.conference.presentation.domain.PresentationRepository;
 import pl.confitura.jelatyna.conference.presentation.domain.Tag;
@@ -57,8 +57,8 @@ public class SpeakerPresentationController {
     }
 
     @GetMapping("/users/{id}/presentations/{presentationId}")
-    @PreAuthorize("@security.isOwner(#id) && @security.presentationOwnedByUser(#presentationId)"
-            + " && !@security.isWorkshop(#presentationId)")
+    @PreAuthorize("@security.isOwner(#id) && @presentationSecurity.presentationOwnedByUser(#presentationId)"
+            + " && !@presentationSecurity.isWorkshop(#presentationId)")
     public ResponseEntity<InlinePresentation> getPresentation(@PathVariable String id, @PathVariable String presentationId) {
         var presentation = presentationRepository.findById(presentationId);
         return ResponseEntity.ok(new InlinePresentation(presentation));
@@ -86,9 +86,9 @@ public class SpeakerPresentationController {
 
 
     @PostMapping("/users/{userId}/presentations/{presentationId}")
-    @PreAuthorize("@security.isOwner(#userId) && @security.presentationOwnedByUser(#presentationId)"
-            + " && !@security.isWorkshop(#presentationId)"
-            + " && @security.canChangePresentation(#presentationId)")
+    @PreAuthorize("@security.isOwner(#userId) && @presentationSecurity.presentationOwnedByUser(#presentationId)"
+            + " && !@presentationSecurity.isWorkshop(#presentationId)"
+            + " && @presentationSecurity.canChangePresentation(#presentationId)")
     public ResponseEntity<InlinePresentation> updatePresentation(@Valid @RequestBody PresentationRequest presentationRequest,
                                                                  @PathVariable String userId,
                                                                  @PathVariable String presentationId) {
@@ -101,16 +101,16 @@ public class SpeakerPresentationController {
     }
 
     @DeleteMapping("/users/{userId}/presentations/{presentationId}")
-    @PreAuthorize("@security.isOwner(#userId) && @security.presentationOwnedByUser(#presentationId)"
-            + " && !@security.isWorkshop(#presentationId)"
-            + " && @security.canChangePresentation(#presentationId)")
+    @PreAuthorize("@security.isOwner(#userId) && @presentationSecurity.presentationOwnedByUser(#presentationId)"
+            + " && !@presentationSecurity.isWorkshop(#presentationId)"
+            + " && @presentationSecurity.canChangePresentation(#presentationId)")
     public void deletePresentation(@PathVariable String userId, @PathVariable String presentationId) {
         presentationRepository.deleteById(presentationId);
     }
 
     @PostMapping("/users/{userId}/presentations/{presentationId}/resubmit")
-    @PreAuthorize("@security.isOwner(#userId) && @security.presentationOwnedByUser(#presentationId)"
-            + " && !@security.isWorkshop(#presentationId)")
+    @PreAuthorize("@security.isOwner(#userId) && @presentationSecurity.presentationOwnedByUser(#presentationId)"
+            + " && !@presentationSecurity.isWorkshop(#presentationId)")
     public ResponseEntity<InlinePresentation> resubmitPresentation(@PathVariable String userId,
                                                                    @PathVariable String presentationId) {
         return ResponseEntity.ok(new InlinePresentation(resubmit(userId, presentationId)));
@@ -138,9 +138,9 @@ public class SpeakerPresentationController {
 
 
     @PostMapping("/users/{userId}/workshops/{workshopId}")
-    @PreAuthorize("@security.isOwner(#userId) && @security.presentationOwnedByUser(#workshopId)"
-            + " && @security.isWorkshop(#workshopId)"
-            + " && @security.canChangePresentation(#workshopId)")
+    @PreAuthorize("@security.isOwner(#userId) && @presentationSecurity.presentationOwnedByUser(#workshopId)"
+            + " && @presentationSecurity.isWorkshop(#workshopId)"
+            + " && @presentationSecurity.canChangePresentation(#workshopId)")
     public ResponseEntity<InlineWorkshop> updateWorkshop(@Valid @RequestBody WorkshopRequest workshopRequest,
                                                          @PathVariable String userId,
                                                          @PathVariable String workshopId) {
@@ -153,16 +153,16 @@ public class SpeakerPresentationController {
     }
 
     @DeleteMapping("/users/{userId}/workshops/{workshopId}")
-    @PreAuthorize("@security.isOwner(#userId) && @security.presentationOwnedByUser(#workshopId)"
-            + " && @security.isWorkshop(#workshopId)"
-            + " && @security.canChangePresentation(#workshopId)")
+    @PreAuthorize("@security.isOwner(#userId) && @presentationSecurity.presentationOwnedByUser(#workshopId)"
+            + " && @presentationSecurity.isWorkshop(#workshopId)"
+            + " && @presentationSecurity.canChangePresentation(#workshopId)")
     public void deleteWorkshop(@PathVariable String userId, @PathVariable String workshopId) {
         presentationRepository.deleteById(workshopId);
     }
 
     @PostMapping("/users/{userId}/workshops/{workshopId}/resubmit")
-    @PreAuthorize("@security.isOwner(#userId) && @security.presentationOwnedByUser(#workshopId)"
-            + " && @security.isWorkshop(#workshopId)")
+    @PreAuthorize("@security.isOwner(#userId) && @presentationSecurity.presentationOwnedByUser(#workshopId)"
+            + " && @presentationSecurity.isWorkshop(#workshopId)")
     public ResponseEntity<InlineWorkshop> resubmitWorkshop(@PathVariable String userId, @PathVariable String workshopId) {
         return ResponseEntity.ok(new InlineWorkshop(resubmit(userId, workshopId)));
     }
@@ -181,8 +181,8 @@ public class SpeakerPresentationController {
     }
 
     @GetMapping("/users/{id}/workshops/{workshopId}")
-    @PreAuthorize("@security.isOwner(#id) && @security.presentationOwnedByUser(#workshopId)"
-            + " && @security.isWorkshop(#workshopId)")
+    @PreAuthorize("@security.isOwner(#id) && @presentationSecurity.presentationOwnedByUser(#workshopId)"
+            + " && @presentationSecurity.isWorkshop(#workshopId)")
     public ResponseEntity<InlineWorkshop> getWorkshop(@PathVariable String id, @PathVariable String workshopId) {
         var workshop = presentationRepository.findById(workshopId);
         return ResponseEntity.ok(new InlineWorkshop(workshop));
