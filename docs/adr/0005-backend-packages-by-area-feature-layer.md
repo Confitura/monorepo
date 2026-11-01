@@ -2,7 +2,7 @@
 
 ## Status
 
-accepted
+accepted; the migration is done and every rule is strict
 
 ## Context
 
@@ -47,13 +47,14 @@ tell a reader what its classes may depend on, and the tangle grows with every fe
 
 **Enforcement.** `ArchitectureTest` (ArchUnit) encodes the rules, plus one more: every
 class except `JelatynaApplication` lives under `conference`, `webpage`, `identity`,
-`demo` or `platform`. Every rule is a `FreezingArchRule`, and the violation store
-(`jelatyna-backend/archunit_store`) is committed. A new violation fails the build; a
-fixed one drops out of the store, and the PR that fixed it commits the smaller store.
-The area, layer and cycle rules look only at classes already in the new packages, so
-code in the old ones is unchecked until it moves, and moved code must follow every rule
-at once. The "lives in an area" rule lists every class still to move: it is the
-migration's progress meter, and the migration is done when its store entry is empty.
+`demo` or `platform`. During the migration every rule was a `FreezingArchRule` with a
+committed violation store (`jelatyna-backend/archunit_store`): a new violation failed the
+build; a fixed one dropped out of the store, and the PR that fixed it committed the
+smaller store. The area, layer and cycle rules looked only at classes already in the new
+packages, so code in the old ones was unchecked until it moved, and moved code had to
+follow every rule at once. The "lives in an area" rule listed every class still to move:
+it was the migration's progress meter. Its store entry is empty now, so the store and the
+freezing are gone: the rules are plain ArchUnit rules, and any violation fails the build.
 
 **Migration: one stack of 17 PRs.** Part 1 adds the test, the store and this ADR and
 moves no class. Each later part moves one slice of classes into place and lands on top
@@ -81,8 +82,7 @@ reviewable.
 
 - Until the last part merges, two layouts coexist; the old packages are held only by the
   "lives in an area" rule.
-- A test run that fixes violations rewrites `archunit_store`; commit it with the change.
-  Freezing a new violation instead of fixing it changes the store as well, so a reviewer
-  sees it in the diff.
+- Since the migration is done there is no store to commit: a violation can't be frozen,
+  only fixed.
 - ArchUnit has to read the class files of the JDK the backend builds with; a JDK upgrade
   may need a newer ArchUnit.

@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.infrastructure.fakedb;
+package pl.confitura.jelatyna.demo;
 
 import org.springframework.boot.flyway.autoconfigure.FlywayMigrationStrategy;
 import org.springframework.context.annotation.Bean;

@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.infrastructure.fakedb;
+package pl.confitura.jelatyna.demo;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

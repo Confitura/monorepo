@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.infrastructure.fakedb;
+package pl.confitura.jelatyna.demo;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;

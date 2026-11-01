@@ -63,11 +63,11 @@ pnpm test            # Unit tests (Vitest)
 
 ### Backend (jelatyna-backend)
 
-Spring Boot app whose packages are moving, part by part, to `pl.confitura.jelatyna.<area>.<feature>.<layer>` (ADR-0005):
+Spring Boot app whose packages follow `pl.confitura.jelatyna.<area>.<feature>.<layer>` (ADR-0005):
 
 - **Areas** — `conference` (edition, presentation, rating, agenda, voting, registration, dashboard), `webpage` (faq, partner, page, news, archive, chat), `identity` (user, login); plus `demo` (demo data) and `platform` (cross-cutting: security, persistence, web, storage)
 - **Layers** — every feature has `domain` (entities, repositories with their `@PreAuthorize`, services, ports; no `org.springframework.web`, HTTP clients, ScribeJava or Mandrill), `web` (controllers under `/api`, DTOs, requests), and one package per external system it talks to (`listmonk`, `mandrill`, ...) implementing a domain port
-- **Rules** — `webpage` → `conference` → `identity` and `webpage` → `identity`, never back (an entity holds the id otherwise); `platform` uses no area; nothing uses `demo`; no cycles between features; another feature only through its `domain`. `ArchitectureTest` enforces them, plus "every class but `JelatynaApplication` lives in an area, `demo` or `platform`", as frozen ArchUnit rules: a new violation fails, and a run that fixes one shrinks `jelatyna-backend/archunit_store`, which you commit
+- **Rules** — `webpage` → `conference` → `identity` and `webpage` → `identity`, never back (an entity holds the id otherwise); `platform` uses no area; nothing uses `demo`; no cycles between features; another feature only through its `domain`. `ArchitectureTest` enforces them, plus "every class but `JelatynaApplication` lives in an area, `demo` or `platform`", as plain ArchUnit rules: any violation fails the build
 - **Security** — OAuth 2.0 login (Google, Facebook, GitHub, Twitter) via ScribeJava; JWT tokens via JJWT
 - **Database** — JPA/Hibernate with QueryDSL; PostgreSQL in prod, locally (`local`) and in tests (Testcontainers)
 - **Fake users** — `FakeLoginUsers` and `application-local.yml` allow local development without real OAuth credentials
