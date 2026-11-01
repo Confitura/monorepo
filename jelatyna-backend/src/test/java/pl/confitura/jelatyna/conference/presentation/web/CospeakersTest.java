@@ -23,8 +23,8 @@ import pl.confitura.jelatyna.identity.user.web.SecurityHelper;
 import pl.confitura.jelatyna.conference.registration.domain.ParticipationData;
 import pl.confitura.jelatyna.conference.registration.domain.ParticipationRepository;
 import pl.confitura.jelatyna.conference.registration.domain.VoucherService;
-import pl.confitura.jelatyna.user.User;
-import pl.confitura.jelatyna.user.UserRepository;
+import pl.confitura.jelatyna.identity.user.domain.User;
+import pl.confitura.jelatyna.identity.user.domain.UserRepository;
 
 // The co-speaker dialog lists a talk's speakers by name and email and removes one by id,
 // so that is all the co-speaker endpoints answer with, whatever else the profile holds.

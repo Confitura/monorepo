@@ -5,10 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import pl.confitura.jelatyna.BaseIntegrationTest;
 import pl.confitura.jelatyna.login.github.GitHubUser;
 import pl.confitura.jelatyna.login.twitter.TwitterUser;
-import pl.confitura.jelatyna.user.Login;
-import pl.confitura.jelatyna.user.LoginRepository;
-import pl.confitura.jelatyna.user.User;
-import pl.confitura.jelatyna.user.UserRepository;
+import pl.confitura.jelatyna.identity.user.domain.Login;
+import pl.confitura.jelatyna.identity.user.domain.LoginRepository;
+import pl.confitura.jelatyna.identity.user.domain.User;
+import pl.confitura.jelatyna.identity.user.domain.UserRepository;
 
 import java.util.UUID;
 

@@ -1,7 +1,7 @@
 package pl.confitura.jelatyna.login;
 
 import lombok.Data;
-import pl.confitura.jelatyna.user.User;
+import pl.confitura.jelatyna.identity.user.domain.User;
 
 @Data
 public abstract class OAuthUserBase {

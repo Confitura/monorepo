@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.user;
+package pl.confitura.jelatyna.identity.user.domain;
 
 import java.time.Instant;
 
@@ -51,7 +51,7 @@ public class Login {
     }
 
     /** Hands this Login to another User, e.g. the survivor of a merge. */
-    void moveTo(User user) {
+    public void moveTo(User user) {
         this.user = user;
     }
 }

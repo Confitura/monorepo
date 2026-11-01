@@ -15,8 +15,8 @@ import pl.confitura.jelatyna.BaseIntegrationTest;
 import pl.confitura.jelatyna.conference.edition.domain.EditionRepository;
 import pl.confitura.jelatyna.conference.presentation.domain.Presentation;
 import pl.confitura.jelatyna.conference.presentation.domain.PresentationRepository;
-import pl.confitura.jelatyna.user.User;
-import pl.confitura.jelatyna.user.UserRepository;
+import pl.confitura.jelatyna.identity.user.domain.User;
+import pl.confitura.jelatyna.identity.user.domain.UserRepository;
 
 // The names the chat rejoins: each speaker of an accepted talk, by id.
 class AcceptedSpeakerDirectoryTest extends BaseIntegrationTest {

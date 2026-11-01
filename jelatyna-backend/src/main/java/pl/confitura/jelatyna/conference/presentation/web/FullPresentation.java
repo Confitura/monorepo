@@ -3,7 +3,7 @@ package pl.confitura.jelatyna.conference.presentation.web;
 import io.swagger.v3.oas.annotations.media.Schema;
 import pl.confitura.jelatyna.conference.presentation.domain.Presentation;
 import pl.confitura.jelatyna.conference.presentation.domain.Tag;
-import pl.confitura.jelatyna.user.User;
+import pl.confitura.jelatyna.identity.user.domain.User;
 
 import java.util.List;
 import java.util.stream.Collectors;

@@ -19,8 +19,8 @@ import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 import io.jsonwebtoken.Jwts;
 import pl.confitura.jelatyna.BaseIntegrationTest;
 import pl.confitura.jelatyna.identity.user.domain.TokenService;
-import pl.confitura.jelatyna.user.User;
-import pl.confitura.jelatyna.user.UserRepository;
+import pl.confitura.jelatyna.identity.user.domain.User;
+import pl.confitura.jelatyna.identity.user.domain.UserRepository;
 
 // A real server, because MockMvc applies neither the servlet filter order nor the servlet
 // filter registrations these tests are about.

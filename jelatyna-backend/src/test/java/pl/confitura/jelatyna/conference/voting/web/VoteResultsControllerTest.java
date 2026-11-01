@@ -14,8 +14,8 @@ import pl.confitura.jelatyna.identity.user.web.SecurityHelper;
 import pl.confitura.jelatyna.conference.presentation.domain.PreSelectionStatus;
 import pl.confitura.jelatyna.conference.presentation.domain.Presentation;
 import pl.confitura.jelatyna.conference.presentation.domain.PresentationRepository;
-import pl.confitura.jelatyna.user.User;
-import pl.confitura.jelatyna.user.UserRepository;
+import pl.confitura.jelatyna.identity.user.domain.User;
+import pl.confitura.jelatyna.identity.user.domain.UserRepository;
 
 import java.time.Instant;
 import java.time.LocalDate;

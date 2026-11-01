@@ -3,10 +3,10 @@ package pl.confitura.jelatyna.login;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import pl.confitura.jelatyna.user.Login;
-import pl.confitura.jelatyna.user.LoginRepository;
-import pl.confitura.jelatyna.user.User;
-import pl.confitura.jelatyna.user.UserRepository;
+import pl.confitura.jelatyna.identity.user.domain.Login;
+import pl.confitura.jelatyna.identity.user.domain.LoginRepository;
+import pl.confitura.jelatyna.identity.user.domain.User;
+import pl.confitura.jelatyna.identity.user.domain.UserRepository;
 
 @Service
 public class OAuthUserService {

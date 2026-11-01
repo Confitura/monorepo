@@ -22,7 +22,8 @@ import pl.confitura.jelatyna.webpage.page.domain.Page;
 import pl.confitura.jelatyna.webpage.page.domain.PageRepository;
 import pl.confitura.jelatyna.conference.presentation.domain.Presentation;
 import pl.confitura.jelatyna.conference.presentation.domain.PresentationRepository;
-import pl.confitura.jelatyna.user.UserController;
+import pl.confitura.jelatyna.identity.user.domain.PublicProfile;
+import pl.confitura.jelatyna.identity.user.domain.UserRepository;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -35,6 +36,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -44,7 +46,7 @@ public class WebpageDataDumper {
     private final String resourcesFolder;
     private final EditionRepository editionRepository;
 
-    private final UserController userController;
+    private final UserRepository userRepository;
     private final PageRepository pageRepository;
     private final NewsEntryRepository newsEntryRepository;
     private final PresentationRepository presentationRepository;
@@ -119,12 +121,12 @@ public class WebpageDataDumper {
     }
 
     public void dumpAdmins(String folder) {
-        var users = userController.getAdmins().getBody();
+        var users = userRepository.findAdmins().stream().map(PublicProfile::from).collect(toSet());
         dumbData(folder, users, "/users/search/admins.json");
     }
 
     public void dumpVolunteers(String folder) {
-        var users = userController.getVolunteers().getBody();
+        var users = userRepository.findVolunteers().stream().map(PublicProfile::from).collect(toSet());
         dumbData(folder, users, "/users/search/volunteers.json");
     }
 

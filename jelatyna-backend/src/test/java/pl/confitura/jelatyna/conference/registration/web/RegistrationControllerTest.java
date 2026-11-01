@@ -10,8 +10,8 @@ import pl.confitura.jelatyna.conference.registration.domain.ParticipationData;
 import pl.confitura.jelatyna.conference.registration.domain.ParticipationRepository;
 import pl.confitura.jelatyna.conference.registration.domain.Voucher;
 import pl.confitura.jelatyna.conference.registration.domain.VoucherService;
-import pl.confitura.jelatyna.user.User;
-import pl.confitura.jelatyna.user.UserRepository;
+import pl.confitura.jelatyna.identity.user.domain.User;
+import pl.confitura.jelatyna.identity.user.domain.UserRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;

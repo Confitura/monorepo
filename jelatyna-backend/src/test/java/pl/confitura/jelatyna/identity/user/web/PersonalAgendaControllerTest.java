@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.user.parsonalagenda;
+package pl.confitura.jelatyna.identity.user.web;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
@@ -9,7 +9,7 @@ import pl.confitura.jelatyna.conference.agenda.domain.AgendaEntry;
 import pl.confitura.jelatyna.conference.agenda.domain.AgendaUtils;
 import pl.confitura.jelatyna.conference.agenda.domain.PresentationUtils;
 import pl.confitura.jelatyna.conference.agenda.domain.UserUtils;
-import pl.confitura.jelatyna.user.User;
+import pl.confitura.jelatyna.identity.user.domain.User;
 
 import java.util.List;
 import java.util.Map;

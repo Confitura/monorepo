@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import pl.confitura.jelatyna.conference.presentation.domain.PublicSpeaker;
 import pl.confitura.jelatyna.conference.presentation.domain.PresentationRepository;
-import pl.confitura.jelatyna.user.User;
-import pl.confitura.jelatyna.user.UserRepository;
+import pl.confitura.jelatyna.identity.user.domain.User;
+import pl.confitura.jelatyna.identity.user.domain.UserRepository;
 
 /** Speakers' public profiles with their talks, under the /users paths they have always had. */
 @RestController

@@ -7,7 +7,7 @@ import lombok.Data;
 import pl.confitura.jelatyna.platform.security.JelatynaPrincipal;
 import pl.confitura.jelatyna.conference.registration.domain.ParticipationData;
 import pl.confitura.jelatyna.conference.registration.domain.Voucher;
-import pl.confitura.jelatyna.user.User;
+import pl.confitura.jelatyna.identity.user.domain.User;
 
 @Data
 class Participant implements Serializable {

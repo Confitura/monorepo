@@ -22,8 +22,8 @@ import pl.confitura.jelatyna.conference.rating.domain.Rate;
 import pl.confitura.jelatyna.conference.rating.domain.RateRepository;
 import pl.confitura.jelatyna.conference.rating.domain.RateValue;
 import pl.confitura.jelatyna.platform.storage.ResourceConfigurationProperties;
-import pl.confitura.jelatyna.user.User;
-import pl.confitura.jelatyna.user.UserRepository;
+import pl.confitura.jelatyna.identity.user.domain.User;
+import pl.confitura.jelatyna.identity.user.domain.UserRepository;
 import pl.confitura.jelatyna.webpage.page.domain.Page;
 import pl.confitura.jelatyna.webpage.page.domain.PageRepository;
 
@@ -126,6 +126,17 @@ class WebpageDataDumperTest extends BaseIntegrationTest {
         assertThat(List.of("users/search/admins.json", "users/search/volunteers.json", "faq/entries.json",
                 "partners/list.json", "news.json"))
                 .allSatisfy(file -> assertThat(folder.resolve(file)).exists());
+    }
+
+    @Test
+    void adminsAndVolunteersAreDumpedToTheirOwnLists() throws Exception {
+        created.push(userRepository.save(new User().setName("Dumped Admin").setAdmin(true)));
+        created.push(userRepository.save(new User().setName("Dumped Volunteer").setVolunteer(true)));
+
+        webpageDataDumper.dumpAll();
+
+        assertThat(read("users/search/admins.json", "$[*].name")).contains("Dumped Admin").doesNotContain("Dumped Volunteer");
+        assertThat(read("users/search/volunteers.json", "$[*].name")).contains("Dumped Volunteer").doesNotContain("Dumped Admin");
     }
 
     @Test

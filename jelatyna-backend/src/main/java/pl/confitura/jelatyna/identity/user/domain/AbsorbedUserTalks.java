@@ -2,8 +2,6 @@ package pl.confitura.jelatyna.identity.user.domain;
 
 import java.util.List;
 
-import pl.confitura.jelatyna.user.User;
-
 /**
  * Merge (users): the absorbed User's talks, which presentation owns, move to the survivor. Called inside the
  * merge's transaction, before the absorbed User is deleted.

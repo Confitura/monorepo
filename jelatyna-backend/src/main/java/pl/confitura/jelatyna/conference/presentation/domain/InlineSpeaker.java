@@ -4,7 +4,7 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Value;
 
-import pl.confitura.jelatyna.user.PublicProfile;
+import pl.confitura.jelatyna.identity.user.domain.PublicProfile;
 
 interface InlineSpeaker {
     String getId();

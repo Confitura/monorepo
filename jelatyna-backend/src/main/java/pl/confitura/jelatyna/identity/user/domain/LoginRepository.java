@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.user;
+package pl.confitura.jelatyna.identity.user.domain;
 
 import java.util.List;
 import java.util.Optional;

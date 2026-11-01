@@ -34,8 +34,8 @@ import pl.confitura.jelatyna.conference.presentation.domain.Presentation;
 import pl.confitura.jelatyna.conference.presentation.domain.PresentationRepository;
 import pl.confitura.jelatyna.conference.presentation.domain.Tag;
 import pl.confitura.jelatyna.conference.presentation.domain.TagRepository;
-import pl.confitura.jelatyna.user.User;
-import pl.confitura.jelatyna.user.UserRepository;
+import pl.confitura.jelatyna.identity.user.domain.User;
+import pl.confitura.jelatyna.identity.user.domain.UserRepository;
 
 // "Submit again" copies a past Edition's talk or workshop into the Current Edition as a fresh
 // submission by the speaker who resubmits it; the original stays as it was (ADR-0004).

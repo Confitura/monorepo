@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.user;
+package pl.confitura.jelatyna.identity.user.web;
 
 import static java.time.temporal.ChronoUnit.SECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -42,8 +42,11 @@ import pl.confitura.jelatyna.BaseIntegrationTest;
 import pl.confitura.jelatyna.conference.presentation.domain.PresentationRequest;
 import pl.confitura.jelatyna.conference.edition.domain.EditionRepository;
 import pl.confitura.jelatyna.platform.security.JelatynaPrincipal;
-import pl.confitura.jelatyna.identity.user.web.SecurityHelper;
+import pl.confitura.jelatyna.identity.user.domain.Login;
+import pl.confitura.jelatyna.identity.user.domain.LoginRepository;
 import pl.confitura.jelatyna.identity.user.domain.TokenService;
+import pl.confitura.jelatyna.identity.user.domain.User;
+import pl.confitura.jelatyna.identity.user.domain.UserRepository;
 import pl.confitura.jelatyna.login.OAuthUserService;
 import pl.confitura.jelatyna.login.github.GitHubUser;
 import pl.confitura.jelatyna.conference.presentation.domain.Presentation;

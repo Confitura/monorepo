@@ -8,7 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import pl.confitura.jelatyna.conference.edition.domain.EditionContent;
 import pl.confitura.jelatyna.conference.edition.domain.Edition;
 import pl.confitura.jelatyna.identity.user.domain.Speakers;
-import pl.confitura.jelatyna.user.User;
+import pl.confitura.jelatyna.identity.user.domain.User;
 
 import java.util.List;
 import java.util.Set;
