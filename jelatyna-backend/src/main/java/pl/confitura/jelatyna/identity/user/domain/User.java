@@ -112,8 +112,4 @@ public class User extends AuditedEntity {
     private static String ownOr(String own, String absorbed) {
         return hasText(own) ? own : absorbed;
     }
-
-    interface Edit {
-
-    }
 }
