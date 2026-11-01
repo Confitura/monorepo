@@ -7,7 +7,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
-import static pl.confitura.jelatyna.infrastructure.security.SecurityHelper.ADMIN_TOKEN;
+import static pl.confitura.jelatyna.identity.user.web.SecurityHelper.ADMIN_TOKEN;
 
 @Service
 public class RoomsUtils {

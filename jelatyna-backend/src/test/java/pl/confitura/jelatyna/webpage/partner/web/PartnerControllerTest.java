@@ -8,7 +8,7 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.transaction.support.TransactionTemplate;
 import pl.confitura.jelatyna.BaseIntegrationTest;
-import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
+import pl.confitura.jelatyna.identity.user.web.SecurityHelper;
 import pl.confitura.jelatyna.webpage.partner.domain.Partner;
 import pl.confitura.jelatyna.webpage.partner.domain.PartnerRepository;
 
@@ -21,8 +21,8 @@ import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static pl.confitura.jelatyna.infrastructure.security.SecurityHelper.admin;
-import static pl.confitura.jelatyna.infrastructure.security.SecurityHelper.user;
+import static pl.confitura.jelatyna.identity.user.web.SecurityHelper.admin;
+import static pl.confitura.jelatyna.identity.user.web.SecurityHelper.user;
 
 class PartnerControllerTest extends BaseIntegrationTest {
 

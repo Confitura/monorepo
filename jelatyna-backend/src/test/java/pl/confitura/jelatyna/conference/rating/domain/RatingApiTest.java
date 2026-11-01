@@ -11,7 +11,7 @@ import pl.confitura.jelatyna.conference.agenda.domain.AgendaEntry;
 import pl.confitura.jelatyna.conference.agenda.domain.AgendaUtils;
 import pl.confitura.jelatyna.conference.agenda.domain.PresentationUtils;
 import pl.confitura.jelatyna.conference.agenda.domain.UserUtils;
-import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
+import pl.confitura.jelatyna.identity.user.web.SecurityHelper;
 import pl.confitura.jelatyna.conference.presentation.domain.Presentation;
 import pl.confitura.jelatyna.conference.rating.web.RateRequest;
 

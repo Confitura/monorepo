@@ -7,7 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.transaction.support.TransactionTemplate;
 import pl.confitura.jelatyna.BaseIntegrationTest;
-import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
+import pl.confitura.jelatyna.identity.user.web.SecurityHelper;
 import pl.confitura.jelatyna.webpage.faq.domain.FaqCategory;
 import pl.confitura.jelatyna.webpage.faq.domain.FaqCategoryRepository;
 import pl.confitura.jelatyna.webpage.faq.domain.FaqEntry;
