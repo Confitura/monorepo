@@ -1,6 +1,6 @@
-package pl.confitura.jelatyna.identity.login.providers;
+package pl.confitura.jelatyna.identity.login.providers.facebook;
 
-import static pl.confitura.jelatyna.identity.login.providers.FacebookService.SYSTEM;
+import static pl.confitura.jelatyna.identity.login.providers.facebook.FacebookService.SYSTEM;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;

@@ -1,9 +1,11 @@
-package pl.confitura.jelatyna.identity.login.providers;
+package pl.confitura.jelatyna.identity.login.providers.github;
 
 import tools.jackson.databind.ObjectMapper;
 import com.github.scribejava.apis.GitHubApi;
 import com.github.scribejava.core.builder.ServiceBuilder;
 import com.github.scribejava.core.oauth.OAuth20Service;
+import pl.confitura.jelatyna.identity.login.providers.AbstractOAuth20Service;
+import pl.confitura.jelatyna.identity.login.providers.OAuthConfiguration;
 import pl.confitura.jelatyna.identity.login.domain.OAuthUserService;
 
 import java.io.IOException;

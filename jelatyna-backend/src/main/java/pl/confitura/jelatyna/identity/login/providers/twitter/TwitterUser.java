@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.identity.login.providers;
+package pl.confitura.jelatyna.identity.login.providers.twitter;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

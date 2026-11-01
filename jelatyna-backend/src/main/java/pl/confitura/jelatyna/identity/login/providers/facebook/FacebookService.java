@@ -1,9 +1,11 @@
-package pl.confitura.jelatyna.identity.login.providers;
+package pl.confitura.jelatyna.identity.login.providers.facebook;
 
 import tools.jackson.databind.ObjectMapper;
 import com.github.scribejava.apis.FacebookApi;
 import com.github.scribejava.core.builder.ServiceBuilder;
 import com.github.scribejava.core.oauth.OAuth20Service;
+import pl.confitura.jelatyna.identity.login.providers.AbstractOAuth20Service;
+import pl.confitura.jelatyna.identity.login.providers.OAuthConfiguration;
 import pl.confitura.jelatyna.identity.login.domain.OAuthUserService;
 
 import java.io.IOException;

@@ -9,6 +9,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import pl.confitura.jelatyna.identity.login.domain.OAuthUserService;
+import pl.confitura.jelatyna.identity.login.providers.facebook.FacebookService;
+import pl.confitura.jelatyna.identity.login.providers.github.GithubService;
+import pl.confitura.jelatyna.identity.login.providers.google.GoogleService;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -48,7 +48,7 @@ import pl.confitura.jelatyna.identity.user.domain.TokenService;
 import pl.confitura.jelatyna.identity.user.domain.User;
 import pl.confitura.jelatyna.identity.user.domain.UserRepository;
 import pl.confitura.jelatyna.identity.login.domain.OAuthUserService;
-import pl.confitura.jelatyna.identity.login.providers.GitHubUser;
+import pl.confitura.jelatyna.identity.login.providers.github.GitHubUser;
 import pl.confitura.jelatyna.conference.presentation.domain.Presentation;
 import pl.confitura.jelatyna.conference.presentation.domain.PresentationRepository;
 import pl.confitura.jelatyna.conference.registration.domain.ParticipationData;
