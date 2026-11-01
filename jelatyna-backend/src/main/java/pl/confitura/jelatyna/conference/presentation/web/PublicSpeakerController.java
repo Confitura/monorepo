@@ -21,10 +21,11 @@ public class PublicSpeakerController {
     private final UserRepository userRepository;
     private final PresentationRepository presentationRepository;
 
+    // Accepted talks of every Edition.
     @GetMapping("/users/{id}/public")
     public ResponseEntity<?> getPublicById(@PathVariable String id) {
         User user = userRepository.findById(id);
-        return ResponseEntity.ok(PublicSpeaker.from(user, presentationRepository.findBySpeakersContains(user)));
+        return ResponseEntity.ok(PublicSpeaker.from(user, presentationRepository.findAcceptedWithCoSpeaker(user)));
     }
 
     // Accepted talks of every Edition.
