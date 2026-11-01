@@ -43,7 +43,7 @@ import pl.confitura.jelatyna.conference.presentation.domain.PresentationRequest;
 import pl.confitura.jelatyna.conference.edition.domain.EditionRepository;
 import pl.confitura.jelatyna.platform.security.JelatynaPrincipal;
 import pl.confitura.jelatyna.infrastructure.security.SecurityHelper;
-import pl.confitura.jelatyna.infrastructure.security.TokenService;
+import pl.confitura.jelatyna.identity.user.domain.TokenService;
 import pl.confitura.jelatyna.login.OAuthUserService;
 import pl.confitura.jelatyna.login.github.GitHubUser;
 import pl.confitura.jelatyna.conference.presentation.domain.Presentation;

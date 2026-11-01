@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import pl.confitura.jelatyna.infrastructure.security.TokenService;
+import pl.confitura.jelatyna.identity.user.domain.TokenService;
 import pl.confitura.jelatyna.user.User;
 import pl.confitura.jelatyna.user.UserRepository;
 

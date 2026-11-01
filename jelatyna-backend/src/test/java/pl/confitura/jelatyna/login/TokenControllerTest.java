@@ -20,7 +20,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import pl.confitura.jelatyna.BaseIntegrationTest;
-import pl.confitura.jelatyna.infrastructure.security.TokenService;
+import pl.confitura.jelatyna.identity.user.domain.TokenService;
 import pl.confitura.jelatyna.user.User;
 import pl.confitura.jelatyna.user.UserRepository;
 

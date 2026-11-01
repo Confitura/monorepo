@@ -1,4 +1,4 @@
-package pl.confitura.jelatyna.infrastructure.security;
+package pl.confitura.jelatyna.identity.user.web;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -23,6 +23,7 @@ import tools.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import lombok.extern.slf4j.Slf4j;
+import pl.confitura.jelatyna.identity.user.domain.TokenService;
 import pl.confitura.jelatyna.platform.security.AuthenticationFilter;
 import pl.confitura.jelatyna.platform.security.JelatynaPrincipal;
 import pl.confitura.jelatyna.platform.security.SecurityConfiguration;
