@@ -13,8 +13,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.experimental.Accessors;
-import pl.confitura.jelatyna.conference.agenda.domain.AgendaEntry;
-import pl.confitura.jelatyna.conference.agenda.domain.TimeSlot;
 import pl.confitura.jelatyna.platform.persistence.AuditedEntity;
 
 @Entity
@@ -61,7 +59,7 @@ public class User extends AuditedEntity {
     }
 
 
-    void updateFields(User user) {
+    public void updateFields(User user) {
         name = user.name;
         email = user.email;
         bio = user.bio;
