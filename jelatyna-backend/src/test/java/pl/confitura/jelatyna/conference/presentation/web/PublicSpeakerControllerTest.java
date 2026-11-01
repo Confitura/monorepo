@@ -29,7 +29,7 @@ import pl.confitura.jelatyna.identity.user.domain.User;
 import pl.confitura.jelatyna.identity.user.domain.UserRepository;
 
 // The speakers' public profiles: the list shows each speaker of an accepted talk with those talks, of any Edition;
-// a speaker's own profile lists every talk they give.
+// a speaker's own profile lists only their accepted talks, of any Edition, too.
 class PublicSpeakerControllerTest extends BaseIntegrationTest {
 
     @Autowired
@@ -74,16 +74,20 @@ class PublicSpeakerControllerTest extends BaseIntegrationTest {
     }
 
     @Test
-    void aSpeakersPublicProfileListsEveryTalkTheyGive() throws Exception {
+    void aSpeakersPublicProfileListsOnlyTheirAcceptedTalksOfAnyEdition() throws Exception {
         User speaker = speaker("Speaker");
+        Edition past = pastEdition();
         Presentation talk = talk("Talk", true, false, editionRepository.findCurrent(), speaker);
-        Presentation reported = talk("Past reported workshop", false, true, pastEdition(), speaker);
+        Presentation workshop = talk("Past workshop", true, true, past, speaker);
+        talk("Past rejected talk", false, false, past, speaker);
+        // Not reviewed yet: a fresh submission waits as reported, the status a rejected talk goes back to.
+        talk("Pending talk", false, false, editionRepository.findCurrent(), speaker);
 
         String body = mockMvc.perform(get("/users/" + speaker.getId() + "/public"))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 
-        JSONAssert.assertEquals(profile(speaker, talk, reported), body, JSONCompareMode.NON_EXTENSIBLE);
+        JSONAssert.assertEquals(profile(speaker, talk, workshop), body, JSONCompareMode.NON_EXTENSIBLE);
     }
 
     private String only(String speakers, User speaker) {
