@@ -19,10 +19,10 @@
     "@nuxtjs/plausible": "^4.0.0",
     "@nuxtjs/sitemap": "^9.1.0",
     "@pinia/nuxt": "^1.0.3",
-    "@plausible-analytics/tracker": "^0.4.6",
+    "@plausible-analytics/tracker": "^0.4.7",
     "dayjs": "^1.11.23",
     "isomorphic-dompurify": "^4.6.0",
-    "marked": "^18.1.1",
+    "marked": "^18.1.2",
     "modern-normalize": "^3.0.1",
     "nuxt": "^4.6.3",
     "pinia": "^4.1.0",
@@ -34,7 +34,7 @@
     "@nuxt/test-utils": "4.3.4",
     "@vue/test-utils": "^2.5.1",
     "happy-dom": "^21.0.4",
-    "sass-embedded": "^1.106.1",
+    "sass-embedded": "^1.107.0",
     "vitest": "^5.0.5"
   },
   "pnpm": {
