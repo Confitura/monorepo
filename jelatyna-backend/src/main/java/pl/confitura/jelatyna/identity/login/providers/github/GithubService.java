@@ -5,7 +5,7 @@ import com.github.scribejava.apis.GitHubApi;
 import com.github.scribejava.core.builder.ServiceBuilder;
 import com.github.scribejava.core.oauth.OAuth20Service;
 import pl.confitura.jelatyna.identity.login.providers.AbstractOAuth20Service;
-import pl.confitura.jelatyna.identity.login.providers.OAuthConfiguration;
+import pl.confitura.jelatyna.identity.login.providers.ProvidersConfiguration;
 import pl.confitura.jelatyna.identity.login.domain.OAuthUserService;
 
 import java.io.IOException;
@@ -13,12 +13,12 @@ import java.io.IOException;
 public class GithubService extends AbstractOAuth20Service {
     public static final String SYSTEM = "github";
 
-    public GithubService(OAuthUserService oauthUserService, OAuthConfiguration.OAuthProviderProperties properties, ObjectMapper mapper) {
+    public GithubService(OAuthUserService oauthUserService, ProvidersConfiguration.OAuthProviderProperties properties, ObjectMapper mapper) {
         super(oauthUserService, properties, mapper);
     }
 
     @Override
-    protected OAuth20Service createService(OAuthConfiguration.OAuthProviderProperties properties) {
+    protected OAuth20Service createService(ProvidersConfiguration.OAuthProviderProperties properties) {
         return new ServiceBuilder(properties.getApiKey())
                 .apiSecret(properties.getApiSecret())
                 .callback(properties.getCallback())

@@ -3,6 +3,7 @@ package pl.confitura.jelatyna.conference.dashboard.listmonk;
 import com.eventuallycoding.listmonk.ListmonkClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -11,7 +12,8 @@ import pl.confitura.jelatyna.conference.dashboard.domain.NewsletterApi;
 @Configuration
 @RequiredArgsConstructor
 @Profile("!test")
-public class ListMonkConfiguration {
+@EnableConfigurationProperties(ListmonkConfiguration.ListMonkConfigurationProperties.class)
+public class ListmonkConfiguration {
 
     private final ListMonkConfigurationProperties properties;
 

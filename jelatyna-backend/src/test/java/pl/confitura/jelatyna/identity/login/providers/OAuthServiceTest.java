@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class OAuthServiceTest extends BaseIntegrationTest {
 
     @Autowired
-    private OAuthConfiguration.OAuthConfigurationProperties properties;
+    private ProvidersConfiguration.OAuthConfigurationProperties properties;
 
     @Autowired
     private OAuthUserService oauthUserService;
@@ -23,7 +23,7 @@ class OAuthServiceTest extends BaseIntegrationTest {
     private ObjectMapper mapper;
     @BeforeEach
     public void setup() {
-        OAuthConfiguration configuration = new OAuthConfiguration(properties, oauthUserService, mapper);
+        ProvidersConfiguration configuration = new ProvidersConfiguration(properties, oauthUserService, mapper);
         google = configuration.google();
         github = configuration.github();
     }

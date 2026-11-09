@@ -4,6 +4,10 @@ import com.tngtech.archunit.core.importer.ImportOption;
 import com.tngtech.archunit.junit.AnalyzeClasses;
 import com.tngtech.archunit.junit.ArchTest;
 import com.tngtech.archunit.lang.ArchRule;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import static com.tngtech.archunit.base.DescribedPredicate.alwaysTrue;
 import static com.tngtech.archunit.core.domain.JavaClass.Predicates.resideInAPackage;
@@ -64,4 +68,12 @@ class ArchitectureTest {
     @ArchTest
     static final ArchRule featuresHaveNoCycles = slices().matching(FEATURES)
             .should().beFreeOfCycles();
+
+    // ADR-0006: a bean is built by a @Bean method in its package's @Configuration; only controllers are scanned.
+    @ArchTest
+    static final ArchRule beansAreDeclaredInConfigurations = noClasses()
+            .that().areNotMetaAnnotatedWith(Configuration.class)
+            .and().areNotMetaAnnotatedWith(Controller.class)
+            .and().areNotAnnotatedWith(ConfigurationProperties.class)
+            .should().beMetaAnnotatedWith(Component.class);
 }

@@ -1,7 +1,5 @@
 package pl.confitura.jelatyna.conference.presentation.domain;
 
-import org.springframework.stereotype.Component;
-
 import lombok.RequiredArgsConstructor;
 import pl.confitura.jelatyna.identity.user.domain.Security;
 
@@ -9,9 +7,8 @@ import pl.confitura.jelatyna.identity.user.domain.Security;
  * The {@code @PreAuthorize} checks over a talk or workshop, as {@code @presentationSecurity}. The user and role
  * checks they combine with stay in identity's {@link Security}.
  */
-@Component("presentationSecurity")
 @RequiredArgsConstructor
-public class PresentationSecurity {
+class PresentationSecurity {
 
     private final PresentationRepository presentationRepository;
     private final Security security;

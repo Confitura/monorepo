@@ -4,11 +4,8 @@ import static java.util.concurrent.TimeUnit.MINUTES;
 
 import java.util.Map;
 
-import org.springframework.stereotype.Service;
-
 import net.jodah.expiringmap.ExpiringMap;
 
-@Service
 public class OAuthCallbackContextHolder {
     private Map<String, OAuth2Context> tokenToContext = ExpiringMap.builder()
             .expiration(5, MINUTES)

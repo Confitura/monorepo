@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Service;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
@@ -18,9 +17,8 @@ import lombok.extern.slf4j.Slf4j;
 import pl.confitura.jelatyna.conference.registration.domain.MailSender;
 import pl.confitura.jelatyna.conference.registration.domain.MessageInfo;
 
-@Service
 @Slf4j
-public class MandrillMailSender implements MailSender {
+class MandrillMailSender implements MailSender {
     private final MandrillApi api;
     private final MailConfigurationProperties properties;
 

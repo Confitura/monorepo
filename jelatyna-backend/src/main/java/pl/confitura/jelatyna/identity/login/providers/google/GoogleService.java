@@ -5,7 +5,7 @@ import com.github.scribejava.apis.GoogleApi20;
 import com.github.scribejava.core.builder.ServiceBuilder;
 import com.github.scribejava.core.oauth.OAuth20Service;
 import pl.confitura.jelatyna.identity.login.providers.AbstractOAuth20Service;
-import pl.confitura.jelatyna.identity.login.providers.OAuthConfiguration;
+import pl.confitura.jelatyna.identity.login.providers.ProvidersConfiguration;
 import pl.confitura.jelatyna.identity.login.domain.OAuthUserService;
 
 import java.io.IOException;
@@ -21,12 +21,12 @@ public class GoogleService extends AbstractOAuth20Service{
     private static final String PROTECTED_RESOURCE_URL = "https://www.googleapis.com/plus/v1/people/me";
     private static final String GOOGLE_SCOPE = "https://www.googleapis.com/auth/userinfo.email";
 
-    public GoogleService(OAuthUserService oauthUserService, OAuthConfiguration.OAuthProviderProperties properties, ObjectMapper mapper) {
+    public GoogleService(OAuthUserService oauthUserService, ProvidersConfiguration.OAuthProviderProperties properties, ObjectMapper mapper) {
         super(oauthUserService, properties, mapper);
     }
 
     @Override
-    protected OAuth20Service createService(OAuthConfiguration.OAuthProviderProperties properties) {
+    protected OAuth20Service createService(ProvidersConfiguration.OAuthProviderProperties properties) {
         return new ServiceBuilder(properties.getApiKey())
                 .defaultScope(GOOGLE_SCOPE)
                 .responseType("code")

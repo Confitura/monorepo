@@ -25,7 +25,7 @@ public abstract class AbstractOAuth20Service {
 
     public AbstractOAuth20Service(
             OAuthUserService oauthUserService,
-            OAuthConfiguration.OAuthProviderProperties properties,
+            ProvidersConfiguration.OAuthProviderProperties properties,
             ObjectMapper mapper) {
         this.auth20Service = createService(properties);
         this.oauthUserService = oauthUserService;
@@ -33,7 +33,7 @@ public abstract class AbstractOAuth20Service {
         this.callback = properties.getCallback();
     }
 
-    protected abstract OAuth20Service createService(OAuthConfiguration.OAuthProviderProperties properties);
+    protected abstract OAuth20Service createService(ProvidersConfiguration.OAuthProviderProperties properties);
 
     public String getAuthorizationUrl(String state) {
         Map<String, String> additionalParams = Map.of(

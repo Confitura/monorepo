@@ -4,9 +4,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.datafaker.Faker;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.DependsOn;
-import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
@@ -31,14 +28,10 @@ import java.util.List;
 import java.util.Set;
 
 import static java.time.temporal.ChronoUnit.DAYS;
-import static pl.confitura.jelatyna.platform.Profiles.FAKE_DB;
 
 @Slf4j
-@Configuration()
-@Profile(FAKE_DB)
 @RequiredArgsConstructor
-@DependsOn({"agendaInitializer"})
-public class FakePresentations {
+class FakePresentations {
     private static final String TODAY_DAY_ID = "day-today";
     private final static Faker faker = new Faker();
 

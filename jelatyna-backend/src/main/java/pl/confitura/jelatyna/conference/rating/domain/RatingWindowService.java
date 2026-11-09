@@ -1,7 +1,6 @@
 package pl.confitura.jelatyna.conference.rating.domain;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 import pl.confitura.jelatyna.conference.agenda.domain.Day;
 import pl.confitura.jelatyna.conference.agenda.domain.DayRepository;
 
@@ -17,7 +16,6 @@ import java.util.Optional;
  * Europe/Warsaw, and stays open afterwards. There is no separate flag — admins control it by
  * setting the agenda dates.
  */
-@Service
 @RequiredArgsConstructor
 public class RatingWindowService {
 

@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class AgendaInitializerProfileTest {
 
     private final ApplicationContextRunner runner = new ApplicationContextRunner()
-            .withUserConfiguration(AgendaInitializer.class);
+            .withUserConfiguration(FakeDbConfiguration.class);
 
     @Test
     void isNotRegisteredWithoutFakeDbProfile() {

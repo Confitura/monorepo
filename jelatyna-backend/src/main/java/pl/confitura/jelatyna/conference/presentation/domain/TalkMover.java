@@ -2,15 +2,12 @@ package pl.confitura.jelatyna.conference.presentation.domain;
 
 import java.util.List;
 
-import org.springframework.stereotype.Component;
-
 import lombok.RequiredArgsConstructor;
 import pl.confitura.jelatyna.identity.user.domain.AbsorbedUserTalks;
 import pl.confitura.jelatyna.identity.user.domain.User;
 
-@Component
 @RequiredArgsConstructor
-public class TalkMover implements AbsorbedUserTalks {
+class TalkMover implements AbsorbedUserTalks {
 
     private final PresentationRepository presentations;
 
