@@ -23,6 +23,7 @@ jobs:
           filters: |
             backend:
               - 'jelatyna-backend/**'
+              - '.github/workflows/check-builds.yml'
             frontend:
               - 'webpage/**'
             admin-app:
@@ -62,14 +63,18 @@ jobs:
           java-version: '25'
           distribution: temurin
           cache: maven
+      # The cache is keyed by runner image: a tarball another image's Docker saved breaks build-image's export.
+      - name: Read runner image
+        id: runner-image
+        run: echo "os=$ImageOS" >> "$GITHUB_OUTPUT"
       # Restore only: deploy-images.yml's push-backend owns this cache and saves it.
       - name: Restore Paketo builder
         id: paketo-cache
         uses: actions/cache/restore@v6
         with:
           path: /tmp/paketo-builder.tar
-          key: paketo-builder-${{ hashFiles('jelatyna-backend/pom.xml') }}
-          restore-keys: paketo-builder-
+          key: paketo-builder-${{ steps.runner-image.outputs.os }}-${{ hashFiles('jelatyna-backend/pom.xml') }}
+          restore-keys: paketo-builder-${{ steps.runner-image.outputs.os }}-
       - name: Load Paketo builder
         if: steps.paketo-cache.outputs.cache-matched-key != ''
         run: docker load -i /tmp/paketo-builder.tar

@@ -93,7 +93,7 @@ GitHub Actions (`.github/workflows/run-tests.yml`) runs on pushes to `master` an
 - **test-frontend** (webpage): Node 24, pnpm 10.34.9, `pnpm install --frozen-lockfile → build → test`
 - **test-admin-app**: Node 24, pnpm 10.34.9, `pnpm install --frozen-lockfile → codegen + git diff --exit-code src/client (drift check) → typecheck → test:unit`
 
-`.github/workflows/check-builds.yml` runs on the same triggers with its own paths filter (module directories only, not `openapi.json`) and builds the deployable images: Docker builds of webpage and admin-app, and the backend's Paketo image with `./mvnw spring-boot:build-image -DskipTests`, the same build `deploy-images.yml`'s `push-backend` deploys, without the GHCR login or push. It restores (never saves) `push-backend`'s Paketo builder cache. `spring-boot:build-image` is the only way to build a backend image.
+`.github/workflows/check-builds.yml` runs on the same triggers with its own paths filter (module directories, not `openapi.json`; backend also on changes to `check-builds.yml` itself) and builds the deployable images: Docker builds of webpage and admin-app, and the backend's Paketo image with `./mvnw spring-boot:build-image -DskipTests`, the same build `deploy-images.yml`'s `push-backend` deploys, without the GHCR login or push. It restores (never saves) `push-backend`'s Paketo builder cache, keyed by runner image (`$ImageOS`) so a tarball saved by another image's Docker is never loaded. `spring-boot:build-image` is the only way to build a backend image.
 
 Each workflow ends in an aggregator job — `all-tests-passed` and `all-builds-passed` — that fails if any job failed and passes if they passed or were skipped. These two are the required checks on `master`.
 
