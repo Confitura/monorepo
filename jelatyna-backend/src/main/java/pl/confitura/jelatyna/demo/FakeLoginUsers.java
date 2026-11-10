@@ -3,8 +3,6 @@ package pl.confitura.jelatyna.demo;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import pl.confitura.jelatyna.conference.presentation.domain.PresentationRequest;
 import pl.confitura.jelatyna.conference.presentation.domain.WorkshopRequest;
 import pl.confitura.jelatyna.conference.edition.domain.Edition;
@@ -21,11 +19,7 @@ import pl.confitura.jelatyna.identity.user.domain.UserRepository;
 import java.util.Map;
 import java.util.Set;
 
-import static pl.confitura.jelatyna.platform.Profiles.FAKE_SECURITY;
-
 @Slf4j
-@Configuration
-@Profile(FAKE_SECURITY)
 @RequiredArgsConstructor
 public class FakeLoginUsers {
 

@@ -1,13 +1,11 @@
 package pl.confitura.jelatyna.conference.rating.domain;
 
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.AllArgsConstructor;
 import pl.confitura.jelatyna.conference.presentation.domain.Presentation;
 import pl.confitura.jelatyna.conference.presentation.domain.PresentationRepository;
 
-@Service
 @AllArgsConstructor
 public class RatingService {
 

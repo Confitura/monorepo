@@ -1,5 +1,5 @@
 # Destructive demo mode on top of local (or test): every start wipes the schema and re-seeds fake data.
 spring:
-  # FakeDbFlywayConfiguration cleans the schema on every start; nothing outside fake-db may clean.
+  # FakeDbConfiguration cleans the schema on every start; nothing outside fake-db may clean.
   flyway:
     clean-disabled: false

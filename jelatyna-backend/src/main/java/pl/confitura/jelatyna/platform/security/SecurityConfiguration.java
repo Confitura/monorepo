@@ -54,4 +54,10 @@ public class SecurityConfiguration {
         return registration;
     }
 
+    // The name a scanned OAuthCallbackContextHolder had: JavaBeans leave a name starting with two capitals as it is.
+    @Bean("OAuthCallbackContextHolder")
+    public OAuthCallbackContextHolder oauthCallbackContextHolder() {
+        return new OAuthCallbackContextHolder();
+    }
+
 }

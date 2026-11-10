@@ -8,12 +8,10 @@ import java.util.Locale;
 import java.util.Set;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import static com.google.common.io.Files.*;
 
-@Service
 @RequiredArgsConstructor
 public class ResourceStorage {
 

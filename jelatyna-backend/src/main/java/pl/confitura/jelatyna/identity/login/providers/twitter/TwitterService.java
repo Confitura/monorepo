@@ -3,8 +3,6 @@ package pl.confitura.jelatyna.identity.login.providers.twitter;
 import static com.github.scribejava.core.model.Verb.GET;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import tools.jackson.databind.ObjectMapper;
 import com.github.scribejava.apis.TwitterApi;
@@ -17,14 +15,12 @@ import com.github.scribejava.core.oauth.OAuth10aService;
 import pl.confitura.jelatyna.identity.login.domain.OAuthUserService;
 import pl.confitura.jelatyna.identity.user.domain.User;
 
-@Service
 @Slf4j
 public class TwitterService {
     private ObjectMapper mapper;
     private OAuth10aService service;
     private OAuthUserService oauthUserService;
 
-    @Autowired
     public TwitterService(OAuthUserService oauthUserService, TwitterConfigurationProperties properties, ObjectMapper mapper) {
         this.oauthUserService = oauthUserService;
         this.mapper = mapper;

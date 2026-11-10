@@ -2,7 +2,6 @@ package pl.confitura.jelatyna.conference.agenda.domain;
 
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.confitura.jelatyna.conference.presentation.domain.Presentation;
 import pl.confitura.jelatyna.conference.presentation.domain.PresentationRepository;
@@ -11,7 +10,6 @@ import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Service
 @RequiredArgsConstructor
 public class AgendaService {
     private final TimeSlotsRepository timeSlotsRepository;

@@ -2,6 +2,7 @@ package pl.confitura.jelatyna.webpage.archive.domain;
 
 import tools.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -18,6 +19,7 @@ import pl.confitura.jelatyna.identity.user.domain.UserRepository;
 @Configuration
 @RequiredArgsConstructor
 @EnableScheduling
+@EnableConfigurationProperties(ResourceConfigurationProperties.class)
 public class ArchiveConfiguration {
 
     private final ObjectMapper objectMapper;

@@ -1,6 +1,5 @@
 package pl.confitura.jelatyna.webpage.chat.domain;
 
-import org.springframework.stereotype.Service;
 import pl.confitura.jelatyna.webpage.chat.domain.ChatTypes.AskRequest;
 import pl.confitura.jelatyna.webpage.chat.domain.ChatTypes.EventSink;
 import pl.confitura.jelatyna.webpage.chat.domain.ChatTypes.SseEvent;
@@ -17,7 +16,6 @@ import java.util.Optional;
  * name↔id translation, the Datalinks call, caching, and relaying SSE events.
  * The Datalinks token lives only in {@link DatalinksClient} and never reaches a sink.
  */
-@Service
 public class ChatService {
 
     private final ChatConfigurationProperties properties;

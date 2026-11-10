@@ -4,11 +4,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
-import org.springframework.stereotype.Component;
 import pl.confitura.jelatyna.conference.agenda.domain.*;
 import pl.confitura.jelatyna.conference.agenda.domain.TimeSlot.TimeSlotId;
 import pl.confitura.jelatyna.conference.edition.domain.EditionRepository;
@@ -20,13 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.Collections.emptyList;
-import static pl.confitura.jelatyna.platform.Profiles.FAKE_DB;
 
-@Component
-@Profile(FAKE_DB)
 @Slf4j
 @RequiredArgsConstructor
-public class AgendaInitializer {
+class AgendaInitializer {
 
     private final DayRepository dayRepository;
     private final RoomRepository roomRepository;

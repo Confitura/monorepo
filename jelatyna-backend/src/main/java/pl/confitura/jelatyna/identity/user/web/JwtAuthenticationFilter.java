@@ -17,7 +17,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
-import org.springframework.stereotype.Component;
 
 import tools.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -31,10 +30,9 @@ import pl.confitura.jelatyna.platform.web.JsonError;
 import pl.confitura.jelatyna.identity.user.domain.User;
 import pl.confitura.jelatyna.identity.user.domain.UserRepository;
 
-@Component
 @Slf4j
 @RequiredArgsConstructor
-public class JwtAuthenticationFilter extends AuthenticationFilter {
+class JwtAuthenticationFilter extends AuthenticationFilter {
 
     private final TokenService tokenService;
     private final UserRepository userRepository;

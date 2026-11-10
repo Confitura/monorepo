@@ -1,7 +1,6 @@
 package pl.confitura.jelatyna.webpage.chat.datalinks;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 import pl.confitura.jelatyna.webpage.chat.domain.ChatConfigurationProperties;
 import pl.confitura.jelatyna.webpage.chat.domain.ChatTypes.SseEvent;
 import pl.confitura.jelatyna.webpage.chat.domain.DatalinksClient;
@@ -18,8 +17,7 @@ import java.util.function.Consumer;
 
 /** Datalinks client backed by the JDK {@link HttpClient} streaming the SSE body. */
 @Slf4j
-@Component
-public class HttpDatalinksClient implements DatalinksClient {
+class HttpDatalinksClient implements DatalinksClient {
 
     private final ChatConfigurationProperties.Datalinks config;
     private final String helperPrompt;

@@ -12,7 +12,6 @@ import io.jsonwebtoken.security.Keys;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -26,7 +25,6 @@ import pl.confitura.jelatyna.platform.security.JelatynaPrincipal;
 import javax.crypto.SecretKey;
 
 
-@Service
 @Slf4j
 @RequiredArgsConstructor
 public class TokenService {
