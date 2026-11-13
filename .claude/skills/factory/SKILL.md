@@ -35,8 +35,8 @@ A task whose dependencies are all `Done` except one, its **parent**, which is `I
 
 Only inside herdr (`HERDR_ENV=1`). Otherwise skip this section and every **Herdr:** line below; the factory works the same without them. Herdr only shows what the factory does: never use it to start or host agents.
 
-- **Dashboard.** When `run`, `fix` or an `auto` iteration starts, reuse the pane labelled `factory-watch` if `herdr pane list --workspace "$HERDR_WORKSPACE_ID"` still has one (`.result.panes[].label`). Otherwise `herdr pane split --current --direction right --cwd "$PWD" --no-focus` (new id at `.result.pane.pane_id`), `herdr pane run <id> .claude/skills/factory/watch.sh` and `herdr pane rename <id> factory-watch`. The script is read-only: phase, event timeline, board, open factory PRs with CI and Macroscope status, and the branch being worked on.
-- **Phase `<p>`** (the **Herdr:** lines below): overwrite `backlog/.factory-phase` with `<p> · <task id> <title> · started <HH:MM>` (add ` · <m>/<e>` for an implementer; `idle` has no task), append `<YYYY-MM-DD HH:MM> <that line>` to `backlog/.factory-events.log` and trim it to its last 200 lines (both sit next to `.factory-auto.json`, gitignored with the board), and title the lead's pane: `herdr pane report-metadata --source factory --title 'factory · <task id or PR> · <p>' "$HERDR_PANE_ID"`. Wherever the `run`, `fix` or `auto` iteration stops, `herdr pane report-metadata --source factory --clear-title "$HERDR_PANE_ID"`.
+- **Dashboard.** When `run`, `fix` or an `auto` iteration starts, `.claude/skills/factory/open-watch.sh`. It reuses the pane labelled `factory-watch`, or splits the lead's pane right without taking focus and runs the read-only dashboard `.claude/skills/factory/watch.sh` in it: phase, event timeline, board, open factory PRs with CI and Macroscope status, and the branch being worked on.
+- **Phase `<p>`** (the **Herdr:** lines below): `.claude/skills/factory/phase.sh '<p> · <task id> <title>'` (add ` · <m>/<e>` for an implementer; `idle` and `clone-dirty` have no task). It overwrites `backlog/.factory-phase` with the line and its start time, appends it timestamped to `backlog/.factory-events.log`, kept to its last 200 lines (both sit next to `.factory-auto.json`, gitignored with the board), and titles the lead's pane `factory · <the line>`. Wherever the `run`, `fix` or `auto` iteration stops, `.claude/skills/factory/phase.sh --clear` clears the title. Outside herdr `open-watch.sh` does nothing and `phase.sh` only writes the files, but the factory calls neither there.
 - **Notifications.** Every `auto` notification also goes out as `herdr notification show '<short title>' --body '<the line>' --sound <s>`, next to `PushNotification` and under the same key, so the same once-per-key dedupe covers both. `--sound done` for `pr-opened` of a PR targeting `master` (it auto-merges), `split` and `idle`; `--sound request` for the rest, which need the human.
 
 ## setup
@@ -68,7 +68,7 @@ Only inside herdr (`HERDR_ENV=1`). Otherwise skip this section and every **Herdr
 ### 1. Pick the task
 
 - With an id: `backlog task view <id> --plain`; it must be `To Do`, labelled `ready-for-agent`, and appear in the ready list below or be stackable (**Stacks**). Otherwise explain why and stop.
-- Without: the first task from `backlog task list -s "To Do" -l ready-for-agent --ready --plain`. If that's empty, the first stackable task in `backlog task list -s "To Do" -l ready-for-agent --plain` (check each one's dependencies with `backlog task view`). Neither → say the frontier is empty and stop.
+- Without: the first task from `backlog task list -s "To Do" -l ready-for-agent --ready --plain`. If that's empty, the first stackable task in `backlog task list -s "To Do" -l ready-for-agent --plain` (check each one's dependencies with `backlog task view`). Neither → say the frontier is empty (**Herdr:** phase `idle`) and stop.
 
 `--ready` treats a dependency as satisfied only when it is `Done` (merged). A stackable task builds on exactly one unmerged PR, its parent's.
 
@@ -88,7 +88,7 @@ If the task clearly won't fit in about 300 counted lines, split it **before bran
 2. Create each later slice with `backlog task create "<title>" -d "<description>" --ac "<criterion>" … -l ready-for-agent --dep <previous slice id>`, so each depends on the one before and the `--ready` frontier keeps them in order. Carry over a `model:` / `effort:` label only if the human set it on the original; leave the rest unlabelled so each slice is tiered on its own when it runs.
 3. Tasks that depended on the original would otherwise become ready as soon as slice 1 merges. Find them (`backlog task list --plain`, then `backlog task view <id> --plain` for each) and add the last slice to their dependencies: `backlog task edit <dependent> --dep <its existing dependencies>,<last slice id>` (`--dep` replaces the list, so repeat the existing ones).
 4. Record it: `backlog task edit <id> --append-notes "factory: split into <id>, <new ids> — <one-line reason>"`.
-5. Run only the first slice (the original task) through the rest of `run`. In `auto` mode, also notify `split:<id>`.
+5. Run only the first slice (the original task) through the rest of `run`. In `auto` mode, also notify `split:<id>`. **Herdr:** phase `split into <new ids>`.
 
 When in doubt, don't split: the implementer stops at a green checkpoint if the diff runs over (see step 5).
 
@@ -259,9 +259,9 @@ One unattended iteration, meant for `/loop /factory auto` in a dedicated clone o
 
 **Herdr:** open the dashboard first, and clear the pane title wherever the iteration stops.
 
-1. **Clone check.** The tree must be clean and on `master`. If not, notify `clone-dirty` and stop. Then `git fetch origin --prune` and fast-forward `master` (`git merge --ff-only origin/master`); if that fails, notify `clone-dirty` and stop.
+1. **Clone check.** The tree must be clean and on `master`. If not, notify `clone-dirty` and stop. Then `git fetch origin --prune` and fast-forward `master` (`git merge --ff-only origin/master`); if that fails, notify `clone-dirty` and stop. **Herdr:** phase `clone-dirty` on either stop.
 2. **`sync`** as above.
-3. **Interrupted work.** If a task is `In Progress`, an earlier iteration didn't finish. Notify `stuck:<task>` and stop; never reset it alone.
+3. **Interrupted work.** If a task is `In Progress`, an earlier iteration didn't finish. Notify `stuck:<task>` (**Herdr:** phase `stuck`) and stop; never reset it alone.
 4. **Conflicts, failing checks and review comments.** If `fix` has a candidate PR (its step 1, which also notifies the PRs out of attempts), run `fix` on it exactly as in `fix` (the remembered branch is `master`), then stop: that fix is this iteration's one piece of work.
 5. **Human tasks.** For each `To Do` task labelled `ready-for-human` whose dependencies are all `Done`, notify `human-ready:<task>`.
 6. **Pick.** Take the task `run` would pick (its step 1), stackable tasks included. If there is none, notify `idle:<open PRs>` ("nothing ready; waiting on your merges of #…"), **Herdr:** phase `idle`, and stop.

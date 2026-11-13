@@ -16,6 +16,7 @@ pr_filter='def n($s): map(select(. == $s)) | length;
   + " · \(.mergeable | ascii_downcase)"'
 
 # gh at most once a minute, cached between redraws; the timeout keeps a slow network from stalling the loop.
+command -v timeout >/dev/null || timeout() { perl -e 'alarm shift; exec @ARGV' "$@"; } # alarm survives exec
 prs_at=-60
 refresh_prs() {
   [ $((SECONDS - prs_at)) -ge 60 ] || return
@@ -63,11 +64,12 @@ frame() {
   fi
 }
 
-# Cut to the ~95-column pane so long titles don't wrap.
-if [ -n "$ONCE" ]; then refresh_prs; frame | cut -c1-95; exit; fi
+# Cut to the ~95-column pane so long titles don't wrap; perl counts UTF-8 characters whatever the locale.
+cut95() { perl -CS -lpe '$_ = substr $_, 0, 95'; }
+if [ -n "$ONCE" ]; then refresh_prs; frame | cut95; exit; fi
 while true; do
   refresh_prs
-  out=$(frame | cut -c1-95)
+  out=$(frame | cut95)
   clear
   printf '%s\n' "$out"
   sleep 5
