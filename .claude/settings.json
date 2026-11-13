@@ -44,7 +44,15 @@
       "Bash(gh pr edit * --base master)",
       "Bash(gh stack link *)",
       "Bash(git merge --no-edit origin/factory/*)",
-      "Bash(git merge-base --is-ancestor *)"
+      "Bash(git merge-base --is-ancestor *)",
+      "Bash(herdr pane list --workspace *)",
+      "Bash(herdr pane split --current --direction right --cwd * --no-focus)",
+      "Bash(herdr pane run * .claude/skills/factory/watch.sh)",
+      "Bash(herdr pane rename * factory-watch)",
+      "Bash(herdr pane report-metadata --source factory *)",
+      "Bash(herdr notification show *)",
+      "Bash(.claude/skills/factory/watch.sh)",
+      "Bash(ONCE=1 .claude/skills/factory/watch.sh)"
     ],
     "deny": [
       "Bash(gh pr merge *)",
