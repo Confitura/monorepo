@@ -15,8 +15,7 @@ pr_filter='def n($s): map(select(. == $s)) | length;
      elif ($verdict | contains("Needs human approval")) then "needs human" else "pending" end)"
   + " · \(.mergeable | ascii_downcase)"'
 
-# gh at most once a minute, cached between redraws; the timeout keeps a slow network from stalling the loop.
-command -v timeout >/dev/null || timeout() { perl -e 'alarm shift; exec @ARGV' "$@"; } # alarm survives exec
+# gh at most once a minute, cached between redraws; timeout keeps a slow network from stalling the loop; a missing timeout fails fast (no fallback can stop gh, a Go binary that ignores SIGALRM).
 prs_at=-60
 refresh_prs() {
   [ $((SECONDS - prs_at)) -ge 60 ] || return
