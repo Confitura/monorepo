@@ -4,7 +4,7 @@
 #   phase.sh --clear         clear the lead's pane title (the iteration stopped)
 # Writes only the two files outside herdr; the pane title needs HERDR_ENV=1.
 cd "$(dirname "$0")" && cd "$(git rev-parse --show-toplevel)" || exit 1
-title() { [ "$HERDR_ENV" != 1 ] || herdr pane report-metadata --source factory "$@" "$HERDR_PANE_ID"; }
+title() { [ "$HERDR_ENV" != 1 ] || herdr pane report-metadata "$HERDR_PANE_ID" --source factory "$@"; }
 if [ "$1" = --clear ]; then title --clear-title; exit; fi
 [ -n "$1" ] || { echo "usage: phase.sh '<phase line>' | --clear" >&2; exit 2; }
 printf '%s · started %s\n' "$1" "$(date +%H:%M)" > backlog/.factory-phase
