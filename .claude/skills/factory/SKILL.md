@@ -31,6 +31,14 @@ A task whose dependencies are all `Done` except one, its **parent**, which is `I
 - **Changes travel up by merging:** when a PR in a stack gets a new commit, the PR above it needs a **restack**, which `fix` does by merging the base in, one level per run.
 - **Merged below:** when a parent PR merges, GitHub moves the PR above it onto `master`; if it doesn't, `sync` retargets it. A squash merge leaves the parent's commits in the branch, so the PR then needs a restack from `master` too. Moving onto `master` brings no approval event, so the PR auto-merges only once Macroscope approves a later head (such as its restack); until then the maintainer merges it.
 
+## Herdr
+
+Only inside herdr (`HERDR_ENV=1`). Otherwise skip this section and every **Herdr:** line below; the factory works the same without them. Herdr only shows what the factory does: never use it to start or host agents.
+
+- **Dashboard.** When `run`, `fix` or an `auto` iteration starts, `.claude/skills/factory/open-watch.sh`. It reuses the pane labelled `factory-watch`, or splits the lead's pane right without taking focus and runs the read-only dashboard `.claude/skills/factory/watch.sh` in it: phase, event timeline, board, open factory PRs with CI and Macroscope status, and the branch being worked on.
+- **Phase `<p>`** (the **Herdr:** lines below): `.claude/skills/factory/phase.sh '<p> · <task id> <title>'` (add ` · <m>/<e>` for an implementer; `idle` and `clone-dirty` have no task). It overwrites `backlog/.factory-phase` with the line and its start time, appends it timestamped to `backlog/.factory-events.log`, kept to its last 200 lines (both sit next to `.factory-auto.json`, gitignored with the board), and titles the lead's pane `factory · <the line>`. Wherever the `run`, `fix` or `auto` iteration stops, `.claude/skills/factory/phase.sh --clear` clears the title. Outside herdr `open-watch.sh` does nothing and `phase.sh` only writes the files, but the factory calls neither there.
+- **Notifications.** Every `auto` notification also goes out as `herdr notification show '<short title>' --body '<the line>' --sound <s>`, next to `PushNotification` and under the same key, so the same once-per-key dedupe covers both. `--sound done` for `pr-opened` of a PR targeting `master` (it auto-merges), `split` and `idle`; `--sound request` for the rest, which need the human.
+
 ## setup
 
 1. `backlog --version` — if missing, tell the user to run `brew install backlog-md` and stop.
@@ -55,11 +63,12 @@ A task whose dependencies are all `Done` except one, its **parent**, which is `I
 - `gh auth status` succeeds.
 - `git fetch origin --prune`.
 - Remember the current branch (`git branch --show-current`) to return to at the end.
+- **Herdr:** open the dashboard.
 
 ### 1. Pick the task
 
 - With an id: `backlog task view <id> --plain`; it must be `To Do`, labelled `ready-for-agent`, and appear in the ready list below or be stackable (**Stacks**). Otherwise explain why and stop.
-- Without: the first task from `backlog task list -s "To Do" -l ready-for-agent --ready --plain`. If that's empty, the first stackable task in `backlog task list -s "To Do" -l ready-for-agent --plain` (check each one's dependencies with `backlog task view`). Neither → say the frontier is empty and stop.
+- Without: the first task from `backlog task list -s "To Do" -l ready-for-agent --ready --plain`. If that's empty, the first stackable task in `backlog task list -s "To Do" -l ready-for-agent --plain` (check each one's dependencies with `backlog task view`). Neither → say the frontier is empty (**Herdr:** phase `idle`) and stop.
 
 `--ready` treats a dependency as satisfied only when it is `Done` (merged). A stackable task builds on exactly one unmerged PR, its parent's.
 
@@ -79,7 +88,7 @@ If the task clearly won't fit in about 300 counted lines, split it **before bran
 2. Create each later slice with `backlog task create "<title>" -d "<description>" --ac "<criterion>" … -l ready-for-agent --dep <previous slice id>`, so each depends on the one before and the `--ready` frontier keeps them in order. Carry over a `model:` / `effort:` label only if the human set it on the original; leave the rest unlabelled so each slice is tiered on its own when it runs.
 3. Tasks that depended on the original would otherwise become ready as soon as slice 1 merges. Find them (`backlog task list --plain`, then `backlog task view <id> --plain` for each) and add the last slice to their dependencies: `backlog task edit <dependent> --dep <its existing dependencies>,<last slice id>` (`--dep` replaces the list, so repeat the existing ones).
 4. Record it: `backlog task edit <id> --append-notes "factory: split into <id>, <new ids> — <one-line reason>"`.
-5. Run only the first slice (the original task) through the rest of `run`. In `auto` mode, also notify `split:<id>`.
+5. Run only the first slice (the original task) through the rest of `run`. In `auto` mode, also notify `split:<id>`. **Herdr:** phase `split into <new ids>`.
 
 When in doubt, don't split: the implementer stops at a green checkpoint if the diff runs over (see step 5).
 
@@ -107,7 +116,7 @@ The reviewer ignores these labels — it is pinned to `opus` / `xhigh` in its ow
 
 ### 4. Implement
 
-Spawn **one** `factory-implementer` subagent (foreground) with `model: <m>` and `effort: <e>` from step 2, and this prompt:
+**Herdr:** phase `implementer`. Spawn **one** `factory-implementer` subagent (foreground) with `model: <m>` and `effort: <e>` from step 2, and this prompt:
 
 ```
 TASK: <id> — <title>
@@ -123,6 +132,7 @@ BASE: <S>
 - `REMAINING WORK` in the report that isn't `none` means the implementer stopped at a green checkpoint to stay near the size budget. The reviewer marks the criteria listed there `DEFERRED`, which is not a FAIL. Publish what's done as usual, then in **Publish** create the follow-up task for the remainder.
 - `VERDICT: FAIL` (first time) → resume the same implementer with `SendMessage` (agent id from its result) carrying the REQUIRED FIXES — it keeps its model and effort. If resuming isn't possible, spawn a fresh `factory-implementer` with the same `model` / `effort`, the task text, the findings, and "remediation mode: the branch already has your earlier commits". Then run a **new** reviewer.
 - Second FAIL → **Hand to human**.
+- **Herdr:** phase `reviewer` as each reviewer starts, then `verdict PASS` or `verdict FAIL` (and `implementer` again for a fix round).
 
 ### 6. Publish (on PASS)
 
@@ -149,21 +159,23 @@ BASE: <S>
    If the WHY doesn't answer an obvious "why this way?" about the diff, ask the implementer to complete it before publishing — never fill it in from backlog notes.
 
    For a stacked task, end the body with `Stacked on #<parent PR>: review that one first. Merging this PR also merges the PRs below it.`, then link the stack (**Stacks**). If linking fails, keep the PR (its base already chains it) and say so in the report.
+
+   **Herdr:** phase `PR opened #<n>`.
 3. `backlog task edit <id> -s "In Review" --ref <PR url> --append-notes "factory: PR <url> (ready for review), reviewer PASS"` plus `--check-ac <n>` for each criterion the reviewer marked MET (not the DEFERRED ones).
 4. If the report's `REMAINING WORK` isn't `none`, create the follow-up: `backlog task create "<title>" -d "<what's left>" --ac "<criterion>" … -l ready-for-agent --dep <id>` with the deferred criteria as its `--ac`s. Carry over a `model:` / `effort:` label only if the human set it (the ones the factory added are recorded in a `factory: tier` note; leave those off so the follow-up is tiered on its own). Append `factory: remaining work split off as <new id>` to the task's notes. It depends on this task, so it stays off the frontier until the PR merges. As in a split, add the new task to the dependencies of any task that depended on this one (`--dep` replaces the list, so repeat the existing ones).
 
 ### Hand to human
 
-Don't push. `backlog task edit <id> -s "To Do" --remove-label ready-for-agent --add-label ready-for-human --append-notes "<blocker or reviewer findings>; local branch <B>"`.
+Don't push. `backlog task edit <id> -s "To Do" --remove-label ready-for-agent --add-label ready-for-human --append-notes "<blocker or reviewer findings>; local branch <B>"`. **Herdr:** phase `handed to human`.
 
 ### 7. Finish
 
-`git switch <remembered branch>`. Report: task, tier with model / effort, branch, verdict, PR url (or what the human must decide), and the next ready task from the frontier.
+`git switch <remembered branch>`. **Herdr:** clear the pane title. Report: task, tier with model / effort, branch, verdict, PR url (or what the human must decide), and the next ready task from the frontier.
 
 ## sync
 
 1. `backlog task list -s "In Review" --plain`. For each task, read its PR url from `References:` in `backlog task view <id> --plain`, then `gh pr view <url> --json state,headRefName,baseRefName,isDraft`.
-   - `MERGED` → `backlog task edit <id> -s "Done" --append-notes "factory: merged <YYYY-MM-DD>"`; delete the task's local branches — `<headRefName>` plus any earlier attempts from `git branch --list 'factory/<id lowercase>-*'` — with `git branch -D`, skipping one that is checked out (squash merges aren't ancestors, so `-d` fails).
+   - `MERGED` → `backlog task edit <id> -s "Done" --append-notes "factory: merged <YYYY-MM-DD>"` (**Herdr:** phase `merged #<pr>`); delete the task's local branches — `<headRefName>` plus any earlier attempts from `git branch --list 'factory/<id lowercase>-*'` — with `git branch -D`, skipping one that is checked out (squash merges aren't ancestors, so `-d` fails).
    - `CLOSED` → `backlog task edit <id> -s "To Do" --remove-label ready-for-agent --add-label ready-for-human --append-notes "factory: PR closed unmerged"`.
    - `OPEN` → report whether it's ready or a draft (a draft means a human turned it back), a one-line `gh pr checks <url>` summary, and how many review comments are pending (see **Review comments** in `fix`). If its base branch belongs to a merged PR or no longer exists, GitHub didn't move it down its stack: `gh pr edit <url> --base master`.
 2. `git fetch origin --prune`.
@@ -175,7 +187,7 @@ Repairs one open factory PR on its own branch: merges its base (`master`, or in 
 
 ### Preflight
 
-As in `run`: a clean tree, no task `In Progress`, `gh auth status`, `git fetch origin --prune`, and remember the current branch.
+As in `run`: a clean tree, no task `In Progress`, `gh auth status`, `git fetch origin --prune`, and remember the current branch. **Herdr:** open the dashboard.
 
 ### 1. Pick the PR
 
@@ -211,7 +223,7 @@ For review comments, take the pending ones from step 1: per comment its id, its 
 
 1. `git switch --no-track -C <headRefName> origin/<headRefName>` (`-C` resets a stale local copy to what the PR has). Note `git rev-parse --short HEAD` as the PR's previous head.
 2. For a conflict or restack, `git merge --no-edit origin/<baseRefName>` (after a parent merged, that is `origin/master`). If it completes on its own, there's nothing hand-written to review: push it (step 4) and let CI check it. A check that then fails comes back through `fix`. If it stops on conflicts, leave the merge in progress for the implementer.
-3. Spawn **one** `factory-implementer` with the task's `model:` / `effort:` labels and this prompt:
+3. **Herdr:** phase `implementer · fix #<pr>`. Spawn **one** `factory-implementer` with the task's `model:` / `effort:` labels and this prompt:
    ```
    TASK: <id> — <title>
    BRANCH: <headRefName> (already checked out; it is PR <url>)
@@ -222,35 +234,37 @@ For review comments, take the pending ones from step 1: per comment its id, its 
    ```
    For a conflict, replace the `FAILING CHECKS` block with `MERGE CONFLICT: a merge of origin/<baseRefName> is in progress; conflicting files: <git diff --name-only --diff-filter=U>`. For review comments, replace it with `REVIEW COMMENTS:` and, per comment, `<id> — <author> — <path:line, or conversation>`, then its body (and a thread's earlier comments).
 4. `STATUS: BLOCKED` → **Hand back** (if a merge is still in progress, `git merge --abort` first). `STATUS: DONE` → confirm `git log --oneline origin/<headRefName>..HEAD` is non-empty (for review comments it is empty when none was FIXED) and `git status --porcelain` is clean, then spawn a `factory-reviewer` with the task text, `BRANCH: <headRefName>`, `BASE: origin/<baseRefName>`, `PREVIOUS HEAD: <sha>`, the FAILING CHECKS, MERGE CONFLICT or REVIEW COMMENTS block, and the implementer's report.
-5. A first `VERDICT: FAIL` gets one fix round, as in `run` step 5. A second FAIL → **Hand back**.
+5. A first `VERDICT: FAIL` gets one fix round, as in `run` step 5. A second FAIL → **Hand back**. **Herdr:** the reviewer and verdict phases as in `run` step 5.
 
 ### 4. Push (on PASS)
 
-1. `git push origin <headRefName>`. It's a plain push: if it's rejected because the branch moved, go to **Hand back**. Never force. Review comments with nothing FIXED have no commit to push: skip to step 3.
+1. `git push origin <headRefName>`. It's a plain push: if it's rejected because the branch moved, go to **Hand back**. Never force. Review comments with nothing FIXED have no commit to push: skip to step 3. **Herdr:** phase `fix pushed #<pr>`.
 2. Add one line at the end of the PR's `## Verification` list: read the body (`gh pr view <url> --json body`), add the line, then `gh pr edit <url> --body-file <tmp file>`. The line: `- Check fix (<short sha>): <the implementer's TLDR>`, for a conflict or restack `- Merged <baseRefName> (<short sha>): <the implementer's TLDR, or "no conflicts">`, or for review comments `- Review comments (<short sha>): <the implementer's TLDR>`. Like the rest of the PR, it's public.
 3. For review comments, post each reply from the `COMMENTS` section of the implementer's report as written, ending with `<!-- factory -->`. A thread comment gets its reply in the thread: `gh api -X POST "repos/{owner}/{repo}/pulls/<n>/comments/<comment id>/replies" -F body=@<tmp file>`. Conversation comments and review bodies get one `gh pr comment <url> --body-file <tmp file>` that quotes each and answers it. Don't resolve threads: that's the commenter's call, and Macroscope resolves its own once the code is fixed.
 4. `backlog task edit <id> --append-notes "factory: fixed <the conflict | failing checks | review comments> on <PR url> in <short sha, or "replies only">, reviewer PASS"`.
 
 ### Hand back
 
-Don't push or reply. `backlog task edit <id> --append-notes "factory: couldn't fix <the conflict | failing checks | review comments> on <PR url> — <one line>"`. The task stays `In Review` for the human. In `auto` mode, notify `pr-conflict:<pr>:<head sha>`, `pr-checks-failed:<pr>:<head sha>` or `pr-comments:<pr>:<newest pending comment id>` with that line.
+Don't push or reply. `backlog task edit <id> --append-notes "factory: couldn't fix <the conflict | failing checks | review comments> on <PR url> — <one line>"`. The task stays `In Review` for the human. **Herdr:** phase `handed back #<pr>`. In `auto` mode, notify `pr-conflict:<pr>:<head sha>`, `pr-checks-failed:<pr>:<head sha>` or `pr-comments:<pr>:<newest pending comment id>` with that line.
 
 ### Finish
 
-`git switch <remembered branch>`. Report: the PR, the conflict, its failing checks or its review comments, the verdict, and the pushed commit and replies or why it was handed back.
+`git switch <remembered branch>`. **Herdr:** clear the pane title. Report: the PR, the conflict, its failing checks or its review comments, the verdict, and the pushed commit and replies or why it was handed back.
 
 ## auto
 
 One unattended iteration, meant for `/loop /factory auto` in a dedicated clone of the repo (so it never switches branches under someone's IDE). It does `sync`, then at most one `fix` or one `run`, and tells the human only when they're needed.
 
-**Notifications.** Send them with the `PushNotification` tool, one short line each (what happened, the id or PR, what to do). Send each event once: keep the keys already sent in `backlog/.factory-auto.json` (gitignored with the board) and skip a key that's there (the same file holds `fix`'s attempt keys). Keys: `pr-opened:<pr>`, `pr-checks-failed:<pr>:<head sha>`, `pr-conflict:<pr>:<head sha>`, `pr-comments:<pr>:<comment id>`, `handed:<task>`, `split:<task>`, `human-ready:<task>`, `stuck:<task>`, `idle:<sorted open PR numbers>`, `clone-dirty`.
+**Notifications.** Send them with the `PushNotification` tool, one short line each (what happened, the id or PR, what to do). Send each event once: keep the keys already sent in `backlog/.factory-auto.json` (gitignored with the board) and skip a key that's there (the same file holds `fix`'s attempt keys). Keys: `pr-opened:<pr>`, `pr-checks-failed:<pr>:<head sha>`, `pr-conflict:<pr>:<head sha>`, `pr-comments:<pr>:<comment id>`, `handed:<task>`, `split:<task>`, `human-ready:<task>`, `stuck:<task>`, `idle:<sorted open PR numbers>`, `clone-dirty`. **Herdr:** each also goes out as a herdr notification.
 
-1. **Clone check.** The tree must be clean and on `master`. If not, notify `clone-dirty` and stop. Then `git fetch origin --prune` and fast-forward `master` (`git merge --ff-only origin/master`); if that fails, notify `clone-dirty` and stop.
+**Herdr:** open the dashboard first, and clear the pane title wherever the iteration stops.
+
+1. **Clone check.** The tree must be clean and on `master`. If not, notify `clone-dirty` and stop. Then `git fetch origin --prune` and fast-forward `master` (`git merge --ff-only origin/master`); if that fails, notify `clone-dirty` and stop. **Herdr:** phase `clone-dirty` on either stop.
 2. **`sync`** as above.
-3. **Interrupted work.** If a task is `In Progress`, an earlier iteration didn't finish. Notify `stuck:<task>` and stop; never reset it alone.
+3. **Interrupted work.** If a task is `In Progress`, an earlier iteration didn't finish. Notify `stuck:<task>` (**Herdr:** phase `stuck`) and stop; never reset it alone.
 4. **Conflicts, failing checks and review comments.** If `fix` has a candidate PR (its step 1, which also notifies the PRs out of attempts), run `fix` on it exactly as in `fix` (the remembered branch is `master`), then stop: that fix is this iteration's one piece of work.
 5. **Human tasks.** For each `To Do` task labelled `ready-for-human` whose dependencies are all `Done`, notify `human-ready:<task>`.
-6. **Pick.** Take the task `run` would pick (its step 1), stackable tasks included. If there is none, notify `idle:<open PRs>` ("nothing ready; waiting on your merges of #…") and stop.
+6. **Pick.** Take the task `run` would pick (its step 1), stackable tasks included. If there is none, notify `idle:<open PRs>` ("nothing ready; waiting on your merges of #…"), **Herdr:** phase `idle`, and stop.
 7. **`run`** that task exactly as in `run` (preflight through Finish; the remembered branch is `master`). After Publish, notify `pr-opened:<pr>`. After Hand to human, notify `handed:<task>` with the blocker in one line. If the size check split the task, notify `split:<task>` with the new task ids in one line.
 8. Stop after that one task or fix. In `/loop` dynamic mode, schedule the next iteration soon (about a minute) if a task is still ready or stackable or `fix` still has a candidate, otherwise 20–30 minutes.
 
