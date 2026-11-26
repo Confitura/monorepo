@@ -16,26 +16,26 @@
     "start": " node .output/server/index.mjs"
   },
   "dependencies": {
-    "@nuxtjs/plausible": "^4.0.0",
+    "@nuxtjs/plausible": "^4.1.0",
     "@nuxtjs/sitemap": "^9.1.0",
     "@pinia/nuxt": "^1.0.3",
     "@plausible-analytics/tracker": "^0.4.7",
     "dayjs": "^1.11.23",
-    "isomorphic-dompurify": "^4.7.0",
-    "marked": "^18.2.0",
+    "isomorphic-dompurify": "^4.8.0",
+    "marked": "^18.2.1",
     "modern-normalize": "^3.0.1",
     "nuxt": "^4.6.4",
     "pinia": "^4.1.0",
     "vue": "^3.5.45",
-    "vue-router": "^5.5.0",
+    "vue-router": "^5.5.1",
     "vue3-google-map": "^0.27.2"
   },
   "devDependencies": {
     "@nuxt/test-utils": "4.4.0",
-    "@vue/test-utils": "^2.5.1",
+    "@vue/test-utils": "^2.6.0",
     "happy-dom": "^21.0.4",
     "sass-embedded": "^1.108.2",
-    "vitest": "^5.1.0"
+    "vitest": "^5.1.1"
   },
   "pnpm": {
     "overrides": {
